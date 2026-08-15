@@ -1,0 +1,701 @@
+ISBN: 978-628-95207-8-1. ISSN: 2414-6390. Digital Object Identifier: 10.18687/LACCEI2024.1.1.695
+
+
+
+
+  DECT Evolution towards Meeting the Requirements
+    for IMT-2020 in the Residential Environment
+                             Luis Montalvo, Ph.D.1 , Gloria Túquerres, Eng.2 , and Iván Bernal, Ph.D. 3
+                         1
+                          IEEE Life Member, luis.montalvo@ieee.org, 2IEEE Senior Member, gtuquerres@ieee.org,
+                                     3
+                                       Escuela Politécnica Nacional, Ecuador, ivan.bernal@epn.edu.ec
+
+     Abstract– Energy efficiency and spectrum efficiency have been                        operate on a “designated” license-free RF band (in Europe,
+identified by “IMT for 2020 and beyond” (International Mobile                             from 1880 MHz to 1900 MHz). “Designated” meaning that no
+Telecommunications) as two of the current wireless network                                other technologies can be deployed in the DECT band, as it is
+capabilities that need substantial enhancement to satisfy the                             the case, for the highly congested Industrial, Scientific and
+exponential growth of IoT and high data rate applications. “Digital
+Enhanced Cordless Telecommunications” (DECT) is the leading
+                                                                                          Medical (ISM) band, where WiFi, Bluetooth, Zigbee, and other
+standard around the world for cordless telecommunications and it                          technologies operate. In this paper, we show that, although
+has the great advantage to operate on a “designated” license-free RF                      DECT has evolved to support VoIP [3] and packet data services
+band (1880/1900 MHz in Europe). However, the original DECT has                            [4], DECT still has both low energy efficiency and low
+very low energy efficiency and very low spectral efficiency, and                          spectrum efficiency capabilities [5] compared to nowadays
+therefore, DECT is neither suitable for ultra-low energy applications                     technologies such as Long Term Evolution (LTE) [6].
+nor for high data rate multimedia streaming applications. The                             Therefore, the legacy DECT standard is not suited for ultra-low
+“European Telecommunications Standards Institute” Technical                               energy applications (ULE), or data-rate hungry applications,
+Committee DECT (ETSI TC DECT) is working on these two aspects,                            such as multimedia streaming. We call “DECT legacy” or
+and it has proposed a new set of “Technical Specifications” that
+enables DECT to support both ultra-low energy (DECT-ULE) and
+                                                                                          simply “DECT” the standard variants of DECT defined in [2],
+high data rate (DECT-2020 New Radio) application domains. In this                         [3] and [4].
+paper, we introduce an energy consumption model for the DECT                                   DECT targets use cases where mobility is not the most
+“Portable Part” (PP) that lets us analyze in detail the operation of a                    stringent requirement, such as the residential and industrial
+PP in the “standby mode”. The model lets us show that the simple                          environments. A theoretical performance evaluation of DECT-
+reduction on the requirement of how often the PP must monitor the                         ULE for monitoring and controlling wireless sensor networks
+“paging” beacon enables DECT for ultra-low energy applications.                           (WSN) in industrial environments is published in [7]. In this
+We then show that the use of the state-of-the-art multi-carrier                           paper, we concentrate on the residential environment use cases,
+“Orthogonal Frequency Division Multiplexing” (OFDM)                                       such as “smart home” and “multimedia streaming”.
+modulation, and the spatial multiplexing “Multiple Input Multiple
+Output” (MIMO) antenna technique, enables DECT for high data
+                                                                                               We present first an analysis of the current DECT
+rate multimedia streaming applications.                                                   capabilities in terms of energy consumption and throughput
+     Keywords-- IMT-2020, DECT-2020 New Radio, DECT-ULE,                                  capacity and stand out the enhancements that need to be
+3GPP LTE.                                                                                 implemented in DECT to meet the IMT-2020 objectives in the
+                                                                                          residential environment. We then describe how the European
+                                 I. INTRODUCTION                                          Telecommunications Standards Institute Technical Committee
+                                                                                          ETSI TC DECT is actively working on the one hand, on a new
+     IMT-2020 [1] establishes the vision for mobile
+                                                                                          set of specifications for ultra low energy (DECT-ULE) [8], [9],
+telecommunications for 2020 and beyond based on the forecast
+                                                                                          and on the other hand, on a new radio specification, called
+that traffic volume and number of devices will continue to grow
+                                                                                          DECT- 2020 New Radio [10], capable to support high data
+exponentially. IMT-2020 points out eight current network
+                                                                                          rates. Regarding energy consumption, we first introduce an
+capabilities that should be enhanced to satisfy such demands:
+                                                                                          energy consumption model for the DECT “Portable Part” (PP)
+peak data rate, user experienced data rate, latency, mobility,
+                                                                                          that lets us study in detail the operation of a PP in the “standby
+connection density, energy efficiency, spectrum efficiency, and
+                                                                                          mode”. The model lets us show that the main reason for the low
+area traffic capacity. Spectrum efficiency has a direct impact on
+                                                                                          energy efficiency of the current DECT standard is the
+data rate (peak and user experienced), connection density, and
+                                                                                          requirement on Portable Parts (PP) to continuously monitor the
+area traffic capacity; and therefore, it is one of the most
+                                                                                          highly frequent “paging” events generated by the Fixed Part
+important capabilities to enhance. Energy efficiency is crucial
+                                                                                          (FP). A simple reduction on the requirement of the frequency
+in the case of battery-operated Internet of Things (IoT) devices
+                                                                                          with which the PPs monitors the “paging” events from the FP
+since it has a direct impact on battery lifetime.
+                                                                                          can lead to an extension of the battery standing time from one
+      “Digital     Enhanced Cordless Telecommunications”
+                                                                                          week to almost two years.
+(DECT) [2] is the leading standard around the world for digital
+                                                                                               Regarding spectrum efficiency, we show that the main
+cordless telecommunications and it has the great advantage to
+                                                                                          reason for the low spectral efficiency with regard to current
+  Digital Object Identifier: (only for full papers, inserted by LACCEI).
+                                                                                          standards, is the use of the single-carrier modulation “Gaussian
+  ISSN, ISBN: (to be inserted by LACCEI).                                                 Minimum Shift Keying” (GMSK) [11]. We show that using the
+  DO NOT REMOVE                                                                           state-of-the-art multi-carrier modulation techniques, such as the
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             1
+“Orthogonal Frequency Division Multiplexing” (OFDM) [12],                                     Additional use cases are expected to emerge which are
+and the spatial multiplexing antenna technique “Multiple Input                            currently not foreseen. Fig. 1 illustrates some examples of
+Multiple Output” (MIMO) [13], can lead to significant                                     envisioned use cases by IMT-2020. We mark with red circles
+improvements in spectral efficiency going from 0.384                                      those use cases that will be covered by DECT-ULE [8], [9] and
+(bit/s)/Hz of the legacy DECT standard to up to 56 (bit/s)/Hz                             DECT-2020 in the residential environment [10].
+with a 1024-QAM OFDM modulation and a 6x6 MIMO
+antenna system. With such a spectral efficiency, DECT can
+reach up to 1.12 Gbps of data rate, being therefore able to satisfy
+the current IMT-advanced [14] objective in terms of peak data
+rate, which is 1 Gbps. Since our main focus is the residential
+environment, it seems reasonable to assume that the 1.2 Gbps
+can be distributed among up to twelve user devices requiring up
+to 100 Mbps, and therefore DECT-2020-NR [10] will be able
+to satisfy the IMT-2020 [1] objective in terms of user
+experienced data rate, which is 100 Mbps. Notice that we
+cannot claim that DECT-2020-NR will satisfy the IMT-2020
+objective in terms of peak data rate, which is 20 Gbps [1].
+     These two axes of performance enhancement of the current
+DECT standard show that DECT-ULE and DECT-2020-NR
+can satisfy IMT-2020 requirements for application domains
+such as “smart home” and “multimedia streaming”.                                                                  Fig. 1 ITU-R IMT-2020 scenarios [1].
+     The remaining of this paper is organized as follows.
+Section II reviews the vision and overall objectives of IMT-                              B. Key Capabilities
+2020. Section III presents a brief overview of DECT. Sections                                  IMT-2020 is expected to provide far more enhanced
+IV and V analyze with detail DECT’s evolution for ultra low                               capabilities than the current IMT-2000-Advanced capabilities
+energy and multimedia streaming application domains. Finally,                             defined in [14], [15]. A set of eight parameters are considered
+Section VI draws our conclusions.                                                         to be key capabilities of IMT-2020: peak data rate, user
+                                                                                          experienced data rate, latency, mobility, connection density,
+                          II. IMT-2020 OVERVIEW                                           energy efficiency, spectrum efficiency, and area traffic
+                                                                                          capacity. Fig. 2 shows the expected enhancement of the key
+     The present section is mostly based on ITU Std. M.2083-                              capabilities from IMT-2000-Advanced [14] to IMT-2020. We
+0 [1] and all figures are reproduced from there with some                                 highlight with red ellipses the “Energy Efficiency” and
+highlights from us.                                                                       “Spectrum Efficiency” key capabilities that are the main scope
+     IMT-2020 [1] defines the framework and overall                                       of this paper.
+objectives of the International Mobile Telecommunications for
+2020 and beyond. Anticipating that users should be able to
+access services anywhere, anytime, IMT-2020 recommends
+that IMT-2020 interwork with other radio systems such as
+Radio Local Area Networks (RLANs). One of the worldwide
+well established RLANs is DECT [2].
+
+A. Use Cases
+    IMT-2020 is envisaged to support diverse use cases and
+applications that include [1]:
+• Enhanced Mobile Broadband: This use case addresses
+   human-centric scenarios for mobile access to multimedia
+   content, services, and data.
+• Massive Machine Type Communications: This use case
+   is characterized by a very large number of connected
+   devices typically transmitting a relatively low volume of
+   non-delay sensitive data. The devices are required to be low
+   cost and have a very long battery life.
+• Ultra-Reliable and Low Latency Communications: This                                           Fig. 2 Enhancements to Networks Key Capabilities from IMT-Advanced
+   use case has stringent requirements for capabilities such as                                                        to IMT-2020 [1].
+   throughput, latency, and availability. Some examples
+   include wireless control of industrial manufacturing or                                    It is worth highlighting: the 10 times increase in user
+   production processes, remote medical surgery, distribution                             experienced data rate (from 10 Mbps to 100 Mbps), the 100
+   automation in a smart grid, transportation safety, etc.                                times increase in network energy efficiency, the 10 times
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             2
+reduction in latency (from 10 ms to 1 ms), and the 10 times
+increase in connection density (from 105 to 106 devices/km2).
+                                                                                               where, F0 = 1897.344 MHz and c = 0, 1, …, 9, as is shown
+     While all key capabilities may be important to some extent
+                                                                                          in Fig. 4.
+for all use cases, the relevance of some of them may be
+                                                                                               The modulation method used is the Gaussian Minimum
+significantly different, depending on the use-cases scenarios. In
+                                                                                          Shift Keying (GMSK) with a bandwidth times bit-period (BT)
+the enhanced mobile broadband use case, user experienced data
+                                                                                          product of nominally 0.5 and a peak carrier deviation δf = 288
+rate, area traffic capacity, peak data rate, mobility, energy
+                                                                                          kHz. A binary “1” is encoded with a peak frequency deviation
+efficiency and spectrum efficiency all have high importance,
+                                                                                          of (+δf), giving a transmit frequency of (Fc + δf). A binary “0”
+but mobility and the user experienced data rate would not have
+                                                                                          is encoded with a peak frequency deviation of (−δf), giving a
+equal importance simultaneously in all scenarios. For example,
+                                                                                          transmit frequency of (Fc − δf) [17].
+in the residential environment, a higher user experienced data
+rate, but a lower mobility would be required than in the wide
+                                                                                          B. DECT Time-Frame
+area coverage scenario. In the massive machine type
+                                                                                               DECT has two operational modes, the Frequency Division
+communications use case, the following key capabilities are
+                                                                                          Duplex (FDD) mode that requires a pair of available resource
+required: support for a huge number of low bit rate, zero/very
+                                                                                          spectrum, one assigned exclusively to the uplink and one to the
+low mobility, devices that may transmit only occasionally; and
+                                                                                          downlink, and a Time Division Duplex (TDD) mode operating
+minimum data rate in virtually all circumstances [16]. A low-
+                                                                                          in unpaired spectrum. In the following, we consider the TDD
+cost device with long operational lifetime is vital for this use
+                                                                                          mode.
+case [1], but high bit rates are not crucial.
+                                                                                               Each radio channel is structured into 10-ms frames capable
+                                                                                          of carrying 12 digital telephone conversations. The 10-ms time
+                            III. DECT OVERVIEW
+                                                                                          frame is divided into 24 slots (TSLOT = 416.7µs), with two
+     DECT is the leading standard around the world for digital                            slots allocated to each telephone call, each slot conveying 480
+cordless telecommunications and is described in a series of                               bits for each communication direction, as is shown in Fig. 5.
+standards issued by ETSI [2]. The initial DECT standard was
+further developed into the New Generation DECT (NG-DECT)
+standard [3], with primary target on VoIP applications, keeping
+backwards compatibility with all previous developments. A
+packet data service also was standardized by DECT in DECT
+Packet Radio Service (DPRS) [4]. The use of the DECT band
+is being re-engineered for new services. ETSI’s work on
+DECT-ULE [8] shows that the DECT technology is being
+reoriented towards new application domains, such as: home
+automation, home security and climate control.
+     A residential DECT system is a short-range cordless
+communication system organized in a simple star topology as
+(Fig. 3). The Fixed Part (FP) is typically the gateway connected
+to the WAN by xDSL or fiber. In many cases, there are only                                                             Fig. 3 DECT Star Topology.
+one or two Portable Parts (PP; telephone handsets) wirelessly
+connected to the FP. The cell coverage for indoor environments
+starts at 50 m for conditions such as offices with metallic
+partition walls and goes up to 200 m for open-plan conditions.
+     In this paper, we call “DECT legacy” (for short “DECT”)
+to all DECT standard variants prior to DECT-ULE [8]. For
+backwards compatibility all variants of the DECT standard
+including the most recent ones, such as DECT-ULE [8], and
+those in preparation, such as DECT-2020 New Radio [10], keep
+the same structure of the Physical Layer as DECT [3], [4].                                       Fig. 4 Distribution of the ten RF channels inside the DECT spectrum.
+
+A. DECT Spectrum Management
+     In Europe, the most common radio frequency spectrum
+allocated to DECT is in the band 1880/1900 MHz [17].
+However, countries outside Europe have allocated the
+1900/1920 and 1910/1930 MHz bands to DECT-similar
+services. In this paper, we will concentrate our analysis in the
+1880/1900 MHz band.
+     The 1880/1900 MHz band is divided into ten RF channels
+                                                                                                                    Fig. 5 DECT time-frame structure.
+with center frequency Fc given by:
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             3
+C. DECT Time-Frequency Grid
+     Given the organization of the time and frequency
+resources, DECT can carry up to 120 simultaneous digital
+telephone conversations in the coverage area of the FP. Each
+conversation occupies a duplex channel that carries: a two-way
+digital voice channel, a two-way digital signaling channel, and
+a two-way synchronization channel (See Fig. 5).
+     The DECT radio resource is represented by a grid with two
+dimensions: carrier frequency and time (Fig. 6). The blue and
+green units in Fig. 6 represent two on-going FP«--»PP
+communications. The red unit represents a “Beacon” unit
+whose function is explained in the following section.
+
+D. DECT Beacon Function                                                                                       Fig. 6 DECT Time-Frequency Resource Grid.
+      A DECT base station (FP) continuously broadcasts a
+“Beacon”, in every frame, so that the DECT handsets (PP) can
+lock-on to, as is described in Section 5.7 of [18]. The beacon
+transmission can be part of an active communications link
+between the FP and a PP (“Traffic Bearer”) or a “Dummy
+Bearer” transmission. The FP “Beacon” carries information
+concerning: FP identity, FP capabilities, FP synchronization
+information, DECT channels status, and PP “paging”
+information for an incoming call set-up, as is shown in Fig. 7.
+The “Beacon” is a part of the “signaling” field shown in Fig. 5.
+      For letting the FP set up the link with the PPs using the                                                            Fig. 7 DECT Beacon
+least interfered available channels, the FP continuously scans
+and measures the RF signal strength of all DECT channels                                       where, OH is the overhead due to the error control (CRC),
+(frequency-carrier/time-slot pairs) and establishes an ordered                            signaling and synchronization channels, and guard time
+list of the corresponding “Received Strength Signal Indicators”                           embedded in each conversation together with the digital voice
+(RSSI). A low RSSI represents a free and non-interfered                                   (data) channel (See Fig. 5) and is given by (3).
+channel, while a high RSSI represents a busy or interfered
+channel. Based on this list, the FP continuously applies on its
+side a “Dynamic Channel Selection and Allocation” algorithm.
+      PPs must also scan periodically (once every 30 seconds                                 Replacing OH in (2), we get (4) that let us conclude that
+according to Section 11.4.2 of the standard [18]) all DECT                                DECTCTC is equal to 7.68 Mbps.
+channels and establish a similar RSSI list. Two situations are
+possible: 1) a FP with which the PP is associated, transmits a
+“Beacon Function” containing a “Paging” message for the PP;
+in this case, the PP must lock onto the corresponding DECT
+channel and continue with the set up communications
+                                                                                               Given that DECTCTC is 7.68 Mbps and that the DECT “Cell
+procedure, 2) the PP wishes to initiate a communication with
+                                                                                          Bandwidth” is 20 MHz, the DECT “Cell Spectral Efficiency”
+one of the FPs to which it has access rights; in this case, the
+                                                                                          is 0.384 (bit/s)/Hz.
+“Beacon Function” from the FP contains information about the
+status of the channel (free or occupied), the PP analyzes this
+                                                                                                 IV. DECT EVOLUTION FOR ULTRA LOW ENERGY
+information and locks onto the FP having the strongest RSSI,
+as mandated by the DECT standard [18].                                                         In this section, we present the modifications that have been
+                                                                                          introduced into the current DECT technology to render it more
+E. DECT Spectral Efficiency                                                               energy consumption efficient and satisfying ultra-low energy
+     As mentioned in Section III-A, DECT uses GMSK                                        consumption requirements of battery-operated IoT devices.
+modulation with a gaussian pulse having a BT product of 0.5,                                   We first introduce an energy consumption model for the
+and a maximum frequency deviation from the carrier equal to                               DECT devices that will let us quantitatively analyze the energy
+δf = 288 kHz [17]. Since in GMSK modulation the bit rate (BR)                             consumption profile of DECT devices. We then apply the
+is equal to two times the frequency difference between the                                energy consumption model to a current DECT PP product [19],
+higher and lower frequencies (BRGMSK = 4 δf) [11], the DECT                               and finally, we show the modifications that the ETSI DECT
+“Cell Throughput Capacity” (DECT CTC) is computed by (2).                                 Ultra Low Energy (ULE) standardization [8], [9] proposes to
+                                                                                          substantially extend the battery lifetime of the DECT-ULE
+                                                                                          devices.
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             4
+A. Energy Consumption Model                                                                 performs in the “Paging mode”. We consider that a paging
+    Fig. 8 shows a simple energy consumption model that we                                  scan takes place during one 10 ms time frame.
+propose and that will let us estimate the lifetime of the battery                         • n2 is the number of 10 ms time frames that the PP stays in
+pack powering a DECT PP. The PP operates in one of three                                    the “Transaction mode” per hour.
+modes (states): 1) Hibernation mode (e0), 2) Paging mode (e1),
+and 3) Transaction mode (e2).                                                                  DECT equipment manufacturers usually specify the
+                                                                                          energy characteristics of their products in terms of the battery
+                                                                                          standing time assuming the PP is continuously in a “Talk mode”
+                                                                                          or in a “Standby mode”.
+                                                                                               The “Talk mode” corresponds to the definition of our
+                                                                                          “Transaction mode”. Therefore, n0 = n1 = 0, and (5) becomes:
+
+
+
+                                                                                               where, Tt is the time that the PP takes to completely
+                                                                                           discharge the pack of batteries, that power the PP, while in
+                                                                                           the “Talk mode”.
+                                                                                               The “Standby mode” corresponds to the case where the PP
+                                                                                           continuously switches back and forth between our
+                                                                                           definitions of “Paging mode” and “Hibernation mode”, and
+                      Fig. 8 DECT Energy Consumption Model.                                it never enters the “Transaction mode”. See the greyed block
+                                                                                           in Fig. 8.
+     In the Hibernation mode, the PP shuts down all operating                                  In the “Standby mode”, n2 in (5) is zero. Therefore, E is
+functions except the one required to monitor a low power local
+                                                                                           given by the following equation:
+timer. The PP enters the Hibernation mode between two
+consecutive paging scans (Paging mode) or after a talk
+(Transaction mode) is finished.                                                               where, Ts is the time that the PP takes to completely
+     In the Paging mode, the PP scans the DECT RF channels                                 discharge the pack of batteries that power the PP, while in the
+for a beacon message from the FP indicating that there is a call                           “Standby mode”.
+for the PP. Therefore, the energy consumption is dominated by
+the RF receive circuitry.                                                                 B. Battery Capacity and Energy Consumption
+     In the Transaction mode, the PP either receives or transmits                               For a battery-operated electronic device, one of the most
+its data subject to the maximum RF power constraints of the                               important characteristics is the battery lifetime. The battery
+DECT specification. This mode is dominated by the energy                                  lifetime is a function of the electric charge stored in the battery
+consumption of the power amplifier [20].                                                  and the rate at which an electronic device drains the current
+     For simplicity, in the following analysis, we consider that                          from the battery.
+the time unit is the duration of a DECT time frame, i.e., 10 ms.                                It is common practice to specify the battery charge capacity
+     Let:                                                                                 in terms of Ampere-hours (Ah), having dimensions of electric
+• e0 be the energy consumed by the PP while in the                                        current multiplied by time, equal to the charge transferred by a
+    “Hibernation mode”,                                                                   steady current of 1 A flowing for 1 hour. Ampere-hours is not
+• e1 be the energy consumed by the PP while in the “Paging                                an SI (International System of Units) electric charge unit. The
+    mode”,                                                                                SI unit of electric charge is the Coulomb (C) which is the
+• e2 be the energy consumed by the PP while in the                                        electric charge transported by a constant current of one Ampere
+    “Transaction mode”, and                                                               in one second (1C = 1A . 1s).
+• E be the energy stored in a set of one or more batteries used                                 In this paper, we stick to the SI; therefore, we convert the
+    to power the PP.                                                                      Ah specification into an equivalent electric charge SI unit.
+The energy E is consumed by the PP and is given by (5).                                         In general, the amount of electric charge transferred from
+                                                                                          the battery to the electronic device in a time interval from t 1 to
+                                                                                          t2 is given by (8):
+        where:
+• Tstd is the standing time (lifetime) that the PP takes to
+  completely consume the energy stored in the set of                                           where, i(t) is the instantaneous current drained by the
+  batteries that power the PP, given in hours.                                            electronic device.
+• n0 is the number of 10 ms time frames that the PP stays in                                   Therefore, 1 Ah is equal to 3600 C. The electric charge
+  the “Hibernation mode” per hour.                                                        capacity of smaller batteries is usually specified in mAh. 1 mAh
+• n1 is the number of paging scans per hour that the PP                                   = 10−3 Ah = 3.6 C.
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             5
+     The energy consumed by an electronic device in a time                                    With all this, we are ready to compute the energy e1
+interval from t1 to t2 is given by (9):                                                   consumed during a “Paging mode” event, using (14), derived
+                                                                                          from (7).
+
+
+     where, v(t) is the instantaneous voltage, and i(t) is the
+instantaneous current drained by the electronic device.                                       Knowing that E = 10368 J, Ts = 168 h, e0 = 0.48 µJ,
+     In general, the battery voltage varies during discharge, but                         n0=360000/h, and n1 = 120/h, we can compute e1 using (14).
+an average or nominal value may be used to approximate the                                We obtain e1 = 0.514 J.
+energy calculation by (10):                                                                   In the following, let us do a similar analysis for the “Talk
+                                                                                          mode” of the “Thomson CONECTO 300” handset. The energy
+                                                                                          e2 consumed by the PP during one 10 ms time frame in the
+     The SI unit of energy is the Joule, which can be expressed                           “Transaction mode” can be computed using (15) that is derived
+as: (1J = 1V.1A.1s). A Joule can also be expressed in terms of                            from (6).
+the electric charge Q in Coulombs and the voltage V in Volts
+(1J = 1C.1V).
+     Notice that multiplying the nominal battery voltage V by
+                                                                                               where, n2 is the number of 10 ms time frames contained in
+the battery capacity in Ah gives an estimate of how much
+                                                                                          1 h, and therefore n2 = n0 = 360000/h. Knowing that E = 10368
+energy in terms of watt-hours the battery contains.
+                                                                                          J, and Tt = 4 h, we obtain e2 = 7.2 mJ.
+C. Example of Energy Consumption of a Current DECT PP                                          Table I summarizes the different components of the energy
+    For illustration purposes, let us analyze in detail the energy                        consumption of the “Thomson CONECTO 300” handset [19].
+                                                                                                                      TABLE I
+consumption of the “Thomson CONECTO 300” handset [19].                                                 ENERGY CONSUMPTION OF THOMSON HANDSET.
+This DECT handset has the following specifications:                                                                  E                 Tt               Ts
+• Battery standing time of 4 hours in the “Talk mode”.                                                       10.368 × 103 [J]
+                                                                                                                                    4 [hours]      168 [hours]
+• Battery standing time of 168 hours in the “Standby mode”.                                                 4.8 V @ 600 mAh
+
+• Handset powered by a set of 4 rechargeable 1.2 V Ni MH                                                            e0                 e1                e2
+
+    batteries with 600 mAh charge capacity.                                                                  0.48 × 10−6 [J]         0.514 [J]    7.2 × 10−3 [J]
+     Therefore, the 600 mAh of electric charge of a 1.2 V NiMH                                                    e1 /e0              e2 /e0           e1 /e2
+battery correspond to 2160 C (600 x 3.6 C), and the energy “E”                                                1.0684 × 106          15 × 103           71.23
+stored in the four 1.2 V NiMH batteries is: E= 10368 J (4 x 1.2
+V x 2160 C). See Section IV-B.                                                                 The first two rows of Table I correspond to the energy
+     Let us continue with the computation of e0. Thomson’s
+                                                                                          performance data published by the manufacturer in its
+CONECTO 300 datasheet does not specify the amount of                                      datasheet, the remaining rows are computed with our energy
+current (I0) that is drained by the handset when it is in the                             consumption model. Interesting values to remark are the ratios
+“Hibernation mode”, as defined in our model, but it is
+                                                                                          ei/ej:
+reasonable to assume that a PP in such a sleep mode drains
+                                                                                          • e1/e0 is equal to 1.07 x 106, which means that the energy
+10µA of current. Indeed, the datasheet of a current DECT-ULE
+chip specifies that the chip alone drains 1 µA in a similar                                   consumed by the PP during one 10 ms time frame in the
+“Hibernation mode” [21].                                                                      “Paging mode” is more than one million times the energy
+     Therefore, e0 can be computed with (11):                                                 consumed by the PP during one 10 ms time frame in the
+                                                                                              “Hibernation mode”,
+                                                                                          • e2/e0 is equal to 15000, which means that the energy
+     where, V is the voltage of the battery pack (4.8 V) and t0 is                            consumed by the PP during one 10 ms time frame in the
+the duration of a DECT frame as previously mentioned (10 ms).                                 “Transaction mode” is 15 thousand times the energy
+Therefore, e0 = 0.48 µJ.                                                                      consumed by the PP during one 10 ms time frame in the
+     The number of 10 ms time frames contained in one hour                                    “Hibernation mode”, and
+(n0) can be computed as:                                                                  • e1/e2 is equal to 71.23, which means that the energy
+                                                                                              consumed by the PP during one 10 ms time frame in the
+                                                                                              “Paging mode” is more than 70 times the energy consumed
+                                                                                              by the PP during one 10 ms time frame in the “Transaction
+     The number of “paging” events that take place in one hour
+                                                                                              mode”.
+is n1. The DECT specification [18] states that the paging
+interval must be 30s (T209: max time between updates of
+                                                                                          D. DECT modifications for Ultra Low Energy
+channel list.). Therefore, n1 can be computed as:                                              There are several IoT applications where the frequency of
+                                                                                          the paging events is not required to be as frequent as one paging
+                                                                                          event every 30 s as it is specified by the present DECT standard
+                                                                                          for the cordless telecommunications application. Therefore, in
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             6
+the following, we show how we can substantially increase the                                  continuously listen for paging messages, they are assumed
+battery standing time by simply reducing the number of paging                                 to listen only from time to time, asynchronously,
+events per hour (n1) when the DECT PP operates in the                                         according to a wake-up timer, whose value and tolerance
+“Standby mode”.                                                                               are known by the FP, but not the listening time. Slow
+     From (7), we obtain the following equation:                                              actuators are normally battery powered.
+                                                                                          • Sensor type PP: Devices characterized by long sleep times,
+                                                                                              and strong energy savings requirements. The traffic is
+     Recall that for the “Thomson CONECTO 300”: E = 10368                                     dominated by the PP to FP direction. Sensors are typically
+J, e0 = 0.48 µJ, e1 = 0.541 J, and n0 = 360000/h. Fig. 9 shows                                battery powered and are still able to provide fast response
+the variation of the battery standing time as a function of the                               times from PP to FP. Typical applications are, for instance,
+number of paging events per hour (n1).                                                        command elements in electricity control, smoke detectors
+    It is worth noticing that by reducing the number of paging                                and motion detectors. Two sub-types of sensors are
+ events down to one every hour, the battery standing time can                                 considered: 1) those that listen to the paging channel with a
+ be extended up to 1.7 years from 7 days that is obtained when                                very slow or ultra slow paging cycle (Type Ia), and 2) those
+ the paging events frequency is of one every 30s. The                                         that, in normal conditions, do not listen to any paging
+ principle of reducing the frequency of the paging events for                                 channel (Type Ib).
+ reducing energy consumption on the DECT PP side is                                            In order to support these new paging capabilities, DECT-
+ applied by ETSI TC DECT in a couple of “Technical                                        ULE specifies new paging channels for ULE over an “Extended
+ Specifications”, named “Home Automation Network (HAN),                                   Dummy Bearer” (beacon). These new paging channels support
+ Phases 1 and 2” [8], [9]. These specifications are intended to                           a wide range of modes from fast to ultra- slow paging, as is
+ cover “Machine to Machine Communications” based on the                                   shown in Table II, and many devices. The granularity of the
+ principles of “Ultra Low Energy”. DECT-ULE provides bi-                                  paging cycle parameter is of one TDMA frame (10 ms).
+ directional radio communication with medium range, data                                       With regard to DECT-ULE Phase 1 [8], DECT-ULE Phase
+ protection, and Ultra Low Energy consumption between                                     2 [9] adds support for: 1) hybrid PP devices, i.e., devices that
+ different types of Portable Devices and Radio Fixed Parts.                               utilize ULE and non-ULE services, such as voice, from the FP,
+ DECT-ULE Phase 1 is intended primarily, but not                                          and 2) downlink broadcast, which is the capability for the FP to
+ necessarily, for Home Automation scenarios.                                              transmit ULE messages to multiple PP devices.
+
+                                                                                                                            TABLE II
+                                                                                                                     DECT-ULE PAGING CYCLES.
+
+                                                                                                                                  Paging Cycle          Power
+                                                                                                            Fast Actuator        10 ms - 160 ms          Line
+                                                                                                           Slow Actuator        160 ms - 10 min        Battery
+                                                                                                           Sensor Type Ia       160 ms - 60 min        Battery
+                                                                                                           Sensor Type Ib           Infinite ms        Battery
+
+
+                                                                                              Examples of the applications that can be built with DECT-
+                                                                                          ULE Phase 2 are: 1) medical pendant alarms, intercoms, and
+                                                                                          other M2M devices with voice capability, and 2) lighting
+                                                                                          control using the downlink broadcast feature.
+
+       Fig. 9 Battery Standing Time as a Function of Paging Events per Hour.                        V. DECT EVOLUTION FOR MULTIMEDIA STREAMING
+
+    Three types of PP devices are part of DECT-ULE phase 1                                     Multimedia streaming requires large amounts of bit rate that
+ [8]:                                                                                     the present DECT technology cannot provide, asit was shown
+• Fast Actuator type PP: Devices optimized for fast                                       in Section III. However, we showed in [5], that LTE, with the
+   response times (both ways) and significant FP to PP traffic.                           state-of-the-art multi-carrier OFDM modulation and a 4 x 4
+   Typical applications are, for instance, electricity control                            MIMO spatial multiplexing system, would be capable to provide
+   elements. These devices must periodically listen the paging                            up to 300 Mbps (with 64- QAM) using the 20 MHz of
+   channel following the configured paging cycle. Fast                                    bandwidth of the present DECT band.
+   actuators are normally line powered.                                                        There are two ways to increase the bit rate of a
+• Slow Actuator type PP: Devices optimized for medium
+                                                                                          communications channel: 1) augmenting the cell spectral
+   response times and significant FP to PP traffic. Typical                               efficiency, and 2) augmenting the bandwidth of the RF
+                                                                                          spectrum of the band. ETSI TC DECT and the DECT Forum
+   applications are, for instance, thermostats and related
+                                                                                          industry body are currently developing a new set of DECT
+   control elements. These devices are not required to
+                                                                                          standards with these two guidelines in mind. This requires
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             7
+major changes to the current DECT radio interface, specially to                                In addition to the legacy DECT full slots, DECT-2020
+the MAC and Physical (PHL) layers [10]. This new radio                                    foresees the use of half slots, i.e., T HSLOT = TFRAME/48 = 208.33 µs.
+interface is called “DECT-2020 New Radio” (DECT-2020, for                                      In order to support low-latency scenarios, DECT-2020 can
+short in this paper), and it will be capable to meet the IMT-2020                         also operate with 30 slots/frame (T SLOT = 333.3 µs), or with 40
+requirements [1], in terms of user experienced data rate and                              slots/frame (T SLOT = 250 µs), or in a frameless mode.
+spectral efficiency.
+
+A. DECT-2020 Spectrum Management
+     Due to the requirement of efficient sharing of the DECT
+band (1880/1900 MHz) with legacy DECT, DECT-2020 uses
+the same basic carrier and spectrum structure. The bandwidth
+of the basic carrier is BWBC = 1.728 MHz. DECT-2020 uses
+OFDM modulation with a sub-carrier separation of 27 kHz. In
+                                                                                                               Fig. 11 DECT-2020 Time Frame Structure.
+other words, a DECT-2020 basic carrier is composed of 64 sub-
+carriers of BWSC = 27 kHz. DECT-2020 also foresees the use
+of half-carriers with a bandwidth of BWHC = 0.864 MHz.                                         2) DECT-2020 Time Frequency Grid: Similar to what we did
+    Three different options of channel bandwidth have been                                for legacy DECT, we can conveniently represent the DECT-2020
+                                                                                          management of the time-frequency resource with a two-
+ considered:
+                                                                                          dimensional grid. For example, the structure of the time-frequency
+•   Full-carrier Channel: The transmission bandwidth is                                   grid for the basic “Full-Carrier” channel is shown in Fig. 12.
+    equal to the basic DECT-2020 channel with 1.728 MHz
+    (BWBC). However, to guarantee compatibility with other
+    DECT-2020 and DECT transmitters, not all the sub-
+    carriers carry data. The four sub-carriers on each edge of
+    the basic channel are null sub-carriers. Therefore, the
+    occupied bandwidth (BWO) is equal to 1.512 MHz (56x27
+    kHz). Fig. 10 shows the DECT-2020 spectrum
+    organization of this Full-Carrier channel.
+•   Multiple-carrier Channel: The transmission bandwidth
+    is equal to NC 1.728 MHz, where NC ∈ {2, 4, 8, 12, 16}. A
+    proper number of zero (null) sub- carriers are inserted to
+    produce a suitable occupied bandwidth. NC = 16
+    corresponds to the maximum possible number of carriers,
+    where BWMC = 27.648 MHz and BWO = 20.736 MHz that
+    fits exactly in the legacy full DECT band.
+•   Half-carrier Channel: The transmission bandwidth is
+    equal to one half the basic DECT channel, i.e., BWHC =
+    0.864 MHz and BWO = 0.648 MHz.
+                                                                                                  Fig. 12 DECT-2020 Time-Frequency Grid for Full Carrier Channel.
+
+
+                                                                                              On the frequency dimension, there are 64 sub-carriers of
+                                                                                           27 kHz of bandwidth each constituted of: 8 null sub-carriers,
+                                                                                           52 data sub-carriers and 4 pilot sub-carriers. The pilot sub-
+                                                                                           carriers are used to monitor the quality of the RF bands.
+                                                                                              On the time dimension, the 416.67 µs slot is constituted of
+                                                                                           ten 41.67 µs OFDM symbols.
+                  Fig. 10 DECT-2020 Full Carrier OFDM Symbol.                                 As mentioned previously, DECT-2020 FP and PP devices
+                                                                                           communicate using packets of OFDM symbols. The packet
+     1) DECT-2020 Time Frame: The DECT-2020-time frame and                                 duration is variable; however, the packet transmissions
+time slot are equal to those of the legacy DECT, i.e., TFRAME = 10                         always start on a slot boundary.
+ms, and TSLOT = TFRAME/24 = 416.7 µs. However, DECT-2020 FP
+                                                                                              The FP maintains a Time/Frequency Map (TFM) for
+and PP devices communicate using packets of OFDM symbols.
+                                                                                           communication with the PP clients. A given FP«--»PP
+The nominal duration of a DECT-2020 OFDM symbol is T SYM =
+                                                                                           communication follows the same TFM, except for certain
+TSLOT /10 = 41.67 µs. Therefore, the time structure of a DECT-2020
+frame is the one shown in Fig. 11.                                                         slots specifically allocated for contention-based access. The
+                                                                                           TFM can change dynamically, based on MAC layer
+                                                                                           commands.
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             8
+    3) DECT 2020 Performance: The “Cell Throughput Capacity”                              European Community. The unpaired 2 GHz frequency bands,
+of DECT-2020 can be computed with (17):                                                   1900/1920 MHz and 2010/2025 MHz were part of the assigned
+                                                                                          frequency bands. In 2012, CEPT (Conférence Européenne des
+                                                                                          Administrations des Postes et Télécommunications), which is the
+                                                                                          European regional organization dealing with postal and
+    where:                                                                                telecommunications issues, analysed the usage of these unpaired 2
+•  NSD is the number of sub-carriers that carry user data.                                GHz bands and concluded that they were mostly unused. The band
+• N BPSC is the number of bits per sub-carrier, which is a function
+                                                                                          1900-1920 MHz, although licensed in many countries, remained
+   of the modulation used.                                                                largely unused, and the use of frequencies in the band 2010-2025
+• R is the code rate. DECT-2020 uses FEC, and therefore, some
+                                                                                          MHz had only been authorised in few countries [22]. Therefore,
+   of the bits in the user packets are redundant. R is the fraction of                    CEPT was mandated to assess and identify alternative uses of these
+   bits that carry non- redundant user data.                                              unpaired 2 GHz frequency bands other than for the provision of
+• TSYM is the OFDM symbol duration (41.67 µs).
+                                                                                          mobile communications services through terrestrial cellular
+NSD in (17) is given by (18).                                                             networks (as introduced by the IMT- 2000/UMTS Decision) as
+                                                                                          well as to develop less restrictive technical conditions for their
+     where: N SC is the total number of sub-carriers, NSP is the                          deployment while ensuring co-existence with the electronic
+number of pilot sub-carriers, and N SN is the number of “null” sub-                       communications services in the paired 2 GHz spectrum [22].
+carriers in the DECT-2020 channel.                                                                                      TABLE III
+      NSC in (18) is given by (19).                                                                    DECT-2020 CELL THROUGHPUT CAPACITY [MBPS]
+                                                                                                                                      Modulation
+                                                                                                      MIMO
+                                                                                                                   16QAM        64 Q AM      256 Q AM      1024 Q AM
+
+     where:                                                                                            1X1          67.39       112.32        149.76         187.20
+•   NC is the number of DECT basic carriers in the DECT-2020                                           2X2         134.80       224.60        299.50         374.40
+    channel.                                                                                           4X4         269.60       449.30        599.00         748.80
+•   BW BC is the bandwidth of the DECT basic channel (1.728                                            6X6         404.40       673.90        898.60         1123.00
+    MHz).
+•   BWSC is the bandwidth of a sub-carrier (27 kHz).                                                                    TABLE IV
+                                                                                                      DECT-2020 CELL SPECTRAL EFFICIENCY [BIT/S/HZ].
+For computing the maximum “Cell Throughput Capacity” of                                                                               Modulation
+                                                                                                      MIMO
+                                                                                                                  16QAM         64 Q AM      256 Q AM      1024 Q AM
+DECT-2020, we consider the ideal case where the cell is occupied
+by one single user using the maximum multi-carrier channel and                                         1X1          3.37          5.62          7.49           9.36
+the most efficient modulation (1024-QAM).                                                              2X2           6.74        11.23         14.98          18.72
+      In this case, NC = 16. NSP, NSN, and R are specified in [17],                                    4X4          13.48        22.46         29.95          37.44
+they are NSN = 56, NSP = 32, and R = 5/6. Therefore, from Equation                                     6X6          20.22        33.70         44.93          56.16
+18, NSD = 936. For 1024-QAM, NBSPC = 10.
+      Replacing all these parameters in (17), we obtain DECT-                                  One of the alternatives suggested by CEPT for the 1900/1920
+2020CTC equal to 187.2 Mbps.                                                              MHz band is to make it available for DECT, so that a single
+      The computation that we just presented, assumes a SISO                              continuous block of 40 MHz (1880/1920 MHz) is provided to
+antenna system. If a MIMO system is used, DECT-2020 CTC is                                DECT [22]. If this recommendation is adopted, DECT-2020 would
+ideally multiplied by the number of spatial streams (N SS)                                double the theoretical maximum “Cell Throughput Capacity” that
+corresponding to the MIMO system. Table III summarizes the                                we presented in Section V-A3 (2.24 Gbps = 2 x 1.12 Gbps), and
+“Cell Throughput Capacity” for different modulation types and                             therefore, it would exceed the current ITU-Advanced objective,
+MIMO systems. When spatial multiplexing is used, the maximum                              however it would not meet the ITU-2020 objective [1] which is 20
+DECT transmission power (250 mW) is split among the different                             Gbps.
+antennas.
+      Table III shows that DECT-2020 with MIMO 6x6, and 1024-                                                               VI. CONCLUSIONS
+QAM modulation attains 1.12 Gbps of throughput, and therefore,
+it is capable to meet the IMT-2020 objective of user experienced                           Our main focus in this paper was the residential environment
+data rate [1].                                                                             and especially the “Smart Home” and “Multimedia Streaming”
+      Since the bandwidth of the DECT band is 20 MHz, we can                               application domains. This is the reason why we concentrated our
+compute the “Cell Spectral Efficiency” that is summarized in Table                         study on the necessary enhancements to the current DECT
+IV.                                                                                        standard regarding “energy efficiency” and “spectral efficiency”.
+                                                                                           We showed that the original DECT standard, that in Europe
+B. Additional Spectrum                                                                     operates in the “designated” band from 1880 MHz to 1900 MHz,
+    In 1998, the European Parliament decided (Decision                                     cannot satisfy the energy efficiency and spectrum efficiency
+128/1999/EC) the coordinated introduction of the Universal                                 requirements of nowadays IoT and multimedia streaming
+Mobile Telecommunications System (IMT- 2000/UMTS) in the
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                             9
+ applications. The reasons are: in the first case, the DECT                              [7] K. Das and P. Havinga, “Evaluation of DECT-ULE for Robust
+                                                                                             Communication in Dense Wireless Sensor Networks,” in 2012 3rd IEEE
+ requirement on the PP to continuously (at least once every 30s)                             International Conference on the Internet of Things, Oct 2012, pp. 183–190.
+ monitor the “paging” event generated by the FP which leads to                           [8] European Telecommunications Standards Institute, Digital Enhanced
+ an accelerated drain of the battery pack powering the PP; and in                            Cordless Telecommunications (DECT); Ultra Low Energy (ULE);
+                                                                                             Machine to Machine Communications; Part 1: Home Automation Network
+ the second case, the low spectral efficiency due to the use of the
+                                                                                             (phase 1), ETSI Std. TS 102 939—1, Oct 2017.
+ single-carrier modulation GMSK.                                                         [9] ——, Digital Enhanced Cordless Telecommunications (DECT); Ultra Low
+    With regard to energy efficiency, we presented an energy                                 Energy (ULE); Machine to Machine Communications; Part 2: Home
+ consumption model for the PP that let us show that the                                      Automation Network (phase 2), ETSI Std. TS 102 939-2, Oct 2017.
+                                                                                         [10]——, Digital Enhanced Cordless Telecommunications (DECT); DECT-
+ introduction of flexibility in the “paging” function so that the                            2020 New Radio (NR) Interface; Study on Physical (PHY) Layer, ETSI
+ requirement on how often the PP must monitor the “paging”                                   Std. TR 103 514, July 2018.
+ events is relaxed depending on the application, leads to an                             [11]K. Murota and K. Hirade, “GMSK Modulation for Digital Mo- bile Radio
+                                                                                             Telephony,” IEEE Transactions on Communications, vol. 29, no. 7, pp.
+ enormous enhancement of the energy efficiency. The lifetime of                              1044–1050, Jul 1981.
+ the batteries powering such an ultra low energy IoT device could                        [12]G. Ku and J. M. Walsh, “Resource Allocation and Link Adaptation in LTE
+ be extended from a few weeks to several years.                                              and LTE Advanced: A Tutorial,” IEEE Communications Surveys
+                                                                                             Tutorials, vol. 17, no. 3, pp. 1605–1633, third quarter 2015.
+    With regard to spectral efficiency, we showed that the                               [13]J. Kumar, “Compact MIMO Antenna,” Wiley Microwave and Optical
+ introduction of the state-of-the-art multi-carrier OFDM                                     Technology Letters, vol. 58, no. 6, pp. 1294–1298, June 2016.
+ modulation and the use of a MIMO antenna system can lead to                             [14]International Telecommunications Union, Detailed Specifications of the
+                                                                                             Terrestrial Radio interfaces of International Mo- bile Telecommunications-
+ significant improvements in spectral efficiency going from                                  Advanced (IMT-Advanced), ITU Std. M.2012-3, January 2018.
+ 0.384 (bit/s)/Hz of the legacy DECT standard to up to 56.16                             [15]——, Requirements Related to Technical Performance for IMT- Advanced
+ (bit/s)/Hz with a 1024-QAM OFDM modulation and a 6x6                                        Radio Interface(s), ITU Std. M.2134, 2008.
+                                                                                         [16]I. Bernal, “A Friendly Introduction to the Requirements and Supporting
+ MIMO antenna system. This enhancement on the spectral
+                                                                                             Technologies for 5G Cellular Networks,” Revista Politécnica, vol. 37, no.
+ efficiency enables DECT the possibility of providing data rates                             1, May 2016.
+ of up to 1.12 Gbps, being therefore able to satisfy the current                         [17]European Telecommunications Standards Institute, Digital Enhanced
+ IMT-advanced [14] objective in terms of peak data rate, which                               Cordless Telecommunications (DECT); Common Inter- face Part 2:
+                                                                                             Physical Layer (PHL), ETSI Std. EN 300 175-2, July 2017.
+ is 1 Gbps. Since our main focus is the residential environment,                         [18]——, Radio Equipment and Systems (RES); Digital European Cordless
+ it seems reasonable to assume that the 1.2 Gbps can be                                      Telecommunications (DECT); Common Inter- face Part 3: Medium Access
+ distributed among up to twelve user devices requiring up to 100                             Control Layer, ETSI Std. EN 300 175-3.
+                                                                                         [19]CONECTO 300 - Wireless DECT Handset with SOS Call Function and
+ Mbps each, and therefore DECT would be able to satisfy the                                  Medaillon, Thomson, 2018.
+ IMT-2020 [1] objective in terms of user experienced data rate,                          [20]S. Mattisson, “Minimizing Power Dissipation of Cellular Phones,” in
+ which is 100 Mbps.                                                                          Proceedings of 1997 International Symposium on Low Power Electronics
+                                                                                             and Design, Aug 1997, pp. 42–45.
+    Finally, we described how ETSI TC DECT is introducing                                [21]DHX91 Chipset: Comprehensive, Feature-Rich ULE System on a Chip,
+ these and other features in a new set of specifications: DECT-                              DSP Group, May 2014.
+ ULE [8], [9] to enable IoT applications, and DECT- 2020 New                             [22]Conférence Européenne des Postes et des Télécommunications, “CEPT
+                                                                                             Report 52,” CEPT, Technical Report, 2016. [Online]. Available:
+ Radio [10] to enable high data rate applications, such as                                   https://www.ecodocdb.dk/download/ 9a10d409-8d4f/CEPTREP052.PDF
+ multimedia streaming.
+     The new DECT-2020 standard [10] will be capable to
+  achieve at least a 100 times improvement in terms of
+  battery life time, and up to a 100 times enhancement in the user
+  experienced data rate with regard to the current DECT standard
+  [2].
+                                 REFERENCES
+[1] International Telecommunications Union, IMT Vision - Framework and
+    Overall Objectives of the Future Development of IMT for 2020 and
+    Beyond, ITU Std. M.2083-0, September 2015.
+[2] European Telecommunications Standards Institute, EN 300 175-1;
+    Digital Enhanced Cordless Telecommunications (DECT); Common
+    Interface (CI); 9 parts, ETSI Std. ETS 300 175, February 1996.
+[3] ETSI, DECT; New Generation DECT; Part 2: Support of Transparent IP
+    Packet Data, ETSI Std. TS 102 527-2, June 2007.
+[4] European Telecommunications Standards Institute, DECT Packet Radio
+    Service (DPRS), ETSI Std. EN 301 649, March 2015.
+[5] L. Montalvo, E. Gautier, D. Sayed, T. Borja, C. Paredes, and I. Bernal, “An
+    Efficient Residential LTE Small Cell Using a Designated Wireless Local
+    Loop Band,” in 2017 IEEE Second Ecuador Technical Chapters Meeting
+    (ETCM), Oct 2017, pp.1–6.
+[6] European Telecommunications Standards Institute, LTE; Evolved
+    Universal Terrestrial Access (E-UTRA); Base Station (BS) Conformance
+    Testing, ETSI Std. TS 136.141 Release 10, January 2011.
+
+
+22nd LACCEI International Multi-Conference for Engineering, Education, and Technology: Sustainable Engineering for a Diverse, Equitable, and Inclusive Future at the Service
+of Education, Research, and Industry for a Society 5.0. Hybrid Event, San Jose – COSTA RICA, July 17 - 19, 2024.                                                           10
+

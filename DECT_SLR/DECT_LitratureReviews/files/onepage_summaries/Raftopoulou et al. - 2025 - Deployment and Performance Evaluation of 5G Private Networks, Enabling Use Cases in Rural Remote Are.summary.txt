@@ -1,0 +1,70 @@
+Title: Received 11 August 2025, accepted 24 August 2025, date of publication 29 August 2025, date of current version 8 September 2025.
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Rural remote areas have unique challenges for providing reliable and high-speed
+cellular connectivity, which makes them unattractive for mobile network
+operators. The Horizon Europe COMMECT project has addressed connectivity in
+rural remote areas by 5G private network deployments, which so far have mainly
+been studied and deployed in industrial environment. The evaluation of the 5G
+private network deployments is conducted through field trials in four different
+environment, each of them characterized by different challenges and aiming to
+support different agro-forestry use cases. In particular, the evaluations relate
+to 1) indoor environments (e.g. hospitals and educational centers), 2) forestry,
+3) livestock transportation, and 4) mines. The obtained results showcase that 5G
+private networks can support the proposed use cases. For example, in indoor
+environments, a downlink and uplink throughput of 700 Mbps and 50 Mbps,
+respectively, were measured, which are sufficient to enable e.g. remote
+monitoring of hospital patients. Moreover, it was measured that at least 10 Mbps
+in the uplink can be achieved for up to 300 m deep in the forest. The 10 Mbps
+target is also met in the farm location, including a satellite backhaul, which
+can enable e.g. the use case of (un)loading livestock from/to the truck.
+Additionally, throughput of more than 100 Mbps was measured at the mine
+location, which is sufficient to enhance safety by e.g. operating autonomous
+vehicles.
+
+Approach and methods:
+In recent years, the fifth generation of mobile networks (5G) has seen wide
+deployment around the globe. Continuing the trend of the previous generations of
+cellular networks, 5G further improves broadband services as well as enabling a
+range of new services by also offering ultra-low latency and massive
+connectivity [1]. Typically, these so-called public The associate editor
+coordinating the review of this manuscript and approving it for publication was
+Nurul I. Sarkar VOLUME 13, 2025 . 5G networks are deployed and managed by mobile
+network operators (MNOs), which then offer their supported services to
+individuals or businesses. While MNOs provide a range of services, e.g. Internet
+access, and video streaming, through their 5G networks, their network
+deployments are mostly focused on urban areas. Providing connectivity in rural
+areas is unattractive and challenging for MNOs due to the high investment needed
+for the infrastructure deployment and the low population density in those areas
+[2]. Thus, rural areas often face limited or 2025 The Authors. This work is
+licensed under a Creative Commons Attribution 4.0 License. For more information,
+see https://creativecommons.org/licenses/by/4.0/ 154581 M. Raftopoulou et al.:
+Deployment and Performance Evaluation of 5G Private Networks poor connectivity,
+which in return impacts the residents
+
+Key findings:
+AND FUTURE WORK 5G private networks have gained a lot of attention for
+deployments in industrial environments. Within the COMMECT project, different 5G
+private network deployments have been proposed to address the connectivity
+challenges in remote areas and enable new use cases. In particular, use cases
+within four different environments have been considered, namely indoor
+environments (for e.g. healthcare or educational centers), forestry, livestock
+transportation, and mines. The proposed network deployments are diverse in terms
+of hardware (and thus cost) and configuration, and they have been evaluated via
+field trials. The results have shown that the deployed networks can support the
+presented use cases and that there is a clear trade-off between performance and
+cost. This highlights the need for designing 5G private networks based on the
+use case and the respective requirements, which could potentially lead to new
+business models and opportunities within the telecom sector. Therefore, this
+work has performed an empirical assessment and validation across challenging and
+underexplored remote scenarios, which are essential for understanding the
+feasibility and limitations of 5G private networks in rural contexts. For future
+work, we propose to study the performance of other technologies which could
+potentially support the use cases, e.g. Wi-Fi.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

@@ -1,0 +1,67 @@
+Title: European Wireless 2024 Ŏ 09 – 11 September 2024 Ŏ Brno, Czech Republic
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—5G communication networks are suitable to realize Tactile Internet with Human
+in the Loop application due to the envisaged latency promises. Currently, 5G
+Release 15 is widely deployed. Latency performance to control robots or enable
+humans to engage with the metaverse will require higher releases. WiFi is widely
+used due to its cost, but has poor latency performance due to the “listen-
+before-talk” requirement in the ISM bands. Therefore, solutions that combine low
+cost and high latency performance are needed. This paper presents a detailed
+performance evaluation of a 5G DECT NR+ testbed with a focus on latency and data
+rate. While commercial off-the-shelf (COTS) 5G testbeds are still very
+expensive, we present a low-cost solution to achieve similar or even better
+latency performance with NR+. The testbed is composed of two NR+ platforms and
+will explore different settings such as packet length and Modulation and Coding
+Scheme (MCS). The main result of the paper is that non-optimized COTS DECT NR+
+can provide latency values of 2 ms to 8 ms and a data rate of 2.3 Mbit/s to 2.5
+Mbit/s.
+
+Approach and methods:
+to some of the main features of the standard. TABLE I DECT-2020 NR+ M ODULATION
+AND CODING SCHEMES ( ACCORDING TO STANDARD VERSION MCS0-MCS4). MCS Index 0 1 2 3
+4 Modulation BPSK QPSK QPSK 16-QAM 16-QAM Nbps 1 2 2 4 4 R 1/2 1/2 3/4 1/2 3/4
+B. Physical Layer The DECT-2020 NR+ physical layer is suitable for operation in
+frequency bands up to 6 GHz. The standard overall deﬁnes 19 different frequency
+bands from 450 MHz to 5875 MHz. However, in Europe and most of the world,
+implementations are limited to the unlicensed but regulated DECT frequency band
+of around 1.9 GHz. Therefore, the hardware that was used for tests supports
+these 3 bands: band 1: 1880 MHz to 1900 MHz band 2: 1900 MHz to 1920 MHz • band
+9: 1910 MHz to 1930 MHz • • Depending on the subcarrier scaling factor and
+Fourier transform scaling factor, the transmission bandwidth can vary from 1.728
+MHz up to 221.184 MHz. The typical operation range should theoretically cover
+several hundreds of meters. However, as described in [7], up to 3 km are
+achievable within line of sight. Six different Modulation and Coding Schemes
+(MCSs) are described in
+
+Key findings:
+Assisted mMTC usage Scenario,” in 2021 IEEE International Conference on Advanced
+Networks and Telecommunications Systems (ANTS), 2021. [5] [Online]. Available:
+https://www.etsi.org/committee/dect. [6] [Online]. Available:
+https://www.dect.org/userﬁles/Public/DF DECT% 20NRplus.pdf. [7] [Online].
+Available: https://www.dect.org/news.aspx?id=390#:∼:
+text=To%20achieve%20the%203%20km,and%20dedicated%20to% 20DECT%20systems. [8]
+ETSI TS 103 636-3, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release
+1,” Jan. 2023. [9] Nordic Semiconductor, “DECT PHY Documentation,” [Online].
+Available: https://docs.nordicsemi.com/bundle/ncs-latest/page/nrfxlib/ nrf
+modem/doc/dectphy.html. VI. C ONCLUSION While 5G and future 6G deployments
+provide highly accurate and ultra low latency timing for command and control
+data required for the tactile internet, including robotics and metaverse
+applications, this performance comes at a high cost for deployment. Our
+measurements indicate that latency values as well as packet delay variations,
+i.e., jitter, are all approaching the thresholds required for tactile internet
+applications, such as robotics or the metaverse. Future evaluations will target
+overall performance measurements including sustainable data rates. Further
+research will target potentials for further latency reductions and combining
+DECT-2020 NR+ with other approaches to derive a complete system implementation.
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 10:37:57 UTC from IEEE Xplore.
+Restrictions apply. ISBN 978-3-8007-6496-9  © VDE VERLAG GMBH · Berlin ·
+Offenbach
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

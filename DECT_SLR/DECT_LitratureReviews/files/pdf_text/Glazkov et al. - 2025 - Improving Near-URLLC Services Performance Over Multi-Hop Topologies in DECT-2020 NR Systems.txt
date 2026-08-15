@@ -1,0 +1,547 @@
+                                                                                                                                                                 Improving Near-URLLC Services Performance over
+                                                                                                                                                                  Multi-Hop Topologies in DECT-2020 NR Systems
+                                                                                                                                                                             Roman Glazkov1 , Andrey Samuylov1 , Anna Gaydamaka1 Dmitri Moltchanov1 , Juho Pirskanen2 ,
+                                                                                                                                                                                                        Jussi Numminen2 , Mikko Valkama1
+                                                                                                                                                                                                           1
+                                                                                                                                                                                                               Unit of Electrical Engineering, Tampere University, Finland
+                                                                                                                                                                                                                           2
+                                                                                                                                                                                                                              Wirepas Oy, Tampere, Finland
+                                                                                                                                                                                                                     Contact author’s e-mail: roman.glazkov@tuni.fi
+2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring) | 979-8-3315-3147-8/25/$31.00 ©2025 IEEE | DOI: 10.1109/VTC2025-SPRING65109.2025.11174908
+
+
+
+
+                                                                                                                                                                    Abstract—DECT-2020 NR is a radio access technology de-                         hinder their ability to fully meet the stringent requirements of
+                                                                                                                                                                 signed for 5G Internet of Things (IoT) applications. By lever-                    these emerging applications. In addition, such systems have
+                                                                                                                                                                 aging multi-hop communications and listen-before-talk (LBT)                       been designed exclusively for mMTC applications and cannot
+                                                                                                                                                                 mechanisms, DECT-2020 NR offers a flexible and cost-effective
+                                                                                                                                                                 deployment solution for massive machine-type communications                       multiplex traffic with strict performance requirements.
+                                                                                                                                                                 (mMTC). The ETSI standardization committee currently con-                            Recent studies [5], [6] demonstrated that the capacity of
+                                                                                                                                                                 siders extending use-case options to ultra-reliable low-latency                   the recently introduced DECT-2020 system can scale up to
+                                                                                                                                                                 communications by enabling scheduled access along with LBT.                       millions of radio devices (RDs) per square kilometer while
+                                                                                                                                                                 However, this approach can increase the cost of the end systems.                  meeting the performance requirements for 5G mMTC appli-
+                                                                                                                                                                 The aim of this study is to investigate whether standardized phys-
+                                                                                                                                                                 ical and medium access control (MAC) mechanisms, including                        cations outlined in [4], [7]. However, as opposed to LTE-M
+                                                                                                                                                                 power control, LBT, and priority queuing, can provide near-                       and NB-IoT, DECT-2020 NR is not limited to mMTC use
+                                                                                                                                                                 URLLC operation over multihop topologies. Our results show                        cases. Currently, at the third evolution stage of the DECT-
+                                                                                                                                                                 that to improve loss performance one needs to disable power                       2020 NR specifications, the support of near-URLLC services
+                                                                                                                                                                 control, use a shorter back-off window, and enable priority                       over multi-hop topologies is investigated. Specifically, DECT-
+                                                                                                                                                                 data transmission. For improving latency performance it is
+                                                                                                                                                                 critical to use shorter acknowledgement (ACK) timeout and                         2020 adopts scheduling-based access for latency-critical traffic
+                                                                                                                                                                 send ACKs immediately after data packet reception. Applying                       [8]. However, the introduction of scheduled transmissions over
+                                                                                                                                                                 these techniques allows us to improve multi-hop URLLC latency                     multi-hop topologies requires significant signaling overhead
+                                                                                                                                                                 performance by up to 30-80% and loss performance by up to 10-                     and more complex and thus more expensive end devices.
+                                                                                                                                                                 20% depending on URLLC and mMTC traffic conditions with                              It has already been demonstrated that such services can be
+                                                                                                                                                                 only negligible impact on mMTC traffic performance.
+                                                                                                                                                                    Index Terms—IoT; DECT-2020; NR+; multi-hop; URLLC.
+                                                                                                                                                                                                                                                   supported over device-to-device (D2D) links in the DECT-
+                                                                                                                                                                                                                                                   2020 topology with LBT access while coexisting with classic
+                                                                                                                                                                                                                                                   DECT systems and DECT-2020 NR operating in mMTC mode
+                                                                                                                                                                                            I. I NTRODUCTION
+                                                                                                                                                                                                                                                   [9]. However, further improvements are needed to enable near-
+                                                                                                                                                                    Internet of Things (IoT) applications are becoming an                          URLLC services in the multi-hop mode. Being aligned with
+                                                                                                                                                                 integral part of our daily lives, enabling a wide range of remote                 5G standards, DECT-2020 NR’s physical layer offers great
+                                                                                                                                                                 functionalities from sensing to actuation [1]. Massive machine-                   flexibility in physical and link layer mechanisms, including
+                                                                                                                                                                 type communications (mMTC) technologies play a pivotal role                       modulation and coding schemes (MCS), per-link hybrid au-
+                                                                                                                                                                 in supporting IoT. NB-IoT standardized in 3GPP Rel. 13 and                        tomatic repeat request (HARQ) procedures, power control,
+                                                                                                                                                                 then extended in subsequent releases, and LTE-M, re-branded                       various numerologies, etc. [10], [11]. Along with system-
+                                                                                                                                                                 as eMTC [2], has emerged as the standardized solution for                         level solutions, such as priority queuing, these mechanisms
+                                                                                                                                                                 cellular IoT (CIoT), whereas DECT-2020 NR [3] leads the                           provide a great opportunity to prioritize the traffic of URLLC
+                                                                                                                                                                 way in non-cellular IoT standards.                                                applications over the air interface.
+                                                                                                                                                                    The contemporary IoT landscape is marked by the emer-                             In this paper, we assess whether physical and MAC layer
+                                                                                                                                                                 gence of novel applications and services that bridge the                          solutions already supported by the DECT-2020 NR standard
+                                                                                                                                                                 gap between URLLC and mMTC requirements. Industrial                               are sufficient to enable near-URLLC services of multi-hop
+                                                                                                                                                                 automation within factory settings, communication between                         topologies in DECT-2020 NR systems supporting LBT access
+                                                                                                                                                                 unmanned aerial vehicles (UAVs), and energy grid monitoring                       only. To this end, we first identify mechanisms that can
+                                                                                                                                                                 and control exemplify this trend. These use cases demand                          improve the performance of near-URLLC traffic in the pres-
+                                                                                                                                                                 significantly stricter latency, reliability, and throughput com-                  ence of competing mMTC traffic and then perform a detailed
+                                                                                                                                                                 pared to conventional mMTC services [4]. While existing                           system-level simulation campaign that captures the specifics of
+                                                                                                                                                                 CIoT solutions such as LTE-M and NB-IoT have made                                 medium access control and physical layer implementations.
+                                                                                                                                                                 strides in this direction, their inherent bandwidth limitations                      The main contributions of this study are as follows:
+                                                                                                                                                                 and shortcomings with respect to latency and reliability may                         • numerical comparison of various physical and MAC layer
+
+
+
+
+                                                                                                                                                                 979-8-3315-3147-8/25/$31.00
+                                                                                                                                                             Authorized                               ©2025
+                                                                                                                                                                        licensed use limited to: Hochschule   IEEE
+                                                                                                                                                                                                            Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+         techniques for near-URLLC traffic performance in DECT-
+         2020 NR systems with competing mMTC traffic;
+       • for improving loss performance of URLLC traffic by
+         up to 10-20%, one needs to disable power control, use
+         shorter back-off and enable priority data packet transmis-
+         sion at URLLC devices;
+       • for improving multi-hop URLLC latency performance by
+         up two 30-80% one needs to utilize shorter acknowledg-
+         ment (ACK) timeout and send ACKs immediately after
+         data packet reception.
+       The remainder of this paper is organized as follows. We
+    begin in Section II by describing the essentials of DECT-2020
+    NR and introducing the considered mechanisms. In Section IV,
+    we describe the considered scenario, deployment, and system-                                 Fig. 1. Illustration of DECT-2020 network formation.
+    level simulation tool. The numerical results are presented in
+    Section V. Finally, conclusions are drawn.                                          The MAC layer incorporates advanced features, such as
+                                                                                      energy conservation and power control. Energy-saving mech-
+                              II. DECT-2020 NR                                        anisms help prolong the operational cycles of RDs, whereas
+      In this section, we begin by describing the DECT-2020 NR                        power control reduces interference. When combined with tree
+    basics and then introduce the mechanisms considered in this                       topology, these features add layers of complexity compared
+    paper to enable near-URLLC communications.                                        with conventional CIoT systems.
+
+    A. Overall Description                                                            B. Considered Mechanisms
+       The DECT-2020 NR physical layer, introduced as a set of                           There are a number of physical, link, and system-level
+    standards in 2021, is tailored to meet current radio communi-                     mechanisms offered by the DECT-2020 standard even when
+    cation requirements [3]. It specifies 19 operational bands, the                   operating in LBT channel access mode, which can be tuned
+    most commonly used of which are the traditional DECT bands:                       to provide priorities to near-URLLC services in the presence
+    1880–1900 MHz in Europe and Australia and 1900–1920 MHz                           of completing mMTC traffic.
+    in other regions. These bands accommodate up to 11 channels,                         1) LBT Mechanism: LBT mechanisms supported by DECT-
+    each with a bandwidth of 1.728 MHz. Similar to 3GPP NR,                           2020 NR are characterized by two critical parameters affecting
+    DECT-2020 NR supports multiple numerologies with a range                          RD sensitivity to external interference. These are the number
+    from 27 kHz to 216 kHz. The system employs Time Division                          of symbols N sensed to detect interference and the power
+    Duplex (TDD) for managing uplink and downlink operations.                         sensing threshold, Pth . As RDs in the network are not perfectly
+    Cyclic Prefix Orthogonal Frequency Division Multiplexing                          synchronized, the former may affect the packet delivery ratio
+    (CP-OFDM) with Time Division Multiple Access (TDMA)                               (PDR) significantly. In general, the larger the value of N the
+    and Frequency Division Multiple Access (FDMA) for radio                           better the PDR. The same applies to Pth as its lower values
+    resource allocation. This approach to channel bandwidth,                          may potentially lead to better PDR. By utilizing different
+    symbol length, and slot structure allows seamless coexistence                     values of N and Pth one may provide implicit priority for
+    between legacy DECT and DECT-2020 NR systems [12].                                near-URLLC traffic. In addition, making the duration of the
+       At the Medium Access Control (MAC) layer, RDs in DECT-                         back-off window smaller than that of the mMTC traffic may
+    2020 NR can function in either fixed (FT) mode, portable                          provide additional performance gains.
+    termination (PT) mode, or both simultaneously (see Fig. 1).                          2) Power Control Capabilities: As DECT-2020 NR was
+    In the FT mode, RDs serve as routers, handle local resource                       primarily designed for mMTC applications generally char-
+    management, connect PT-mode RDs, and forward data to the                          acterized by a high RD density in the area, power control
+    next FT node. Both modes utilize Listen Before Talk (LBT)                         capabilities are a vital part of the standard. They alleviate
+    with a binary back-off mechanism for uplink, enabling swift                       the negative impact of interference and improve collisions
+    medium access with a minimum sensing duration of two                              as a result of LBT access. One of the potential options
+    symbols for Random Access Channel (RACH) transmissions.                           for providing addition prioritization at the air interface is to
+       The standard employs tree topologies to streamline the                         allow RDs transmitting packets of near-URLLC applications
+    routing processes. Devices operating in the PT mode connect                       to utilize the full power regime, whereas mMTC packets will
+    to the most suitable RD by evaluating the link quality and                        follow power control functionality.
+    announced cost, which reflects the efficiency of the route                           3) HARQ Mechanism: DECT-2020 NR utilizes multiple
+    to external systems. PT-mode RDs do not maintain detailed                         modulation and coding schemes (MCS) along with a HARQ
+    path information and rely solely on the next-hop connectivity.                    mechanism operating in the chase combining mode. The
+    Consequently, the selection of effective relay points and next-                   choice of a suitable MCS follows a conventional algorithm
+    hop connections is essential to ensure optimal performance.                       with the aim of reaching a 10% block error rate (BLER).
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+                                                                                      We assume time-division multiple access (TDMA) operational
+                                                                                      mode of the system, where the time was divided into frames of
+                                                                Density  RD/m2       10 ms in length. Each frame is then segmented into 10 slots,
+                                                                                      each of which can be used for LBT-based access by the RDs.
+                                                                                      We consider only the uplink RD in the sink direction.
+                                                                                      B. Topology and Traffic
+                                                                                         A certain fraction ⌈γN ⌉, γ ∈ (0, 1) of RDs operate in
+                                                                                      routing mode, forwarding the traffic to other routers or the
+                                                                                      sink of behalf of leaf RDs. The network topology is assumed
+                                                                                      to follow a tree structure, where the successor for each node is
+                                                                                      selected based on measurements of the received signal power
+                                                                                      estimated from beacons. Beacons are always transmitted using
+                                                                                      full power. As each RD has only one path to the sink, no
+                                                                                      additional hop selection mechanism is utilized.
+                                                                                         We assume that there are two types of multiplexed traffic
+                                                                                      in a network: mMTC traffic and near-URLLC traffic. All
+            Fig. 2. An illustration of DECT-2020 NR cell deployment.                  RDs in the system generate mMTC traffic. By following
+                                                                                      recommendations in ITU-R M.2412, the arrival process of
+    Although this is a common target for mMTC and enhanced                            mMTC packets is assumed to follow a homogeneous Poisson
+    mobile broadband (eMBB) applications, one must utilize the                        process with inter-packet time 1/λm s. Out of N RDs, θN ,
+    lowest possible MCS for near-URLLC traffic to minimize the                        θ ∈ (0, 1), θ << 1, also run near-URLLC service. Their
+    BLER. Simultaneously, to ensure that the packet is delivered                      packets are also generated according to the Poisson process
+    with minimal latency, one may fine-tune the HARQ opera-                           with an inter-packet time 1/λu s.
+    tional parameters. Specifically, providing priority handling to
+    ACK packets and sending them out immediately may improve                          C. Propagation and Antenna Models
+    the performance of near-URLLC applications.                                          Owing to the low complexity of RDs and sink for all com-
+       4) Priority Queuing/Handling of Packets: As DECT-2020                          municating devices, we assume single-element antennas with
+    strictly regulates only two lower levels, at the system level,                    omnidirectional radiation patterns. The values of the receive
+    one may utilize different ways to handle packets. Specifically,                   and transmit gains, as well as the noise floor recommended
+    instead of treating all the packets equally, one may implement                    in [10] are chosen, see Table II. We utilize a combination of
+    priority queuing for near-URLLC data packets at routers in                        3GPP propagation models for the 1.9 GHz band defined in
+    the DECT-2020 NR network.                                                         [13]. Depending on the node position, a propagation model is
+       5) Contention Window: The contention window can be                             chosen as follows: (i) if one of the nodes is a sink, then the
+    considered as yet another powerful tool to enable prioritization                  UMa path loss model is utilized; (ii) otherwise, if d2D < 25,
+    at the air interface. By default, all RDs in DECT-2020 compete                    where d2D is the horizontal projection distance between the
+    for resources by utilizing the same maximum contention                            interacting nodes, then the InH path loss model is used; and
+    window. However, making it smaller for near-URLLC traffic                         (iii) in the remaining cases, the UMi model is employed.
+    can give implicit priority to channel access as compared to                          In addition, we account for line-of-sight (LoS) or non-line-
+    conventional mMTC traffic.                                                        of-sight (NLoS) conditions by utilizing the standardized [13]
+                                                                                      LoS blockage probabilities for UMa/UMi
+                             III. S YSTEM M ODEL                                                      (
+      In this section, we introduce the considered system model.                                (U )    1,                         d2D ≤ 18
+                                                                                               pL = 18            d2D
+                                                                                                                − 36        18
+                                                                                                                                             ,    (1)
+    We begin with deployment and resources, and then specify the                                        d2D + e       (1 − d2D ), 18 < d2D
+    topology and traffic, as well as the antenna and propagation
+                                                                                      and for inH model,
+    models. Finally, we introduce the considered scenarios and                                      
+    define the metrics of interest.                                                                 1, d −1.2
+                                                                                                                        d2D ≤ 1.2
+                                                                                                (I)    −  2D
+    A. Deployment and Resources                                                               pL = e       4.7   ,       1.2 < d2D < 6.5 .                      (2)
+                                                                                                             d   −6.5
+                                                                                                            − 2D
+                                                                                                      0.32e            , 6.5 ≤ d2D
+                                                                                                    
+                                                                                                                32.6
+      We consider single-cell deployment, as illustrated in Fig. 2
+    with a single sink places in the center and N RDs places                             Finally, we also account for additional building penetration
+    randomly and uniformly around in a radius of R m. The                             losses for the UMa and UMi models if at least one node is
+    deployment of interest is a typical warehouse with walls that                     indoors. Another loss factor is added if both nodes are indoors
+    may affect the propagation properties and thus the multi-hop                      and d2D > 25. The probability that any node is indoors is
+    topology structure.                                                               drawn independently as recommended in [13], i.e.,
+      The system is assumed to utilize a single 1.728 MHz-wide
+    channel in the DECT band with a carrier frequency 1.92 GHz.                                            P Lpen = 20 + 0.5U (0, 25),                          (3)
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+                                                                           TABLE I
+                                                            C ONSIDERED SETS OF URLLC MECHANISMS
+
+            Parameter                   Priority queuing     Back-off    Power control      LBT threshold     ACK priority     LBT duration     ACK delay
+            Priority queuing            Enabled              Disabled    Disabled           Disabled          Disabled         Disabled         Disabled
+            Back-off                    Default              Short       Default            Default           Default          Default          Default
+            Power control               Enabled              Enabled     Disabled           Enabled           Enabled          Enabled          Enabled
+            LBT threshold, dBm          - 75                 -75         -75                -100              -75              -75              -75
+            ACK priority                off                  off         off                off               on               off              off
+            LBT duration, symbols       2                    2           2                  2                 2                4                2
+            ACK waiting time, slots     10                   10          10                 10                10               10               1
+
+
+    where U (0, x) is a random sample from uniform distribution.                      characteristics, and power settings. Additionally, it serves as
+                                                                                      a container for Layer 2 interfaces, forwarding mechanisms,
+    D. Considered Scenarios                                                           flow tables, signaling engines, application handlers, traffic
+       We consider multiple scenarios. In all scenarios, the consid-                  generators, and physical layer interfaces. To accurately sim-
+    ered area of interest was of cellular form with an outer radius                   ulate high-density deployments, we implemented a physical
+    of 40 m and a sink located in the geometrical center at a height                  layer abstraction that stores all bidirectional path loss states
+    of 3 m. The number of RD distributed was set to 300, resulting                    between RDs, considering only the reception signal strengths
+    in rather dense conditions with 0.06 devices/m2 . Some nodes                      that exceed the noise floor.
+    generate URLLC traffic. The default system parameters are                            The simulation process commences with node placement
+    summarized in Table II. The topology construction algorithm                       and path loss calculations, adhering to the 3GPP guidelines
+    executed at each node chooses the next hop based on the best                      outlined in TR 38.901. Whenever feasible, we reference the
+    reference signal received power (RSRP). To balance the load                       ITU-R guidelines in ITU-R M.2412. To collect data, we uti-
+    between routing nodes and avoid bottlebeck, we do not allow                       lized the method of replications. We conducted 25 simulation
+    for more than 10 leafs to be associated with the routing node.                    runs for each parameter set, gathering 105 observations in the
+    The resulting topology is a tree, as dictated by the DECT-2020                    steady state for each run. The steady-state period was identified
+    NR standards. All the RDs operate in the LBT mode.
+                                                                                                                   TABLE II
+       We consider multiple URLLC scenarios by varying the                                      C ONSIDERED SYSTEM AND EVALUATION PARAMETERS
+    parameters of the mechanisms introduced in Section II-B. Gen-
+    eral system parameters as well as mMTC nodes parameters are                                       Parameter                                Value
+    summarized in Table II, while the specific considered URLLC                                                      General parameters
+    cases are provided in Table I.                                                       DECT-2020 NR FT                          1, height 25 m, outdoors
+                                                                                         Carrier frequency                        1900 MHz
+    E. Metrics of Interest                                                               Number of RDs                            100
+                                                                                         Fraction of URLLC RDs                    0.1
+       The metrics of interest include the packet delivery ratio                         Number of channels                       1
+    and and 95-percentile of latency. The latter metric shows the                        Channel bandwidth                        1.728 MHz
+                                                                                         RD deployment                            Uniformly random
+    maximum delay experienced by 95% of RDs. We compare the                              Building penetration loss                20 dB (ITU-R)
+    resulting metrics to those standardized by ITU-R in M.2410                           Indoor/outdoor fraction                  80% / 20%
+    and M.2412 for URLLC and mMTC applications.                                          Channel model, Sink-Node                 Urban macro
+                                                                                         Channel model, Node-Node                 Urban street canyon
+                            IV. S IMULATION TOOL                                         Number of node/sink antenna elements 1
+                                                                                         Sink/RD noise figure                     7 dB
+       In our analysis, we capture the operation of the system at                        Sink/RD antenna element gain             0 dBi
+    the MAC layer, including the topology construction, routing,                         Thermal noise level                      –174 dBm/Hz
+                                                                                         Traffic model                            Bursts of 2 packets
+    and forwarding capabilities. Physical and MAC layer imple-                           Application data message size            32 bytes
+    mentations follow the DECT-2020 specifications [10], [11].                           Channel access                           LBT
+    However, while the MAC layer is implemented in full, the                             Contention window size                   min – 24, max – 768
+                                                                                         Rx sensitivity                           -99.7 dBm (TS 103.636-2)
+    performance of the physical layer is abstracted by utilizing
+                                                                                         Max Tx power                             10 dBm
+    the BLER curves. The remaining parameters common to both                             Format                                   MSC 1,3,4 (1,2,3 packets)
+    systems are listed in Table II.                                                      URLLC inter-arrival time                 fixed, 8 ms, 16 ms
+       The DECT-2020 system was implemented using the system-                                                      mMTC RD parameters
+                                                                                         Mean inter-arrival time                  10-50 s
+    level simulation tool WINTERsim, which was utilized during                           Inter-arrival time distribution          Exponential
+    the standardization process of DECT-2020 technology [5].                             LBT threshold                            -75 dBm
+    WINTERsim is a discrete-event system-level simulation tool.                          Error correction                         HARQ with 3 attempts
+    For DECT-2020, we employed node abstraction as the funda-                            Power control                            Enabled
+                                                                                         LBT sensing duration                     2 symbols
+    mental class representing RDs. This class encapsulates all node                      ACK waiting time                         10 slots
+    parameters, including the position, mobility model, antenna
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+     URLLC/mMTC Delivery ratio   1.00                                                                                       0.030                                                             1.00                                                                                 0.030                                                             1.00                                                      0.030
+
+
+
+
+                                                                                                                                                                  URLLC/mMTC Delivery ratio
+
+
+
+
+                                                                                                                                                                                                                                                                                                                         URLLC/mMTC Delivery ratio
+                                                                                                                                    URLLC Delay 95% quantile, s
+
+
+
+
+                                                                                                                                                                                                                                                                                           URLLC Delay 95% quantile, s
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                       URLLC Delay 95% quantile, s
+                                 0.95                                                                                       0.025                                                             0.95                                                                                 0.025                                                             0.95                                                      0.025
+
+
+                                 0.90                                                                                       0.020                                                             0.90                                                                                 0.020                                                             0.90                                                      0.020
+
+
+                                 0.85                                                                                       0.015                                                             0.85                                                                                 0.015                                                             0.85                                                      0.015
+
+
+                                 0.80                                           URLLC inter packet time, s                  0.010                                                             0.80                                         URLLC inter packet time, s              0.010                                                             0.80              URLLC inter packet time, s              0.010
+                                                                                 Hop=0          Hop=1                                                                                                                                       Hop=0          Hop=1                                                                                                        Hop=0          Hop=1
+                                                                                    0.008             0.008                                                                                                                                    0.008             0.008                                                                                                     0.008             0.008
+                                                                                      0.016           0.016                                                                                                                                      0.016           0.016                                                                                                       0.016           0.016
+                                 0.75                                                                                       0.005                                                             0.75                                                                                 0.005                                                             0.75                                                      0.005
+                                        10                             20           30           40            50      60                                                                            10                20                      30           40           50   60                                                                            10   20        30           40           50   60
+                                                                       mMTC inter packet time, s                                                                                                                          mMTC inter packet time, s                                                                                                              mMTC inter packet time, s
+
+                                                                           (a) Priority queuing                                                                                                                                       (b) Shorter back-off                                                                                                            (c) ACK priority
+
+                                                                            Fig. 3. Performance of MAC layer mechanisms: priority queuing for data and ACK packets and shorted back-off window.
+
+    using moving average statistics. Owing to the substantial size                                                                                                                                                                                          for the single-hop case, whereas it stays at approximately
+    of the statistical samples, we present only point estimates.                                                                                                                                                                                            0.97-0.98 for the multi-hop cases. The increase in the traffic
+                                                                                                                                                                                                                                                            rate from URLLC RDs has a similar impact. In terms of
+                                                                                      V. N UMERICAL R ESULTS                                                                                                                                                latency quantile, we observe that single-hop communications
+       In this section, we report our numerical results. We begin                                                                                                                                                                                           with a 16 ms interval between URLLC packet generation
+    with the baseline scenario, where both considered traffic types                                                                                                                                                                                         results in a respectable 15 ms latency quantile for single-hop
+    are handled the same way and then proceed to address the                                                                                                                                                                                                communications. However, switching to multi-hop mode leads
+    URLLC candidate cases defined in Table II. We present near-                                                                                                                                                                                             to doubling of the latency quantile while increasing the traffic
+    URLLC latency performance only as in all considered experi-                                                                                                                                                                                             rate two times adds comparable latency on top of that. In the
+    ments mMTC latency performance satisfied ITU-R guidelines                                                                                                                                                                                               following discussion, we mainly concentrate on performance
+    specified in M.2410 and M.2412, i.e., was less than 10 s.                                                                                                                                                                                               improvements for URLLC multi-hop communications.
+    A. Baseline Performance
+       We begin with the baseline performance, when URLLC RD                                                                                                                                                                                                B. Mechanisms in Isolation
+    parameters coincide with those of mMTC RDs, and the only                                                                                                                                                                                                   We now assess the impact of the MAC and physical
+    difference is the packet generation rate. For this case, the PDR                                                                                                                                                                                        mechanisms summarized in Table I in isolation. We begin with
+    and 95-th latency quantile for URLLC and mMTC traffic are                                                                                                                                                                                               a performance analysis of MAC layer mechanisms, including
+    presented in Fig. 4. Note that we show URLLC performance                                                                                                                                                                                                priority queuing, utilizing shorter backoffs, and enabling ACK
+    for both single-hop communications when RD is directly                                                                                                                                                                                                  priority handling for URLLC packets in Fig. 3. By analyzing
+    connected to the sink, and for multi-hop communications,                                                                                                                                                                                                the presented results, we observe that enabling priority queuing
+    where there is at least one relaying point between URLLC                                                                                                                                                                                                provides gains on the order of 2-3% for in terms of both PDR
+    RD and the sink.                                                                                                                                                                                                                                        and latency performance. Utilizing a shorter back-off window
+       By analyzing the presented results, one first observes that                                                                                                                                                                                          is more impactful, especially for single-hop operations, for
+    there is a principle difference between single- and multi-hop                                                                                                                                                                                           example, 95% packet latency decreases from 17 ms to 14
+    URLLC performance in terms of both investigated metrics.                                                                                                                                                                                                ms for the smallest considered mMTC inter-packet generation
+    For the single-hop case and a small load of mMTC traffic (40-                                                                                                                                                                                           time. The highest impact on multi-hop URLLC performance is
+    60 s between packet arrivals at mMTC RDs), PDR is perfect                                                                                                                                                                                               produced by ACK priority handling, where a notable reduction
+                                                                                                                                                                                                                                                            in the 95% latency quantile is observed. This mechanism also
+                                                                    1.00                                                                                                                             0.030                                                  improves the PDR performance by 2-3%.
+                                        URLLC/mMTC Delivery ratio
+
+
+
+
+                                                                                                                                                                                                             URLLC Delay 95% quantile, s
+
+
+
+
+                                                                                                                                                                                                                                                               Now, consider the impact of the physical layer mechanisms
+                                                                    0.95                                                                                                                             0.025
+                                                                                                                                                                                                                                                            shown in Fig. 5. Here, we observe that disabling power
+                                                                                                                                                                                                                                                            control at URLLC RDs leads to a drastic improvement in
+                                                                    0.90                                                                                                                             0.020
+                                                                                                                                                                                                                                                            PDR performance. Specifically, even for the small mMTC
+                                                                                                                                                                                                                                                            inter-packet generation time and 16 ms URLLC inter-packet
+                                                                    0.85                                                                                                                             0.015
+                                                                                                                                                                                                                                                            generation time, the PDR is still at 0.99, as compared to
+                                                                                                                                                                                                                                                            the baseline when it is just 0.93. Similar improvements were
+                                                                    0.80                              URLLC inter packet time, s                                                                     0.010
+                                                                                                       Hop=0
+                                                                                                          0.008
+                                                                                                                      Hop=1
+                                                                                                                            0.008
+                                                                                                                                                                                                                                                            observed for other traffic loads. The associated 95% quantile
+                                                                    0.75                                       0.016        0.016
+                                                                                                                                                                                                     0.005
+                                                                                                                                                                                                                                                            performance, however, improves for the single-hop scenario
+                                                                           10             20                  30       40                                50                                    60                                                           only, but the gain is drastic and may reach 30%. In contrast, the
+                                                                                           mMTC inter packet time, s                                                                                                                                        utilization of a lower LBT threshold and longer LBT sensing
+                                                                                                                                                                                                                                                            duration (four instead of just two symbols) worsens the PDR
+                                 Fig. 4. URLLC and mMTC RDs performance or baseline scenario.                                                                                                                                                               and latency performance.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+     URLLC/mMTC Delivery ratio   1.00                                                                                       0.030                                                             1.00                                                                                 0.030                                                             1.00                                                      0.030
+
+
+
+
+                                                                                                                                                                  URLLC/mMTC Delivery ratio
+
+
+
+
+                                                                                                                                                                                                                                                                                                                         URLLC/mMTC Delivery ratio
+                                                                                                                                    URLLC Delay 95% quantile, s
+
+
+
+
+                                                                                                                                                                                                                                                                                           URLLC Delay 95% quantile, s
+
+
+
+
+                                                                                                                                                                                                                                                                                                                                                                                                                       URLLC Delay 95% quantile, s
+                                 0.95                                                                                       0.025                                                             0.95                                                                                 0.025                                                             0.95                                                      0.025
+
+
+                                 0.90                                                                                       0.020                                                             0.90                                                                                 0.020                                                             0.90                                                      0.020
+
+
+                                 0.85                                                                                       0.015                                                             0.85                                                                                 0.015                                                             0.85                                                      0.015
+
+
+                                 0.80                                           URLLC inter packet time, s                  0.010                                                             0.80                                         URLLC inter packet time, s              0.010                                                             0.80              URLLC inter packet time, s              0.010
+                                                                                 Hop=0          Hop=1                                                                                                                                       Hop=0          Hop=1                                                                                                        Hop=0          Hop=1
+                                                                                    0.008             0.008                                                                                                                                    0.008             0.008                                                                                                     0.008             0.008
+                                                                                      0.016           0.016                                                                                                                                      0.016           0.016                                                                                                       0.016           0.016
+                                 0.75                                                                                       0.005                                                             0.75                                                                                 0.005                                                             0.75                                                      0.005
+                                        10                             20           30           40            50      60                                                                            10                20                      30           40           50   60                                                                            10    20       30           40           50   60
+                                                                       mMTC inter packet time, s                                                                                                                          mMTC inter packet time, s                                                                                                               mMTC inter packet time, s
+
+                                                                           (a) No power control                                                                                                              (b) Lower LBT threshold                                                                                                                             (c) Longer LBT duration
+
+                                                                                                          Fig. 5. Impact of physical layer mechanisms: power control, LBT threshold and its duration.
+
+      In summary, we conclude that disabling power control for                                                                                                                                                                                              to provide the biggest performance boost to URLLC RDs.
+    URLLC RDs is the most effective way to improve the latency                                                                                                                                                                                              The first scheme, the performance of which is shown in Fig.
+    and PDR performance. Utilizing priority queuing, shorter                                                                                                                                                                                                6(a), assumes no power control, but utilizes shorter back-off
+    back-off window, and sending ACK packets immediately also                                                                                                                                                                                               timer and priority queuing. By cross-comparing the presented
+    positively affect URLLC traffic performance. However, having                                                                                                                                                                                            results to those shown for the baseline scheme in Fig. 4, we
+    a smaller LBT threshold and larger LBT sensing duration                                                                                                                                                                                                 observe that the reliability region of the system is significantly
+    makes URLLC RDs more hesitant to transmit packets, thus                                                                                                                                                                                                 extended as PDR remains close to one over the whole consid-
+    negatively affecting the performance metrics of interest.                                                                                                                                                                                               ered mMTC traffic parameters for single-hop communications
+                                                                                                                                                                                                                                                            and 16 ms interarrival time between URLLC packets. The
+    C. Selected Candidate Schemes
+                                                                                                                                                                                                                                                            performance of the multi-hop case is also improved, and now
+       Having studied the system’s response to individual mecha-                                                                                                                                                                                            PDR is close to 1 for 16 ms URLLC interval time for 30-60 s
+    nisms, we now consider two selected schemes that are shown                                                                                                                                                                                              interarrival arrival time between mMTC packets. Comparable
+                                                                                                                                                                                                                                                            improvements are observed with respect to the latency quantile
+                                                                    1.00                                                                                                                             0.030                                                  performance, which is now less than 10 ms for single-hop
+                                        URLLC/mMTC Delivery ratio
+
+
+
+
+                                                                                                                                                                                                                                                            communications for the higher considered mMTC traffic load.
+                                                                                                                                                                                                             URLLC Delay 95% quantile, s
+
+
+
+
+                                                                    0.95                                                                                                                             0.025                                                  Latency quantile performance is also drastically improved in
+                                                                                                                                                                                                                                                            the case of multi-hop communications, especially for high
+                                                                    0.90                                                                                                                             0.020                                                  mMTC load conditions.
+                                                                                                                                                                                                                                                               The second identified candidate case features all those
+                                                                    0.85                                                                                                                             0.015
+                                                                                                                                                                                                                                                            mechanisms selected for the first case and also adds immediate
+                                                                                                                                                                                                                                                            ACK for transmitted URLLC packets and also utilizes shorter
+                                                                    0.80                              URLLC inter packet time, s                                                                     0.010
+                                                                                                       Hop=0          Hop=1                                                                                                                                 ACK timeout, see Fig. 6(b). The major impact is logically ob-
+                                                                                                          0.008             0.008
+                                                                                                               0.016        0.016
+                                                                                                                                                                                                                                                            served for the latency quantiles. Specifically, even for multihop
+                                                                    0.75                                                                                                                             0.005
+                                                                           10             20                  30       40                                50                                    60
+                                                                                                                                                                                                                                                            communications under the worst possible URLLC and mMTC
+                                                                                           mMTC inter packet time, s                                                                                                                                        traffic conditions, it is now smaller than 30 ms. At the same
+                                                                                                                                                                                                                                                            time, the PDR performance does not degrade significantly as
+                                                                           (a) No power control, short back-off, priorities
+                                                                                                                                                                                                                                                            compared to Fig. 6(a). By cross-comparing Figs. 6 and Fig. 4,
+                                                                    1.00                                                                                                                             0.030                                                  the performance degradation of mMTC traffic is negligible.
+                                        URLLC/mMTC Delivery ratio
+
+
+
+
+                                                                                                                                                                                                             URLLC Delay 95% quantile, s
+
+
+
+
+                                                                    0.95                                                                                                                             0.025                                                                                                               VI. C ONCLUSIONS
+                                                                                                                                                                                                                                                               The market for small data communications is characterized
+                                                                    0.90                                                                                                                             0.020
+                                                                                                                                                                                                                                                            by the appearance of applications having requirements in-
+                                                                                                                                                                                                                                                            between conventional mMTC and URLLC services, so-called
+                                                                    0.85                                                                                                                             0.015
+                                                                                                                                                                                                                                                            near-URLLC applications. Motivated by the need to support
+                                                                                                                                                                                                                                                            such applications in DECT-2020 NR LBT-based technology,
+                                                                    0.80                              URLLC inter packet time, s                                                                     0.010
+                                                                                                       Hop=0
+                                                                                                          0.008
+                                                                                                                      Hop=1
+                                                                                                                            0.008
+                                                                                                                                                                                                                                                            in this study, we analyzed the impact of various physical and
+                                                                    0.75                                       0.016        0.016
+                                                                                                                                                                                                     0.005
+                                                                                                                                                                                                                                                            MAC layer mechanisms on the performance of near-URLLC
+                                                                           10             20                  30       40                                50                                    60                                                           traffic in the presence of competing mMTC traffic.
+                                                                                           mMTC inter packet time, s                                                                                                                                           Our results show that there are two groups of mechanisms
+                                    (b) No power control, short back-off, priorities, immediate ACK
+                                                                                                                                                                                                                                                            that affect the loss and latency performance of URLLC traffic.
+                                                                                                                                                                                                                                                            Disabling power control, utilizing a shorter than default back-
+                                                                    Fig. 6. Performance of selected sets of mechanisms.                                                                                                                                     off window, and enabling priority data packets queuing ar
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+    URLLC RDs are critical for improving loss performance. The                         [5] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+    gains in terms of PDR may reach 10-20% as compared to the                              Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+                                                                                           Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+    baseline. Using a shorter ACK timeout and prioritized trans-                           munications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+    mission of ACKs at URLLC RDs are essential for providing                           [6] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+    better latency performance with gains in terms of 95% quantile                         Massive Machine Type Communications with DECT-2020 Standard: A
+                                                                                           System-Level Performance Study,” VTT Technical Research Centre of
+    latency reaching 30-80%. Notably, the associated performance                           Finland, 2021.
+    degradation of mMTC traffic is negligible.                                         [7] ITU-R, “Guidelines for evaluation of radio interface technologies for
+       We note that anything beyond the reported reliability and                           IMT-2020,” ITU-R, M.2412-0, July 2017.
+                                                                                       [8] ETSI, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+    latency performance requires the use of DECT-2020 NR                                   ETSI, TS 103 636-4 v1.3.1, December 2021.
+    scheduling-based MAC, which is characterized by more com-                          [9] A. Samuylov, D. Moltchanov, A. Gaydamaka, E. Lyczkowski,
+    plicated protocol logic and associated signaling overheads.                            A. Frotzscher, F. von Schoettler, J. Pirskanen, J. Numminen, J. Salokan-
+                                                                                           nel, E. Llaguno, R. Pires, D. Bayar, and M. Valkama, “Empowering
+                       ACKNOWLEDGMENT                                                      Near-URLLC IoT with 5G DECT-2020 NR: Current State and the Road
+                                                                                           Ahead,” IEEE Communications Magazine, vol. 1, no. 1, pp. 1–6, 2025.
+      This work was supported by the CELTIC-NEXT ”Ultra                               [10] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+    Scalable Wireless Access” (USWA) project.                                              transmission requirements; Release 1,” ETSI, TS 103 636-2 v1.3.1,
+                                                                                           December 2021.
+                                  R EFERENCES                                         [11] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,”
+                                                                                           ETSI, TS 103 636-3 v1.3.1, December 2021.
+     [1] A. Khanna and S. Kaur, “Internet of things (iot), applications and chal-     [12] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Kouch-
+         lenges: a comprehensive review,” Wireless Personal Communications,                eryavy, and M. Valkama, “Performance assessment of dect-2020 nr and
+         vol. 114, no. 2, pp. 1687–1762, 2020.                                             classic dect coexistence mechanisms,” in 2023 IEEE 97th Vehicular
+     [2] H. Fattah, 5G LTE Narrowband Internet of Things (NB-IoT). CRC                     Technology Conference (VTC2023-Spring). IEEE, 2023, pp. 1–7.
+         Press, 2018.                                                                 [13] 3GPP, “Study on channel model for frequencies from 0.5 to 100 GHz
+     [3] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” ETSI, TS 103                  (Release 14),” 3rd Generation Partnership Project (3GPP), 3GPP TR
+         636-1 v1.3.1, December 2021.                                                      38.901 V14.1.1, July 2017.
+     [4] ITU-R, “Minimum requirements related to technical performance for
+         IMT-2020 radio interface,” ITU-R, M.2410-0, July 2017.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,1169 @@
+              Comparison of Two Models
+          with Non-ordinary Arrival Process
+       to Analyze the Cluster of the DECT-2020
+                       Network
+
+     Uliana Morozova1(B) , Dmitry Nikolaev1 , Elisaveta Gaidamaka1 ,
+             Anastasia Vlaskina1 , and Yuliya Gaidamaka1,2
+ 1
+    RUDN University, 6 Miklukho-Maklaya St, Moscow 117198, Russian Federation
+{morozova-uk,nikolaev-di,gaydamaka-ea,vlaskina-as,gaidamaka-yuv}@rudn.ru
+2
+  Federal Research Center “Computer Science and Control” of the Russian Academy
+ of Sciences (FRC CSC RAS), 44–2 Vavilov St, Moscow 119333, Russian Federation
+
+
+
+       Abstract. DECT-2020 NR is a wireless communication standard
+       designed for large-scale IoT networks with a large number of devices.
+       In such networks, a sink node collects data from multiple sources. In this
+       paper, we modeled a DECT-2020 sink node as a discrete packet arrival
+       system, where data packets are processed in batches. We compared two
+       types of systems with diﬀerent arrival disciplines, Early Arrival and Late
+       Arrival, across several metrics, including the age of information (AoI),
+       which measures the freshness of the received data. The results showed
+       how the diﬀerence in the order of batch arrival aﬀected network perfor-
+       mance and Age of Information.
+
+
+       Keywords: DECT-2020 · URLLC · mMTC · age of information ·
+       queuing theory · discrete time Markov chain
+
+
+1    Introduction
+
+The rapid development of ﬁfth-generation (5G) networks creates new opportu-
+nities for enabling applications that demand massive machine-type communica-
+tions (mMTC) and ultra-reliable low-latency communications (URLLC). These
+capabilities are of particular importance in the context of the Internet of Things
+(IoT), where millions of devices are expected to communicate simultaneously
+with high levels of reliability, resilience, and scalability.
+    Among the promising technologies in this domain is the DECT-2020 New
+Radio (NR) protocol, standardized by the European Telecommunications Stan-
+dards Institute (ETSI) [1–4]. Unlike conventional cellular systems that rely on
+centralized base stations and ﬁxed infrastructure, DECT-2020 NR operates in
+the unlicensed 1880–1930 MHz frequency band and supports a fully decentralized
+mesh network topology (see Fig. 1).
+
+ c The Author(s), under exclusive license to Springer Nature Switzerland AG 2026
+Y. Koucheryavy et al. (Eds.): ruSMART 2025/NEW2AN 2025, LNCS 16461, pp. 27–47, 2026.
+https://doi.org/10.1007/978-3-032-19978-2_3
+28         U. Morozova et al.
+
+    In DECT-2020 NR, each radio device (RD) can act as a transmitter (RDPT ),
+repeater (RDFT,PT ), or receiver (RDFT ), thereby supporting ﬂexible multi-hop
+communication. This self-organizing architecture enables scalable deployments
+with densities of up to one million devices per square kilometer [5], which signif-
+icantly exceeds the capacity of traditional wireless technologies such as Wi-Fi,
+LTE-M, or NB-IoT.
+
+
+                                Cluster 2
+                                                    Cluster 1
+     Cluster 3
+
+
+
+
+                                                                    Core Network
+
+
+
+
+                          Fig. 1. DECT-2020 network topology
+
+
+    Another important characteristic of DECT-2020 NR is its half-duplex trans-
+mission mode. In this case, a relay node (RDFT,PT ) alternates between receiving
+packets from child nodes (RDPT or RDFT,PT ) and transmitting packets to the
+parent node (RDFT,PT or RDFT ). Such an operation can be naturally repre-
+sented by a queueing model with batch arrivals and batch services, where the
+arrival batch size is variable while the service batch size remains ﬁxed.
+    When modelling a tact-based systems such as DECT-2020 NR, it is impor-
+tant to have a clear understanding of the sequence of actions in a slot, which
+is especially important in half-duplex data transmission mode. Specialized liter-
+ature distinguishes between two main disciplines: Early Arrival (EA) and Late
+Arrival (LA) [6]. As the names suggest, in the ﬁrst case, a data packet is accepted
+at the beginning of the slot and transmitted further through the system at the
+end of the slot. In the second case, the data packet stored on the node is ﬁrst
+transmitted through the system, and only at the end of the slot the new data
+packet arrives. In addition to DECT-2020 NR, EA and LA can also be used in
+IAB technology, which can also operate in half-duplex data transmission mode.
+    This paper focuses on the modeling and performance evaluation of a DECT-
+2020 NR network cluster using discrete-time queuing systems. Special attention
+is given to the analysis of packet transmission delays in multi-hop routing sce-
+narios and the inﬂuence of the stochastic nature of mMTC traﬃc on overall
+network performance.
+    This article proposes two mathematical models of the DECT-2020 NR clus-
+ter. To this end, Sect. 2 constructs a mathematical model of packet transmission
+by a relay node (RDFT,PT ) in the form of two diﬀerent queueing systems, tak-
+ing into account the peculiarities of mMTC traﬃc, i.e. multiple random access.
+          Comparison of Two Models for Analysis of the DECT-2020 Cluster         29
+
+Section 3 describes a numerical experiment illustrating the diﬀerence between
+two mathematical models applied to a real DECT-2020 NR node.
+
+Related Works. In recent years, discrete-time queues have been attracting much
+attention, partly due to their practical relevance. Dividing time into slots and the
+need to select diﬀerent arrival disciplines (EA or LA) allows for more accurate
+modeling of telecommunication networks.
+     Earlier, within the framework of DTMC studies, authors compared and ana-
+lyzed models with diﬀerent arrival policies. In the article by Gupta and Goswami
+[6], a discrete-time system with a ﬁnite buﬀer and bulk service was analyzed. The
+authors considered two policies—AF (arrival ﬁrst) and DF (departure ﬁrst)—
+showing that AF reduces delays and losses, while DF can be eﬀective under high
+load. Similarly, the paper [7] examined the relationships between queue lengths
+at diﬀerent epochs (arrival, departure, and random) for a discrete-time queue
+with D-BMAP arrivals, also under diﬀerent arrival policies (EA and LA). The
+authors used properties of the discrete-time batch Markovian arrival process
+(D-BMAP) and probability generating function methods to establish exact rela-
+tionships between distributions. The results allow characteristics at one epoch
+to be expressed in terms of another, simplifying system analysis. The article
+[8] by Goswami and Chaudhry presents the ﬁrst explicit analysis of the sojourn
+time distribution for a discrete-time queue with batch service Geo/Geoa,b /1. The
+authors propose a novel analytical approach, utilizing the roots of the character-
+istic equation inside and outside the unit circle, to derive closed-form expressions
+for the sojourn time probability generating function and its probability distribu-
+tion. Research has also been conducted on systems with bulk arrivals and bulk
+service. The article by Claeys [9] focused on delay analysis in the discrete-time
+GeoX /Geoc /1 system with bulk arrivals and bulk service. The authors consid-
+ered two service policies: IBSP (immediate-batch service policy) and FBSP (full-
+batch service policy). Additionally, Chang and Choi [10] analyzed a discrete-time
+system with a ﬁnite buﬀer where the server operates in bulk arrival and bulk
+service mode and can also take vacations. Discrete-time systems are also actively
+used in the study of Age of Information (AoI). For example, in the study [11]
+the authors obtained the stationary distribution of AoI and derived analytical
+expressions for the average age of information and other performance metrics
+using a discrete-time queueing system.
+     In contrast to the works presented above, the authors of this article analyze
+a discrete-time system with batch arrivals of variable size and batch service of
+ﬁxed size under EA and LA disciplines. For both systems, explicit formulas for
+the probability generating function of the waiting time until the start of service
+were derived.
+30           U. Morozova et al.
+
+2     System Model
+In this section, for the system model of the node RDFT,PT we built the mathe-
+matical model in the form of a discrete-time queueing system. We complete this
+section by introducing the metrics of interest. The notation utilized in this paper
+is provided in Table 1.
+
+
+                               Table 1. The notation used in the paper
+
+     Notation                        Description
+     A                               maximum length of an arrival batch
+     B                               constant length of a service batch
+     li , i = {1, . . . , A}         probability distribution of the arrival batch size
+     ˆ
+     l                               the average number of packets in an arrival batch
+     Ln                              the probability that an arrival batch has at least n
+                                     packets
+      L(z)                           PGF of the arrival batch size
+     a                               probability of a batch arrival
+     b                               probability of a completion of a batch service
+     ρ                               system load
+     Q− (n)                          discrete time Markov chain (DTMC) of the number of
+                                     packets in the system
+     Ω                               discrete state space of DTMC Q− (n)
+     pla    ea
+      ij , pij                       transition probabilities of Q− (n)
+      pla   ea
+       i , pi                        stationary probabilities of Q− (n)
+      PLA (z), PEA (z)               PGFs of stationary probabilities of Q− (n)
+         ∗
+      Q (n)                          the embedded DTMC
+      qila , qiea                    stationary probabilities of Q∗ (n)
+      QLA (z), QEA (z)               PGFs of stationary probabilities of Q∗ (n)
+      α(z)                           PGF of the batch inter-arrival time
+      β(z)                           PGF of the batch service time
+     WLA (z), WEA (z)                PGFs of a packet waiting time
+     VLA (z), VEA (z)                PGFs of a packet sojourn time
+     wLA , wEA                       the average waiting time of a packet
+      v LA , v EA                    the average sojourn time of a packet
+      NLA , NEA                      the average number of packets in the system
+      Δ(t)                           function of Age of Information
+     ΔP
+      i                              PAoI for the ith packet
+      Δ (z), ΔP
+        P              P
+              LA (z), ΔEA (z) PGFs of PAoI
+         P       P    P
+      Δ , ΔLA , ΔEA                  the average PAoI
+         Comparison of Two Models for Analysis of the DECT-2020 Cluster        31
+
+    The DECT-2020 network cluster consists of D terminal devices RDPT with
+one relay RDFT,PT as repeater node or the sink RDFT as the ﬁnal receiver node,
+in which the age of information from the terminal device RDPT transmitted
+in the uplink towards the base network is estimated. The system model of the
+DECT-2020 network considered in this work is based on the previously published
+study [12]. At speciﬁed by half duplex mode time intervals, each terminal device
+generates a data packet and attempts to transmit it to the receiver via repeater,
+where the packets await further transmission along the route. The number of
+packets received by RDPT,FT node is a random variable (r.v.), the distribution
+of which depends on the number D of terminal devices RDPT . The repeater
+RDFT,PT also has speciﬁed time intervals to transmit packets up to the parent
+node. The number of packets transmitted by node RDPT,FT during the trans-
+mission time interval is also random, but in the most congested links, such as
+the link from RDFT to the core network, it can be considered constant, and its
+value is determined by the duration of the transmission interval.
+
+2.1   Queueing System
+We present the mathematical model of the RDFT,PT node as an inﬁnite buﬀer
+discrete-time queue with batch arrivals of variable size and batch service of ﬁxed
+size, formally denoted as Geo[1,A] |Geo[B] |1|∞. Packets arrive in batches of no
+more than A packets, that is given by D, and are served in batch with ﬁxed size
+B, which corresponds to the average number of packets transmitted per time
+slot, depended on the channel data rate.
+    Batches of packets arrive in the system with the probability a per slot and
+no packets arrive with the complementary probability a = 1 − a. Probability a
+represents a probability of generating a data packet by at least one RDPT from
+D RDPT . Probability b means that the batch service is completed during a slot,
+and the probability that no batch completes the service during a slot, equals
+to b = 1 − b. Probability b allows us to model the successful completion of a
+packet batch by node RDFT at the end of the transmission interval. These allow
+modeling of the half-duplex communication mode.
+    In this paper, we consider two types of discrete-time system: Late Arrival
+(LA) and Early Arrival (EA) [6]. There is diﬀerence in the order of actions in a
+slot, see Fig. 2:
+- LA system: at the beginning of the slot a batch of packets completes service
+and leaves the system, then, depending on the number of packets remaining in
+the queue, the next batch of size B either begins service immediately or in one
+of the next time slots once B packets have accumulated in the queue and at the
+end of the slot new batch of packets arrives;
+- EA system: at the beginning of the slot new batch of packets arrives, then
+if a server is free depending on the number of packets remaining in the queue
+immediately or in the next time slot the batch of B packets begins service and
+at the end of the slot leaves the system.
+    Next, we will introduce some necessary deﬁnition which are the same for the
+both systems. After that, we will derive formulas for each systems, separately.
+32       U. Morozova et al.
+
+                                   Batch arrival            Batch arrival
+
+                                    n-th slot
+       Late
+      Arrival
+
+
+                          Batch service            Batch service            Batch service
+
+
+                  Batch arrival           Batch arrival            Batch arrival
+
+                                    n-th slot
+      Early
+      Arrival
+
+
+
+                                          Batch service            Batch service
+
+
+Fig. 2. The time diagram for two considered system: Late Arrival and Early Arrival
+
+
+       The following notations for both LA and EA are introduced:
+ {li , i = 1, . . . , A} - probability distribution of the arrival batch size;
+                A
+ L(z) = i=1 li z i - probability generating function (PGF) of the arrival batch
+ size;
+ˆl = A ili - the average number of packets in an arrival batch.
+          i=1
+       Let us deﬁne the discrete time Markov chain (DTMC) Q− (n), n = 0, 1, ...,
+ with discrete state space Ω ∈ {0, 1, ...} denoting the number of packets in the
+ system immediately before the end of the nth slot after the batch arrived.
+       Also, we note that steady-state conditions for both LA and EA systems exist
+ only if the following is satisﬁed
+
+
+                                             aˆl
+                                        ρ=       < 1.                                       (1)
+                                             bB
+Early Arrival System. We deﬁne the stationary probability distribution of the
+system states as
+
+
+                         pea          −
+                          i = lim P {Q (n) = i},              i ∈ Ω,                        (2)
+                                  n→∞
+
+     and to ﬁnd them we determine the transition probabilities of DTMC Q− (n)
+
+                      pea      −         −
+                       ij = P{Q (n) = j|Q (n − 1) = i} =
+         Comparison of Two Models for Analysis of the DECT-2020 Cluster            33
+
+               ⎧
+               ⎪
+               ⎪a + alB b,                              i = j < B,                (3a)
+               ⎪
+               ⎪
+               ⎪
+               ⎪ alj−i + alj−i+B b, i < j ≤ B − 1, j − i ≤ A − B                  (3b)
+               ⎪
+               ⎪
+               ⎪
+               ⎪alj−i ,
+               ⎪
+               ⎪                     i < j ≤ B − 1, j − i > A − B                 (3c)
+               ⎪
+               ⎪
+               ⎪
+               ⎪
+               ⎨ab + alB b,
+               ⎪                                        j = i ≥ B,                (3d)
+              = ab,                                      i − j = B,               (3e)
+               ⎪
+               ⎪
+               ⎪alj−i+B b,
+               ⎪                                  i > j, i − j < B,               (3f)
+               ⎪
+               ⎪
+               ⎪
+               ⎪
+               ⎪
+               ⎪alj−i b + alj−i+B b,         j − i ≤ A − B, j > i,                (3g)
+               ⎪
+               ⎪
+               ⎪
+               ⎪alj−i b,                     j − i > A − B, j > i,
+               ⎪
+               ⎪                                                                  (3h)
+               ⎪
+               ⎩0,                                       otherwise.
+
+    Expression (3a) represents the probability that the number of packets in the
+system remains unchanged if initially there were fewer than B packets in the
+system.
+(3b)—the number of packets increases by j − i; either exactly j − i packets arrive
+and none are serviced, or more than j − i packets arrive and the B packets
+already in the system are serviced.
+(3c)—the number of packets increases by j − i, meaning exactly j − i packets
+arrive and none are serviced.
+(3d)—the number of packets remains unchanged if initially there were more than
+B packets or exactly B packets in the system.
+(3e)—no packets arrive and exactly B packets are serviced.
+(3f)—the number of packets increases by j − i, meaning j − i + B packets arrive
+and B packets are serviced.
+(3g)—the number of packets increases by j − i; either j − i + B packets arrive
+and B packets are serviced, or only j − i packets arrive and none are serviced.
+(3h)—the number of packets increases by j − i and none are serviced.
+
+              i−A+B−1                        i−1
+       pea
+        i =             pea
+                         j ali−j +                      pea
+                                                         j (ali−j + ali−j+B b)+
+                j=0                  j=max(0,i−A+B)
+                                B+i−1
+           + pea
+              i (a + alB b) +            pea             ea
+                                          j ali−j+B b + pi+B ab,    0 ≤ i < B,
+                                 j=i+1
+               i−A+B−1                        i−1
+       pea
+        i =                  pea
+                              j ali−j b +             pea
+                                                       j (ali−j b + ali−j+B b)+
+              j=max(0,i−A)                  j=i−A+B
+                                 B+i−1
+           + pea
+              i (ab + alB b) +            pea             ea
+                                           j ali−j+B b + pi+B ab,    i ≥ B.        (4)
+                                  j=i+1
+
+   The system of Eq. (4) can be solved numerically, but for the case of an inﬁnite
+buﬀer, only an approximate numerical solution is achievable. However, in this
+case one can obtain an explicit analytical expression for the generating function
+34       U. Morozova et al.
+
+PEA (z) of the stationary probability distribution (2) for the EA system:
+                                                   ∞
+                                  PEA (z) =               pea i
+                                                           i z .                         (5)
+                                                  i=0
+
+
+     By multiplying (4) by z i and then summing up over i, we have
+                                         B−1 ea i                     B−i−1 k
+                           b(z B − 1)    i=0 pi z           a+a       k=1  z lk
+             PEA (z) =                                                              .    (6)
+                                     z B − (a + aL(z))(bz B + b)
+
+Refer to the Appendix for the omitted details of derivation.
+   According to Rouché’s theorem [16] and using the normalization condition,
+we can acquire pea
+                i , i = 0, B − 1, due to the next system of equations:
+
+
+               ⎧B−1                     B−i−1
+               ⎪
+               ⎪
+               ⎪
+               ⎪    pea i
+                     i zj       a+a              zjk lk     = 0,    j = 1, B − 1,
+               ⎨
+                i=0                     k=1                                              (7)
+               ⎪B−1
+               ⎪
+                                     B−i−1
+               ⎪
+               ⎪         pea   a+a          lk      = 1 − ρ,
+               ⎩          i
+                   i=0                k=1
+
+where zj , j = 1, B − 1, are the roots of the denominator of (6), which is |zj | < 1.
+
+Late Arrival System. As for the LA system, we deﬁne the stationary probability
+distribution
+
+
+                          pla          −
+                           i = lim P {Q (n) = i},                  i ∈ Ω,                (8)
+                                n→∞
+
+and determine the transition probabilities of DTMC Q− (n)
+
+                         pla      −         −
+                          ij = P{Q (n) = j|Q (n − 1) = i} =
+
+                  ⎧
+                  ⎪a,                                    i = j < B,                     (9a)
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪alj−i ,             i < j, i = 0, B − 1, j = 1, A                    (9b)
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪ab + balB ,
+                  ⎪
+                                                         j = i ≥ B,                     (9c)
+                  ⎪
+                  ⎨ba,                                    i − j = B,                    (9d)
+                =
+                  ⎪
+                  ⎪balj−i+B ,                      i > j, i − j < B,                    (9e)
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪balj−i + balj−i+B ,        j − i ≤ A − B, j > i,                     (9f)
+                  ⎪
+                  ⎪
+                  ⎪
+                  ⎪balj−i ,                   j − i > A − B, j > i,
+                  ⎪
+                  ⎪
+                                                                                        (9g)
+                  ⎩
+                   0,                                     otherwise.
+          Comparison of Two Models for Analysis of the DECT-2020 Cluster                            35
+
+    Similarly to (3), in (9) expression (9a) represents the probability that the
+number of packets in the system remains unchanged if initially there were fewer
+than B packets in the system.
+(9b)—the number of packets increases by j − i, meaning exactly j − i packets
+arrive and none are serviced.
+(9c)—the number of packets remains unchanged if initially there were more than
+B packets or exactly B packets in the system.
+(9d)—no packets arrive and exactly B packets are serviced.
+(9e)—the number of packets increases by j − i, meaning j − i + B packets arrive
+and B packets are serviced.
+(9f)—the number of packets increases by j − i; either j − i + B packets arrive
+and B packets are serviced, or only j − i packets arrive and none are serviced.
+(9g)—the number of packets increases by j − i and none are serviced.
+    The stationary probability distribution can be obtained as shown in (10),
+using the transition probabilities (9), but LA system has the same situation
+with the problem to solve this system of equation directly as EA system, so here
+we also utilize the method of generating functions.
+
+          i−1                       B+i−1
+   pla
+    i =         pla         la
+                 j ali−j + pi a +            pla            la
+                                              j bali−j+B + pi+B ba,      0 ≤ i ≤ B − 1,
+          j=0                          j=B
+          B−1                i−1
+   pla
+    i =         pla
+                 j ali−j +         pla                        la
+                                    j (bali−j + bali−j+B ) + pi (ba + balB )+
+          j=0                j=B
+          B+i−1
+      +           pla            la
+                   j bali−j+B + pi+B ba,        i = B, A,
+          j=i+1
+           B−1                     i−A+B−1                       i−1
+   pla
+    i =           pla
+                   j ali−j +                    pla
+                                                 j bali−j +              pla
+                                                                          j (bali−j + bali−j+B )+
+          j=i−A                j=max(B,i−A)                   j=i−A+B
+                              B+i−1
+      + pla
+         i (ba + balB ) +              pla            la
+                                        j bali−j+B + pi+B ba,        i > A.                     (10)
+                               j=i+1
+
+
+
+   We deﬁne the PGF of the stationary probabilities in (8) as
+
+                                                     ∞
+                                        PLA (z) =           pla i
+                                                             i z .                              (11)
+                                                     i=0
+
+   By multiplying (10) by z i and then summing up over i, we have
+
+                                                                       B−1
+                                     b(a + aL(z))(z B − 1) i=0 pla i z
+                                                                       i
+                      PLA (z) =                                          .                      (12)
+                                        z B − (a + aL(z))(bz B + b)
+36        U. Morozova et al.
+
+     Refer to the Appendix for the omitted details of derivation.
+     According to Rouché’s theorem [16], the denominator of (12) has A + B roots
+zj , j = 0, A + B that include z0 = 1, |zj | < 1, j = 1, B − 1, and |zj | > 1, j =
+B, A + B. We can also obtain an equation using the normalization condition:
+
+                                        B−1
+                                              pla
+                                               i = 1 − ρ.                           (13)
+                                        i=0
+
+   With that, we form the system of linear equations by substituting the cor-
+responding roots zj , |zj | < 1, j = 1, B − 1, into the numerator (12), equating to
+zero:
+
+                           ⎧B−1
+                           ⎪
+                           ⎪
+                           ⎪
+                           ⎪    pla i
+                                 i zj = 0,          j = 1, B − 1,
+                           ⎨
+                            i=0                                                     (14)
+                           ⎪B−1
+                           ⎪
+                           ⎪
+                           ⎪         pla
+                           ⎩          i = 1 − ρ,
+                               i=0
+
+      and solving this, we get
+
+                     B−1                                    B−1
+                                               (−1)B−1      i=1 (z − zi )
+                           pla i
+                            i z = (1 − ρ)            B−1
+                                                                            .       (15)
+                     i=0                             i=1 (zi − 1)
+
+      Finally, we acquire PLA (z) as
+
+                                                                    B−1 i
+                               (−1)B−2 b(a + aL(z))(1 − ρ)          i=0 z
+                  PLA (z) =               A+B               B−1
+                                                                                ,   (16)
+                                 ablA     j=B (z − zj )     j=1 (zj − 1)
+
+
+where zj , j = 1, B − 1, are the roots of the denominator of (12), which is |zj | < 1,
+and zj , j = B, A + B , are such that |zj | > 1.
+    It can be noticed that the same roots are used for both systems because
+of the same denominator in PGFs (6) and (12). The diﬀerence is only in the
+numerator of PGFs and in the incomplete form of the L(z), in particular.
+
+
+2.2     Metrics of Interest
+
+We now proceed to derive the formulas for the PGF of sojourn time for a packet
+in the system for the LA system, then, by analogy, we will ﬁnd one for the EA
+system.
+    First, we deﬁne the second DTMC Q∗ (n), n = 0, 1, . . ., with the same discrete
+state space Ω, whose states represent the number of packets in the queueing
+system immediately before the arrival of a new batch of packets at the nth time
+          Comparison of Two Models for Analysis of the DECT-2020 Cluster          37
+
+slot. Let {qila , i ∈ Ω} denote the stationary probability distribution of the states
+of the DTMC Q∗ (n), n = 0, 1, . . .:
+
+
+                         qila = pla   la
+                                 i + pi+B b,    i = 0, B − 1,                   (17)
+                               qila = pla     la
+                                       i b + pi+B b,   i ≥ B.                   (18)
+
+   We also use the PGF method to ﬁnd (17) and get the PGF of the corre-
+                                ∞
+sponding distribution QLA (z) = i=0 qila z i :
+
+                                                        b
+                           QLA (z) = PLA (z) b +            .                   (19)
+                                                       zB
+
+    Before proceeding to the calculation of the PGF of the waiting time, we intro-
+duce the PGF of inter-arrival time and the PGF of the service time, respectively,
+α(z) = az/(1 − az), β(z) = bz/(1 − bz). These PGFs will be used for EA system
+too.
+    Now we are able to deﬁne the PGF of waiting time until the start of service
+for an arbitrary packet in an arriving batch
+
+               ⎧                   ⎡                         ⎤
+               ⎪
+               ⎪  ∞        A
+                               l
+                                      k
+               ⎪
+               ⎪                 k ⎣
+               ⎪
+               ⎪     qila                 β γi (z)αLψi+k (z)⎦ , k < ψi ,
+               ⎪
+               ⎪                ˆ
+                                l
+               ⎪
+               ⎪ i=0      k=1
+                                   ⎡j=1
+               ⎪
+               ⎪ ∞                                   ψi +Bγk−ψi
+               ⎨           A
+                               lk ⎣
+                                      ψi
+     WLA (z) =       qila                 β γi (z) +            β γi+j−1 (z)+   (20)
+               ⎪
+               ⎪                ˆ
+                                l
+               ⎪
+               ⎪ i=0      k=1        j=1               j=ψi +1
+                                                                ⎤
+               ⎪
+               ⎪
+               ⎪
+               ⎪             k
+               ⎪
+               ⎪
+               ⎪
+               ⎪  +                      β γi+j−1 (z) αLψi+k (z)⎦ , k ≥ ψi ,
+               ⎩
+                       j=ψi +Bγk−ψi +1
+
+
+               i
+where γi =         - the number of completed batches formed in the system given
+              B
+that, at the instant a batch arrives, there are already i packets in the system,
+            i+j−1
+γi+j−1 =                 - the number of full batches formed before an arbitrary
+                 B
+packet in the arriving batch, j = 1, . . . , k,
+ψi = B(γi + 1) − i - the number of available places in the batch being formed,
+         A
+Ln = m=n lm - the probability that an arrival batch has at least n packets.
+   Finally, the stationary distribution of the sojourn time of a packet will have
+the following PGF:
+                               VLA (z) = WLA (z)β(z).                         (21)
+    We can also calculate the average waiting time and the average sojourn time
+of a packet with the help of PGFs, respectively, as
+
+                                  wLA = WLA (1),                                (22)
+38      U. Morozova et al.
+
+                                                       1
+                            v LA = VLA (1) = wLA + .                            (23)
+                                                       b
+     As for EA system the stationary probability distribution {qiea , i ∈ Ω} of the
+states of the DTMC Q∗ (n), n = 0, 1, . . ., coincides with the stationary probability
+distribution {pea                                                  −
+               i , i ∈ Ω} of the system states of the DTMC Q (n), n = 0, 1, . . .,
+i.e.
+                                 qiea = pea
+                                         i ,    i ≥ 0.                          (24)
+    In this case, the PGF of the waiting time of an arbitrary packet from the
+arrival batch and the PGF of the sojourn time of an packet in the system will
+be as follows, respectively,
+
+               ⎧                  ⎡                            ⎤
+               ⎪
+               ⎪  ∞       A
+                              l
+                                     k
+               ⎪
+               ⎪                k ⎣
+               ⎪
+               ⎪     pea
+                      i                  β γi −1 (z)αLψi+k (z)⎦ , k < ψi ,
+               ⎪
+               ⎪               ˆl
+               ⎪
+               ⎪ i=0     k=1
+                                  ⎡j=1
+               ⎪
+               ⎪                                       ψi +Bγk−ψi
+               ⎨ ∞        A
+                              lk ⎣
+                                     ψi
+                      ea                   γi −1
+     WEA (z) =       pi                  β       (z) +            β γi+j−1 (z)+   (25)
+               ⎪
+               ⎪               ˆl
+               ⎪
+               ⎪ i=0     k=1        j=1                  j=ψi +1
+                                                                ⎤
+               ⎪
+               ⎪
+               ⎪
+               ⎪            k
+               ⎪
+               ⎪
+               ⎪ +
+               ⎪                        β γi+j−1 (z) αLψi+k (z)⎦ , k ≥ ψi ,
+               ⎩
+                       j=ψi +Bγk−ψi +1
+
+
+                               VEA (z) = WEA (z)β(z),                             (26)
+
+where ψi , γi and γi+j−1 are deﬁned in the same way as for the LA system.
+   In terms of average values, these take the following forms:
+
+
+                                   wEA = WEA (1),                                 (27)
+                                                  1
+                          v EA = VEA (1) = wEA + .                      (28)
+                                                  b
+   Additionally, for both systems we can ﬁnd the average number of packets in
+the system:
+
+
+                                  bB(1 − ρ) aˆl + B−1
+                                                               A+B  1
+                                                   2 −         j=B 1−zj
+             NLA = PLA (1) =                            A+B
+                                                                           .      (29)
+                                      (−1)A+B ablA      j=1 (zj − 1)
+
+                                         B−1 ea             B−i−1
+                                         i=0 pi    a+a      k=1   lk
+                 NEA = PEA (1) =                                       .          (30)
+                                                   1−ρ
+   That allows us to use Little’s formula to deriving average system time for
+both cases:
+          Comparison of Two Models for Analysis of the DECT-2020 Cluster          39
+
+
+                                            NLA
+                                   v LA =        ,                              (31)
+                                             aˆl
+
+                                            NEA
+                                   v EA =        .                              (32)
+                                             aˆl
+
+2.3   Age of Information
+
+In this section, we will deﬁne the PGF of PAoI in a general case and then we
+will look at speciﬁc cases.
+    According to [14] we deﬁne AoI at the sink as the function
+
+
+                                 Δ(t) = t − tN (t) ,                            (33)
+
+where N (t) is the indicator of the update (a packet) from the source (RDPT )
+most recently received by the sink (RDFT ).
+
+
+
+
+                 Fig. 3. Function of AoI Δ(t) and PAoI values ΔP
+                                                               i
+
+
+
+
+   In the Fig. 3, let ti , i ≥ 0, be the time instant of generating the ith packet on
+the source and ti , i ≥ 0, be the time instant when the ith packet was received
+by the sink. Then we denote the peak age of information (PAoI) [15] for the ith
+packet at the sink as follows
+
+
+                                  ΔP
+                                   i = ti − ti−1 .                              (34)
+
+    It can be noticed that PAoI is the r.v. being calculated as the sum of the r.v.
+ξ of the interarrival time with PGF α(z), the r.v. ω of the waiting time with PGF
+W(z) and the r.v. η of service time with PGF β(z) as demonstrated in Fig. 4.
+40     U. Morozova et al.
+
+Due to that, we are able to obtain the PGF of PAoI as the PGFs convolution
+for the LA system
+
+
+                  ΔP
+                   LA (z) = α(z)VLA (z) = α(z)WLA (z)β(z),                 (35)
+
+with the average PAoI
+                                 P     1
+                               ΔLA =         + v LA ,                      (36)
+                                       aˆl
+and for the EA system
+
+                  ΔP
+                   EA (z) = α(z)VEA (z) = α(z)WEA (z)β(z),                 (37)
+
+with the average PAoI
+                                 P     1
+                               ΔEA =       + v EA .                        (38)
+                                       aˆl
+
+
+3    Numerical Analysis
+In this section, we estimate the impact of two-hop DECT-2020 network fragment
+in AoI metrics when delivering an update from RDPT to RDFT . For this we model
+a RDFT,PT node as LA and EA systems and compare the results of numerical
+experiments on both systems with parameters A = 5, B = 3, and b = 0.8.
+    We consider a node RDFT,PT that receives packets from 5 end-nodes RDPT s,
+which implies A = 5 in the mathematical model. We assume that the batch size
+has a binomial distribution with a success probability of 0.7. Note that in real
+DECT-2020 networks the batch size distribution depends on the probability of
+RDPT having data at each time unit and the number of RDPT s in the cluster.
+A ﬁxed size of the serviced batch B = 3 and a probability b = 0.8 of completing
+the service of a batch in a time slot allow us to regulate the load served by
+
+
+
+
+              Fig. 4. Peak Age of Information ΔP
+                                               i for the ith packet
+         Comparison of Two Models for Analysis of the DECT-2020 Cluster        41
+
+
+
+
+      Fig. 5. The comparison EA and LA systems in case of the average PAoI
+
+
+RDFT,PT over the time interval during which the radio channel at RDFT,PT
+is used to transmit through the uplink to the parent node the packets received
+from the child nodes before. We assume that in this and subsequent experiments,
+the packet delivery probability a is related to the values of these parameters by
+(1). Note that a time unit that corresponds to a slot in mathematical model of
+DTMC can be interpreted as a slot, subslot, or symbol in DECT-2020 protocol.
+In the latter case, its duration in seconds will be calculated using the Fourier
+transform scaling factor β and subcarrier scaling factor μ, which depend on the
+numerology). For our analysis we consider numerology 1 with symbol length
+41.667 · 10−6 s.
+                                                                         P
+    In Fig. 5, for the ﬁrst experiment we present the average PAoI Δ for LA
+(36) and EA (38) systems as a function of load. As a result of this experiment, we
+found the load range of ρ = [0,09...0,81], where the system with selected range
+of system parameter values gives the average peak data age is less than 10 ms,
+that satisﬁes the stringent latency requirements for URLLC traﬃc [13].
+42       U. Morozova et al.
+
+    In Fig. 6, for the second experiment we compare the average number of pack-
+ets in LA (29) and EA (30) systems as a function of load using the same param-
+eters as in the ﬁrst experiment. As expected, the curve for LA lies above the
+curve for EA, although only slightly, so LA system performance metrics show
+the worse case.
+                                                                     P
+    The third experiment involves analyzing the average PAoI Δ as a function
+of the ratio B/A between the length of the serviced and received batches (see
+Fig. 7). The experiment is carried out at A = 10, B = {1, · · · , 10}, b = 0.8 under
+                                                            P
+conditions of decreasing load. As the graphs show, for Δ the value of 10 ms
+is achieved starting from a ratio value of 0.25 and higher, and the diﬀerence for
+                  P
+high and low Δ is 0.5 - 1 ms.
+
+
+
+
+     Fig. 6. Performance of average numbers of packets in the EA and LA systems
+         Comparison of Two Models for Analysis of the DECT-2020 Cluster         43
+
+
+
+
+      Fig. 7. Performance of dependence of the average PAoI on batches sizes
+
+
+4   Conclusion
+
+In this work, we investigated a model of a DECT-2020 NR network cluster using
+a discrete-time system with diﬀerent arrival disciplines. Based on the derived
+PGF of the waiting time, we also succeed to obtain an analytical expression for
+the PGF of the PAoI. We compared the average peak age of information in the
+DECT-2020 NR network cluster under the EA and LA disciplines. As the results
+of experiments, it is recommended to rely on the LA system, which provides an
+upper bound for the delay metrics, when calculating and designing a DECT-2020
+NR network. In future work, we also plan to focus on the study of discrete-time
+systems with batch service of variable batch size. Estimating the distribution of
+the incoming batch length is also the goal of our further research.
+
+Acknowledgments. The reported study was funded by RSF, project number 24–
+19-00804, https://rscf.ru/en/project/24-19-00804/ (Yu.Gaidamaka, formal analysis,
+investigation), by the RUDN University Scientiﬁc Projects Grant System, project No.
+021937–2-000 (U. Morozova, E. Gaidamaka, D. Nikolaev, software, data curation) and
+by the RUDN University Development Program “Strategy- 2030”, project C05.1 “Imple-
+mentation of international and domestic academic cooperation and enhancement of
+academic reputation” (A. Vlaskina, visualization, writing - original draft).
+44             U. Morozova et al.
+
+Appendix
+Derivation of the PGF of the number of packets in the system
+Early Arrival System. Let us multiply (4) by z i and sum over i, then we will
+have
+                                   ⎡
+                     B−1                i−A+B−1                                      i−1
+                                   i⎣
+ PEA (z) =                     z                     pea
+                                                      j ali−j +                                       pea
+                                                                                                       j (ali−j + ali−j+B b)+
+                         i=0                 j=0                             j=max(0,i−A+B)
+                                                                                       ⎤                  ⎡
+                                        B+i−1                                                     ∞             i−A+B−1
+  + pea
+     i (a + alB b) +                               pea             ea    ⎦
+                                                    j ali−j+B b + pi+B ab +                           z   i⎣
+                                                                                                                                   pea
+                                                                                                                                    j ali−j b+
+                                        j=i+1                                                  i=B             j=max(0,i−A)
+                                                                                                                                                    ⎤
+              i−1                                                                                     B+i−1
+  +                       pea                         ea
+                           j (ali−j b + ali−j+B b) + pi (ab + alB b) +                                          pea             ea    ⎦
+                                                                                                                 j ali−j+B b + pi+B ab =
+      j=i−A+B                                                                                         j=i+1
+                               B−1           i−A+B−1                            B−1                    i−1
+  = abPEA (z) +                         zi                   pea
+                                                              j ali−j b +              zi                             pea
+                                                                                                                       j ali−j b+
+                                i=0                j=0                           i=0        j=max(0,i−A+B)
+          ∞            i−A+B−1                                    ∞                  i−1                                    B−1
+  +           zi                             pea
+                                              j ali−j b +               zi                            pea
+                                                                                                       j ali−j b + ab               z i pea
+                                                                                                                                         i +
+      i=0          j=max(0,i−A)                                   i=0        j=max(0,i−A+B)                                  i=0
+
+          ∞                   B+i−1                                             ∞                                            B−1
+  +           zi                                  pea
+                                                   j ali−j+B b + ab                  z i pea
+                                                                                          i+B = abPEA (z) + ab                      z i pea
+                                                                                                                                         i +
+      i=0          j=max(0,i−A+B)                                              i=0                                           i=0
+
+          B−1             i−1                            ∞               i−1                                   ∞
+  + ab              zi          pea
+                                 j li−j + ab                 zi                       pea
+                                                                                       j li−j + ab                 z i pea
+                                                                                                                        i+B +
+              i=0         j=0                        i=0          j=max(0,i−A)                             i=0
+
+              ∞                    B+i−1
+  + ab              zi                               pea
+                                                      j li−j+B .
+          i=0            j=max(0,i−A+B)
+
+
+      Let us look at each expression separately:
+
+                   B−1         i−1                           B−2              B−i−1
+     1)       ab          zi         pea
+                                      j li−j = ab                  z i pea
+                                                                        i              z k lk ,
+                   i=0         j=0                           i=0               k=1
+                   ∞                 i−1
+     2)       ab         zi                         pea
+                                                     j li−j = abL(z)PEA (z),
+                   i=0        j=max(0,i−A)
+                   ∞                 B+i−1                                                                         B−1             B−i−1
+                                                                                ab
+     3)       ab         zi                              pea
+                                                          j li−j+B =                    L(z)PEA (z) −                    z i pea
+                                                                                                                              i            z k lk       ,
+                   i=0
+                                                                                zB                                 i=0              k=1
+                              j=max(0,i−A+B)
+                   ∞                                                          B −1
+                                             ab
+     4)       ab         z i pea
+                              i+B =                 L(z)PEA (z) −                    z i pea
+                                                                                          i       .
+                   i=0
+                                             zB                                i=0
+
+
+      Then, the ﬁnal form of the PGF is:
+                                                       B−1 i ea                B−1 i ea      B−i−1 k
+                               (ab − zabB )                             ab
+                                                       i=0 z pi + (ab − z B )  i=0 z pi      k=1  z lk
+      PEA (z) =                                                                                        ,
+                                                     1 − ab + abL(z) + zabB L(z) + zabB L(z)
+which is equivalent (6).
+                      Comparison of Two Models for Analysis of the DECT-2020 Cluster                                                                        45
+
+Late Arrival System. After multiplying (10) by z i and summing up over i, we
+have
+                                    ⎡                                                                                         ⎤
+                       B−1               i−1                                   B+i−1
+                                    i⎣                                                                            ⎦
+     PLA (z) =                  z              pla         la
+                                                j ali−j + pi a +                             pla            la
+                                                                                              j bali−j+B + pi+B ba +
+                        i=0              j=0                                       j=B
+                      ⎡
+          A               B−1                         i−1
+     +           zi ⎣           pla
+                                 j ali−j +                  pla                        la
+                                                             j (bali−j + bali−j+B ) + pi (ba + balB )+
+         i=B              j=0                         j=B
+                                                             ⎤                      ⎡
+         B+i−1                                                         ∞                B−1                          i−A+B−1
+     +                 pla            la    ⎦
+                        j bali−j+B + pi+B ba +                                 z   i⎣
+                                                                                                  pla
+                                                                                                   j ali−j +                           pla
+                                                                                                                                        j bali−j +
+         j=i+1                                                     i=0                  j=i−A                     j=max(B,i−A)
+                                                                                                                                                        ⎤
+               i−1                                                                                         B+i−1
+     +                     pla                        la
+                            j (bali−j + bali−j+B ) + pi (ba + balB ) +                                             pla            la    ⎦
+                                                                                                                    j bali−j+B + pi+B ba =
+         j=i−A+B                                                                                           j=i+1
+               ∞                         B−1                      ∞                           A           B+i−1
+     = ba             z i pla
+                           i + ab               z i pla
+                                                     i + ab                z i pla
+                                                                                B+i +               zi            pla
+                                                                                                                   j bali−j+B +
+              i=0                         i=0                    i=0                          i=0          j=B
+
+             ∞              B+i−1                                      ∞            min(i−1,B−1)                          A          i−1
+     +                zi                   pla
+                                            j bali−j+B +                       zi                          pla
+                                                                                                            j ali−j +           zi          pla
+                                                                                                                                             j bali−j +
+         i=A+1             j=i−A+B                                 i=0              j=max(0,i−A)                         i=B         j=B
+
+             ∞                      i−1                                                              B−1                  ∞
+     +                zi                          pla
+                                                   j bali−j = abPLA (z) + ab                                z i pla
+                                                                                                                 i + ab           z i pla
+                                                                                                                                       B+i +
+         i=A+1             j=max(B,i−A)                                                               i=0                 i=0
+
+         ∞                  B+i−1                                                  ∞         min(i−1,B−1)
+     +           zi                               pla
+                                                   j bali−j+B +                         zi                       pla
+                                                                                                                  j ali−j +
+         i=0          j=max(B,i−A+B)                                            i=0          j=max(0,i−A)
+         ∞                  i−1
+     +           zi                            pla
+                                                j bali−j .
+         i=0          j=max(B,i−A)
+
+
+
+      Let us analyze these formulas separately.
+
+                 ∞                                                             B−1
+                                           ab
+1) ab                  z i pla
+                            B+i =                      PLA (z) −                        z i pla
+                                                                                             i       ,
+               i=0
+                                           zB                                  i=0
+
+
+
+                                                                                                                     ⎛                              ⎞
+         ∞                 B+i−1                                                        ∞                                             B−1
+                 i                               la                                           i la          baL(z)                           i la
+2)           z                                  pj bali−j+B = baL(z)                         z pi+B =                ⎝PLA (z) −             z pi ⎠ ,
+      i=0            j=max(B,i−A+B)                                                    i=0                   zB                       i=0
+
+         ∞           min(i−1,B−1)                           A+B−1              min(i−1,B−1)                               B−1
+                 i                         la                              i                          la                             i la
+3)           z                            pj ali−j =                   z                             pj ali−j = aL(z)             z pi ,
+      i=0            j=max(0,i−A)                            i=0               j=max(0,i−A)                               i=0
+                                                                                                                          ⎛                                 ⎞
+         ∞                 i−1                                ∞                     i−1                                                      B−1
+                 i                         la                          i                             la                                              i la
+4)           z                            pj bali−j =              z                              pj bali−j = baL(z) ⎝PLA (z) −                     z pi ⎠ .
+      i=0            j=max(B,i−A)                            i=B           j=max(B,i−A)                                                      i=0
+46      U. Morozova et al.
+
+     Then the PGF will have the following form
+                     B−1
+                                          ab   baL(z)
+                           z i pla
+                                i  ab −      −        + aL(z) − baL(z)
+                                          zB     zB
+          PLA (z) = i=0                                                    .
+                               1 − ab + zabB + baL(z)
+                                                 zB
+                                                      + baL(z)
+
+After simple mathematical operations, we ﬁnally obtained (12).
+
+
+References
+ 1. ETSI, TS 103 636-1, “DECT-2020 New Radio (NR); Part 1: Overview, Release 2”;
+    Oct. 2024
+ 2. ETSI, TS 103 636-2, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+    transmission requirements, Release 2”; Oct. 2024
+ 3. ETSI, TS 103 636-3, “DECT-2020 New Radio (NR); Part 3: Physical layer, Release
+    2”; Oct. 2024
+ 4. ETSI, TS 103 636-4, “DECT-2020 New Radio (NR); Part 4: MAC layer, Release
+    2”; Oct. 2024
+ 5. 3GPP. Study on scenarios and requirements for next generation access technologies
+    (3GPP TR 38.913 version 18.0.0 Release 18)
+ 6. Gupta, U. C. and Veena Goswami. “Performance analysis of ﬁnite buﬀer discrete-
+    time queue with bulk service.” Comput. Oper. Res. 29 (2002): 1331-1341
+ 7. Kim, N.K., Chang, S.H., Chae, K.C.: On the relationships among queue lengths at
+    arrival, departure, and random epochs in the discrete-time queue with D-BMAP
+    arrivals. Oper. Res. Lett. 30(1), 5–32 (2002)
+ 8. Goswami, V., Chaudhry, M.L.: Sojourn-Time Distribution for Geo/Geoa,b /1 Queue
+    with Batch Service. Int. J. Appl. Comput. Math 9, 153 (2023). https://doi.org/10.
+    1007/s40819-023-01645-w
+ 9. Claeys, D., Walraevens, J., Laevens, K. et al. Delay analysis of two batch-service
+    queueing models with batch arrivals: Geo X/Geo c/1. 4OR-Q J Oper Res 8, 255–
+    269 (2010)
+10. Chang, S.H., Choi, D.W.: Performance analysis of a ﬁnite-buﬀer discrete-time
+    queue with bulk arrival, bulk service and vacations. Comput. Oper. Res. 32(9),
+    2213–2234 (2005)
+11. Kosta, A., Pappas, N., Ephremides, A. and Angelakis, V. Non-linear Age of Infor-
+    mation in a Discrete Time Queue: Stationary Distribution and Average Perfor-
+    mance Analysis. ICC 2020 - 2020 IEEE International Conference on Communica-
+    tions (ICC), Dublin, Ireland, 2020, pp. 1-6
+12. Samuylov, A., Moltchanov, D., Pirskanen, J., Numminen, J., Koucheryavy, Y.
+    and Valkama, M. Performance Assessment of DECT-2020 NR and Classic DECT
+    Coexistence Mechanisms: IEEE 97th Vehicular Technology Conference (VTC2023-
+    Spring). Florence, Italy 2023, 1–7 (2023). https://doi.org/10.1109/VTC2023-
+    Spring57618.2023.10200362
+13. Samuylov, A., Moltchanov, D., Gaydamaka, A., Lyczkowski, E., Frotzscher, A., von
+    Schoettler, F., Valkama, M.: Empowering Near-URLLC IoT with 5G DECT-2020
+    NR: Current State and the Road Ahead. IEEE Commun. Mag. 63(4), 130–136
+    (2025)
+          Comparison of Two Models for Analysis of the DECT-2020 Cluster            47
+
+14. Kaul, S., Gruteser, M., Rai, V., Kenney, J."Minimizing age of information in vehic-
+    ular networks," 2011 8th Annual IEEE Communications Society Conference on
+    Sensor, Mesh and Ad Hoc Communications and Networks, Salt Lake City, UT,
+    USA, 2011, pp. 350-358, https://doi.org/10.1109/SAHCN.2011.5984917
+15. Kosta, A., Pappas, N., Angelakis, V. Age of Information: A New Concept, Metric,
+    and Tool , now, 2017, https://doi.org/10.1561/1300000060
+16. Cohen, J.; Down, D.G. On the role of Rouche’s theorem in queueing analysis
+    Queueing Systems. – 1996. – Vol. 23. – P. 281-291
+

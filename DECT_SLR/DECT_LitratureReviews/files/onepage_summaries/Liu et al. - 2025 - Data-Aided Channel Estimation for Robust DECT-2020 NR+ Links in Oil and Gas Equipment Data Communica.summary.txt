@@ -1,0 +1,74 @@
+Title: 2025 7th International Conference on Intelligent Control, Measurement and Signal Processing (ICMSP)
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Oil and gas extraction and processing environments impose stringent
+requirements on wireless data links used for equipment monitoring, control, and
+safety. Multipath-rich metallic structures, Radio Frequency(RF) blocking, and
+dynamic interference degrade channel estimation accuracy, especially at low SNR.
+This paper adapts and evaluates a data-aided least-squares (LS) channel
+estimation approach—originally developed and validated for Digital Enhancement
+Cordless Telecommunication2020 New Radio Plus(DECT-2020 NR+)—to oil and gas
+equipment data communication over Orthogonal Frequency Division
+Multiplexing(OFDM) links. By combining pilot symbols with previously decoded
+data symbols, the proposed receiver improves channel transfer function (CTF)
+estimates without increasing pilot overhead. MATLAB simulations on AWGN and 3GPP
+TDL channels, coupled with a lab validation using a 979-8-3315-7017-0/25/$31.00
+©2025 IEEE DECT development board and a backscatter-like test signal, show
+consistent MSE gains over pilot-only LS across SNRs. Deployment aspects for oil
+and gas sites, including subcarrier numerology, packetization, and frequency
+planning in the 1.9 GHz frequency band, which is used in some industrial
+wireless systems. Detailed implementation guidance is provided for field
+gateways and sensor Radio Devices(RDs). Results indicate that data-aided
+estimation enhances reliability and spectral efficiency for real-time equipment
+telemetry and alarm reporting in harsh oilfield environments.
+
+Approach and methods:
+(Beijing Petroleum Machinery Co.,Ltd.) China National Petroleum Corporation
+Beijing, China guobiaodri@cnpc.com.cn Abstract—Oil and gas extraction and
+processing environments impose stringent requirements on wireless data links
+used for equipment monitoring, control, and safety. Multipath-rich metallic
+structures, Radio Frequency(RF) blocking, and dynamic interference degrade
+channel estimation accuracy, especially at low SNR. This paper adapts and
+evaluates a data-aided least-squares (LS) channel estimation approach—originally
+developed and validated for Digital Enhancement Cordless Telecommunication2020
+New Radio Plus(DECT-2020 NR+)—to oil and gas equipment data communication over
+Orthogonal Frequency Division Multiplexing(OFDM) links. By combining pilot
+symbols with previously decoded data symbols, the proposed receiver improves
+channel transfer function (CTF) estimates without increasing pilot overhead.
+MATLAB simulations on AWGN and 3GPP TDL channels, coupled with a lab validation
+using a 979-8-3315-7017-0/25/$31.00 ©2025 IEEE DECT development board and a
+backscatter-like test signal, show consistent MSE gains over pilot-only LS
+across SNRs. Deployment aspects for oil and gas sites, including subcarrier
+numerology, packetization, and frequency planning in the 1.9 GHz frequency band,
+which is used in some industrial wireless systems. Detailed implementation
+guidance is provided for field gateways and sensor Radio Devices(RDs). Results
+indicate that data-aided estimation enhances reliability and spectral efficiency
+for real-time equipment telemetry and alarm reporting in
+
+Key findings:
+gas operations, these improvements directly support more reliable telemetry for
+safety interlocks and condition-based maintenance, even amid rotating machinery
+and heavy steel infrastructure. The approach also aligns with the sector’s power
+and spectrum constraints, enabling longer sensor lifetimes and denser mesh
+deployments without sacrificing link robustness. R EFERENCES [1] ETSI TS 103
+636-1 V2.0.0, ”DECT-2020 New Radio (NR); Part 1: Overview; Release 2,” European
+Telecommunications Standards Institute, 2020. [2] M. N. Drakshayini and M. R.
+Kounte, ”A review of wireless channel estimation techniques: challenges and
+solutions,” International Journal of Wireless and Mobile Computing, vol. 23, no.
+2, pp. 193–203, 2022. [3] E.-C. Lim and H.-J. Choi, ”Reliable region decision
+DDCE and erasure replacement decoding of OFDM system,” in Proc. Asia-Pacific
+Conference on Communications, Perth, Australia, 2005, pp. 919–923. [4] A.
+Jahangir, ”Analysis of the performance of the DECT NR+ radio access technology
+for connectivity of unmanned aerial vehicles (UAVs),” M.S. thesis, Univ. Oulu,
+Oulu, Finland, 2024. [5] A. Saikko, ”Positioning methods in DECT-2020 NR
+networks,” M.S. thesis, Dept. Elect. Eng., Aalto University, Espoo, Finland,
+2024. 313 Authorized licensed use limited to: Hochschule Aalen (FH) - Technik
+und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore.
+Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

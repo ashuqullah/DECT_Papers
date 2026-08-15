@@ -1,0 +1,74 @@
+Title: Positioning and Tracking in DECT-2020 NR With
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—This article addresses efficient positioning and user device tracking in
+Internet-of-Things (IoT) networks with particular focus on the new DECT-2020 New
+Radio standard—the first noncellular 5G technology standard in the world.
+Stemming from fundamental performance requirements of IoT networks, for example,
+related to energy consumption, latency, and reliability, it is important to
+utilize available radio resources efficiently, while avoiding redundant
+transmissions and signaling. In this article, we extend our earlier proposed
+tracking-based positioning solution, which utilized Fisher information to select
+the most beneficial range and angle measurements, to cover also received signal
+strength (RSS)-based measurements and particle filter-based solutions. By
+exploiting prior information inherited from trackingbased positioning solutions,
+it is possible to proactively select the most valuable positioning measurements,
+and thus save valuable effort and time in acquiring and processing positioning
+measurements without sacrificing the positioning performance in practice.
+Through extensive numerical evaluations, considering range, angle, and RSS
+measurements, we show that the proposed anchor selection method is able to
+outperform the traditional signal-to-noise ratio-based measurement selection
+approach, while enabling positioning with a smaller number of measurements. In
+addition, we illustrate the effect of prior information quality on the proposed
+method performance by varying the measurement interval in the tracking process.
+The numerical results show that when only two anchors are utilized,
+approximately up to 10%–50% reduction in positioning root-mean-square error can
+be achieved depending on the considered measurement type.
+
+Approach and methods:
+CCOMMODATING to growing demand on Internet-ofThings (IoT)-based services, the
+new Digital Enhanced Cordless Telecommunications—2020 New Radio (DECT-2020 NR)
+[1], [2] was introduced as part of the official International Telecommunication
+Union (ITU) fifth generation (5G) standards in 2022 [3]. As the first
+noncellular 5G technology, the DECT-2020 NR is developed especially for IoT use
+cases with support of ultrareliable low latency communications (URLLC) and
+massive machine-type communications (mMTC) related performance requirements from
+5G. In various IoT and wireless sensor network (WSN) systems, along with related
+applications and location-based services [4], positioning plays an important and
+emerging role. Except for a few recent studies, [5], [6], DECT-2020 NR-based
+positioning has not yet been widely studied due to its technological novelty.
+Nonetheless, research works focusing on positioning with other IoT systems, or
+IoT-like scenarios, can be found, for example, in [4], [7], [8], [9], [10],
+[11], and [12]. In [4], different IoT-based A Received 31 October 2024; revised
+16 January 2025; accepted 28 February 2025. Date of publication 11 April 2025;
+date of current version 29 April 2025. This work was supported by Business
+Finland under the USWA project. (Corresponding author: Jukka Talvitie.) Antti
+Saikko, Jukka Talvitie, Joonas Säe, and Mikko Valkama are
+
+Key findings:
+In this article, we extended our earlier research work considering positioning
+in IoT systems with a specific focus on the DECT-2020 NR standard. We utilized
+the proposed method of selecting the most important positioning measurements to
+avoid processing of negligible measurements, therefore enabling reduced energy
+consumption, latency, and computational load. Moreover, by exploiting
+measurement-based Fisher information from potential anchor measurements,
+evaluated through the means of prediction step of a tracking filter and
+associated mobility model, the proposed measurement selection method were used
+to minimize the a posteriori PEB. In addition to EKF-based tracking, we
+formulated a particle filter-based solution for challenging RSS-based
+positioning scenarios, and proposed a novel method to utilize tracked particles
+for FIM-based measurement selection. Based on extensive set of numerical results
+considering specific DECT-2020 NR system parameters, the performance of the
+proposed measurement selection approach was assessed and compared against the
+baseline SNR-based selection scheme considering range, angle, and RSS
+measurements, while also addressing the corresponding theoretical bounds. In
+addition, up to a certain point the results can be applied to scenarios 80 IEEE
+JOURNAL OF INDOOR AND SEAMLESS POSITIONING AND NAVIGATION, VOL. 3, 2025 with
+other wireless technologies, such as cellular 5G NR, when considering similar
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

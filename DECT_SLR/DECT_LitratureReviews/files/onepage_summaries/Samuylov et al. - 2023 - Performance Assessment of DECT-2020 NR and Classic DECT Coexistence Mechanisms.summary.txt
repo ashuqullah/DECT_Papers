@@ -1,0 +1,68 @@
+Title: Performance Assessment of DECT-2020 NR and
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—The recently standardized ETSI DECT-2020 New Radio (NR) technology promises to
+enable operator-independent Internet-of-Things (IoT) services. One of the
+supported operating bands is the 1880 − 1900 MHz band where IoT devices use one
+or more 1.728 MHz wide channels for multi-hop communications. It has been shown
+that such systems scale well to satisfy the requirements of 5G massive machine-
+type communications (mMTC). During the standardization process, the coexistence
+with classic DECT technology was addressed but the benefits of different options
+have not been deeply explored. In this paper, by utilizing system-level
+simulation techniques we evaluate several coexistence solutions for DECT-2020
+and classic DECT systems including conventional listen-before-talk access (LBT),
+last-minute scan, and scheduling-based mechanisms. Our numerical results
+illustrate that the standard LBT operation ensures excellent performance with no
+more than 2% of packet drops for classic DECT, and still results in satisfactory
+DECT2020 operation under 25% of resources allocated to classic DECT. The use of
+last-minute-scan leads to drastic performance degradation of DECT-2020 (by more
+than 10% in terms of packet drops) as compared to the standard LBT-only
+operation. Finally, a scheduling-based mechanism allows to improve the LBT
+performance for DECT-2020 devices by 2-5%.
+
+Approach and methods:
+operation ensures excellent performance with no more than 2% of packet drops for
+classic DECT, and still results in satisfactory DECT2020 operation under 25% of
+resources allocated to classic DECT. The use of last-minute-scan leads to
+drastic performance degradation of DECT-2020 (by more than 10% in terms of
+packet drops) as compared to the standard LBT-only operation. Finally, a
+scheduling-based mechanism allows to improve the LBT performance for DECT-2020
+devices by 2-5%. Index Terms—DECT-2020; New Radio; IoT; coexistence. I. I
+NTRODUCTION The amount of services offered by the Internet of Things (IoT) is
+growing each year spanning all the commercial sectors [1]. To enable
+connectivity for constantly growing IoT equipment massive machine-type
+communications (mMTC) technologies are being specified as a part of 5G IMT-2020.
+NB-IoT and LTE-M are the main mMTC technologies developed by 3GPP to provide
+cellular IoT (CIoT) connectivity with the former satisfying 5G IMT-2020
+requirements [2]. In addition to 3GPP activities, there is an alternative ETSI
+initiative standardizing non-CIoT 5G mMTC technology. These efforts recently
+commenced in ETSI DECT-2020 New Radio (NR) standard in 2021 [3]. Current
+specifications define 19 different operating bands for DECT-2020 NR below 6 GHz,
+including unlicensed DECT bands [4]. The use of
+
+Key findings:
+Part 1: Overview,” ETSI, TS 103 636-1 v1.3.1, December 2021. [4] ——, “DECT-2020
+New Radio (NR); Part 2: Radio reception and transmission requirements; Release
+1,” ETSI, TS 103 636-2 v1.3.1, December 2021. [5] R. Kovalchukov, D. Moltchanov,
+J. Pirskanen, J. Säe, J. Numminen, Y. Koucheryavy, and M. Valkama, “DECT-2020
+New Radio: The Next Step toward 5G Massive Machine-Type Communications,” IEEE
+Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022. [6] M. Penner, M.
+Nabeel, and J. Peissig, “Link-level performance evaluation of imt-2020 candidate
+technology: Dect-2020 new radio,” arXiv preprint arXiv:2104.08549, 2021. [7]
+ETSI, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,” ETSI, TS
+103 636-3 v1.3.1, December 2021. [8] ——, “DECT-2020 New Radio (NR); Part 4: MAC
+layer; Release 1,” ETSI, TS 103 636-4 v1.3.1, December 2021. [9] ——, “Digital
+Enhanced Cordless Telecommunications (DECT); Common Interface (CI); Part 1:
+Overview,” ETSI, TS 300 175-1 v2.9.1, March 2022. [10] ITU-R, “Guidelines for
+evaluation of radio interface technologies for IMT-2020,” ITU-R, M.2412-0, July
+2017. [11] ETSI, “DECT(22)000193 Legacy Speech Codec Error Tolerance,” ETSI,
+DECT-000193, July 2020. Authorized licensed use limited to: Hochschule Aalen
+(FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC
+from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

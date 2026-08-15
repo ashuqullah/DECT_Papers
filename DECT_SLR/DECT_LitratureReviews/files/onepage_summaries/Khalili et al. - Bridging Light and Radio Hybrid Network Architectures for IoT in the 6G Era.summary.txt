@@ -1,0 +1,71 @@
+Title: Bridging Light and Radio: Hybrid Network
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+The massive scale and dense deployments of future Internet of Things (IoT),
+particularly within the 6G framework, expose the critical limitations of
+traditional Radio Frequency (RF) systems, namely spectral congestion,
+interference, and security vulnerabilities. Optical Wireless Communication (OWC)
+oﬀers a compelling complement, providing vast, unlicensed spectrum, immunity to
+RF interference, and enhanced physical-layer security. However, OWC's
+susceptibility to blockages and limited mobility hinders its standalone
+deployment, as it cannot, on its own, meet the stringent connectivity and
+mobility requirements of many IoT applications. This article explores the
+convergence of optical and radio networks and proposes a ﬂexible, adaptable, and
+resilient connectivity framework tailored for modern IoT ecosystems. We present
+a holistic system architecture that integrates single-mode RF, single-mode OWC,
+and uniﬁed hybrid Access Points (APs) to eﬃciently manage the diverse and often
+conﬂicting objectives of various IoT applications. While these hybrid RF/OWC APs
+oﬀer signiﬁcant advantages in cost, eﬃciency, and coordinated management, they
+also introduce a primary deployment challenge: the inherent coverage mismatch
+between the two technologies. To precisely address this critical issue, we
+demonstrate a practical solution supported by a coverage equivalence analysis to
+validate the proposed framework. This analysis quantiﬁes the required OWC
+transmitter density to match a given RF range, oﬀering tangible guidance for
+system planning.
+
+Approach and methods:
+While these hybrid RF/OWC APs oﬀer signiﬁcant advantages in cost, eﬃciency, and
+coordinated management, they also introduce a primary deployment challenge: the
+inherent coverage mismatch between the two technologies. To precisely address
+this critical issue, we demonstrate a practical solution supported by a coverage
+equivalence analysis to validate the proposed framework. This analysis quantiﬁes
+the required OWC transmitter density to match a given RF range, oﬀering tangible
+guidance for system planning. Keywords communication, networking and broadcast
+technologies, hybrid network architecture, internet of things, optical wireless
+communication Posted on 1 December 2025 — CC-BY 4.0 — This is a preprint and has
+not been peer reviewed. Data may be preliminary. — https://
+doi.org/10.36227/techrxiv.176462964.43051246/v1 1 Bridging Light and Radio:
+Hybrid Network Architectures for IoT in the 6G Era Mohammad Khalili∗ , Amila
+Perera∗ , Juha Häkkinen† , Marcos Katz∗ , and Konstantin Mikhaylov∗ ∗ Centre
+for Wireless Communications, University of Oulu, Oulu, Finland
+{mohammad.khalili, malalgodage.perera, marcos.katz,
+konstantin.mikhaylov}@oulu.fi † Circuits and Systems Research Unit (CAS),
+University of Oulu, Oulu, Finland juha.hakkinen@oulu.fi Abstract—The massive
+scale and dense deployments of future Internet of Things (IoT), particularly
+within the 6G framework, expose the critical limitations of traditional Radio
+Frequency (RF) systems, namely spectral congestion, interference, and
+
+Key findings:
+“Centimeter-level 3D mobile online visible light positioning system with single
+LED lamp,” IEEE Internet of Things J., vol. 11, no. 1, pp. 418–429, 2024. [13]
+R. Kovalchukov et al., “DECT-2020 new radio: The next step toward 5G massive
+machine-type communications,” IEEE Commun. Mag., vol. 60, no. 6, pp. 58–64,
+2022. [14] X. Wu et al., “Hybrid LiFi and WiFi networks: A survey,” IEEE Commun.
+Surv. Tutor., vol. 23, no. 2, pp. 1398–1420, 2021. Juha Häkkinen is a Senior
+Research Fellow at the University of Oulu. His research focuses on circuits and
+systems for VLC and emerging circuit technologies utilizing novel flexible
+components in the IoT. Marcos Katz is a Professor at the University of Oulu,
+specializing in wireless communications. He has held roles at Nokia, Samsung,
+and VTT, the Technical Research Centre in Finland. The major focus of his
+research is on the Visible Light Communication and sustainable IoT systems.
+Konstantin Mikhaylov is an Associate Professor (Tenure Track) with the Centre
+for Wireless Communications at the University of Oulu. The major focus of his
+research is on the radio access and beyond-access technologies for massive and
+dependable IoT, and the matters related to the design and use of IoT systems.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

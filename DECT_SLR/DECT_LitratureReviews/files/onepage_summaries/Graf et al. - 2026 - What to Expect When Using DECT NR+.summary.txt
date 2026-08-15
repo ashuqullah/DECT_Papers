@@ -1,0 +1,71 @@
+Title: What to Expect When Using DECT NR+
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+DECT NR+ is the new kid on the block in wireless technologies: it re-purposes
+the 1.9 GHz Digital Enhanced Cordless Telecommunications (DECT) standard for
+IoT-type applications. How does DECT NR+ perform in practice and where should we
+be using it? The ambition of this article is to provide answers to those
+questions. We start by an overview of the fundamental principles of the physical
+layer. We then survey the DECT NR+ products on the market today. Using the nRF91
+series from Nordic Semiconductor, we conduct a comprehensive set of hands-on
+power consumption and communication range measurements. Our results place DECT
+NR+ in a gap in-between existing technologies. Its range is comparable to long
+range standards such as IEEE 802.15.4g under certain parameter choices: 200 m in
+an urban setting, 6 km in the most favorable lineof-sight conditions. For higher
+order Modulation and Coding Schemes, range drops and is rather comparable to Wi-
+Fi. The nRF9161 draws significant power (at 3.7 V, 220 mA transmitting at +19
+dBm, 45 mA receiving), approximately 10× higher than BLE radios. This is likely
+primarily due to earlystage design inefficiencies and the inherent complexity of
+the DECT NR+ physical layer, limiting its adoption in batterypowered
+applications. We conclude that DECT NR+ is particularly appropriate for
+applications that require a dynamic tradeoff between communication range and
+data rate, but are not cost-sensitive.
+
+Approach and methods:
+Wireless connectivity is at the heart of Internet of Things (IoT) applications,
+allowing devices to communicate without the constraints of a wired
+infrastructure. The scope of 5G standardization has expanded into IoT
+applications [1]. While cellular 5G networks are well-suited for high-bandwidth
+and lowlatency use cases, their infrastructure-heavy nature and operational
+costs make them less ideal for widespread IoT deployment, especially in
+industrial and private networks. To bridge the gap between traditional cellular
+and unlicensed wireless IoT solutions, DECT-2020 NR, also known as “DECT NR+”,
+is announced as “the first non-cellular 5G standard” officially recognized by
+the International Telecommunication Union Radiocommunication Sector (ITU-R). The
+promise is that DECT NR+ avoids costly contracts and dependencies associated
+with licensed bands, unlike cellular technologies such as 5G NR, LTE-M or
+Narrowband IoT (NB-IoT). DECT NR+ is specified by European Telecommunications
+Standards Institute (ETSI) ISSN: 0163-6804 Digital Object Identifier:
+10.1109/MCOM.001.2500286 16 and designed to support the ultra-reliable
+lowlatency communication (URLLC) [2] and massive machinetype communication
+(mMTC) pillars of 5G [3]. One of its key features is its operation in the 1.9
+GHz license-free frequency band, traditionally reserved for Digital Enhanced
+Cordless Telecommunications (DECT) phones, offering the advantage of minimal
+external interference. DECT NR+ potentially
+
+Key findings:
+candidate at Sorbonne University in Paris, France and works at Siemens AG in
+Erlangen, Germany. He holds a M.Sc. in Electrical Engineering from TU Munich,
+Germany. His research focuses on low-power wireless communication systems. T
+homas W atteyne (thomas.watteyne@inria.fr) is a Senior Research Director at
+Inria Paris, France. He is currently on a sabbatical and works as a Principal
+Engineer at Analog Devices in Boston, USA. He holds a Ph.D. degree in Computer
+Science from INSA Lyon, France. He was a postdoctoral research lead in Prof.
+Kristofer Pister’s team with the University of California at Berkeley, USA. From
+2005 to 2008, he was a Research Engineer with France Telecom, Orange Labs. From
+2023 to 2024, he served as the Scientific Coordinator of the Horizon Europe
+OpenSwarm Project. From 2013 to 2022, he co-chaired the IETF 6TiSCH Working
+Group to standardize how to use IEEE802.15.4e TSCH in IPv6-enabled mesh
+networks. M ichael V illnow (michael.villnow@siemens.com) leads the research
+group for sensor systems at Siemens AG in Erlangen, Germany. He received the
+Diploma degree in Mechatronics from Friedrich-Alexander-University (FAU) of
+Erlangen-Nuremberg, Germany. Since 2015, he has been a Project Manager at
+Siemens for IoT development projects. IEEE Communications Magazine • February
+2026
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

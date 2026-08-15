@@ -1,0 +1,436 @@
+                                                                                                                                                                                                                                  Energy Saving Router Rotation
+2022 18th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob) | 978-1-6654-6975-3/22/$31.00 ©2022 IEEE | DOI: 10.1109/WIMOB55322.2022.9941639
+
+
+
+
+                                                                                                                                                                                                                                   Protocol for DECT-2020 NR
+                                                                                                                                                                                                                                Timo Nihtilä                                                                     Tarmo Taipale
+                                                                                                                                                                                                                           Magister Solutions Ltd                                                           Nordic Semiconductor Ltd
+                                                                                                                                                                                                                             Jyväskylä, Finland                                                                  Turku, Finland
+                                                                                                                                                                                                                          timo.nihtila@magister.fi                                                        tarmo.taipale@nordicsemi.no
+
+
+
+
+                                                                                                                                                                                                    Abstract—ETSI DECT-2020 New Radio (NR) is a new flexible                        met and the data does not accumulate to relaying nodes.
+                                                                                                                                                                                                radio interface targeted to support a broad range of wireless                       However, maintaining an active duty cycle consumes energy
+                                                                                                                                                                                                Internet of Things (IoT) applications. It has been shown to fulfill                 resources which may be scarce if the network consists of
+                                                                                                                                                                                                both massive machine-type communications (mMTC) and                                 mainly battery-operated nodes, as is common in the IoT
+                                                                                                                                                                                                ultra-reliable    low    latency     communications      (URLLC)                    domain.
+                                                                                                                                                                                                requirements for 5th generation (5G) networks. DECT-2020 NR
+                                                                                                                                                                                                                                                                                       Energy consumption is a well-known and well-studied
+                                                                                                                                                                                                is an autonomous wireless mesh network protocol where the
+                                                                                                                                                                                                devices can choose to become routers, forwarding the data of                        problem of WMNs. Comprehensive surveys of different
+                                                                                                                                                                                                other devices in addition to their own data. Thus, a wireless mesh                  energy-efficient routing protocols proposed for wireless
+                                                                                                                                                                                                network does not need separate base stations or a core network                      sensor/mesh networks have been presented in literature e.g.
+                                                                                                                                                                                                architecture to extend coverage. This makes the deployment of                       [2], [3]. The advantages and disadvantages of each considered
+                                                                                                                                                                                                DECT-2020 NR networks easy, but with the cost of increased                          algorithm has been quite extensively analyzed. However, no
+                                                                                                                                                                                                energy consumption in the router nodes. Notably, the same                           earlier work on the suitability or the performance of WMN
+                                                                                                                                                                                                energy consumption is not inflicted upon the non-routing leaf
+                                                                                                                                                                                                                                                                                    energy saving protocols with DECT-2020 NR yet exists.
+                                                                                                                                                                                                nodes whose operation is on the contrary very energy efficient.
+                                                                                                                                                                                                This role-induced disparity in node energy consumption results                         The performance of DECT-2020 NR has been evaluated
+                                                                                                                                                                                                in the network not using the energy of its devices with maximal                     earlier e.g. in [4]-[7] but none of the studies gave
+                                                                                                                                                                                                efficiency. A method to alleviate this problem could be a network                   consideration to the network energy consumption. In [8] it was
+                                                                                                                                                                                                rotation in which the roles of network nodes are periodically                       demonstrated that especially when serving delay sensitive
+                                                                                                                                                                                                rotated and the energy consumption is thus distributed more                         data, the lifetime of a battery-operated DECT-2020 NR
+                                                                                                                                                                                                evenly among the nodes. In this paper we propose a role rotation                    network is limited by the energy consumption of the router
+                                                                                                                                                                                                protocol for DECT-2020 NR and evaluate its impact to the
+                                                                                                                                                                                                                                                                                    nodes, due to their active duty cycle required to maintain low
+                                                                                                                                                                                                expected lifetime and the performance of the network by system
+                                                                                                                                                                                                level simulations.                                                                  latencies. On the other hand, the leaf nodes of DECT-2020 NR
+                                                                                                                                                                                                                                                                                    were shown to be very energy efficient as they only need to be
+                                                                                                                                                                                                    Keywords—DECT-2020, NR, 5G, energy saving                                       awake intermittently. Due to this disparity in energy
+                                                                                                                                                                                                                                                                                    efficiency, it is evident that if the DECT-2020 NR network
+                                                                                                                                                                                                                        I.          INTRODUCTION                                    could distribute the energy consumption more evenly between
+                                                                                                                                                                                                    The DECT-2020 NR standard was released by the                                   the nodes, the network lifetime would increase.
+                                                                                                                                                                                                European Telecommunications Standards Institute (ETSI) in                              More even energy consumption distribution can be
+                                                                                                                                                                                                2020 [1]. It is intended for industrial Internet of Things (IoT)                    achieved via node role rotation. The idea has been proposed
+                                                                                                                                                                                                applications requiring either massive machine-type (mMTC)                           for WMNs earlier in [9] where the authors proposed a
+                                                                                                                                                                                                and/or ultra-reliable low latency (URLLC) communications.                           Low-Energy Adaptive Clustering Hierarchy (LEACH)
+                                                                                                                                                                                                    DECT-2020 NR introduces a device-based cluster-tree                             protocol. LEACH utilizes a randomized rotation of
+                                                                                                                                                                                                wireless mesh network (WMN), capable of forming an                                  cluster-heads, which are elected head nodes of local sensor
+                                                                                                                                                                                                autonomous network without the need for separate base                               node clusters. Cluster-heads collect the data from the nodes in
+                                                                                                                                                                                                stations or core network. Nodes are capable of acting as
+                                                                                                                                                                                                                                                                                    the cluster, aggregate it and transmit it to the target base
+                                                                                                                                                                                                routers between their neighbors, forwarding data between
+                                                                                                                                                                                                them in case direct connection is not possible.                                     station, so their function is roughly similar to DECT-2020 NR
+                                                                                                                                                                                                    WMN coverage can theoretically reach extreme distances                          routers. A cluster-head node consumes more energy than a
+                                                                                                                                                                                                with minimal costs and effortless deployment. However,                              regular node so in LEACH the cluster nodes periodically elect
+                                                                                                                                                                                                forwarding data through the network with a reasonable delay                         a different node to act as a cluster-head to evenly distribute the
+                                                                                                                                                                                                requires that each node passing the data onwards has an                             energy load.
+                                                                                                                                                                                                acceptable duty cycle, meaning the node is able to receive and                         Similar role rotation idea was also used in [10], where the
+                                                                                                                                                                                                transmit reasonably often so that the delay requirements are                        Span algorithm was introduced for 802.11 ad hoc networks. In
+
+
+
+
+                                                                                                                                                                                             Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                                                                                                               69
+   Span, each network node periodically makes an independent                           the exact route cost calculation is left to implementation so
+   decision on whether to sleep or stay awake as a coordinator                         essentially the node is free to use any information available.
+   node which is a similar node as DECT-2020 NR router node in                         Selecting a proper route cost metric is essential for ensuring
+   a sense that it participates in forwarding the packets through                      the occurrence of role rotation in the network. We will discuss
+   the network.                                                                        this more in section III.
+      Based on the findings of these earlier WMN studies one can
+   expect network lifetime benefits from rotation also with
+   DECT-2020 NR standard but exactly how much benefit is
+   achievable cannot be concluded without implementing a
+   rotation protocol that can be fitted into the standard and
+   evaluating its performance using realistic modeling.
+      Compared to conventional WMN technologies, the energy
+   efficiency of DECT-2020 NR is improved by the use of
+   state-of-the-art physical layer techniques, such as Cyclic
+   Prefix Orthogonal Frequency Division Multiplexing
+   (CP-OFDM), turbo coding and Hybrid ARQ (HARQ) and
+   periodic Random Access Channel (RACH) duty-cycling.
+   These features make the comparison with earlier, more simpler
+   WMN technologies difficult and justify the need for a new                           Fig. 1 A diagram of a simple network initial organization process of where tier
+   study.                                                                              1 (T1) node A becomes a router (R) and T1 node B and tier 2 (T2) node C
+      In this paper we adapt the WMN role rotation functionality                       become leaf nodes (L).
+   to DECT-2020 NR and propose a simple protocol to rotate the
+                                                                                          After a PT has successfully associated itself with an FT, the
+   roles of network nodes without the need of specific election
+                                                                                       PT switches to FT mode and performs FT mode operations,
+   processes or central coordination but by merely reusing the
+                                                                                       i.e. BG scanning and beaconing, in order to advertise itself as
+   mesh network organization process inherent in the standard.
+                                                                                       a potential parent to its nearby nodes and by that extend the
+      Finally, we evaluate the actual effect of rotation to
+                                                                                       coverage area of the network to a new tier of nodes. The nodes
+   DECT-2020 NR network lifetime and performance by
+                                                                                       associated directly to the sink form tier 1, the nodes associated
+   conducting dynamic system level simulations in a typical IoT
+                                                                                       with tier 1 nodes form tier 2 nodes, etc.
+   use case with mesh networks of different sizes. The results of
+                                                                                          As this organization cycle continues from tier to tier, the
+   the study can be used to improve the energy efficiency of
+                                                                                       mesh network size can theoretically increase to extreme
+   DECT-2020 NR standard in future releases.
+                                                                                       distances. The cycle continues until all nodes within a certain
+       II.          DECT-2020 NR MESH NETWORK ORGANIZATION                             coverage area are associated with another node. In the
+                                                                                       simulations we let all the nodes perform BG scanning after
+      The DECT-2020 NR network organization process is
+                                                                                       their association and after all nodes have performed it, we
+   explained in the standard [1]. For a single network, there is
+                                                                                       consider the initial organization phase finished and the
+   always one sink, i.e. a gateway node to the Internet. There can
+                                                                                       network complete, after which all nodes initiate traffic
+   be multiple sinks in a group of nodes but from the system
+                                                                                       transmissions.
+   point of view the sinks form their own networks (cluster
+                                                                                          Some nodes in the network are left as pure PT nodes, i.e.
+   trees), which co-exist but operate independently from each
+                                                                                       leaf nodes. These nodes cancel their advertisement beaconing
+   other. In this study we concentrate on the operation of a single
+                                                                                       after organization is finished and go to sleep, only to wake up
+   network entity under one sink.
+                                                                                       listening to their parent’s beacon or to transmit data.
+      A diagram of the initial organization process in a simple
+   network is presented in Fig. 1. The process starts by the sink                                     III.         NETWORK ROTATION PROCESS
+   selecting FT (Fixed Termination point) mode. In FT mode, a
+                                                                                          In this section we explain how the DECT-2020 NR network
+   node first performs background (BG) scanning, searching for
+                                                                                       rotation is executed in this study. It should be noted that the
+   the least busy channel for operation. After finding a channel,
+                                                                                       purpose of this paper is to describe the basic principles of the
+   the FT starts cluster beacon transmissions on it.
+                                                                                       rotation process and focus on the actual impact of it to the
+      All other nodes are in PT (Portable Termination point)
+                                                                                       network performance. Thus, we address the implications and
+   mode, where they initially scan channels for cluster beacons
+                                                                                       the mere feasibility of implementing the process in a real
+   and after detecting one or more of them, select from them the
+                                                                                       network only superficially in this paper.
+   sender FT for association. A PT having multiple FT
+                                                                                          A diagram of a rotation process in a simple network is
+   candidates makes the choice based on the route cost, a
+                                                                                       depicted in Fig. 2. The protocol consists of the following
+   parameter of the route info information element (IE) of the
+                                                                                       phases: association release, advertisement and reassociation,
+   cluster beacon message. The specification mandates that each
+                                                                                       which are explained in the following sections.
+   hop should increase the route cost by at least 1 but otherwise
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                  70
+                                                                                        scanning mode thus have an opportunity to hear the AFT and
+                                                                                        associate with it. If AFT receives association requests during
+                                                                                        its advertisement phase, it becomes a router and continues
+                                                                                        beaconing. Otherwise it switches back to PT mode after the
+                                                                                        advertisement phase and continues as a leaf node until the next
+                                                                                        rotation. The duration of the advertisement phase is a network
+                                                                                        parameter. In our simulations, we assumed one beacon period
+                                                                                        duration for this. A longer advertisement phase would increase
+                                                                                        the success rate of associations with AFT, but also its energy
+                                                                                        consumption.
+                                                                                           Contrary to operation during the initial organization phase,
+                                                                                        AFTs do not perform BG scanning before starting the
+                                                                                        advertisement beaconing. It is assumed that the channel
+   Fig. 2 A diagram of a rotation process in a simple network, where tier 1 (T1)        selection made during the initial organization phase remains
+   node A switches its role from router (R) to leaf (L) and node B vice versa.
+                                                                                        valid as almost all nodes transmitted beacons during it and
+   A.         Association release phase                                                 were therefore able to be heard and avoided by their
+      Rotation is always triggered by the sink, which starts an                         neighbors. A small risk of mutual interference between
+   association release phase. The sink releases the associations to                     neighbors after reassociation is always left, but in this study
+   its children by transmitting an Association Release message to                       we calculated the benefit of energy saving by not performing a
+   each of them. The release process then continues recursively                         new BG scan after each reassociation greater than the risk of
+   so that a node receiving an Association Release message from                         potential interference.
+   its parent will forward the message also to its own children, if                     C.        Reassociation phase
+   such exist. Hence, the process continues down on all the
+                                                                                           The phase with the most impact on the rotation process is
+   branches of the mesh network recursively until all associations
+                                                                                        the reassociation phase. Here the PTs select new parents after
+   in the network are released and all nodes are left orphans.
+                                                                                        they have received one or multiple cluster beacons.
+      It is to be noted that during the association release phase,
+                                                                                           An intuitive value to base the FT selection on would be the
+   traffic generation still persists in every node, so the association
+                                                                                        received beacon signal strength. If PTs prioritize the candidate
+   release causes an inevitable service interruption. Thus, the
+                                                                                        FTs who transmitted the strongest beacons, it would
+   periodicity of triggering the rotation should be selected so that
+                                                                                        presumably minimize the error probability and the required Tx
+   the interruption time is minimized whilst making sure that as
+                                                                                        power of transmissions between them. This would obviously
+   many nodes as possible get a chance to act as a router before
+                                                                                        impact positively on the battery life in that sense. However,
+   the first ones deplete their batteries. However, any reasonable
+                                                                                        assuming the positions of the nodes in the network do not
+   IoT use case assuming battery-operated nodes needs to have a
+                                                                                        change, basing the selection on beacon signal strength would
+   relatively low traffic intensity in order to ensure an adequate
+                                                                                        mean that the nodes would always select the same routers as
+   node lifetime [8]. Low traffic intensity means a packet interval
+                                                                                        parents, whenever there was an attempt to reorganize the
+   of e.g. several hours per node and results in years of expected
+                                                                                        network. This would cement the roles in the network and
+   router battery life while the service interruption due to rotation
+                                                                                        effectively eliminate the possibility of rotation.
+   is likely to be over in minutes, depending on the beacon
+                                                                                           Generally, in order to achieve rotation of roles in the
+   interval and the depth of the cluster tree network. Thus the
+                                                                                        network, the FT selection should be made based on a metric
+   rotation occurring e.g. once per day is likely short enough to
+                                                                                        which is not fixed throughout the lifetime of the network. In
+   allow the network to go through all possible router
+                                                                                        order to achieve as even energy consumption among the nodes
+   constellations many times during the network lifetime. A
+                                                                                        as possible, we propose that the FT selection should prioritize
+   rotation interval sparse as this most likely has a negligible
+                                                                                        associations to FTs with the highest battery level. This way
+   effect on the service quality.
+                                                                                        after the rotation, nodes with low battery level would be more
+   B.         Advertisement phase                                                       likely to end up in leaf role, in which they can save energy and
+     Upon becoming an orphan after the association release                              stay connected to the network longer.
+   phase, a node starts beacon scanning immediately to find a                              Router battery state is not specifically embedded into the
+   new parent. In order to ensure that the roles of the network                         cluster beacon message in current DECT-2020 NR
+   nodes are truly rotated, all nodes who associate need to send                        specifications. However, implementations using the current
+   an advertisement in order to establish as many reassociation                         specifications could base their reported route cost metric value
+   opportunities as possible for the remaining orphans.                                 to the inverse of their battery level and this would have the
+     Upon associating with an FT, a PT node becomes an                                  same effect. Another option would be to introduce a new
+   advertising FT (AFT) where it temporarily sends beacons and                          battery level IE to the beacon message which then could be
+   enables its RACH listening. Nearby orphans in beacon
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                   71
+   utilized by the PT nodes in FT selection along with the route                       adequate service. The details of the selected use case and its
+   cost metric.                                                                        traffic parameterization are shown in Table II.
+                      IV.       SIMULATIONS                                               In the result analysis, we focused on the impact of router
+      For this study we used an open-source Network Simulator 3                        rotation to the node battery life expectation and to system
+   platform [11] into which we implemented a module for                                performance in terms of end-to-end packet delay and the
+   DECT-2020 NR. The module consists of the MAC and PHY                                service rate, which is the percentage of the transmitted data
+   layers implemented according to ETSI TS 103 636 series                              that is successfully received by the target node (the sink).
+   specifications [1]. The details of the simulator modeling are                       End-to-end delay was measured from the time a packet was
+   explained in [8]. We added the periodic rotation process                            generated in the source node to the time when it was
+   explained in section III and modified the FT selection process                      successfully received at the target node.
+   of the simulator accordingly.                                                          Each node transmits a packet to the sink once per 24 hours.
+                                                                                       The rotation period was set to 2 hours, a short period in
+                         TABLE I. SIMULATION PARAMETERS
+                                                                                       relation to expected node lifetime, to ensure some rotations
+              Parameter                                Value                           occur during the 24 h simulation time. During the rotation
+            Scenario radius                        800 m - 5 km                        period, the network as a whole relays on average 83-417
+              Frequency                              1.89 GHz                          packets through (depending on the number of nodes) and, with
+            DECT channels                                10                            a beacon interval of 32 seconds, each router transmits 225
+          Propagation model                      ITU Urban Macro                       beacons and listens to as many RACH occasions.
+              Shadowing                               Disabled
+                                                                                                              TABLE II. SIMULATION USE CASE
+            Channel model                  5G spatial channel model [13]
+           Number of nodes                      [1000, 3000, 5000]                            Parameter                              Value
+           Number of sinks                                1                                 Real-life use case         Smart energy demand response
+           No of simulation                              20                                    examples              management (DRM), Smart transport
+            drops per case                                                                                            road condition monitoring, Smart
+          Simulation duration                          24 h                                                          agriculture irrigation / fertilization /
+            Antenna model                       1x1 omni, 0 dBi gain                                                           pest control [12]
+             Noise figure                             7 dB                                   Tolerable delay                     Few minutes
+           Beacon Tx power                           23 dBm                                  Beacon interval                          32 s
+        Minimum beacon quality                        3 dB                                    Router RACH                1 x 20 ms per beacon period
+            for association                                                                       period
+              Route cost                    Inverse of FT battery level                           Traffic               100 B data packet / 24 h / node
+            Power control                  Pathloss based: TxP [dBm] =                           Rotation                          2 hours
+                                           min (23, -68 - 0.7 * path gain)                  triggering period
+      Max HARQ retransmissions                            9                                 Traffic direction            Unidirectional, targeting sink
+      HARQ processes per node                             2
+          SCS scaling factor                              1                               Table III shows the used energy parameters. Expected node
+          FFT scaling factor                              1                            battery life for each node was calculated from their
+            LBT min CW                                    8                            experienced energy consumption during the simulation, which
+           LBT max CW                                    64
+                                                                                       was defined by the electric current usage of the radio states
+      Table I shows the general simulation parameters and                              they were in. State transitions did not consume any additional
+   assumptions. We simulated a DECT-2020 NR network in an                              energy. The used currents in different radio states were based
+   IoT scenario consisting of different amounts of nodes, from                         on actual values of an existing Nordic Semiconductor
+   1000 to 5000, to cover different network loads. Nodes were                          nRF9160 LTE-M/NB-IoT modem [13] and thus they are
+   randomly positioned in each simulation drop. The centermost                         expected to reflect the values of an upcoming DECT-2020 NR
+   node was selected as the sink in each drop. Scenario radius                         modem also.
+   was also varied in order to capture the effects of different sized                                         TABLE III. ENERGY PARAMETERS
+   mesh topologies with different amounts of routers and tiers.
+                                                                                               Parameter                               Value
+      As found in [8], a battery-operated DECT-2020 NR mesh
+                                                                                             Battery capacity                      18 kJ (5 Wh)
+   network is reasonable only with low traffic intensity and                                     Voltage                               3.7 V
+   relatively loose delay requirements. A high traffic intensity                            Sleep state current                      8 𝜇A [15]
+   severely decreases the network lifetime (resulting in mere                              Rx/LBT state current                     45 mA [15]
+   days of operation time), to which no energy saving mechanism                              Tx state current              Linear Tx current = TxP (W) /
+   is able to do much about. Thus, in the simulations, we                                                                  (3.7 V * 0.37) + 0.045 A [14]
+   assumed a general battery-operated IoT sensor network use
+   case with relatively low traffic intensity and set the parameters                      The energy consumption of the nodes was collected only
+   to minimize node energy consumption whilst still ensuring                           after the initial network organization phase, so the increased
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                  72
+   energy consumption of nodes due to additional beaconing and                           individual nodes can avoid the routing responsibility much
+   RACH listening during the advertisement phase of the rotation                         longer, prolonging their lifetimes.
+   process was accounted for in the expected node lifetimes.
+     In the analysis, we assume minimum node battery life as the
+   metric to reflect the performance of the router rotation
+   protocol. Minimum node battery life is the shortest
+   experienced lifetime of a node in the network in the
+   simulations i.e. the maximum time all nodes are still in the
+   network, which is the desired situation. The longer the
+   minimum node battery life, the longer the network is intact
+   and the better is the performance of the rotation protocol.
+
+                       V.           SIMULATION RESULTS
+      Fig. 3 shows examples of simulated network topologies of
+   1000 nodes with some selected scenario radiuses. Different
+   network tiers are depicted with a different color. The figure
+   demonstrates how the network has only few tiers when nodes
+   are within a small radius, but as the nodes are dispersed over a                      Fig. 4 Minimum node battery life with different scenario radiuses and user
+   larger area, the network requires more tiers to cover the whole                       loads.
+   scenario.                                                                                In absolute terms, router lifetimes decrease as more nodes
+                                                                                         are introduced to the network due to increased traffic and
+                                                                                         consequently increased activity in router nodes.
+                                                                                            In larger scenarios the battery life gain from rotation is
+                                                                                         smaller than with smaller scenarios. With larger radius the
+                                                                                         network is spread thinner and there are less candidates near
+                                                                                         router nodes to replace them. Thus the rotation responsibility
+                                                                                         is rotated between fewer nodes and some nodes may even be
+                                                                                         irreplaceable as routers, which decreases the overall
+                                                                                         achievable gain in battery life.
+
+
+
+
+      Fig. 3 Examples of simulated 1000 node network topologies with 800 m
+   (top left), 1200 m (top right), 2000 m (bottom left) and 5000 m (bottom right)
+   scenario radiuses.
+
+      Fig. 4 shows the minimum node battery life with different
+   user loads and scenario radiuses. With the given duty cycle                           Fig. 5 Percentage of nodes participating in traffic routing during simulation
+   assumptions, without rotation, the first node dies after 0.1-1.5                      with different scenario radiuses and user loads.
+   years of network uptime, on average, depending on the load
+   and the mesh network radius.                                                             Fig. 5 shows the percentage of nodes who participate in
+      With rotation, the average minimum lifetime is increased                           traffic routing at any given time during the simulations on
+   threefold in smaller scenarios and low network load. The                              average. Without rotation, only a small percentage of nodes
+   rotation battery life gain increases as the load increases from                       act as routers in small scenarios. This is because in a small
+   1000 to 3000 nodes but diminishes with a higher load. The                             geographical area, all the nodes can be covered easily with
+   increase is likely caused by the increased number of candidate                        only a few routers. In larger scenarios more nodes need to
+   routers: with a larger node pool to pick a new router from,                           participate in routing to achieve full coverage. Without
+                                                                                         rotation, with the largest scenario radius, 20-40 % of network
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                    73
+   nodes act as routers, which naturally limits the possibilities to                                           VI.          CONCLUSIONS
+   rotate their roles.                                                                     In this paper we showed that a periodic router rotation is
+      Fig. 6 shows the achieved end-to-end delays in different                         able to balance the energy consumption of DECT-2020 NR
+   cases. The delays are relatively long, measured in minutes in                       mesh network nodes more evenly and thus significantly
+   all cases, but all being within accepted delay tolerance of the                     increase the lifetime of a battery-operated IoT sensor network
+   use case. When comparing the results with and without                               without degrading the network performance, such as traffic
+   rotation, we see that rotation has a minimal effect on the                          delay and network service rate. The gain in node router
+   experienced delays. This is as expected since the rotation                          lifetime is inversely proportional to mesh network size in
+   interval is long in relation to the traffic generation interval.                    terms of both geographical area and number of nodes.
+                                                                                                                       REFERENCES
+                                                                                       [1]  DECT-2020 New Radio (NR) Specifications, Release 1, 2021. [Online].
+                                                                                            Available: https://www.etsi.org/committee/1394-dect.
+                                                                                       [2] N. A. Pantazis, S. A. Nikolidakis and D. D. Vergados, "Energy-Efficient
+                                                                                            Routing Protocols in Wireless Sensor Networks: A Survey," IEEE
+                                                                                            Communications Surveys & Tutorials, vol. 15, no. 2, pp. 551-591, 2013,
+                                                                                            doi: 10.1109/SURV.2012.062612.00084.
+                                                                                       [3] S. Mamechaoui, F. Didi and G. Pujolle, “A survey on energy efficiency
+                                                                                            for Wireless Mesh Network,” Intl. Journal of Computer Networks and
+                                                                                            Communications, vol. 5, 2013, doi: 10.5121/ijcnc.2013.5209.
+                                                                                       [4] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen, Y.
+                                                                                            Koucheryavy and M. Valkama, “DECT-2020 New Radio: The next step
+                                                                                            towards 5G massive machine-type communications,” arXiv:2101.07158,
+                                                                                            2021.
+                                                                                       [5] A. Anttonen, P. Karhula, M. Lasanen and M. Majanen, “Enabling
+                                                                                            massive machine type communications with DECT-2020 standard: A
+                                                                                            System-Level Performance Study,” VTT Technical Research Centre of
+                                                                                            Finland Research Report No. VTT-R-00367-21, 2021.
+   Fig. 6 Box plots showing 5th, 25th, 50th, 75th and 95th percentile of               [6] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal and S. Kumar,
+   end-to-end delay with different scenario radiuses and user loads.                        “Assessment of candidate technology ETSI: DECT-2020 New Radio,” in
+                                                                                            Proc. 5GWF’20, 2020, doi:10.1109/5GWF49715.2020.9221186.
+      Also from Fig. 7, showing network service rate, we can see                       [7] M. Penner, M. Nabeel and J. Peissig, "URLLC performance evaluation
+   that increasing user load significantly degrades service rate                            of IMT-2020 candidate technology: DECT-2020 New Radio," in Proc.
+   due to data building up in the routers. Battery life is                                  VTC2021-Fall,                             pp.                          1-7,
+   consequently decreased due to increased activity from                                    doi:10.1109/VTC2021-Fall52928.2021.9625340.
+                                                                                       [8] T. Nihtilä and H. Berg, "Energy Consumption of DECT-2020 NR Mesh
+   retransmissions.                                                                         Networks," in Proc. EuCNC/6G Summit, 2022, pp. 196-201, doi:
+      Rotation on the other hand degrades service rate so slightly                          10.1109/EuCNC/6GSummit54941.2022.9815770.
+   that if application QoS requirements demand it, the                                 [9] W. R. Heinzelman, A. Chandrakasan and H. Balakrishnan,
+   degradation can most likely be counteracted with a minimal                               “Energy-efficient communication protocol for wireless microsensor
+                                                                                            networks,” in Proc. HICSS’00, 2000, vol. 2, pp. 10,
+   RACH duration increase, which presumably would not
+                                                                                            doi:10.1109/HICSS.2000.926982.
+   decrease the router lifetimes as much as the rotation would                         [10] B. Chen, K. Jamieson, H. Balakrishnan and R. Morris, “Span: an
+   increase it.                                                                             energy-efficient coordination algorithm for topology maintenance in ad
+                                                                                            hoc wireless networks,” Wireless Networks, 2001, vol 8,
+                                                                                            doi:10.1023/A:1016542229220.
+                                                                                       [11] G. F. Riley and T. R. Henderson, “The ns-3 network simulator,” in
+                                                                                            Modeling and Tools for Network Simulation, K. Wehrle, M. Günes and
+                                                                                            J. Gross (ed.), pp. 15-34, Springer 2010, ISBN:978-3-642-12330-6.
+                                                                                       [12] A. Pekar, J. Mocne, W. K. G. Seah and I. Zolotova, “Application
+                                                                                            domain-based overview of IoT network traffic characteristics,” ACM
+                                                                                            Computing Surveys, Vol. 53, Issue 4, pp. 1-33, July 2021,
+                                                                                            doi:https://doi.org/10.1145/3399669.
+                                                                                       [13] T. Zugno, M. Polese, N. Patriciello, B. Bojović, S. Lagen and M. Zorzi,
+                                                                                            “Implementation of a spatial channel model for ns-3,” in Proc.
+                                                                                            WNS3’20, 2020, doi:10.1145/3389400.3389401.
+                                                                                       [14] F. I. Di Piazza, S. Mangione and I. Tinnirello, “On the effects of transmit
+                                                                                            power control on the energy consumption of WiFi network cards,” in
+                                                                                            Proc. QSHINE, 2009, doi:10.1007/978-3-642-10625-5_29.
+                                                                                       [15] Nordic Semiconductor nRF9160 modem current consumption. [Online].
+                                                                                            Available: https://infocenter.nordicsemi.com
+
+
+   Fig. 7 Network service rate with different scenario radiuses and user loads.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from IEEE Xplore. Restrictions apply.
+                                                                                  74
+

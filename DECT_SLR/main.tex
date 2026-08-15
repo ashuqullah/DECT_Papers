@@ -1,0 +1,103 @@
+\documentclass[5p,twocolumn]{elsarticle}
+
+% ============================================================
+% Computer Networks manuscript
+% ============================================================
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{diffcoeff}
+\usepackage{isomath}
+\usepackage{siunitx}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{url}
+\usepackage[nonumberlist,acronym,nomain]{glossaries}
+\usepackage{cleveref}
+\usetikzlibrary{positioning,arrows.meta}
+\sisetup{table-format=1.3}
+\pgfplotsset{compat=1.18}
+
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{
+    positioning,
+    arrows.meta,
+    fit,
+    backgrounds,
+    shapes.geometric,
+    calc
+}
+
+\graphicspath{{figures/}}
+
+\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
+\makenoidxglossaries
+\loadglsentries{acronyms}
+
+\journal{Computer Networks}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+
+\author[aalen]{Ashuqullah Alizai\corref{cor1}}
+\ead{ashuqullah.alizai@hs-aalen.de}
+\cortext[cor1]{Corresponding author.}
+
+\author[aalen]{Mohammad Reza Mousavi}
+\ead{mohammad.mousavi@hs-aalen.de}
+
+\author[aalen]{Stephan Ludwig}
+\ead{stephan.ludwig@hs-aalen.de}
+
+\affiliation[aalen]{
+  organization={Aalen University of Applied Sciences},
+  city={Aalen},
+  country={Germany}
+}
+
+\begin{abstract}
+To be written after completing the survey.
+\end{abstract}
+
+\begin{keyword}
+DECT-2020 NR \sep
+DECT NR+ \sep
+non-cellular 5G \sep
+industrial Internet of Things \sep
+systematic literature review \sep
+PRISMA
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sections/01_introduction}
+\input{sections/02_methodology}
+\input{sections/03_literature_search_results}
+\input{sections/04_research_classification}
+\input{sections/05_comparative_analysis}
+\input{sections/06_research_gaps}
+\input{sections/07_future_research_directions}
+\input{sections/08_conclusion}
+\printnoidxglossary[
+    type=\acronymtype,
+    title={List of Acronyms}
+]
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

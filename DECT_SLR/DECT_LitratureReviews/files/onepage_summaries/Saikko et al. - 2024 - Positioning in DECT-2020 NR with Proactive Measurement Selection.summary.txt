@@ -1,0 +1,68 @@
+Title: Positioning in DECT-2020 NR with
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—This paper addresses efficient positioning and user device tracking in
+Internet-of-Things (IoT) networks with particular focus on the new DECT-2020 New
+Radio standard – the first non-cellular 5G technology standard in the world.
+Stemming from fundamental performance requirements of IoT networks, for example,
+related to energy consumption, latency, and reliability, it is important to
+utilize available radio resources efficiently, while avoiding redundant
+transmissions and signaling. In this paper, we propose a tracking-based
+positioning solution with a proactive measurement selection, in which
+positioning measurements are selected based on Fisher information. The proposed
+method, accompanied with computationally attractive processing solution, is able
+to sort and select potential positioning measurements based on achievable
+minimum positioning error. The provided numerical results, considering both
+range and angle measurements, show that the proposed method outperforms the
+traditional signal-tonoise ratio based measurement selection approach, and
+enables positioning with a smaller number of measurements.
+
+Approach and methods:
+smaller number of measurements. Index Terms—positioning, DECT-2020 NR, internet-
+of-things, non-cellular 5G, Fisher information, extended Kalman filter I. I
+NTRODUCTION To accommodate growing demand on Internet-of-Things (IoT) based
+services, the new Digital Enhanced Cordless Telecommunications - 2020 New Radio
+(DECT-2020 NR) [1], [2] was introduced as part of the official International
+Telecommunication Union (ITU) fifth generation (5G) standards in 2022 [3]. The
+DECT-2020 NR is the first non-cellular 5G technology, designed especially for
+IoT use cases with support for 5G performance requirements regarding ultra
+reliable low latency communications (URLLC) and massive machine type
+communications (mMTC). Positioning plays an important role in various IoT and
+wireless sensor network (WSN) systems, as well as related applications and
+location-based services (LBS) [4]. DECT-2020 NRbased positioning is not yet
+widely studied due to its technological novelty, but research works focusing on
+positioning with other IoT systems, or IoT-like scenarios, can be found, for
+example, in [4]–[9]. In [4], different IoT-based positioning approaches are
+compared, and classified in a IoT infrastructure applicable framework, while
+also considering aspects of power consumption and energy efficiency.
+Furthermore, possible positioning methods for IoT systems are comprehensively
+discussed in [5], [9], including also comparison between positioning
+capabilities of different IoT technologies.
+
+Key findings:
+46, no. 5, pp. 1386–1396, 1998. [19] M. Koivisto, M. Costa, J. Werner, K.
+Heiska, J. Talvitie, K. Leppänen, V. Koivunen, and M. Valkama, “Joint device
+positioning and clock synchronization in 5G ultra-dense networks,” IEEE
+Transactions on Wireless Communications, vol. 16, no. 5, pp. 2866–2881, May
+2017. [20] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+massive machine type communications with DECT-2020 standard: A system-level
+performance study,” VTT Research Report VTT-R-0036721, 2021. [Online].
+Available: https://cris.vtt.fi/ws/files/45087959/VTT R 00367 21.pdf [21] A.
+Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Koucheryavy, and M.
+Valkama, “Performance assessment of DECT-2020 NR and classic DECT coexistence
+mechanisms,” in Proc. 2023 IEEE 97th Vehicular Technology Conference
+(VTC2023-Spring), 2023, pp. 1–7. [22] 3GPP, TR 38.901 V17.0.0, “Study on channel
+model for frequency spectrum from 0.5 to 100 GHz (Release 17),” Mar. 2022. [23]
+J. Talvitie, T. Levanen, M. Koivisto, T. Ihalainen, K. Pajukoski, M. Renfors,
+and M. Valkama, “Positioning and location-based beamforming for high speed
+trains in 5G NR networks,” in Proc. 2018 IEEE Globecom Workshops (GC Wkshps),
+2018, pp. 1–7. Authorized licensed use limited to: Hochschule Aalen (FH) -
+Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE
+Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

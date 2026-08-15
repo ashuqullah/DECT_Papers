@@ -1,0 +1,16 @@
+Title: Fagerholm - 2024 - FPGA-based DECT-2020 New Radio packet detection
+
+Summary:
+
+This paper addresses the key challenges and contributions of the work through a link-level summary of its objectives, methods, results, and practical implications.
+
+Core focus:
+A rapid increase in number and diverse applications of connected devices has forced digital wireless protocols to specialize further for specific purposes. One of such applications is the previously unanswered market for reliable wireless low-latency communication in private self-sustained networks. As a revision of an older standard, DECT-2020 New Radio aims to provide a solution for this market. To research different physical layer properties of DECT in real-world environments, a software-defined radio (SDR) framework would be required. Since such design already existing for IEEE 802.11, a well-utilized open-source project openwifi, an analogous solution for DECT could be realized. The goal of this thesis was to provide an implementation for the first part of this SDR framework. The main contribution of this thesis is an FPGA-based packet detector for DECT. Written in Verilog-2001 for an AMD Zynq system-on-chip, the implemented design manages Synchronization Training Field preamble detection and timing synchro- nization with hardware efficient autocorrelation approach. The proposed design was evaluated using a simulation environment that integrated MATLAB and the Icarus Verilog simulation tool. Both real-world and generated data were utilized during the simulation. Compared to a cross-correlation based detection, the implementation utilizes only two complex-valued multiplications at the expense of a higher signal-to-noise (SNR) ratio requirement. In comparison to a reference autocorrelation-based detection, the implementation requires at least 2.6 dB higher SNR depending on the utilized configuration, yet it does not suffer from co-channel interference and includes a simpler signal power estimator. The resource utilization of the proposed design is comparable to that of openwifi despite differences in communication protocols. Finally, different power scaling factors were simulated to analyze the implementation’s performance. The thesis thus provides an initial foundation to a hardware-based SDR for DECT-2020 NR.
+
+Additional context and findings:
+9 1.1 Thesis objectives . . . . . . . . . . . . . . . . . . . . . . . . . . . 10 1.2 Structure of thesis . . . . . . . . . . . . . . . . . . . . . . . . . . . 11 2
+
+Key takeaways:
+- The paper presents a new or improved technical approach in the DECT-2020 NR / 5G / wireless communication domain.
+- It evaluates performance using simulation or experimental analysis to support claims and compare with relevant baselines.
+- The work contributes to understanding, optimizing, or validating DECT-2020 NR, URLLC, mMTC, mesh networking, or related 5G-enabled radio technologies.

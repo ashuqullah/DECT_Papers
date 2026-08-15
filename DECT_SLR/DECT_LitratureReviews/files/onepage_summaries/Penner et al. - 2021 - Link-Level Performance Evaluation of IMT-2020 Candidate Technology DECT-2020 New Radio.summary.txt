@@ -1,0 +1,70 @@
+Title: Link-Level Performance Evaluation of IMT-2020
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+arXiv:2104.08549v1 [cs.NI] 17 Apr 2021 “This work has been submitted to the IEEE
+for possible publication. Copyright may be transferred without notice, after
+which this version may no longer be accessible.” Link-Level Performance
+Evaluation of IMT-2020 Candidate Technology: DECT-2020 New Radio Maxim Penner,
+Muhammad Nabeel, and Jürgen Peissig Institute of Communications Technology,
+Leibniz Universität Hannover, Germany {penner,nabeel,peissig}@ikt.uni-
+hannover.de Abstract—The ETSI has recently introduced the DECT-2020 New Radio
+(NR) as an IMT-2020 candidate technology for the mMTC and URLLC use cases. To
+consider DECT-2020 NR as an IMT-2020 technology, the ITU-R has determined
+different independent evaluation groups to assess its performance against the
+IMT-2020 requirements. These independent evaluation groups are now in process of
+investigating the DECT-2020 NR. In order to successfully assess a technology,
+one important aspect is to fully understand the underlying physical layer and
+its performance in different environments. Therefore, in this paper, we focus on
+the physical layer of DECT-2020 NR and investigate its link-level performance
+with standard channel models provided by the ITUR for evaluation. We perform
+extensive simulations to analyze the performance of DECT-2020 NR for
+
+Approach and methods:
+both URLLC and mMTC use cases. The results presented in this work are beneficial
+for the independent evaluation groups and researchers as these results can help
+calibrating their physical layer performance curves. These results can also be
+used directly for future system-level evaluations of DECT-2020 NR. I. I
+NTRODUCTION Due to growing number of new applications day by day and their
+advanced requirements, the mobile communication industry witnesses a generation
+transition almost after every decade. To process this transition smoothly,
+different organizations regularly work together to create new standards,
+technical specifications, and regulations [1]. In the last years, the
+International Telecommunication Union, Radiocommunication Sector (ITU-R) Working
+Party 5D (WP5D) has set requirements for International Mobile Telecommunications
+2020 (IMT-2020) to support the Fifth Generation (5G) use cases involving Ultra
+Reliable Low Latency Communications (URLLC), massive Machine Type Communications
+(mMTC), and enhanced Mobile Broadband (eMBB) [2]. By targeting one or more of
+these 5G use cases, Third Generation Partnership Project (3GPP) has developed
+technologies such as New Radio (NR), Narrowband Internet of Things (NB-IoT), and
+Long Term Evolution for Machines (LTE-M) that meet the requirements set by ITU-R
+[3], [4]. One of the candidate technologies currently being evaluated, submitted
+by European Telecommunications
+
+Key findings:
+Mobile Telecommunications-2020 (IMT-2020),” International Telecommunication
+Union, Report ITU-R M.2150-0, February 2021. [5] ETSI, “DECT-2020 New Radio
+(NR); Part 1: Overview; Release 1,” European Telecommunications Standards
+Institute, Technical Specification (TS) 103 636-1, July 2020. [6] ——, “DECT-2020
+New Radio (NR); Part 3: Physical layer; Release 1,” European Telecommunications
+Standards Institute, Technical Specification (TS) 103 636-3, July 2020. [7] R.
+Kovalchukov, D. Moltchanov, J. Pirskanen, J. Sae, J. Numminen, Y. Koucharyavy,
+and M. Valkama, “DECT-2020 New Radio: The Next Step Towards 5G Massive Machine-
+Type Communications,” arXiv preprint arXiv:2101.07158, 2021. [8] V. Dhanwani, N.
+Kumar, A. K. Bachkaniwala, D. Rawal, and S. Kumar, “Assessment of Candidate
+Technology ETSI: DECT-2020 New Radio,” in 2020 IEEE 3rd 5G World Forum (5GWF).
+IEEE, 2020, pp. 625–630. [9] R. Sattiraju, D. Wang, A. Weinand, and H. D.
+Schotten, “Link Level Performance Comparison of C-V2X and ITS-G5 for Vehicular
+Channel Models,” in 2020 IEEE 91st Vehicular Technology Conference
+(VTC2020-Spring). IEEE, 2020, pp. 1–7. [10] ITU-R, “Guidelines for evaluation of
+radio interface technologies for IMT-2020,” International Telecommunication
+Union, Report ITU-R M.2412-0, October 2017. [11] F. Hlawatsch and G. Matz,
+“Chapter 1 - Fundamentals of Time-Varying Communication Channels,” in Wireless
+communications over rapidly time-varying channels. Academic Press, 2011, pp.
+1–63.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

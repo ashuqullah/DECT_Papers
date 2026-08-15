@@ -1,0 +1,333 @@
+                                                                                                                                                                                                              2025 7th International Conference on Intelligent Control, Measurement and Signal Processing (ICMSP)
+
+
+
+                                                                                                                                                                                            Data-Aided Channel Estimation for Robust
+2025 7th International Conference on Intelligent Control, Measurement and Signal Processing (ICMSP) | 979-8-3315-7017-0/25/$31.00 ©2025 IEEE | DOI: 10.1109/ICMSP68723.2025.11407711
+
+
+
+
+                                                                                                                                                                                          DECT-2020 NR+ Links in Oil and Gas Equipment
+                                                                                                                                                                                                      Data Communication
+                                                                                                                                                                                                                            Zheyuan Liu*                                                               Qian Li
+                                                                                                                                                                                                               CNPC Equipment Manufacturing                                          CNPC Equipment Manufacturing
+                                                                                                                                                                                                                        Innovation Center                                                     Innovation Center
+                                                                                                                                                                                                            (Beijing Petroleum Machinery Co.,Ltd.)                                (Beijing Petroleum Machinery Co.,Ltd.)
+                                                                                                                                                                                                             China National Petroleum Corporation                                  China National Petroleum Corporation
+                                                                                                                                                                                                                          Beijing, China                                                       Beijing, China
+                                                                                                                                                                                                                     * liuzydr@cnpc.com.cn                                                   liqdr@cnpc.com.cn
+
+                                                                                                                                                                                                                           Shuangye Yang                                                          Chenyang Yao
+                                                                                                                                                                                                               CNPC Equipment Manufacturing                                          CNPC Equipment Manufacturing
+                                                                                                                                                                                                                       Innovation Center                                                     Innovation Center
+                                                                                                                                                                                                            (Beijing Petroleum Machinery Co.,Ltd.)                                (Beijing Petroleum Machinery Co.,Ltd.)
+                                                                                                                                                                                                             China National Petroleum Corporation                                  China National Petroleum Corporation
+                                                                                                                                                                                                                         Beijing, China                                                        Beijing, China
+                                                                                                                                                                                                                  yangshuangye@cnpc.com.cn                                                 yaocydr@cnpc.com.cn
+
+                                                                                                                                                                                                                               Kai Zhao                                                              Lufeng Jia
+                                                                                                                                                                                                               CNPC Equipment Manufacturing                                          CNPC Equipment Manufacturing
+                                                                                                                                                                                                                       Innovation Center                                                      Innovation Center
+                                                                                                                                                                                                            (Beijing Petroleum Machinery Co.,Ltd.)                                (Beijing Petroleum Machinery Co.,Ltd.)
+                                                                                                                                                                                                             China National Petroleum Corporation                                  China National Petroleum Corporation
+                                                                                                                                                                                                                         Beijing, China                                                        Beijing, China
+                                                                                                                                                                                                                    zhaokaidr@cnpc.com.cn                                                  jialufdr@cnpc.com.cn
+
+                                                                                                                                                                                                                              Qiao Zhang                                                              Biao Guo
+                                                                                                                                                                                                               CNPC Equipment Manufacturing                                          CNPC Equipment Manufacturing
+                                                                                                                                                                                                                       Innovation Center                                                     Innovation Center
+                                                                                                                                                                                                            (Beijing Petroleum Machinery Co.,Ltd.)                                (Beijing Petroleum Machinery Co.,Ltd.)
+                                                                                                                                                                                                             China National Petroleum Corporation                                  China National Petroleum Corporation
+                                                                                                                                                                                                                         Beijing, China                                                        Beijing, China
+                                                                                                                                                                                                                     zhangqdr@cnpc.com.cn                                                 guobiaodri@cnpc.com.cn
+
+
+
+                                                                                                                                                                                           Abstract—Oil and gas extraction and processing environments                     DECT development board and a backscatter-like test signal,
+                                                                                                                                                                                        impose stringent requirements on wireless data links used for                      show consistent MSE gains over pilot-only LS across SNRs.
+                                                                                                                                                                                        equipment monitoring, control, and safety. Multipath-rich metal-                   Deployment aspects for oil and gas sites, including subcarrier
+                                                                                                                                                                                        lic structures, Radio Frequency(RF) blocking, and dynamic in-                      numerology, packetization, and frequency planning in the 1.9
+                                                                                                                                                                                        terference degrade channel estimation accuracy, especially at low                  GHz frequency band, which is used in some industrial wireless
+                                                                                                                                                                                        SNR. This paper adapts and evaluates a data-aided least-squares                    systems. Detailed implementation guidance is provided for field
+                                                                                                                                                                                        (LS) channel estimation approach—originally developed and                          gateways and sensor Radio Devices(RDs). Results indicate that
+                                                                                                                                                                                        validated for Digital Enhancement Cordless Telecommunication-                      data-aided estimation enhances reliability and spectral efficiency
+                                                                                                                                                                                        2020 New Radio Plus(DECT-2020 NR+)—to oil and gas equip-                           for real-time equipment telemetry and alarm reporting in harsh
+                                                                                                                                                                                        ment data communication over Orthogonal Frequency Divi-                            oilfield environments.
+                                                                                                                                                                                        sion Multiplexing(OFDM) links. By combining pilot symbols
+                                                                                                                                                                                        with previously decoded data symbols, the proposed receiver
+                                                                                                                                                                                        improves channel transfer function (CTF) estimates without                           Index Terms—DECT-2020 NR+, Oil and Gas Equipment,
+                                                                                                                                                                                        increasing pilot overhead. MATLAB simulations on AWGN and                          OFDM, Channel Estimation, Data-aided, Decision-Directed
+                                                                                                                                                                                        3GPP TDL channels, coupled with a lab validation using a                           Channel Estimation, LS, Industrial IoT
+
+
+
+
+                                                                                                                                                                                       979-8-3315-7017-0/25/$31.00 ©2025 IEEE                                          309
+                                                                                                                                                                                       Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore. Restrictions apply.
+                        I. I NTRODUCTION
+    Wireless data communication in oil and gas facilities sup-
+ ports distributed sensing (pressure, temperature, vibration),
+ condition-based maintenance, mobile workforce tools, and
+ safety interlocks. Metallic infrastructures (pipelines, tanks,
+ derricks) and rotating machinery create severe multipath,
+ shadowing, and non-stationary fading that stress channel es-
+ timation (CE), particularly for compact, battery-powered sen-
+ sor nodes operating at low Equivalent Isotropically Radiated
+ Power(EIRP). DECT-2020 NR+—a non-cellular 5G technol-                                            Fig. 1. OFDM system with Channel Estimation
+ ogy standardized by European Telecommunications Standards
+ Institute(ETSI)—offers licensed-exempt operation around 1.9
+ GHz, OFDM waveforms, mesh networking, and deterministic                            channel/noise statistics for lower MSE but at higher com-
+ low-latency options suitable for plant-scale industrial IoT [1].                   plexity and with prior knowledge requirements. Data-aided
+    Traditional pilot-assisted CE (e.g., LS, MMSE) suffers in                       CE iteratively refines estimates using detected data symbols,
+ low SNR or sparse-pilot regimes common in DECT NR+                                 mitigating sparse-pilot limitations and improving low-SNR
+ profiles [2]. Data-aided or Decision-Directed Channel Estima-                      robustness.
+ tion(DDCE) augments pilots with reliable data symbol deci-
+ sions to refine the Channel Transfer Function(CTF) estimate                        C. Oil and Gas Environment Challenges
+ over time, reducing mean squared error (MSE) and improving
+ equalization [3]. Building on our thesis work in DECT NR+,                            Oilfield and refinery layouts exhibit:
+ this paper contributes:                                                               • High-RCS metallic clutter driving frequency-selective
+    • A oil and gas centric adaptation of data-aided LS CE for                           fading.
+       DECT-2020 NR+ OFDM links, preserving low complex-                               • Time variation from rotating equipment and moving
+       ity and pilot overhead.                                                           vehicles.
+    • A simulation study on AWGN and Tapped Delay                                      • RF coexistence with trunked radios and Wi-Fi (2.4/5
+       Line(TDL)-A/C channels across SNRs, showing MSE                                   GHz), favoring 1.9 GHz for reduced congestion.
+       gains vs. pilot-only LS.                                                     These factors motivate CE methods that maintain accuracy
+    • Deployment guidance for oil and gas equipment commu-                          under pilot scarcity and SNR variability.
+       nication, including numerology choices, packet design,
+       and mesh routing implications.                                                                     III. T ECHNICAL D ETAILS
+           II. BACKGROUND AND R ELATED W ORK
+                                                                                    A. System Assumptions and Numerology
+ A. DECT-2020 NR+ for Industrial Sites
+                                                                                       This paper target DECT-2020 NR+ with µ=1 (27 kHz
+    DECT-2020 NR+ employs CP-OFDM with configurable
+                                                                                    subcarrier spacing), FFT size NFFT =64, CP length NCP =8,
+ subcarrier spacing (27–216 kHz), TDD frames (10 ms,
+                                                                                    and occupied subcarriers NOCC =56. Frames contain PCC
+ 24 slots), and flexible PCC/PDC mapping [4]. It enables
+                                                                                    (control) and PDC (payload), with DRS-like pilots interleaved
+ mesh topology among radio devices (RDs) that can act
+                                                                                    per ETSI mapping [5]. Modulation uses QPSK for robustness;
+ as Fixed Terminals(FT) or Portable Terminals(PT), allowing
+                                                                                    higher Modulation and Coding Scheme(MCS) can be enabled
+ self-organizing coverage within plants. Compared to cellular,
+                                                                                    where SNR allows. The working frequency is 1.88–1.90 GHz
+ DECT NR+ reduces infrastructure dependence and simplifies
+                                                                                    (regional regulations apply).
+ local control, advantageous for private oilfield networks.
+ B. Channel Estimation in OFDM                                                      B. Channel and Signal Model
+    Channel Estimation (CE) is the technique which could get
+                                                                                       For subcarrier k and OFDM symbol l:
+ the Channel State Information (CSI) in a wireless communi-
+ cation channel. In the experiment in real life, the CSI cannot                                                Ykl = Hkl Xkl + Vkl                             (1)
+ be obtained accurately, hence the procedure to get the factor
+ of CSI is called Channel Estimation.                                               where Hkl is the Channel Transfer Function, Xkl is the pilot
+    The DECT-2020 system takes advantages of OFDM sym-                              or data symbol, and Vkl AWGN plus residual interference.
+ bols for communication. It is the OFDM-based system. OFDM                          Equalization uses zero-forcing (ZF):
+ is a multiplexing scheme that splits the data stream into
+ multiple narrowband channels to effectively take advantages                                                                 Ykl
+ of the available bandwidth.                                                                                        Xkl =                                      (2)
+                                                                                                                             Hkl
+    LS estimation divides received pilots by known pilots, offer-
+ ing low complexity but noise sensitivity. MMSE incorporates                           The resource grid and indexing could be seen as follows:
+
+
+
+                                                                                310
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore. Restrictions apply.
+                                                                                    prevent error propagation and looser at high SNR to harvest
+                                                                                    more virtual pilots (combined with CRC gating to ensure
+                                                                                    only validated codeblocks contribute); outliers are suppressed
+                                                                                    by applying subcarrier-wise median or gentle Savitzky–Golay
+                                                                                    filtering to the estimated CTF trajectories (with phase unwrap-
+                                                                                    ping) to remove impulsive spikes from motors and igniters
+                                                                                    without blurring genuine fades; unreliable resources are ex-
+                                                                                    cluded by dropping 1–2 edge subcarriers per side and masking
+                                                                                    bins flagged by a short-window periodogram as narrowband
+                    Fig. 2. Resource grid and indexing [6]
+                                                                                    interferers so they are neither used in the reliable set nor
+                                                                                    in interpolation, with persistence of masks informing agile
+                                                                                    frequency reselection; and mesh-aware cooperation is enabled
+ C. Pilot-Only LS Estimation                                                        in DECT-2020 NR+ by feeding per-link CE quality (CTF
+    LS algorithm is the easiest and most straightforward method                     MSE, BER) to the controller to trigger FT/PT role switching,
+ of channel estimation in OFDM system. It assesses the channel                      rerouting, or channel reselection around shadowed equipment,
+ response by minimizing the square error between the received                       while tuning τ and temporal smoothing α (e.g., 0.8–0.9
+ pilot signal and the expected known pilot signal. Due to its                       on weak hops) to stabilize estimates—altogether delivering
+ low complexity and low demand for channel prior statistics,                        more accurate, interference-robust channel estimates and lower
+ LS algorithm is widely utilized in channel estimation. The                         BLER at edge SNRs without increasing pilot density or
+ result of LS estimation could be used in ZF equalization.                          computational burden.
+    The equation of the LS estimation could be seen as follows                                                    IV. R ESULTS
+ [7]:
+                                                                                    A. Simulation Setup
+                        ĤP,LS = XP−1 YP                     (3)
+                                                                                        Under the simulation setup, oil and gas site wireless con-
+    The ĤP,LS is the channel response of LS method at the                          ditions are emulated by combining a flat AWGN baseline
+ pilot subcarriers. XP is the known transmitted pilot symbols.                      with 3GPP TDL-A/C fading at 1.9GHz, setting delay spreads
+ While YP is the real pilot symbols passing the channel. The                        between roughly 30 and 300ns and low Doppler in the 1–
+ expanded matrix form could be seen as follows,                                     30Hz range to reflect slow machinery motion and vehicular
+                    h
+                      YP (1)   YP (2)           YP (NP )
+                                                         iT                         activity; the SNR is swept from 0 to 30dB in 3dB steps.
+         ĤP,LS = X    P (1)
+                             , XP (2) , . . . , XP (NP )    (4)                     The PHY follows DECT-2020 NR+ µ=1 numerology (27kHz
+ Where the NP is the number of pilot subcarriers. It means                          spacing, NFFT =64, NCP =8, 56 occupied subcarriers), with
+ that each pilot subcarrier channel is estimated by dividing the                    ETSI pilot mapping, PCC using a Type-2 control field and
+ received pilot symbols by known transmitted pilot symbols                          turbo coding, and PDC using QPSK with turbo coding plus
+ [8]. This is low-complexity but noise-sensitive, especially with                   CRC24A, all within the standard 10 ms TDD frame. For each
+ sparse pilots [9].                                                                 SNR point, at least 1000 packets are transmitted to ensure
+                                                                                    stable statistics, and results are averaged across subcarriers
+ D. Data-aided Channel Estimation                                                   and OFDM symbols. The receiver first forms an initial pilot-
+    Compared with pilot-only channel estimation, the data-aided                     only LS estimate Ĥ(0), applies ZF equalization and soft
+ channel estimation utilize not only the pilot signal, but also                     decoding, then performs data-aided LS by augmenting pilots
+ the whole data packet to evaluate channel response. After                          with reliability-gated decoded data (LLR/CRC-based) to ob-
+ decoding the data, the obtained data will be reencoded to                          tain an updated Ĥ(1), with optional subcarrier-wise median
+ perform data-aided channel estimation. The encoding method                         filtering, narrowband interferer masking, edge-subcarrier ex-
+ is same as at the transmitter side. After the signal mapping into                  clusion, and temporal exponential smoothing to stabilize slow
+ the OFDM symbols, the channel estimation could be obtained                         fading. Performance is assessed by channel-transfer-function
+ as:                                                                                MSE against the simulator’s ground-truth H, along with PDC
+                                   Yre                                              BLER/BER to verify that decision feedback does not induce
+                            H=                                 (5)
+                                   Xen                                              error floors, and computational effort is accounted for via
+ The Yre is the received symbols and Xen is the encoded data.                       operation counts to demonstrate that the proposed method
+                                                                                    remains near-LS in complexity and suitable for embedded
+ E. Receiver Enhancements in oil and gas filed environments                         industrial RDs.
+    In oil and gas environments characterized by strong metallic
+ multipath, slow time variation, and impulsive Electromagnetic                      B. Simulation Results
+ Interference(EMI), the receiver is hardened by integrating                            The channel response for 3 packets is first simulated in 3D
+ environment-aware tactics atop data-aided LS: the reliability                      as shown below. In the simulation, the true channel response
+ gate τ is adapted from a coarse SNR estimate derived via PCC                       is set to 1, and the SNR is set to 21 dB. As observed, the
+ RSSI and noise variance so that τ is stricter at low SNR to                        estimated channel response fluctuates around 1 due to the
+
+
+
+                                                                                311
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore. Restrictions apply.
+ added Gaussian white noise. If the SNR were set to infinity,                       rately the estimated channel response approximates the true
+ the channel response would be a flat surface always equal to                       channel response. The calculation of MSE could be seen as:
+ 1.                                                                                                                       N
+                                                                                                                     1 X
+                                                                                                         M SE =            ∥Hi − Ĥi ∥2                        (6)
+                                                                                                                     N i=1
+
+                                                                                       The Ĥi is the estimated channel, Hi is the true chan-
+                                                                                    nel response. As the channel information is known, the Hi
+                                                                                    could be obtained by the function ChannelResponseOutput in
+                                                                                    matlab. For data aided channel estimation, one sample is an
+                                                                                    OFDM symbol, N is the number of subcarriers in OFDM. The
+                                                                                    pilot-only method only estimates channel at pilot position, the
+                                                                                    length of pilot-only method is not the same as data-aided one,
+                                                                                    the vector of pilot-only estimation in one packet needed to be
+                    Fig. 3. Channel Response in simulation                          inserted linear values, and transfer into the shape of OFDM
+                                                                                    grid, one sample is also the vector of one OFDM symbol.
+   For TDL-A channel, the channel response for one packet                              In the simulation, the transfer of 1000 packets is imitated,
+ could be seen as follows, different from the flat AWGN                             including 58000 samples, each sample is an OFDM symbols,
+ channel, the surface fluctuates along the OFDM carrier axis,                       the result could be obtained by calculate the average of the
+ which indicates that different subcarriers experience different                    squared errors across all 58000 samples. After calculating the
+ gains.                                                                             MSE of each sample for both channel estimation methods, the
+                                                                                    average value of all samples could be obtained to evaluate the
+                                                                                    performance of two methods.
+                                                                                       The SNR values of channel are set from 0 to 30, the interval
+                                                                                    is 3 dB, to demonstrate the MSE for both methods in different
+                                                                                    channel environment, the results could be seen as Fig.6.
+
+
+
+
+     Fig. 4. Channel Response of Data-aided CE in 3D grid in simulation
+
+   Compared with Data-aided channel estimation, the Pilot-
+ only channel estimation is not smooth enough as follows,
+
+
+                                                                                              Fig. 6. MSE of Channel Estimation for AWGN channel
+
+                                                                                       The results clearly show that the data-assisted LS estimation
+                                                                                    has a lower MSE than the pilot-only estimation across all
+                                                                                    SNR values. This suggests that incorporating data symbols into
+                                                                                    the estimation process significantly improves the accuracy of
+                                                                                    the channel estimation. Both methods show an exponential
+                                                                                    decrease in MSE with increasing SNR, which is reflected
+                                                                                    in the almost linear trend on the logarithmic scale. This is
+                                                                                    in line with theoretical expectations, as a higher SNR leads
+     Fig. 5. Channel Response of Pilot-only CE in 3D grid in simulation             to a more accurate estimation. The performance difference
+                                                                                    between the two methods is particularly pronounced at low
+    To compare the performance between pilot-only channel es-                       SNR values, where the pilot-only LS estimation struggles with
+ timation and data-aided channel estimation. The Mean Square                        higher errors, further highlighting the advantage of using data
+ Error (MSE) is used to evaluate the performance of different                       symbols in channel estimation. Overall, the figure highlights
+ methods of channel estimation [10]. It quantifies how accu-                        the superior performance of data-based estimation, which is
+
+
+
+                                                                                312
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore. Restrictions apply.
+ a more effective method for reducing estimation errors in                           [6] ETSI TS 103 636-3: ”DECT-2020 New Radio (NR); Part 3: Physical
+ practical communication systems.                                                        layer; Release 1”. European Telecommunications Standards Institute,
+                                                                                         2020.
+                                                                                     [7] F.-S. Tseng and T.-Y. Wang, ”Reflection design with LS channel esti-
+                                                                                         mation for RIS-enhanced OFDM systems,” in Proc. 13th International
+                                                                                         Conference on Ubiquitous and Future Networks (ICUFN), Barcelona,
+                                                                                         Spain, 2022, pp. 379–382.
+                                                                                     [8] J. Hu, Y. Liu, W. Yuan, and Z. Ding, ”DNN and LS based channel
+                                                                                         estimation in OTFS system,” in Proc. IEEE 23rd International Confer-
+                                                                                         ence on Communication Technology (ICCT), Wuxi, China, 2023, pp.
+                                                                                         1527–1531.
+                                                                                     [9] R. Srividhya, T. Jayachandran, and V. Rajmohan, ”Channel estimation
+                                                                                         for OFDM systems using MMSE and LS algorithms,” in Proc. 6th
+                                                                                         International Conference on Trends in Electronics and Informatics
+                                                                                         (ICOEI), Tirunelveli, India, 2022, pp. 1564–1569.
+                                                                                    [10] T. O. Hodson, ”Root mean square error (RMSE) or mean absolute error
+                                                                                         (MAE): When to use them or not,” Geoscientific Model Development
+                                                                                         Discussions, vol. 2022, pp. 1–10, 2022.
+
+
+
+
+            Fig. 7. MSE of Channel Estimation for nrTDL channel
+
+    For nrTDL channel, similar result of MSE could be ob-
+ tained, the performance of data-aided channel estimation is
+ better than pilot-only channel estimation for all SNR environ-
+ ment. The difference is that the line does not show an linear
+ trend in this channel.
+                         V. C ONCLUSION
+    A data-aided LS channel estimation scheme is presented for
+ DECT-2020 NR+ tailored to oil and gas equipment data com-
+ munication. By augmenting pilot-based LS with reliability-
+ gated decoded data, the receiver achieves lower CTF MSE
+ and improved decoding performance under low SNR and
+ frequency-selective fading, without increasing pilot overhead
+ or computational burden. Simulations on AWGN and TDL
+ channels confirm consistent gains and practical deployability
+ in metallic, multipath-rich oil and gas environments. Future
+ work includes fusion with adaptive MMSE/Kalman filters,
+ MIMO extensions for spatial diversity around large equipment,
+ and field trials in live refinery networks to quantify end-to-
+ end reliability and energy benefits. In oil and gas operations,
+ these improvements directly support more reliable telemetry
+ for safety interlocks and condition-based maintenance, even
+ amid rotating machinery and heavy steel infrastructure. The
+ approach also aligns with the sector’s power and spectrum
+ constraints, enabling longer sensor lifetimes and denser mesh
+ deployments without sacrificing link robustness.
+                                R EFERENCES
+   [1] ETSI TS 103 636-1 V2.0.0, ”DECT-2020 New Radio (NR); Part 1:
+       Overview; Release 2,” European Telecommunications Standards Insti-
+       tute, 2020.
+   [2] M. N. Drakshayini and M. R. Kounte, ”A review of wireless channel
+       estimation techniques: challenges and solutions,” International Journal
+       of Wireless and Mobile Computing, vol. 23, no. 2, pp. 193–203, 2022.
+   [3] E.-C. Lim and H.-J. Choi, ”Reliable region decision DDCE and erasure
+       replacement decoding of OFDM system,” in Proc. Asia-Pacific Confer-
+       ence on Communications, Perth, Australia, 2005, pp. 919–923.
+   [4] A. Jahangir, ”Analysis of the performance of the DECT NR+ radio
+       access technology for connectivity of unmanned aerial vehicles (UAVs),”
+       M.S. thesis, Univ. Oulu, Oulu, Finland, 2024.
+   [5] A. Saikko, ”Positioning methods in DECT-2020 NR networks,” M.S.
+       thesis, Dept. Elect. Eng., Aalto University, Espoo, Finland, 2024.
+
+
+
+
+                                                                                313
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:30:23 UTC from IEEE Xplore. Restrictions apply.
+

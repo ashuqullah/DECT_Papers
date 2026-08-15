@@ -1,0 +1,72 @@
+Title: Assessment of Candidate Technology ETSI:
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—A number of IMT-2020 candidate technologies including the 3GPP have been
+submitted to the ITU-R. All candidate technologies are expected to meet the
+minimum performance requirements set by ITU-R for getting recommended as
+IMT-2020. In this paper, based on the submissions for Digital Enhanced Cordless
+Telecommunication (DECT-2020 NR) technology, we have evaluated the performances
+of latency, reliability and connection density as per ITU-R evaluation
+methodology. We found that the latency requirements can only be met using half-
+slot transmissions or HARQ-less full-slot transmission in contrary to the
+results submitted in the self-evaluation report of the DECT-2020 NR. Due to lack
+of details in the submissions; like the channel and interference modeling
+between device to device relaying, scheduling and control of relay propagation
+direction, we could not conclude whether the DECT-2020 NR can meet the minimum
+performance requirement of connection density of IMT-2020.
+
+Approach and methods:
+direction, we could not conclude whether the DECT-2020 NR can meet the minimum
+performance requirement of connection density of IMT-2020. Index Terms—5G India
+Forum, DECT, NR, Latency, Reliability, Connection Density, Beamformng I. I
+NTRODUCTION The International Telecommunication Union Radiocommunication sector
+(ITU-R) has set the requirements for International Mobile
+Telecommunications-2020 (IMT-2020 5G Standard). The standard is about to
+complete in next few months that is, by 2020 [1]. However, some parts of it have
+been finalized earlier. For example, the requirements for radio access
+technologies (RAT) were adopted in ITU-R report M.2410 in November 2017 [2].
+Following this publication, the developers of radio access technologies such as
+third generation partnership project (3GPP) started developing 5G technologies
+meeting these requirements. 3GPP has developed radio access technologies new
+radio (NR), Long term evolution - machine type communication (LTE-M) and narrow
+band - Internet of things (NB-IoT) which together meet all the requirements [3].
+Additionally, many other candidate technologies developed by China, Korea, the
+European telecommunications standards 978-1-7281-7299-6/20/$31.00 © 2020 IEEE
+Institute (ETSI)-digital enhanced cordless telecommunications (DECT) Forum,
+enhanced ultra high throughput (EUHT) have been submitted to ITU-R; claiming to
+have met the minimum technology requirements. Candidate technologies submitted
+to ITU-R need to fulfil
+
+Key findings:
+evaluate the minimum density of V. ACKNOWLEDGEMENT This work is supported by 5G
+India Forum (5GIF) Independent Evaluation Group (IEG) for IMT-2020: 5G India
+Forum is associated with COAI, India. R EFERENCES [1] ITU-R M.2083-0 IMT Vision
+– Framework and overall objectives of the future development of IMT for 2020 and
+beyond.Available: https://www.itu.int/dms
+pubrec/itu-r/rec/m/R-REC-M.2083-0-201509I!!PDF-E.pdf [2] ITU-R: Minimum
+requirements related to technical performance for IMT-2020 radio interface(s).
+Report ITU-R M.2410-0, (11/2017). [3] ITU-R: Requirements, evaluation criteria
+and submission templates for the development of IMT-2020. Report ITU-R M.2411-0,
+(11/2017). [4] ITU-R: Guidelines for evaluation of radio interface technologies
+for IMT-2020.Report ITU-R M.2412-0, (10/2017). [5] 5GIF Self Evaluation
+Report.Available at: https://www.itu.int/md/R15-IMT.2020-C-0011/en [6] 5G for
+Mission Critical Communication-Achieve ultrareliability and virtual zero
+latency, White Paper.Available: http://www.hit.bme.hu/j̃akab/edu/litr/5G/Nokia
+5G for Mission Critical Communication White Paper.pdf. [7] M. Luvisotto, Z. Pang
+and D. Dzung, ”Ultra High Performance Wireless Control for Critical
+Applications:Challenges and Directions,” IEEE Transactions on Industrial
+Informatics, vol. 13, no. 3, pp. 1448-1459, June 2017. [8]
+https://www.itu.int/md/R15-IMT.2020-C-0006/en [9]
+https://www.dect.org/userfiles/file/Press%20releases/DECT%20Today
+/DECT%20Today%20May%202018.pdf [10] ETSI TR103.514-V1.1.1-DECT-2020 NR
+interface;Study on Physical(PHY) layer. [11]
+https://doi.org/10.1016/j.mcm.2010.08.027 Authorized licensed use limited to:
+Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026
+at 12:39:05 UTC from IEEE Xplore. Restrictions apply. 630
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

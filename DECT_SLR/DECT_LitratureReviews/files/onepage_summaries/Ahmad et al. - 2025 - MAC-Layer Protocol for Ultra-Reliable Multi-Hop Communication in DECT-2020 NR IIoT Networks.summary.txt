@@ -1,0 +1,65 @@
+Title: 2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 New Radio (NR) is a Radio Interface Technology (RIT) that meets the
+IMT-2020 requirements for UltraReliable Low-Latency Communications (URLLC) and
+massive Machine-Type Communications (mMTC). ITU-R approval was gained by the end
+of 2021, and it remains the only non-cellular 5G technology to date. This work
+presents an enhanced Medium Access Control (MAC) protocol that utilizes the
+mesh-networking capability of DECT-2020 NR, extending the procedures and MAC
+messages beyond the standard. The protocol dynamically assigns radio devices
+(RDs) the role of intermediate nodes for routing data to RDs in locations prone
+to outages, thereby reducing the outage rate to below 1% and expanding the
+network’s coverage area. Furthermore, event-based simulations demonstrate the
+protocol’s potential to enable ultra-reliable 5G private networks, positioning
+DECT-2020 NR as a promising candidate for evolving into a 6G wireless technology
+in future releases of the standard.
+
+Approach and methods:
+5G private networks, positioning DECT-2020 NR as a promising candidate for
+evolving into a 6G wireless technology in future releases of the standard. Index
+Terms—URLLC, TDMA, DECT-2020, MAC, 5G, 6G, Future Wireless Networks, New Radio,
+Coverage, Outage Rate. I. I NTRODUCTION DECT-2020 NR is a RIT developed and
+maintained by the European Telecommunications Standards Institute (ETSI). It
+targets applications that lie between the extremes of URLLC and mMTC. DECT-2020
+NR is ideal for presence monitoring, audio streaming, smart city developments,
+and industrial and consumer IoT [2], [4]. It offers local deployment options
+without the need for dedicated network infrastructure or extensive network
+planning, due to its inherent capability to form mesh networks, where radio
+devices make autonomous routing decisions. However, while detailed network
+planning is not required, seamless and ubiquitous coverage remains crucial for
+reliable wireless communication. Therefore, addressing coverage-related
+challenges and finding effective solutions is essential. Coverage enhancement
+strategies are discussed in [14], proposing solutions such as Heterogeneous
+Networks (HetNets), relaying, and cloud-based mechanisms for nextgeneration
+wireless technologies. Network coverage and the network capacity trade-off are
+investigated in [9] along with the deployment costs. In [10], coverage analysis
+is presented along with network throughput and techniques such as mmWaves
+
+Key findings:
+Conference (VTC Spring), Nanjing, China, 2016, pp. 1-5. [10] G. R. MacCartney
+and T. S. Rappaport, ”Millimeter-Wave Base Station Diversity for 5G Coordinated
+Multipoint (CoMP) Applications,” in IEEE Transactions on Wireless
+Communications, vol. 18, no. 7, pp. 3395-3410, July 2019. [11] M. Mozaffari, W.
+Saad, M. Bennis, Y. -H. Nam and M. Debbah, ”A Tutorial on UAVs for Wireless
+Networks: Applications, Challenges, and Open Problems,” in IEEE Communications
+Surveys & Tutorials, vol. 21, no. 3, pp. 2334-2360, thirdquarter 2019. [12] R.
+Borralho, A. Mohamed, A. U. Quddus, P. Vieira and R. Tafazolli, ”A Survey on
+Coverage Enhancement in Cellular Networks: Challenges and Solutions for Future
+Deployments,” in IEEE Communications Surveys & Tutorials, vol. 23, no. 2, pp.
+1302-1341, Secondquarter 2021 [13] Goldsmith, Andrea. Wireless communications.
+Cambridge university press, 2005. [14] E. Hossain and M. Hasan, ”5G cellular:
+key enabling technologies and research challenges,” in IEEE Instrumentation &
+Measurement Magazine, vol. 18, no. 3, pp. 11-21, June 2015. [15] ITU-R,
+“Guidelines for evaluation of radio interface technologies for IMT2020,”
+International Telecommunication Union, Report ITU-R M.2412-0, Oct 2017.
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore.
+Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

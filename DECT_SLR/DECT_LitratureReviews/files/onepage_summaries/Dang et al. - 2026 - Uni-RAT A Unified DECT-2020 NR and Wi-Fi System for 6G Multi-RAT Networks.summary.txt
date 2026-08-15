@@ -1,0 +1,84 @@
+Title: Uni-RAT: A Unified DECT-2020 NR and Wi-Fi
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Future 6G networks aim to deliver seamless, secure, and low-latency
+connectivity across heterogeneous radio access technologies (RATs) such as 5G
+New Radio (NR), Wi-Fi, and DECT-2020 NR to support emerging applications
+including extended reality (XR) and the Industrial Internet of Things (IIoT).
+However, current Multi-RATs systems are operated and managed in isolation, which
+hinders users and devices from seamlessly leveraging heterogeneous connectivity
+in a unified and efficient manner. To address this fragmentation, 3GPP has
+introduced interworking functions such as the N3IWF for untrusted and the TNGF
+for trusted non-3GPP access, enabling IP-session continuity when users move
+across heterogeneous networks. Nevertheless, these mechanisms rely on mandatory
+IPsec, which requires each RAT to maintain a separate secure tunnel to the core
+network and prevents intra-cell device-todevice (D2D) communication, thereby
+introducing significant encryption latency, increasing data-plane load, and
+complicating network management. To overcome these limitations, we propose Uni-
+RAT, a unified Multi-RATs framework in which DECT2020 NR operates as the Master-
+RAT, anchoring 3GPP controlplane security via 5G-AKA and NAS, while Wi-Fi
+functions as a Secondary-RAT for data-plane data delivery. Uni-RAT employs
+lightweight Layer-3 WireGuard tunnels to secure both D2D and multi-hop
+communication, significantly reducing the latency and computational overhead of
+IPsec-based interworking mechanisms used by N3IWF and TNGF. In addition, a
+customized SMS-over-NAS signaling mechanism is introduced to distribute
+WireGuard configuration and keying material, enabling unified authentication and
+efficient Multi-RATs security management. We implement a full prototype using
+Nordic nRF9161 DECT-2020 NR devices, Raspberry Pi Wi-Fi nodes, and a Cumucore 5G
+core, with security-critical functions protected inside Arm TrustZone.
+Experimental results indicate that Uni-RAT supports Multi-RATs communication
+with high throughput and low packet loss in intra-cell D2D scenarios, maintains
+bounded latency and jitter under relay-assisted and inter-cell configurations,
+and achieves stable UE registration latency below 100 ms with up to 100
+concurrent devices under background traffic, demonstrating its practical
+feasibility and scalability and positioning Uni-RAT as an early architectural
+blueprint for 6G Multi-RATs networks.
+
+Approach and methods:
+and costeffective connectivity [5]. The 3rd generation partnership project
+(3GPP) specifies two interworking functions for non-3GPP access in TS23.502 [6],
+which extend 5G connectivity beyond licensed cellular access and enable the
+integration of heterogeneous RATs such as Wi-Fi and LiFi with the 5G Core (5GC).
+In the untrusted non-3GPP access model, the non-3GPP interworking function
+(N3IWF) connects the user equipment (UE) to the 5GC via an end-to-end (E2E)
+IPsec tunnel that secures both NAS signaling and data-plane traffic. In
+contrast, the trusted non3GPP access model employs the Trusted non-3GPP gateway
+function (TNGF), which enables direct NAS signaling between the UE and the
+access and mobility management function (AMF) while relying on trusted link-
+layer security mechanisms, such as IEEE 802.1X or MACsec. While both N3IWF and
+TNGF enable non-3GPP access to the 5GC, they are fundamentally designed to
+integrate each non-3GPP RAT independently through per-access secure connectivity
+to the core network. Consequently, security contexts are not shared across RATs,
+which prevents coordinated cross-RAT control and results in fragmented control-
+plane operation. Moreover, although these mechanisms ensure E2E integrity and
+confidentiality, their reliance on IPsec tunneling or link-layer security
+increases configuration complexity and computational overhead, whicih
+limitations constrain deployment flexibility in heterogeneous environments,
+
+Key findings:
+TNAN1 (AP1) PublicKey = <public-key-TNAN1> Endpoint = 10.42.0.1:51820 AllowedIPs
+= 10.0.0.0/24, 10.42.1.0/24 PersistentKeepalive = 15 Listing 5: WireGuard
+Configuration on Switch Listing 2: UE1 (STA1) WireGuard Configuration ot
+[Interface] # WireGuard interface on Uni-RAT TNAN2 PrivateKey = <private-key-
+TNAN2> Address = 10.0.0.3/32 ListenPort = 51820 table ip filter { chain input {
+type filter hook input priority 0; accept } chain forward { type filter hook
+forward priority 0; accept } tn [Peer] # Relay switch (hub) PublicKey = <public-
+key-RelaySwitch> Endpoint = 192.168.88.1:51820 AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 15 } rin [Peer] # Uni-RAT UE2 (STA2) PublicKey = <public-
+key-UE2> AllowedIPs = 10.0.0.4/32 Listing 3: TNAN2 (AP2) WireGuard Configuration
+ep [Interface] # WireGuard interface on Uni-RAT UE2 PrivateKey = <private-key-
+UE2> Address = 10.0.0.4/32 } Listing 6: nftables configuration for NAT and
+forwarding on Uni-RAT relay node sudo systemctl enable nftables sudo systemctl
+restart nftables Listing 7: Enable and Restart nftables Service Pr [Peer] # Uni-
+RAT TNAN2 (AP2) PublicKey = <public-key-TNAN2> Endpoint = 10.42.1.1:51820
+AllowedIPs = 10.0.0.0/24, 10.42.0.0/24 PersistentKeepalive = 15 chain output {
+type filter hook output priority 0; accept } Listing 4: UE2 (STA2) WireGuard
+Configuration This preprint research paper has not been peer reviewed.
+Electronic copy available at: https://ssrn.com/abstract=6459430
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

@@ -1,0 +1,85 @@
+Title: 2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—ETSI DECT-2020 New Radio (NR) is a new flexible radio interface targeted to
+support a broad range of wireless Internet of Things (IoT) applications. Recent
+reports have shown that DECT-2020 NR achieves good delay performance and it has
+been shown to fulfill both massive machine-type communications (mMTC) and ultra-
+reliable low latency communications (URLLC) requirements for 5th generation (5G)
+networks. A unique aspect of DECT-2020 as a 5G technology is that it is an
+autonomous wireless mesh network (WMN) protocol where the devices construct and
+uphold the network independently without the need for base stations or core
+network architecture. Instead, DECT-2020 NR relies on part of the network
+devices taking the role of a router to relay data through the network. This
+makes deployment of a DECT-2020 NR network affordable and extremely easy, but
+due to the nature of the medium access protocol, the routing responsibility adds
+an additional energy consumption burden to the nodes, who in the IoT domain are
+likely to be equipped with a limited battery capacity. In this paper, we analyze
+by system level simulations the energy consumption of DECT-2020 NR networks with
+different network sizes and topologies and how the reported low latencies can be
+upheld given the energy constraints of IoT devices. Being a new technology,
+DECT-2020 NR has not been extensively studied yet. In [1] the authors introduced
+the DECT-2020 NR standard and evaluated its performance by comparing it to the
+existing low-power wide-area network (LPWAN) solutions. The paper demonstrated
+delay performance similar to existing solutions but with much higher node
+densities. In [2] the standard was shown to fulfill the International
+Telecommunication Union Radiocommunication Sector (ITU-R) requirements for 5G
+networks, but in [3] only a partial fulfillment of these requirements was
+confirmed. These studies paid only little consideration to the energy required
+to reach the presented level of performance. Only in [1] the issue was touched
+by stating that a multi-hop network was more energy efficient than a single-hop
+network when considering the amount of energy needed for transmissions. We will
+demonstrate in this paper that this viewpoint is one-sided since the energy
+consumption of a multi-hop mesh network is not limited to the transmissions.
+Energy consumption of WMNs is a well-known problem covered by multiple studies
+in recent years [5], [6]. Like [1], most of them consider the energy consumption
+primarily as a routing problem, indicating that the energy is mostly consumed by
+the device transmissions. However, unlike many earlier WMN technologies,
+DECT-2020 NR uses state-of-the-art physical layer techniques, such as Cyclic
+Prefix Orthogonal Frequency Division Multiplexing (CP-OFDM), turbo coding and
+Hybrid ARQ (HARQ) with incremental redundancy which decrease the duration and
+increase the energy efficiency of the transmissions, making the comparison to
+old studies difficult and thus justifying the need for separate investigation on
+DECT-2020 NR. This paper extends the WMN energy problem field of study by
+exploring how the advanced features of DECT-2020 NR affect the WMN energy
+consumption, whether different network topologies have an impact on this and
+also whether the recently reported low latency capabilities of the new standard
+can be upheld in typical IoT scenarios given the energy constraints of IoT
+devices.
+
+Approach and methods:
+The DECT-2020 NR standard was released by the European Telecommunications
+Standards Institute (ETSI) in 2020. It is intended for industrial Internet of
+Things (IoT) applications requiring either massive machine-type (mMTC) and/or
+ultra-reliable low latency (URLLC) communications. DECT-2020 NR introduces a
+device-based wireless cluster-tree mesh network, capable of forming an
+autonomous network without the need for separate base stations or core network.
+Nodes can act as routers between their neighbors, forwarding data between them
+in case direct connection is not possible. With wireless mesh networking (WMN)
+the coverage can theoretically reach extreme distances with minimal costs and
+effortless deployment. However, forwarding data through the network with a
+reasonable delay requires that each node passing the data onwards has an
+adequately active duty cycle, meaning the node can receive and transmit
+reasonably often so that the delay requirements are met, and the data does not
+accumulate in relaying nodes. However, maintaining an active duty cycle requires
+energy resources which may be scarce if the network consists of battery-operated
+nodes, as is common in the IoT domain. II. RESEARCH
+
+Key findings:
+S A system level simulation analysis of DECT-2020 NR confirms its good delay
+performance with some notable constraints. A wide-range battery-operated mesh
+network cannot maintain both long uptime and low latency. It was noticed that
+rather than the actual transmissions, maintaining an active duty cycle to ensure
+low latencies is the most important consumer of energy in a DECT-2020 NR mesh
+network. In order to guarantee a reasonable network uptime, the duty cycle of
+battery-operated mesh routers and, consequently, the requirements for traffic
+delay should be low. For delay sensitive data, the alternative is to either use
+mains powered routers or to use multiple sinks, covering the area solely with
+star topologies, without the need for the network to resort to mesh mode at all.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

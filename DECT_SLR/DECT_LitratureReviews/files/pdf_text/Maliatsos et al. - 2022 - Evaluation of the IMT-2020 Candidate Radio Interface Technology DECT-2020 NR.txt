@@ -1,0 +1,383 @@
+                                                                                                                                                                                                                                                         COMSNETS 2022 Workshop on Standards-driven Research
+
+
+
+
+                                                                                                                                                                                     Evaluation of the IMT-2020 candidate radio
+                                                                                                                                                                                        interface technology DECT-2020 NR
+                                                                                                                                                                                            Konstantinos Maliatsos                                       Antonis Gotsis                              Angeliki Alexiou
+2022 14th International Conference on COMmunication Systems & NETworkS (COMSNETS) | 978-1-6654-2104-1/22/$31.00 ©2022 IEEE | DOI: 10.1109/COMSNETS53615.2022.9668561
+
+
+
+
+                                                                                                                                                                             Department of Information and Communication                           Feron Technologies and                    Department of Digital Systems
+                                                                                                                                                                               Systems Engineering, University of Aegean                       Department of Digital Systems,                    University of Piraeus
+                                                                                                                                                                                           Karlovasi, Greece                                        University of Piraeus                          Piraeus, Greece
+                                                                                                                                                                                           kmaliat@aegean.gr                                           Athens, Greece                              alexiou@unipi.gr
+                                                                                                                                                                                                                                                antonis.gotsis@feron-tech.com
+
+
+
+                                                                                                                                                                           Abstract—This paper provides an overview of DECT-2020 NR                        submitted and qualified for further evaluation by WP 5D in
+                                                                                                                                                                        technology evaluation conducted by the Wireless World Research                     2019. Step 4 of the process, includes elaborate evaluation of
+                                                                                                                                                                        Forum (WWRF) in the context of IMT-2020 Evaluation Process                         the proposed RITs by Independent Evaluation Groups (IEGs).
+                                                                                                                                                                        solicited by the International Telecommunication Union (ITU).
+                                                                                                                                                                        DECT-2020 NR, a Radio Interface Technology developed by ETSI                       After detailed examination of the technologies, the IEGs
+                                                                                                                                                                        TC DECT and DECT Forum, was submitted as an IMT-2020                               should conclude, if the IMT-2020 requirements are covered
+                                                                                                                                                                        candidate along with five other technologies. It is applicable                     or not. The evaluation studies are performed on the basis of a
+                                                                                                                                                                        in various use cases and markets, with focus on consumer                           methodology formulated by WP 5D and potentially additional
+                                                                                                                                                                        and industrial IoT applications, such as industry and building                     methodologies proposed by the various IEGs. The evaluation is
+                                                                                                                                                                        automation and monitoring. In particular, it is targeting Ultra-
+                                                                                                                                                                        Reliable Low Latency (URLLC) and massive Machine Type Com-                         based on the characteristics defined in ITU-R Reports M.2410-
+                                                                                                                                                                        munication (mMTC) scenarios, based on decentralized network                        0 [1], M.2411-0 [2] and M.2412-0 [3] using a methodology
+                                                                                                                                                                        deployments. The WWRF performed a complete assessment of                           described in Report ITU-R M.2412-0. The methodology aims
+                                                                                                                                                                        the technology which included a high-level assessment of services                  at assessing the service, spectrum and technical characteristics
+                                                                                                                                                                        and spectrum capabilities, along with a minimum technical                          for the candidate RITs, given a set of minimum performance
+                                                                                                                                                                        performance requirements analysis for the URLLC and mMTC
+                                                                                                                                                                        test environments, based on inspection, analysis and simulation.                   requirements.
+                                                                                                                                                                        For assessing characteristics using simulation, i.e., reliability and                 During 2020, it was concluded that the set of RITs (SRIT)
+                                                                                                                                                                        connection density, an in-house simulation tool was developed.                     proposed by 3GPP (Release 16 [4]) should proceed to next
+                                                                                                                                                                        The evaluation study addressed mesh topologies supported by                        steps of the process. Along with 3GPP, some variants relying
+                                                                                                                                                                        DECT-2020 and proposed several enhancements to the ITU’s                           on it, submitted by Republic of Korea, People’s Republic
+                                                                                                                                                                        evaluation methodology, which is defined for cellular topologies
+                                                                                                                                                                        only. The technology was found to fulfill all the requirements                     of China and India (TSDSI) were also qualified. However,
+                                                                                                                                                                        specified by ITU’s evaluation process for IMT-2020.                                at the same time, the proponent’s ETSI (TC DECT) &
+                                                                                                                                                                           Index Terms—ITU evaluation, DECT-2020 NR, IMT-2020,                             DECT FORUM submission for the DECT-2020 NR (Digital
+                                                                                                                                                                        URLLC, mMTC                                                                        Enhanced Cordless Telecommunications) radio interface did
+                                                                                                                                                                                                                                                           not receive a complete evaluation as to whether it satisfies all
+                                                                                                                                                                                              I. I NTRODUCTION
+                                                                                                                                                                                                                                                           the requirements for a RIT component. As a way forward,
+                                                                                                                                                                           Working Party 5D of the International Telecommunication                         WP 5D decided to extend the evaluation process for the ETSI
+                                                                                                                                                                        Union (ITU WP 5D) is responsible for the specification of                          (TC DECT) & DECT FORUM. Thus, at the end of 2020,
+                                                                                                                                                                        the overall radio system aspects of the terrestrial component                      an open request to IEGs for the evaluation of the remaining
+                                                                                                                                                                        of International Mobile Telecommunications (IMT) systems,                          SRITs were issued with the objective to finalize the procedure
+                                                                                                                                                                        currently comprising of IMT-2000, IMT-Advanced, and IMT-                           by October 2021.
+                                                                                                                                                                        2020 - commonly known outside ITU as 3G, 4G and 5G                                    The Wireless World Research Forum (WWRF) was one
+                                                                                                                                                                        respectively. ITU recognizes a technology as IMT-2020 (and                         of the IEGs that steped up for the evaluation process. Over
+                                                                                                                                                                        consequently 5G), if it is a mobile system that proposes one                       the last years, WWRF championed several activities focused
+                                                                                                                                                                        or more new radio interfaces , able to support new capabilities                    on the wireless evolution to and beyond 5G. On December
+                                                                                                                                                                        beyond IMT-advanced. Therefore, the ITU WP 5D has defined                          2020, WWRF has been accepted as a Sector Member of
+                                                                                                                                                                        an 8-step process from technology preparation and devel-                           ITU. In its capacity as ITU member WWRF had many direct
+                                                                                                                                                                        opment to assessment, leading to an ITU recommendation                             contributions, including its participation as an IEG in the IMT-
+                                                                                                                                                                        acknowledging or not, a proposal as an IMT-2020 technology.                        2020 Step 4 evaluation of the TSDSI and EUHT (NUFRONT)
+                                                                                                                                                                           As part of Step 3, that includes submission of new Radio                        technology proposals, during 2019-2020. WWRF contributed
+                                                                                                                                                                        Interface Technologies (RITs), six candidate RITs have been                        three reports -related to DECT-2020 NR technology - leading
+                                                                                                                                                                          This research was funded and conducted on behalf of the Wireless World           to the final report on August 2021. In this paper, the results
+                                                                                                                                                                        Research Forum.                                                                    and conclusion of these studies for the DECT NR-2020 RIT
+
+
+
+
+                                                                                                                                                                       Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:29 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                978-1-6654-2104-1/22/$31.00 ©2022 IEEE                                889
+                                                                                  COMSNETS 2022 Workshop on Standards-driven Research
+
+
+
+
+ are presented. A short introduction to the RIT is presented in                        •  Portable Termination points (PT), that select another RD,
+ Section II. In Section III, the ITU requirements and the work                            which is in FT mode, for association.
+ methodology are presented, while in Section IV the analysis                        It is noted that apart from their scope, the standard does not
+ results are provided. Finally, conclusions are derived in Section                  distinguish physical layer functions between FTs and PTs.
+ V.                                                                                    One of the most distinctive features of DECT-2020 NR
+    II. OVERVIEW OF THE DECT-2020 NR T ECHNOLOGY                                    is the mesh networking capability [8], which allows for
+                                                                                    network topologies and deployments in IoT / mMTC usage
+    DECT-2020 NR has been specified in the following series
+                                                                                    scenarios, addressing the link budget limitations of classical
+ of radio communication standards:
+                                                                                    cellular technologies. In particular, mesh network devices can
+    • TS103.636-1 [5], a document that provides an overview
+                                                                                    communicate directly to each other extending the range of
+       of the standard;                                                             network and increasing the reliability of communication. The
+    • TS103.636-2 [6], that establishes the minimum RF re-
+                                                                                    role of the involved RDs may change autonomously. Each RD
+       quirements for DECT-2020 NR Radio Devices;                                   can act as a node transmitting a message, as a node forwarding
+    • TS103.636-3 [7], that specifies the transmission tech-
+                                                                                    any message from another radio device or as a node being the
+       niques in the DECT-2020 NR physical layer;                                   destination of a message. Each RD can communicate directly
+    • TS103.636-4 [8], that specifies the medium access pro-
+                                                                                    (device to device) or, if not in range, indirectly - via other radio
+       cedures.                                                                     devices establishing a communication route - which minimizes
+ DECT-2020 NR is a non-cellular RIT applicable in various                           the probability of outage.
+ use cases and markets. It mainly targets consumer and indus-                          Mesh operation supports autonomous routing using a cost
+ trial IoT supporting and enabling industry and infrastructure                      value, without the need to maintain routing tables in each
+ automation and monitoring. It is positioned as an Ultra-                           device. To achieve scalability the RDs are able to:
+ Reliable Low Latency (URLLC) and massive Machine Type                                 • route data;
+ Communication (mMTC) enabler as defined by ITU-R for                                  • take local decisions of the radio resources;
+ IMT-2020. The technology supports autonomous operation,                               • operate with no need for central coordination;
+ while if necessary, interworking with Wide Area Networks                              • change roles between routing and non-routing nodes.
+ (WAN - e.g., PLMN, fibre, satellite, etc.) is possible.                               The mesh system operation is based on a clustered tree
+    According to [5], DECT-2020 NR can be used as a foun-
+                                                                                    topology. Each RD decides the next hop individually based
+ dation for:
+                                                                                    on the currently available routes towards the RD providing the
+    • Very reliable Point-to-Point and Point-to-Multipoint
+                                                                                    connectivity to the internet (FT). Each RD has knowledge of
+       Wireless Links;                                                              the next uplink and downlink hop, and each cluster controls
+    • Local Area Wireless Access Networks in a typical DECT
+                                                                                    radio resources independently. An example of the clustered
+       star topology supporting URLLC scenarios;                                    topology is shown in Fig.1 [5].
+    • Mesh and Self-Organizing Local Area Wireless Access
+                                                                                       The RD considers the route cost, the cost of the route to
+       Networks following a mesh network topology, enabling                         deliver data to the sink, i.e., to the FT that has a backend con-
+       mMTC use cases.                                                              nection to the internet. RD may select the RD for association
+    The DECT-2020 NR physical layer [7] is in principle de-                         which indicates the smallest cost. The route cost calculation is
+ signed for sub-6GHz frequency bands. The physical layer em-                        left to implementation. Route cost value will increase at least
+ ploys Orthogonal Frequency Division Multiplexing (OFDM)                            1 in every hop. The maximum route cost value is 254, which
+ modulation with both Time and Frequency Division Multiple                          is not seen as a limiting factor in real deployments.
+ Access (TDMA and FDMA respectively) techniques sup-
+ ported. Duplexing is performed with time division (TDD).                           A. Submission
+ DECT OFDM supports multiple numerologies, allowing op-                                ETSI (TC DECT) & DECT Forum submitted an SRIT
+ eration with different channel bandwidths from approximately                       proposal that includes the following two component RITs:
+ 1.5MHz to 200MHz and subcarrier spacing varying from                                  • DECT-2020 NR RIT component
+ 27kHz to 216kHz, providing configurations for various propa-                          • 3GPP NR RIT component
+ gation conditions. Standardized precoders for up to 8 streams                      The 3GPP NR component has already been evaluated by
+ MIMO operation are also supported (however, beamformers                            other IEGs. Hence, WWRF along with other IEGs decided to
+ beyond the standard can be used, as long as they do not                            evaluate only the DECT-2020 NR RIT component. More spe-
+ impose extra requirements at the receiver). DECT-2020 NR is                        cific, ITU-R imposes requirements for three usage scenarios:
+ designed to enable coexistence with legacy DECT and DECT                           enhanced Mobile BroadBand (eMBB), URLLC, and mMTC.
+ evolution in frequency bands currently allocated to DECT.                          Within the SRIT, the eMBB usage scenario is addressed
+    DECT-2020 NR does not follow the conventional cellular                          by the 3GPP NR component, while the DECT-2020 NR
+ structure. Radio devices (RDs) can operate in two modes:                           component address two usage scenarios (mMTC and URLLC)
+    • Fixed Termination points (FT), initiating coordination of                     as described in [3].
+       local radio resources, and providing information on how                         Since the DECT-2020 component RIT addresses URLLC
+       other RDs may connect and communicate with it;                               and mMTC test environments, only the technical performance
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:29 UTC from IEEE Xplore. Restrictions apply.
+                                                                               890
+                                                                                  COMSNETS 2022 Workshop on Standards-driven Research
+
+
+
+
+                                                                                                                   TABLE I
+                                                                                                    T ECHNICAL PERFORMANCE REQUIREMENTS
+
+                                                                                      Characteristic for       High-level      Reference to      Reference
+                                                                                      evaluation    (test-     assessment      [1]               to        [3]
+                                                                                      environment)             method                            Evaluation
+                                                                                                                                                 Document
+                                                                                      User plane latency       Analytical      § 4.7.1           § 7.2.6
+                                                                                      (URLLC)
+                                                                                      Control plane latency    Analytical      § 4.7.2           § 7.2.5
+                                                                                      (URLLC)
+                                                                                      Mobility interruption    Analytical      § 4.12            § 7.2.7
+                                                                                      time (URLLC)
+                                                                                      Reliability (URLLC)      Simulation      § 4.10            § 7.1.5
+                                                                                      Connection density       Simulation      § 4.8             § 7.1.3
+                                                                                      (mMTC)
+                                                                                      Bandwidth                Inspection      § 4.13            § 7.3.1
+
+
+
+                                                                                         of certain size in a given time window. The time window
+                                                                                         is defined as 24 hours (loose requirement) or 2 hours
+                                                                                         (strict requirement).
+                                                                                       • Bandwidth requirement is at least 100 MHz, with the
+                                                                                         possibility to achieve 1 GHz overall with multiple carri-
+                                                                                         ers.
+
+                                                                                    B. Method of work
+                                                                                       For assessing characteristics using simulation, i.e., reliability
+                                                                                    and connection density, we rely on an in-house simulation
+           Fig. 1. The DECT-2020 NR mesh clustered tree topology                    tool. An End-to-End Physical Layer simulator of the DECT-
+                                                                                    2020 NR technology was developed by WWRF IEG in MAT-
+                                                                                    LAB/Ocatve, able to perform jointly system-level and link-
+ requirements related to these test environments have been                          level experiments. The developed simulator is decomposed
+ evaluated.                                                                         into two main components:
+            III. R EQUIREMENTS AND M ETHODOLOGY                                        • The link level simulator: implementing the radio trans-
+                                                                                          mission between two nodes of the system.
+ A. Requirements
+                                                                                       • The system level simulator: implementing the radio ac-
+    The evaluation methodology includes two core parts:                                   cess network setup according to the specifications of the
+    • A high-level assessment of services and spectrum capa-                              ITU evaluation guidelines ( [3] § 8.4)
+       bilities;                                                                       It is noted that both simulator components are developed
+    • A minimum technical performance requirements analysis.                        in MATLAB/Octave. The system simulation procedure for the
+    Regarding the latter, the technical performance requirements                    evaluation and validation of the KPI for connection density
+ listed in the Table I are assessed. In this Table, for each                        is detailed in [3], for cellular topology only. By relying on
+ addressed characteristic the assessment method used (based                         the cellular topology DECT-2020 NR will fail to meet the
+ on ITU evaluation methodology) is listed with references to                        requirements. However, as mentioned before, the DECT-2020
+ the requirements and exact methodology steps extracted from                        NR RIT introduces a mesh network topology and system
+ corresponding ITU Documents [1] and [3].                                           operation extending the range of network and increasing the
+    As a summary, some basic requirement values are provided                        reliability of communication.
+ (the reader is encouraged to study the details in [1] and [3]):                       In Fig.2, the system level simulator initialization and utiliza-
+    • User-plane latency should be 1ms for both downlink and                        tion process is presented, focusing on the URLLC reliability
+       uplink (unloaded conditions) for URLLC.                                      use case, i.e., the system level simulator is configured to fit
+    • Control-plane latency should be lower than 20ms.                              the specifications provided by ITU for the URLLC setup.
+    • Mobility interruption time should be 0 ms.                                       Based on the ITU specifications and guidelines for URLLC
+    • Reliability requirement is 10
+                                      −5
+                                          probability of failure in                 reliability:
+       transmitting a layer 2 Protocol Data Unit (PDU) of 32                           • A star topology with coordinated, scheduled transmission
+       bytes within 1 ms in channel quality of coverage edge                              is considered.
+       for the Urban Macro-URLLC test environment.                                     • A 19-cell scenario is considered – with a three sectoral
+    • Connection density requirement is fulfilled when                                    base stations setup. The PTs are considered directly
+       1,000,000 devices per km2 are able to deliver a message                            connected with the FTs.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:29 UTC from IEEE Xplore. Restrictions apply.
+                                                                               891
+                                                                                  COMSNETS 2022 Workshop on Standards-driven Research
+
+
+
+
+                                                                TABLE II
+                       KPI S RELATED TO URLLC AND M MTC USAGE SCENARIOS EVALUATED FOR THE DECT-2020 NR COMPONENT
+
+   Minimum      technical                             Category                              Required value           Value                  Requirement
+   performance                                                                                                                              met
+   requirements
+                               Usage scenario      Test                Downlink     or
+                                                   environment         uplink
+   User plane latency          URLLC               Not applicable      Uplink      and      1                        0.198-0.975 ms         Yes
+   (ms)                                                                Downlink
+   Control plane latency       URLLC               Not applicable      Not applicable       20                       6.25ms                 Yes
+   (ms)
+   Connection     density      mMTC                Urban Macro –       Uplink               1 000 000 users with     More than 1M users     Yes
+   (devices/km2 )                                  mMTC                                     less than 1% outage      with less than 1%
+                                                                                            for a) one message       outage with message
+                                                                                            per day, b) one mes-     transmission period
+                                                                                            sage per 2 hours         of less than 10 min-
+                                                                                                                     utes
+   Reliability                 URLLC               Urban Macro         Downlink             1 − 10−5 success         >1 − 10−6 for          Yes
+                                                   –URLLC                                   probability of trans-    both LoS and NLoS
+                                                                                            mitting a layer 2        for    Configuration
+                                                                                            PDU (protocol data       B with 5x4 with
+                                                                                            unit) of size 32 bytes   1/7 frequency reuse
+                                                                                            within 1 ms in chan-     and        1.728MHz
+                                                                                            nel quality of cover-    bandwidth
+                                                                                            age edge
+   Mobility interruption       eMBB         and    Not applicable      Not applicable       0                        0 ms                   Yes
+   time (ms)                   URLLC
+   Bandwidth and Scala-        All                 Not applicable      Not applicable       At least 100 MHz         221,184 MHz            Yes
+   bility
+                                                                                            Up to 1 GHz              Multiple Carriers      Yes
+                                                                                            Support of multiple      1.728    MHz      to   Yes
+                                                                                            different bandwidth      221.184 MHz.
+                                                                                            values
+
+
+
+
+                                                                                    lots in order to further improve interference isolation
+                                                                                       Since [3] does not address the methodological framework
+                                                                                    for mesh topologies, WWRF IEG devoted significant resources
+                                                                                    for rigorously defining all the additional aspects required for
+                                                                                    performing such an evaluation. As a result, a configuration and
+                                                                                    a simulation procedure are determined that is able to put the
+                                                                                    DECT-2020 NR RIT and its adhoc/relaying component under
+                                                                                    test according to the principles and objectives of the M.2412
+                                                                                    guidelines.
+                                                                                        WWRF IEG addressed the following issues:
+
+                                                                                        • System      model       definition/extension    including
+                                                                                          relay/forwarding nodes in addition to standard cellular
+                                                                                          UEs.
+                                                                                        • Introduction of a simple but effective protocol for multi-
+                                                                                          hop communications.
+                 Fig. 2. System Level Simulator functional flow                         • Definition of a relay selection scheme based on channel
+                                                                                          quality conditions.
+                                                                                        • Consideration of device-to-device channel models for re-
+     • Four channel allocation procedures are considered (1-                              lay communication, not previously considered in cellular
+       channel, 3-channel and 7-channel reuse plan).                                      technologies evaluation
+   • Scheduled channel allocation and/or cognitive channel
+       selection using measurement is considered.                                     WWRF IEG developed a system model simulator that is
+ Since, no throughput requirement is specified in the URLLC                         able to take into account the particularities of the DECT-
+ scenario, time slot sharing among cells is also allowed, i.e.,                     2020 NR RIT, while remaining aligned with the evaluation
+ cells with the same carrier frequency may use different times-                     guidelines defined in ITU-R Report [3].
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:29 UTC from IEEE Xplore. Restrictions apply.
+                                                                                892
+                                                                                  COMSNETS 2022 Workshop on Standards-driven Research
+
+
+
+
+                                 TABLE III                                            1) The proposed RIT component is part of an SRIT which
+      S IMULATED CASES AND SCENARIOS FOR THE EVALUATION OF THE                            also includes the 3GPP 5G NR [4], which was concluded
+          R ELIABILITY KPI S FOR THE DECT-2020 NR COMPONENT
+                                                                                          by WP 5D to fulfill the requirements. Therefore, for the
+   Setup                        5th percentile point     SINR        Fulfilment           RIT evaluation only URLLC and mMTC test environ-
+                                packet error proba-      thresh-     of the re-           ments were considered.
+                                bility                   old         quirement
+   SISO       with     1/7      approximately            3.2 dB      NO               2) Assessment was based on the RIT submission docu-
+   frequency reuse and          0.05    for    LoS;                                       ments and published technology specifications by ETSI
+   1.728MHz      bandwidth      approximately 0.5                                         [5] - [8], following the ITU-R guidelines [1], [2], [3].
+   (Configuration B)            for NLoS
+   2x2       with      1/7      <10−6 for LoS; ap-       3.2 dB      YES (for         3) The DECT NR 2020 RIT supports URLLC and mMTC
+   frequency reuse and          proximately 0.05 for                 LoS)                 usage scenarios.
+   1.728MHz      bandwidth      NLoS                                                  4) The DECT NR 2020 RIT fulfils the requirements and
+   (Configuration B)
+   5x4       with      1/7      <10−6 for LoS            3.2 dB      YES
+                                                                                          parameters that are evaluated by inspection, i.e. band-
+   frequency reuse and          (10−5 is achieved                                         width, spectrum, and services.
+   1.728MHz      bandwidth      at appr. -8 dB);                                      5) The DECT NR 2020 RIT fulfils the requirements that
+   (Configuration B)            <10−6 for NLoS
+   SISO       with     1/3      Nonfunctional at this    -5.1 dB     NO
+                                                                                          are evaluated by analysis, i.e. user-plane latency, control-
+   frequency reuse and          SNR                                                       plane latency and mobility interruption time.
+   1.728MHz      bandwidth                                                            6) The DECT-2020 NR RIT is able to satisfy the reliability
+   (Configuration B)
+                                                                                          requirements for various configurations, as demonstrated
+   2x2       with      1/3      approximately 0.02       -5.1 dB     NO
+   frequency reuse and          for LoS; Nonfunc-                                         through simulation.
+   1.728MHz      bandwidth      tional at this SNR for                                7) The DECT-2020 NR RIT is able to satisfy the con-
+   (Configuration B)            NLoS                                                      nection density requirements for various configurations,
+   5x4       with      1/3      <10−6 for LoS            -5.1 dB     YES (for
+   frequency reuse and          (10−5 is achieved                    LoS)                 as demonstrated through simulation with the use of
+   1.728MHz      bandwidth      at appr. -8 dB);                                          multi-hop communications and a properly defined relay
+   (Configuration B)            approximately 0.005                                       protocol.
+                                for NLoS
+                                                                                    Based on the evaluation, the DECT-2020 NR RIT was found
+                                                                                    to fulfil all the requirements specified by ITU’s evaluation
+                                IV. R ESULTS                                        process for IMT-2020.
+    Based on the aforementioned method of work, all KPIs                                                          R EFERENCES
+ related to URLLC and mMTC usage scenarios are evaluated                             [1] ITU-R, Report M. 2410-0. “Minimum requirements related to technical
+ for the DECT 2020 NR component. The summary of results                                  performance for IMT-2020 radio interface (s).” (2017).
+ of the evaluation process are presented in Table II. Details of                     [2] ITU-R, Report M. 2411-0. “Requirements, evaluation criteria and sub-
+                                                                                         mission templates for the development of IMT-2020.” (2017).
+ the WWRF evaluation report can be found in [9].                                     [3] ITU-R, Report M. 2412-0. “Guidelines for evaluation of radio interface
+    The results, through inspection, analysis and simulation,                            technologies for IMT-2020.” (2017).
+ verify that DECT-2020 NR RIT fulfills the IMT-2020 require-                         [4] 3GPP TR 21.916. “Technical Specification Group Services and System
+                                                                                         Aspects; Release 16 Description; Summary of Rel-16 Work Items
+ ments for URLLC and mMTC, and therefore, since the SRIT                                 (Release 16).”, (2021).
+ also contains 3GPP 5G NR for eMBB use cases, it qualifies                           [5] ETSI TS103.636-1 v1.2.1. “DECT-2020 New Radio (NR); Part 1:
+ for the next steps of the ITU-R process.                                                Overview.” (2021)
+                                                                                     [6] ETSI TS103.636-2 v1.2.1. “DECT-2020 New Radio (NR); Part 2: Radio
+    If we focus on the URLLC reliability use cases, extensive                            reception and transmission requirements” (2021)
+ simulations were performed for various configurations. In                           [7] ETSI TS103.636-3 v1.2.1. “DECT-2020 New Radio (NR); Part 3:
+                                                                                         Physical layer.” (2021)
+ some cases the requirements were met, while in others the                           [8] ETSI TS103.636-4 v1.2.1. “DECT-2020 New Radio (NR); Part 4: MAC
+ system was not able to cover them. Various antenna schemes                              layer.” (2021)
+ were considered for the FTs in order to enable beamforming                          [9] A.Alexiou, K. Maliatsos, A.Gotsis “Outlook 29 - WWRF IEG Eval-
+                                                                                         uation of IMT-2020 Candidate Technology Submission from ETSI
+ capabilities. It is noted that only through multi-antenna oper-                         (TC DECT) AND DECT FORUM”. (https://www.wwrf.ch/outlook.html:
+ ation, the RIT is able to cover the reliability requirements.                           https://www.wwrf.ch/files/content
+ Results are presented in Table III. In the selected set of
+ results, the FTs are considered to be equipped with a single
+ antenna, a 2x2 rectangular panel antenna (4 elements) and a
+ 5x4 rectangular panel antenna (20 elements). Configuration
+ B refers to the second system level configuration defined by
+ ITU-R in [3].
+
+                             V. C ONCLUSIONS
+   WWRF IEG performed a complete evaluation of the DECT-
+ 2020 NR RIT component as part of the re-engagement in Step
+ 4 ITU-R evaluation. The main conclusions were:
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:29 UTC from IEEE Xplore. Restrictions apply.
+                                                                               893
+

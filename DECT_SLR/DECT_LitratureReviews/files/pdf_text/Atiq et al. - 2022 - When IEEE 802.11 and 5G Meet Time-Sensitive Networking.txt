@@ -1,0 +1,1445 @@
+               Received 19 October 2021; revised 4 December 2021; accepted 8 December 2021. Date of publication 15 December 2021;
+                 date of current version 8 January 2022. The review of this paper was arranged by Associate Editor Juergen Jasperneite.
+                                                             Digital Object Identifier 10.1109/OJIES.2021.3135524
+
+
+
+
+                         When IEEE 802.11 and 5G Meet
+                          Time-Sensitive Networking
+               MAHIN K. ATIQ 1 , RAHEEB MUZAFFAR 1 (Member, IEEE), ÓSCAR SEIJO 2 ,
+       IÑAKI VAL 1 (Senior Member, IEEE), AND HANS-PETER BERNHARD 1,3 (Senior Member, IEEE)
+                                                       1
+                                                         Silicon Austria Labs RU Wireless Communications, 4040 Linz, Austria
+                            2
+                                Ikerlan Technology Research Centre, Basque Research and Technology Alliance (BRTA), 20500 Mondragón, Spain
+                                          3
+                                            Institute of Communications and RF-Systems, Johannes Kepler University, 4020 Linz, Austria
+                                   CORRESPONDING AUTHOR: RAHEEB MUZAFFAR (e-mail: Raheeb.Muzaffar@silicon-austria.com).
+                  The work of Iñaki Val and Óscar Seijo was supported by the B-INDUSTRY5G (ELKARTEK) Project of the Basque Government (Spain).
+
+
+
+
+         ABSTRACT      Many emerging applications require a higher level of flexibility, modularity, and efficiency but
+         are dependent on advancements in communication infrastructure and distributed computing. Time-sensitive
+         networking (TSN) standards aim at providing vendor agnostic, reliable, and deterministic communications
+         over the Ethernet, but lack in flexibility and modularity provisions. In this context wireless communication
+         systems are preferred given the obvious benefits in terms of increased flexibility, reduced deployment &
+         maintenance costs, and inherent mobility support. However, the stochastic nature of the wireless medium
+         poses several challenges in achieving these benefits. In this paper we comprehensively analyze the recent
+         standardization efforts and developments in IEEE 802.11 and 5G to enable low-latency, deterministic
+         communications and present the current status of their integration with wired TSN. Then, we present a set of
+         use cases that may be enabled by wireless TSN including industrial automation, automotive, or audiovisual
+         applications.
+
+         INDEX TERMS Real time, deterministic, reliable, time sensitive networking, TSN, 5G, Wi-Fi, IEEE 802.11.
+
+
+
+
+I. INTRODUCTION                                                                          the current state of wireless solutions do not provide the de-
+The development of future information technology (IT) and                                terministic latency and high reliability required for emerging
+operational technology (OT) is being promoted by the vi-                                 use cases.
+sion of flexible, enhanced intelligence, and modular networks.                              The time-sensitive networking (TSN) task group (TG) [4] is
+The communication requirements for various applications are                              working on a set of standards that enable vendor agnostic tech-
+both demanding and diverse [1]. As an example, the grow-                                 nology for reliable and deterministic communications over
+ing complexity in industrial sensing and closed-loop control                             Ethernet. TSN provides mechanisms like time aware shaper
+systems require the use of heterogeneous sensors, actuators,                             (TAS) [5] and frame preemption [6] to enable co-existence
+and control units that have to operate in a predictable and                              of different traffic types on the same network. Even though
+synchronous manner. The elements of the control system can                               TSN is gaining attention due to its advanced features and
+be distributed over short or long distances, and thus the use                            capabilities to fulfill the quality of service (QoS) of industrial
+of communication networks is compulsory to obtain a cost-                                applications, it still lacks the flexibility of wireless networks
+effective solution. Additionally, there is a high demand on the                          required by the numerous emerging industrial use cases such
+degree of flexibility provided by the communication network                              as industrial robots, remote assistance, and human machine
+given the increasing number of mobile devices. On the one                                interface (HMI) [1].
+hand, the wired communication solutions that provide deter-                                 Extending the capabilities of wired TSN network to the
+ministic latency and high reliability may require cumbersome                             wireless domain (wireless TSN) would enable reconfigurable
+and expensive cabling or may not be even suitable due to lack                            and adaptable communication systems, reduce installation
+of functionality such as mobility [2], [3]. On the other hand,                           and maintenance costs [7], [8], and support future use cases
+
+              This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/
+14                                                                                                                                                             VOLUME 3, 2022
+involving mobile devices. We define the term “wireless TSN”        standardization activities related to 5G TSN integration. A
+as a wireless technology that provides a QoS equivalent to the     roadmap to integrate wireless TSN into wired TSN without
+TSN set of standards in terms of reliability, deterministic com-   a particular focus on any wireless technology is also pro-
+munication (bounded latency) and time synchronization and          vided [16]. Additionally, literature is also available on both
+that supports the configuration of the networks’ QoS either        802.11 and 5G to extend TSN capabilities over wireless tech-
+via integration with wired technology (Ethernet) or as an in-      nologies [17], [18].
+dependent wireless system. The main technologies to achieve           Nevertheless, some shortcomings in the mentioned litera-
+wireless TSN capabilities that also have the potential to drive    ture can be observed. The available literature lacks in provid-
+the next generation of industrial wireless communications are      ing a comprehensive analysis of the current state of technolo-
+IEEE 802.11 (named in the paper as “802.11” and commer-            gies and does not develop deep details on the TSN integration
+cially labeled as Wi-Fi) and 3rd generation partnership project    with 802.11 and 5G. Consequently, this paper provides details
+(3GPP) fifth generation (5G) cellular system.                      on the current existing mechanisms of both 802.11 and 5G
+   On the one hand, the IEEE 802.11 communication stan-            to support TSN-like communications, and their integration
+dard [9] is continuously evolving to support very demanding        with wired TSN, including: how time synchronization can
+applications in different sectors, such as factory automation,     be achieved between 802.11 or 5G and TSN devices, which
+healthcare, and in-vehicle networking. One of the main focus       techniques can be used to achieve reliability requirements,
+of 802.11ax (Wi-Fi 6) was to enhance the communication             how TSN traffic priorities will be translated for 802.11 or 5G,
+efficiency and throughput. The upcoming release 802.11be           and how QoS profiles can be mapped with the TSN defined
+(Wi-Fi 7) is expected to provide guaranteed low-latency and        traffic, etc. Additionally, we present an up-to-date information
+high-reliability over unlicensed bands. To do so, several new      on techniques and enhancements for 802.11 and 5G with the
+mechanisms are being proposed for the new version of the           latest releases of the 802.11 standards and 3GPP specifications
+standard, as the scheduled trigger frame (TF)-based access         that is missing in existing literature.
+scheme. It is expected that these new features will be key to         The paper is organized as follows. Section II as a back-
+enable 802.11-based TSN communications.                            ground, provides an overview of existing wireless communi-
+   On the other hand, and similar to 802.11, the 5G commu-         cation solutions for industrial use cases. Section III presents
+nication standard also supports wireless communication for         an overview of wired TSN standards. In Section IV the chal-
+multiple domains including transportation, healthcare, agri-       lenges for enabling wireless TSN are presented. The mech-
+culture, and Industry 4.0. The low latency [10] and high relia-    anisms to enable wireless TSN using 802.11 technology are
+bility provided through ultra-reliable low latency communica-      detailed in Section V. Afterwards, we present the mechanisms
+tion (URLLC) enabling technologies support TSN integration         to enable wireless TSN using 5G technology in Section VI.
+with 5G [11]. The 5G system (5GS) acts as a logical bridge         Different wireless TSN use cases along with their QoS re-
+to support integration with the TSN standards. As specified in     quirements are presented in Section VII. Finally, we conclude
+3GPP Release-16, 5G supports most TSN standards through            along with the next steps in Section VIII.
+interaction with TSN application function (AF), network-
+side TSN translator (NW-TT), and device-side TSN translator        II. BACKGROUND
+(DS-TT) functions. All other core and radio access network         The communication technology landscape for applications
+(RAN) functionalities remain unexposed to the TSN domain.          requiring deterministic communication is highly dominated
+The TSN AF interacts with the TSN domain for controlling           by proprietary or standardized but not interoperable wired
+and configuration management, NW-TT interacts with the             communication systems. Examples include PROFIBUS [19],
+TSN domain to support connectivity with the 5GS (exchange          EtherCAT [20], SERCOS III [21], and many more [1], [22]. A
+of data and control information), and DS-TT interacts with         clear downside of current industrial fieldbuses for determinis-
+the end stations such as the sensors, controllers, and actuators   tic communications is that the solutions are not interoperable
+to enable time-sensitive wireless communication. Further en-       and cannot coexist in the same network. To this end, the IEEE
+hancements on 5G TSN integration are also expected in the          802.1 TSN TG has been working to establish a set of standards
+forthcoming 3GPP Release-17.                                       to provide deterministic and more reliable communications
+   The concept to enable TSN over the wireless medium has          over standard Ethernet [4]. This effort is also mainly aimed
+been brought few years ago. A few available studies show how       to enable seamless interoperability among different industrial
+to enable TSN capabilities over the wireless physical (PHY)        devices, enable their coexistence over the same fieldbus, and
+layer for industrial use cases. The research challenges and        unify their communication interfaces.
+gaps for wireless TSN along with available enhancements in            Besides wired communication systems, wireless communi-
+802.11 networks to support TSN capabilities are highlighted        cation technologies have also been considered and deployed in
+in [12]. In particular expected enhancements of 802.11be for       industrial environments for monitoring and open-loop control
+enabling TSN capabilities are discussed in [13]. Similarly, to     applications. Among others, some wireless solutions based on
+enable TSN over the 5GS, challenges to achieve end-to-end          IEEE 802.15.4 PHY have been proposed, e.g., Zigbee [23],
+time synchronization and scheduling are presented in [14].         WirelessHART [24], wireless networks for industrial automa-
+Authors in [15] discuss different enhancements and ongoing         tion - process automation (WIA-PA) [25], and Smartmesh
+
+VOLUME 3, 2022                                                                                                                   15
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+IP [26]. These standards define their own medium access               (IEC), and the internet engineering task force (IETF) have
+control (MAC) to achieve different features, such as real-time        proposed new standards to enable deterministic communi-
+communications, or high reliability. However, the limitations         cations to the Ethernet standard. The IEEE 802.1 TSN TG
+of the IEEE 802.15.4 PHY in terms of bit rate or reliabil-            evolved from the IEEE 802.1 audio-video bridging (AVB)
+ity makes its use unfeasible for emerging high-performance            TG to cover the expanded goals and meet the demands of
+applications. Some industrial applications use the digital            the industrial control community and the automotive commu-
+enhanced cordless telephone (DECT) technology, given its              nity [38]. Such demands have resulted in mechanisms such
+deterministic medium access. However, it requires improve-            as time-aware scheduling to guarantee packet delivery with
+ments on communication robustness and reliability [27]. Re-           bounded latency, high reliability, and low latency fluctuations
+cently, the DECT technology has received an upgrade in the            (jitter). The IEEE 802.1 TSN TG has focused efforts not
+form of DECT-2020 new radio (NR). It defines an advanced              only on defining and proposing new standards but also on
+radio interface technology to support both URLLC and mas-             extending and improving the already available standards like
+sive machine type communication (mMTC) [28]. However,                 the IEEE 802.1Q [39] and the IEEE 802.1AS for accurate time
+it supports short-range communications with limited data              synchronization [40]. The TSN standards have been designed
+rates and marginally meets the minimum reliability require-           to enable modular systems, whereby the implementations for
+ments [29].                                                           a specific application can be tailored to meet its hardware
+   Additionally, low power wide area (LPWA) technologies              and software requirements. Another motivation behind the
+also gained attention in providing communication for emerg-           development of TSN was to provide a standardized technol-
+ing markets such as industrial networks [30]. The two leading         ogy that is open – not affiliated to any organization or com-
+LPWA technologies are the narrowband-IoT (NB-IoT) [31]                pany [12]. Hence, allowing interoperability between standard
+and long range (LoRa) cost [32]. Both LoRa and NB-IoT                 conforming industrial devices from any vendor. This added
+technologies are energy-efficient though they are focused on          advantage of interoperability on top of deterministic and high
+low data rate and do not provide the expected performance             reliability communications has pushed the development on
+level required by high-end applications.                              TSN forward. TSN in its essence enables the convergence
+   Regarding high-performance wireless technologies, there is         of IT and OT systems, which were previously kept separate
+a clear research trend addressing modifing 802.11 to enable           given the difference in their communication, safety, and secu-
+deterministic communications. These solutions typically rely          rity requirements. TSN also supports direct convergence with
+on commercial 802.11 chips combined with a customized                 higher-layer protocols (e.g., open platform communications
+software (SW) stack to enable time synchronization and use            unified architecture (OPC-UA) [41], [42]), since TSN is im-
+time division multiple access (TDMA) for channel access.              plemented self-contained on the data link layer (layer 2 of the
+Some of the most relevant solutions in this category include          OSI model).
+IsoMAC [33], RT-Wi-Fi [34], and WIA-FA [35]. However,                    To reach the targeted capabilities, the TSN technology is
+these technologies provide latencies in the range of several          based on five key features: accurate time synchronization,
+milliseconds, which cannot compete with the wired fieldbuses          traffic shaping and scheduling, ultra-reliability, resource man-
+capabilities. In recent years, some researchers have proposed         agement, and flexible network configuration models. Such
+the use of system-on-chip field programmable gate array               features are defined across different standard or amendments,
+(SoC-FPGA) devices to build tailor-made PHY and MAC                   as summarized in Table 1.
+layers optimized for specific applications [36]. However, the            Since the TSN family of standards gather many mecha-
+implementation complexity of these solutions is significant           nisms which result in different capabilities, different stan-
+and the cost of SoC-FPGA platforms is typically much higher           dardization bodies are working together to define differ-
+than using commercial devices.                                        ent TSN profiles for specific application areas. The goal is
+   Besides the communication technology, several application          to ease the configuration of TSN network and provide a
+layer protocols for lightweight message exchange are used.            reference for the vendors by defining mandatory and op-
+The application layer handles data formatting and its presenta-       tional TSN features. TSN profile standards include IEEE
+tion. Example of application layer protocols may include con-         802.1BA-2011 for AVB networks [43], IEEE 802.1CM-2018
+strained application protocol, message queue telemetry trans-         TSN for fronthaul [44], and its amendment on synchro-
+port, extensible message and presence protocol, advanced              nization enhancements IEEE 802.1CMde [45]. The ongoing
+message queuing protocol, representational state transfer, data       standardization efforts for TSN profiles includes IEC/IEEE
+distribution service, and Java message service [37]. Although,        60802 TSN profile for industrial automation, P802.1DG TSN
+design, deployment, and implementation of an application              profile for automotive in-vehicle Ethernet communications,
+layer protocol for industrial use cases is another challenge to       P802.1DF TSN for aerospace onboard Ethernet communi-
+consider, this challenge is beyond the scope of this paper.           cations, and P802.1DF TSN profile for service provider
+                                                                      networks [4].
+III. TIME SENSITIVE NETWORKING                                           In the following subsections we overview the most rele-
+In the last decade the institute of eletronics and electrical en-     vant TSN standards classified according to the feature they
+gineers (IEEE), the international electrotechical commission          provide.
+
+16                                                                                                                        VOLUME 3, 2022
+TABLE 1. The TSN Features and Respective Completed Standards With   credit based shaper (CBS) (IEEE 802.1Qav amendment) for
+Publication Year. The Ongoing TSN Standards are Not Mentioned
+                                                                    priority-based transmissions.
+                                                                       IEEE 802.1Qav [48] ensures fair distribution of frames
+                                                                    to queues by shaping the network traffic so as to control
+                                                                    the latency and bandwidth of the reserved streams. It de-
+                                                                    fines a transmission credit to each queue, whereby a queue
+                                                                    is eligible for transmission if the transmission credit is non-
+                                                                    negative and no frames from any other queue are being
+                                                                    transmitted. The credit is increased for a non-empty queue
+                                                                    if no frame is transmitted, and decreased when a frame is
+                                                                    transmitted.
+                                                                       IEEE 802.1Qbv ensures bounded latency for hard real-time
+                                                                    traffic by defining a schedule for the whole network [5]. It uses
+                                                                    the TDMA paradigm to transmit messages in allotted time
+                                                                    windows (i.e., time aware traffic window) and a dedicated
+                                                                    queue is associated with each traffic class. A transmission
+                                                                    gate is defined for each queue. The transmission schedule
+                                                                    is defined in the form of a gate control list (GCL), which
+                                                                    controls the state of the gates (open or closed) and defines the
+                                                                    duration for which a gate is open (time-aware traffic window).
+                                                                    In each cycle the GCL is executed once and is repeated for
+A. TIME SYNCHRONIZATION                                             subsequent cycles. The transmission of frames is controlled
+The IEEE 802.1AS [40], [46] standard defines the procedure          by both the GCL and the transmission selection algorithm.
+to achieve a common sense of time shared among all net-             The transmission selection algorithm ensures that low-priority
+worked devices including switches, bridges, and end stations        traffic does not interfere with high-priority traffic and allows
+in the TSN network. This shared sense of time is a fundamen-        transmission of high-priority traffic first, if multiple gates are
+tal premise not only for the correct functioning of other TSN       concurrently open.
+mechanisms (e.g., TAS) but also for coordinated functioning            The unpredictable pattern of best-effort traffic gives rise
+of different end stations.                                          to the priority inversion problem, i.e., the on-going low-
+   The IEEE 802.1AS provides a generic precision time pro-          priority traffic prevents transmission of high-priority traffic.
+tocol (gPTP) profile for accurate time synchronization, using       To address this, IEEE 802.1Qbu frame preemption speci-
+IEEE 1588v2 precision time protocol (PTP) [47]. PTP uses            fies suspension or holding of the ongoing low-priority trans-
+the master-slave paradigm, where a device with the most ac-         mission if a high priority queue has a frame to send [6].
+curate time source is selected as the grandmaster (GM). The         The IEEE IEEE 802.1Qbu is connected to IEEE 802.3br
+GM’s clock is then used to provide time reference to other          which defines two MAC service interfaces namely the ex-
+devices in the network. PTP sends periodic sync and followup        press interface and the preemptable interface. Frames mapped
+messages from the clock master (CM) egress ports to the             to preemptable interface may be preempted by express
+clock slave (CS) ingress ports. This mechanism synchronizes         frames while frames mapped to express interface cannot be
+the local clocks of the networked devices with each other. In       preempted. Moreover, preemptable frames cannot be pre-
+order to ensure more stringent synchronization, the standard        empted by other preemptable frames regardless of their
+also introduces redundancy in GM devices and synchroniza-           priority.
+tion hierarchies by supporting multiple gPTP domains. The              Additionally, the IEEE 802.1Qch standard specifies cyclic
+redundant domain is used when the performance of the first          queuing and forwarding (CQF) to assign egress queues to
+domain degrades.                                                    frames based on their arrival time, which is essential for re-
+                                                                    ceiving all transmitted frames during the expected cycle [49].
+B. TRAFFIC SHAPING AND SCHEDULING                                   CQF along with TAS also ensures deterministic delay for all
+A TSN stream is defined as a data flow with a given QoS re-         frames.
+quirements between two end stations. Based on the QoS, Each            In contrast to the standards mentioned in this section, the
+flow is uniquely identified by using the priority code point        IEEE 802.1Qcr (asynchronous traffic shaper (ATS)) operates
+(PCP) field (traffic class) and the VLAN ID (VID) within the        without the need for any synchronization between networked
+IEEE 802.1Q tag in the Ethernet header. IEEE 802.1Q [39]            devices [50]. ATS schedules traffic based on its urgency. To
+defines up to eight traffic classes per Ethernet port, where a      implement this, it reshapes TSN traffic streams per hop to
+dedicated queue is associated with each traffic class. Each         smooth out the traffic patterns, implements per-flow queues,
+queue can then be controlled by different TSN mechanisms            and prioritizes urgent traffic over relaxed traffic. These mech-
+that results in different QoS provisioning, such as TAS (IEEE       anisms help achieve high bandwidth efficiency and low delay,
+802.1Qbv amendment) for time-triggered communications, or           but also imply a high computation process on each frame.
+
+VOLUME 3, 2022                                                                                                                      17
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+C. ULTRA RELIABILITY                                                  includes an application called multiple stream reservation pro-
+Reliability is an important requirement for many TSN appli-           tocol (MSRP). The MSRP describes the specific attributes of a
+cations. Although, cyclic redundancy check can detect errors          station to transmit or receive streams if they are either Talker
+and notify the sender for re-transmission, it causes delays           or Listeners. Since MSRP has some limitations, the MSRP
+that are not tolerable by time critical flows. Therefore, en-         gen 2, also named MSRP++ has been created [59]. MSRP++
+abling fault tolerance in the network increases reliability and       overcomes those drawbacks by splitting the configuration in-
+supports deterministic communication. TSN comprises some              formation into static and dynamic and by adding new fields
+standards to enhance the reliability of the network and add           about the stream properties.
+fault tolerance. Those standards are described as follows.               The TSN TG also defines IEEE 802.1Qcp to enable com-
+   The IEEE 802.1CB standard for frame replication and elim-          munication of TSN configuration data between bridges using
+ination provides proactive redundancy in order to decrease            YANG models [60]. YANG is a data modeling language used
+packet loss probability. It identifies packets belonging to a         for data configuration, remote procedure calls, and notifica-
+stream, replicates them for transmission over possibly dis-           tions for network management tools. Examples of YANG
+joint paths, and removes the duplicate frames at the des-             based protocols include RESTCONF and NETCONF. Apart
+tination [51]. The IEEE 802.1CB is similar in properties              from this IEEE 802.1Qcx represents YANG models defined
+and compatible to the well-known parallel redundancy pro-             for connectivity fault management (CFM) for relays and
+tocol (PRP) [52] and high-availability seamless redundancy            bridges [61].
+(HSR) [53] protocols, thus providing inherent interoperability.
+   The IEEE 802.1CB does not define disjoint paths itself,            E. NETWORK CONFIGURATION
+instead relies on the IEEE 802.1Qca [54] standard for path            A TSN network consists of a set of interconnected full-duplex
+control and reservation. IEEE 802.1Qca builds on the inter-           (TSN) Ethernet switches (forming a multi-hop topology); and
+mediate system-to-intermediate system (IS-IS) [55] to create          a set of (computational) TSN nodes (each connected to one or
+multiple paths through the network. It offers explicit path           more TSN switches). The configuration of such network is a
+control, redundancy for data flows between stations (STAs),           complex task and it depends on the TSN network architecture
+stream & bandwidth reservation, and distribution of control           models. Three models currently exist: fully centralized, hy-
+parameters for flow control messages and flow synchroniza-            brid, and fully distributed, as defined in the 802.1Qcc amend-
+tion [54].                                                            ment [58]. Therefore, the network configuration relates to the
+   The IEEE 802.1Qci standard employs the stream identifica-          TSN configuration models and the network topology where it
+tion of IEEE 802.1CB to implement per-stream filtering and            is applied to. For the fully centralized model, a centralized
+policing based on rule matching. It allows for QoS provision-         user configuration (CUC) entity is defined along with the
+ing by detecting which streams violate the defined behavior           centralized network configuration (CNC). The UNI is defined
+and takes mitigating actions [56].                                    between the CNC and the CUC to exchange the information
+                                                                      related to the user specific communication requirements. For
+                                                                      the hybrid model, the user requirements are communicated
+                                                                      directly to the network, but the configuration information is
+D. RESOURCE MANAGEMENT                                                sent by the CNC. There is no CUC entity in the hybrid model.
+Resource management is a key aspect to achieve deterministic          802.1Qcc is complemented by 802.1Qca [54] which defines
+and reliable communication. It defines mechanisms and ser-            the stream reservation capabilities, including path control,
+vices to manage resources including bandwidth, scheduling             bandwidth, and stream reservation of the TSN flows. Finally,
+patterns, and communication paths. The following standards            802.1Qci [56], which is also used to enhance the network’s
+in TSN contribute towards resource management.                        reliability, enhances the current existing protection and filter-
+   The IEEE 802.1Qat standard for stream reservation proto-           ing mechanisms to make sure that the nodes stays with the
+col (SRP) provides protocols to ensure resource availability          expected schedulers and to avoid interference from external
+along the entire path between the source and destination. It          network devices. Moreover, the IEEE P802.1Qdj as an on-
+achieves this by allowing resource allocation and reservation         going TSN standard specifies procedures and interfaces to
+at each switch, thus ensuring end-to-end latency and band-            enhance the three network configuration models.
+width guarantees [57].
+   Apart from the distributed management by 802.1Qat, TSN             IV. WIRELESS TSN
+also specifies the IEEE 802.1Qcc standard to globaly man-             The ongoing work on wired TSN promises deterministic la-
+age the network. It provides an enhancement to the existing           tency along with high reliability. However, wired networks
+SRP by defining new architectures and specifying a software-          lack flexibility given the high maintenance and installation
+defined interface between the user and the network called             costs of wired connections and minimal support for mobil-
+user/network interface (UNI) [58]. Additionally, UNI also             ity. With the advancement of industrial technologies, a new
+defines a fully distributed and a hybrid architecture model.          vision (often termed as industrial internet of things (IIoT)) is
+For the fully distributed model, the users send their require-        emerging where all industrial assets are interconnected with
+ments directly to the network through the UNI. The SRP                each other including the cloud, the information systems, and
+
+18                                                                                                                        VOLUME 3, 2022
+                                                                     BS comprises both the BS and core network in case of 5G as
+                                                                     wireless technology while in case of Wi-Fi is a TSN capable
+                                                                     access point (AP). However, a simple substitution of wired to
+                                                                     wireless components is not enough if there is no coordination
+                                                                     between the wired and wireless domains and if the wireless
+                                                                     domain does not support TSN capabilities. In general three
+                                                                     different layers or functional groups can be identified that may
+                                                                     be addressed for transition to a hybrid wired-wireless TSN
+                                                                     network. These include PHY-layer, link layer with time and
+                                                                     communication synchronization, and network configuration
+                                                                     regarding services, QoS, latency, and similar.
+                                                                        On the PHY-layer, TSN capabilities can be extended over a
+                                                                     wireless network through interfacing between the wired EDs
+                                                                     and the wireless EDs. This can be established either through a
+                                                                     wireless bridge such as the 5GS (5G core and BS), providing
+                                                                     wireless interfaces such as connecting APs, or through a wired
+                                                                     connection such as Ethernet to a WiFi BS. Here, we use the
+                                                                     general term BS to address the media conversion from the
+FIGURE 1. Simplified wireless TSN network fully centralized.         wired to the wireless domain and vice versa. Two types of
+                                                                     BSs can be identified, namely, a simple BS and a complex
+                                                                     BS. Simple BSs are placed at the ED ends and allows allows
+the business processes. Wireless technologies are the key en-        interfacing between wired and wireless TSN EDs, e.g., ED1-
+ablers to realize this vision for factories of the future. The       ED4 to a wireless channel, as presented in Fig. 1. A complex
+benefits of adding wireless includes inherent support for mo-        BS translates the serial TSN Ethernet communication to the
+bility, possibility to monitor harsh environments, flexible and      wireless domain. This BS has to act as a wireless bridge
+modular production systems that support mass customization,          with the possibility to analyze or compile Ethernet data and
+and ability to self-configure after failures [7], [8], [62], [63].   respectively send/receive the data in defined time slots using
+                                                                     the corresponding wireless channels. The mapping between
+A. ENABLING WIRELESS TSN INTEGRATION                                 Ethernet data and wireless channel time slots (irrespective of
+Deterministic latency and high reliability performance are the       the technology) is to be configured as part of the link layer
+prerequisites of any communication technology in the IIoT.           functions.
+The deterministic latency and high-reliability are mostly ful-          The link layer allows to link packets of the Ethernet stream
+filled by wired fieldbuses, though wireless protocols struggle       according to their identification to specific time slots in wire-
+to fulfill them. The main challenge comes from the error-            less channels. However, the forwarding of the traffic with low,
+prone nature of the wireless channel and the fact that the           deterministic latency, requires tight time synchronization be-
+wireless media is shared by all the devices.                         tween the domains. In Fig. 1, the wireless domain is depicted
+    With the advancement of industrial technologies, a new           in blue and wired in green where time synchronization of the
+vision (often termed as IIoT) is emerging where all indus-           two domains can be performed using a boundary clock.
+trial assets are interconnected with each other including the           It is expected that the functionality for CNC and CUC
+cloud, the information systems, and the business processes.          remains unchanged except for the parameters that are specif-
+Industrial assets include sensors, actuators, robots, machines,      ically required for configuration of the wireless links and the
+and control systems [64], [65] (see Section VII-A for a brief        ones that are beneficial in establishing communication links
+overview of IIoT applications). We focus on the challenges at        with desired performance. Once the PHY layer and link layer
+MAC and PHY layers, given that industrial communication              mapping between the wired and wireless domains is estab-
+systems are typically focused on these layers along with the         lished, ensuring QoS along with enabling resilience, security,
+application layer [66].                                              and efficiency would be required. In the following, we present
+    The components and functions of a fully centralized TSN          the main challenges to be tackled for enabling a wireless TSN
+network must include TSN enabled switches, end devices               system.
+(EDs), TSN clock, CUC, and CNC. To support IIoT use cases
+for additional advantages of mobility and flexibility, extending     B. CHALLENGES TO SUPPORT WIRELESS TSN
+TSN capabilities over a wireless network is essential. There-        To support wireless TSN, several research challenges can be
+fore, a step forward is to enable a hybrid wired-wireless TSN        foreseen, which are mostly related to the wireless medium.
+network. Considering this scenario, some components of a             First, the wireless medium, specifically, under the unlicensed
+TSN network such as TSN EDs are to be replaced with wire-            frequencies is contention based and poses the challenge of
+less TSN EDs and TSN switch replaced with a wireless TSN             channel access due to the listen before talk procedure. How-
+base station (BS), as presented in Fig. 1. The wireless TSN          ever, guaranteed access to the wireless channel is essential to
+
+VOLUME 3, 2022                                                                                                                      19
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+enable deterministic communications. The demanding ques-              features are the modification of the orthogonal frequency
+tion is to design mechanisms that enable guaranteed channel           division multiplexing (OFDM) numerology, the introduction
+access in unlicensed frequency spectrum. A related issue of           of orthogonal frequency division multiple access (OFDMA),
+the wireless medium is the inherent interference from other           and the definition of the TF and target wake time (TWT)
+channels. The interference and signal distortion issues pose          mechanisms. The new 802.11ax mechanisms enable signifi-
+challenges in achieving ultra-reliability. In the first place, in-    cant latency reduction and enhanced efficiency, though IEEE
+terference from nearby wireless devices that communicates             802.11ax does not still reach the performance figures in some
+with the same protocol may be avoided by a good protocol              important TSN aspects, such as time-aware scheduling and
+design (e.g., using coordination between devices). Interfer-          ultra-reliability [13]. The new 802.11be standard (Wi-Fi 7) is
+ence from wireless devices using other protocols are more             under definition and its final specification will be released in
+complex and mechanisms to minimize interference are re-               two to three years [68]. An expected novelty for 802.11be is
+quired. For instance, in the case of a factory, the mechanisms        the introduction of the low-latency operation mode [69]. The
+to minimize interference could be shielding the walls of the          low-latency mode may provide the QoS required by TSN-
+factory or implementing a strict access control of devices so         capable systems and so enabling wireless TSN [16].
+no one transmits in the operation bands of the industrial de-            Through this section, we first comprehensively analyze all
+vices. Also, the Wireless TSN can implement functionalities           the current existing mechanisms in 802.11ax and the new
+to detect interference and move to other bands, as is the case        mechanisms that are yet to come in 802.11be that can be used
+in cognitive radio approaches.                                        to enable wireless TSN. Then, taking into account that the
+   Apart from the inherent problems of interference in unli-          integration of wired TSN and 802.11 is yet to be defined,
+censed bands, common wireless propagation phenomena also              we propose a possible 802.11-based TSN architecture that
+poses a significant hurdle in the achievable reliability and          includes the configuration of the 802.11 mechanisms to enable
+latency. Therefore, the propagation phenomena in the target           wireless TSN and the integration of such mechanisms with
+environments must be taken into account in the design and             wired TSN.
+implementation of the protocol, and in the deployment of the
+wireless network infrastructure.                                      A. TIME SYNCHRONIZATION
+   To enable TSN integration with wireless technologies, sev-
+                                                                      The problem of time synchronization using 802.11 has been
+eral challenges are to be addressed. These include enabling
+                                                                      widely studied in the literature. Two elements are key to
+time synchronization, time-aware scheduling, providing the
+                                                                      successfully enable time synchronization for wireless TSN:
+ultra-reliability targets required by the applications [12], [13],
+                                                                      the technologies/protocols involved in the actual wireless time
+[17], [67]. Moreover, exposing the wireless QoS capabilities
+                                                                      synchronization and its coexistence with other wireless TSN
+from the wireless TSN to the wired TSN domain and its
+                                                                      mechanisms (e.g., traffic shaping and scheduling).
+integration with the TSN configuration and management is an-
+other challenge. A crucial feature of TSN is to support vendor
+independent network configuration. These can be configured            1) WIRELESS TIME SYNCHRONIZATION
+through protocols such as NETCONF to ensure that configu-             The attainable wireless time synchronization depends mainly
+ration of the TSN features is performed according to standard         on three variables: the messaging scheme of the synchroniza-
+methods. However, in case of any changes such as installation         tion protocol, the timestamping technique / available clock,
+of additional sensors, a manual re-configuration is required.         either SW or hardware (HW) timestamps/clock, and the spe-
+Therefore, the challenge is the design of re-configurable sys-        cific wireless conditions. The largest error source is the times-
+tem that allows changes in the network yet enabling smooth            tamping and clock, whereas the messaging scheme and the
+network functioning. A re-configurable system, however, also          wireless channel phenomena are typically a source of small
+requires defining interfacing and interaction between the sen-        time synchronization error.
+sors, the wired TSN domain and the wireless TSN domain.                  Two main families of time synchronization messaging
+The configuration setting is also to be reflected at the wireless     schemes exist: one way messaging based on the broadcasting
+system in a dynamic manner for automatic deployment and               of time frames (e.g., beacon frames) or two-way, when the
+configuration of an end-to-end hybrid wired-wireless TSN              slaves acknowledge the time frames. The latter is able to com-
+system. In the following sections, we detail how some of these        pensate the channel delay thanks to the two-way exchange,
+challenges can be addressed by IEEE 802.11 and 5G.                    whereas the former cannot.
+                                                                         In the particular case of 802.11, the timing measurements
+V. ENHANCEMENTS TO SUPPORT TSN IN IEEE                                (TM) and fine timing measurements (FTM) define two nearly
+802.11AX/BE - WI-FI 6/7                                               identical messaging schemes to enable precise time synchro-
+During the past few years, the IEEE 802.11 standardization            nization. Fig. 2 represents the FTM frame exchange, which is
+groups have been working on the 802.11ax standard (Wi-                described as follows. First, an STA sends a FTM request mes-
+Fi 6) [9]. Efforts have not only been focused on providing            sage to start the synchronization procedure. The AP answers
+higher throughput, but also on enhancing some other aspects           the request with a FTM frame. The STA receives the FTM and
+such as latency, reliability, and flexibility. The most relevant      answers an 802.11 acknowledgment (ACK). During the frame
+
+20                                                                                                                        VOLUME 3, 2022
+                                                                        to synchronize its timer to the network base time. A hybrid
+                                                                        synchronization using the 802.11 beacon frames and the FTM
+                                                                        scheme could be a suitable solution. In the first step, in an
+                                                                        unsynchronized state, the STAs could perform a coarse-grain
+                                                                        synchronization exploiting 802.11 beacons. In the second
+                                                                        step, after the coarse synchronization, it could switch to the
+                                                                        802.11 FTM.
+
+
+
+                                                                        B. TRAFFIC SHAPING AND SCHEDULING
+                                                                        802.11 default medium access is contention-based where ev-
+                                                                        ery node of the network can gain access to the wireless
+                                                                        medium at any time. Such medium access is not determin-
+                                                                        istic and cannot virtually provide any level of QoS. Nonethe-
+                                                                        less, 802.11 includes other operation modes that enable traf-
+                                                                        fic classification and contention-free based medium access.
+                                                                        Regarding traffic classification, 802.11 includes a medium
+                                                                        access scheme named enhanced distributed channel access
+FIGURE 2. Synchronization schemes considered in 802.11ax for wireless   (EDCA) [9], which includes four traffic classification profiles:
+TSN operation.
+                                                                        video, voice, background tasks, and best-effort. Even though
+                                                                        these traffic profiles are not aligned with the TSN needs, they
+                                                                        may be redefined or extended for the TSN needs, given that,
+exchange, a set of timestamps is collected, which represent
+                                                                        real applications may roughly require three traffic priorities
+the frames ingress and egress times. The frame exchange is
+                                                                        (hard real-time, soft real-time, and best-effort). Besides, other
+repeated several times (depending on the FTM configuration)
+                                                                        mechanisms such as internet protocol (IP) classification [13]
+to take more timestamps. Finally, the timestamps are used
+                                                                        are also being considered to perform traffic classification in
+by the STA to compute the synchronization error and fre-
+                                                                        802.11be. Nonetheless, TSN sub-standards are defined just for
+quency drift and compensate its internal clock time. The frame
+                                                                        the second layer of the communication stack and thus the use
+exchange is periodically performed to continuously correct
+                                                                        of IP may constraint the design of custom stacks for specific
+small variations in the clock drift.
+                                                                        applications.
+   The timestamping technique is the strongest limiting factor
+                                                                            Concerning the time-aware operation and QoS, 802.11ax
+in the synchronization performance [70]. The timestamping
+                                                                        supports several methods to prevent undesired transmissions
+techniques are classified as SW or HW. SW-based times-
+                                                                        from the STAs connected to a wireless TSN-capable AP and
+tamps are affected by the jitter of the communication stack
+                                                                        to ensure almost deterministic transmissions. Nonetheless, it
+and so they provide low performance, in the 1 µs precision
+                                                                        is worth mentioning that since 802.11 is based on the listen-
+range [71]. In comparison, HW timestamps reaches synchro-
+                                                                        before-talk procedure, the transmissions will always present a
+nization levels in the order of 10-40 ns for 20 MHz BW and
+                                                                        jitter (even for free channel conditions). The jitter should be
+over different channel conditions, as highlighted in several
+                                                                        below 100 µs for the common 802.11 random access proce-
+research works [36], [72]–[75]. Some of these works highlight
+                                                                        dure when no interference is present. The next medium access
+that the wireless propagation phenomena is one strong lim-
+                                                                        mechanisms currently being considered to enable time-aware
+itation in the achievable synchronization level. Even so, the
+                                                                        operation in 802.11ax include EDCA, hybrid coordination
+achieved performance for the worst-case channel conditions,
+                                                                        function controlled channel access (HCCA), TWT, and TF-
+is enough to reach the performance targets of wireless TSN.
+                                                                        based [13]. EDCA and HCCA were already included in the
+                                                                        older versions of 802.11 standard, whereas TWT was first
+2) COEXISTENCE OF TIME SYNCHRONIZATION AND OTHER                        introduced in 802.11ax. In addition to the scheduled TF, an
+TRAFFIC STREAMS                                                         enhancement to the 802.11ax TF is currently under consider-
+Apart from the performance itself, the coexistence of the time          ation by the 802.11be task group (TGbe) group [13]. These
+synchronization with other traffic streams is also a relevant           medium access mechanisms are based on a similar princi-
+matter of study. It is extremely important that the timing              ple that the AP prevents the transmissions of the STAs and
+messages do not impact the scheduling of the TSN flows.                 establishes priorities based on the real-time traffic needs of
+At the same time, the traffic from the TSN flows should                 the STAs. The most promising medium access may be the
+not block the timing messages. The natural option would                 scheduled TF, which enables a very tight scheduling of the
+be using the 802.11 FTM. However, an unauthenticated and                ongoing transmissions.
+non-synchronized STA may cause interference to the wireless                 In the first place, EDCA, and HCCA have been widely stud-
+TSN traffic flows when it attempts to send FTM request frame            ied in the literature over older versions of the standard. Most
+
+VOLUME 3, 2022                                                                                                                         21
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+                                                                      different wireless technologies and users and so there is a high
+                                                                      probability of intereference. The ultra-reliability challenge is
+                                                                      typically tackled by combining two complementary perspec-
+                                                                      tives: intra-frame redundancy and inter-frame redundancy.
+
+
+                                                                      1) INTRA-FRAME REDUNDANCY
+                                                                      Intra-frame redundancy introduces redundant bits within a
+                                                                      frame, reducing the data rate though effectively enhancing
+                                                                      the probability of successful reception of a frame. The ratio
+                                                                      between the number of bits (redundant + data) and the number
+                                                                      of data bits transmitted in a frame dictates the protection
+                                                                      level of a frame against the wireless impairments. At this
+                                                                      moment, the most reliable modulation and coding scheme
+                                                                      (MCS) in 802.11ax is BPSK with redundancy of 1/2 (MCS =
+                                                                      0). In addition, 802.11ax has also introduced the dual carrier
+                                                                      modulation (DCM) to enable the transmission of redundant
+                                                                      data over different subcarriers to enhance the reliability under
+                                                                      high-multipath channels. Unfortunately, to the best of our
+                                                                      knowledge, there is no work available in the literature that
+                                                                      analyzes the reliability of 802.11ax using DCM.
+                                                                         Some researchers have comprehensively studied the reli-
+                                                                      ability of intra-frame redundancy using solutions based on
+FIGURE 3. Comparison of 802.11 scheduling modes.
+                                                                      the 802.11 PHY for industrial environments [36], [77]. These
+                                                                      studies show that PER < 10−6 using single-frame transmis-
+                                                                      sions are feasible in industrial environments using robust
+researchers concluded that they are not suitable to handle real-      modulation schemes and decoder implementations. However,
+time traffic [76]. In the second place, the TWT, originally de-       the presented results are for environments with no external
+signed as a power-saving mechanism, is also being considered          interference.
+to enable time-aware operation. The TWT mechanisms enable
+the activation/deactivation of STAs to reduce their consumed
+power [18]. This feature can also be used to wake up the STAs         2) INTER-FRAME REDUNDANCY
+at different time instants so that the STAs will compete for the      Intra-frame redundancy is absolutely necessary to ensure an
+medium with fewer STAs.                                               appropriate reliability of the wireless TSN system. However,
+   Finally, the TF-based scheduling uses the TF to determin-          it does not provide enough protection under situations with
+istically schedule 802.11 frames [13]. First, the AP must gain        interference or in the case of incorrect encoding/decoding
+access to the wireless medium using the 802.11 legacy random          due to a fault in the transceiver electronics. Therefore, the
+access mechanisms. Once the AP has gained the medium                  use of inter-frame redundancy is almost compulsory to reach
+access, the AP can transmit a TF that is used by the 802.11           the reliability targets required by industrial applications.
+nodes to access the medium without an additional contention.          The inter-frame redundancy is typically classified into active
+As shown in Fig. 3(a) and (b), the TF significantly reduces           redundancy and passive redundancy. In active redundancy,
+the number of random contention waiting periods between               the transmitter detects through an ACK frame if the data
+frame transmissions, thus effectively enhancing the network           frame has been lost and acts in consequence (e.g., perform-
+efficiency and latency. TF enhancements are under considera-          ing retransmissions). In the passive redundancy, different
+tion for 802.11be to enable time-aware scheduling. Basically,         copies of the same frame are transmitted through different
+the idea is to replace the TF with an scheduled TF that en-           resources/paths (either time, frequency, space, or different
+ables the transmission of several frames in a row, as shown           communication technologies) without waiting for the ACK
+in Fig. 3(c). The scheduled TF may significantly reduce the           from the receiver.
+communication jitter and latency since the AP must only gain             Active redundancy is spectrum-efficient as it only transmits
+access to the channel once, as opposed to using the legacy TF.        repetitions of a frame if the initial frame is lost. In addition,
+                                                                      the repeated frame can be shortened using hybrid automatic
+C. ULTRA RELIABILITY                                                  repeat request (HARQ) techniques, minimizing the amount of
+Achieving ultra-reliability is one of the most challenging            radio resources consumed in the retransmission. However, it
+features in wireless communications over unlicensed bands             clearly impacts the achievable latency because the retransmis-
+because 1) the wireless channel heavily distort the wireless          sions require signaling from the receiver to know if the frame
+signals and 2) unlicensed wireless bands are shared among             was correctly delivered or not latency [78].
+
+22                                                                                                                        VOLUME 3, 2022
+                                                                        In addition to the previous 802.11 standard, 802.11be pro-
+                                                                     poses the introduction of a new feature related to the man-
+                                                                     agement of a complete network that comprises several APs,
+                                                                     named as multi-AP resource coordination. Among others, a
+                                                                     purpose of this feature is to manage the mutual interference
+                                                                     and contention levels between different AP networks and op-
+                                                                     timize the deployment of the network. To do so, it assumes a
+                                                                     centralized global management of the entire network, named
+                                                                     the Master AP, where all the wireless devices belong to the
+                                                                     same logical network.
+                                                                        Finally, apart from the intrinsic challenges of the resource
+                                                                     management of the wireless protocol, the interference from
+                                                                     other networks in unlicensed bands is a significant extra chal-
+                                                                     lenge for the resource management. This challenge is even
+FIGURE 4. Multi-link Redundancy techniques proposed for 802.11be.
+                                                                     more significant when the networks has to fulfill stringent QoS
+                                                                     capabilities. In that sense, adequate network planning of the
+                                                                     wireless technologies is extremely important to minimize the
+   On the contrary, passive redundancy has lower efficiency,         wireless interference [83]. Recently, the available spectrum
+since multiple repetitions of the same frame are transmitted         for 802.11ax has been extended in some countries by adding
+through different channels. Nonetheless, it is a very com-           1 GHz extra bandwidth [84]. This band is currently free of
+pelling method to achieve ultra-reliability in wireless TSN          other wireless systems, therefore, it may be an interesting
+without sacrificing latency and without requiring complex            opportunity to avoid interference and ensure appropriate net-
+retransmission schemes. Passive redundancy is currently not          work planning. 802.11ax devices that operates in 6 GHz band
+supported in 802.11ax, however, is being considered for the          have been commercially labeled as Wi-Fi 6E.
+802.11be standard using multi-link operation [79].
+   The multi-link operation allows an STA to simultaneously          E. NETWORK CONFIGURATION
+maintain multiple 802.11 links across the 2.4, 5, and 6 GHz
+                                                                     Traditionally, 802.11 is based on a star network topology,
+bands. The multiple links can be used to send redundant
+                                                                     centralized around an AP, which behaves as a gateway for the
+frames as in 802.1CB standard (see Fig. 4). Multi-link is ex-
+                                                                     exchanged frames between the devices. There is also a stan-
+pected to significantly enhance the network reliability. Multi-
+                                                                     dard extension for supporting mesh network topology [85]. Its
+link will be implemented in a new entity named multi-link
+                                                                     main objective is to enlarge the network coverage using dif-
+management, built on top of the 802.11 MAC layer. The
+                                                                     ferent hops between the AP and STA. Additionally, 802.11be
+multi-link management and TSN entities will configure each
+                                                                     will provide an evolved network configuration based on si-
+link based on the traffic QoS requirements and the wireless
+                                                                     multaneous AP links for each STA, which can be considered
+link capabilities. Finally, it is worth noting that multi-link may
+                                                                     for improving the throughput or even increasing the logical
+also enhance the average and worst-case latency in unlicensed
+                                                                     link reliability. This feature will require perfect coordination
+bands [80]. Basically, each 802.11 link will operate under un-
+                                                                     between the APs and consequently another wired network
+correlated interference and propagation conditions. Therefore,
+                                                                     configuration around the APs.
+the probability of transmitting one of the redundant copies of
+                                                                        Besides the standardized solutions, there have been several
+the frame before the specified time is increased.
+                                                                     proposals for improving the coordination within the APs. The
+                                                                     authors in [86] consider the mechanisms for the handover
+D. RESOURCE MANAGEMENT                                               process of the STA when it changes from one AP to the next
+The management and allocation of resources is always a criti-        one. From the reliability point of view, the authors from [87]
+cal issue in industrial wireless networks, since resources such      and [88] propose two parallel 802.11 networks following the
+as spectrum and transmit power are limited. Motivated by this,       approach defined as parallel redundancy protocol (PRP) [89].
+there is a large body of work on managing such resources             These solutions involve new network architectures not only in
+and improving the overall performance of the system. The             the wireless domain but also in the wired domain that support
+OFDMA modulation provided by 802.11ax allows efficient               the correct behavior of the overall network.
+transmissions of small frames to a group of users simultane-
+ously. The whole bandwidth is divided into multiple subsets          F. 802.11-BASED TSN AND THE INTEGRATION WITH
+of subcarriers, each subset is known as a resource unit. To          WIRED TSN
+efficiently utilize the available bandwidth, one needs to opti-      Even if next 802.11 standard releases supports Wireless TSN,
+mally solve the scheduling and resource allocation problem.          802.11 as its own is not enough to fulfill all the communica-
+Several proposals can be found in the literature with different      tion requirements in real deployments and so it has to rely on a
+approaches to optimize the user and spectral resources [81],         wired TSN backbone that interconnects the wireless network
+[82].                                                                with wired devices. Therefore, the last important aspect to
+
+VOLUME 3, 2022                                                                                                                     23
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+FIGURE 5. 802.11 and TSN hybrid network architecture.
+
+
+
+successfully enable wireless TSN is to integrate the wireless         we will describe the functioning of each subsystem of the
+TSN technology into wired TSN infrastructure.                         architecture to achieve a high-performance integration.
+   Several action points have to be considered to reach a suc-
+cessful integration, as introduced in Section IV. First, 802.11
+must support a QoS similar to wired TSN. These aspects have           1) INTEGRATION OF WIRED AND WIRELESS TIME
+been already reviewed in the previous sections. A second im-          SYNCHRONIZATION
+portant aspect is the time synchronization translation between        A key point in the integration of wired and wireless TSN is
+the wired and wireless domains. The third challenge is related        the translation of the time synchronization from the wired to
+to translating the frame data and their priority and ID through       the wireless domain. Basically, the wired TSN must include
+the domains. Finally, the last challenge is to translate the          a CM that propagates the synchronization to every wired
+802.11 QoS capabilities from the wireless TSN to the CNC              TSN capable device of the network including the 802.11 APs
+language, and from CNC back to the 802.11.                            (Fig. 5). Then, the APs propagates in turn the timing from the
+   These challenges are serious hurdles to enable the inte-           wired to the 802.11 interface. In the case of the integration of
+gration of 802.11 with wired TSN. Through this subsection,            TSN and 802.11-based TSN, a boundary clock is probably a
+we have analyzed such challenges and we have developed an             better approach because the APs not only require to propagate
+802.11-based TSN network architecture, which is depicted in           the synchronization but they also need to be synchronized to
+Fig. 5. The presented architecture includes a common wired            the network timing to implement the time-aware scheduling.
+TSN segment that includes a set of wired TSN switches,                The integration of the synchronization poses an implementa-
+wired TSN devices (e.g., the controller), the TSN CM that             tion challenge and a protocol translation challenge. Regarding
+provides the global network time, and the CNC and CUC                 the implementation, the main challenge is how to share the
+configuration entities that performs the wired and wireless           same clock across the different wired and wireless interfaces.
+TSN network orchestration. The wired TSN is extended to               Basically, custom hardware solutions are required to forward
+the wireless domain using 802.11 APs. The APs include the             the time provided by a hardware clock from one interface
+key elements that enable the translation of the TSN traffic           to another, as shown in [90]. In addition to this, a second
+and services, namely the data translator and priority mapping,        challenge is related to the synchronization protocol. Basically,
+the time synchronization forwarding, and the QoS functions            the wired and wireless domain may use different clock syn-
+translator (named in Fig. 5 as the control block at the APs).         chronization protocols and therefore may use different time
+The data translator is an existing element in the Ethernet-           formats (timestamps) as well. As a result, the time has also to
+802.11 integration, whereas, to the best of our knowledge, the        be converted to an appropriate format.
+rest of the subsystems, which are required for wireless TSN              A boundary clock-based wired and wireless TSN time syn-
+operation, are not standardized. In the following paragraphs,         chronization translation has been demonstrated in [90]. The
+
+24                                                                                                                        VOLUME 3, 2022
+work shows that the translation can be done with virtually no        the different flows when they cross the wired and wireless
+loss in precision if hardware-based translation is employed.         domains. Such schedule is designed with the aim of satisfying
+                                                                     the QoS targets of the applications. Second, and once that
+                                                                     the CNC computes the network scheduler, the 802.11 devices
+2) DATA TRANSLATION AND PRIORITY MAPPING
+                                                                     must be able to translate the QoS into the implemented 802.11
+The data translation and priority is the second important chal-
+                                                                     mechanisms so that the TSN flows requirements are main-
+lenge of the 802.11 and wired TSN integration. Regarding the
+                                                                     tained.
+data translation, 802.11 is a natural extension to Ethernet and
+                                                                        Regarding the former aspect, the 802.11 must be able to
+it already includes all the required translation mechanisms to
+                                                                     measure the specific QoS that it is able to provide and to notify
+forward a frame from the wired domain to the wireless, such
+                                                                     the QoS to the CNC. link layer discovery protocol (LLDP),
+as header parsing and translation, fragmentation if required,
+                                                                     defined in 802.1AB [91], and extended by 802.1ABcu to sup-
+etc. However, the priority mapping between 802.11 and Eth-
+                                                                     port YANG, is commonly used to discover the network and
+ernet is not standardized and so vendor-specific solutions are
+                                                                     to know the capabilities of each wired TSN switch. However,
+common in commercial APs. This includes, for instance, au-
+                                                                     LLDP does not include fields to define the 802.11 capabilities.
+tomatic virtual LAN (VLAN) tagging of the traffic forwarded
+                                                                     As a result, it may be necessary to use proprietary protocols
+through Ethernet at the AP.
+                                                                     or to modify LLDP so it include wireless-related fields.
+   Two priority mapping models can be envisioned: non-
+                                                                        The CNC gathers the information about the network topol-
+integrated 802.11 priority mapping, and integrated 802.11 pri-
+                                                                     ogy, including TSN switches, the 802.11 links, and the talkers
+ority mapping. In the former one, the mapping is not provided
+                                                                     and listener configurations from the CUC via the UNI. After
+by the 802.11 itself, but by an external hardware or software
+                                                                     that, the CNC computes the network’s scheduler. Then, the
+entity that transmits the frames to the modem according to
+                                                                     scheduler is sent to both the wired and wireless TSN-capable
+an external schedule. This model has already been considered
+                                                                     devices in TSN-like format (see Fig. 5). The control unit of
+in some works that aim to enable TSN over 802.11ac and
+                                                                     the APs has then to translate the wired TSN configuration into
+ax [17]. In the second one, 802.11 is actually priority aware
+                                                                     an 802.11 configuration structure. Such translation strongly
+and implements different queues for each traffic stream. The
+                                                                     depends on the available 802.11 mechanisms, capabilities,
+transmission of the frames of each queue is controlled by
+                                                                     wireless deployment, and resources available at each AP.
+the specific 802.11 MAC mechanism implemented over the
+                                                                     For instance, the coordination between APs working on the
+network, such as done in the EDCA mechanism. Such priority
+                                                                     same or adjacent channels is expected to play a vital role in
+classification could be enabled for other schemes, such as
+                                                                     the scheduling configuration [80]. That is, after the APs re-
+the scheduled TF. However, the integrated 802.11 priority
+                                                                     ceive the TSN scheduler configuration, the master AP gathers
+mapping requires support from the 802.11 standardization
+                                                                     all the information about the schedulers and state of the 802.11
+bodies and from the vendors to develop the required specific
+                                                                     links and creates an 802.11 scheduler that satisfies the QoS of
+hardware mechanisms.
+                                                                     each TSN flow. Additionally, both the TSN flows configura-
+   In addition to this, it is also necessary to tag the 802.11
+                                                                     tion and 802.11 links are subject to changes in the case that
+frames according to their TSN VLAN tags. To do so, 802.11
+                                                                     new TSN flows are added to the network or if one wireless
+includes a QoS field that can be used to know the specific
+                                                                     link is degraded. In that case, the master AP has to recalculate
+QoS properties of a frame. This field could be used to provide
+                                                                     the network schedule on the fly to maintain the QoS of each
+information about which frame belongs to which wired TSN
+                                                                     TSN flow.
+flow.
+                                                                     G. EXAMPLE 802.11-TSN INTEGRATED SCENARIO
+3) 802.11-TSN QOS MAPPING                                            We have used the paper [92] as an use case and configura-
+Finally, the 802.11-TSN QoS mapping is the last important            tion example of a Wired TSN - Wireless TSN (802.11-based)
+challenge of the 802.11 and TSN integration. The QoS map-            network. The specific application is within an industrial use
+ping is refers to two functionalities implemented between the        case for smart grids. The requirements of the application are
+CNC and the 802.11-capable devices. First, the 802.11-TSN            as follows. The application must periodically sample every
+capable devices must deliver to the CNC the specific QoS sup-        500 µs some sinusoidal waveforms from different points of
+ported by the 802.11 links, including aspects as throughput,         the grid. Then, the sampled data must be sent with deter-
+minimum latency, worst-case latency, and mean reliability.           ministic latency to a controller which has to decide, based
+Since 802.11 QoS does not use the semantics (parameters)             on the sampled values, the state of the grid and act in con-
+specified by TSN, the fundamental problem here is how to             sequence. To enable this use case over Wireless TSN, [92]
+correctly translate the information so no details are lost in        implements 1) in the wired domain: 802.1AS and 802.1Qbv
+the process, or how to modify the TSN parameters so they             to provide deterministic communication with known latency
+include all the relevant information about the 802.11 link. In       from the network configuration. 2) In the wireless domain: a
+addition, the notification of these capabilities and the available   beacon-based synchronization messaging (similar to the Wi-
+mechanisms is of utmost importance. Basically, because the           Fi beacon frames), and a TDMA-based scheduling (similar
+CNC use such information to create the schedule between              to the scheduled-trigger frame techniques that are expected
+
+VOLUME 3, 2022                                                                                                                      25
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+FIGURE 6. 5G system architecture as a logical TSN bridge supporting time synchronization and end-to-end deterministic connectivity.
+
+
+
+to be in the next Wi-Fi releases). To ensure deterministic                   architecture as a TSN logical bridge is presented in Fig. 6.
+latency, both the 802.1Qbv and the TDMA-based scheduler                      The 5G core consists of the control plane and the user plane.
+are synchronized to the network global time. Additionally, the               The control plane carries signaling and control traffic, whereas
+data translation and forwarding between domains is done by                   the user plane carries user traffic [96], [97]. The signaling and
+hardware means, ensuring minimum and guaranteed latency                      control traffic is referred to as the exchange of information that
+when the data crosses the domains.                                           enables user equipment (UE) access to the network such as au-
+                                                                             thentication, resource allocation, mobility, etc. The user traffic
+VI. ENHANCEMENTS TO SUPPORT TSN IN 5G                                        is the actual data that is to be exchanged in corresponding QoS
+The 3GPP standardization body is continuously working on                     flows. The control plane has functions such as the access and
+the evolution of 5G cellular technology. The 3GPP Release-15                 mobility management function (AMF), session management
+focuses on enhanced mobile broadband (eMBB), while in                        function (SMF), and policy control function (PCF), while the
+Release-16 and forthcoming Release-17 URLLC gains impor-                     user plane function (UPF) falls under the user plane. The PCF
+tance. Besides URLLC, 5G offers network slicing and edge                     provides policy rules to SMF that include QoS policy and
+computing that may interest future industrial applications.                  charging control, network slicing, and roaming & mobility
+Moreover, the 5G NR defines a flexible frame structure and                   management. The SMF performs the session management
+mini-slot transmissions based on different numerologies to                   functions such as allocation of IP addresses to UEs, signaling
+support low latency communication [93]. The IIoT is a ma-                    of QoS and policy information to RAN via the AMF, and
+jor vertical focus area for Release-16 with features including               selection & control of UPF for traffic routing.
+enhanced support for URLLC, time sensitive communication                        The access network includes the UE and the 5G gNodeB
+(TSC), non-public networks (NPN), high accuracy position-                    (gNB). 5G TSN logical bridge includes the TSN translator
+ing, and NR on unlicensed bands [94].                                        (TT) functionality for both the user plane and the control plane
+   The 3GPP Release-16 extends support to TSN for applica-                   to inter-operate between TSN and 5G system [11], [95]. The
+tions that demand reliable and deterministic communications.                 TT functionality consists of the DS-TT and the NW-TT. The
+The 5G-TSN integration is applicable to TSN fully centralized                DS-TT is located at the UE, while NW-TT resides at the UPF.
+configuration model (IEEE 802.1Qcc) whereby the fully dis-                   Support for TSN ingress and egress ports is provided via DS-
+tributed and the hybrid (centralized network/distributed user)               TT and NW-TT. On the control plane, the TT is a TSN AF that
+models are not supported [95]. The 5GS integrates with TSN                   interacts with the CNC for control and management. The AF
+as a logical bridge where the 5G core and access network pro-                influences traffic routing in the user plane and interacts with
+cedures remain hidden from the TSN network [67]. The 5GS                     the PCF for policy control.
+
+26                                                                                                                                    VOLUME 3, 2022
+FIGURE 7. 5G time-aware system supporting synchronization through boundary clock or transparent clock solutions [104].
+
+
+
+   The 5GS virtual bridge comprises the user plane tunnel                  evaluations suggest that the synchronization accuracy require-
+between the UE and UPF, the NW-TT side port to support                     ment can be achieved without applying UE propagation delay
+connectivity to the TSN domain, and DS-TT side port asso-                  compensation if the inter-site distance (ISD) is smaller than
+ciated to the protocol data unit (PDU) session that provides               200 m with dense cell, because the delay is in the range
+connectivity to the TSN network. Only a single PDU ses-                    of tens of nanoseconds. Additional details on 5G synchro-
+sion per DS-TT port for a given UPF can be established.                    nization process can be found in [103] and are out of the
+However, all PDU sessions that connect to the same TSN                     scope of this paper. To support TSN time synchronization
+network through a particular UPF are grouped under one 5GS                 with 5GS, boundary clock and transparent clock solutions
+virtual bridge. Nevertheless, multiple 5GS virtual bridges can             are considered [15], [105]. The transparent clock solution has
+be established using different UPFs that may exist in a 5GS to             been standardized in 5G Release-16 [67], [95]. In addition to
+support redundant traffic transmission [95].                               the transparent clock solution, Release-17 supports boundary
+   In the forthcoming Release-17 support for fully distributed             clock solution as presented in Fig. 7. In the boundary clock
+TSN configuration and UE-UE TSN communication is under                     solution, the TSN GM clock connects directly to the gNB via
+consideration [98]. Another viewpoint of adding TSN func-                  UPF which in turn distributes timing information to the UEs.
+tionalities in the 5GS instead of TSN-5G integration may also              The UEs then synchronize their connected TSN devices. This
+prevail in future [15]. In the following subsections we present            method ensures that every element of the network is synchro-
+the mapping of TSN standards as integration to 5GS for the                 nized to the same common base time. In this solution, the 5G
+centralized configuration model.                                           internal clock can also be used as the time source for PTP GM.
+                                                                           Although, it is implementation specific but exchange of PTP
+                                                                           messages may not be necessary in this case, as opposed to the
+A. TIME SYNCHRONIZATION                                                    transparent clock solution. The transparent clock solution al-
+Time synchronization being the fundamental prerequisite                    lows the exchange of gPTP messages via TT for synchroniza-
+for TSN is supported by 5GS through establishing Ether-                    tion. In this solution the TTs support gPTP and timestamping.
+net type PDU sessions between the end stations and TSN                     As soon as a gPTP message enters the 5GS via the UPF from
+switches [95]. Irrespective of the TSN time synchronization,               the TSN domain, an ingress timestamp (TSi) is generated by
+5G entities such as UE, gNB, UPF, DS-TT, and NW-TT are                     the NW-TT based on the 5G internal clock and is embedded in
+all synchronized via the 5G internal synchronization process               the gPTP message. The gPTP message exchange is performed
+(see Fig. 6). Although 5G and TSN synchronization pro-                     via the established PDU sessions between the UEs and the
+cesses run in parallel, they are independent of each other.                TSN switch for synchronization of the network endpoints. A
+The 5G fronthaul synchronization between the radio resource                gPTP message received by a UE is forwarded to the DS-TT
+head (RRH) (gNB) and the baseband unit (BBU) is serviced                   that creates an egress timestamp (TSe). The TSe is also based
+via enhanced common public radio interface (eCPRI) [99],                   on the 5GS internal synchronized clock which is provided to
+while timing information to the UE is distributed by the gNB               the UE by the gNB. The duration that the gPTP packet spends
+through multicast or unicast messages [100]. gNB as a CM,                  within the 5GS is calculated as the difference between TSi and
+synchronizes the UE and the UPF. The synchronization accu-                 TSe and is called the residence time. The residence time is
+racy requirement of less than 1 µs between the gNB and the                 added to the correction field (CF) of the TSN synchronization
+UE is specified [101]. Specifically, gNB-UE synchronization                packets. The DS-TT then forwards the modified gPTP packet
+accuracy between 470 ns and 540 ns is achievable with 15 kHz               to the connected TSN devices. The gPTP message payload
+sub-carrier spacing (SCS). The synchronization accuracy can                can be a synchronization message for a one-step operation or
+further be improved with wider SCS [102]. In addition, some                a follow up message for a two-step operation. Irrespective of
+
+VOLUME 3, 2022                                                                                                                         27
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+the gPTP message payload, all gPTP message transmissions                  5GS supports periodic deterministic communication both in
+within the 5GS are performed in compliance with the QoS               DL and UL where QoS characteristics are known in-advance.
+requirements of IEEE 802.1AS. However, the timing error is            The transmission schedule for both DL and UL, i.e., from
+dependent upon the number of hops between the TSN GM                  the UPF to UE and vice versa, is provided externally to the
+clock and the gNB that get accumulated with the higher num-           5GS such as via IEEE 802.1 TSN [95]. The knowledge of the
+ber of hops [15].                                                     traffic schedule is useful for 5GS since it allows the gNB to
+   The 5G-TSN integration supports multiple TSN working               efficiently allocate resources using traffic scheduling schemes
+time domains where each TSN domain can send its gPTP                  both for DL and UL transmission.
+messages. A gPTP message carries the multicast Ethernet                   The 5G deterministic support features include TSC as-
+destination MAC address and a specific domain number. The             sistance information (TSCAI) and hold & forward buffer-
+domain number identifies the referred TSN time domain. A              ing mechanism [95]. TSCAI describes the traffic flow pat-
+gPTP message received by the DS-TT for one or more TSN                tern while hold & forward mechanism allows traffic flow
+working domain is forwarded to the corresponding TSN de-              de-jittering. The TSN AF interacts with the CNC to obtain
+vice that can select or discard the message depending on the          TSCAI parameters. TSCAI parameters include traffic burst
+interested domain number.                                             arrival time (latest possible time when the first packet of the
+   Release-16 specifies downlink (DL) TSN time synchro-               data burst arrives), periodicity (time period between start of
+nization where the TSN GM clock is located at the NW-TT               two bursts), and flow direction (UL or DL). The TSCAI is
+end. On the contrary, the uplink (UL) TSN time synchroniza-           derived on a per QoS flow basis and is forwarded to the SMF
+tion refers to when the TSN GM is attached to the device              via PCF (see Fig. 6). The SMF further signals the TSCAI
+at the DS-TT side. The UL TSN time synchronization and                parameters to 5G RAN with respect to the 5GS clock. The
+the UE-to-UE time synchronization are under development in            clock mapping for burst arrival time and periodicity from TSN
+3GPP Release-17 [98]. The solution proposed is similar to that        to 5GS is the responsibility of SMF as it is measured and
+of the DL synchronization whereby the NW-TT can perform               reported by the UPF.
+operations similar to that of DS-TT as in the DL synchroniza-             TSN traffic arriving at the 5GS bridge through a corre-
+tion, i.e., the DS-TT applies TSi while the NW-TT applies             sponding PDU session is mapped with appropriate QoS flow
+TSe. However, the difference in the UL synchronization is that        configuration characteristics. The QoS flow between the UE
+instead of the source distributing timing information (UE in          and UPF can be characterized in terms of resource type,
+this case), UPF delivers gPTP messages to TSN end stations            priority level, packet delay budget (PDB), packet error rate
+behind the DS-TT but without sending it back to the source            (PER), averaging window, and maximum data burst volume
+UE.                                                                   (MDBV). The resource types can be guaranteed bit rate
+                                                                      (GBR), non-GBR, or delay critical GBR [11], [95]. Averaging
+B. TRAFFIC SHAPING AND SCHEDULING                                     window represents the duration over which the guaranteed
+The 5G capability of URLLC enables integration of TSN traf-           flow bit rate (GFBR) and maximum flow bit rate (MFBR) are
+fic shaping and scheduling. The URLLC service is provided             calculated. GFBR is the guaranteed bit rate to be provided to
+through several components including integrated frame struc-          a QoS flow while MFBR limits the highest expected bit rate
+ture, flexible scheduling, efficient control and data resource        for the QoS flow over an averaging window.
+sharing, and advanced channel coding schemes. URLLC is,                   Based on the QoS characteristics, 5G quality indicator
+however, possible due the development and implementation              (5QI) values have been standardized, however, this can also be
+of 5G NR that supports sub-6 GHz and mmWave carrier                   pre-configured, or assigned dynamically. Delay-critical GBR
+frequency ranges. NR supports mini-slots comprising 2, 4,             resource type along with TSCAI parameters are used to define
+or 7 OFDM symbols whose transmission can start instantly              TSC QoS flows which may use either of the standardized,
+with priority and preemption support. Such transmission ca-           pre-configured, or dynamically assigned 5QIs. Nevertheless,
+pabilities facilitate URLLC and are beneficial for time-critical      to optimize the scheduling process, standardized 5QI values
+applications.                                                         along with delay critical GBR can be used for industrial
+   In the DL, a URLLC packet can follow either an in-                 applications. The periodic TSC flow uses a burst size not
+stant or a reservation-based scheduling scheme [106]. In-             exceeding MDBV within defined PDB. PDB is defined as an
+stant scheduling can interrupt an ongoing transmission via            upper bound time that a packet may be delayed in 5GS. In
+preemption indication sent by the gNB to the UE inform-               other words, the largest amount of data to be transmitted for
+ing that the resources indicated contain URLLC data. In the           periodic TSC flow is mapped to a 5QI considering MDBV and
+reservation-based scheduling scheme, resources are reserved           PDB constraints.
+in advance for URLLC transmission [107]. For the UL, UE                   As stated earlier, hold & forward buffering is another fea-
+uses prior configured parameters through the radio resource           ture that 5GS supports for deterministic communication. This
+control (RRC) signaling to periodically send UL grant free            feature is identical to the gate scheduling behavior of the eight
+(GF) URLLC transmission. Successful reception of URLLC                queues configured in the TSN GCL. Accordingly, frames of a
+transmission is guaranteed by using one of the GF retransmis-         corresponding queue in a given time interval are transmitted
+sion schemes [108].                                                   if the gate is open but are held back otherwise.
+
+28                                                                                                                        VOLUME 3, 2022
+   According to the 3GPP Release-16 specifications, VLAN          initiated by the UE and is indicated to the SMF. Whether a UE
+configuration information for 5G TSN bridge is pre-               can have a redundant PDU session is dependent upon its sub-
+configured with a mapping table at TSN AF and NW-TT.              scription. Multiple solutions to enable redundant transmission
+Moreover, the VLAN configuration information does not need        paths are suggested [95], [109]. These solutions are detailed
+to be exchanged between the TSN AF and NW-TT. The map-            as follows.
+ping table contains information regarding TSN traffic classes,       1) Redundant user plane paths based on dual RAN connec-
+UPF-UE delay, and priority levels. The PCF provides map-          tivity: In this approach, redundant user plane paths based on
+ping information from TSN QoS to 5G QoS profile. PCF can          dual RAN connectivity are established (Fig. 8(a)). The estab-
+trigger PDU session modification procedure for a new 5G           lishment of two independent user plane paths for disjoint PDU
+QoS flow when initiated by the TSN AF depending up on             sessions is dependent upon the availability and connectivity
+the traffic requirements. Similar to the fixed TSN switches,      coverage of dual RAN (master and secondary) and UE’s dual
+solution for CNC controlled dynamic VLAN configuration            connectivity support. Once the RAN and UE dual connectivity
+for 5GS bridges is under consideration in 3GPP Release-17         support is available, the TSN FRER protocol is responsible to
+specifications [98].                                              manage replication and elimination of redundant frames over
+   Allocation and retention priority (ARP) is the set of pre-     duplicate paths. A UE connects to both the master and sec-
+configured values for TSC flows and contains information          ondary RAN, however, the master RAN controls the selection
+about the priority level, preemption capability, and preemp-      of secondary RAN and enables the set up of dual connectivity
+tion vulnerability. ARP, therefore, defines the importance of a   feature via the Xn interface.
+QoS flow where the priority level ranges between 1 and 15, 1         2) Multiple UEs per end station for user plane redundancy:
+being the highest. ARP can be used to decide which TSC flow       In this approach, the end station is equipped with two UEs
+may be accepted, rejected, or preempted, for example, in the      where each UE can set up an independent PDU session via
+case of resource limitations.                                     separate paths connecting to RAN 1 and RAN 2, respectively
+   Although 5G specification provides comprehensive map-          (Fig. 8(b)). Again, it is assumed that multiple RAN nodes can
+ping to TSN traffic shaping and scheduling, the wireless na-      provide coverage to the UEs equipped by the end station. The
+ture that allows mobility and frequent changes in the network     two PDU sessions that establish via UPF 1 and UPF 2 connect
+layout may require further enhancements [15]. Possibly, more      to the same TSN network and are controlled through their
+QoS profiles specific to TSN communication are desirable,         respective SMFs. To ensure that the UEs connect to different
+however, further evaluations of the 5GS TSN integrated sys-       RANs, the operating frequency of the RAN nodes can be
+tem may provide future directions.                                configured distinctly. Alternatively, separate reliability groups
+                                                                  for the UEs and cells of the RAN can be defined to allow
+C. ULTRA RELIABILITY
+                                                                  connectivity of the UEs to different RAN nodes. However,
+                                                                  the redundant UE approach does not seem suitable for highly
+TSN specifies frame replication and elimination for reliability
+                                                                  mobile end stations.
+(FRER), path control and reservation (PCR), and per-stream
+                                                                     3) Redundant transmission with two N3 tunnels between
+filtering and policing (PSFP) standards to achieve reliabil-
+                                                                  the user plane and RAN: Another approach to support high
+ity. Reliability, however, depends on communication service
+                                                                  reliability is through a redundant transmission link between
+availability that according to 3GPP ranges between 99.9999%
+                                                                  the RAN and UPF. This link is referred to as the N3 tunnel.
+and 99.999999% for industrial applications [101]. Reliability
+                                                                  In this approach reliability is assumed at the RAN, UPF, and
+is required in both the control signaling and data transmis-
+                                                                  control plane network functions for URLLC traffic. However,
+sion. It can be achieved through various techniques includ-
+                                                                  the N3 tunnel is considered unreliable, possibly due to the en-
+ing HARQ, enhanced demodulation efficiency, multi-antenna
+                                                                  vironmental factors that affect the communication at the back-
+transmission, use of multiple carriers, coordinated multi-
+                                                                  haul network. In order to enhance reliability between the RAN
+point, and duplicate packet transmission over independent
+                                                                  and UPF, two N3 tunnels can be provisioned over disjoint
+paths [14], [15]. The 3GPP Release-16 suggests an always-on
+                                                                  transport layer paths associated with a single PDU session.
+PDU session for URLLC QoS flows. However, the respon-
+                                                                  Different routing information such as the use of different IP
+sibility lies with the UE to gain knowledge on whether the
+                                                                  addresses or different network instances can be provided by
+QoS flow is meant to serve URLLC traffic [95]. The 5G mul-
+                                                                  the UPF or SMF for routing the traffic over disjoint paths.
+tipath transmission support increases reliability for URLLC
+                                                                  Once the redundant paths are provisioned, the SMF indicates
+traffic and enables TSN FRER but requires increased usage of
+                                                                  the RAN and UPF about the redundant tunnel belonging to
+resources [15]. Approaches to enable redundant transmission
+                                                                  the same PDU session. Replicated packets are assigned the
+paths are discussed in the following.
+                                                                  same GPRS tunnelling protocol user plane (GTP-U) sequence
+                                                                  number and are transmitted via the N3 Tunnel 1 and the
+1) REDUNDANT TRANSMISSION PATHS                                   N3 Tunnel 2 separately (Fig. 8(c)). In the DL, the packet re-
+The 5G system supports reliability by setting up two re-          ceived first by the RAN from either of the tunnel is forwarded
+dundant PDU sessions over user planes as disjoint sessions        to the UE while the replicated packet is dropped. In the reverse
+(Fig. 6). Redundant PDU session establishment request is          direction, packets are replicated by the RAN that assigns the
+
+VOLUME 3, 2022                                                                                                                   29
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+FIGURE 8. Approaches to enable redundant transmission paths through duplication of transmission chains [95], [109].
+
+
+
+
+same GTP-U sequence number and are forwarded to the UPF                     and the maximum number of flow meter instances are ex-
+using separate N3 tunnels.                                                  tracted. In case PSFP information is not available from the
+   4) Two N3 and N9 tunnels between RAN user plane: The                     CNC, pre-configured QoS flows are used and configured dur-
+redundant N3/N9 tunnel is an extension of the two N3 tunnel                 ing the PDU session establishment. If the PSFP information
+approach where two intermediate UPF (I-UPF) are added to                    is available, the TSN AF uses PSFP information to determine
+support redundant URLLC transmission between the UPF and                    the traffic pattern information such as traffic periodicity, burst
+RAN. The N3/N9 redundant transmission is performed at QoS                   arrival time, burst size, and maximum flow bitrate of a TSN
+flow granularity that shares the same QoS flow ID of the same               stream. Moreover, the TSN AF identifies traffic flow direction
+PDU session. Similar to the redundant N3 tunnel approach,                   (DL or UL), traffic class of the TSN stream with their per
+in the DL, the UPF connected to the TSN domain duplicates                   port priorities, and transmission gate scheduling parameters.
+the packet and assigns them the same GTP-U sequence num-                    The TSN AF is responsible to forward stream parameters,
+ber. The duplicated packets are transmitted to I-UPF 1 and                  TSCAI (flow direction, periodicity, and burst arrival time),
+I-UPF 2 separately and are forwarded to the RAN via the                     priorities, gate scheduling, and other traffic pattern informa-
+N3 Tunnel 1 and N3 Tunnel 2, respectively (Fig. 8(d)). The                  tion in a TSC assistance container to the SMF via PCF (see
+duplicate received packet is eliminated by the RAN based on                 Fig. 6). The mapping of the traffic class to TSN QoS and
+the GTP-U sequence number. In the UL, the URLLC packet                      delay requirements can be performed using TSN AF QoS
+received from the UE is duplicated by the RAN that follows                  mapping table. Hence, the corresponding 5G QoS flow can
+the two N3/N9 redundant paths and the UPF eliminates the                    be configured by an appropriate selection of 5QI in the PCF.
+duplicate received packet.                                                  If, however, the standard or pre-configured 5QIs do not satisfy
+                                                                            the required TSN flow QoS, the SMF can reconfigure the QoS
+2) 5G SUPPORT FOR PSFP                                                      flow binding. TSN streams that terminate to the same egress
+The 5GS support for PSFP depends upon the PSFP imple-                       port and correspond to the same traffic class with the same
+mentation support from TT functions on the device side and                  periodicity and burst arrival time may aggregate to the same
+the network side. The TSN AF interfaces towards the CNC                     QoS flow. The PCF derives the required MDBV taking the
+to obtain information on PSFP objects corresponding to the                  maximum burst size as input of the aggregated TSN streams.
+PSFP functionality implemented by the DS-TT and NW-TT.
+The TSN AF extracts relevant PSFP configuration parameters                  D. RESOURCE MANAGEMENT
+provided by the CNC to determine traffic pattern information.               5G supports DL and UL resource reservation schemes for
+Stream parameters such as the maximum number of stream fil-                 URLLC traffic as discussed in Section VI-B. 5G also supports
+ter instances, the maximum number of stream gate instances,                 TSN integration as a logical bridge to the TSN domain on a
+
+30                                                                                                                               VOLUME 3, 2022
+per UPF basis. A single or multiple 5G TSN logical bridge          second controller can be connected to the 5GS via a UE.
+may be available to the TSN domain whereby each logical            Therefore, the two controllers connect via the 5G integrated
+bridge is bound by a UPF ID [110]. A 5G TSN logical bridge         TSN system, one via the NW-TT port (at the UPF) and
+consists of ports both on the UPF side (NW-TT) and the UE          the other via the DS-TT port (at the UE). Such a C2C use
+side (DS-TT) as well as the UE-UPF tunnel (see Fig. 6). The        case typically requires communicating cyclic synchronous
+UPF side ports support connectivity to the TSN domain via          traffic. The 5GS system supports such a communication by
+NW-TT, while the DS-TT side port(s) are associated with the        establishing one or multiple PDU sessions whereby the con-
+PDU session provided connectivity to TSN enabled devices.          figuration on the QoS requirements is communicated and
+The binding relationship between the DS-TT and the PDU             orchestrated via the TSN AF. Although, the communica-
+session is stored at the TSN AF. The NW-TT and DS-TT               tion requirements depend on the application itself, the 5GS
+port capabilities such as the UE-DS-TT residence time and          supports TSN standards of IEEE 802.1AS, IEEE 802.1Q,
+bridge propagation delay are notified to the CNC through the       IEEE 802.1Qbv, IEEE 802.1CB, IEEE 802.1Qci, and
+TSN AF for registration or modification [95], [110]. The same      IEEE 802.1Qcc that may be required to support such a C2C
+UE-DS-TT residence time is used for both UL and DL and             use case.
+applies to all traffic classes. However, the residence time may
+vary among the UEs. The TSN AF interacts with the CNC to           VII. USE CASES
+provide port capabilities and delay information which enables      Wireless TSN enables flexibility, mobility, easier network re-
+the CNC to schedule traffic accordingly [67].                      configuration, and lower maintenance costs along with high
+   The TSN AF determines the required QoS for one or more          reliability and deterministic communications [17], [67]. Sev-
+TSN streams based on the information received from the CNC         eral use cases could benefit from the capabilities of the
+(e.g., GCL), bridge delay, and UE-DS-TT residence time. It         wireless TSN technology. Some of these use cases are de-
+forwards the requirement request to the PCF. The PCF maps          scribed below and summarized in Table 2 along with their
+the TSN QoS parameters with 5G QoS and notifies them to the        requirements.
+SMF. The SMF establishes/modifies the QoS flow of a PDU
+session for the TSN stream(s) and informs the UPF regarding        A. INDUSTRIAL AUTOMATION
+necessary modifications. The SMF determines the TSCAI for          A number of use cases for industrial automation can be identi-
+the requested QoS flow and sends them to the RAN together          fied where wireless TSN will make a significant impact. These
+with the QoS profile for resource reservation.                     may include closed-loop control, HMI and production IT, and
+   The 5G grant-free scheduling to support URLLC traffic           functional safety to mention a few. The closed-loop control
+provides reliability and low latency for periodic data transmis-   include very low latency, tight synchronization, and minimum
+sion. However, aperiodic or sporadic traffic may not receive       jitter [101]. The process monitoring use case employs multiple
+guaranteed high reliability with bounded latency requirements      sensors to collect and analyze data. The data collected can be
+due to the impact of self-collisions [111]. Solutions address-     used for predictive maintenance, processes optimization, or
+ing grant-free scheduling for aperiodic traffic to meet URLLC      condition monitoring [112]. Here time synchronization is a
+requirements may be required in the future 3GPP releases.          requirement for consistent and accurate monitoring of data.
+                                                                   In an industrial setting different HMIs may exist including
+E. NETWORK CONFIGURATION                                           interface panels to different machines and IT devices apart
+5G supports TSN centralized architecture where the TSN AF          from production IT (e.g., enterprise resource planning (ERP)
+interacts with the CNC for scheduling and identifying QoS          and manufacturing execution system (MES)) [113]. Lastly,
+requirements [11]. The fully distributed TSN configuration         functional safety applications include fast motion control,
+and the hybrid models are yet not supported by the 5GS. A          emergency-stop, and overhead cranes, etc. They impose very
+direct connection of the 5G user plane with the TSN enabled        short response time to ensure human safety and so low latency
+switches can be envisioned for distributed and hybrid models       and ultra-high reliability is required for such systems [113],
+due to the absence of CNC [15]. For these two models, dis-         [114]. Both 802.11 and 5G technologies may be suitable for
+tributed resource reservation protocol namely, P802.1Qdd -         industrial automation use cases in general, though the specific
+resource allocation protocol (RAP) is under development. 5G        characteristics of each scenario must be considered (e.g., the
+integration for distributed model shall be expected after the      required coverage area).
+development of RAP [67].
+                                                                   B. AUTOMOTIVE
+F. EXAMPLE 5G-TSN INTEGRATED SCENARIO                              The number of sensors in a car are increasing exponentially
+In an industrial environment, an example scenario widely           given the new advanced driver assistance systems (ADAS)
+realized is a closed loop application such as the controller-      and autonomous driving (AD) functions along with state-of-
+to-controller (C2C) communication where a control entity           the-art infotainment systems. Different types of sensors and
+communicates with another control entity of a machine [67].        actuators are used including environmental monitoring sen-
+As a 5G integrated TSN system, a machine controller can            sors, cameras, ultrasonic, light detection and rangings (LI-
+be connected to the wired TSN backbone network while a             DARs), and radio detection and rangings (RADARs). Sensor
+
+VOLUME 3, 2022                                                                                                                  31
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+TABLE 2. Wireless TSN Use Cases With Requirements
+
+
+
+
+data, audio/video transmission, and control messages present          video data. Several applications are under this use case. For
+different latency and reliability requirements to the commu-          instance cloud gaming is becoming popular and requires high
+nication network. The automotive industry can benefit from            traffic rate to ensure appropriate video resolution, low latency
+the features of TSN [115] and some TSN solutions for the              in the range of few ms and even lower jitter to ensure adequate
+automotive industry are already available on the market [116],        user experience. In particular, 5G could be interesting to en-
+[117]. Nevertheless, a wireless TSN removes all the wires,            able high-end graphics over hand-held devices with minimum
+which simplifies communication network inside the vehicle             consumption power. Other applications, such as augmented
+and consequently the vehicle design procedure [118]. Clearly,         reality (AR) and virtual reality (VR), are also emerging au-
+802.11 technology for enabling wireless TSN is more suitable          dovisual trends. On the VR side, some VR glasses rely on ex-
+for in-vehicle communications because of its limited cover-           ternal processing devices to compute the graphics. Given that
+age, whereas 5G technology is more suitable for inter-vehicle         the state-of-the-art glasses have a refresh rate of 120 frames
+and vehicle to infrastructure communications focusing AD.             per second and 2 k resolution, their cycle time is in the range
+                                                                      of 8.3 ms, whereas the throughput is around 200 Mbps. The
+C. RAILWAY INDUSTRY                                                   distance between the VR glasses and the computer is small
+The European railway industry has positioned to be a key              and so 802.11-based TSN is a suitable choice for this use case.
+player in the transport sector in the upcoming years. To this         On the AR side, multi-user AR games require fast updates of
+aim, the Shift2Rail Multi-Annual Action Plan has identified           the AR data represented to each user. As a result, their latency
+several challenges that need to be tackled. One of them is            requirement is in line with VR, though it requires far lower
+the evolution of the current wired train control and monitor-         throughput as it only sends the status of each player and the
+ing system (TCMS) to a wireless architecture [119]. TCMS              AR elements. 5G may be more suitable because multi-user
+network operates in a two-level network architecture that             AR may be deployed in large open spaces.
+comprises the train backbone, which connects different con-
+sists networks. The next-generation TCMS will apply wire-
+less technologies at both backbone and consist levels, thus           E. AEROSPACE
+implementing wireless train backbone (WLTB) and wireless              Communication within an aircraft consists of different traffic
+consist network (WLCN) solutions. These networks present              classes from time-critical to best-effort traffic. Hence correct
+diverse and stringent real-time requirements [120]. TSN has           scheduling according to communication constraints is impor-
+been chosen as a perfect candidate for the wired domain net-          tant. TSN has been envisioned as a cabin backbone bus for
+work [121], whereas both 5G and 802.11 have been chosen as            cabin communication in aircrafts’ [122] or in NASA Orion
+the convenient solutions for WLTB and WLCN respectively.              project for the multi-purpose crew vehicle [123]. Moving to
+                                                                      a wireless TSN can be desirable for the above use cases as it
+D. AUDIOVISUAL                                                        would not only reduce the weight of the vehicle by remov-
+Audiovisual use cases incorporate both visual and audio in-           ing wires but also lower the maintenance and reconfiguration
+teractions to create a real-time virtual environment. It requires     costs. Some wireless solutions for in-cabin communication in
+high data rates for video transmission, low latency, and ac-          aircraft and spacecraft have already been considered [124]–
+curate time synchronization to avoid jitter in the audio and          [126].
+
+32                                                                                                                        VOLUME 3, 2022
+   Another consideration under aerospace is of small un-            others include the integration of TSN configuration and man-
+manned aerial vehicles (UAVs). UAVs are being used for              agement with 5G management and orchestration capabilities,
+many commercial applications and the communication re-              TSN domain synchronization through 5G internal clock, and
+quirements vary depending upon the application scenario.            the integration of TSN distributed and hybrid models with 5G
+Some of these applications such as construction, search &           as the standards become available. Moreover, apart from of
+rescue, and entertainment require multi-UAV collaboration           5G TSN integration, another research direction could be pro-
+where synchronization is needed [127]–[131]. A 5G sup-              visioning of deterministic communications within 5G which
+ported TSN service could be a suitable choice to enable un-         would require modifications in the core and RAN entities of
+precedented levels of coordination between UAVs.                    the 5GS.
+                                                                       Nevertheless, the developments of wireless TSN are gain-
+F. HEALTHCARE                                                       ing interest and momentum among researchers, the question
+According to the 2017 UN report “World Population Ag-               is when will it be realized for industrial use cases. Certainly,
+ing” [132], the number of 80 years old or above peo-                newer challenges will then emerge.
+ple will increase threefold from 2017 to 2050. This
+increase in the aging population and developments in non-
+obtrusive and embedded sensor systems are changing the way          REFERENCES
+the medical staff provides care to the elderly. The possibility     [1]    M. Wollschlaeger, T. Sauter, and J. Jasperneite, “The future of indus-
+                                                                           trial communication: Automation networks in the era of the Internet
+for remote and continuous physiological-monitoring ensures                 of Things and industry 4.0,” IEEE Ind. Electron. Mag., vol. 11, no. 1,
+timely intervention from a medical practitioner. Additionally,             pp. 17–27, Mar. 2017.
+care can be provided with the help of health care robots            [2]    S. Vitturi, C. Zunino, and T. Sauter, “Industrial communication sys-
+                                                                           tems and their future challenges: Next-generation ethernet, IIoT, and
+for the disabled and cognitively impaired population [133],                5G,” Proc. IEEE, vol. 107, no. 6, pp. 944–961, 2019.
+[134]. The physiological-monitoring systems need to transmit        [3]    F. De Pellegrini, D. Miorandi, S. Vitturi, and A. Zanella, “On the use of
+video/audio along with sensor data with high reliability and in            wireless networks at low level of factory automation systems,” IEEE
+                                                                           Trans. Ind. Informat., vol. 2, no. 2, pp. 129–143, May 2006.
+emergency cases with low latency. Additional requirements           [4]    Time-sensitive networking (TSN) task group, 2021. [Online]. Avail-
+include flexibility and support for mobility. Wireless TSN                 able: https://1.ieee802.org/tsn/
+can meet these requirements in order to realize the evolving        [5]    IEEE Standard for Local and Metropolitan Area Networks–Bridges
+                                                                           and Bridged Networks–Enhancements for Scheduled Traffic, IEEE
+assisted living use cases.                                                 Std. 802. 1Qbv-2015, 2015.
+                                                                    [6]    IEEE Standard for Local and Metropolitan Area Networks–Bridges
+VIII. CONCLUSION                                                           and Bridged Networks–Frame Preemption, IEEE Std. 802. 1Qbu-
+                                                                           2016, 2016.
+In this paper we present the standardization activities and         [7]    F. Tramarin, A. K. Mok, and S. Han, “Real-time and reliable industrial
+developments in 802.11 and 5G to enable wireless TSN. In                   control over wireless LANs: Algorithms, protocols, and future direc-
+particular, we focus on analyzing 1) the enabling mechanisms               tions,” Proc. IEEE, vol. 107, no. 6, pp. 1027–1052, 2019.
+                                                                    [8]    A. Willig, “Recent and emerging topics in wireless industrial com-
+in both 802.11 and 5G for time synchronization, traffic shap-              munications: A selection,” IEEE Trans. Ind. Informat., vol. 4, no. 2,
+ing and scheduling, ultra-reliability, resource management,                pp. 102–124, May 2008.
+and flexible network configuration models and 2) the current        [9]    IEEE Standard for Information Technology–Telecommunications and
+                                                                           Information Exchange Between Systems Local and Metropolitan Area
+state of the integration of both 802.11 and 5G with wired                  Networks–Specific Requirements–Part 11: Wireless LAN Medium Ac-
+TSN. Additionally, we present wireless TSN use cases in                    cess Control (MAC) and Physical Layer (PHY) Specifications, IEEE
+different domains along with their QoS requirements in terms               Std 802. 11–2016, 2020.
+                                                                    [10]   I. Parvez, A. Rahmati, I. Guvenc, A. I. Sarwat, and H. Dai, “A
+of latency, reliability and throughput.                                    survey on low latency towards 5G: RAN, core network and caching
+   Currently, wireless TSN is in its infancy, and there still are          solutions,” IEEE Commun. Surv. Tuts., vol. 20, no. 4, pp. 3098–3130,
+many open questions till we can reach open standardization.                Oct.–Dec. 2018.
+                                                                    [11]   A. Larrañaga, M. C. Lucas-Estañ, I. Martinez, I. Val, and J. Goza-
+The 802.11 working group has been considering new mech-                    lvez, “Analysis of 5G-TSN integration to support industry 4.0,” in
+anisms to enable wireless TSN like operation over 802.11.                  Proc. IEEE Int. Conf. Emerg. Technol. Factory Automat., 2020,
+Some existing mechanisms already enable few TSN features                   pp. 1111–1114.
+                                                                    [12]   A. Mildner, “Time sensitive networking for wireless networks-a state
+over 802.11ax (e.g., time synchronization) though several                  of the art analysis,” in Proc. IITM Seminar Netw. Architectures Serv.,
+open questions are still to be solved for the next standard                2019, pp. 33–37.
+release. The probability of interfering transmissions is by far     [13]   T. Adame, M. Carrascosa, and B. Bellalta, “Time-sensitive network-
+                                                                           ing in IEEE 802.11be: On the way to low-latency WiFi 7,” Sensors,
+the most serious hurdle to achieve ultra-high reliability and              vol. 21, no. 15, pp. 1–20, 2021.
+guaranteed latency, especially for communications in unli-          [14]   M. Khoshnevisan, V. Joseph, P. Gupta, F. Meshkati, R. Prakash, and P.
+censed bands. However, even if 802.11be specification is able              Tinnakornsrisuphap, “5G industrial networks with CoMP for URLLC
+                                                                           and time sensitive network architecture,” IEEE J. Sel. Areas Commun.,
+to solve these challenges, its adoption will strongly depend on            vol. 37, no. 4, pp. 947–959, Apr. 2019.
+the specific implementations of chip makers and in the inte-        [15]   T. Striffler, N. Michailow, and M. Bahr, “Time-sensitive networking
+gration model between 802.11 and wired TSN. Therefore, the                 in 5th generation cellular networks-current state and open topics,” in
+                                                                           Proc. IEEE 5G World Forum, 2019, pp. 547–552.
+most critical and often overlooked challenge is the definition      [16]   S. F. Bush, G. Mantelet, B. Thomsen, and E. Grossman, “Industrial
+of the mechanisms to enable the seamless integration of wired              wireless time-sensitive networking: RFC on the path forward,” White
+TSN and 802.11be. Regarding 5G, the open questions among                   paper, AVNU Alliance, vol. 18, p. 3, 2018.
+
+VOLUME 3, 2022                                                                                                                                   33
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+[17]   D. Cavalcanti, S. Bush, M. Illouz, G. Kronauer, A. Regev, and            [40]   IEEE Standard for Local and Metropolitan Area Networks: Timing
+       G. Venkatesan, “Wireless TSN-Definitions use cases & standards                  and Synchronization for Time–Sensitive Applications in Bridged Lo-
+       roadmap,” White Paper, Avnu Alliance, pp. 1–16, 2020.                           cal Area Networks, IEEE Std. 802.1AS- 2020 (Revision of the IEEE
+[18]   D. Cavalcanti, J. Perez-Ramirez, M. M. Rashid, J. Fang, M. Galeev,              802.1AS-2011), 2020.
+       and K. B. Stanton, “Extending accurate time distribution and time-       [41]   D. Bruckner et al., “An introduction to OPC UA TSN for industrial
+       liness capabilities over the air to enable future wireless industrial           communication systems,” Proc. IEEE, vol. 107, no. 6, pp. 1121–1131,
+       automation systems,” Proc. IEEE, vol. 107, no. 6, pp. 1132–1152,                2019.
+       2019.                                                                    [42]   J. Pfrommer, A. Ebner, S. Ravikumar, and B. Karunakaran, “Open
+[19]   E. Tovar and F. Vasques, “Real-time fieldbus communications us-                 source OPC UA PubSub over TSN for realtime industrial commu-
+       ing profibus networks,” IEEE Trans. Ind. Electron., vol. 46, no. 6,             nication,” in Proc. IEEE Int. Conf. on Emerg. Technol. and Factory
+       pp. 1241–1251, Dec. 1999.                                                       Automat., 2018, pp. 1087–1090.
+[20]   G. Prytz, “A performance analysis of EtherCAT and PROFINET IRT,”         [43]   IEEE Standard for Local and Metropolitan Area Networks–Audio
+       in Proc. IEEE Int. Conf. Emerg. Technol. Factory Automat., 2008,                Video Bridging (AVB) Systems, IEEE Std. 802.1BA-2011, 2011.
+       pp. 408–415.                                                             [44]   IEEE Standard for Local and Metropolitan Area Networks–Time-
+[21]   E. Schemm, “SERCOS to link with ethernet for its third generation,”             Sensitive Networking for Fronthaul, IEEE Std. 802. 1CM-2018, 2018.
+       Comput. Control Eng., vol. 15, no. 2, pp. 30–33, 2004.                   [45]   IEEE Standard for Local and Metropolitan Area Networks–Time-
+[22]   Industrial Communication Networks-Profiles-part 2: Additional Field-            Sensitive Networking for Fronthaul–Amendment 1: Enhancements to
+       bus Profiles for Real-Time Networks Based on ISO/IEC 8802-3, IEC                Fronthaul Profiles to Support New Fronthaul Interface, Synchroniza-
+       Std. 61784–2, 2014.                                                             tion, and Syntonization Standards, IEEE Std. 802. 1CMde-2020, 2020.
+[23]   J. Song et al., “WirelessHART: Applying wireless technol-                [46]   K. B. Stanton, “Distributing deterministic, accurate time for tightly
+       ogy in real-time industrial process control,” in Proc. IEEE                     coordinated network and software applications: IEEE 802.1 AS, the
+       Real-Time Embedded Technol. Appl. Symp., 2008, pp. 377–386,                     TSN profile of PTP,” IEEE Commun. Standards Mag., vol. 2, no. 2,
+       doi: 10.1109/RTAS.2008.15.                                                      pp. 34–40, Jun. 2018.
+[24]   J. Song et al., “WirelessHART: Applying wireless technology in real-     [47]   IEEE Standard for a Precision Clock Synchronization Protocol for
+       time industrial process control,” in Proc. IEEE Real-Time Embedded              Networked Measurement and Control Systems, IEEE Std. 1588-2008,
+       Technol. Appl. Symp., 2008, pp. 377–386.                                        2008.
+[25]   W. Liang, X. Zhang, Y. Xiao, F. Wang, P. Zeng, and H. Yu, “Survey and    [48]   IEEE Standard for Local and Metropolitan Area Networks–Virtual
+       experiments of WIA-PA specification of industrial wireless network,”            Bridged Local Area Networks–Forwarding and Queueing Enhance-
+       Wiley Online Library Wireless Commun. Mobile Comput., vol. 11,                  ments, IEEE Std. 802. 1Qav-2009, 2009.
+       no. 8, pp. 1197–1212, 2011.                                              [49]   IEEE Standard for Local and Metropolitan Area Networks–Bridges
+[26]   T. Watteyne, L. Doherty, J. Simon, and K. Pister, “Technical overview           and Bridged Networks–Cyclic Queuing and Forwarding, IEEE
+       of SmartMesh IP,” in Proc. IEEE Int. Conf. Innov. Mobile Internet               Std. 802. 1Qch-2017, 2017.
+       Serv. Ubiquitous Comput., 2013, pp. 547–551.                             [50]   IEEE Standard for Local and Metropolitan Area Networks–
+[27]   K. Das and P. Havinga, “Evaluation of DECT-ULE for robust commu-                Bridges and Bridged Networks–Asynchronous Traffic Shaping, IEEE
+       nication in dense wireless sensor networks,” in Proc. IEEE Int. Conf.           Std. 802.1Qcr-2020, 2020.
+       Internet Things, 2012, pp. 183–190.                                      [51]   IEEE Standard for Local and Metropolitan Area Networks: Frame
+[28]   ETSI, “TS 103 636–1: DECT-2020 New Radio (NR); Part 1:                          Replication and Elimination for Reliability, IEEE Std. 802. 1CB-2017,
+       Overview,” Release-1, v1.2.1, 2021.                                             2017.
+[29]   V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal, and S.              [52]   H. Kirrmann, M. Hansson, and P. Muri, “IEC 62439 PRP: Bump-
+       Kumar, “Assessment of candidate technology ETSI: DECT-2020 new                  less recovery for highly available, hard real-time industrial networks,”
+       radio,” in Proc. IEEE 5G World Forum, 2020, pp. 625–630.                        in Proc. IEEE Int. Conf. Emerg. Technol. Factory Automat., 2007,
+[30]   R. S. Sinha, Y. Wei, and S.-H. Hwang, “A survey on LPWA tech-                   pp. 1396–1399.
+       nology: LoRa and NB-IoT,” ScienceDirect ICT Exp., vol. 3, no. 1,         [53]   H. Kirrmann, K. Weber, O. Kleineberg, and H. Weibel, “HSR: Zero
+       pp. 14–21, 2017.                                                                recovery time and low-cost redundancy for industrial ethernet (high
+[31]   S. K. Routray, K. P. Sharmila, A. Javali, A. D. Ghosh, and S. Sarangi,          availability seamless redundancy, IEC 62439-3),” in Proc. IEEE Int.
+       “An outlook of narrowband IoT for industry 4.0,” in Proc. IEEE Int.             Conf. Emerg. Technol. Factory Automat., 2009, pp. 1–4.
+       Conf. Inventive Res. Comput. Appl., 2020, pp. 923–926.                   [54]   IEEE Standard for Local and Metropolitan Area Networks–
+[32]   K. Mikhaylov, J. Petaejaejaervi, and T. Haenninen, “Analy-                      Bridges and Bridged Networks–Path Control and Reservation, IEEE
+       sis of capacity and scalability of the LoRa low power wide                      Std. 802. 1Qca-2015, 2016.
+       area network technology,” in Proc. IEEE Eur. Wireless, 2016,             [55]   D. Oran, “RFC1142: OSI IS-IS intra-domain routing protocol,” 1990.
+       pp. 1–6.                                                                 [56]   IEEE Standard for Local and Metropolitan Area Networks–Bridges
+[33]   H. Trsek, T. Tack, O. Givehchi, J. Jasperneite, and E. Nett, “Towards           and Bridged Networks–Per-Stream Filtering and Policing, IEEE
+       an isochronous wireless communication system for industrial automa-             Std. 802. 1Qci-2017, 2017.
+       tion,” in Proc. IEEE Int. Conf. Emerg. Technol. Factory Automat.,        [57]   IEEE Standard for Local and Metropolitan Area Networks–Virtual
+       2013, pp. 1–4.                                                                  Bridged Local Area Networks–Stream Reservation Protocol (SRP),
+[34]   R. Costa, J. Lau, P. Portugal, F. Vasques, and R. Moraes, “Handling             IEEE Std. 802. 1Qat-2010, 2010.
+       real-time communication in infrastructured IEEE 802.11 wireless net-     [58]   IEEE Standard for Local and Metropolitan Area Networks–Bridges
+       works: The RT-WiFi approach,” J. Commun. Netw., vol. 21, no. 3,                 and Bridged Networks–Stream Reservation Protocol (SRP) Enhance-
+       pp. 319–334, 2019.                                                              ments and Performance Improvements, IEEE Std. 802. 1Qcc-2018,
+[35]   Industrial Networks - Wireless Communication Network And Commu-                 2018.
+       nication Profiles - WIA-FA, IEC Std. 62948:2017, 2017.                   [59]   F. J. Goetz, M. Kiessling, and J. Schmitt, “MSRP++ for stream regis-
+[36]   Ö. Seijo, I. Val, and J. A. López-fernández, “w-SHARP: Im-                      tration and reservation,” Auton. Robots, 2016.
+       plementation of a high-performance wireless time-sensitive net-          [60]   IEEE Standard for Local and Metropolitan Area Networks–Bridges
+       work for low latency and ultra-low cycle time industrial applica-               and Bridged Networks–YANG Data Model, IEEE Std. 802. 1Qcp-
+       tions,” IEEE Trans. Ind. Informat., vol. 17, no. 5, pp. 3651–3662,              2018, 2018.
+       May 2021.                                                                [61]   IEEE Standard for Local and Metropolitan Area Networks–Bridges
+[37]   D. Glaroudis, A. Iossifides, and P. Chatzimisios, “Survey, comparison           and Bridged Networks–YANG Data Model for Connectivity Fault
+       and research challenges of IoT application protocols for smart farm-            Management, IEEE Std. 802.1Qcx-2020, 2020.
+       ing,” Comput. Netw., vol. 168, 2020, Art. no. 107037.                    [62]   E. Sisinni, A. Saifullah, S. Han, U. Jennehag, and M. Gidlund, “In-
+[38]   N. Finn, “Introduction to time-sensitive networking,” IEEE Commun.              dustrial Internet of Things: Challenges, opportunities, and directions,”
+       Standards Mag., vol. 2, no. 2, pp. 22–28, Jun. 2018.                            IEEE Trans. Ind. Informat., vol. 14, no. 11, pp. 4724–4734, Nov. 2018.
+[39]   IEEE Standard for Local and Metropolitan Area Networks–Bridges           [63]   C. Lu et al., “Real-time wireless sensor-actuator networks for
+       and Bridged Networks, IEEE Std. 802. 1Q-2018 (Revision of IEEE                  industrial cyber-physical systems,” Proc. IEEE, vol. 104, no. 5,
+       Std 802.1Q-2014), 2018.                                                         pp. 1013–1024, 2015.
+
+
+34                                                                                                                                              VOLUME 3, 2022
+[64]   S. Mumtaz, A. Alsohaily, Z. Pang, A. Rayes, K. F. Tsang, and J.            [85]  IEEE Standard for Information Technology–Telecommunications and
+       Rodriguez, “Massive Internet of Things for industrial applications:              Information Exchange Between Systems Local and Metropolitan Area
+       Addressing wireless IIoT connectivity challenges and ecosystem frag-             Networks-Specific Requirements–Part 11: Wireless LAN Medium Ac-
+       mentation,” IEEE Ind. Electron. Mag., vol. 11, no. 1, pp. 28–33,                 cess Control (MAC) and Physical Layer (PHY) Specifications Amend-
+       Mar. 2017.                                                                       ment 10: Mesh Networking, IEEE P802.11 s/D8.0, 2010.
+[65]   L. Da Xu, W. He, and S. Li, “Internet of Things in industries: A           [86] Z. Fernández, ó. Seijo, M. Mendicute, and I. Val, “Analysis and
+       survey,” IEEE Trans. Ind. Informat., vol. 10, no. 4, pp. 2233–2243,              evaluation of a wired/wireless hybrid architecture for distributed
+       Nov. 2014.                                                                       control systems with mobility requirements,” IEEE Access, vol. 7,
+[66]   A. Willig, K. Matheus, and A. Wolisz, “Wireless technology in                    pp. 95915–95931, 2019.
+       industrial networks,” Proc. IEEE, vol. 93, no. 6, pp. 1130–1151,           [87] G. Cena, S. Scanzio, A. Valenzano, and C. Zunino, “An en-
+       2005.                                                                            hanced MAC to increase reliability in redundant Wi-Fi networks,”
+[67]   5GACIA, “Integration of 5G with time-sensitive networking for in-                in Proc. IEEE Int. Workshop Factory Commun. Syst., 2014,
+       dustrial communications,” White Paper, ZVEI - German Electrical and              pp. 1–10.
+       Electronic Manufacturers’ Association, 2020.                               [88] M. Rentschler et al., “Simulation of parallel redundant WLAN with
+[68]   D. Lopez-Perez, A. Garcia-Rodriguez, L. Galati-Giordano, M.                      OPNET,” in Proc. IEEE Int. Conf. Emerg. Technol. Factory Automat.,
+       Kasslin, and K. Doppler, “IEEE 802.11be extremely high through-                  2013, pp. 1–8.
+       put: The next generation of Wi-Fi technology beyond 802.11ax,”             [89] Industrial Communication Networks–High Availability Automation
+       IEEE Commun. Mag., vol. 57, no. 9, pp. 113–119, Sep. 2019,                       Networks–Part 3: Parallel Redundancy Protocol (PRP) And High-
+       doi: 10.1109/MCOM.001.1900338.                                                   Availability Seamless Redundancy (HSR), IEC Std. 62439-3, Ed 2.0,
+[69]   C. Deng et al., “IEEE 802.11be Wi-Fi 7: New challenges oppor-                    2010.
+       tunities,” IEEE Commun. Surv. Tut., vol. 22, no. 4, pp. 2136–2166,         [90] I. Val, O. Seijo, R. Torrego, and A. Astarloa, “IEEE 802.1AS
+       Oct.–Dec. 2020, doi; 10.1109/COMST.2020.3012715.                                 clock synchronization performance evaluation of an integrated wired-
+[70]   ó. Seijo, J. A. López-Fernández, H. Bernhard, and I. Val, “Enhanced              wireless TSN architecture,” IEEE Trans. Ind. Informat., to be pub-
+       timestamping method for subnanosecond time synchronization in                    lished, doi: 10.1109/TII.2021.3106568.
+       IEEE 802.11 over WLAN standard conditions,” IEEE Trans. Ind.               [91] Standard for Local and Metropolitan Area Networks–Station and
+       Informat., vol. 16, no. 9, pp. 5792–5805, Sep. 2020.                             Media Access Control Connectivity Discovery, IEEE Std 802.1AB-
+[71]   A. Mahmood, R. Exel, and T. Sauter, “Delay and jitter characteri-                2016 (Revision of IEEE Std 802.1AB-2009), pp. 1–146, 2016,
+       zation for software-based clock synchronization over WLAN using                  doi: 10.1109/IEEESTD.2016.7433915.
+       PTP,” IEEE Trans. Ind. Informat., vol. 10, no. 2, pp. 1198–1206,           [92] ó. Seijo, X. Iturbe, and I. Val, “Tackling the challenges of
+       May 2014.                                                                        the integration of wired and wireless TSN with a technology
+[72]   O. Seijo, I. Val, J. A. Lopez-Fernandez, and M. Velez, “IEEE 1588                proof-of-concept,” IEEE Trans. Ind. Informat., to be published,
+       clock synchronization performance over time-varying wireless chan-               doi: 10.1109/TII.2021.3131865.
+       nels,” in Proc. IEEE Int. Symp. Precis. Clock Synchronization Meas.,       [93] X. Lin et al., “5G new radio: Unveiling the essentials of the next gen-
+       Control, and Commun., 2018, pp. 1–6.                                             eration wireless access technology,” IEEE Commun. Standards Mag.,
+[73]   R. Exel, “Clock synchronization in IEEE 802.11 wireless LANs using               vol. 3, no. 3, pp. 30–37, Sep. 2019.
+       physical layer timestamps,” in Proc. IEEE Int. Symp. Precis. Clock         [94] A. Ghosh, A. Maeder, M. Baker, and D. Chandramouli, “5G evolution:
+       Synchronization Meas., Control, Commun., 2012, pp. 1–6.                          A view on 5G cellular technology beyond 3GPP release 15,” IEEE
+[74]   A. M. Romanov, F. Gringoli, and A. Sikora, “A precise synchroniza-               Access, vol. 7, pp. 127639–127651, 2019.
+       tion method for future wireless TSN networks,” IEEE Trans. Ind.            [95] 3GPP, “TS 23. 501: Technical specification group services and system
+       Informat., vol. 17, no. 5, pp. 3682–3692, May 2021.                              aspects, system architecture for the 5G system (5GS),” Release-16,
+[75]   M. Ibrahim et al., “Verification: Accuracy evaluation of WiFi fine time          v16.8.0, 2021.
+       measurements on an open platform,” in Proc. ACM Int. Conf. Mobile          [96] Z. Zaidi, V. Friderikos, Z. Yousaf, S. Fletcher, M. Dohler, and H.
+       Comput. Netw., 2018, pp. 417–427.                                                Aghvami, “Will SDN be part of 5G?,” IEEE Commun. Surv. Tuts.,
+[76]   R. Costa, P. Portugal, F. Vasques, C. Montez, and R. Moraes, “Lim-               vol. 20, no. 4, pp. 3220–3258, Oct.–Dec. 2018.
+       itations of the IEEE 802.11 DCF, PCF, EDCA and HCCA to han-                [97] P. Marsch et al., “5G radio access network architecture: Design guide-
+       dle real-time traffic,” in Proc. IEEE Int. Conf. Ind. Informat., 2015,           lines and key considerations,” IEEE Commun. Mag., vol. 54, no. 11,
+       pp. 931–936.                                                                     pp. 24–32, Nov. 2016.
+[77]   M. Zhan, Z. Pang, D. Dzung, M. Luvisotto, K. Yu, and M. Xiao,              [98] 3GPP, “TS 23.700-20: Technical specification group services and sys-
+       “Towards high-performance wireless control: 10−7 packet error rate in            tem aspects; study on enhanced support of industrial Internet of Things
+       real factory environments,” IEEE Trans. Ind. Informat., vol. 16, no. 8,          (IIoT) in the 5G system (5GS),” Release-17, v1.0.2, 2020.
+       pp. 5554–5564, Aug. 2020.                                                  [99] A. Nasrallah et al., “Ultra-low latency (ULL) networks: The IEEE
+[78]   ó. Seijo, Z. Fernández, I. Val, and J. A. López-Fernández, “SHARP:               TSN and IETF DetNet standards and related 5G ULL research,” IEEE
+       A novel hybrid architecture for industrial wireless sensor and actuator          Commun. Surv. Tuts., vol. 21, no. 1, pp. 88–145, 2018.
+       networks,” in Proc. IEEE Int. Workshop Factory Commun. Syst., 2018,        [100] T. K. PeterM. Rost, D. Chandramouli, “5G plug-and-produce,” White
+       pp. 1–10.                                                                        Paper, Nokia, 2020.
+[79]   C. Deng et al., “IEEE 802.11be Wi-Fi 7: New challenges opportu-            [101] 3GPP, “TS 22. 104: Service requirements for cyber-physical control
+       nities,” IEEE Commun. Surv. Tuts., vol. 22, no. 4, pp. 2136–2166,                applications in vertical domains,” Release-16, v16.1.0, 2019.
+       Oct.–Dec. 2020.                                                            [102] 3GPP, “TR 38. 825: Technical specification group radio access net-
+[80]   G. Lacalle, I. Val, O. Seijo, M. Mendicute, D. Cavalcanti, and J. Perez-         work; study on NR industrial Internet of Things (IoT),” Release-16,
+       Ramirez, “Analysis of latency and reliability improvement with multi-            v16.0.0, 2019.
+       link operation over 802.11,” in Proc. IEEE Int. Conf. Ind. Informat.,      [103] 3GPP, “TS 38.331: Technical specification group radio access net-
+       2021, pp. 1–7, doi: 10.1109/INDIN45523.2021.9557495.                             work; NR; radio resource control (RRC) protocol specification,”
+[81]   M. Karaca, S. Bastani, B. E. Priyanto, M. Safavi, and B. Landfeldt,              Release-16, v16.2.0, 2020.
+       “Resource management for OFDMA based next generation 802.11ax              [104] 3GPP, “TS 23. 501: Technical specification group services and system
+       WLANs,” in Proc. IEEE IFIP Wireless Mobile Netw. Conf., 2016,                    aspects, system architecture for the 5G system (5GS),” Release-17,
+       pp. 57–64.                                                                       v17.2.0, 2021.
+[82]   K. Wang and K. Psounis, “Scheduling and resource allocation in             [105] 3GPP, “TS 23. 734: Study on 5GS enhanced support of vertical and
+       802.11ax,” in Proc. IEEE Conf. Comput. Commun., 2018, pp. 279–                   LAN services,” Release-16, v16.1.0, 2019.
+       287.                                                                       [106] H. Ji, W. Kim, and B. Shim, “New radio technologies for ultra reliable
+[83]   K. Kosek-Szott et al., “Coexistence issues in future WiFi networks,”             and low latency communications,” in Proc. IEEE Region 10 Conf.,
+       IEEE Netw., vol. 31, no. 4, pp. 86–95, Jul./Aug. 2017.                           2018, pp. 1620–1623.
+[84]   G. Naik, J. M. Park, J. Ashdown, and W. Lehr, “Next generation Wi-         [107] T.-K. Le, U. Salim, and F. Kaltenberger, “An overview of physical
+       Fi and 5G NR-U in the 6GHz bands: Opportunities and challenges,”                 layer design for ultra-reliable low-latency communications in 3GPP
+       IEEE Access, vol. 8, pp. 153027–153056, 2020.                                    release 15 and release 16,” 2020, arXiv:2002.03713.
+
+
+VOLUME 3, 2022                                                                                                                                              35
+ATIQ ET AL.: WHEN IEEE 802.11 AND 5G MEET TIME-SENSITIVE NETWORKING
+
+
+
+
+[108] N. H. Mahmood, R. Abreu, R. Böhnke, M. Schubert, G. Berardinelli,        [122] W. Steiner, P. Heise, and S. Schneele, “Recent IEEE 802 developments
+      and T. H. Jacobsen, “Uplink grant-free access solutions for URLLC              and their relevance for the avionics industry,” in Proc. IEEE Digit.
+      services in 5G new radio,” in Proc. IEEE Int. Symp. Wireless Commun.           Avionics Syst. Conf., 2014, pp. 2A2–1.
+      Syst., 2019, pp. 607–612.                                                [123] A. A. Atallah, G. B. Hamad, and O. A. Mohamed, “Reliability analysis
+[109] 3GPP, “TS 23. 725: Study on enhancement of ultra-reliable low la-              of TSN networks under SEU induced soft error using model checking,”
+      tency communications (URLLC) support in the 5G core network,”                  in Proc. IEEE Latin Amer. Test Symp., 2019, pp. 1–6.
+      Release-16, v16.1.0, 2019.                                               [124] D. Neuhold, J. F. Schmidt, J. Klaue, D. Schupke, and C. Bettstetter,
+[110] 3GPP, “TS 23. 502: Technical specification group services and system           “Experimental study of packet loss in a UWB sensor network for
+      aspects, procedures for the 5G system (5GS),” Release-16, v16.6.2,             aircraft,” in Proc. ACM Int. Conf. on Model., Anal. Simul. Wireless
+      2020.                                                                          Mobile Syst., 2017, pp. 137–142.
+[111] M. C. Lucas-Estañ, J. Gozalvez, and M. Sepulcre, “On the capacity        [125] L. Allmen et al., “Aircraft strain WSN powered by heat storage har-
+      of 5G NR grant-free scheduling with shared radio resources to sup-             vesting,” IEEE Trans. Ind. Electron., vol. 64, no. 9, pp. 7284–7292,
+      port ultra-reliable and low-latency communications,” MDPI Sensors,             Sep. 2017.
+      vol. 19, no. 16, pp. 1–18, 2019.                                         [126] D. Neuhold, J. F. Schmidt, C. Bettstetter, J. Sebald, and J. Klaue,
+[112] 3GPP, “TR 22. 804: Study on communication for automation in verti-             “UWB connectivity inside a space launch vehicle,” in Proc. IEEE Eur.
+      cal domains (CAV),” Release-16, v1.1.0, 2020.                                  Wireless, 2019, pp. 1–4.
+[113] R. Vannithamby and A. Soong, 5G Verticals: Customizing Applica-          [127] S. Hayat, E. Yanmaz, and R. Muzaffar, “Survey on unmanned aerial
+      tions, Technologies and Deployment Techniques. Hoboken, NJ, USA:               vehicle networks for civil applications: A communications viewpoint,”
+      Wiley, 2020.                                                                   IEEE Commun. Surv. Tuts., vol. 18, no. 4, pp. 2624–2661, Oct.–Dec.
+[114] T. Stolte, G. Bagschik, and M. Maurer, “Safety goals and functional            2016.
+      safety requirements for actuation systems of automated vehicles,” in     [128] I. Bekmezci, O. K. Sahingoz, and Ş. Temel, “Flying ad-hoc net-
+      Proc. IEEE Int. Conf. Intell. Transp. Syst., 2016, pp. 2191–2198.              works (FANETs): A survey,” Elsevier Ad Hoc Netw., vol. 11, no. 3,
+[115] S. Samii and H. Zinner, “Level 5 by layer 2: Time-sensitive networking         pp. 1254–1270, 2013.
+      for autonomous vehicles,” IEEE Commun. Standards Mag., vol. 2,           [129] X. Du, C. E. Luis, M. Vukosavljev, and A. P. Schoellig, “Fast and in
+      no. 2, pp. 62–68, Jun. 2018.                                                   sync: Periodic swarm patterns for quadrotors,” in Proc. IEEE Int. Conf.
+[116] J. Lee and S. Park, “Time-sensitive network (TSN) experiment in                Robot. Automat., 2019, pp. 9143–9149.
+      sensor-based integrated environment for autonomous driving,” MDPI        [130] 3GPP, “TS 22. 125: Technical specification group services and system
+      Sensors, vol. 19, no. 5, 2019, Art. no. 1111.                                  aspects, unmanned aerial system (UAS) support in 3GPP),” Release-
+[117] M. H. Farzaneh and A. Knoll, “An ontology-based plug-and-                      17, v17.2.0, 2020.
+      play approach for in-vehicle time-sensitive networking (TSN),” in        [131] R. Muzaffar, E. Yanmaz, C. Raffelsberger, C. Bettstetter, and
+      Proc. IEEE Inf. Technol. Electron. Mobile Commun. Conf., 2016,                 A. Cavallaro, “Live multicast video streaming from drones: An ex-
+      pp. 1–8.                                                                       perimental study,” Auton. Robots, vol. 44, no. 1, pp. 75–91, 2020.
+[118] Y. Huo, W. Tu, Z. Sheng, and V. C. Leung, “A survey of in-vehicle        [132] United Nations, Depart. Econ. Soc. Affairs, Pop. Div., “World
+      communications: Requirements, solutions and opportunities in IoT,”             population ageing 2017—highlights,” 2017. [Online]. Available:
+      in Proc. IEEE World Forum Internet Things, 2015, pp. 132–137.                  https://www.un.org/en/development/desa/population/publications/
+[119] J. Härri, A. Arriola, P. Aljama, I. Lopez, U. Fuhr, and M.                     pdf/ageing/WPA2017_Highlights.pdf
+      Straub, “Wireless technologies for the next-generation train control     [133] N. Tejima, “Rehabilitation robotics: A review,” Adv. Robot., vol. 14,
+      and monitoring system,” in Proc. IEEE 5G World Forum, 2019,                    no. 7, pp. 551–564, 2001.
+      pp. 179–184.                                                             [134] M. J. Matarić, J. Eriksson, D. J. Feil-Seifer, and C. J. Winstein,
+[120] P. Aljama et al., “Applicability of 5G technology for a wireless train         “Socially assistive robotics for post-stroke rehabilitation,” Springer J.
+      backbone,” in Proc. Eur. Conf. Antennas Propag., 2021, pp. 1–5.                NeuroEngineering Rehabil., vol. 4, no. 1, pp. 1–9, 2007.
+[121] M. Jakovljevic, A. Geven, N. Simanic-John, and D. Saatci, “Next-gen
+      train control/management (TCMS) architectures: ‘drive-by-data’ sys-
+      tem integration approach,” in Proc. Eur. Congr. Embedded Real-Time
+      Softw. Syst. (ERTS), 2018. [Online]. Available: https://hal.archives-
+      ouvertes.fr/hal-02156252.
+
+
+
+
+36                                                                                                                                             VOLUME 3, 2022
+

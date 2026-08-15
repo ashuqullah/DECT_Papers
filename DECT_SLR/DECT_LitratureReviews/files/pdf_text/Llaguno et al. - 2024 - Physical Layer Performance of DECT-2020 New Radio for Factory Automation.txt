@@ -1,0 +1,247 @@
+                                                                                                                                                                           Physical Layer Performance of DECT-2020 New
+                                                                                                                                                                                    Radio for Factory Automation
+2024 IEEE 20th International Conference on Factory Communication Systems (WFCS) | 979-8-3503-1934-7/24/$31.00 ©2024 IEEE | DOI: 10.1109/WFCS60972.2024.10540949
+
+
+
+
+                                                                                                                                                                                                Endika Llaguno, Ivan Pretel                                            Pablo Angueira+ , Jon Montalban++
+                                                                                                                                                                                              Research and Innovation                                            University of the Basque Country (UPV/EHU)
+                                                                                                                                                                                                                                                                 +
+                                                                                                                                                                                                    Agile Content                                                  Department of Communication Engineering
+                                                                                                                                                                                                                                                                     ++
+                                                                                                                                                                              Gran Vı́a de Don Diego López de Haro, 45 Bilbao, Spain                                   Department of Electronic Technology
+                                                                                                                                                                                   {endika.llaguno, ivan.pretel}@agilecontent.com                                    Plaza Torres Quevedo 1, Bilbao, Spain
+                                                                                                                                                                                                                                                                    {pablo.angueira,jon.montalban}@ehu.eus
+
+
+
+                                                                                                                                                                         Abstract—Derived from the work at IMT-2020, the standard                       reconfigurability; with wireless communication, it is possible
+                                                                                                                                                                      DECT2020-NR provides non-cellular communication solutions                         to have easily relocatable and reconfigurable workcells [4]. It
+                                                                                                                                                                      for applications requiring strict latency and reliability for flexible            is because of this that it has been decided to study an IoT
+                                                                                                                                                                      and adaptive deployments. Examples include industrial and
+                                                                                                                                                                      audiovisual communications. This work-in-progress analyzes the                    technology that allows it to be used in harsh scenarios such as
+                                                                                                                                                                      physical layer performance of DECT2020-NR in an industrial                        industry. In particular, the new DECT-2020NR standard has
+                                                                                                                                                                      environment. Different types of communication links are con-                      been established as an option to be studied in this paper.
+                                                                                                                                                                      sidered and various propagation channel conditions and system                     The DECT-2020NR standard has been designed to meet the
+                                                                                                                                                                      configurations are simulated. The results obtained confirm the                    requirements of URLLC (Ultra-Reliable Low Latency Com-
+                                                                                                                                                                      need for a MAC access layer with link control techniques to
+                                                                                                                                                                      ensure the reliability requirements of industrial applications.                   munication) and mMTC (massive Machine Type Communica-
+                                                                                                                                                                         Index Terms—DECT-2020NR, Factory Automation, URLLC,                            tions), which are prevalent in industrial environments. How-
+                                                                                                                                                                      mMTC, 5G, Physical layer                                                          ever, there is a scarcity of information and content regarding
+                                                                                                                                                                                                                                                        this new standard. Hence, there exists a need to model DECT-
+                                                                                                                                                                                                 I. I NTRODUCTION                                       2020NR at a system level. As a first step towards achieving
+                                                                                                                                                                         The fourth industrial revolution and its requirements impose                   these models, it is necessary to create physical layer mod-
+                                                                                                                                                                      radical changes to the underlying networking technologies.                        els that fit these industrial communication scenarios. Several
+                                                                                                                                                                      Drath et al. [1] state that the major technical background                        works already exist where DECT-2020NR is modeled [5], [6];
+                                                                                                                                                                      of Industry 4.0 is the introduction of Internet technologies                      however, the use cases addressed in them do not represent
+                                                                                                                                                                      into industry. Thus, the performance of radio communication                       industrial scenarios. Therefore, the purpose of this work is to
+                                                                                                                                                                      systems in automation applications is challenging. In partic-                     fill this gap and generate suitable physical layer models that
+                                                                                                                                                                      ular, in industrial environments, with many metal surfaces                        adapt to these industrial scenarios, which are parameterized
+                                                                                                                                                                      and moving objects, are significantly demanding for wireless                      according to the literature. These industrial scenarios are based
+                                                                                                                                                                      transmissions. The large fluctuation in the quality of wireless                   on proprietary use cases.
+                                                                                                                                                                      transmission channels compared to wired ones (e.g., high end-                     This paper studies and evaluates the physical layer of the
+                                                                                                                                                                      to-end latency and reduced reliability) raises the necessity                      DECT-2020NR standard for a factory automation environ-
+                                                                                                                                                                      to address new technologies and techniques to enhance and                         ment. First, the main characteristics of DECT-2020NR are
+                                                                                                                                                                      ensure the required-by-industry network quality.                                  presented. In Section II, the defined use case for this envi-
+                                                                                                                                                                         In addition to this new paradigm, Internet of Things (IoT)                     ronments is detailed. This use case includes two main types
+                                                                                                                                                                      applied to the industry was transformed into Industrial Internet                  of scenarios: URLLC; and mMTC. The study that has been
+                                                                                                                                                                      of Things (IIoT). IIoT represents the use of IoT in manu-                         carried out on each of the scenarios is presented, including
+                                                                                                                                                                      facturing [2], [3]. It can be defined as the development of                       their particular characteristics. In Section III, the associated
+                                                                                                                                                                      connected devices that provide sensing and processing capabil-                    physical layer simulations with two of those analyzed sce-
+                                                                                                                                                                      ity. Currently, on the factory area, wired connections provide                    narios are presented. The next section discusses the obtained
+                                                                                                                                                                      highly reliable but costly and physically-restrictive connec-                     results, including the behaviour of the Bit Error Rate (BER)
+                                                                                                                                                                      tivity. Wireless connectivity, however, offers many benefits                      and Packet Error (PER). Finally, the obtained conclusions are
+                                                                                                                                                                      over wired solutions. First, lower expenditures and decreased                     presented as well as the future work and lines that will be
+                                                                                                                                                                      long-term maintenance costs can be achieved with wireless                         performed.
+                                                                                                                                                                      solutions by the elimination of conduit and cable. Second,
+                                                                                                                                                                      wireless connections can be used in otherwise impractical                         A. DECT-2020NR standard
+                                                                                                                                                                      locations, using low-power monitoring devices, thus elimi-                          DECT-2020NR is a Radio Interface Technology standard
+                                                                                                                                                                      nating the difficulties inherent in physically routing cables.                    which is part of the 5G paradigm. It emerged within IMT-
+                                                                                                                                                                      Third, wireless communication allows quick mobility and                           2020 as a solution to the URLLC and mMTC scenarios.
+
+
+
+
+                                                                                                                                                                  Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:12 UTC from IEEE Xplore. Restrictions apply.
+    Although it is a technology which is able to operate in the                       use case describes a complete industrial environment of a pro-
+    rest of the 19 bands defined in IMT-2020, it has a dedi-                          duction automation factory. In this environment five diferent
+    cated frequency band (1880-1900 MHz). It has Cyclic Prefix                        scenarios have been identified based in their communications
+    Orthogonal Frequency Division Multiplexing (CP-OFDM) to                           requirements.
+    manage radio resources, Frequency Division Multiple Access                           The first one is the production line scenario, here several
+    (FDMA) and Time Division Multiple Access (TDMA) as                                robotic arms collaborate in a small area to assemble multiple
+    media access methods. It defines 4 main layers: physical layer,                   parts of a product. This robotics arm have to be coordinated
+    Medium Access Layer(MAC), Data Link Control (DLC) and                             to work together, so the synchronization of them is critical.
+    Convergence (CVG).                                                                This makes the scenario a URLLC type scenario, where the
+       Physical layer can use different bandwidths in the channels                    requirements of reliability and latency are very strict. The
+    for transmission: 1,728, 3,456 and 6,912 MHz. It presents 12                      communications requirements of this scenarios have been
+    types of modulation and coding schemes, which range from                          decided according to [3]
+    the most robust (BPSK, code rate of 1/2), to the scheme                              Then we have the security cameras scenario, where numer-
+    that offers the greatest capacity (1024 QAM, code rate of                         ous cameras are strategically positioned throughout the factory,
+    5/6). The physical layer also offers different numerologies                       with a particular focus on areas near the production line. These
+    that allow adjusting the spacing between subcarriers as well                      cameras are deployed to oversee and ensure the security of
+    as the scale factor of the Fourier transform. The packets are                     the factory premises. The communication requirements in this
+    divided into 4 parts: the STF (Synchronization Training Field)                    domain are aligned with those specified in [10] for security
+    synchronization signal, the DRS (Demodulation Reference                           camera systems
+    Signal) demodulation, the control channel and finally the data                       Related with security we have another scenario, this is the
+    channel. This physical layer uses frames of 10 ms duration                        safety one. There, sensors are strategically placed around the
+    that are divided into 24 slots. At the same time, each slot can                   production line workcell with the objective of responding to
+    be divided into subslots, depending on the used numerologies                      other existing sensors integrated into operators’ helmets. If an
+    [7].                                                                              individual breaches the perimeter without adhering to proper
+       The MAC layer is one of those that gives the greatest                          safety protocols, the sensors surrounding the workcell will
+    differences to the standard. This layer allows radio devices                      trigger a response, and the robotic arms must stop. These
+    (RD) to operate in fixed (FT) or portable termination (PT)                        scenario have very strict safety requirements as stablished in
+    modes or both at the same time. A device in FT mode works                         [3].
+    as router coordinating local radio resources and coordinating                        Around the factory several autonomous vehicles are de-
+    network communications. PT mode is very similar to the role                       ployed, this vehicles bring materials from the warehouse and
+    that user equipments (UE) assume in 5G networks, where                            they also carry the products from the production line to the
+    they manage their own communications and connect to a                             storage room. They communicate between each other and
+    neighbouring FT node. This layer allows devices to select the                     with the concentrator node. The location data is sent to the
+    mode to operate (FT, PT or both) according to the state of the                    concentrator and the corresponding instructions and actions
+    network . MAC layer provides 3 channels to tramsmit: broad-                       to perform are received from it. The vehicles communicate
+    cast channel (BCH/PCH); random access channel (RACH);                             between them to avoid collisions. Given that the maximum
+    and a dedicated channel (DCH). The usage of deterministic                         working speed of this vehicles is low (few m/s), the communi-
+    communications through the DCH channel is also possible.                          cation requirements are not strict in terms of latency. Although
+    DCH allows scheduled access through the reservation of radio                      they send a large amount of information per minute to the
+    resources by the FT node for a given communications flow.                         network, these communications meet the mMTC profile.
+    Furthermore, it also allows random transmissions using RACH                          The last scenario is the monitoring one, this scenario corre-
+    and listen before talk (LBT) algorithms for access to the                         sponds to all the sensors distributed throughout the factory that
+    medium [8].                                                                       collect information for the monitoring and analysis of all the
+       Finally, DLC and CVG layers are proprietary to the stan-                       processes that take place in the factory. The sensors are mainly
+    dard. The DLC layer manages each of the radio links of RDs,                       distributed in the production line and in the autonomous ve-
+    as well as the routing in these DECT networks. CVG layer                          hicles. They communicate with the concentrator nodes which
+    establish transmission procedures based on traffic character-                     collect this information and send it for further analysis. Due to
+    istics and provides compatibility with other protocols outside                    the large number of equipment involved in this monitoring this
+    the scope of this standard [9].                                                   scenario represents the mMTC characteristics, its requirements
+                                                                                      are based on those analysed in [10]
+                                  II. U SE C ASE                                         These previous casuistics provides 5 main communications
+                                                                                      scenarios: 1) the production line which includes communica-
+      The DECT-2020NR standard was designed for these two                             tions between robots; 2) safety sensors for operators’ safety;
+    main scenarios. The presented use case encompasses both,                          3) security cameras to receive information from the cam-
+    which are focused on achieving reliability with low latency and                   eras; 4) autonomous vehicle control communications to avoid
+    scalability in an automation process context. Concretely, this                    collisions and orchestrate their operation; and 5) monitoring,
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:12 UTC from IEEE Xplore. Restrictions apply.
+    where both the workcell and autonomous vehicles sensors are                       B. Channel parameters
+    considered. The requirements for each one are depicted below,                        After configuring the physical layer of the devices, a study
+    where we define the latency, PER and the amount of data the                       of the radio links generated for this scenarios has been carried
+    physical layer have to send.                                                      out. It has been observed that two different radio links are
+                                                                                      generated, one for each scenario. These links have been
+           TABLE I: Requirements for each Use Case scenario
+                                                                                      modeled with specific channels that allow them to be precisely
+      Nº        Scenarios       Latency (ms)    Reliability (PER)    Data (bits)      parameterized. The characteristics of the links of each scenario
+      1      Production Line          1               10−7              136           can be seen in Table III.
+      2       Safety Sensors          1               10−8              136
+      3     Security Cameras        100               10−3             50 M           TABLE III: Simulated channels for Production Line and
+      4      Vehicle Control         10               10−4             10 M           Security camera scenarios
+      5        Monitoring           100               10−3              512
+                                                                                                           Delay Spread    LoS/NLoS     Clusters   Taps    Doppler
+                                                                                       Production Line         30 ns         LoS           8        32      15 Hz
+                                                                                       Security cameras       100 ns         LoS           4        12       0 Hz
+                    III. S IMULATION E NVIRONMENTS
+       This section introduces the simulation environment em-                            The production line link is characterized by a high number
+    ployed to simulate the scenarios outlined in the preceding                        of metallic surfaces surrounding the cell, leading to numerous
+    section. Specifically, simulations for two out of the five defined                multipath components. This is reflected in the considerable
+    scenarios, namely the Production Line and Security Cameras                        number of echoes (taps) and clusters observed. Due to the
+    ones, are presented herein. These simulations were conducted                      small cell area, the delay spread is approximately 30 ns, satis-
+    at the physical layer of DECT-2020NR using the MATLAB                             fying the condition outlined in [11]. This condition stipulates
+    simulation program. The simulation code utilized in this study                    that a delay spread of less than 60 ns is necessary for the
+    is derived from the work of Maxim Penner, as documented in                        proper functioning of industrial communications of this kind.
+    [5]. The following presents the specific parameters with which                    The transmitters and receivers are arranged in such a way
+    the scenarios have been simulated in MATLAB, as well as the                       that there is almost always a line of sight between them.
+    links associated with each of the scenarios.                                      Therefore, a Line-of-Sight (LoS) channel has been assumed
+                                                                                      for simulation purposes. Finally, the movement of the robotic
+    A. Physical Layer parametrization                                                 arms results in a maximum Doppler shift of 15 Hz. Therefore,
+       For both scenarios, a perfect channel estimation and syn-                      this link has been modeled using the channel described in [12]
+    chronization have been assumed on the receiver. The physical                      for the mechanical room scenario.
+    layer header sent is 40 bits long for both scenarios, because we                     The links between the cameras and the concentrator have
+    want to maximize the transmission of useful information. The                      a greater distance than that of the production line, resulting
+    channels, as well as the transmission frequency, bandwidths                       in a higher observed delay spread, approximately around 100
+    and other parameters, are specific to each one.                                   ns. Additionally, due to being in an area with fewer obstacles,
+       For the production line scenario, communications need to                       the received echoes are much less pronounced and are more
+    be as robust as possible, which is why the physical layer                         widely spaced over time. The channel formed between the
+    numerology used is the one seen in Table II.                                      devices is LoS because the equipment is positioned on the
+       For the security cameras, physical layer parameters have                       ceiling, ensuring a constant line of sight between them. Due
+    been chosen to achieve the specified throughput of 50 Mbps.                       to these characteristics and considering the data in Table III,
+    Hence, a less robust numerology has been employed, and the                        the WLAN 802.11ah channel, model D [13], has been chosen
+    transmission bandwidth has been increased. The transmission                       as the basis for simulating the links in these scenarios.
+    frequency differs from that used in the production line case to                                       IV. R ESULTS AND D ISCUSSION
+    avoid interference with these scenario communications.
+                                                                                         This section presents the results obtained by simulating the
+    TABLE II: Physical layer simulation parameters for Produc-                        physical layer of the scenarios defined in section III. The
+    tion Line and Security camera scenarios                                           evolution of the BER and PER for the two mentioned scenarios
+                                                                                      is presented. These SNR/PER curves have been simulated for
+                                               Scenarios
+                                                                                      a range of values from -10 to 20 dB Signal to Noise Ratio
+          Parameters              Production Line   Security Cameras
+                                                                                      (SNR). A total of 10 million packets have been simulated for
+      Modulation                       BPSK              16 QAM                       each simulated SNR.
+      Code Rate                         1/2                 3/4                          In the production line scenario, transmitted packets have
+      µ, β                              1, 1                4, 4                      been of a size of 136 bits for the data channel, while for
+      Bandwidth                     1.728 MHz           6.912 MHz                     the security camera scenario, packets of 23,048 bits have
+      Transmission mode                SISO                SISO                       been sent. Below we presents the results obtained with the
+      Frequency                      1.4 GHz             0.9 GHz                      numerologies described in the previous section, which are the
+                                                                                      ones that provide the highest performance for each scenario.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:12 UTC from IEEE Xplore. Restrictions apply.
+                                                Fig. 1: BER and PER results for the simulated scenario
+
+
+       These simulations demonstrate that the physical layer alone                    tion, adaptability, and scalability capabilities that the DECT-
+    is insufficient to meet the specific requirements of each                         2020NR standard offers.
+    scenario. As observed in Figure 1, we do not achieve the                                                        R EFERENCES
+    required 10−7 threshold for production line communications;
+                                                                                       [1] R. Drath and A. Horch, “Industrie 4.0: Hit or hype?[industry forum],”
+    the minimum PER remains at 10−5 . For the security cameras,                            IEEE industrial electronics magazine, vol. 8, no. 2, pp. 56–58, 2014.
+    the simulations yield similar results, with a minimum PER                          [2] H. Boyes, B. Hallaq, J. Cunningham, and T. Watson, “The industrial
+    close to 10−2 . Therefore, the implementation of upper-layer                           internet of things (iiot): An analysis framework,” Computers in Industry,
+                                                                                           vol. 101, pp. 1–12, 2018.
+    protocols becomes necessary to address these limitations.                          [3] K. Montgomery, R. Candell, Y. Liu, and M. Hany, Wireless user
+                                                                                           requirements for the factory workcell.       Department of Commerce,
+                  V. C ONCLUSIONS AND FUTURE WORK                                          National Institute of Standards and Technology, 2020.
+                                                                                       [4] M. Dotoli, A. Fay, M. Miśkowicz, and C. Seatzu, “An overview
+       The main scenarios based on wireless communications                                 of current technologies and emerging trends in factory automation,”
+                                                                                           International Journal of Production Research, vol. 57, no. 15-16, pp.
+    which can be deployed in an industrial facility have been                              5047–5067, 2019.
+    defined and studied. For these ones, the communication ca-                         [5] M. Penner, M. Nabeel, and J. Peissig, “Link-level performance evalu-
+    pabilities provided by DECT-2020NR technology have been                                ation of imt-2020 candidate technology: Dect-2020 new radio,” arXiv
+                                                                                           preprint arXiv:2104.08549, 2021.
+    analysed from the physical layer perspective. The results of                       [6] S. Soni, R. Makkar, D. Rawal, and N. Sharma, “Link-level assessment
+    the simulations of the most representative scenarios have been                         of noma aided multi-hop dect-2020 new radio for mmtc applications,”
+    analysed and presented, using the optimal numerologies for                             in 2023 International Conference on Information Networking (ICOIN),
+                                                                                           2023, pp. 478–482.
+    each of them. In the future it is intended to complete the work                    [7] ETSI, DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,
+    simulating all the scenarios addressed in this paper.                                  European Telecommunications Standards Institute TS 103 636-3 V1.4.1
+       This physical layer is not enough to meet the needed                                (2023-01) ed., 2023.
+                                                                                       [8] ——, DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,
+    communication requirements in these types of environments.                             European Telecommunications Standards Institute TS 103 636-4 V1.4.1
+    Thus, it is intended to implement all the defined layers of                            (2023-01) ed., 2023.
+    the standard. These layers can implement repetition, routing                       [9] ——, DECT-2020 New Radio (NR); Part 5: DLC and Convergence
+                                                                                           layers; Release 1, European Telecommunications Standards Institute TS
+    and positioning algorithms which can improve the results                               103 636-5 V1.4.1 (2023-01) ed., 2023.
+    obtained by using only the physical layer. Furthermore, other                     [10] R. Bajracharya, R. Shrestha, and H. Jung, “Future is unlicensed: Private
+    relevant but not verified (in this paper) metrics can be validated                     5g unlicensed network for connecting industries of future,” Sensors,
+                                                                                           vol. 20, 05 2020.
+    (e.g. latency). To do so, the defined use case is going to be                     [11] P. Series, “Propagation data and prediction methods for the planning of
+    implemented and generated in an event simulation software                              indoor radiocommunication systems and radio local area networks in the
+    (e.g. NS-3). The results presented in this paper will serve as the                     frequency range 300 mhz to 450 ghz,” Electronic Publication: Geneva,
+                                                                                           Switzerland, 2019.
+    foundation for the event simulation implementation, wherein                       [12] Y. Ai, M. Cheffena, and Q. Li, “Power delay profile analysis and mod-
+    the PER/SNR curves simulated using this Matlab code will                               eling of industrial indoor channels,” in 2015 9th european conference
+    represent the physical layer in the simulator.                                         on antennas and propagation (eucap). IEEE, 2015, pp. 1–5.
+                                                                                      [13] B. Domazetović, E. Kočan, and A. Mihovska, “Performance evaluation
+       Finally, it is intended to complete the research on this                            of ieee 802.11 ah systems,” in 2016 24th Telecommunications Forum
+    technology by designing Self-Organizing Network (SON) al-                              (TELFOR). IEEE, 2016, pp. 1–4.
+    gorithms. They can allow the exploitation of the reconfigura-
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:12 UTC from IEEE Xplore. Restrictions apply.
+

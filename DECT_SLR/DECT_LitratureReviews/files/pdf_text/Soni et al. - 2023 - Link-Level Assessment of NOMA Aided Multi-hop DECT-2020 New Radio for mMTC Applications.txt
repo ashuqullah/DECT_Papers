@@ -1,0 +1,422 @@
+                                                                                                                                                         Link-Level Assessment of NOMA Aided Multi-hop
+                                                                                                                                                          DECT-2020 New Radio for mMTC Applications
+                                                                                                                                                                         Sandhya Soni                                        Rahul Makkar                                        Divyang Rawal
+                                                                                                                                                          Electronics and Communication Engg.                 Electronics and Communication Engg.                 Electronics and Communication Engg.
+2023 International Conference on Information Networking (ICOIN) | 978-1-6654-6268-6/23/$31.00 ©2023 IEEE | DOI: 10.1109/ICOIN56518.2023.10048900
+
+
+
+
+                                                                                                                                                                       The LNMIIT                                          The LNMIIT                                          The LNMIIT
+                                                                                                                                                                       Jaipur, India                                       Jaipur, India                                       Jaipur, India
+                                                                                                                                                             sandhya.soni.y18pg@lnmiit.ac.in                         rahul.makkar27@ieee.org                            divyang.rawal@lnmiit.ac.in
+
+                                                                                                                                                                                                                              Nikhil Sharma
+                                                                                                                                                                                                               Electronics and Communication Engg.
+                                                                                                                                                                                                                             The LNMIIT
+                                                                                                                                                                                                                            Jaipur, India
+                                                                                                                                                                                                                     nikhil.sharma@lnmiit.ac.in
+
+
+                                                                                                                                                           Abstract—Digital enhanced cordless telecommunication-2020                      works, and machine-to-machine applications, which require
+                                                                                                                                                        new radio (DECT-2020 NR) is an essential part of the fifth                        a sufficiently large connection density. Multi-hop (MH) com-
+                                                                                                                                                        generation (5G) standards proposed by the international telecom-                  munication can improve upon the reliability of the commu-
+                                                                                                                                                        munication union (ITU). With an achievable density of ap-
+                                                                                                                                                        proximately one million connections per square km, it is a                        nication links to support such massive connectivity compared
+                                                                                                                                                        potential candidate which promises to fill in the actual gap                      to the point-to-point communication links [4]. It enhances the
+                                                                                                                                                        in the wireless internet of things (IoT) market for the massive                   system’s performance by decreasing the transmit power at the
+                                                                                                                                                        machine-type communications (mMTC). In this paper, we explore                     transmitter and extending the network coverage area [5]. For
+                                                                                                                                                        a non-orthogonal multiple access (NOMA) assisted cooperative                      such a system, the long transmission link segregates it into
+                                                                                                                                                        multi-hop (MH) relaying system for DECT-2020 NR system for
+                                                                                                                                                        mMTC applications. The use of cooperative multi-hop (MH)                          multiple short connections, which are further connected via
+                                                                                                                                                        relaying system allows a reliable long-haul communication system                  the intermediate relay nodes [6], [7]. Based on the decoding
+                                                                                                                                                        and further the use of NOMA scheme helps in achieving a                           procedure used at the relay node, some of the cooperative
+                                                                                                                                                        better spectral efficiency and massive connectivity. The link level               relaying schemes are decode-and-forward (DF), selective DF,
+                                                                                                                                                        evaluation of the proposed system is carried out for the proposed                 and amplify-and-forward (AF) [8].
+                                                                                                                                                        NOMA aided MH DECT-2020 NR system and further error rate
+                                                                                                                                                        analysis is presented in terms of outage probability and the bit                  A. Related works
+                                                                                                                                                        error rate (BER). Monte-Carlo simulations further corroborate
+                                                                                                                                                        the correctness of the analytical findings.                                          The performance analysis of cooperative relaying scheme
+                                                                                                                                                           Index Terms—Decode-and-forward, digital enhanced cordless                      aided NOMA and DECT-2020 NR specifications has been
+                                                                                                                                                        telecommunication-2020 new radio, massive machine-type com-                       studied in [9]–[19]. The authors in [9] compare the efficacy
+                                                                                                                                                        munication, multi-hop, non-orthogonal multiple access.
+                                                                                                                                                                                                                                          of DECT-2020 NR specifications over the mMTC with the
+                                                                                                                                                                                                                                          existing solutions regarding the supported density of nodes.
+                                                                                                                                                                                   I. I NTRODUCTION
+                                                                                                                                                                                                                                          The authors in [10] perform a thorough simulation to examine
+                                                                                                                                                           Fifth-generation (5G) communication systems aim to                             the DECT-2020 NR’s performance for the mMTC and ultra-
+                                                                                                                                                        achieve high data rates, reliability, and energy efficiency                       reliable low-latency communication (uRLLC) scenarios. The
+                                                                                                                                                        with massive connectivity. One of the salient features of                         simulated results are beneficial for calibrating the physical
+                                                                                                                                                        5G communication, i.e., massive machine-type communication                        layer performance for future system-level evaluation. Further,
+                                                                                                                                                        (mMTC), is an area where failure is not an option and could                       the authors in [11] evaluate DECT-2020 NR for compatibility
+                                                                                                                                                        put at risk the complete automation processes, critical infras-                   with the uRLLC usage case simultaneously at the link and
+                                                                                                                                                        tructure, livelihoods, if not lives themselves. Digital enhanced                  system levels. The performance of MH DF relaying is demon-
+                                                                                                                                                        cordless telecommunication-2020 new radio (DECT-2020 NR)                          strated in [12] for the mMTC scenario for the corresponding
+                                                                                                                                                        as a part of 5G standards promises to fulfil all the gaps in the                  specifications. In [13], different approaches for relay selection,
+                                                                                                                                                        wireless internet of things (IoT) industry and supports one                       allocation of channel/frequency, and device association with
+                                                                                                                                                        million connections per square km to support mMTC [1]–[3].                        relays are proposed. The angle-based process is the most
+                                                                                                                                                           The mMTC scenario encompasses ad-hoc wireless net-                             optimal method for the scenario mentioned above.
+                                                                                                                                                        works, device-to-device connectivity, wireless sensor net-                           The need for higher spectral efficiency for the next-
+                                                                                                                                                                                                                                          generation communication systems is inevitable to cater for
+                                                                                                                                                          This work is supported by 5G India Forum (5GIF) Independent Evaluation          massive connectivity and long-haul scenarios. One of the most
+                                                                                                                                                        Group (IEG) for IMT-2020: 5GIF is associated with COAI, India.                    promising technology to enable multiple access to support the
+
+
+
+                                                                                                                                                   978-1-6654-6268-6/23/$31.00 ©2023 IEEE                                             478                                                                       ICOIN 2023
+                                                                                                                                                    Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:51 UTC from IEEE Xplore. Restrictions apply.
+                                     Fig. 1: A system model of considered DF MH downlink NOMA scenario
+
+
+    needs of the 5G networks is non-orthogonal multiple access                           • Additionally, the performance is explored for coded and
+    (NOMA) [14]. The downlink NOMA uses a superimposed                                     uncoded systems using such specifications.
+    coding (SC) signal at the transmitter and successive interfer-                       The remaining paper is organized as follows: Section II
+    ence cancellation (SIC) technique at the receiver end to detect                   presents the DECT 2020 NR frame structure specifications.
+    the intended user’s information. NOMA provides a higher                           Section III provides the considered system model of the MH
+    spectrum efficiency than the conventional orthogonal multiple                     downlink NOMA system. Performance analysis of such a
+    access (OMA) scheme at the cost of the increased error rate                       system is presented in Section IV. Section V demonstrates the
+    [15], [16]. Integrating NOMA with other physical layer tech-                      numerical results and their description. Finally, the conclusion
+    niques, including cooperative communication, MIMO system,                         is provided in Section VI.
+    cognitive radio networks, and visible light communication
+    (VLC), further enhances the system’s performance [17] and                                     II. DECT-2020 NR F RAME S TRUCTURE
+    provides an efficient multiple access solution. Recently, sig-                       DECT-2020 NR is an emerging standard to meet the criteria
+    nificant work has been done based on the cooperative NOMA                         of IMT-2020. The transmission range supported by DECT-
+    system over the point-to-point and dual-hop communication                         2020 NR is 1880–1900 MHz, comprising ten varying fre-
+    system to exploit the benefits like improved spectral efficiency                  quency channels ranging from 1881.792 MHz to 1897.344
+    and network coverage [18], [19].                                                  MHz with a bandgap of 1728 kHz [2]. Similar to NR, it also
+                                                                                      specifies a subcarrier scaling factor (µ) {1, 2, 4, 8}, resulting
+    B. Motivation and Contribution
+                                                                                      in a subcarrier spacing (∆f ) in kHz of {27, 54, 108, 216},
+       DECT-2020 NR can achieve a density of approximately one                        respectively. Moreover, it presents a network with mesh topol-
+    million connections per square km. Hence it is a potential                        ogy having multiple radio devices connectivity via a fixed
+    candidate that promises to fill the void of IoT demand for                        terminating (FT) point [3].
+    mMTC. Moreover, a cooperative MH relaying system allows                              The detailed study provides the overview, transmission
+    a reliable long-haul communication system. And the use of                         requirements, and physical layer specification of DECT-2020
+    the NOMA scheme helps achieve better spectral efficiency                          NR specifications in the drafts released by the European
+    and massive connectivity. Hence, owing to its inherent merits,                    telecommunications standards institute (ETSI) [1]–[3], respec-
+    the MH DF NOMA-aided relaying requires more research                              tively. The maximum bandwidth is 10 MHz with a sym-
+    employing DECT-2020 NR.                                                           bol length of 10 ms. Similar to NR specifications [20], it
+    It inspired us to propose this system and explore its outage                      also provides a numerology factor (µ) = {1, 2, 4, 8}. The
+    and bit error rate (BER) performance over static and dynamic                      subcarrier spacing (in kHz) and the number of orthogonal
+    channel environments. Furthermore, we illustrate the link-                        frequency-division multiplexing (OFDM) symbols per slot are
+    level evaluation of the system using the DECT-2020 NR                             provided as 10µ and 27µ, respectively. Further, the number
+    specifications over various parameters. In this regard, the main                  of FFT points, a cyclic prefix (LCP ) and useful subcarri-
+    contributions of the work are summarised as follows.                              ers are given as {64, 128, 256, 1024}, {8, 16, 32, 128}, and
+       • The outage analysis is presented for the proposed MH                         {56, 112, 224, 896}, respectively.
+         DF NOMA system over the multi-path fading scenario
+         considering Rayleigh fading channels.                                                                 III. S YSTEM M ODEL
+       • The performance of the system is presented using a                              A MH DF downlink NOMA system having one source
+         varying number of hops, the distance between the nodes                       base station (BS), two NOMA users and N intermediate
+         and the number of FFT points.                                                users/relays is considered, as shown in Fig. 1. Based on the
+       • Monte-Carlo simulations are provided to justify the cor-                     location, the relay UN is assumed to be nearer to NOMA
+         rectness of the derived analysis.                                            users. Since there is no direct link between the BS and
+       • The link-level assessment of the system is also presented                    NOMA users in long-haul communications, we assume that
+         in terms of BER over the DECT-2020 NR specifications.                        both the near user (Dn1 ) and the far user (Dn2 ) are beyond
+
+
+
+                                                                                  479
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:51 UTC from IEEE Xplore. Restrictions apply.
+    the BS’s communication range. The channel between BS                                 Further, (4) is simplified using the cumulative distribution
+    to k th intermediate user is assumed to be independent and                        function (CDF) of the random variable (RV) γk in [7, Eq. (4)]
+    identically distributed (i.i.d.) Rayleigh faded and distributed                   is given as
+    as ∼ CN (0, 1) ∀ k ∈ {1, 2, . . . , N }.                                                                           N
+                                                                                                                       
+    With the relay’s proximity, the channel condition between the                                         P =1−             (1 − Fγk (γth )) .                  (5)
+    UN and the Dn1 is assumed to be better as compared to the                                                         k=1
+    channel condition of the UN -Dn2 link, i.e., |hn1 |2 > |hn2 |2 .
+                                                                                      For multipath fading scenario between the various hops, the
+    At the BS, the SC symbol (xsc ) is generated by adding the
+                                                                                      expression (5) is expressed as
+    appropriately scaled modulated symbols s1 and s2 . Further,
+                                                                                                            N                   
+    the BS transmits the SC symbols to the users and is given as                                                          γth dk
+                                                                                               P =1−           1 − exp −           ,        (6)
+                                                                                                                             Γ̄k
+                  xsc = αPs s1 + (1 − α)Ps s2 ,                 (1)                                        k=1
+
+                                                                                      where dk is the distance between the k th hop
+                                                                                                                                    and it is assumed
+    where Ps denotes the power of the transmitted symbol, s1 and                                                             Lch
+                                                                                      to be unity, i.e., dk = d = 1. Γk = γk N  fft is the factor, being
+    s2 are modulated symbols corresponding to the Dn1 and Dn2
+                                                                                      used for converting multipath fading into the flat fading with
+    user, respectively.
+                                                                                      Lch number of channel taps and Nfft FFT points.
+       For simplification, we consider the system model in two
+                                                                                         The CDF of RV Γn1 corresponding to the link between the
+    parts, i.e., the first consisting of BS to N intermediate users
+                                                                                      end intermediate user to the link NOMA user Dn1 over the
+    and the second consisting of N th intermediate user to NOMA
+                                                                                      multipath fading scenario is given as
+    users. For the first part of the considered system, the BS                                                                     
+    transmits the SC symbol to the 1st intermediate relay. Further,                                       Dn1               γth dn1
+                                                                                                        P     = 1 − exp −              .             (7)
+    as per the DF protocol, it decodes and re-transmits the data                                                             2Γ̄n1
+    to the next intermediate user. For k th intermediate user, the                    The CDF of the RV Γn2 corresponding to the link between the
+    received data is decoded version of data from the previous                        end intermediate user to NOMA   user Dn2 over the          multipath
+    (k − 1)th intermediate user and further, it re-transmits to the                                                            |hn2 |φ2 ρ̄s
+                                                                                      fading scenario is given by Pr |hn2 |φ1 ρ̄s +1 < γ0               in [21,
+    next (k + 1)th intermediate user. The received symbol at k th
+                                                                                      Eq. (7)]. Thus, utilizing rigorous mathematics, the simplified
+    intermediate user is given as
+                                                                                      equation is given as follows.
+                                                                                                                               
+                              yk = hk x̂Uk−1 + zk ,                           (2)                                        γth dn2
+                                                                                                          1 −    exp   −           , γth < 1−α     α ,
+                                                                                               P Dn2 =                   2Γ̄n2                              (8)
+    where x̂Uk−1 is the received and decoded SC symbol at the                                             1,                            otherwise,
+    (k − 1)th intermediate user with x̂U0 = xsc , hk is the Rayleigh                                                                          
+    distributed channel coefficient and zk is the AWGN for k th                       where Γ̄n1 = αγ̄n LNch fft
+                                                                                                                   and  Γ̄ n 2
+                                                                                                                               =  K  γ̄ n
+                                                                                                                                            Lch
+                                                                                                                                             Nfft , K = (1 −
+    intermediate user ∼ CN (0, N0 ).                                                  α) − αγth . γ̄n is the output SNR at the NOMA users. dn1
+       Further, detecting the signal at N th intermediate user using                  and dn2 are the distances between the end intermediate user
+    (2), the received SC symbol at the intended NOMA user is                          to NOMA users Dn1 and Dn2 , respectively, which is given
+    provided as follows                                                               as dn1 = d and dn2 = {1.5d, 3d}.
+                                                                                         Therefore, the end-to-end outage probability at Dn1 and
+                     yDni = hni x̂UN + zni ,          i = 1, 2,               (3)     Dn2 of a MH NOMA system over the multipath fading
+                                                                                      scenario is obtained as
+    where x̂UN is the decoded symbol at the N th intermediate user,                                              N                              
+    hni is the i.n.i.d. Rayleigh faded channel coefficient of the ith                          BS−Dn1
+                                                                                                                                           γth dk
+    user and zni is the AWGN of ith NOMA user.                                              P           =1−              1 − exp −
+                                                                                                                   k=1
+                                                                                                                                             Γ̄k
+                                                                                                                                           
+                           IV. O UTAGE A NALYSIS                                                                                   γth dn1
+                                                                                                             × 1 − exp −                           .        (9)
+                                                                                                                                    2Γ̄n1
+       The probability of an outage for the considered MH DF                                                     N                                
+                                                                                                                                           γth dk
+    downlink NOMA system is examined in this Section. The MH                                P  BS−Dn2
+                                                                                                        =1−              1 − exp −
+    relaying system experiences an outage event when at least                                                      k=1
+                                                                                                                                             Γ̄k
+    SNR γk of any hop falls below a predetermined SNR (γth ).                                                                              
+                                                                                                                                   γth dn2
+    Thus, the outage probability (P ) of the N hops consisting N                                             × 1 − exp −                           .       (10)
+                                                                                                                                    2Γ̄n2
+    intermediate users is given as
+                                                                                                         V. R ESULTS AND D ISCUSSION
+                                     N
+                                                                                        The simulation results for outage probability and BER for
+                         P =1−             Pr (γk > γth ) ,                   (4)
+                                                                                      the considered MH DF NOMA system are presented in this
+                                     k=1
+                                                                                      section. The specifications of DECT-2020 NR mentioned in
+    where γth = 2N R − 1, R is the transmission rate, and Pr (·)                      Section II are utilized for the simulations. The results are also
+    indicates the probability operator.                                               shown for different transmission rate values (R), the distance
+
+
+
+                                                                                  480
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:51 UTC from IEEE Xplore. Restrictions apply.
+    between NOMA users and the source, and various FFT points.
+                                                                                                                            100
+    Additionally, employing DECT-2020 NR specifications, turbo
+    coding is performed to show the benefits of coding gain over
+    the uncoded system. For the simulation, α is chosen to be 0.4,
+                                                                                                                            10-1
+    and the channel variances for the near user (NU) and far user
+    (FU) are considered 0 and -3 dB, respectively. For a multipath
+
+
+
+
+                                                                                                       Outage probability
+    fading scenario, we have chosen Lch = 5.
+                                                                                                                            10-2
+                                                                                                                                          Analytical-FU-dual-hop, dn = 3d
+                                                                                                                                                                       2
+
+                              100                                                                                                         Analytical-FU-dual-hop, dn = 1.5d
+                                                                                                                                                                       2
+                                                                                                                                          Analytical-NU-dual-hop, dn = d
+                                                                                                                                                                       1
+                                                                                                                            10-3
+                                                                                                                                          Analytical-FU-single-hop, dn = 3d
+                                                                                                                                                                           2
+
+                              10-1                                                                                                        Analytical-FU-single-hop, dn = 1.5d
+                                                                                                                                                                           2
+                                                                                                                                          Analytical-NU-single-hop, dn = d
+                                                                                                                                                                           1
+                                                                                                                                          Simulation
+         Outage probability
+
+
+
+
+                                                                                                                            10-4
+                              10   -2                                                                                                 0   5        10        15                20   25   30   35   40
+                                                                                                                                                                  SNR in dB
+
+
+                                            Analytical-FU-three-hop                                Fig. 3: Outage performance of MH NOMA system with
+                              10-3          Analytical-NU-three-hop
+                                            Analytical-FU-dual-hop
+                                                                                                   varying distance dk = dn1 = d = 1 and dn2 = {1.5d, 3d}
+                                            Analytical-NU-dual-hop
+                                            Analytical-FU-single-hop
+                              10-4          Analytical-NU-single-hop
+                                            Analytical-OMA-dual-hop
+                                                                                                                            100
+                                            Analytical-OMA-single-hop
+                                            Simulation
+                              10-5
+                                        0   5       10       15         20   25   30   35   40
+                                                                  SNR (dB)
+
+    Fig. 2: Outage performance comparison of MH NOMA and                                               Outage probability
+                                                                                                                            10-1
+    OMA system
+
+       Fig. 2 presents the outage probability performance of the                                                                          Analytical-FU, Nfft = 1024
+
+    MH DF NOMA system using (9) and (10) for users Dn1 and                                                                  10   -2
+                                                                                                                                          Analytical-NU, Nfft = 1024
+                                                                                                                                          Analytical-FU, Nfft = 256
+    Dn2 , respectively. The results are presented for up to three-                                                                        Analytical-NU, Nfft = 256
+                                                                                                                                          Analytical-FU, Nfft = 128
+    hop scenarios over the flat fading environment considering the                                                                        Analytical-NU, Nfft = 128
+
+    transmission rate R = 0.5 bps. A comparison between MH
+                                                                                                                                          Analytical-FU, Nfft = 64
+                                                                                                                                          Analytical-NU, Nfft = 64
+
+    NOMA and OMA is demonstrated. The outage performance                                                                    10-3
+                                                                                                                                          Simulation
+
+
+    for the single-hop NOMA system is verified from [21]. It is                                                                       0   5        10        15                20   25   30   35   40
+                                                                                                                                                                  SNR in dB
+    noticeable that the NOMA system over single-hop outperforms
+    the dual-hop and three-hop case as increasing the number of                                    Fig. 4: Outage performance of single-hop NOMA system over
+    hops decreases the received SNR at each hop due to the fading                                  multipath fading scenario
+    effect. The performance of Dn1 is better than Dn2 due to
+    better channel conditions. It is observed that increasing the
+    hops beyond two degrades the overall outage performance                                           Fig. 4 represents the outage probability performance of the
+    severely. The outage performance of single and dual-hop OMA                                    single-hop NOMA system over the multipath fading scenario
+    systems is better than NOMA systems due to the absence                                         for {64, 128, 256, 1024} FFT points as per the DECT-2020
+    of inter-user interference at OMA users. Hence, it is noted                                    NR specifications [12]. It has been shown that as transmitted
+    that the considered system is used for massive connections                                     sub-carrier power diminishes, the chance of outages for both
+    with improved spectral efficiency over the conventional OMA                                    users increases as the FFT point increases. Hence, it is worth
+    system despite decreasing the outage performance.                                              mentioning that the proposed system works over the multipath
+       The MH NOMA system’s outage performance with the                                            fading scenario for the described specifications.
+    distance variation between the users is shown in Fig. 3. For                                      Fig. 5 demonstrates the BER comparison of uncoded and
+    simulations, the distance between intermediate users and near                                  coded (using convolutional turbo code (CTC)) single-hop
+    user is dk = dn1 = d = 1 is chosen. Similarly, the distance                                    NOMA system with code rate 1/3 as per the DECT-2020 NR
+    between far and near user is dn2 = {1.5d, 3d} is considered.                                   specification. It is observed that the coded system enhances
+    It is observed that the performance at Dn1 user decreases                                      performance more than the uncoded system. The significant
+    on increasing the number of hops. Also, the performance at                                     improvement of 6-7 dB can be seen at an error floor of 10−3
+    Dn2 decreases with increasing the distance between the end                                     for both the NOMA users over the coded transmission.
+    intermediate node to the Dn2 user for single and dual-hop                                         Moreover, the BER performance comparison for the single-
+    systems. Hence, it is noted that the proposed system can be                                    hop NOMA system over DECT-2020 NR specification is
+    used where the distance between the nodes varies.                                              shown in Fig. 6 over the multipath fading scenario by
+
+
+
+                                                                                                 481
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:51 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                   R EFERENCES
+               100
+                                                                                                       [1] “DECT-2020 new radio (NR); part 1: Overview”, 2020.
+                                                                                                           https://www.etsi.org/deliver/etsi     ts/103600     103699/10363601/01.
+                                                                                                           01.01 60/ts 10363601v010101p.pdf,” ETSI, 2020.
+               10-1                                                                                    [2] “DECT-2020 new radio (NR); part 2: Radio reception and trans-
+                                                                                                           mission requirements”, 2020. https://www.etsi.org/deliver/etsi ts/103600
+                                                                                                           103699/10363602/01.01.01 60/ts 10363602v010101p.pdf,” ETSI, 2020.
+                                                                                                       [3] “DECT-2020 new radio (NR); part 3: Physical layer”, 2020.
+               10-2                                                                                        https://www.etsi.org/deliver/etsi ts/103600 103699/10363603/01.01. 01
+         BER
+
+
+
+
+                                                                                                           60/ts 10363603v010101p.pdf,” ETSI, 2020.
+                                                                                                       [4] Y. Chen, N. Zhao, Z. Ding, and M.-S. Alouini, “Multiple UAVs as
+                                                                                                           relays: Multi-hop single link versus multiple dual-hop links,” IEEE
+               10-3
+                                                                                                           Trans. Wireless Commun., vol. 17, no. 9, pp. 6348–6359, 2018.
+                              Uncoded - NU                                                             [5] M. O. Hasna and M.-S. Alouini, “Outage probability of multihop
+                              Uncoded - FU                                                                 transmission over nakagami fading channels,” IEEE Commun. Lett.,
+               10-4
+                              Coded with code rate = 0.33 - NU
+                              Coded with code rate = 0.33 - FU
+                                                                                                           vol. 7, no. 5, pp. 216–218, 2003.
+                                                                                                       [6] J. Cao, L.-L. Yang, and Z. Zhong, “Performance of multihop wireless
+                      0       5        10        15       20        25         30        35    40          links over generalized-k fading channels,” in 2010 IEEE 72nd Veh.
+                                                       SNR(dB)                                             Technol. Conf.(VTC-Fall), pp. 1–5, IEEE, 2010.
+                                                                                                       [7] D. Dixit and P. Sahu, “Performance of multihop communication systems
+    Fig. 5: Comparison of coded (CTC-1/3) and uncoded NOMA                                                 with regenerative relays in η-µ fading channels,” in 2014 IEEE 79th Veh.
+    system over flat fading scenario                                                                       Technol. Conf. (VTC-Spring), pp. 1–5, IEEE, 2014.
+                                                                                                       [8] O. S. Badarneh and F. S. Almehmadi, “Performance of multihop wireless
+                                                                                                           networks in α-µ fading channels perturbed by an additive generalized
+                                                                                                           gaussian noise,” IEEE Commun. Lett., vol. 20, no. 5, pp. 986–989, 2016.
+               100                                                                                     [9] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+                                                                                                           Y. Koucheryavy, and M. Valkama, “DECT-2020 new radio: The next
+                                                                                                           step toward 5G massive machine-type communications,” IEEE Commun.
+                                                                                                           Mag., vol. 60, no. 6, pp. 58–64, 2022.
+                                                                                                      [10] M. Penner, M. Nabeel, and J. Peissig, “Link-level performance evalua-
+                                                                                                           tion of IMT-2020 candidate technology: DECT-2020 new radio,” arXiv
+               10-1
+                                                                                                           preprint arXiv:2104.08549, 2021.
+                                                                                                      [11] M. Penner, M. Nabeel, and J. Peissig, “URLLC performance evaluation
+                                                                                                           of IMT-2020 candidate technology: DECT-2020 new radio,” in 2021
+         BER
+
+
+
+
+                                                                                                           IEEE 94th Veh. Technol. Conf. (VTC2021-Fall), pp. 1–7, IEEE, 2021.
+                              Nfft = 1024, Nuseful = 896, Lcp = 128: NU                               [12] S. Soni, R. Makkar, T. Singhwi, D. Rawal, N. Sharma, and L. Minz,
+               10-2           Nfft = 1024, Nuseful = 896, Lcp = 128: FU
+                                                                                                           “On performance of multi-hop assisted mMTC for DECT-2020 new
+                              Nfft = 256, Nuseful = 224, Lcp = 32: NU
+                              Nfft = 256, Nuseful = 224, Lcp = 32: FU                                      radio system,” in 2021 Int. Conf. Inf Commun. Technol. Convergence
+                              Nfft = 128, Nuseful = 112, Lcp = 16: NU                                      (ICTC), pp. 984–988, IEEE, 2021.
+                              Nfft = 128, Nuseful = 112, Lcp = 16: FU                                 [13] T. Singhwi, S. Andra, S. J. Seelam, R. Makkar, D. Rawal, and
+                              Nfft = 64, Nuseful = 56, Lcp = 8: NU
+                              Nfft = 64, Nuseful = 56, Lcp = 8: FU
+                                                                                                           N. Sharma, “DECT-2020 new radio system level assessment for multi-
+               10-3                                                                                        hop assisted mMTC usage scenario,” in 2021 IEEE Int. Conf. Adv. Netw.
+                      0   5       10        15    20      25       30     35        40    45   50          Telecommun. Systems (ANTS), pp. 1–6, 2021.
+                                                       SNR in dB                                      [14] L. Dai, B. Wang, Y. Yuan, S. Han, I. Chih-Lin, and Z. Wang, “Non-
+                                                                                                           orthogonal multiple access for 5G: solutions, challenges, opportunities,
+    Fig. 6: Performance of NOMA system for different multipath                                             and future research trends,” IEEE Commun. Mag., vol. 53, no. 9, pp. 74–
+    fading scenario                                                                                        81, 2015.
+                                                                                                      [15] K. Higuchi and A. Benjebbour, “Non-orthogonal multiple access
+                                                                                                           (NOMA) with successive interference cancellation for future radio
+                                                                                                           access,” IEICE Trans. Commun, vol. 98, no. 3, pp. 403–414, 2015.
+    varying FFT points. For simulations, the transmitted useful                                       [16] P. Wang, J. Xiao, and L. Ping, “Comparison of orthogonal and non-
+                                                                                                           orthogonal approaches to future wireless cellular systems,” IEEE Veh.
+    sub-carriers are taken {56, 112, 224, 896} for the FFT points                                          Technol. Mag., vol. 1, no. 3, pp. 4–11, 2006.
+    {64, 128, 256, 1024}, respectively. It has been shown that                                        [17] S. M. R. Islam, N. Avazov, O. A. Dobre, and K.-s. Kwak, “Power-
+    performance improves with fewer FFT points since adding                                                domain non-orthogonal multiple access (NOMA) in 5G systems: Po-
+                                                                                                           tentials and challenges,” IEEE Commun. Surveys Tuts., vol. 19, no. 2,
+    more FFT points reduces the sub-carriers transmitted power.                                            pp. 721–742, 2017.
+                                                                                                      [18] F. Kara and H. Kaya, “On the error performance of cooperative-NOMA
+                                            VI. C ONCLUSION                                                with statistical CSIT,” IEEE Commun. Lett., vol. 23, no. 1, pp. 128–131,
+                                                                                                           2018.
+                                                                                                      [19] M. Jain, S. Soni, N. Sharma, and D. Rawal, “Performance analysis at
+       This paper analyses the MH relaying NOMA system over                                                far and near user in NOMA based system in presence of SIC error,”
+    the multipath fading scenario. The system’s outage perfor-                                             AEU-Int. J. Electron. Commun., vol. 114, p. 152993, 2020.
+    mance deteriorates with increased hops, distance, and FFT                                         [20] R. Makkar, V. Kotha, M. Sheeba Kumari, D. Rawal, V. K. Chakka, and
+                                                                                                           N. Kumar, “Performance of downlink SISO NR system using MMSE-
+    points, and numerical results are corroborated with the gener-                                         IRC receiver,” in 2020 IEEE 3rd 5G World Forum (5GWF), pp. 619–624,
+    ated simulation results. The link level performance is provided                                        2020.
+    over the DECT-2020 NR specifications. The addition of 64                                          [21] S. Arzykulov, T. A. Tsiftsis, G. Nauryzbayev, and M. Abdallah, “Outage
+                                                                                                           performance of cooperative underlay CR-NOMA with imperfect CSI,”
+    FFT points, 56 useful sub-carriers, and eight cyclic prefix                                            IEEE Commun. Lett., vol. 23, no. 1, pp. 176–179, 2018.
+    lengths enhances the system’s BER performance. Additionally,
+    the performance of the coded system outperforms the uncoded
+    transmission by 6-7 dB.
+
+
+
+                                                                                                    482
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:51 UTC from IEEE Xplore. Restrictions apply.
+

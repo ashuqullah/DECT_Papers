@@ -1,0 +1,711 @@
+                                                                                                                                                                                                          2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+                                                                                                                                                                                                    MAC-Layer Protocol for Ultra-Reliable Multi-Hop
+2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob) | 979-8-3503-9281-4/25/$31.00 ©2025 IEEE | DOI: 10.1109/WIMOB66857.2025.11257485
+
+
+
+
+                                                                                                                                                                                                    Communication in DECT-2020 NR IIoT Networks
+                                                                                                                                                                                                                                 Hassan Ahmad, Awais Bin Asif, Alexander Poets, and Jürgen Peissig
+                                                                                                                                                                                                                              Institute of Communications Technology, Leibniz Universität Hannover, Germany
+                                                                                                                                                                                                                                       {ahmad,asif,poets,peissig}@ikt.uni-hannover.de
+
+                                                                                                                                                                                                     Abstract—DECT-2020 New Radio (NR) is a Radio Interface                         and automatic operations, reducing maintenance efforts, and
+                                                                                                                                                                                                  Technology (RIT) that meets the IMT-2020 requirements for Ultra-                  making it an attractive technology for private 5G/6G networks.
+                                                                                                                                                                                                  Reliable Low-Latency Communications (URLLC) and massive                           However, achieving seamless coverage is challenging because
+                                                                                                                                                                                                  Machine-Type Communications (mMTC). ITU-R approval was
+                                                                                                                                                                                                  gained by the end of 2021, and it remains the only non-cellular                   no prior planning is involved. In our previous work [1], we
+                                                                                                                                                                                                  5G technology to date. This work presents an enhanced Medium                      discuss enhancing coverage specifically for DECT-2020 NR
+                                                                                                                                                                                                  Access Control (MAC) protocol that utilizes the mesh-networking                   and propose a MAC protocol to improve coverage performance
+                                                                                                                                                                                                  capability of DECT-2020 NR, extending the procedures and MAC                      by exploiting path diversity through an intermediate node acting
+                                                                                                                                                                                                  messages beyond the standard. The protocol dynamically assigns                    as a relay device. The protocol leverages the ability of each
+                                                                                                                                                                                                  radio devices (RDs) the role of intermediate nodes for routing data
+                                                                                                                                                                                                  to RDs in locations prone to outages, thereby reducing the outage                 RD to operate in both Fixed Termination (FT) and Portable
+                                                                                                                                                                                                  rate to below 1% and expanding the network’s coverage area.                       Termination (PT) modes simultaneously, i.e., FT/PT mode. In
+                                                                                                                                                                                                  Furthermore, event-based simulations demonstrate the protocol’s                   this work, we extend our previously proposed MAC protocol,
+                                                                                                                                                                                                  potential to enable ultra-reliable 5G private networks, positioning               originally designed to reduce outage probability using the
+                                                                                                                                                                                                  DECT-2020 NR as a promising candidate for evolving into a 6G                      FT/PT mode functionality of an RD as an intermediate node.
+                                                                                                                                                                                                  wireless technology in future releases of the standard.
+                                                                                                                                                                                                     Index Terms—URLLC, TDMA, DECT-2020, MAC, 5G, 6G,
+                                                                                                                                                                                                                                                                                    The extension introduces multi-hop communication to meet
+                                                                                                                                                                                                  Future Wireless Networks, New Radio, Coverage, Outage Rate.                       stricter reliability requirements and enhance coverage within
+                                                                                                                                                                                                                                                                                    a given Region of Interest (ROI) for private 5G/6G networks,
+                                                                                                                                                                                                                                                                                    such as in industrial environments with logistics robots and
+                                                                                                                                                                                                                             I. I NTRODUCTION
+                                                                                                                                                                                                                                                                                    IoT devices equipped with DECT-2020 NR nodes. Our MAC
+                                                                                                                                                                                                     DECT-2020 NR is a RIT developed and maintained by the                          protocol exploits the path diversity between multiple RDs to
+                                                                                                                                                                                                  European Telecommunications Standards Institute (ETSI). It                        route data for an RD in an outage location, achieving an outage
+                                                                                                                                                                                                  targets applications that lie between the extremes of URLLC                       rate of less than 1%, i.e., over 99% coverage in the ROI as
+                                                                                                                                                                                                  and mMTC. DECT-2020 NR is ideal for presence monitoring,                          per IMT-2020 guidelines mentioned in [15]. The remainder of
+                                                                                                                                                                                                  audio streaming, smart city developments, and industrial and                      the paper is structured as follows:
+                                                                                                                                                                                                  consumer IoT [2], [4]. It offers local deployment options                         In Section II, we briefly explain the modes of operation of
+                                                                                                                                                                                                  without the need for dedicated network infrastructure or                          an RD in DECT-2020 NR and the MAC layer of DECT-2020
+                                                                                                                                                                                                  extensive network planning, due to its inherent capability to                     NR. The system model is presented in Section III, where the
+                                                                                                                                                                                                  form mesh networks, where radio devices make autonomous                           coverage area and outage probability are also defined. The
+                                                                                                                                                                                                  routing decisions. However, while detailed network planning is                    proposed MAC protocol is explained in Section IV, and simu-
+                                                                                                                                                                                                  not required, seamless and ubiquitous coverage remains crucial                    lation results are presented in Section V. Section VI concludes
+                                                                                                                                                                                                  for reliable wireless communication. Therefore, addressing                        the paper, and Section VII contains the acknowledgments.
+                                                                                                                                                                                                  coverage-related challenges and finding effective solutions
+                                                                                                                                                                                                  is essential. Coverage enhancement strategies are discussed                                           II. DECT-2020 N EW R ADIO
+                                                                                                                                                                                                  in [14], proposing solutions such as Heterogeneous Networks                           An RD in the DECT-2020 NR network with transmission
+                                                                                                                                                                                                  (HetNets), relaying, and cloud-based mechanisms for next-                         and reception capabilities can be operated in either FT mode,
+                                                                                                                                                                                                  generation wireless technologies. Network coverage and the                        PT mode, or in both modes simultaneously as an FT/PT [4].
+                                                                                                                                                                                                  network capacity trade-off are investigated in [9] along with                     The particular RD mode depends on the local requirements
+                                                                                                                                                                                                  the deployment costs. In [10], coverage analysis is presented                     and can be switched during operation by an autonomous
+                                                                                                                                                                                                  along with network throughput and techniques such as mm-                          decision of the RD. According to the DECT-2020 NR technical
+                                                                                                                                                                                                  Waves and Coordinated Multi-Point (CoMP). The potential                           specification [4], local resources—such as time, i.e., time
+                                                                                                                                                                                                  of device-to-device communications and Unmanned Aerial                            slots or sub-slots, and frequency channels—are coordinated by
+                                                                                                                                                                                                  Vehicles (UAVs) to extend coverage is discussed in [11], while                    the RD in FT mode, which announces information regarding
+                                                                                                                                                                                                  solutions for coverage challenges, such as cell radius expansion,                 connection initiation and communication with it. The RDs in
+                                                                                                                                                                                                  are addressed in [12].                                                            PT mode, however, follow the FT’s instructions and connect to
+                                                                                                                                                                                                  Most of the literature cited in this work focuses on the                          it. The MAC layer in DECT-2020 NR enables RDs to access
+                                                                                                                                                                                                  concept of coverage area in cellular communications or related                    the wireless medium via random access or scheduled time
+                                                                                                                                                                                                  domains. DECT-2020 NR, once deployed, enables autonomous                          resources while providing logical channels for higher-layer
+
+
+
+
+                                                                                                                                                                                              Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                                         979-8-3503-9281-4/25/$31.00 ©2025 IEEE
+                2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+                                                                                                                                                                                                                    Cluster of RDFT,G on channel x
+                                                      MAC-Protocol Data Unit (PDU)
+
+                                                                                                                                      RDPT,1              RDPT,4             RDPT,6                    RDPT,8
+                                                      MAC: DCCH         Higher Layer Data 1   Higher Layer Data 2
+      Physical Header   MAC header   MAC Common    MAC Mux-         MAC Mux-         MAC Mux-
+                                                            MAC SDU          MAC SDU                    MAC SDU
+           Field          type         Header       Header           Header           Header
+
+    Fig. 1: Physical Header Field and Protocol Data Unit (PDU) of MAC layer.                                                                                                          Private Server
+                                                                                                                                      RDPT,2                          RDFT,G                           RDPT,9
+
+
+
+                                                                                                                                      RDPT,3              RDPT,5               RDPT,7                  RDPT,N
+    data transfer. It consists of a Physical Header Field, which
+    configures physical layer parameters, e.g., Modulation and                                                                            Fig. 3: Initial Cluster Formation of RDFT,G .
+    Coding Scheme (MCS), number of antennas, transmit power,
+    etc., and a MAC Protocol Data Unit (PDU) carrying MAC
+    messages, Information Elements (IEs), and higher-layer data [5].                                                   1) Outage Probability and Coverage Area: The outage
+    The MAC header type indicates the communication type, e.g.,                                                     probability ρout (Pmin,d ) is the probability that the received
+    unicast, multicast, or broadcast, while multiplexing headers                                                    power Pr (d) at distance d falls below the minimum required
+    manage data integration within the MAC PDU, where MAC-                                                          power Pmin [1]. Based on the total path-loss model [1] and the
+    own messages and IEs are multiplexed in the Dedicated Control                                                   derivation in [13], it is given by:
+    Channel field (DCCH) [5] as shown in Fig. 1.                                                                                                                                 
+                                                                                                                                                    Pmin − Pt −P L(d0 )−10γ log10 dd
+                                                                                                                    ρout (Pr (d) < Pmin ) = 1 − Q                   σψ
+                                                                                                                                                                                   0
+                                                                                                                                                                                        ,
+                                                                                                                                                                                                       dB
+                                       III. S YSTEM M ODEL                                                                        (1)
+                                                                  where Pt is the transmit power, P L is the log-distance path-
+       We focus on achieving ultra-reliable communication using
+                                                                  loss [1], and Q(·) is the Q-function [13]. The coverage area in
+    DECT-2020 NR for private 5G/6G networks, utilizing sched-
+                                                                  an ROI consists of locations where the received power exceeds
+    uled TDMA/FDMA communication resources. The downlink
+                                                                  or equals Pmin .
+    (DL) supports data transmission from the FT, i.e., RDFT,G ,
+    connected to a private server acting as a gateway, while                     IV. P ROPOSED MAC L AYER P ROTOCOL
+    the uplink (UL) is limited to link quality feedback. We          The proposed MAC protocol for a private DECT-2020 NR
+    consider a private network with one RD in FT mode, i.e., 5G/6G network with one gateway and mobile RDs in PT mode
+    RDFT,G , and N RDs in PT mode, i.e., RDtotal , where aims to reduce outage risks. It targets an outage rate below 1%
+    RDtotal = {RDPT,1 , RDPT,2 , RDPT,3 , ...., RDPT,N } as shown according to the IMT-2020 guidelines, with distinct modules
+    in Fig. 2. RDFT,G manages resource allocation, schedules detailed in separate subsections.
+    RDs, and initiates communication. Operating in the DECT
+    band (1880–1900 MHz) with a 6.912 MHz bandwidth, i.e., the
+                                                                                 RDFT,G                            RDPT
+    maximum available bandwidth, the system faces outage risks
+                                                                      (Association Procedure)             (Association Procedure)
+    due to mobile RDs and varying channel conditions. This outage
+                                                                    Channel Scan
+    risk must be mitigated in the system deployment.
+                                                                                                                               Network Beacons
+                                                                                                                        (Network Beacon Message with
+                                                                                                                        reserved field (0,0,0) + Random             Both RDs, follow,                                                    Check RSSI-2
+                                                                                                                              Access Resource IE)                     for association
+                         RDPT,1           RDPT,4             RDPT,6                    RDPT,8                                                                      request and response
+                                                                                                                           Random Access Procedure                                                Random Access Procedure
+
+                                                                                                                               Association Response                                                 Association Request
+                                                                      Private Server                                   (Association Response Message IE +                                     (Association Request Message IE)
+                         RDPT,2                       RDFT,G                           RDPT,9                         Cluster Beacon Message with reserved
+                                                                                                                      field (0,0,0) + Resource Allocation IE)                                                   Associated to RDFT,G
+
+
+
+                         RDPT,3           RDPT,5               RDPT,7                  RDPT,N
+                                                                                                                                                 Fig. 4: Initial Association Protocol.
+                                Fig. 2: DECT-2020 NR system model.
+                                                                                                                    A. Initial Association with RDFT,G
+    This research examines two large-scale propagation models                                                       RDFT,G initiates the communication on free time resources after
+    for coverage and outage probability assessment [1]: the log-                                                    a channel scan following the association procedure described
+    distance path-loss model and log-normal shadowing. In the                                                       in [1]. Initially, all the channels are considered free due to
+    log-distance model [1], the free-space path-loss distance (d0 ) is                                              the presence of only one FT in the network, i.e., RDFT,G .
+    1 m, with a path-loss rate γ of 1.6 for indoor environments [13].                                               In [1], we proposed that the RDFT,G initiates the association
+    Log-normal shadowing captures non-deterministic effects like                                                    procedure by transmitting network beacons on a dedicated
+    blockage, reflection, and scattering [1], [13]. The total path-loss                                             channel. In these beacon transmissions, the Random Access
+    combines log-distance path-loss and log-normal shadowing,                                                       Resource IE is multiplexed with the Network Beacon Message
+    represented as ψdB , a zero-mean Gaussian variable with                                                         to announce resources such as UL random access resources
+    standard deviation σψdB [1], [13]. Typically, σψdB is 12 dB                                                     for association requests and DL resources for association
+    for implicit indoor models and 6 dB for explicit ones [8].                                                      responses, thereby completing the random access procedure
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+                                                     RDFT,G                                                                 RDPT,x
+                                                (Outage situation)                                                       (In coverage)
+                              Outage Report: Device(s) experiencing outage identified
+
+                              FT/PT Mode Switching Request: Triggered as per protocol [1]
+                                                                                                                                            Switch to FT/PT mode
+                              DCCH of MAC PDU for RDPT,x Extra Info: Contains:
+                              - Cluster Beacon Message with reserved field (b1,b2,b3)               Start the Association Procedure: Follow the steps outlined in
+                              - Route Request Info IE(s)                                            Fig. 4 with the following modifications [1]:
+                              - Resource Allocation IE(s)                                           - Network Beacon Message with reserved field (b1,b2,b3)
+                                                                                                    - Multiplex the Route Request Info IE(s) previously received
+
+                                                                                                                 Success in Association Procedure?
+                                                                                                               Yes                                  No
+                                                                                                    Response to RDFT,G                   Look for switch back
+                                                                                                    - Route Response Info IE(s)                request
+
+                                Look for the response from RDPT,x
+                                                                                                        Stay in FT/PT mode          Switch back to PT mode as
+                                - If a positive response is received, transmit data                                                 RDPT,x
+                                - Else, transmit the switch back request message                           as RDFT/PT,x
+
+
+
+                                                                                              (a)
+                                                   RDFT/PT,x                                                              RDFT,G
+                                                (Outage situation)                                                   (Outage situation)
+                              Outage Report: Device(s) experiencing outage identified
+
+                              Send the feedback to RDFT,G about the RD(s) in outage
+
+                              Use Feedback Info format for this purpose:                                                        Receive the Feedback Info format
+                              Following three feedbacks are possible:
+                                                                                                    Follow the procedure in Fig. 5 (a)
+                              - Feedback Info format with mode field (e1,e2)
+                              - Feedback Info format with mode field (f1,f2)                        - Mode field (e1,e2) is received, transmit the Cluster Beacon
+                              - Feedback Info format with mode field (g1,g2)                        Message with reserved field (b1,b2,b3)
+
+                              - Mode field (e1,e2), no other association                            - Mode field (f1,f2) is received, transmit the Cluster Beacon
+                                                                                                    Message with reserved field (x1,x2,x3) to allow its own
+                              - Mode field (f1,f2), follow procedure in Fig. 4,
+                                                                                                    connected RD(s) for a dual association with RDFT/PT,x
+                               Network Beacon Message with reserved field (x1,x2,x3)
+                                                                                                    - Mode field (g1,g2) is received, transmit the Cluster Beacon
+                              - Mode field (g1,g2), follow the procedure in Fig. 4, Network
+                                                                                                    Message with reserved field (x1,x2,x3) to allow its own
+                              Beacon Message with reserved field (x1,x2,x3). Follow the
+                                                                                                    connected RD(s) for a dual association with RDFT/PT,x
+                              procedure in Fig. 5 (a), with the connected RD(s), transmit
+                              Cluster Beacon Message with reserved field (b1,b2,b3)
+
+
+                                                                                      (b)
+                                              Fig. 5: Proposed protocol for mitigating outage risks in DECT-2020 NR network.
+
+
+
+    for initial association with the RDs in RDtotal [1], [5]. The RSSI-2 requirement depends on receiver sensitivity and the
+    minimum periodicity of the network beacons was set to 10 ms quality margin, with a 20 dB margin to account for small-
+    in [1], and this value is still used in the current solution. By scale fading [1]. Initially, we assume that all RDs in RDtotal
+    utilizing network beacons with 10 ms periodicity, instead of meet the minimum RSSI-2 requirement and receive a positive
+    cluster beacons as traditionally used according to the DECT- acknowledgment (ACK) through the Association Response
+    2020 NR technical specification [5], channel congestion during Message IE from RDFT,G on the announced DL time resources.
+    the association process is effectively reduced. It allows RDs All RDs are assumed to complete their association with RDFT,G
+    to perform scanning and transmit beacons on a dedicated following the Random Access Procedure [1]. In the association
+    channel, thereby minimizing interference [1]. Additionally, response, we propose multiplexing the Cluster Beacon Message
+    it supports the coordination of random access resources among and Resource Allocation IE with the Association Response
+    RDs—a mechanism implicitly tied to FT/PT mode switching Message IE using unicast header. Multiplexing the Cluster
+    as described in prior work [1]. The association procedure Beacon Message in this manner is a valid approach, as the
+    from the perspective of RDFT,G is shown in Fig. 4. The RDs DECT-2020 NR technical specification permits the inclusion
+    in RDtotal send the association request using the Association of different messages within a MAC PDU. The Cluster Beacon
+    Request Message IE on the announced UL random access time Message sets the time reference, while the Resource Allocation
+    resources if the detected network beacon exceeds the required IE specifies scheduled DL and UL resources for RDtotal .
+    Received Signal Strength Indicator (RSSI)-2 threshold. The The initial association procedure is shown in Fig. 4 and the
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+    cluster of RDFT,G , e.g., on channel x is shown in Fig. 3. Furthermore, the disjoint sets RDoutage and RDcoverage are
+    Once the association is complete, further communication is represented as
+    carried out with the help of cluster beacons, according to
+                                                                         RDoutage = {RDPT,i1 , RDPT,i2 , RDPT,i3 , ...., RDPT,iM } ,
+    their roles as described in [5]. The scheduled time resources                        
+    for the RDs in RDtotal are repeated each frame until the             RD   coverage = RDPT,j1 , RDPT,j2 , RDPT,j3 , ...., RDPT,jN −M ,
+    scanStatusValid timer ends [1]. We assume no interference                                                                                       (3)
+    occurs in the allocated time resources due to the absence           where,    M   represents  the total RDs in outage,     i 1 , i2 , i3 , ..., i M
+
+    of nearby interfering networks. Each RD is allocated equal          are   the   indices  of  the  RDs   in RD  total facing        an    outage,
+    time resources. For a particular RD, RDPT,k , the required time 0 < M < N and RDcoverage contains the remaining RDs
+    resources are Xtr,k = DLtr,k +U Ltr,k , where k = 1, 2, 3, ..., N , fulfilling the Pmin requirement with j1 , j2 , j3 , ..., jN −M as their
+    DLtr and U Ltr are DL and UL time resources, respectively, and indices. In the outage scenario, following our proposed protocol
+    DLtr > U Ltr as shown in Fig. 3. After successful allocation mentioned in [1], the RDFT,G requests the RDs in RDcoverage
+    of time resources, the data transmission starts, following the to switch to FT/PT mode to route the data for the RDs in
+    procedure in [5].                                                   RDoutage . For RDPT,x such that,
+                                                                            RDPT,x ∈ RDcoverage , where x ∈ {j1 , j2 , . . . , jN −M }
+                                  Unicast Header
+                                                                                                                    following steps are taken as shown in Fig. 5 (a). RDFT,G initi-
+                               Multiplexing Header
+                                                                                                                    ates the FT/PT mode switching request per protocol mentioned
+                                                         Format of MAC: DCCH, when RDFT,G requests the mode
+
+
+
+
+                              Cluster Beacon Message
+                                SFN | (b1,b2,b3) | ---                                                              in [1]. In DL transmission to RDPT,x , RDFT,G multiplexes
+                               Multiplexing Header                                                                  Cluster Beacon Message with reserved field (b1 , b2 , b3 ) to
+                               Route Request Info IE                                                                initiate the request of mode switching, Route Request Info
+                                     (RDPT,i1)
+                                                                                                                    IE(s)—as proposed and detailed in our previous work [1]
+                               Multiplexing Header
+                                                                                                                    containing the address(es) of RD(s) in RDoutage , and Resource
+                                                                            switching
+
+
+
+
+                              Resource Allocation IE
+                                    (RDPT,i1)                                                                       Allocation IE(s) containing information about the previously
+                                                                                                                    allocated time resources to the RD(s) in RDoutage , in the MAC
+                               Multiplexing Header
+                                                                                                                    PDU of RDPT,x . The address(es) of RD(s), along with their
+                              Route Request Info IE
+                                   (RDPT,iM)                                                                        previously allocated time resource(s) are later used by RDPT,x
+                               Multiplexing Header                                                                  to receive the data for routing and to transmit feedback to the
+                              Resource Allocation IE                                                                RDFT,G if one RD or more RDs in RDoutage get associated to
+                                   (RDPT,iM)
+                                                                                                                    RDPT,x . The format of DCCH in the case of mode switching
+    Fig. 6: Control information in the DCCH of MAC PDU when a mode switching                                        request is shown in Fig. 6. Extra control information for the
+    request is initiated.
+                                                                                                                    RDPT,x , e.g., Resource Allocation IE of RDPT,x , etc., can also
+                                                                                                                    be multiplexed if needed, which is allowed and described in
+                                                                                                                    DECT-2020 NR technical specification [5]. The mode switching
+    B. Mitigation of outage risks in the network                                                                    request is transmitted with the unicast header. RDFT,G repeats
+                                                                                                                    this [1],
+       Due to the mobility of the RDs in RDtotal or varying channel
+    conditions, the RDs may experience an outage situation. We                                                            ∀x ∈ {j1 , j2 , . . . , jN −M },   RDPT,x ∈ RDcoverage .
+    analyze two scenarios. First, RDs directly connected to RDFT,G                                                  After receiving the FT/PT mode switching request, RDPT,x
+    as shown in Fig. 3, experience an outage. Second, RDs in FT/PT                                                  switches to RDFT/PT,x and starts the association procedure
+    mode, e.g., intermediate routing RDs, or the RDs connected                                                      as per protocol mentioned in [1]. The network beacons are
+    to them, encounter an outage. The protocol addresses both                                                       transmitted by multiplexing the Network Beacon Message with
+    scenarios: how RDs switch to FT/PT mode and how RDs                                                             reserved field (b1 , b2 , b3 ) and the Route Request Info IE(s) to
+    in outage identify FT/PT-mode RDs. It also ensures network                                                      avoid any irrelevant association [1]. Although these network
+    adaptation to prevent outages, even if intermediate nodes, i.e,                                                 beacons target the RDs in outage, they are transmitted using
+    RDs in FT/PT mode, or their connected PTs experience an                                                         a broadcast header rather than a multicast header. Irrelevant
+    outage. Each scenario is explained in separate subsections.                                                     associations are prevented via the three-bit Network Beacon
+       1) Direct Connection Scenario: When the RDs are directly                                                     Message field, ensuring compatibility and consistency with
+    connected to RDFT,G as shown in Fig. 3, RDFT,G manages an                                                       overall MAC beacon transmission procedures in [5]. The format
+    outage report in case one or more RDs experience an outage,                                                     of DCCH in this case, when an RD switched to FT/PT mode
+    identifying the affected RDs [1]. The identified RDs in outage                                                  transmits the beacons for the initiation of the association
+    are given by a set RDoutage . This set is obtained by subtracting                                               procedure is shown in Fig. 7. The rationale behind using
+    the set of RDs fulfilling Pmin requirement, i.e., RDcoverage ,                                                  network beacons for association is already explained in IV-A.
+    from RDtotal .                                                                                                  RDFT/PT,x follows the association procedure as mentioned in
+                                                                                                                    section IV-A and shown in Fig. 4. If the association procedure
+                      RDoutage = RDtotal − RDcoverage ,                                                       (2)   is successful, RDFT/PT,x sends the response to the RDFT,G
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+    about the associated RD(s) using the proposed Route Response                                      Unicast Header                   Unicast Header
+    Info IE(s) in [1] on their previously allocated time resources                                 Multiplexing Header               Multiplexing Header   (b)
+
+
+
+
+                                                                                                                  response to mode switching
+                                                                                                                  Format of MAC: DCCH, in
+
+                                                                                                                   request in case of success
+                                                                                                  Route Response Info IE            Route Response Info IE
+    announced in the FT/PT mode switching request and from the                                          (RDPT,y1)                         (RDPT,y1)
+    next frame starts receiving data for routing it to the newly asso-
+    ciated RD(s). The response to the successful association can be                                                                    Unicast Header
+                                                                                                                                                           (c)
+                                                                                                   Multiplexing Header
+    transmitted either collectively or individually. In the collective                                                               Multiplexing Header
+                                                                                                  Route Response Info IE
+                                                                                                                                    Route Response Info IE
+    case, RDFT/PT,x sends a unified response regarding all newly                                        (RDPT,yQ)
+                                                                                                                                          (RDPT,yQ)
+                                                                                                             (a)
+    associated RDs using the proposed Route Response Info IE(s)
+                                                                             Fig. 8: Control information in the DCCH of MAC PDU following successful
+    on the first available time resources. The corresponding DCCH mode switching and feedback is sent by the intermediate routing node.
+    format is illustrated in Fig.8 (a). Alternatively, responses can be
+    sent individually for each RD, as per the resource allocations                 a) Scenario 1: If the intermediate node, e.g., RDFT/PT,x
+    announced in the original FT/PT mode switching request. The faces an outage then in this case RDFT,G updates the RDoutage
+    DCCH formats for these individual responses are shown in by adding RDFT/PT,x and the RDs connected to it and initiates
+    Fig.8 (b) and (c), respectively. In this context, we consider that the procedure as mentioned in IV-B1 and shown in Fig. 5 (a).
+    a set of RDs, denoted as {RDPT,y1 , RDPT,y2 , . . . , RDPT,yQ }, RDFT/PT,x switches back to the RDPT,x and ends the association
+    where ∀k ∈ {1, 2, 3, . . . , Q}, the index yk ∈ {i1 , i2 , . . . , iM }. with the connected RDs.
+    These RDs are assumed to be newly associated with RDFT/PT,x
+    as a part of outage recovery procedure. In case, not a single                                         Physical Header
+
+    RD in RDoutage associates to RDFT/PT,x , it waits for the switch                                       Unicast Header
+
+    back to PT mode request message from RDFT,G and switches                                            Multiplexing Header
+
+
+
+
+                                                                                                                                                    Format of MAC: DCCH,
+
+                                                                                                                                                    (RDFT/PT) informs about
+                                                                                                                                                     when the routing node
+                                                                                                       Feedback Info Format
+    to PT mode again, if received, as mentioned in [1]. All RDs                                     2-Bits Field | CQI | Reserved
+
+
+
+
+                                                                                                                                                            outage
+    within RDcoverage , that establish a connection with one or more                                             Option 1: (e1,e2)
+    RDs in RDoutage form their cluster with the connected RD or                                                   Option 2: (f1,f2)
+    RDs [1].                                                                                                     Option 3: (g1,g2)
+
+                                                                                                           Fig. 9: Control information in the DCCH of MAC PDU, when the feedback
+                                                                                                           is sent by the intermediate routing device regarding an outage.
+
+                                 Broadcast Header
+                                                           Format of MAC: DCCH, when RDPT,x switches to
+
+
+
+
+                               Multiplexing Header
+                                                            FT/PT mode and transmits the network beacons
+
+
+
+
+                             Network Beacon Message
+                                                                                b) Scenario 2: If any connected RD, e.g., RDPT,y ,
+                                (b1,b2,b3) | --- | --- |                   with RDFT/PT,x encounters an outage again, then, as per the
+                              Multiplexing Header                          proposed protocol, RDFT/PT,x sends feedback to RDFT,G over
+                          Random Access Resource IE                        the UL time resources previously allocated to RDFT/PT,x
+                                                                           for RDPT,y , as outlined in section IV-B1, to inform RDFT,G
+                              Multiplexing Header
+                             Route Request Info IE
+                                                                           about the outage. We propose a 12-bit Feedback Info format
+                                   (RDPT,i1)                               for this purpose. Two bits are dedicated to the mode in
+                                                                           which RDFT/PT,x will assist RDFT,G , four bits represent the
+                              Multiplexing Header
+                             Route Request Info IE
+                                                                           Channel Quality Indicator (CQI), and the remaining six bits
+                                   (RDPT,iM)                               are reserved to maintain a consistent bit length across different
+    Fig. 7: Control information in the DCCH of MAC PDU for the association formats as specified in [5]. The four-bit CQI field follows the
+    procedure when an RD in PT mode switches to FT/PT mode.                standard convention used in various other feedback formats,
+                                                                           as described in [5]. If the Feedback Info format is sent with
+                                                                           mode bits (e1 , e2 ), it indicates that the connection is lost,
+                                                                           and RDFT/PT,x is switching back to PT mode, making it
+       2) Intermediate Node Scenario: Once RDPT,x transitions unavailable as a routing device, e.g., in Fig. 10 (a). Conversely,
+    to RDFT/PT,x and forms its cluster, there are three possible if Feedback Info format is sent with mode bits (f1 , f2 ), it
+    scenarios for the number of RDs in its cluster [1]. First, signifies that the connection is lost; however, RDFT/PT,x will
+    at least one RD is associated with it. Second, Q RDs are remain in FT/PT mode to support multi-hop communication,
+    associated, where Q < M . Third, all RDs in RDoutage are e.g., in Fig. 10 (a)-(c), that means it will be available for a
+    associated with it. The three scenarios are shown in Fig. 10. In new association with any RD that associates with the RD
+    Fig. 10 (a), RDPT,y ∈ RDoutage is the only RD connected went into an outage to support multi-hop communication.
+    to RDFT/PT,x , where y ∈ {i1 , i2 , . . . , iM }. In Fig. 10 (b), Otherwise, if the Feedback Info format is sent with mode
+    a set of RDs, i.e., {RDPT,y1 , RDPT,y2 , . . . , RDPT,yQ }, where bits (g1 , g2 ), it indicates the connection is lost, and RDFT/PT,x
+    ∀k ∈ {1, 2, 3, . . . , Q}, yk ∈ {i1 , i2 , . . . , iM }. However, in will trigger its directly connected RDs and be available for
+    Fig. 10 (c), all RDs within RDoutage are connected to RDFT/PT,x . a new association with any RD that associates with the RD
+    In addition, we consider two more scenarios for the outage went into an outage to support multi-hop communication, e.g.,
+    given as                                                               Fig. 10 (b) and (c). If RDFT,G receives the Feedback Info
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+                                                             (a)                                              (b)                                                                                   (c)
+
+                                                                                                                                                                          RDPT,i1
+                                  Private Server                                  Private Server                                    Private Server
+                     RDFT,G                                          RDFT,G                                             RDFT,G                          RDFT/PT,x                         RDPT,i2
+
+                                                                                                    RDPT,y1                                                               RDPT,iM
+
+
+
+
+                                                                                                          ,------,
+                      RDFT/PT,x        RDPT,y                         RDFT/PT,x
+                                                                                                    RDPT,yQ                         Cluster of RDFT,G                            Cluster of RDFT/PT,x
+
+
+                        Fig. 10: Different possibilities of RDs in the cluster of an RD, e.g., RDPT,x switched to FT/PT mode as RDFT/PT,x .
+
+
+                                                                                                                     Possible New Connections for RDPT,i1
+                                                                                                                     • Feedback Info format (e1,e2)
+                                                                                     RDPT,i2                               • RDFT,G to any RD within RDother-in-coverage (solid green line) to
+                                      Private Server                                                                         RDPT,i1 (dotted green line)
+
+
+
+
+                                                                                         ,-----,
+                     RDFT,G                                                                                                • Direct connection to RDFT,G (dotted green line)
+                                                                   RDFT/PT,x                                         • Feedback Info format (f1,f2)
+                                                                                     RDPT,iM                               • RDFT,G to any RD within RDother-in-coverage (solid green line) to
+                                                                                                                             RDPT,i1 (dotted brown line)
+                                                                                                                           • RDFT,G to RDFT/PT,x (solid green line) to any RD within RDother-in-
+                                                                                                                             coverage (dotted brown line) to RDPT,i1 (dotted orange line)
+                                                                                                                           • Direct connection to RDFT,G (dotted brown line)
+                                                                                                                     • Feedback Info format (g1,g2)
+                                                                                                                           • RDFT,G to any RD within RDother-in-coverage (solid green line) to
+                                                                                                                             RDPT,i1 (dotted grey line)
+                                                                                                   RDPT,i1                 • RDFT,G to RDFT/PT,x (solid green line) to any RD connected to RDFT/PT,x
+                      RDother-in-coverage                                                                                    (solid green line) to RDPT,i1 (dotted purple line)
+                                                                                                                           • RDFT,G to RDFT/PT,x (solid green line) to any RD within RDother-in-
+                                                                                                                             coverage (dotted blue line) to RDPT,i1 (dotted blue line)
+                       RDPT, j    ,   RDPT, j      ,-----,     RDPT, j                                                     • Direct connection to RDFT,G (dotted grey line)
+
+                                                                                                                                     Cluster of RDFT,G                        Cluster of RDFT/PT,x
+
+
+                                                      Fig. 11: Multi-hop communication options following the proposed protocol.
+
+
+
+   format with mode bits (e1 , e2 ), it initiates the procedure as
+   mentioned in Fig. 5 (a). Similarly, if (f1 , f2 ) is received, it
+   follows the procedure mentioned in Fig. 5 (a); however, in                       RDother-in-coverage = RDcoverage \ {RDP T,x }
+   this case, the reserved field of the Cluster Beacon Message                                             = {RDP T,j | j ̸= x},
+   is set to (x1 , x2 , x3 ), and RDFT/PT,x initiates the Procedure
+                                                                          and j ∈ {j1 , j2 , . . . , jN −M }.
+   in Fig. 4 to enable multi-hop communication with Network
+   Beacon Message reserved field (x1 , x2 , x3 ). The format of                           V. R ESULTS AND D ISCUSSION
+   DCCH of MAC PDU in this case, when the feedback is sent                  To highlight the effectiveness of our proposed technique,
+   by the intermediate routing device, i.e., RDFT/PT,x regarding our results from the link-level simulations in [3] are utilized to
+   an outage is shown in Fig. 9. The inclusion of the Feedback determine the minimum required SNR, i.e., SNR
+                                                                                                                                     needed , for the
+   Info format is indicated by the Physical Header [1], [5].              receiver sensitivity calculation, as outlined in [6]. We select
+   Furthermore, if the RDFT,G receives the Feedback Info format MCS - 3, i.e., 16 - QAM with 1/2 coding rate [3], to set the
+   with mode bits (g1 , g2 ), it again follows the procedure in value of SNR                                                                 −5
+                                                                                        needed to achieve a packet error rate of 10             . For
+   Fig. 5 (a), the reserved field of the Cluster Beacon Message an AWGN channel with perfect channel knowledge, the SNR
+   is set to (x1 , x2 , x3 ), and RDFT/PT,x also initiates the same required to achieve a Packet Error Rate (PER) of 10−5 for
+   Procedure in Fig. 5 (a) with its directly connected RDs, MCS - 3 is approximately 10 dB [3]. We round it to 10 dB
+   the reserved field of the Cluster Beacon Message is set to and set it as SNR
+                                                                                                needed . To account for the 20 dB small-scale
+   (b1 , b2 , b3 ). RDFT/PT,x also follows the procedure in Fig. 4, fading margin, we add this to the large-scale propagation loss
+   where the Network Beacon Message reserved field is set at all locations in the ROI as an extra loss. We assume that
+   to (x1 , x2 , x3 ). Where, (e1 , e2 ) ̸= (f1 , f2 ) ̸= (g1 , g2 ) and communication uses MCS - 1 or MCS - 2, i.e., QPSK with
+   (x1 , x2 , x3 ) ̸= (b1 , b2 , b3 ). We consider option (c) in Fig. 10, coding rates of 1/2 and 3/4. Since SNR
+                                                                                                                            needed is selected for
+   as an example and assume RDPT,i1 faces an outage again. a higher MCS, it ensures a PER below 10−5 for MCS used
+   Following our proposed protocol different new connection in communication, supporting ultra-reliable communication in
+   options for RDPT,i1 are shown in Fig. 11. As an example, if the ROI. As all RDs in RD
+                                                                                                            coverage meet the SNRneeded , RDFT,G
+   RDFT/PT,x transmits the Feedback Info format with mode field can switch from QPSK to QAM, adjusting control information
+   (e1 , e2 ), then RDPT,i1 may establish a new connection either while maintaining the same required PER. This is feasible
+   directly to RDFT,G or to any RD ∈ RDother-in-coverage as shown because DECT-2020 NR supports adaptive modulation and
+   in Fig. 11. Where, RDother-in-coverage is given as                     coding schemes.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+                                          200
+                                                                                   120   the effectiveness of our technique with lower Tx power levels
+                                          150
+                                                                                   100   from [5].
+
+
+
+
+                            Y range (m)
+                                          100                                      80
+
+
+                                                                                   60
+                                                                                                                 Tx power of RDs in FT/PT mode (dBm)
+                                           50                                                #RDs in RDtotal
+                                                                                   40                              0       4       7       10         13
+                                            0
+                                                0   50       100       150   200
+                                                         X range (m)                                 10          2.35    1.56     1.25    0.67          0.31
+                  Fig. 12: Total loss map with respect to RDFT,G .
+                                                                                                     20          2.05    1.07     0.35    0.19          0.12
+                                                                                         TABLE II: Outage rate (%) analysis for different transmit power levels
+    The Rxsensitivity is calculated as −88 dBm using the formula of RDs operating in FT/PT modes. The Tx power of RDFT,G is fixed
+    in [1], with the selected bandwidth of 6.912 MHz and a noise at 23 dBm. The analysis is performed for varying numbers of RDs in
+    figure of 7 dB. It is the required Pmin , the received power level RDtotal , representing the default number of RDs in PT mode within
+                                                                          the Region of Interest (ROI). Outage performance is evaluated under
+    below this threshold is considered an outage. To analyze the the constraint that only a single intermediate node is selected to assist
+    outage percentage in the ROI with a single FT, i.e., RDFT,G , communication and mitigate outage. It is observed that increasing
+    we consider a 200 × 200 meter area, e.g., factory hall, with the number of RDs in RDtotal enables a reduction in the required
+    coordinates ranging from (0, 0) to (200, 200) and a 1-meter Tx power of RDs in FT/PT mode, contributing to improved energy
+    resolution. The RDFT,G is placed at (100, 100) and considered efficiency.
+    static. Different numbers of PTs are considered in RDtotal . We
+    analyze the results by considering 10 PTs in RDtotal . First,            TABLE II presents the outage rate for the proposed protocol
+    the total loss map with respect to RDFT,G is calculated as            in a single-hop scenario, as a function of the number of RDs
+    shown in Fig. 12, using the log-distance path-loss model in [1]       in RDtotal and the Tx power of RDs in RDtotal operating in
+    with d0 = 1 m, γ = 1.6, and antenna gain of 0 dBi for both            FT/PT     mode. The rows correspond to different numbers of
+    transmitter and receiver, assuming equal antenna heights. The         RDs    in RDtotal used in the network, specifically 10 and 20.
+    carrier center frequency is 1.885 GHz, and the log-normal             The   columns      correspond to the Tx power levels of the RDs
+    shadowing map with σψdB = 12 dB with respect to RDFT,G is             switched   to   FT/PT    mode, varying from 0 dBm to 13 dBm. The
+    calculated using [7] and [8]. After calculating the large-scale       numerical    entries   in  the table are outage rates in percent.
+    path loss, a 20 dB small-scale fading margin is added, resulting      The  outage    rates  for  different Tx power levels of mobile RDs,
+    in the total loss map in the ROI with respect to RDFT,G given         with  a fixed  Tx   power   of RDFT,G , are shown in TABLE II for 10
+    in Fig. 12.                                                           PTs  using   a  single  intermediate      hop communication. As shown
+    The received power at different locations within the ROI, with        in TABLE       II,  with  a  Tx  power      level of 10 dBm, 1% outage
+    respect to RDtotal is calculated by subtracting the total loss        is achieved,     demonstrating       the   effectiveness      of our protocol.
+    map from the transmit (Tx) power. The coverage percentage             Increasing    the   number    of   RDs    in  RD   total  further reduces the
+    is determined by counting the locations on 200 × 200 meter            Tx  power    of   the  mobile    RDs,    as   shown     in  TABLE     II for 20
+    grid where the received power is greater than or equal to             PTs,  where    the  desired  outage    is  achieved    at  7 dBm.  To   analyze
+    Rxsensitivity = −88 dBm, dividing by the total number of              results  for multi-hop     communication         (two    intermediate    nodes),
+    locations (40, 000), and multiplying by 100. The outage per-          we  select  4   RDs   in RD   total from    the  available    10  and  20  RDs.
+    centage is then obtained by subtracting the coverage percentage       These    RDs    are   placed   at   half   the  distance     from   the   center
+    from 100.                                                             location along the diagonals of the ROI, ensuring coverage
+                                                                          with respect to RDFT,G . The Tx power of these 4 RDs is set to
+            Tx power (dBm)      13     16       19      21     23         13 dBm, half the power of the RDFT,G , as per [5]. With these
+               Outage (%)     19.87   14.01    8.99    5.89   4.68        fixed RDs and multi-hop support, the Tx power of mobile
+    TABLE I: Outage rate (%) analysis for different transmit power levels RDs can be further reduced, e.g., 3 dB gain is achieved as
+    of RDFT,G within the Region of Interest (ROI), without using the shown in TABLE III. The placement of fixed RDs is based
+    proposed protocol.                                                    on the scenario where, in an industrial hall, some IoT devices,
+                                                                          e.g., sensors, are fixed, while others, e.g., logistics robots, are
+       TABLE I shows the outage percentages for different Tx mobile. These sensor devices, equipped with DECT-2020 NR
+    power levels of the RDFT,G . The first row provides the values RDs, can switch to FT/PT mode as needed. The gateway,
+    of the different Tx power levels, while the second row presents having information on the location of mobile RDs, can use
+    the corresponding outage percentages at each Tx power level. multi-hop extension firmware to adapt the network and reduce
+    As observed, the required outage rate of less than 1% is outages.
+    not achieved even at the maximum Tx power of 23 dBm, To obtain the results in TABLE II, an event-based simulator
+    as specified in [5]. At this power level, the outage remains is used, where each event corresponds to a change in the RD
+    at 4.68%. Therefore, we employ our proposed technique to position. The total loss map of RDFT,G remains static, and
+    achieve the desired outage rate. To minimize the outage with the received power of all RDs is checked at their respective
+    respect to RDFT,G , we use a Tx power of 23 dBm and apply locations. If an RD faces an outage with respect to RDFT,G ,
+    the protocol to meet the required outage. For mobile RDs new total loss maps are generated for the remaining RDs not in
+    (RDtotal ), power saving is considered. Therefore, we analyze outage, following the procedure outlined above. Correlated log-
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+            2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+
+
+
+
+                               Tx power of RDs in FT/PT mode (dBm)                    nodes. The protocol operates efficiently without requiring prior
+         #RDs in RDtotal
+                                 0       4       7       10          13               infrastructure planning and adapts to varying transmit power
+                 10            2.01     1.24    0.90    0.55          0.21            and received power constraints, making it well-suited for private
+                 20            1.79     0.87    0.29    0.17          0.09            5G/6G networks, e.g., Industrial IoT.
+                                                                                      In future work, we plan to incorporate network coding to
+    TABLE III: Outage rate (%) analysis for different transmit power
+    levels of RDs operating in FT/PT modes. The Tx power of RDFT,G
+                                                                                      optimize time resource utilization, further enhancing the
+    is fixed at 23 dBm. The analysis is performed for varying numbers of              efficiency and reliability of the proposed protocol.
+    RDs in RDtotal , representing the default number of RDs in PT mode
+    within the Region of Interest (ROI). Outage performance is evaluated                                    VII. ACKNOWLEDGMENT
+    under the constraint that four RDs from the total RDs in the ROI                    The work in this paper was part of the C ELTIC -N EXT project
+    are static with 13 dBm Tx power and within the coverage of RDFT,G ,
+    while the remaining RDs are mobile. Multi-hop communication is
+                                                                                     USWA and received funding from the Federal Ministry of
+    allowed to mitigate the outage. It is observed that increasing the               Education and Research of Germany (BMBF, funding code:
+    number of RDs in RDtotal enables a further reduction in the required             16KISK254). We would like to thank the funding organization
+    Tx power of RDs in FT/PT mode compared to single-hop scenario,                   for the financial support.
+    contributing to improved energy efficiency.
+                                                                                                                    R EFERENCES
+                                                                                       [1] H. Ahmad, A. B. Asif, J. Peissig and M. Penner, ”MAC Protocol for
+    normal shadowing maps are generated with a fixed correlation                           Reducing Outage Probability in DECT-2020 New Radio,” 2024 20th
+    of 0.5 with the base map, i.e., shadowing map of RDFT,G ,                              International Conference on Wireless and Mobile Computing, Networking
+                                                                                           and Communications (WiMob), Paris, France, 2024, pp. 42-49.
+    for simplicity. Using the total loss maps and selected Tx                          [2] A. B. Asif, H. Ahmad, S. Preihs and J. Peissig, ”URLLC-Based Multi-
+    powers in TABLE II, the received power of each RD is                                   Hop Communication Using DECT-2020 NR,” 2025 IEEE Wireless
+    calculated. If the minimum received power is met, the RD is                            Communications and Networking Conference (WCNC), Milan, Italy,
+                                                                                           2025, pp. 1-7, doi: 10.1109/WCNC61545.2025.10978532.
+    considered in coverage; otherwise, it is in outage. Results are                    [3] M. Penner, M. Nabeel and J. Peissig, ”URLLC Performance Evaluation
+    then accumulated for 60,000 events. In the multi-hop scenario,                         of IMT-2020 Candidate Technology: DECT-2020 New Radio,” 2021
+    e.g., TABLE III, the outage for each RD is first checked with                          IEEE 94th Vehicular Technology Conference (VTC2021-Fall), Norman,
+                                                                                           OK, USA, 2021, pp. 1-7.
+    respect to RDFT,G . If the RD is in an outage, its coverage                        [4] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview; Release 1,” Eu-
+    with respect to the remaining RDs, e.g., 4 static RDs and                              ropean Telecommunications Standards Institute, Technical Specification
+    other mobile RDs in coverage with respect to RDFT,G , is then                          (TS) 103 636-1, March 2024.
+                                                                                       [5] ETSI, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,” Eu-
+    evaluated. If the RD is still in outage, its coverage is checked                       ropean Telecommunications Standards Institute, Technical Specification
+    with other RDs that are in outage with respect to RDFT,G                               (TS) 103 636-4, March 2024.
+    but are in coverage of the remaining RD or RDs. If the RD                          [6] ETSI, “Digital Enhanced Cordless Telecommunications (DECT); DECT-
+                                                                                           2020 New Radio (NR); Test specification: radio,” European Telecom-
+    continues to experience an outage, it is classified as an outage;                      munications Standards Institute, Technical Specification (TS) 103 776,
+    otherwise, it is classified as coverage.                                               September 2023.
+                                                                                       [7] C. Mehlführer, J. Colom Ikuno, M. Šimko, S. Schwarz, et al. The Vienna
+                               VI. C ONCLUSION                                             LTE simulators - Enabling reproducibility in wireless communications
+                                                                                           research. EURASIP J. Adv. Signal Process. 2011, 29 (2011).
+       In this paper, we proposed an enhanced single and multi-                        [8] Claussen, ”Efficient modelling of channel maps with correlated shadow
+                                                                                           fading in mobile radio systems,” 2005 IEEE 16th International Sympo-
+    intermediate-hop Medium Access Control (MAC) protocol that                             sium on Personal, Indoor and Mobile Radio Communications, Berlin,
+    utilizes the mesh-networking capability of DECT-2020 NR by                             Germany, 2005.
+    extending the procedures and MAC messages beyond the DECT-                         [9] K. I. Pedersen, F. Frederiksen, G. Berardinelli and P. E. Mogensen, ”The
+                                                                                           Coverage-Latency-Capacity Dilemma for TDD Wide Area Operation and
+    2020 NR standard. The protocol leverages MAC messages and                              Related 5G Solutions,” 2016 IEEE 83rd Vehicular Technology Conference
+    Information Elements (IEs) to reduce the outage rate to less                           (VTC Spring), Nanjing, China, 2016, pp. 1-5.
+    than 1% in a given Region of Interest (ROI). The protocol                         [10] G. R. MacCartney and T. S. Rappaport, ”Millimeter-Wave Base Station
+                                                                                           Diversity for 5G Coordinated Multipoint (CoMP) Applications,” in IEEE
+    achieves this by employing periodic Network and Cluster                                Transactions on Wireless Communications, vol. 18, no. 7, pp. 3395-3410,
+    Beacon Message transmissions to address outage scenarios                               July 2019.
+    caused by the mobility of Radio Devices (RDs). Specifically, it                   [11] M. Mozaffari, W. Saad, M. Bennis, Y. -H. Nam and M. Debbah, ”A
+                                                                                           Tutorial on UAVs for Wireless Networks: Applications, Challenges, and
+    mitigates the outages experienced by RDs directly connected to                         Open Problems,” in IEEE Communications Surveys & Tutorials, vol. 21,
+    the gateway and those acting as intermediate routing nodes in                          no. 3, pp. 2334-2360, thirdquarter 2019.
+    FT/PT mode. To enhance network resilience, the proposed                           [12] R. Borralho, A. Mohamed, A. U. Quddus, P. Vieira and R. Tafazolli, ”A
+                                                                                           Survey on Coverage Enhancement in Cellular Networks: Challenges and
+    protocol enables dynamic mode switching and facilitates                                Solutions for Future Deployments,” in IEEE Communications Surveys
+    the identification of FT/PT-mode RDs for efficient routing.                            & Tutorials, vol. 23, no. 2, pp. 1302-1341, Secondquarter 2021
+    Furthermore, it ensures reliable connectivity even when the                       [13] Goldsmith, Andrea. Wireless communications. Cambridge university
+                                                                                           press, 2005.
+    intermediate nodes or their associated RDs lose connection.                       [14] E. Hossain and M. Hasan, ”5G cellular: key enabling technologies and
+    Event-based simulations validate the effectiveness of the                              research challenges,” in IEEE Instrumentation & Measurement Magazine,
+    proposed approach, demonstrating its ability to achieve ultra-                         vol. 18, no. 3, pp. 11-21, June 2015.
+                                                                                      [15] ITU-R, “Guidelines for evaluation of radio interface technologies for IMT-
+    reliable communication while maintaining minimal transmis-                             2020,” International Telecommunication Union, Report ITU-R M.2412-0,
+    sion power for mobile RDs operating as intermediate routing                            Oct 2017.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:31 UTC from IEEE Xplore. Restrictions apply.
+

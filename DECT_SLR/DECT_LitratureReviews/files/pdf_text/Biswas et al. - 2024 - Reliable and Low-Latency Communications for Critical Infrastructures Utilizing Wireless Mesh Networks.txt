@@ -1,0 +1,415 @@
+          Reliable and Low-Latency Communications
+              for Critical Infrastructures Utilizing
+                   Wireless Mesh Networks
+                        Ritayan Biswas∗ , Joonas Säe∗ , Juho Pirskanen† , and Jukka Lempiäinen∗
+   ∗ Faculty of Information Technology and Communication Sciences (ITC), Tampere University, 33720 Tampere, Finland
+
+                                 Email: {ritayan.biswas, joonas.sae, jukka.lempiainen}@tuni.fi
+                                           † Wirepas Ltd., 33270 Tampere, Finland.
+
+                                             Email: {juho.pirskanen}@wirepas.com
+
+
+
+   Abstract—The purpose of this paper is to evaluate the appli-     is envisioned that long-term evolution (LTE) and 5G net-
+cability of wireless mesh networks as a suitable alternative to     works can support such implementations based on different
+traditional mobile networks for the monitoring and protection       specifications. 3GPP incorporated mission-critical push-to-talk
+of critical infrastructures. Present-day mobile networks have
+to handle a large amount of data due to the increase in the         (MCPTT) for critical communications in LTE Release 13 [2].
+need for mobile broadband and the number of users. Therefore,          The purpose of this article is to evaluate the applicability
+monitoring critical infrastructures exerts an additional load       of wireless mesh networks for monitoring and protection of
+on the existing networks. Thus, the applicability of wireless       critical infrastructures as an alternative to traditional commer-
+mesh networks (operating at independent frequency bands) is         cial mobile networks for communicating outage information of
+investigated to determine if they are capable of protecting
+and monitoring critical infrastructures such as smart grids.        critical infrastructures such as smart grids. The coverage and
+The reliability and latency of optimally tuned wireless mesh        latency of mesh networks are studied based on the DECT-2020
+networks free of other network traffic are studied with the         new radio (DECT-2020 NR) standard [3]–[7]. The simulations
+help of simulations based on the DECT-2020 NR standard. It is       are carried out on a smart grid in a rural environment where
+observed that reliable communications can be realized, however,     a line-of-sight (LOS) connection is generally available for
+the end-to-end latency of the network increases with the number
+of hops and re-transmissions. The user plane latency varies         each hop. The effect of multiple hops and re-transmissions
+between 10.55 ms to 25.07 ms over five hops and between 15.55 ms    on the reliability and latency of the system is studied utilizing
+to 38.78 ms over eight hops based on the size of the packet.        simulations.
+Furthermore, there is a 1.2 to 2 times increment in the latency
+with each re-transmission. Therefore, a trade-off is necessary                               II. T HEORY
+to achieve ultra-reliable low-latency communications utilizing      A. Critical Infrastructures
+wireless mesh networks for monitoring and protection of critical
+infrastructures.                                                       Fundamental infrastructures provide a backbone to modern
+   Index Terms—Critical infrastructure, wireless mesh networks,     society, and the working of these underlying foundation blocks
+low-latency, reliable communications, URLLC                         enables the smooth and seamless operation of communities in
+                                                                    different parts of the world today. The essential components
+                      I. I NTRODUCTION                              among a variety of supporting foundation blocks are classified
+                                                                    as critical infrastructures. Level 1 infrastructures such as
+   Critical infrastructures are the fundamental building blocks     electricity networks, and mobile networks are categorized as
+of modern society. A few infrastructures that are of con-           the most significant and their orderly functioning is of utmost
+siderable importance are energy, water, healthcare, commu-          importance in the event of a disaster or disturbance scenario.
+nications, banking, and finance to name a few. The smooth              Disasters occur under unforeseen circumstances and are
+operation and proper functionality of these infrastructures can     caused due to natural or weather-related anomalies such as cy-
+be ensured by preventing significant outage times.                  clones, earthquakes, floods, and wildfires. Furthermore, man-
+   In general, the outage of certain critical infrastructures can   made disturbance scenarios can occur due to war, terrorist
+be catastrophic if not handled in a timely fashion. Typi-           or cyber-attacks, and accidents. The ramifications of these
+cally, mobile radio systems such as terrestrial trunked radio       disaster and disturbance scenarios are calamitous, and they
+(TETRA) and Tetrapol in Europe and Project 25 (P25) in              prohibit the orderly utilization of critical infrastructures. The
+Northern America were utilized to relay outage information          outages can have devastating effects, and governments utilize
+to different operators [1]. The trend of utilizing commercial       a lot of resources to minimize the outage time of these critical
+mobile networks has been accentuated by the requirement to          infrastructures.
+support state-of-the-art modern applications, smart devices,           Electrical networks are fundamentally critical infrastruc-
+and the need for high data rates for certain use cases. It          tures, as electricity is required to perform the majority of
+activities in modern society. Traditional electricity networks                                     RDFT
+                                                                                                                     Internet/network
+                                                                                                                       connectivity
+consist of generation, transmission, and distribution to end
+users. The transmission and distribution of electricity are
+particularly crucial because outages can greatly affect the end                        RDPT/FT             RDPT/FT
+
+
+users. However, state-of-the-art electricity networks or, smart
+grids can determine the direction in which the distribution                                      RDPT/FT                RDPT/FT
+occurs based on the requirement. Additionally, smart grids
+support a few advanced features, such as advanced monitoring
+                                                                                                              RDPT/FT             RDPT/FT
+and metering of the network [8]. Furthermore, to aid and
+minimize the time of the restoration process, remote-controlled
+switches are utilized [9], [10]. These switches and many other      Fig. 1. Network topology of RDs in a clustered tree wireless mesh network.
+sections of the electrical networks utilize mobile networks
+to establish a connection. The authors of [11] recommend
+ensuring power supply to mobile network base stations as            network topology for uplink data transfer [3]. The data is trans-
+an essential method to deal with significant outages of these       mitted to the next hop, and there can be multiple connection
+critical infrastructures.                                           points to the external network. A simplified topology of a
+                                                                    clustered tree wireless mesh network is shown in Fig. 1. The
+B. DECT-2020 New Radio                                              simulations in this work are performed utilizing RDs organized
+   DECT-2020 NR is a set of guidelines proposed by the in-          in the clustered tree wireless mesh network.
+ternational telecommunications union (ITU) as an unlicensed,           The RDs can operate as a fixed termination point (FT), a
+non-cellular 5G radio standard. The DECT-2020 NR standard           portable termination point (PT), or both FT and PT modes
+operates in the unlicensed 1.9 GHz carrier frequency band and       [3]. Generally, the RDs having a direct connection with the
+is intended to provide support for IoT technologies for massive     external network operate in the FT mode. Essentially, these
+machine-type communications (mMTC) [3]. This standard was           RDs regulate the radio resources and enable the RDs operating
+introduced by the ITU keeping in mind that in some specific         in the PT mode to connect with them and transfer data to the
+application scenarios, failure is not a viable option. These sce-   outside network. An RD operating in the PT mode can start
+narios include but are not restricted to critical infrastructures   operating in the FT mode after establishing a connection with
+for communities and a variety of operations in the automation       an RD operating in the FT mode [3]. Therefore, the network
+industry. Therefore, utilizing the DECT-2020 NR standard, a         can swiftly become scalable as the new RD is capable of
+standalone self-organizing network may be established that          handling more RDs.
+provides highly reliable and low-latency communications for a
+                                                                    C. Smart grid protection scenarios
+huge number of nodes or radio devices (RDs) [3]. In DECT-
+2020 NR, RDs operating in a mesh network are capable of                The protection of the smart grid network can be carried out
+communicating directly with each other to extend the range          in different ways such as optical fiber (FO), mesh, and cellular
+of communication.                                                   (5G) networks. Some of the common protection scenarios of
+   The wireless mesh network is a decentralized communica-          smart grids are illustrated in Fig. 2. The protection scenarios
+tion network where the RDs route traffic via single or multiple     can be classified as:
+hops. The decentralized nature of operation enables the RDs            • Mesh: The mesh-only scenario is shown in Fig. 2a.
+in the mesh network to autonomously select their operating                Communication outside the substation utilizes the mesh
+mode and optimize the connection accordingly. The RDs                     network by transferring data from one distribution trans-
+can alternate between high-performance low-latency mode                   former to another, essentially "jumping" across them,
+or extremely low-power mode depending on the use case.                    as illustrated by the blue lines in Fig. 2a. The mesh
+Additionally, the RDs are capable of transitioning between a              network spans between substations, creating a link be-
+transmission node, forwarding node, or destination node based             tween the LAN networks within these substations. This
+on the nature of the message being communicated [3]. This                 link could serve as an alternative connection for station
+enables reliable, robust, optimized, and scalable connectivity            communication and the supervision of remotely oper-
+between different RDs. Furthermore, wireless mesh networks                ated separators (depicted as open squares). Typically,
+are resilient and reliable because if there is a faulty RD, the           the average distance separating distribution substations
+rest of the RDs organize themselves to find the best possible             is approximately 1 km, though some variation may exist.
+route to a gateway [3].                                                   Additionally, substations often feature protective booths
+   Mesh networks may operate based on different types of                  to shield against adverse weather and vandalism, with the
+network topology depending upon the arrangement of the RDs.               added capability of providing electricity.
+Star and point-to-point networks are a special realization of          • FO and mesh: This scenario resembles the previous one,
+mesh networks. In this architecture, a centralized RD receives            but with communication between substations following a
+the data from the adjacent RD. However, following the DECT-               more traditional approach through a Wide Area Network
+2020 NR standard, the clustered tree mesh is the most optimal             (WAN), often implemented using optical fiber (depicted
+                       WAN                                          WAN                                           WAN
+             LAN                 LAN                       LAN                LAN                        LAN                 LAN
+
+                                                                                                                                               Distribution
+                                                                                                                                               Transformer
+                                                                                                                                               Sub-station
+                                                                                                                                                Remote-
+                                                                                                                                               controlled
+                                                                                                                       5G                      Separators
+
+
+
+
+                         (a)                                          (b)                                                   (c)
+Fig. 2. The different protection scenarios for smart grids. Fig. 2a illustrates the mesh-only protection scenario. In Fig. 2b, the protection scenario where FO
+and mesh networks are used is shown. Fig. 2c demonstrates the protection scenario using, FO, mesh, and 5G networks.
+
+
+
+     as red lines). In such cases, the mesh network is extended
+                                                                                                 PACKET                    SLOT,µ
+     only as far as necessary, particularly when it comes to                                    Nsymb   = P acketLength · Nsymb   ,                           (1)
+     Local Out-of-Service (LOM) protection for generators.
+     The conventional SCADA communication for substations                        where the P acketLength is defined based on the packet
+     and remote-controlled disconnectors is organized via                        length type in the physical header and specified based on the
+     the WAN network using optical fiber, and for remote-                        number of slots or sub-slots [6].
+     controlled disconnectors, it employs technologies like                         The DF length in terms of OFDM symbols is expressed as:
+     3G/4G, denoted by the green line. When the configuration
+                                                                                                     DF      PACKET    GI + STF
+     of the electrical network changes such that all generators                                     Nsymb = Nsymb   − Nsymb     ,                             (2)
+     are connected to the same medium voltage output, com-                                           GI + STF
+     munication for some generators must have the capability                     where the value of Nsymb     is 2 when µ is 1.
+     to "route" through the WAN network to another substation                       The number of DRS resource elements (NreDRS ) for a packet
+     and then proceed through the mesh network to reach the                      is expressed by,
+     generator. This occurs even if the electrical power supply                                                       β     j N PACKET k
+     for the generator does not originate from the substation                                                        NOCC      symb
+                                                                                                 NreDRS = NTX
+                                                                                                           eff
+                                                                                                               ·          ·             ,                     (3)
+     in question.                                                                                                     4        Nstep
+   • FO, mesh, and 5G: This represents a further extension of                             eff         β                           eff
+                                                                                 where NTX    is 1, NOCC is 56 and Nstep is 5 as NTX  ≤ 2.
+     the previous version. The concept here revolves around
+                                                                                   The number of resource elements for the physical data
+     the utilization of the 5G network in cases where, for
+                                                                                 channel (NrePDC ) is computed as:
+     various reasons, implementing a mesh network is either
+     not feasible or becomes cost-prohibitive.                                                                  β
+                                                                                              NrePDC = Nsymb
+                                                                                                        DF
+                                                                                                             · NOCC − NreDRS − NrePCC ,                       (4)
+          III. S IMULATION SETUP AND PARAMETERS                                  where the value of NrePCC is 98.
+A. Packet structure                                                                The maximum number of bits that can be carried by the
+                                                                                 PDC is calculated using Eq. 5,
+    The packet structure includes the synchronization training
+field (STF), the guard interval (GI), and the data field (DF) [5].                                  PDC
+                                                                                                   Nbits = ⌊NSS · NrePDC · Nbps · R⌋,                         (5)
+The STF is composed of either 7 or 9 periodic repetitions of
+the sequence. The transmission of the STF commences at the                       where NSS = 1 and represents the number of parallel spatial
+boundary of the transmission allocation. The GI at the end of                    streams, Nbps the bits per symbol having values of [2, 4], and
+the packet helps to avoid an overlap in adjacent TDMA time-                      R the coding rate having values of [ 21 , 43 ].
+slot transmissions. The DF contains the number of OFDM                                                                           TB
+                                                                                    Finally, the size of the transport block (Nbits ) is determined
+symbols with the corresponding cyclic prefix (CP). The length                    using Eq. 6,
+of the OFDM symbols is dependent on the sub-carrier scaling
+factor µ. The DF also transmits the demodulation reference                                             TB
+                                                                                                      Nbits = NM − (C + 1) × L,                               (6)
+signal (DRS), the physical control channel (PCC), and the
+physical data channel (PDC) [5]. In this work, the calculations                  where NM is calculated utilizing Eq. 7, C represents the
+for the packet structure are done for µ = 1.                                     transport block segmentation parameter and is calculated based
+    The transmission packet length in terms of OFDM symbols                      on Eq. 8, and L represents the CRC length having a value of
+is:                                                                              24.
+                              TABLE I
+  PACKET SIZE ( IN BITS ) BASED ON MCS. T RANSMISSION DURATION                          T1 = trd_tx + tduration + trd_rx ,            (10)
+                 CORRESPONDS TO THE PACKET SIZE .
+
+         Transmission duration     QPSK       QPSK    16-QAM
+                                                                      where the duration of trd_tx is 0.5 ms (for T1 ) which is a bit
+             (tduration , µs)      (1/2)      (3/4)     (1/2)         more than the duration of two sub-slots. The value of trd_rx is
+                208.33              32         56         88          one sub-slot or 0.2083 ms. The value of trd_rx is the same in
+                416.67              296        456       616          the subsequent calculations.
+                625.00              552        856      1128            The HARQ transmission duration (T2 ) is computed utilizing
+                833.33              824       1256      1672          Eq. 11,
+               1041.67             1096       1640      2168
+               1250.00             1352       2024      2680
+               1458.33             1608       2360      3192                    T2 = max(trd_tx , tbackoff ) + tHARQ + trd_rx ,       (11)
+               1666.67             1864       2744      3704
+                                                                      where the tbackoff represents the duration of time the system
+                                                                      needs to wait before the HARQ transmission can proceed. The
+                                                                      duration of the back-off time is set to 0.33 ms. The value of
+                                 j N PDC k                            the TX processing delay for T2 is 0.2083 ms. The same value
+                                    bits
+                      NM =                   × M,               (7)   is utilized for trd_tx in the subsequent calculations. The HARQ
+                                    M
+                               PDC               PDC
+                                                                      duration (tHARQ ) is the duration of one sub-slot or 0.2083 ms.
+where the value of M is 8 if Nbits ≤ 512, 16 if Nbits ≤                  Subsequently, the data re-transmission (T3 ) duration is com-
+             PDC
+1024, 32 if Nbits ≤ 2048 otherwise M is 64.                           puted utilizing Eq. 12,
+                            lN − Lm
+                               M
+                        C=             ,               (8)                      T3 = max(trd_tx , tbackoff ) + tduration + trd_rx ,   (12)
+                                Z
+where Z represents the maximum turbo encoder block size.              where the duration of tbackoff is 0.33 ms. Based on the MCS
+In this work, the value of Z is considered to be 2048.                and the transmission packet size the tduration is computed and
+  If NM ≤ Z then the transport block is unsegmented and               the values are summarized in Table I.
+Eq. 6 is modified to Eq. 9,                                              The one-way user plane latency without HARQ is calculated
+                                                                      by utilizing Eq. 13,
+                          TB
+                         Nbits = NM − L.                        (9)
+                                                                                           TUP = tsym + T1 + tack .                   (13)
+The size of the data packet (in bits) is calculated utilizing
+                                                                      If data re-transmission is necessary, the user plane latency is
+either Eq. 6 or Eq. 9 based on the modulation and coding
+                                                                      computed utilizing Eq. 14,
+schemes (MCS) and is summarized in Table I.
+
+B. User plane latency                                                            TUP = tsym + T1 + n × (T2 + T3 ) + tack ,            (14)
+   The user plane latency is computed depending on whether            where the tack term in Eq. 13 and Eq. 14 represents the duration
+the hybrid automatic repeat request (HARQ) is necessary or            of the acknowledgement. The duration of tack is one sub-slot or
+not. The utilization of HARQ enables the system to be more            0.2083 ms. The number of re-transmissions required is denoted
+robust and reliable. However, the HARQ feedback transmis-             by the parameter n, where n ≥ 0.
+sion and the time for the data re-transmission have to be taken          The computation of the user plane latency is performed
+into account when HARQ is necessary for the system [7].               utilizing parameters that can change and therefore modify the
+   The simulations are performed with the sub-carrier scaling         results. Thus, certain assumptions are made to present the
+factor (µ = 1) and the Fourier transform scaling factor               results coherently. Firstly, the data packet is not fragmented for
+(β = 1). Based on the DECT-2020 NR frame structure, 5                 transmission. Therefore, once the data transmission begins, the
+symbols can be transmitted in one sub-slot, and the time              entire packet is transmitted. From Table I, the smallest packet
+duration is evaluated to be 208.33 microseconds [5]. Therefore,       is transmitted over one slot or sub-slot, and the largest packet
+the minimum data packet transmission duration (tduration ) from       utilizes 4 slots/8 sub-slots. Secondly, the underlying principle
+Table I is 208.33 microseconds or 0.208 ms. The tduration of          for data transmission is the slotted ALOHA protocol. The
+each packet is summarized in Table I.                                 randomization is based on the DECT-2020 NR frame structure,
+   The symbol alignment time (tsym ) is a necessary parameter         where the data transmission can begin at any of the 48 sub-
+utilized in the calculation of the user plane latency. The value      slots. However, it is important to tune the parameters optimally
+of tsym is 0.5 times the length of the symbol, which for DECT-        and not wait for too many sub-slots for the data transmission.
+2020 NR systems is 0.0416 ms. Therefore, the value of tsym            This ensures there is no additional latency in the system due
+is 0.0208 ms. Additionally, the duration for the data transfer        to the random selection of the sub-slot. Additionally, the data
+(T1 ) is computed taking into account the TX processing delay         transmission can exceed the frame time (10 ms). Moreover, the
+(trd_tx ), RX processing delay (trd_rx ), and the transmission        messages generated for the protection of critical infrastructures
+duration (tduration ) utilizing Eq. 10,                               are transmitted over reserved channels (exempt from other
+                           TABLE II                                                                 TABLE IV
+M INIMUM USER PLANE LATENCY WITHOUT AND WITH HARQ BASED ON                 U SER PLANE LATENCY WITHOUT AND WITH HARQ BASED ON PACKET
+                PACKET SIZE OVER A SINGLE HOP.                                                 SIZE OVER FIVE HOPS .
+
+    Packet                                                                    Packet
+                32       296    552    824    1096   1352   1608   1864                    32     296     552     824     1096    1352    1608    1864
+  size (bits)                                                               size (bits)
+   Without                                                                   Without
+    HARQ        1.35     1.56   1.76   1.97   2.18   2.39   2.59   2.80       HARQ        5.10    6.14    7.18    8.22    9.26    10.31   11.31   12.36
+                                                                               (ms)
+     (ms)
+                                                                              HARQ
+    HARQ                                                                                  10.55   12.63   14.71   16.80   18.87   20.97   22.97   25.07
+                3.05     3.47   3.88   4.30   4.71   5.13   5.53   5.95        (ms)
+     (ms)
+
+
+                           TABLE III                                                                 TABLE V
+ U SER PLANE LATENCY WITHOUT AND WITH HARQ BASED ON PACKET                 U SER PLANE LATENCY WITHOUT AND WITH HARQ BASED ON PACKET
+                                                                                               SIZE OVER EIGHT HOPS .
+                    SIZE OVER A SINGLE HOP.
+
+                                                                              Packet
+    Packet                                                                                 32     296     552     824     1096    1352    1608    1864
+                32       296    552    824    1096   1352   1608   1864     size (bits)
+  size (bits)
+                                                                             Without
+   Without                                                                    HARQ        7.60    9.26    10.92   12.60   14.25   15.93   17.53   19.21
+    HARQ        1.77     1.97   2.18   2.39   2.60   2.81   3.01   3.22        (ms)
+     (ms)                                                                     HARQ
+                                                                                          15.55   18.87   22.20   25.55   28.86   32.22   35.42   38.78
+    HARQ                                                                       (ms)
+                3.88     4.30   4.72   5.13   5.55   5.97   6.37   6.79
+     (ms)
+
+
+                                                                          computations. This margin takes into account the added signal
+traffic) to optimize latency and other system parameters.
+                                                                          propagation loss, which may occur due to factors such as
+Finally, the MCS utilized in the simulations is QPSK with
+                                                                          blockage of the Fresnel zone. It was observed that, under these
+a coding rate of 1/2.
+                                                                          conditions, the achievable one-hop distance between two RDs
+                       IV. R ESULTS AND A NALYSIS                         positioned within LOS is 5.4 km when operating at a carrier
+   The latency for end-to-end communications is computed for              frequency of 1.9 GHz.
+different scenarios where single or multiple hops via RDs may                For each hop, the latency between the two RDs is calculated
+be necessary to transmit the data to the gateway for processing.          depending on whether the transmission starts immediately in
+Typically, in practical scenarios, one hop is insufficient as it          the first available sub-slot or if the system is configured with a
+does not offer a long enough distance to transfer the data to the         specific back-off duration before transmission can begin. The
+gateway. Therefore, in this work, the latency for one, five, and          back-off duration (tbackoff ), is set to 0.33 ms, which corresponds
+eight hops between the first RD and the gateway is computed               to a transmission delay of 2 sub-slots. Consequently, in this
+to provide an accurate estimation of the duration to transmit             scenario, data transmission initiates during the third sub-slot.
+the data.                                                                    As a result, the minimum user plane latency (in cases where
+   The calculation of end-to-end communication latency is                 there is no back-off) for various packet sizes can be found in
+performed for various scenarios where data transmission to                Table II. Similarly, the user plane latency when factoring in
+the gateway requires either a single hop or multiple hops                 the back-off duration is presented in Table III.
+through RDs. In practical situations, a single hop often falls               Table II reveals that the packet size indeed influences the
+short of covering the necessary distance for data transfer to the         duration of transmission. Furthermore, the latency doubles
+gateway. Consequently, in this study, the latency is computed             when HARQ transmissions are introduced. This outcome is
+for one, five, and eight hops between the initial RD and                  logical since HARQ transmissions enhance error resilience,
+the gateway. This comprehensive analysis provides a precise               albeit at the cost of longer transmission times in comparison
+estimate of the time required for data transmission.                      to non-HARQ transmissions.
+   The attainable communication range between RDs that                       Table III demonstrates that the introduction of a reason-
+have a Line of Sight (LOS) was determined using the Free                  able back-off time leads to an increase in data transmission
+Space Path Loss (FSPL) equation. It is assumed that the                   duration. This occurs because the system must delay data
+RDs employed for safeguarding and monitoring smart grids                  transmission to ensure synchronization between transmitting
+enjoy an unobstructed LOS connection with each other, often               and receiving RDs. However, the incorporation of a back-off
+positioned atop power lines. This positioning ensures that                time in such systems is justifiable, and subsequent calculations
+the RDs maintain a direct, obstacle-free LOS connection,                  account for this back-off duration.
+bypassing any irregularities related to the terrain.                         In real-world scenarios, multiple RDs play a role in trans-
+   The path loss value was calculated based on data from [4].             mitting data to the destination RD or gateway. Table IV
+In this calculation, it was considered that the maximum output            provides a summary of the user plane latency for a system
+power of a class I RD is 23 dBm, and the receiver sensitivity,            with five hops. It’s noteworthy that, akin to the single-hop
+with a bandwidth of 1.728 MHz, is −99.7 dBm. Additionally,                scenario, the packet size has a direct impact on the duration
+an extra margin of approximately 10 dB was factored into the              of data transmission. Additionally, it’s evident that for a given
+                            120
+                                                                                            hops had a substantial impact on end-to-end delay, with latency
+                                     n=0                                                    ranging from approximately 10.55 ms to 25.07 ms for five hops
+                                     n=1
+                            100
+                                     n=2                                                    and 15.55 ms to 38.78 ms for eight hops, depending on data
+                                     n=3
+                             80      n=4                                                    packet size. Furthermore, the overall system latency increased
+                                     n=5
+             Latency (ms)
+                                                                                            by around 1.2 to 2 times with each re-transmission. While
+                             60
+                                                                                            re-transmissions enhance system robustness, they introduce
+                             40                                                             delays between packet generation and delivery. To achieve
+                                                                                            low-latency communications with a 99 % probability, a trade-
+                             20
+                                                                                            off must be struck. This can be accomplished by minimizing
+                              0                                                             the number of re-transmissions required to deliver the packet
+                               32   296    552      824      1096      1352   1608   1864
+                                                 Packet size (in bits)                      to the gateway. In comparison with 5G systems, wireless mesh
+                                                                                            networks demonstrated a realistic end-to-end delay for packet
+Fig. 3. User plane latency over eight hops as a function of the packet size                 delivery. Therefore, it can be concluded that wireless mesh
+and the number of re-transmissions (n).
+                                                                                            networks possess the capability to effectively contribute to the
+                                                                                            protection and monitoring of critical infrastructures such as
+packet size, the transmission duration increases approximately                              smart grids.
+by a factor of around 3.5–4 times when data is transmitted
+                                                                                                                         R EFERENCES
+over five hops.
+   Table V provides a summary of the user plane latency for a                                [1] A. Kumbhar, F. Koohifar, I. Güvenç, and B. Mueller, “A survey on
+                                                                                                 legacy and emerging technologies for public safety communications,”
+system with eight hops, categorized by packet size. Notably,                                     IEEE Communications Surveys and Tutorials, vol. 19, no. 1, pp. 97–
+when compared to a single-hop scenario, it’s observed that the                                   124, 2017.
+end-to-end latency increases by a factor ranging from 4 to 5.7                               [2] S. Mukherjee and C. Beard, “A framework for ultra-reliable low latency
+                                                                                                 mission-critical communication,” in 2017 Wireless Telecommunications
+times when data is transmitted over eight hops.                                                  Symposium (WTS), 2017, pp. 1–5.
+   The simulations mentioned were conducted under the as-                                    [3] European Telecommunications Standards Institute (ETSI), ETSI
+sumption of a single re-transmission (n = 1). As expected,                                       TS 103 636-1 V1.4.1 (2023-01), DECT-2020 New Radio (NR);
+                                                                                                 Part 1: Overview; Release 1, 01 2023. [Online]. Avail-
+latency increases as the number of re-transmissions rises.                                       able: https://www.etsi.org/deliver/etsi_ts/103600_103699/10363601/01.
+Fig. 3 illustrates the latency, categorized by the number of re-                                 04.01_60/ts_10363601v010401p.pdf
+transmissions, for each packet size over eight hops. Notably,                                [4] ——, ETSI TS 103 636-2 V1.4.1 (2023-01), DECT-2020 New Radio
+                                                                                                 (NR); Part 2: Radio reception and transmission requirements; Release
+for a given packet size, latency doubles during the first re-                                    1, 01 2023. [Online]. Available: https://www.etsi.org/deliver/etsi_ts/
+transmission (n = 1). In contrast, for the fifth re-transmission                                 103600_103699/10363602/01.04.01_60/ts_10363602v010401p.pdf
+(n = 5), the latency increases by approximately 1.2 times                                    [5] ——, ETSI TS 103 636-3 V1.4.1 (2023-01), DECT-2020 New
+                                                                                                 Radio (NR); Part 3: Physical layer; Release 1, 01 2023.
+compared to the fourth re-transmission (n = 4). Thus, the                                        [Online]. Available: https://www.etsi.org/deliver/etsi_ts/103600_103699/
+overall end-to-end latency of the system is generally influenced                                 10363603/01.04.01_60/ts_10363603v010401p.pdf
+by the number of re-transmissions required to transmit data                                  [6] ——, ETSI TS 103 636-4 V1.4.1 (2023-01), DECT-2020 New
+                                                                                                 Radio (NR); Part 4: MAC layer; Release 1, 01 2023.
+from the initial RD to the gateway.                                                              [Online]. Available: https://www.etsi.org/deliver/etsi_ts/103600_103699/
+   Moreover, the URLLC requirement of ETSI specifications                                        10363604/01.04.01_60/ts_10363604v010401p.pdf
+states that the target user plane latency in 5G systems is 0.5 ms                            [7] ——, ETSI TR 103 810 V1.1.1 (2021-11), ETSI Evaluation Group;
+                                                                                                 Final Evaluation Report on DECT-2020 NR, 11 2021. [Online].
+in uplink and downlink, respectively [12]. Furthermore, for                                      Available: https://www.etsi.org/deliver/etsi_tr/103800_103899/103810/
+infrequent small packets, 5G systems have a latency of 10 ms                                     01.01.01_60/tr_103810v010101p.pdf
+for a packet size of 160 bits without HARQ re-transmissions                                  [8] CEN/CENELEC/ETSI Joint Working Group on Standards for Smart
+                                                                                                 Grids, Final report of the CEN/CENELEC/ETSI Joint Working Group on
+[12]. Therefore, it can be inferred that wireless mesh networks                                  Standards for Smart Grids, May 2011. [Online]. Available: https://www.
+provide similar latency values in comparison to present 5G                                       etsi.org/images/files/Report_CENCLCETSI_Standards_Smart_Grids.pdf
+systems depending on the use case of protection or monitoring                                [9] D. P. Bernardon, V. J. Garcia, M. Sperandio, J. L. Russi, E. F. B.
+                                                                                                 Daza, and L. Comassetto, “Automatic re-establishment of power supply
+of the network.                                                                                  in distribution systems using smart grid concepts,” in 2010 IEEE/PES
+                                                                                                 Transmission and Distribution Conference and Exposition: Latin Amer-
+                                          V. C ONCLUSION                                         ica (T & D-LA), 2010, pp. 44–49.
+                                                                                            [10] F. Edström and L. Söder, “Impact of remote control failure on power
+   The objective of this article was to assess the suitability of                                system restoration time,” in 2010 IEEE 11th International Conference
+wireless mesh networks for protecting and monitoring critical                                    on Probabilistic Methods Applied to Power Systems, 2010, pp. 343–347.
+infrastructures like smart grids. This evaluation was conducted                             [11] S. Horsmanheimo, N. Maskey, L. Tuomimäki, H. Kokkoniemi-
+                                                                                                 Tarkkanen, and P. Savolainen, “Evaluation of interdependencies between
+by analyzing the end-to-end latency of wireless mesh net-                                        mobile communication and electricity distribution networks in fault
+works, following the DECT-2020 NR standard. The study re-                                        scenarios,” in 2013 IEEE Innovative Smart Grid Technologies-Asia
+vealed that a distance of approximately 5 km could be covered                                    (ISGT Asia), 2013, pp. 1–6.
+                                                                                            [12] European Telecommunications Standards Institute (ETSI), ETSI TR 138
+per hop for RDs situated within LOS, which could be valuable                                     913 V14.3.0 (2017-10), 5G; Study on scenarios and requirements for
+in decentralized local communication, particularly in protec-                                    next-generation access technologies (3GPP TR 38.913 version 14.3.0
+tion scenarios. It was evident that system latency increased                                     Release 14), 01 2023. [Online]. Available: https://www.etsi.org/deliver/
+                                                                                                 etsi_tr/138900_138999/138913/14.03.00_60/tr_138913v140300p.pdf
+with the size of data packets. Additionally, the number of
+

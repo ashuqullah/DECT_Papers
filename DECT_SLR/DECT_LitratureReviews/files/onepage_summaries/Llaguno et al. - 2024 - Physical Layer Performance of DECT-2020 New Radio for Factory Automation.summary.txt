@@ -1,0 +1,61 @@
+Title: Physical Layer Performance of DECT-2020 New
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Derived from the work at IMT-2020, the standard DECT2020-NR provides non-
+cellular communication solutions for applications requiring strict latency and
+reliability for flexible and adaptive deployments. Examples include industrial
+and audiovisual communications. This work-in-progress analyzes the physical
+layer performance of DECT2020-NR in an industrial environment. Different types
+of communication links are considered and various propagation channel conditions
+and system configurations are simulated. The results obtained confirm the need
+for a MAC access layer with link control techniques to ensure the reliability
+requirements of industrial applications.
+
+Approach and methods:
+of Internet technologies into industry. Thus, the performance of radio
+communication systems in automation applications is challenging. In particular,
+in industrial environments, with many metal surfaces and moving objects, are
+significantly demanding for wireless transmissions. The large fluctuation in the
+quality of wireless transmission channels compared to wired ones (e.g., high
+endto-end latency and reduced reliability) raises the necessity to address new
+technologies and techniques to enhance and ensure the required-by-industry
+network quality. In addition to this new paradigm, Internet of Things (IoT)
+applied to the industry was transformed into Industrial Internet of Things
+(IIoT). IIoT represents the use of IoT in manufacturing [2], [3]. It can be
+defined as the development of connected devices that provide sensing and
+processing capability. Currently, on the factory area, wired connections provide
+highly reliable but costly and physically-restrictive connectivity. Wireless
+connectivity, however, offers many benefits over wired solutions. First, lower
+expenditures and decreased long-term maintenance costs can be achieved with
+wireless solutions by the elimination of conduit and cable. Second, wireless
+connections can be used in otherwise impractical locations, using low-power
+monitoring devices, thus eliminating the difficulties inherent in physically
+routing cables. Third, wireless communication allows quick mobility and
+reconfigurability; with wireless communication,
+
+Key findings:
+1, European Telecommunications Standards Institute TS 103 636-3 V1.4.1 (2023-01)
+ed., 2023. [8] ——, DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,
+European Telecommunications Standards Institute TS 103 636-4 V1.4.1 (2023-01)
+ed., 2023. [9] ——, DECT-2020 New Radio (NR); Part 5: DLC and Convergence layers;
+Release 1, European Telecommunications Standards Institute TS 103 636-5 V1.4.1
+(2023-01) ed., 2023. [10] R. Bajracharya, R. Shrestha, and H. Jung, “Future is
+unlicensed: Private 5g unlicensed network for connecting industries of future,”
+Sensors, vol. 20, 05 2020. [11] P. Series, “Propagation data and prediction
+methods for the planning of indoor radiocommunication systems and radio local
+area networks in the frequency range 300 mhz to 450 ghz,” Electronic
+Publication: Geneva, Switzerland, 2019. [12] Y. Ai, M. Cheffena, and Q. Li,
+“Power delay profile analysis and modeling of industrial indoor channels,” in
+2015 9th european conference on antennas and propagation (eucap). IEEE, 2015,
+pp. 1–5. [13] B. Domazetović, E. Kočan, and A. Mihovska, “Performance
+evaluation of ieee 802.11 ah systems,” in 2016 24th Telecommunications Forum
+(TELFOR). IEEE, 2016, pp. 1–4. Authorized licensed use limited to: Hochschule
+Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:44:12
+UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

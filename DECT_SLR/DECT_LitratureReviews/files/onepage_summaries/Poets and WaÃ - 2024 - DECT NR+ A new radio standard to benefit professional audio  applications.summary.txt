@@ -1,0 +1,78 @@
+Title: DECT NR+: A new radio standard to benefit professional audio applications
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+sion. Moreover, the system should not compromise on audio quality and offer a
+flat frequency response and full dynamic range. On the RF side, a wireless
+microphone system is challenged by multipath propagation, frequencyselective
+fading, and multiple sources of interference. In case of belt-worn transmitters,
+the RF performance is also adversely impacted by the human body which causes a
+loss in signal power. In spite of all this, a typical PMSE scenario requires a
+wireless microphone system to cover an area of operation of 100 m2 [4]. Finally,
+given the scarcity of frequency resources, it is crucial that the spectrum is
+utilized efficiently and in compliance with local regulations. DECT-2020 New
+Radio (marketed as NR+ by the DECT Forum) is an ETSI-developed Radio Interface
+Technology (RIT) that meets the IMT-2020 requirements for UltraReliable Low
+Latency (URLLC) and massive Machine Type Communication (mMTC). Therefore, in
+late 2021, it was approved by the ITU-R to be included in the 5G family of
+standards. Constituting the world’s first non-cellular 5G technology, DECT NR+
+targets nomadic wireless applications that can be deployed anywhere by anyone at
+any time. Along with the option to operate in the license-exempt 1.9 GHz DECT
+band, the meshnetworking capability of NR+ makes the technology a compelling
+choice for Small and Medium-sized Enterprises (SMEs) and the Program Making and
+Special Events (PMSE) industry. Wireless microphone systems comprise a
+transmission chain that is either fully analog or digital, or makes use of both
+analog and digital technology. Such hybrid systems employ digital audio signal
+processing but rely on analog modulation. In analog systems, which commonly
+employ frequency modulation (FM), the amplitude of the audio signal is used to
+vary the instantaneous frequency of the carrier wave. Carson’s rule states that
+the bandwidth requirement BT of an FM signal is approximately equal to twice the
+sum of the peak frequency deviation ∆f and the highest modulating frequency fm
+[1]: In this paper, we first give an
+
+Approach and methods:
+to PMSE and its core application of wireless microphone systems. We then provide
+an overview of DECT NR+ and show how it can benefit wireless professional audio
+applications. Finally, we report on our activities within the Franco-German
+joint research project MERCI which incorporates companies from the media and
+event sector to work towards a shared vision of delivering fully immersive
+audio-visual experiences through DECT NR+ cooperative networks. As part of the
+project, we are developing a Software-Defined Radio (SDR) platform to evaluate
+and demonstrate the technology for the conceived use cases. (1) BT = 2(∆f + fm
+). The frequency deviation in turn is calculated as the product of the
+sensitivity of the frequency modulator and the amplitude of the modulating
+signal. Consequently, increasing the bandwidth allows a higher deviation from
+the carrier center frequency and therefore leads to an improvement in dynamic
+range. For this reason, analog wireless microphone systems usually employ
+wideband FM, where ∆f fm . However, in practice the bandwidth available to an FM
+system is constrained. As a solution, a technique known as companding is used.
+To accommodate the limited dynamic range of the channel, the modulating signal
+is compressed at the transmitter and then
+
+Key findings:
+deliverable on use cases, requirements and demonstration scenarios). Summary and
+perspectives This work gave an overview of the new radio standard DECT-2020 NR
+and how it benefits professional au- 55 Hong Liu et al. “Overview of Wireless
+Microphones—Part I: System and Technologies”. In: IEEE Transactions on
+Broadcasting 61.3 (2015), pp. 494– 504. doi: 10.1109/TBC.2015.2459661. Hong Liu
+et al. “Overview of Wireless Microphones—Part II: Frequency Bands, Interference,
+and Regulation”. In: IEEE Transactions on Broadcasting 61.3 (2015), pp. 505–519.
+doi: 10.1109/TBC.2015. 2459662. L.B. Lopes. “On the radio link performance of
+the Digital European Cordless Telecommunications (DECT) system”. In:
+[Proceedings] GLOBECOM ’90: IEEE Global Telecommunications Conference and
+Exhibition. 1990, 1013–1017 vol.2. doi: 10 . 1109 / GLOCOM.1990.116655. Jens
+Pilz et al. “Professional Live Audio Production: A Highly Synchronized Use Case
+for 5G URLLC Systems”. In: IEEE Network 32.2 (2018), pp. 85–91. doi:
+10.1109/MNET.2018.1700230. Mattes Waßmann et al. “Performance of DECT2020 NR in
+an industrial environment for varying RF bands”. In: 2024 Joint European
+Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit).
+Accepted for publication. 2024. Andreas Wilzeck. Insights into Frequency
+Coordination of Broadband Wireless Multi-Channel Audio Systems (WMAS) and
+Narrowband Wireless Equipment. Tech. rep. Sennheiser electronic SE & Co. KG,
+2023.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

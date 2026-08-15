@@ -1,0 +1,343 @@
+\documentclass[conference]{IEEEtran}
+%\IEEEoverridecommandlockouts
+%\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{diffcoeff}
+\usepackage{isomath}
+\usepackage{siunitx}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{tikz}
+\newlength\imagewidth
+\newlength\imagescale
+\usepackage[nonumberlist,acronym,nomain]{glossaries}
+\usepackage{cleveref}
+%\usepackage{caption}
+\usepackage[caption=false,font=footnotesize]{subfig}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+
+
+\floatstyle{plain}
+% \usepackage[a4paper, total={6in, 8in}, left=1.8cm, right=1.8cm, top=1.8cm, bottom=2.9cm]{geometry}
+% \usepackage{geometry}
+%  \geometry{ a4paper, total={210mm,297mm}, left=17mm, right=17mm, top=22mm, bottom=32mm }
+\setlength{\columnsep}{0.25in}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\DeclareMathOperator{\csch}{csch}
+\newcommand{\e}{\ensuremath{\text{e}}}
+\newcommand{\infint}{\ensuremath{\int_{\infty}^{\infty}}}
+\newcommand{\hpoly}[2][n]{\ensuremath{\exp\left\{-\frac{{#2}^2}{2}\right\} H_{#1}\left(#2\right)}}
+\newcommand{\hpolye}[2][n]{\ensuremath{\e^{-\frac{{#2}^2}{2}} H_{#1}\left(#2\right)}}
+\newcommand{\hpolyp}[2][n]{\ensuremath{\exp\left\{-\frac{\left(#2\right)^2}{2}\right\} H_{#1}\left(#2\right)}}
+\newcommand{\F}{\ensuremath{\mathcal{F}}}
+
+\loadglsentries{acronyms.tex}
+    
+\begin{document}
+
+\title{Measurement-Driven Latency Analysis of Uplink/Downlink Scheduling in DECT-2020 NR
+% {\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
+% should not be used}
+% \thanks{Identify applicable funding agency here. If none, delete this.}
+ }
+
+\author{\IEEEauthorblockN{Ashuqullah Alizai}
+\IEEEauthorblockA{\textit{Aalen University of Applied Sciences} \\
+Aalen, Germany \\
+ashuqullah.alizai@hs-aalen.de\\ ORCID 0000-0002-7625-2330}
+\and
+\IEEEauthorblockN{Mohammad Reza Mousavi}
+\IEEEauthorblockA{\textit{Aalen University of Applied Sciences} \\
+Aalen, Germany \\
+mohammad.mousavi@hs-aalen.de\\ ORCID 0000-0003-2521-2651}
+\and
+\IEEEauthorblockN{Stephan Ludwig}
+\IEEEauthorblockA{\textit{Aalen University of Applied Sciences} \\
+Aalen, Germany \\
+stephan.ludwig@hs-aalen.de\\ORCID 0000-0002-0233-1706}
+}
+
+\maketitle
+
+\begin{abstract}
+
+
+\gls{nr} is an \gls{etsi}-standardized non-cellular radio technology targeting low-latency communication in private and enterprise-grade wireless networks. 
+While prior experimental studies have reported promising end-to-end latency figures, the contribution of \gls{ul}/\gls{dl} scheduling behavior and hardware-induced \gls{rx}-to-\gls{tx} (\gls{rx}--\gls{tx}) turnaround to the overall latency budget has not been thoroughly quantified in practical implementations.
+
+In this work, we present a measurement-driven latency analysis of \gls{ul}/\gls{dl} scheduling behavior in \gls{nr} star networks. Using \gls{dso} measurements on a single-chip \gls{nr} platform, complemented by internal modem timing analysis, we characterize the \gls{rx}--\gls{tx} turnaround delay associated with \gls{ul}/\gls{dl} alternation and evaluate its impact on end-to-end latency under different traffic and scheduling scenarios. The results show that, for short-packet and request--response traffic, turnaround-induced latency can constitute a significant portion of the total delay and is strongly influenced by scheduling decisions. Based on these observations, we discuss the limitations of scheduling-based mitigation on single-transceiver hardware and outline architectural directions, such as \gls{ul}/\gls{dl} channel separation, to further reduce latency in future \gls{nr} systems.
+\end{abstract}
+
+
+
+
+
+\begin{IEEEkeywords}
+\gls{nr}, latency analysis, \gls{ul}/\gls{dl} scheduling, \gls{tdd} systems,  \gls{rx}-- \gls{tx} turnaround, star topology, measurement-based evaluation
+\end{IEEEkeywords}
+
+\glsresetall
+
+\section{Introduction}
+% Motivation, problem statement, contributions
+\gls{nr} is a non-cellular 5G radio technology standardized by ETSI to support \gls{urllc} and \gls{mmtc} use cases in private and industrial wireless networks \cite{TS1036361,kovalchukovDECT2020NewRadio2022a,holmaDECT2020NextStep2021}. 
+It operates in harmonized, license-exempt spectrum allocated for \gls{nr}-compliant devices, enabling predictable interference conditions without requiring individual operator licenses \cite{samuylovEmpoweringNearURLLCIoT2025,durreDECT2020NRProfessional2024a}.
+
+Recent experimental studies have demonstrated that \gls{nr} can achieve sub-millisecond to few-millisecond end-to-end latency under favorable conditions \cite{mudriievskyiCHEAP5GDECT2024,maliatsosEvaluationIMT2020Candidate2022,durreDECT2020NRProfessional2024a}. These results confirm the suitability of \gls{nr} for latency-sensitive applications such as industrial automation, tactile Internet services, and real-time audio transmission. However, most existing evaluations report latency as an aggregate end-to-end metric and provide limited insight into the contribution of underlying radio operation and scheduling behavior.
+
+In practical \gls{nr} implementations, cost and power constraints often motivate the use of a single transceiver chain in which \gls{ul} and \gls{dl} communication share the same \gls{rf} and baseband hardware \cite{TS1036362}. Since \gls{nr} relies on \gls{tdd}, \gls{ul} and \gls{dl} transmissions cannot occur simultaneously, and each change in transmission direction requires a finite transceiver reconfiguration interval. Although the standard defines slot-based guard periods to support \gls{ul}/\gls{dl} transitions \cite{TS1036362}, the resulting \gls{rx}--\gls{tx} turnaround time is implementation-dependent and may introduce non-negligible latency, particularly for short-packet and request--response traffic patterns.
+
+Although scheduling and \gls{ul}/\gls{dl} coordination have been extensively studied in \gls{tdd}-based cellular systems to support \gls{urllc} traffic \cite{esswieQuasiDynamicFrameCoordination2019}, comparatively little attention has been given to implementation-level turnaround effects in \gls{nr} systems. Existing \gls{nr} studies primarily rely on simulations or coarse-grained measurements and rarely decompose the contribution of RX--TX switching delay or its interaction with scheduling behavior \cite{glazkovImprovingNearURLLCServices2025,andreevDECT2020NRMesh2023}. As a result, the extent to which observed latency is fundamentally limited by hardware constraints rather than scheduling decisions remains insufficiently characterized.
+
+This paper presents a measurement-driven analysis of \gls{ul}/\gls{dl} latency in \gls{nr} star networks. Using \gls{dso}-based measurements on a single-chip \gls{nr} platform, complemented by internal modem timing analysis, we characterize the \gls{rx}--\gls{tx} turnaround time and evaluate its contribution to end-to-end latency. We further analyze how scheduling behavior influences the frequency and accumulation of direction switching and discuss the extent to which scheduling-level optimizations can mitigate turnaround-induced latency. The goal of this work is not to propose a new scheduling algorithm, but to provide empirical insight into latency bottlenecks arising from implementation-specific hardware and firmware constraints that are not mandated by the \gls{nr} standard.
+
+%=============================Section Background====================================================%
+
+\section{Background and Related Work}
+
+\subsection{\gls{nr} Standardization and Design Goals}
+ The \gls{etsi} standards define a \gls{tdd} physical layer with a slot-based frame structure and guard periods to support transitions between \gls{ul} and \gls{dl} operation~\cite{TS1036361,TS1036362}. While these mechanisms are specified at the protocol level, implementation aspects such as transceiver reconfiguration latency and scheduling behavior are intentionally left open to vendors.
+
+\subsection{Experimental Evaluation of \gls{nr} Latency}
+
+Recent experimental studies have demonstrated that \gls{nr} is capable of achieving low end-to-end latency under favorable conditions. Practical evaluations in the context of professional live audio transmission report sub-millisecond to few-millisecond latency using \gls{nr} hardware \cite{durreDECT2020NRProfessional2024a}. Similarly, work targeting tactile Internet and human-in-the-loop applications highlights the suitability of \gls{nr} for latency-critical communication and emphasizes its potential for \gls{urllc}-like operation \cite{mudriievskyiCHEAP5GDECT2024}.
+
+Additional experimental and link-level evaluations further report low round-trip times and reliable communication performance \cite{haqueDECT2020NRLink2025,maliatsosEvaluationIMT2020Candidate2022}. These studies provide valuable insight into achievable latency figures and overall system behavior. However, latency is typically reported as an aggregate metric, without detailed decomposition into scheduling delay, transceiver turnaround time, or other implementation-level contributors.
+
+
+\subsection{Scheduling and \gls{ul}/\gls{dl} Coordination}
+
+\gls{ul} and \gls{dl} scheduling have been widely studied in \gls{tdd}-based wireless systems, particularly in the context of 5G cellular networks supporting  \gls{urllc} traffic. Prior work shows that frame coordination and scheduling decisions play a crucial role in minimizing latency and avoiding excessive direction switching overhead \cite{esswieQuasiDynamicFrameCoordination2019}. These studies demonstrate that even when physical-layer transmission times are short, scheduling-induced delays can dominate end-to-end latency.
+
+In \gls{nr} systems, scheduling and resource allocation are intentionally flexible to support a wide range of deployment scenarios \cite{TS1036364}. System-level \gls{nr} studies primarily focus on routing, scalability, and multi-hop performance in mesh topologies \cite{samuylovPerformanceMACLayer2024a,glazkovImprovingNearURLLCServices2025}. While these works address important networking aspects, they do not explicitly analyze the impact of \gls{ul}/\gls{dl} alternation and transceiver turnaround on latency in star-based or single-hop deployments.
+
+
+
+
+%=============================Section System Model and Experimental Setup====================================================%
+
+\section{System Model and Experimental Setup}
+This section describes the considered system model, network topology, and hardware assumptions used throughout this work. The focus is on a practical industrial deployment of \gls{nr}, where a central controller coordinates latency-sensitive sensor and actuator traffic.
+
+\subsection{Industrial Sensor--Actuator Star Topology}
+
+We consider an industrial sensor--actuator network organized in a star topology, as illustrated in Fig.~\ref{fig:system_model}. The network consists of a \gls{plc} acting as the \gls{nr} \gls{ftnode}, and multiple \gls{ptnode} attached to sensors (S1--S4) and actuators (A1--A4). All wireless communication is coordinated by the \gls{ftnode}, and direct communication between \glspl{ptnode} is not supported.
+
+Sensor \glspl{ptnode} periodically or event-wise transmit measurement data to the \gls{plc} in the \gls{ul} direction, while actuator \glspl{ptnode} receive control commands from the \gls{plc} in the \gls{dl} direction.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\linewidth]{SandAC.png}
+\caption{Industrial sensor--actuator communication model using a \gls{nr} star topology. 
+Sensors (S1--S4) transmit data to a central \gls{plc} in the \gls{ul}, while actuators (A1--A4) receive commands in the \gls{dl}. }
+\label{fig:system_model}
+\end{figure}
+
+\subsection{Duplexing and Communication Model}
+
+\gls{nr} operates using \gls{tdd}, in which \gls{ul} and \gls{dl} transmissions share the same frequency resources and are separated in time. As a result, the system alternates between \gls{ul}-oriented phases, dominated by sensor data transmissions, and \gls{dl}-oriented phases, dominated by actuator command delivery.
+
+In the considered system model, the \gls{plc} /\gls{ftnode} cannot transmit and receive simultaneously. Instead, it switches between  \gls{rx} and \gls{tx} states depending on the current scheduling decision. Guard intervals are used to support these transitions; however, the duration of the \gls{rx}--\gls{tx} switching process is implementation-dependent and not explicitly defined by the \gls{nr} standard.
+
+
+\subsection{Scheduling Scope and Latency Components}
+
+This work does not assume a specific scheduling algorithm; instead, it analyzes the observable scheduling behavior and its interaction with \gls{rx}--\gls{tx} switching under different \gls{ul}/\gls{dl} transmission scenarios. Higher-layer protocols, multi-hop routing, and mesh networking are outside the scope of this study.
+
+Based on the above assumptions, the end-to-end latency experienced by sensor and actuator traffic can be decomposed into three main components: (i) scheduling and queuing delay at the \gls{mac} layer, (ii) \gls{rx}--\gls{tx} turnaround delay caused by transceiver reconfiguration, and (iii) physical-layer transmission time. The primary focus of this paper is on quantifying the turnaround-related component and evaluating how \gls{ul}/\gls{dl} scheduling decisions influence its impact on latency.
+
+
+\subsection{Experimental Setup and Hardware Platform}
+
+Fig.~\ref{fig:setup} shows the complete laboratory measurement setup used in this study. Experiments were conducted using two \gls{nr} nodes based on the Nordic Semiconductor nRF9151 system-on-chip. One node was configured as the \gls{nr} (\gls{ft}), acting as the central controller, while the other node was configured as a  (\gls{pt}). The nRF9151 integrates the radio-frequency front-end, baseband processing, and protocol stack on a single device.
+
+In this platform, transmission and reception share a single RF transceiver chain, preventing simultaneous \gls{rx} and \gls{tx} operation. Consequently, each transition between \gls{ul} and \gls{dl} communication requires a hardware and firmware reconfiguration of the transceiver, resulting in a finite \gls{rx}--\gls{tx} turnaround delay. This delay is influenced by the internal radio state machine, firmware processing, and timing alignment with the \gls{nr} frame structure.
+
+To measure this turnaround delay, GPIO timing markers generated by the firmware were captured using a \gls{dso}. During the measurements, the LTE/\gls{nr} \gls{rf} ports were connected to laboratory instruments to monitor \gls{rf} activity and, in some runs, to provide a controlled termination. As a result, radiated power was strongly attenuated, and the two nodes communicated only at very short range, primarily via leakage coupling around the \gls{rf} connectors and nearby cables. The setup was designed to study timing and scheduling effects rather than coverage or link-budget performance.
+
+The nodes were operated using the \texttt{dect\_shell} \gls{nr} reference application with minimal instrumentation for timing extraction.
+
+\begin{figure}[t] \centering \includegraphics[width=1\linewidth]{main_setup.jpg} \caption{Laboratory setup for measuring \gls{rx}–\gls{tx} turnaround in DECT-2020 NR using two nRF9151 nodes and GPIO timing markers captured by a \gls{dso}.} \label{fig:setup} \end{figure}
+
+\subsection{Instrumentation and Timing Markers}
+
+To obtain ground-truth timing measurements, GPIO signals were generated by the firmware to indicate key radio events. Specifically, GPIO markers were asserted upon completion of reception and upon initiation of transmission at the \gls{ft}. These signals were connected to a \gls{dso}, enabling direct measurement of the  \gls{rx}-- \gls{tx} turnaround delay.
+
+In addition to external measurements, internal modem timing information was collected using firmware-accessible timers provided by the \gls{nr} modem. These timers report operation latencies in internal modem ticks and provide insight into radio state transitions and internal processing behavior.
+
+
+\subsection{Measurement Procedure}
+
+Measurements were performed under controlled conditions with minimal background traffic. The \gls{ft} and \gls{pt} exchanged \gls{ul} and \gls{dl} traffic according to predefined scheduling patterns. For each experiment, multiple  \gls{rx}-- \gls{tx} transitions were captured to verify repeatability and consistency. The measured turnaround delay was extracted as the time difference between the  \gls{rx} completion marker and the  \gls{tx} start marker observed on the \gls{dso}.
+
+
+%=============================Measurement Results and Scheduling Impact====================================================%
+
+
+
+\section{Measurement Results and Scheduling Impact}
+
+This section analyzes how \gls{ul} scheduling behavior interacts with the measured \gls{rx}-- \gls{tx} turnaround delay and how this interaction affects end-to-end latency.
+
+\begin{figure*}[t]
+\centering
+\subfloat[Scenario~1: Sequential UL scheduling]{%
+  \includegraphics[width=0.48\textwidth]{scenario1.jpg}}
+\hfill
+\subfloat[Scenario~2: Grouped UL scheduling]{%
+  \includegraphics[width=0.48\textwidth]{scenario2.jpg}}
+
+\vspace{0.3em}
+
+\subfloat[Measured latency for Scenario~1]{%
+  \includegraphics[width=0.48\textwidth]{s1graph.jpg}}
+\hfill
+\subfloat[Measured latency for Scenario~2]{%
+  \includegraphics[width=0.48\textwidth]{s2graph.jpg}}
+
+\caption{\gls{ul} scheduling scenarios and their impact on turnaround-induced latency. 
+(a) Sequential \gls{ul} transmissions with acknowledgments after each packet. 
+(b) Grouped \gls{ul} transmissions with acknowledgments after a batch. 
+(c) Measured latency versus number of \gls{ul} transmissions for Scenario~1. 
+(d) Measured latency versus number of \gls{ul} transmissions for Scenario~2.}
+\label{fig:scheduling_latency}
+\end{figure*}
+\subsection{Scheduling Scenarios}
+
+To analyze the impact of scheduling on latency, two representative \gls{ul}-oriented scheduling scenarios are considered. In Scenario~1, \gls{ul} transmissions are scheduled sequentially across frames, with each \gls{ul} transmission followed by an acknowledgment in the \gls{dl} direction. This results in frequent \gls{ul}/\gls{dl} alternation and repeated \gls{rx}--\gls{tx} turnaround events.
+
+In Scenario~2, multiple \gls{ul} transmissions are grouped within a single frame to amortize scheduling overhead. While this reduces frame-level coordination overhead, acknowledgment handling still requires repeated \gls{rx}--\gls{tx} switching, such that turnaround-induced latency remains dominant.
+
+Fig.~\ref{fig:scheduling_latency} shows the measured end-to-end latency as a function of the number of \gls{ul} transmissions for both scenarios. In both cases, latency increases approximately linearly, which is expected since each additional \gls{ul} transmission incurs an approximately constant \gls{rx}--\gls{tx} turnaround delay on the single-transceiver platform.
+
+This behavior can be explained analytically using the slot-based frame structure of \gls{nr}. 
+For Scenario~1, each \gls{ul} transmission incurs a fixed overhead of approximately seven slots ($2.9$~ms), in addition to the \gls{ul} data transmission time. The resulting normalized latency $L_n^{(1)}$, normalized with respect to the 10~ms frame duration, can be expressed as
+\begin{equation}
+L_n^{(1)} =
+\frac{7~\text{slots} + T_{\text{data}}^{\text{UL}_x}}{10~\text{ms}}
+=
+\frac{2.9~\text{ms} + T_{\text{data}}^{\text{UL}_x}}{10~\text{ms}},
+\end{equation}
+where $T_{\text{data}}^{\text{UL}_x}$ denotes the payload transmission time of a single \gls{ul} packet. 
+As shown in Eq.~(1), the latency consists of a constant scheduling overhead and a variable payload transmission component.
+
+In Scenario~2, the scheduling overhead is shared across multiple \gls{ul} transmissions. In the considered configuration, a batch of three \gls{ul} transmissions incurs a fixed overhead of approximately nineteen slots ($7.9$~ms), while the combined \gls{ul} payload occupies four slots ($1.67$~ms). The corresponding normalized latency $L_n^{(2)}$ is given by
+\begin{equation}
+L_n^{(2)} =
+\frac{19~\text{slots} + T_{\text{data}}^{\text{UL}_{1,2,3}}}{10~\text{ms}}
+=
+\frac{7.9~\text{ms} + T_{\text{data}}^{\text{UL}_{1,2,3}}}{10~\text{ms}},
+\end{equation}
+with $T_{\text{data}}^{\text{UL}_{1,2,3}} = 4~\text{slots} \approx 1.67$~ms. 
+Equation~(2) illustrates that grouping multiple \gls{ul} transmissions allows the scheduling overhead to be amortized across several packets.
+
+These results show that scheduling alone provides limited mitigation of turnaround-induced latency in practical \gls{nr} implementations, as the dominant contribution arises from unavoidable \gls{rx}--\gls{tx} switching.
+
+
+
+\subsection{Turnaround-Induced Latency and Baseline Scheduling Behavior}
+
+Based on the measurements, the \gls{rx}--\gls{tx} turnaround latency can be conceptually decomposed into three main components: (i) internal \gls{rx} processing and completion, (ii) transceiver reconfiguration and \gls{tx} initiation, and (iii) firmware execution and alignment with the \gls{nr} slot structure. While the exact contribution of each component is implementation-dependent, the measurements indicate that no single component can be neglected when analyzing low-latency communication behavior.
+
+In the considered \gls{nr} implementation, \gls{ul} and \gls{dl} transmissions are scheduled sequentially using \gls{tdd}. Each change in transmission direction requires either a \gls{rx}--\gls{tx} or \gls{tx}--\gls{rx} transition at the \gls{ft} or \gls{pt}, thereby incurring the measured turnaround delay. As a result, the scheduling behavior directly determines how frequently this composite turnaround latency is accumulated over time and, consequently, how strongly it impacts end-to-end latency.
+
+
+\subsection{ \gls{rx}-- \gls{tx} Turnaround Measurement}
+
+Fig.~\ref{fig:turnaround} illustrates the measured \gls{rx}--\gls{tx} turnaround process using GPIO timing markers captured on a \gls{dso}. The yellow signal indicates the \gls{ul} transmission initiated by the \gls{pt}, during which the \gls{ft} is actively receiving. Once the \gls{ul} reception is completed, the \gls{ft} must reconfigure its transceiver from reception to transmission mode before it can respond. This reconfiguration results in a clearly observable idle interval between the end of the \gls{ul} transmission and the start of the \gls{dl} response. The measured \gls{rx}--\gls{tx} turnaround delay is approximately 850~\textmu s, corresponding to nearly two \gls{nr} slots. Although the over-the-air transmission time is included in the measurement, it is negligible due to the very short separation (approximately 30~cm) between the nodes, such that the observed delay is dominated by transceiver reconfiguration, firmware processing, and frame alignment effects.
+
+
+
+Repeated measurements across multiple  \gls{rx}-- \gls{tx} transitions show consistent turnaround values with limited variation, indicating stable behavior under the considered operating conditions. The magnitude of the measured delay highlights that  \gls{rx}-- \gls{tx} switching constitutes a non-negligible component of the end-to-end latency in practical \gls{nr} systems.
+
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.95\linewidth]{osceliscope.jpg}
+\caption{\gls{rx}--\gls{tx} turnaround behavior at the \gls{ft} measured using GPIO timing markers. The yellow trace shows the \gls{ul} transmission from the \gls{pt}, while the green trace indicates the \gls{dl} response after the turnaround interval.
+}
+\label{fig:turnaround}
+\end{figure}
+
+
+\subsection{Cross-Validation Using Internal Modem Timing}
+
+To further interpret the \gls{dso}-based measurements, internal modem timing information was analyzed. The \gls{nr} modem reports operation latencies in internal modem ticks, where one \gls{nr} slot corresponds to 28\,800 ticks. These timers capture the duration of internal radio state transitions and baseband processing steps, providing insight into delays that are not directly observable at the RF interface.
+
+The reported modem timings indicate that reception-related processing, including \gls{rx} completion and RSSI handling, requires several hundred microseconds, while the \gls{tx} initiation procedure alone spans approximately one \gls{nr} slot. When combined with firmware execution and slot-alignment effects, these internal delays are consistent with the approximately 850~\textmu s \gls{rx}--\gls{tx} turnaround measured using the \gls{dso}. This agreement confirms that the observed turnaround latency is dominated by transceiver reconfiguration and scheduling-related effects rather than measurement artifacts.
+
+Since the \gls{rx}--\gls{tx} turnaround process is governed by deterministic transceiver state transitions and frame alignment, repeated measurements under identical conditions exhibit only negligible variation. Consequently, the analysis focuses on systematic turnaround behavior rather than statistical dispersion.
+
+%=============================Discussion, Design Implications, and Future Direction====================================================%
+
+\section{Discussion, Design Implications, and Future Direction}
+
+This section discusses the implications of the measurement results for \gls{ul}/\gls{dl} scheduling and hardware design in practical \gls{nr} systems. The focus is on understanding the fundamental limitations observed in the experiments and identifying directions for latency reduction beyond scheduling-level optimizations.
+
+\subsection{Limits of Scheduling-Based Latency Reduction}
+
+The results presented in the previous sections show that  \gls{rx}-- \gls{tx} turnaround delay constitutes a dominant component of end-to-end latency in the considered \gls{nr} implementation. Both \gls{dso} measurements and internal modem timing indicate that each change in transmission direction incurs a delay on the order of multiple \gls{nr} slots. As a result, scheduling decisions that frequently alternate between \gls{ul} and \gls{dl} inherently accumulate significant latency.
+
+The analysis of representative scheduling scenarios demonstrates that while grouping \gls{ul} transmissions can reduce some scheduling overhead, it does not eliminate the need for \gls{rx}-- \gls{tx} switching when acknowledgments or \gls{dl} responses are required. Consequently, scheduling strategies alone offer limited potential for reducing latency in traffic patterns characterized by short packets or request--response behavior, which are common in industrial sensor--actuator applications.
+
+\subsection{Impact on Industrial Sensor--Actuator Traffic}
+
+In the considered sensor--actuator star topology, \gls{ul} sensor data and \gls{dl} actuator commands are tightly coupled in time. This asymmetry naturally leads to frequent \gls{ul}/\gls{dl} alternation at the \gls{ft}. The measured turnaround delay, therefore, directly affects control-loop latency and limits how quickly sensor information can be translated into actuator actions.
+
+For such use cases, the observed latency is not primarily determined by physical-layer transmission time, but by the overhead associated with transceiver reconfiguration and scheduling alignment. This finding highlights the importance of considering hardware-induced delays when evaluating the suitability of \gls{nr} for low-latency industrial control applications.
+
+\subsection{Architectural Considerations and Future Directions}
+
+The measurement results presented in this work indicate that  \gls{rx}-- \gls{tx} turnaround delay is a dominant contributor to end-to-end latency in practical \gls{nr} systems employing single-transceiver hardware. This section discusses architectural considerations that arise from these findings and outlines potential directions for reducing turnaround-induced latency in future \gls{nr} implementations.
+
+\subsubsection{Single-Transceiver Versus Multi-Chain Architectures}
+
+The evaluated nRF9151-based platform employs a single RF transceiver chain shared between reception and transmission. While this architecture offers advantages in terms of cost, power consumption, and implementation complexity, it inherently requires sequential  \gls{rx} and  \gls{tx} operation. As shown by the \gls{dso} measurements and modem timing analysis, the resulting  \gls{rx}-- \gls{tx} turnaround delay spans multiple \gls{nr} slots and cannot be eliminated through scheduling alone.
+
+One architectural direction for reducing this limitation is the introduction of separate receive and transmit chains. Even partial separation, such as independent baseband processing with shared RF components, could reduce reconfiguration overhead and enable faster direction switching. However, such approaches introduce trade-offs related to hardware complexity, power consumption, and device cost, which must be carefully evaluated for industrial deployments.
+
+\subsubsection{\gls{ul} and \gls{dl} Resource Separation}
+
+Another potential approach to mitigating turnaround-induced latency is the separation of \gls{ul} and \gls{dl} resources in frequency or time. Allocating distinct channels for \gls{ul} and \gls{dl} communication could reduce or eliminate the need for frequent  \gls{rx}-- \gls{tx} switching at the \gls{ft}, particularly in sensor--actuator scenarios with tightly coupled request--response traffic.
+
+While \gls{nr} primarily relies on \gls{tdd} to efficiently utilize the harmonized, license-exempt spectrum allocated for \gls{nr} systems, future system designs could explore hybrid approaches that trade spectral efficiency for reduced latency in selected operating modes. Such mechanisms could be activated dynamically for latency-critical traffic, while preserving conventional \gls{tdd} operation for best-effort communication.
+
+
+\subsubsection{Scheduling Awareness of Turnaround Costs}
+
+The results of this study also suggest that scheduling decisions should explicitly account for hardware-induced turnaround costs. Rather than assuming negligible switching overhead, schedulers could incorporate turnaround-aware metrics when selecting transmission directions and grouping traffic. While such awareness cannot remove the turnaround delay itself on single-transceiver platforms, it may help avoid unnecessary direction changes and reduce latency accumulation under certain traffic patterns.
+
+Importantly, the effectiveness of turnaround-aware scheduling is fundamentally bounded by the underlying hardware architecture. As demonstrated in this work, scheduling optimization alone offers limited gains when turnaround delays dominate the latency budget.
+
+\subsubsection{Measurement-Driven System Design}
+
+Finally, the combination of external \gls{dso} measurements and internal modem timing analysis highlights the value of measurement-driven system design. External measurements provide ground-truth latency values observable at the RF interface, while internal timing information helps explain the origin of these delays. Future \gls{nr} system evaluations would benefit from similar multi-level measurement approaches to accurately characterize the interaction between hardware, firmware, and scheduling behavior. 
+
+
+% Overall, the presented architectural considerations emphasize that achieving consistently low latency in \gls{nr} systems will likely require joint optimization across hardware architecture, duplexing strategy, and scheduling design, rather than relying on improvements at a single layer.
+
+\section{Conclusion}
+This paper presented a measurement-driven analysis of \gls{ul}/\gls{dl} scheduling and its impact on latency in \gls{nr} systems, based on \gls{dso}-based timing measurements performed on an nRF9151 platform. The \gls{rx}--\gls{tx} turnaround delay was quantified at approximately two \gls{nr} slots and identified as a dominant contributor to end-to-end latency, particularly for short-packet and request--response traffic. Scenario-based evaluations showed that although scheduling decisions influence how frequently turnaround delays occur, they offer limited potential for latency reduction on single-transceiver architectures. In industrial sensor--actuator use cases with frequent \gls{ul}/\gls{dl} alternation, latency accumulates in a manner that cannot be effectively mitigated through scheduling alone, highlighting the need to account for hardware-induced delays in low-latency \gls{nr} system design.
+% This paper presented a measurement-driven analysis of \gls{ul}/\gls{dl} scheduling and its impact on latency in \gls{nr} systems. Using \gls{dso}-based timing measurements on an nRF9151-based platform, the  \gls{rx}-- \gls{tx} turnaround delay was quantified and shown to be on the order of two \gls{nr} slots. 
+% % Internal modem timing information was used to cross-validate the external measurements and to provide insight into the underlying transceiver and firmware behavior.
+
+% The results demonstrated that  \gls{rx}-- \gls{tx} turnaround constitutes a dominant component of end-to-end latency in practical \gls{nr} implementations, particularly for short-packet and request--response traffic. Scenario-based analysis showed that while scheduling decisions influence how often this delay is incurred, scheduling alone offers limited potential for latency reduction on single-transceiver platforms. In industrial sensor--actuator use cases, frequent \gls{ul}/\gls{dl} alternation therefore leads to latency accumulation that cannot be mitigated purely at the scheduling level.
+
+% % These findings highlight the importance of considering hardware-induced delays when evaluating low-latency \gls{nr} deployments. Future work will investigate architectural enhancements, such as \gls{ul}/\gls{dl} channel separation or parallel \gls{tx}/\gls{rx} capabilities, and their potential to reduce turnaround-induced latency while preserving the flexibility and cost efficiency of \gls{nr} systems.
+
+
+\bibliographystyle{IEEEtran}
+%\bibliography{references}
+\bibliography{Dectpaper}
+
+
+\end{document}

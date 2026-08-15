@@ -1,0 +1,65 @@
+Title: Waßmann et al. - 2024 - Performance of DECT-2020 NR in an industrial environment for varying RF bands
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—As there are no publications regarding the performance of DECT-2020 NR in real-
+life scenarios yet, this work constitutes a first performance assessment of
+DECT-2020 NR in the 450, 1350 and 3700 MHz frequency bands at different
+numerologies with bandwidths ranging from 1.728 to 13.824 MHz. To show the
+benefits of DECT-2020 NR, it is compared to classic DECT in a Rayleigh fading
+channel. In the course of this evaluation, performance metrics such as Bit Error
+Rate (BER) and Packet Error Rate (PER) were considered. Furthermore, MATLAB-
+generated DECT-2020 NR packets were transmitted utilizing GNU Radio and Ettus
+USRPs. The measurements were conducted in an industrial production line.
+Overall, the packet error rates were found to be the best at 450 MHz, with a
+packet loss of less than 5 %. At 1350 MHz, a packet error rate of 15 % was
+observed, whereas at 3700 MHz, a maximum value of 10 % was recorded. The
+differences in PER for the different frequencies are attributed to the internal
+losses at higher frequencies in the used USRP B210s. Another aspect of this work
+focuses on characterizing the indoor channel of the production line using OFDM-
+based channel sounding. On average, an RMS delay spread of 65 ns was measured
+for a bandwidth of 13.824 MHz in the selected frequency bands.
+
+Approach and methods:
+bandwidths by adjusting the transmission numerology consisting of the subcarrier
+and Fourier transform scaling factors µ and β, respectively. The technology can
+achieve bandwidths between 1.782 and 221.184 MHz. Moreover, the standard allows
+a license-exempt operation in the DECT frequency band (1880 to 1900 MHz in the
+EU) which at the moment is exclusively available to classic DECT devices (e.g.,
+telephones). Constituting an IMT-2020 technology, operation in the IMT frequency
+bands below 6 GHz is also possible. In this paper, the performance of DECT-2020
+NR is evaluated in frequencies which are approved in Germany for the PMSE sector
+(470 and 1350 MHz) and for the campus networks (3700 MHz) by utilizing different
+numerologies. Since a maximum bandwidth of 20 MHz is specified for wideband
+audio systems [3], the bandwidth is limited to 13.824 MHz in the measurement
+setup, as this is the closest possible bandwidth in DECT2020 NR. The
+measurements were conducted in an industrial environment by using two USRP B210
+Software-Defined Radios (SDR). Moving the receiver during the measurements
+introduces a time-varying channel. Additionally, the wireless doubly-selective
+channel is measured by using the setup as a channel sounder. Abstract—As there
+are no publications regarding the performance of DECT-2020 NR
+
+Key findings:
+Software-Defined Radio and OFDM,” in 2021 channel impulse responses for 1350 and
+3700 MHz look similar IEEE 94th Vehicular Technology Conference (VTC2021-Fall),
+2021, pp. which is represented in the average RMS delay spread according 1–5. to
+Eq. 8 in Table III which shows that the average RMS [13] Wheberth Dias, “USRP
+(x310) AGC Code for a GNU Radio Embedded Python Block,” 27.08.2023. [Online].
+Available: delay spread is the same for all three frequency bands. The
+https://gist.github.com/wheberth/a358dac24fecbb9dcfb7035e66d2ca85 calculation of
+the RMS delay spread is based on the numerology [14] Ettus Research, “USRP
+B200/B210 Bus Series Datasheet.” [Online]. Available: https://www.ettus.com/all-
+products/ub210-kit/ µ = 1, β = 8 since it has the highest resolution for the
+delay [15] M. W. O’Brien, J. S. Harris, O. Popescu, and D. C. Popescu, “An τ . A
+difference for the measured delay spreads can be seen Experimental Study of the
+Transmit Power for a USRP Software-Defined for for the maximum delay spread of
+185 ns in the 3700 MHz Radio,” in 2018 International Conference on
+Communications (COMM), 2018, pp. 377–380. band. Authorized licensed use limited
+to: Hochschule Aalen (FH) - Technik und Wirtschaft. 615 Downloaded on February
+25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply. 6
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

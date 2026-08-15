@@ -1,0 +1,53 @@
+Title: A Robust Routing Protocol for 5G Mesh Networks
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—We consider a novel routing protocol suitable for ad-hoc networks with
+dynamically changing topologies, such as DECT 2020 NR (NR+) systems, which often
+lead to missing links between the nodes and thus, incomplete or inefficient
+routes. A key point of the proposed protocol is the combination of network
+discovery and matrix completion techniques, which allow the nodes to establish
+communication paths efficiently and reliably. Additionally, multihop
+localization is performed to estimate the location of the nodes without needing
+to broadcast each node’s geographical position, thus preserving privacy during
+the routing process and enabling nodes in the network to independently find
+potentially missing paths in a decentralized manner instead of flooding the
+whole network. Simulation results illustrate the good performance of the
+proposed technique in terms of the average number of hops of the obtained routes
+in different scenarios, with different network densities and amounts of
+incompleteness.
+
+Approach and methods:
+to the SotA routing approach for partially connected networks is given, the
+proposed method to find the missing entries of the incomplete hop matrix is
+introduced, followed by the multihop localization scheme, and the local route
+discovery. Finally, a comparison of the proposed scheme with the conventional
+breadth first search (BFS) algorithm performing network discovery on the network
+with partially missing edges, is offered in Section IV, followed by further
+performance evaluation in terms of the average number of hops for various
+network densities and incompleteness levels. II. N ETWORK M ODEL A.
+
+Key findings:
+artificial intelligence tools, pp. 13–13, 1984. [23] W. Glunt et al., “An
+alternating projection algorithm for computing the nearest euclidean distance
+matrix,” SIAM Journal on Matrix Analysis and Applications, vol. 11, no. 4, pp.
+589–600, 1990. [24] P. Jain, R. Meka, and I. Dhillon, “Guaranteed rank
+minimization via singular value projection,” in Advances in Neural Information
+Processing Systems, J. Lafferty, C. Williams, J. Shawe-Taylor, R. Zemel, and A.
+Culotta, Eds., vol. 23. Curran Associates, Inc., 2010. [25] J. Tanner and K.
+Wei, “Low rank matrix completion by alternating steepest descent methods,”
+Applied and Computational Harmonic Analysis, vol. 40, no. 2, pp. 417–429, 2016.
+[26] B. Recht, M. Fazel, and P. A. Parrilo, “Guaranteed minimum-rank solutions
+of linear matrix equations via nuclear norm minimization,” SIAM Review, vol. 52,
+no. 3, pp. 471–501, 2010. [27] J.-F. Cai et al., “A singular value thresholding
+algorithm for matrix completion,” SIAM Journal on Optimization, vol. 20, no. 4,
+2010. [28] A. M.-C. So and Y. Ye, “Theory of semidefinite programming for sensor
+network localization,” Math. Program., vol. 109, no. 2, 2007. Authorized
+licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft.
+Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

@@ -1,0 +1,66 @@
+Title: ETSI/DECT-2020 Component RIT Technology
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—We propose a comprehensive evaluation of ETSI/DECT-2020 New Radio (NR) as an
+IMT-2020 candidate technology for the mMTC (connection density) and URLLC
+(reliability) use cases. Several independent evaluation groups assessed
+DECT-2020 NR performance against the IMT-2020 requirements and INRS played a key
+role within the Canadian Evaluation Group (CEG) in evaluating the technology via
+simulation. In order to develop 5G link- and system-level simulators, it is
+necessary to identify and understand all key characteristics of DECT technology.
+Nevertheless, the mMTC use case offers D2D communications, which made simulation
+analysis extremely cumbersome. In this paper, we also explain the different
+maneuvers in order to fasten the simulations and reduce complexity while
+respecting all DECT specifications. Simulation results provided from link- and
+system-level simulations for both URLLC and mMTC use cases show that DECT-2020
+component RIT meets the IMT-2020 requirements.
+
+Approach and methods:
+from link- and system-level simulations for both URLLC and mMTC use cases show
+that DECT-2020 component RIT meets the IMT-2020 requirements. Index Terms—5G;
+ETSI/DECT; Technology evaluation; Connection density (mMTC); Reliability
+(URLLC); D2D; channel mismatch; implementation impairments; channels estimation
+errors; synchronization; localization; direction-of-arrival (DoA) I. I
+NTRODUCTION The International Telecommunication Union Radiocommunication sector
+(ITU-R) has set the requirements for International Mobile
+Telecommunications-2020 (IMT-2020 5G Standard). With the rise of new wireless
+communications, artificial intelligence, and big data, several enabling radio
+technologies standardized by different standardization organisms such as 3GPP
+and ETSI have been proposed within the ITU-R Working Party 5D. The European
+telecommunications standards Institute (ETSI)-digital enhanced cordless
+telecommunications (DECT) Forum was submitted to ITU-R; claiming to have met the
+minimum technology requirements that need to be fulfilled in order to pass [1].
+Independent evaluation groups (IEG) participated in evaluating DECT submission
+involving Ultra Reliable Low Latency Communications (URLLC) and massive Machine
+Type Communications (mMTC) and INRS took part of the process within the Canadian
+evaluation group (CEG) using guidelines for the evaluation process in [2]. The
+DECT evaluation also garnered the attention of the research community and led to
+several evaluation publications [3]–[6]. The DECT-2020 NR offers star and mesh
+
+Key findings:
+Technical Specification (TS) 103 636-3, July 2020 [10] ETSI, DECT-2020 New Radio
+(NR); Part 4: MAC layer; Release 1, European Telecommunications Standards
+Institute, Technical Specification (TS) 103 636-4, July 2020. [11] Nihtilä,
+Timo and Berg, Heikki. Energy Consumption of DECT-2020 NR Mesh Networks. 2022
+Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G
+Summit), 7 June 2022. [12] 3GPP, Technical Specification Group Radio Access
+Network; Study on channel model for frequencies from 0.5 to 100 GHz , Third
+Generation Partnership Project, TR 38.901 version 16.1.0 Release 16, December
+2019. [13] Canadian Evaluation Group. CEG Report on the Re-Evaluation of the
+ETSI (TC DECT) and DECT Forum Proponent and of the NuFront Proponent Candidate
+Technology Submissions. WP 5D, (738), 2021. URL
+https://www.itu.int/md/R19-WP5D-C-0738 [14] Canadian Evaluation Group,
+Evaluation Report Received from the Canadian Evaluation Group (CEG) on the
+Candidate IMT-2020 Radio Interface Technology Proposals. WP 5D, (30), 2020. [15]
+Canadian Evaluation Group, Interim Evaluation Report on the Candidate Proposals
+for IMT-2020 Submitted to Working Party 5D - Report with Provisional Results. WP
+5D, (28), 2019. 1467 Authorized licensed use limited to: Hochschule Aalen (FH) -
+Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE
+Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

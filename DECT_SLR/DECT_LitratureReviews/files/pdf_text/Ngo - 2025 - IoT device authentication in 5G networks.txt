@@ -1,0 +1,2380 @@
+Master’s Programme in Electronics and Electrical Engineering
+
+
+
+IoT Device Authentication in 5G Networks
+
+Quoc Quang Ngo
+
+
+
+
+                                                               Master’s Thesis
+                                                               2025
+Author Quoc Quang Ngo
+Title IoT Device Authentication in 5G Networks
+Degree programme Electronics and Electrical Engineering
+Major Communications Engineering
+Supervisor Kalle Ruttik (PhD)
+Advisors Dang Yongchao (PhD), Veli-Matti Rantanen (MSc)
+Date 12 Septemper 2025          Number of pages 54+10             Language English
+Abstract
+The rapid expansion of the Internet of Things and Industrial IoT has accelerated the
+adoption of distributed sensing, automation, and data-driven decision-making across
+critical sectors such as manufacturing, energy, healthcare, and logistics. IoT devices
+typically possess limited computational resources, heterogeneous hardware architec-
+tures, and diverse communication protocols, making secure and scalable integration
+into modern communication infrastructures a persistent challenge. Although 5G
+provides high reliability, ultra-low latency, and massive connectivity—factors which
+makes it a promising foundation for IoT systems—current integration approaches often
+rely on complex architectures, proprietary gateways, and heavyweight security frame-
+works that limit their practicality in resource-constrained and industrial environments.
+To address these limitations, this thesis presents a lightweight and interoperable IoT-
+to-5G integration framework featuring a minimal User Equipment and gNB gateway
+stack implemented in C. The system can operate directly on embedded IoT devices
+such as Raspberry Pi and non-cellular IIoT platforms like DECT-2020 NR, e.g. Nordic
+Semiconductor nRF91 family. Moreover, the UE and gNB gateways are designed
+to connect seamlessly with the private 5G Core Networks for device authentication,
+enabling secure, scalable, and standards-compliant integration across heterogeneous
+IoT environments. Experimental validation demonstrates that the designed UE and
+gNB gateway interoperate seamlessly with both commercial and open-source 5G
+systems, including Cumucore, OpenAirInterface, and free5GC. Unlike traditional IoT
+gateways that locally handle protocol translation and security overhead, the proposed
+design offloads authentication, session management, and traffic control directly to the
+5GC, thereby reducing the computational burden on edge IoT and IIoT devices while
+ensuring full compliance with 3GPP standards.
+Keywords IoT , IIoT , Authentication, 5G Core, Private 5G, 3GPP
+Contents
+Abstract                                                                           2
+
+Contents                                                                           3
+
+1   Introduction                                                                   7
+
+2   Literature Review                                                            9
+    2.1 Internet of Things . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+         2.1.1 IoT architecture and communication models . . . . . . . . .       9
+         2.1.2 Resource constraints and interoperability challenges . . . . 12
+         2.1.3 Security threats and vulnerabilities in IoT systems . . . . . . 12
+    2.2 5G-Enabled IoT Integration . . . . . . . . . . . . . . . . . . . . . . 13
+         2.2.1 5G architecture overview and key feature . . . . . . . . . . 14
+         2.2.2 5G system reference mode . . . . . . . . . . . . . . . . . . 15
+    2.3 Security Frameworks in 5G for IoT . . . . . . . . . . . . . . . . . . 17
+         2.3.1 5G security architecture . . . . . . . . . . . . . . . . . . . 17
+         2.3.2 EAP-AKA’ and 5G-AKA . . . . . . . . . . . . . . . . . . . 18
+         2.3.3 Non-3GPP access security and integration with private 5G cores 22
+    2.4 NAS and NGAP Message Procedure in 5G-AKA . . . . . . . . . . 26
+         2.4.1 NAS Message Structure . . . . . . . . . . . . . . . . . . . 27
+         2.4.2 NAS Message Exchange . . . . . . . . . . . . . . . . . . . 28
+         2.4.3 NGAP Message Structure . . . . . . . . . . . . . . . . . . 28
+    2.5 IoT Security Enhancements Beyond 5G . . . . . . . . . . . . . . . 30
+
+3   System Design and Methodology                                                  31
+    3.1 Design Objectives . . . . . . . . . . . . . . . . . . . . . . . . . . .    31
+    3.2 System Architecture Overview . . . . . . . . . . . . . . . . . . . .       32
+         3.2.1 IoT User Equipment (UE) . . . . . . . . . . . . . . . . . .         34
+         3.2.2 gNB Gateway . . . . . . . . . . . . . . . . . . . . . . . . .       34
+         3.2.3 5G Core Network (5GC) . . . . . . . . . . . . . . . . . . .         35
+    3.3 Control Plane Signaling and Security Mechanisms . . . . . . . . . .        35
+
+4   Implementation and Evaluation                                                  36
+    4.1 System Setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     36
+    4.2 Implementation Details . . . . . . . . . . . . . . . . . . . . . . . .     39
+         4.2.1 UE implementation and authentication handling . . . . . . .         39
+         4.2.2 gNB gateway integration and message forwarding . . . . . .          41
+         4.2.3 5GC configuration and interoperability validation . . . . . .       41
+    4.3 Evaluation and Results . . . . . . . . . . . . . . . . . . . . . . . .     43
+         4.3.1 Functionality Validation . . . . . . . . . . . . . . . . . . .      44
+         4.3.2 Performance Evaluation . . . . . . . . . . . . . . . . . . .        44
+         4.3.3 Security-Related Evaluation . . . . . . . . . . . . . . . . .       46
+    4.4 Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   46
+
+
+                                          3
+5   Conclusion and Future Work       48
+
+References                           49
+
+A Confidentiality Algorithm          55
+
+B NAS Content                        60
+
+C Code Snippets                      63
+
+D Sequence Diagram                   64
+
+
+
+
+                                 4
+List of Abbreviations
+
+AAA        Authentication, Authorization, and Accounting
+AMF        Access and Mobility Management Function
+ARPF       Authentication credential Repository and Processing Function
+AUSF       Authentication Server Function
+AUTN       Authentication Token
+B5G        Beyond 5G
+CK         Cipher Key
+CTR        Counter mode
+D2D        Device-to-Device
+DoS        Denial of Service
+eMBB       Enhanced Mobile Broadband
+EAP-AKA    Extensible Authentication Protocol – Authentication and Key Agreement
+EAP-AKA′   Extensible Authentication Protocol – Authentication and Key Agreement Prime
+gNB        Next Generation Node B
+HPLMN      Home Public Land Mobile Network
+HSS        Home Subscriber Server
+IE         Information Element
+IIoT       Industrial Internet of Things
+IK         Integrity Key
+IoT        Internet of Things
+IDS        Intrusion Detection System
+IP         Internet Protocol
+KDF        Key Derivation Function
+MAC        Message Authentication Code
+MCC        Mobile Country Code
+mMTC       Massive Machine-Type Communications
+MNC        Mobile Network Code
+N3IWF      Non-3GPP Interworking Function
+NEF        Network Exposure Function
+NR         New Radio
+NRF        Network Repository Function
+OAI        OpenAirInterface
+PCF        Policy Control Function
+PER        Packet Error Rate
+PLMN       Public Land Mobile Network
+SA         Security Association
+SBA        Service-Based Architecture
+SCTP       Stream Control Transmission Protocol
+SMF        Session Management Function
+SNPN       Standalone Non-Public Network
+SoftSIM    Software-based SIM
+SUCI       Subscription Concealed Identifier
+
+
+                                   5
+SUPI     Subscription Permanent Identifier
+5G       Fifth Generation (mobile network)
+5G-AKA   5G Authentication and Key Agreement
+5GC      5G Core
+TNGF     Trusted Non-3GPP Gateway Function
+TSN      Time-Sensitive Networking
+UDM      Unified Data Management
+UE       User Equipment
+UPF      User Plane Function
+URLLC    Ultra-Reliable Low-Latency Communications
+WAT      Wireless Authentication Technology
+RAND     Random Challenge
+URL      Uniform Resource Locator
+
+
+
+
+                                6
+1    Introduction
+The rapid growth of the Internet of Things (IoT) and its industrial counterpart, the
+Industrial Internet of Things (IIoT), is transforming domains, such as automation,
+manufacturing, healthcare, logistics, as well as critical infrastructures. As illustrated
+in Fig. 1, the number of connected IoT devices worldwide has grown dramatically,
+rising from 12.6 billion in 2015 to a projected 33.4 billion in 2025—nearly tripling
+within a decade. By enabling interconnected devices to exchange, process, and act on
+data, IoT technologies contribute to increased efficiency, productivity, together with
+intelligent decision-making in many fields [1–3]. In the industry, IIoT has become a
+key enabler of the Fourth Industrial Revolution (Industry 4.0) through the integration
+of distributed sensing, monitoring, and control [4, 5]. This integration helps enhance
+productivity as well as mitigates the need for human intervention, thereby increasing
+revenue while reducing costs.
+
+
+
+
+Figure 1: Report of total number of connected devices worldwide from 2015-2025
+from Ericsson. Adapted from [6]
+
+    Despite these benefits, IoT/IIoT devices remain highly resource-constrained,
+heterogeneous, as well as exposed to evolving cyber-physical threats. Security, privacy,
+and trust are critical for IIoT where the entire industrial ecosystem can be damaged
+
+                                           7
+due to a single device malfunction. To address these risks, various mechanisms have
+been proposed. Intrusion Detection Systems (IDS) have been widely adopted to
+monitor, analyze, and detect malicious behavior in IoT/IIoT networks [4]. Recent
+trends focus in machine learning, deep learning, together with ensemble methods
+to improve accuracy and adaptability [7–9]. Moreover, blockchain technology has
+been introduced to IIoT architectures as a distributed, tamper-resistant technology
+that enhances privacy, scalability, and security, especially when combined with 5G
+and edge computing [10–13]. Aside from these generic IoT approaches, researchers
+have increasingly focused on securing 5G-enabled IoT systems. There has been an
+extensive review of 5G IoT, categorizing solutions as blockchain-based solutions,
+cryptographic and signature-based methods, as well as graph-theoretical models [14].
+    While effective, these approaches often show limitations in practice due to their
+incompatibility with existing infrastructure and resource-constrained devices. In many
+IIoT deployments, wide-area connectivity is provided by cellular networks, while
+local connectivity relies on short-range technologies such as Wi-Fi or DECT-2020
+NR [15]. In these non-public wireless networks, constrained IoT devices are often
+responsible for critical functions including authentication, end-to-end security, or
+session management using local credentials and ad-hoc trust schemes [16, 17].
+    There is a need for architectures that allow IoT devices using non-cellular access
+technologies to leverage standardized 5G security mechanisms, improving both
+scalability and security in IIoT deployments. To address this gap, this thesis first
+reviews how an IoT device can register with a private 5G Core (5GC) via non-3GPP
+access. Correspondingly, we then aim to propose and implements a minimal IoT
+User Equipment (UE) and gNB gateway stack in C, tailored for IoT/IIoT devices. The
+proposed system need to enable IoT devices to register directly with commercial and
+open-source 5G Cores, offloading authentication, session management, and traffic
+control to the 5GC rather than performing these tasks on the device or gateway. Finally,
+the thesis experimentally evaluates whether the implemented design can successfully
+interoperate with standardized 5G procedures while reducing device-side complexity,
+demonstrating a scalable and practical integration model for local-area deployments
+such as industrial automation and private 5G networks.
+    This thesis is structured as follows: Section 2 presents the background and
+fundamentals, exploring the architecture and security challenges of IoT/IIoT, as well
+as the authentication protocols of 5G core network. Section 2 also reviews literature
+related to the thesis topic including intrusion detection systems, blockchain-enabled
+IIoT/IoT cybersecurity, as well as how IoT is secured in 5G. Section 3 illustrates
+the methodology, including the system design, choice of implementation, security
+architecture, together with integration with commercial or open-source 5G Core
+networks. Section 4 describes the implementation of the IoT UE and gNB gateway,
+the deployment of 5G cores, and the hardware testbed used for evaluation. Section 4.3
+presents the evaluation results under various scenarios, examining system performance,
+registration, and authentication behavior. Finally, Section 5 concludes the thesis,
+discusses the findings, while considering directions for future research, including
+potential extensions toward 6G multi-access connectivity.
+
+
+                                           8
+2       Literature Review
+This section introduces the key concepts and technologies that form the foundation
+of this thesis. It begins with an overview of the IoT and its communication models,
+followed by an examination of resource constraints, interoperability challenges,
+and security threats inherent in IoT systems. Subsequently, the fundamentals of
+fifth-generation (5G) mobile networks and their integration with IoT are presented,
+emphasizing the architectural principles and their significance for the IIoT. The
+discussion then turns to the security frameworks within 5G-enabled IoT, focusing on the
+5G Authentication and Key Agreement (5G-AKA) and the Extensible Authentication
+Protocol-based AKA’ (EAP-AKA’) mechanisms, as well as the security considerations
+for non-3GPP access and private 5G core integration. Furthermore, advanced IoT
+security solutions and state-of-the-art developments beyond 5G, such as intrusion
+detection and blockchain-enabled IIoT, are explored. The section concludes with a
+summary and discussion of the reviewed literature.
+
+2.1     Internet of Things
+The Internet of Things (IoT) continues to expand rapidly, and the 6G vision is to
+support massive-scale deployments by enabling multi-connectivity across hetero-
+geneous networks while meeting critical requirements for ultra-reliable low-latency
+communications , high data rates, intelligent orchestration, and end-to-end security
+[18]. This trend has accelerated the digital transformation of Industry 4.0, embedding
+real-time sensing, control, and analytics into manufacturing systems, utilities, and
+supply chains. This industrial shift has given rise to the IIoT, a specialized IoT paradigm
+focused on mission-critical applications that demand high reliability, deterministic
+latency, and secure large-scale integration of cyber-physical systems.
+
+2.1.1    IoT architecture and communication models
+The ITU-T reference model for the IoT, defined in Recommendation Y.4000/Y.2060
+[19], outlines four key layers: the device layer, network layer, service and application
+support layer, and application layer, as shown in Fig. 2. The device layer comprises
+sensors, actuators, and gateways. Devices may connect directly to the network or
+indirectly through gateways, which provide multi-interface support (e.g., ZigBee,
+Bluetooth, Wi-Fi, LTE) and protocol conversion across heterogeneous technologies.
+The network layer provides connectivity and transport functions, including access
+control, mobility management, and authentication, authorization, and accounting
+(AAA). It ensures reliable delivery of IoT data and control messages between devices
+and higher layers. The service and application support layer offers middleware functions
+such as data storage, aggregation, and device management, enabling interoperability
+between the network and application layers. Finally, the application layer hosts
+domain-specific IoT services—such as smart homes automation, industrial monitoring,
+and healthcare services—translating data into actionable information for end users.
+Together, these layers enable flexible communication models such as device-to-device
+
+                                            9
+          Figure 2: IoT reference model from ITU-T. Adapted from [19]
+
+(D2D), device-to-gateway, and device-to-cloud, forming the foundation of modern
+IoT systems [19].
+    The model also specifies cross-layer management and security capability blocks.
+Management functions include remote device management, topology, and congestion
+management, while security management, such as authentication/authorization and
+confidentiality/integrity, provides generic protections across device/network/appli-
+cation layers. Additional application-specific capabilities are also considered when
+required [19].
+    Several key parameters influence the design of IoT architectures, including scal-
+ability, energy efficiency, network addressing, and security. Research has focused
+on [20]:
+    • Scalability: Multi-hop routing protocols and hierarchical architectures enable
+      IoT networks to cover larger areas and adapt dynamically to network growth.
+    • Energy efficiency: Techniques such as energy harvesting, optimized MAC
+      protocols, and cross-layer designs minimize power consumption in sensor nodes
+      and network devices.
+    • Addressing and interoperability: The integration of IPv6 with low-power
+      networks (6LoWPAN) and the adoption of standardized protocols allow large-
+      scale, heterogeneous IoT deployments.
+    • Security and privacy: Cryptographic mechanisms, authentication protocols,
+      and secure remote reprogramming (e.g., Deluge-based protocols) protect data
+      integrity and prevent unauthorized access.
+
+                                         10
+    Consequently, hierarchical IoT architectures, such as the three-layer model com-
+prising the Sensing and Control Layer (SCL), Information Processing Layer (IPL), and
+Application Layer (AL), have been proposed to optimize energy usage and hardware
+resource utilization [20]. In these architectures, sensor nodes (SNs) are managed by
+gateway nodes (eGNs), which coordinate with base stations (eNodes) for communi-
+cation and resource allocation. Data is processed and analyzed in the cloud or edge
+resources, with results translated into human-readable formats and provided to end
+users through visualization tools. Alternative architectures, including cloud-based
+models, 3G-PLC integration, and self-configuring peer-to-peer networks, have also
+been explored to address scalability, energy efficiency, and large-scale deployment
+challenges. These designs collectively form the foundation for deploying Industrial
+IoT systems in smart manufacturing, energy, and utility networks [20].
+    The IIoT is a specialized subset of IoT that integrates intelligent devices and
+solutions into industrial processes. By embedding real-time sensing, monitoring,
+and control mechanisms into manufacturing, energy, and logistics, IIoT enhances
+operational efficiency, reliability, and scalability. The IIoT envisions a fully digitized
+factory floor in which sensors, actuators and control units continuously exchange data to
+enable real-time monitoring, predictive maintenance and adaptive manufacturing [21,
+22].
+    In many industrial sectors—such as utilities, mining, and factory automation—real-
+time automation has traditionally relied on wired communication networks, most
+commonly based on real-time extensions of IEEE 802.3 Ethernet [23]. While
+these extensions enable deterministic performance, they are often incompatible with
+standard Ethernet, creating significant challenges for integration with enterprise IT
+networks. Such convergence, however, is critical for realizing the Industry 4.0 vision
+of fully integrated cyber-physical systems [21]. To address this gap, the IEEE 802.1
+Time-Sensitive Networking (TSN) task group’s standards have emerged as an open
+framework that supports the coexistence of deterministic traffic with best-effort traffic
+over Ethernet [24]. TSN thus represents a significant step toward truly converged
+industrial and enterprise networks.
+    In parallel, several wireless technologies have been developed specifically for
+industrial communication [21]:
+
+    • ISA100.11a and WirelessHART: Both are IEEE 802.15.4-based standards
+      designed for short-range mesh connectivity in process automation.
+
+    • IO-Link Wireless: An extension of the IO-Link IEC 61131-9 standard, this
+      Bluetooth-based solution enables wireless networking between sensors, actua-
+      tors, and controllers in factory automation systems.
+
+    • Industrial Wireless LAN: Offered by vendors such as Siemens, these so-
+      lutions extend WLAN technology to industrial domains such as automotive
+      manufacturing, transportation, and logistics.
+
+    Together, these wired and wireless solutions highlight the evolution of indus-
+trial networking from proprietary, domain-specific protocols toward standardized,
+
+                                           11
+interoperable platforms capable of supporting the stringent requirements of IIoT
+applications.
+
+2.1.2   Resource constraints and interoperability challenges
+IoT systems are heterogeneous devices with limited resources, posing significant
+challenges in communication, computation, and security. Most IoT nodes, such as
+sensors and actuators, are constrained in energy, memory, and processing power,
+making the direct adoption of conventional Internet security and communication
+protocols infeasible [25, 26]. Another constraint lies in energy management . Many
+IoT devices rely on small, non-rechargeable batteries, making power efficiency critical
+for long-term deployments. Low-power communication protocols exist, yet frequent
+battery replacement remains a barrier for large-scale IoT systems. Similarly, memory
+limitations restrict the ability of nodes to store data or perform complex cryptographic
+operations, limiting system scalability and resilience [26].
+    Interoperability is another major challenge due to the diversity of network tech-
+nologies, data formats, and communication protocols. Devices using different stan-
+dards—such as ZigBee, Bluetooth, Wi-Fi, or LTE—often require gateways for protocol
+translation, introducing complexity and latency. The absence of a unified IoT architec-
+ture further complicates cross-platform communication and service discovery [25,
+27].
+
+2.1.3   Security threats and vulnerabilities in IoT systems
+Due to the dynamic and resource-limited nature of IoT systems, they are highly
+susceptible to various security threats [22, 28, 29]. Resource constraints hinder
+the deployment of traditional encryption and authentication methods, such as key
+encryption and spread-spectrum techniques [22]. Common attacks—such as denial-
+of-service (DoS), spoofing, jamming, man-in-the-middle, malware injection, and
+buffer overflow—target different layers of the IoT architecture. Fig. 3 summarizes
+typical attacks across these layers.
+    At the physical layer, threats include device tampering and DoS attacks [22, 30].
+Devices deployed in exposed environments are susceptible to physical modification or
+firmware replacement, which can subsequently be used to compromise other nodes.
+Spread-spectrum countermeasures are effective but often infeasible due to energy and
+processing limitations.
+    In the network layer, vulnerabilities stem from the heterogeneity and limited
+trust mechanisms among devices due to the lack of resources [22, 31, 32]. Weak
+nodes can be exploited to gain unauthorized trust, enabling indirect attacks such as
+man-in-the-middle (MITM) intrusions, which compromise confidentiality and data
+integrity through eavesdropping or message replay.
+    At the application layer, security risks are similar to those found in conventional
+software systems. Poor input validation, insecure APIs, and unpatched middleware can
+allow attackers to inject malicious code, steal sensitive data, or bypass authentication
+mechanisms [22, 33].
+
+
+                                          12
+        Figure 3: Attacks on layers of IoT architecture. Adapted from [29]
+
+
+    Traditional security models based on the CIA triad (confidentiality, integrity,
+availability) are often inadequate for IoT systems. Emerging concerns such as
+trustworthiness and privacy have become equally critical, particularly in industrial IoT
+(IIoT) applications where system compromise can lead to physical and operational
+hazards [22].
+    Overall, IoT security requires multi-layered defenses that consider both the unique
+limitations of resource-constrained devices and the complex interdependencies between
+layers.
+
+2.2    5G-Enabled IoT Integration
+Although projects such as 5G-CLARITY [34] showcase the potential of 5G-Advanced
+private networks by integrating 5G NR, Wi-Fi, and (optionally) LiFi with enhanced
+multiconnectivity, high-accuracy localization, and cross-wireless-access-technologies
+(WATs) slicing through 3GPP non-3GPP interworking functions (e.g., N3IWF for
+untrusted access and TNGF for trusted access), practical deployment remains limited
+since most public 5G cores do not yet expose or support these capabilities. Never-
+theless, while multi-connectivity is essential, its realization depends on robust and
+unified authentication, which is currently absent as different WATs rely on distinct
+authentication protocols, encryption methods, and security infrastructures, thereby
+constraining device management and inter-WAT handovers. Furthermore, the het-
+erogeneity of frequency bands and radio characteristics across WATs exacerbates the
+difficulty of designing cohesive frameworks for authentication and mobility.
+     In many deployments, while cellular standards are used for wide-area access, local
+connectivity relies on short-range technologies such as Wi-Fi or Bluetooth [16]. In
+these wireless local-area solutions, however, constrained IoT devices often remain
+responsible for key functions such as device authentication, end-to-end security,
+
+
+                                          13
+session management, and traffic control [17]. These responsibilities can increase
+overhead and complicate scaling when large numbers of nodes must be managed,
+therefore, reducing the scalability and connectivity of the IIoT deployment. Unlike
+public cellular networks, which benefit from the globally standardized and secure
+5G Authentication and Key Agreement (5G-AKA) protocol, non-public networks
+such as Wi-Fi and DECT-2020 NR typically depend on local credentials and ad-hoc
+trust schemes. For example, Wi-Fi authentication often depends on SSID-passphrase
+credentials, which are vulnerable to social engineering and rogue access point attacks,
+whereas DECT-2020 NR devices, despite supporting hop-by-hop AES-128 encryption
+and integrity protection at the MAC layer, currently lack a globally standardized
+authentication framework, and private deployments may rely on ad-hoc trust schemes
+that are less mature than 3GPP’s well-established 5G-AKA system.
+    The fifth-generation core (5GC) natively supports secure device registration,
+authentication, mobility management, and traffic control [35]. By shifting these tasks
+from devices to the Core, resource-constrained IoT platforms can benefit from carrier-
+grade security and efficient traffic handling. Next section explore the fundamentals of
+5GC.
+
+2.2.1   5G architecture overview and key feature
+In addition to traditional IoT architectures, alternative architectural models have been
+proposed to support large-scale integration with emerging wireless technologies such
+as 5G. One such design is the five-layer IoT architecture within a 5G framework
+[36], which enhances scalability, flexibility, and end-to-end connectivity from sensing
+devices to cloud services. As illustrated in Fig. 4, this model introduces dedicated
+layers for communication and network management, enabling seamless interaction
+between heterogeneous IoT devices through low-power wide-area networks (LPWANs)
+such as Sigfox, LoRa, ZigBee, and NB-IoT. Data is aggregated at IoT gateways and
+forwarded over 5G New Radio (NR) links to the core network for processing and
+application delivery across domains such as smart industry, transportation, and energy
+systems.
+    This layered approach complements hierarchical IoT models by providing na-
+tive support for high-throughput, low-latency communication and massive device
+connectivity—characteristics essential for future IIoT deployment over 5G networks.
+5G-and-beyond networks are positioned to be the unifying fabric for this vision:
+the 5G Core incorporates Time-Sensitive Networking to guarantee deterministic
+traffic, and Multi-Access Edge Computing to bring low-latency processing to the
+plant floor [21]. The architecture supports all three 5G service categories—enhanced
+mobile broadband (eMBB), massive machine-type communications (mMTC) and
+ultra-reliable low-latency communications (URLLC)—thus allowing a single radio
+interface to satisfy the diverse, heterogeneous demands of industrial applications, from
+high-throughput video analytics and AR/VR to mission-critical robotic control [21].
+Moreover, 5G’s flexible deployment options (private, public and hybrid) and spectrum
+sharing (licensed and unlicensed) provide plant owners with the ability to design
+dedicated, end-to-end secure networks that can be isolated from carrier infrastructure
+
+                                          14
+Figure 4: Five-layer IoT architecture integrated within a 5G wireless system adapted
+from [36].
+
+while still benefiting from carrier-grade services [21].
+    The advent of 5G and beyond (B5G) networks further accelerates the potential
+of IIoT by supporting ultra-low latency- with target of 10ms for control plane and
+0.5ms for data plane uplink and downlink [37]-, high data throughput, and secure
+large-scale deployments[21]. While IoT and IIoT present opportunities, they also raise
+significant security concerns. Challenges include device authentication, data integrity,
+data privacy preservation, and resistance against DoS and man-in-the-middle attacks.
+
+2.2.2   5G system reference mode
+5G mobile networks mark a significant evolution in wireless communication, engi-
+neered to support eMBB, URLLC, and mMTC [35]. To meet these diverse service
+requirements, 5G adopts a service-based architecture (SBA) within the 5G Core
+(5GC), enabling modular network functions, flexible deployment, and efficient service
+orchestration. Control plane network functions communicate exclusively through
+standardized service-based interfaces. The 5GC also provides native support for
+secure device registration, mutual authentication, mobility management, and traffic
+handling, delivering carrier-grade reliability and security essential for both consumer
+and industrial applications.
+    The non-roaming 5GC network architecture is illustrated in Fig. 5. It shows the
+NFs essential for non-roaming services and includes the following key components:
+    • Mobility Management Function (AMF) is responsible for UE registration, con-
+
+                                          15
+  Figure 5: Non-roaming reference 5G Architecture. Adapted from [35]
+
+
+  nection management, access control, and mobility management. Furthermore,
+  it integrates the Network Slice Selection Function (NSSF), which determines
+  the appropriate network slice for a given service or subscriber.
+
+• Session Management Function (SMF) handles the establishment, modification,
+  and release of PDU sessions in accordance with network policies. It also ensures
+  session continuity and enforces Quality of Service (QoS) requirements, thereby
+  enabling differentiated service delivery.
+
+• User Plane Function (UPF) serves as the anchor point for user-plane traffic.
+  Its deployment can be tailored to the service type, supporting edge computing
+  scenarios or centralized configurations. Functionally, the UPF represents the
+  evolution of the Serving Gateway (SGW) and Packet Data Network Gateway
+  (PGW) in 4G networks.
+
+• Policy Control Function (PCF) provides a comprehensive policy framework that
+  governs network slicing, roaming, and mobility management. It is conceptually
+  similar to the Policy and Charging Rules Function (PCRF) in LTE, but with
+  enhanced capabilities for dynamic and slice-aware policy enforcement.
+
+• Unified Data Management (UDM) is the central repository for subscription
+  information and user profiles. It extends the role of the Home Subscriber
+  Server (HSS) in LTE to cover both fixed and mobile access, ensuring consistent
+  subscriber data management across heterogeneous access technologies.
+
+• Network Repository Function (NRF) introduces a novel service registration
+  and discovery mechanism. It allows network functions to dynamically register
+  their capabilities and discover other NFs through APIs, thereby enabling flexible
+  and adaptive service composition.
+
+
+
+                                      16
+    • Network Exposure Function (NEF) acts as an API gateway, exposing selected
+      network services and capabilities to external entities, such as enterprises and
+      partner operators. This facilitates third-party integration for functions like
+      service provisioning, monitoring, and policy control.
+    • Authentication Server Function (AUSF) provides authentication services
+      for UEs, ensuring secure access to the network. Its specification and security
+      procedures are defined by 3GPP SA Working Group 3 (SA WG3). The AMF
+      and SMF interface with user-plane nodes through N1, N2, and N4, supporting
+      subscriber attachment, session establishment, and mobility management. The
+      N2 and N3 interfaces, in particular, depend on how the 5G radio access network
+      (RAN) is realized, making them tightly coupled with the underlying RAN
+      architecture.
+Together, these functions form the core of the 5G service-based architecture. Addi-
+tional functional entities exist to support charging, exposure, analytics, and network
+management but are outside the focus of this discussion.
+
+2.3     Security Frameworks in 5G for IoT
+This section briefly introduces the 5G security architecture, summarizes the two main
+authentication methods (5G-AKA and EAP-AKA′), and then discusses security for
+non-3GPP access and its integration with private 5G cores.
+
+2.3.1   5G security architecture
+Security is a cornerstone of 5G, particularly given its role in supporting mission-critical
+IIoT applications. Fig. 6 illustrates the overview of 3GPP 5G security architecture.
+The architecture is organized into six security domains, each addressing a specific
+aspect of end-to-end protection across the system [38]:
+    • Network access security (I): Ensures secure mutual authentication and protec-
+      tion of user traffic over both 3GPP and non-3GPP access networks, safeguarding
+      the radio interface against radio interface threats, such as eavesdropping or
+      jamming.
+    • Network domain security (II): Protects signaling and user plane communication
+      between network entities through secure inter-node communication.
+    • User domain security (III): Secures user access to mobile equipment, preventing
+      unauthorized device usage.
+    • Application domain security (IV): Enables secure communication between
+      applications in user and provider domains (outside the scope of [38]).
+    • SBA domain security (V): Introduced in 5G to protect service-based architecture
+      (SBA) communication, including network function discovery, authorization,
+      and service interface security.
+
+                                            17
+    • Visibility and configurability of security (VI): Provides users with transparency
+      and control over active security features.
+
+In the 5G security architecture, primary authentication as part of network access security
+is performed using the 5G-AKA protocol , which provides mutual authentication
+between the UE and the network. In parallel, the Extensible Authentication Protocol-
+based AKA’ (EAP-AKA’) method has been introduced to provide additional flexibility,
+particularly in non-3GPP access scenarios. Both protocols aim to ensure confidentiality,
+integrity, and resistance to common security threats, while meeting the performance
+requirements of next-generation networks.
+
+
+
+
+         Figure 6: 5G Security Architecture Overview. Adapted from [38]
+
+
+2.3.2   EAP-AKA’ and 5G-AKA
+The Extensible Authentication Protocol (EAP) [39] is a generic authentication frame-
+work designed to support multiple authentication mechanisms over a common message
+exchange structure. Rather than prescribing a specific authentication algorithm, EAP
+defines a standardized request/response format that can encapsulate a wide range
+of authentication methods, known as EAP methods. EAP operates between three
+logical entities: the supplicant (end device), the authenticator (e.g., access point or
+gateway), and the authentication server (e.g., AAA server or 5G core network). The
+authenticator acts as a pass-through relay, forwarding EAP messages between the
+supplicant and server without interpreting the method-specific content.
+    An EAP exchange follows a simple message pattern:
+
+   1. EAP-Request/Identity - The authenticator requests the identity of the supplicant.
+
+   2. EAP-Response/Identity - The supplicant replies with a claimed identity.
+
+   3. Method-Specific EAP Messages - Based on the chosen EAP method, authenti-
+      cation proceeds using challenge-response and key derivation steps.
+
+
+
+                                           18
+    EAP is widely deployed in IEEE 802.1X-based access control for wired and
+wireless networks, including Wi-Fi (IEEE 802.11), Ethernet edge networks, VPN
+systems, and cellular interworking architectures. In cellular environments, EAP is
+used as an alternative to native 3GPP authentication procedures and plays a central role
+in 5G security, especially for non-3GPP access integration such as Wi-Fi or Ethernet
+offloading into the 5GC.
+    Common EAP methods include certificate-based authentication (EAP-TLS),
+symmetric-key SIM-based authentication (EAP-SIM, EAP-AKA), and public-key
+optimization schemes (EAP-TLS-POK).
+    EAP-TLS-POK [40] is a lightweight public-key authentication protocol built on
+Transport Layer Security (TLS), specifically designed for constrained devices such
+as IoT/IIoT hardware. Unlike classical EAP-TLS, which relies on X.509 certificates
+and a full public key infrastructure (PKI), EAP-TLS-POK replaces certificates with a
+proof-of-possession mechanism. The UE demonstrates ownership of a pre-provisioned
+asymmetric key pair using a Proof of Knowledge (POK) token derived from its private
+key. This design avoids certificate management overhead while retaining strong
+cryptographic assurance, making it suitable for secure onboarding of IoT devices
+without SIM credentials.
+    EAP-AKA [41] integrates the Authentication and Key Agreement (AKA) protocol
+used in 3G and 4G systems into the EAP framework. It enables SIM/USIM-based
+authentication over access networks such as Wi-Fi that may not natively support 3GPP
+signaling. The supplicant uses a long-term secret key 𝐾 stored in its USIM and a
+shared subscriber profile stored in the Home Subscriber Server (HSS) or UDM entity
+to compute authentication vectors. EAP-AKA provides mutual authentication between
+UE and network, derivation of ciphering and integrity keys, and protection against
+replay and man-in-the-middle attacks.
+    However, EAP-AKA inherits some limitations from earlier 3G specifications, such
+as dependence on SHA-1-based key derivation functions and limited binding between
+authentication keys and access networks, which may impact security when roaming
+or interworking across domains. These limitations were addressed by its successor,
+EAP-AKA’.
+    EAP-AKA’ [42] is the upgraded version of EAP-AKA and is one of the two
+primary authentication methods defined in the 5G system architecture, alongside 5G
+AKA [38]. It is the recommended method for non-3GPP access authentication in 5G,
+such as 5G-Wi-Fi interworking via N3IWF.
+    EAP-AKA’ introduces several key enhancements over EAP-AKA [42]:
+
+    • Network-Bound Key Derivation: Session keys are derived using a 3GPP-
+      defined key derivation function (KDF) based on HMAC-SHA-256 that binds
+      keys to the serving network name (SN-name). This prevents key reuse across
+      networks and improves roaming security.
+
+    • Modern Cryptographic Primitives: Legacy SHA-1 functions are replaced by
+      HMAC-SHA-256, improving resistance to cryptographic collision and preimage
+      attacks.
+
+
+                                          19
+• Full 5G Integration: EAP-AKA’ aligns with the 5G security architecture
+  defined in 3GPP TS 33.501, including NAS key derivation (𝐾NAS   5𝐺 ), anchor
+
+  key generation (𝐾SEAF ), and key hierarchy support for access and user-plane
+  security.
+
+• Backward Compatibility: If the serving network does not support the newer
+  KDF, the UE falls back to EAP-AKA behavior without interrupting connectivity.
+
+The 5G authentication process using EAP-AKA’ proceeds as follows:
+
+1. UE and network exchange EAP-Request/Identity and EAP-Response/Identity
+   messages.
+
+2. The network issues an EAP-Request/EAP-AKA’ challenge.
+
+3. The UE verifies network authenticity and computes the RES∗ response.
+                                               5𝐺 .
+4. Both parties derive 𝐾SEAF and subsequently 𝐾NAS
+
+5. Authentication concludes with EAP-Success and establishment of a secure NAS
+   context.
+
+
+
+
+  Figure 7: Authentication procedure for EAP-AKA’. Adapted from [38]
+
+
+                                    20
+    Figure 7 illustrates the authentication procedure. The process begins when
+the UDM or authentication Credential Repository and Processing Function (ARPF)
+generates an authentication vector (AV) with the AMF separation bit set, and transforms
+the ciphering and integrity keys (CK, IK) into CK’ and IK’. This transformed AV is
+delivered to the AUSF, which initiates the EAP-AKA’ exchange with the UE through
+the SEAF.
+    The SEAF transparently forwards the EAP-Request/AKA’-Challenge to the UE,
+which passes the random challenge (RAND) and authentication token (AUTN) to the
+USIM. The USIM verifies the freshness of the AUTN and, if successful, computes the
+response (RES) along with derived keys. The UE replies with an EAP-Response/AKA’-
+Challenge, which is validated by the AUSF. If verification fails, the authentication is
+aborted. Upon successful verification, both the AUSF and the UE derive the Extended
+Master Session Key (EMSK), from which the key 𝐾AUSF is extracted. Subsequently,
+the serving anchor key 𝐾SEAF is derived and provided to the SEAF. Using 𝐾SEAF ,
+the Subscription Permanent Identifier (SUPI), and the ABBA parameter, the SEAF
+computes the anchor key 𝐾AMF and provides it to the AMF to establish the security
+context. The procedure concludes with the AUSF sending an EAP-Success message
+to the UE, finalizing the mutual authentication and establishing the derived keys for
+subsequent secure communication.
+    Because of its strong key binding, roaming support, and seamless interoperability
+with SIM-based identity management, EAP-AKA’ is the de facto authentication
+framework for secure 5G IoT and enterprise deployments using non-3GPP access.
+    5G-AKA is the primary authentication and key-agreement protocol of 5G, built
+upon the 5G security architecture [38], is defined in the 3GPP Technical Specification
+Series TS 33.501 [38] and TS 33.220 [43]. 5G-AKA is an evolution of the 4G LTE
+AKA, enriched with subscription status checks, session context establishment, and
+enhanced key derivation that provides forward secrecy. The procedure of 5G-AKA is
+illustrated in Figure 8.
+    The 5G-AKA protocol ensures mutual authentication between the UE and the
+network while establishing cryptographic session keys. Authentication is achieved
+through a challenge–response exchange involving the UE, the serving network, and
+the home network, resulting in shared keys (𝐾SEAF , 𝐾AMF ) that secure NAS signaling.
+The formal security of 5G-AKA has been extensively analyzed and proven in 3GPP
+specifications [38, 44] and study [45].
+    The protocol provides three main guarantees: (1) Mutual authentication between
+the UE and network; (2) Key confidentiality and integrity for all subsequent control-
+plane communications; and (3) Replay and downgrade protection through freshness
+verification and the ABBA parameter.
+    Despite the extensive standardization effort, the intrinsic complexity of 5G-
+AKA—multiple nonces, timestamps, and inter-function messaging across the AMF,
+SMF, and UDM—renders it vulnerable to subtle design flaws that can be hard to
+uncover through conventional testing. Consequently, formal verification has become
+an indispensable tool for establishing the security properties of the protocol. In
+this context, [45] presents a comprehensive analysis of the 5G-AKA protocol using
+the ProVerif tool, a state-of-the-art symbolic verifier for cryptographic protocols.
+
+                                          21
+       Figure 8: Authentication procedure for 5G-AKA. Adapted from [38]
+
+
+The authors model the protocol in the applied 𝜋-calculus, encode the 3GPP-defined
+messages and key-derivation functions, and systematically verify critical properties
+such as mutual authentication, key freshness, and resistance to replay, man-in-the-
+middle, and identity leakage attacks. The verification results reported in [45] confirm
+that the nominal implementation of 5G-AKA satisfies the intended security goals
+under the Dolev-Yao adversary model.
+
+2.3.3 Non-3GPP access security and integration with private 5G cores
+The previous section described the non-roaming 5GC architecture, where UE connects
+to the 5G system using standardized access technology such as 5G New Radio (5G NR)
+through the RAN. To expand coverage, offload traffic, improve indoor connectivity,
+and support new services, the 5G system also supports non-3GPP access, such as
+WLAN networks [35]. This is especially important for IoT deployments, where many
+devices rely on non-cellular communication technologies. A 2024 report [46] shows
+that Wi-Fi accounts for 31% of all IoT connections, while cellular IoT technologies
+(2G, 3G, 4G, 5G, LTE-M, and NB-IoT) represent about 21% of global IoT connections.
+    The 5GC supports connectivity for both trusted and untrusted non-3GPP access
+networks. Untrusted networks connect via the Non-3GPP InterWorking Function
+(N3IWF), while trusted networks use the Trusted Non-3GPP Gateway Function
+(TNGF). These gateway functions interface with the 5GC control plane and user plane
+
+                                          22
+through the standardized N2 and N3 interfaces, enabling secure session management
+and traffic routing. Non-3GPP access networks can advertise the public land mobile
+networks (PLMNs) or standalone non-public networks (SNPNs) for which they provide
+trusted connectivity, allowing UEs to discover and attach to networks that meet their
+connectivity and security requirements [35].
+    Figures 9 and 10 depict the service-based architecture of 5G Core networks for
+untrusted and trusted non-3GPP access, respectively. The primary difference between
+trusted and untrusted access lies in the location of the access point to which the UE
+connects. If the access point resides within the Home Public Land Mobile Network
+(HPLMN), that is, inside the 5G Core network, the access is considered trusted;
+otherwise, it is classified as untrusted.
+
+
+
+
+Figure 9: Non-roaming architecture for 5G Core Network with untrusted non-3GPP
+access. Adapted from [35]
+
+
+
+
+Figure 10: Non-roaming architecture for 5G Core Network with trusted non-3GPP
+access. Adapted from [35]
+
+    To implement the UE and gNB gateway stack for authentication and registration, it
+is essential to understand the network protocol stack used in the control plane. The
+
+                                         23
+protocol stack is organized in layers, where each upper layer relies on and is protected
+by the lower ones. Higher layers handle signaling and session logic, while lower layers
+ensure reliable transport, framing, and physical transmission over the air interface.
+
+
+
+
+Figure 11: Control Plane protocol stack between the UE and the AMF. Adapted
+from [35]
+
+   Fig. 11 shows the protocol used between the UE and the AMF via the 5G access
+network (5G-AN). The stack includes the Non-Access Stratum Mobility Management
+(NAS-MM) for registration, authentication, and mobility control, the Next Generation
+Application Protocol (NG-AP) for signaling between the AMF and gNB, and the Stream
+Control Transmission Protocol (SCTP) for reliable transport of control messages.
+Beneath these layers, the Internet Protocol (IP) and the lower Layer 1 and Layer 2 (L1
+and L2) provide end-to-end connectivity, and the access network protocol layer used
+between the UE and 5G-AN interface.
+
+
+
+
+Figure 12: Control Plane protocol stack before the signalling IPsec SA is established
+between UE and N3IWF. Adapted from [35]
+
+    Fig. 12 illustrates the control plane protocol stack used in untrusted non-3GPP
+access, specifically between the UE and the N3IWF. Initial access occurs before the
+IPSec Security Association (SA) is established, so NAS messages are transferred
+using the EAP-5G or IKEv2 procedures over the underlying access network. After the
+IPSec SA is established, the UE creates a TCP/IP tunnel with the N3IWF to transport
+
+                                          24
+Figure 13: Control Plane after the signalling IPsec SA is established between UE
+and N3IWF. Adapted from [35]
+
+
+NAS and PDU session management messages securely as illustrated in fig. 13. On the
+core network side, the AMF communicates with the N3IWF using the same SCTP
+and NGAP stack via the N2 interface. NAS messages between the AMF and UE are
+encapsulated over this secure tunnel through the N1 interface, ensuring registration,
+authentication, and mobility procedures are reliably delivered over untrusted access
+networks.
+
+
+
+
+Figure 14: Control Plane protocol stack before the NWt connection is established
+between UE and TNGF . Adapted from [35]
+
+
+
+
+Figure 15: Control Plane after the NWt connection is established between UE and
+TNGF. Adapted from [35]
+
+
+                                         25
+    For trusted non-3GPP access, Fig. 14 shows the control plane protocol stack
+between the UE and TNGF. Before the NWt connection is established, NAS messages
+are encapsulated using the vendor-specific EAP-5G procedure, with the link layer
+supporting EAP transport and the AAA interface used between TNAP and TNGF.
+Once the NWt connection is active, a TCP/IP tunnel is established between the UE
+and TNGF, and NAS and session management messages are exchanged over IPSec as
+shown in fig. 15. The AMF communicates with TNGF using SCTP and NGAP via
+the N2 interface, while NAS messages are delivered to the UE over the N1 interface.
+This configuration aligns trusted non-3GPP access with the control plane procedures
+of untrusted access, while providing a secure channel for registration and session
+management.
+
+2.4    NAS and NGAP Message Procedure in 5G-AKA
+Fig. 16 illustrates the exchange of NGAP messages and the encapsulated NAS packets
+during the authentication and registration procedure. A detailed version of the diagram
+can be found in Appendix D.
+
+
+
+
+Figure 16: Sequence diagram of NGAP signaling between the gNB and AMF,
+showing encapsulation of NAS messages.
+
+
+
+
+                                          26
+2.4.1     NAS Message Structure
+The structure of the NAS message is standardized by 3GPP [47]. Table 2 shows an
+example of how a NAS packet is defined in the specification. The field IEI represents
+the Information Element Identifier, used to indicate optional Information Elements
+(IEs) present in the message. The Information Element column specifies the name
+or purpose of each field. The Type/Reference column provides either the type of
+the IE or a cross-reference to its detailed definition in the standard. The Presence
+column indicates whether the field is mandatory (M) or optional (O). The Format
+column specifies how the IE is encoded (e.g., fixed value (V), length-value (LV),
+type-length-value (TLV)). Finally, the Length column describes the size of the field in
+octets or the allowed range.
+
+Table 2: AUTHENTICATION REQUEST message content (adapted from 3GPP TS
+24.501, Table 8.2.2.1.1)
+
+IEI Information Ele-        Type/Reference           Presence Format         Length
+    ment
+        Extended protocol   Extended protocol dis-   M           V           1
+        discriminator       criminator
+        Security header     Security header type     M           V           1/2
+        type
+        Spare half octet    Spare half octet         M           V           1/2
+        Authentication      Message type             M           V           1
+        request message
+        identity
+        ngKSI               NAS key set identifier M             V           1/2
+        Spare half octet    Spare half octet       M             V           1/2
+        ABBA                ABBA                   M             LV          3–n
+21      Authentication      Authentication parame- O             TV          17
+        parameter RAND      ter RAND (5G authen-
+                            tication challenge)
+20      Authentication      Authentication parame- O             TLV         18
+        parameter AUTN      ter AUTN (5G authenti-
+                            cation challenge)
+78      EAP message         EAP message            O             TLV-E       7–1503
+
+    In general, NAS messages follow a common structure. At the start, the Extended
+Protocol Discriminator identifies the protocol family (e.g., 5G mobility management
+or session management) so that the message can be correctly interpreted. The Security
+Header Type specifies whether the message is plain, integrity protected, or both
+encrypted and integrity protected. For secured messages, the plain NAS payload is
+placed after the Message Authentication Code (MAC) and sequence number fields.
+The Type field uniquely identifies the purpose of the plain message (for example,
+Authentication Request or Registration Accept). Some messages also contain a Spare
+
+                                           27
+Half Octet, which is reserved padding space that ensures byte alignment of subsequent
+fields.
+    This standardized structure ensures interoperability between different implemen-
+tations of UEs, gNBs, and 5G Core components by defining an unambiguous format
+for control-plane signaling messages such as the Authentication Request.
+
+2.4.2   NAS Message Exchange
+The function of the IoT-UE stack includes constructing outbound NAS packets as
+well as parsing and processing received NAS messages from the core (i.e., AMF).
+Fig. 17 shows an exchange of 5GS mobility management messages implemented in
+the stack. Since NAS messages may contain different optional Information Elements
+(oIEs) depending on the signaling context, the IoT-UE stack ensures that all necessary
+oIEs are correctly included in transmitted messages, while also parsing and handling
+optional IEs received from the Core during registration and authentication.
+    Table 3 summarizes the Information Elements (IEs) involved in the procedure,
+outlining their purpose, function, and role.
+
+ Table 3: Summary of NAS messages during 5G Registration and Authentication
+
+    NAS Message          Key IEs                     Purpose
+    Registration Re-     ngKSI, 5GS Mobile           Identify security context; UE
+    quest                Identity                    subscription verification
+    Authentication       RAND, AUTN, ABBA            Random challenge and net-
+    Request                                          work authentication
+    Authentication       RES*                        UE response to challenge
+    Response
+    Security Mode        Selected NAS algo-          Negotiate integrity/ciphering
+    Command/Com-         rithms, UE security ca-     parameters
+    plete                pability
+    Registration Ac-     5G-GUTI, Allowed NS-        Confirm registration and as-
+    cept/Complete        SAI/DNN                     sign identifiers
+
+   A detailed breakdown of all IEs in the Registration and Authentication NAS
+messages is provided in Appendix B.
+
+2.4.3   NGAP Message Structure
+NGAP (Next Generation Application Protocol) is the control-plane signaling protocol
+exchanged over SCTP between the AMF and the gNB. In contrast to NAS, NGAP
+is specified using Abstract Syntax Notation One (ASN.1). ASN.1 provides a formal
+description of data structures, their types, and how they relate to one another. Messages
+defined in ASN.1 are transmitted in a binary format using Packed Encoding Rules
+(PER) and can be unambiguously decoded by the receiver.
+    For example, the element UserLocationInformation is defined as a CHOICE,
+meaning that only one of the listed alternatives can be present in a given message.
+
+                                           28
+Figure 17: Sequence diagram of the authentication and registration procedure NAS
+flow between IoT-UE and AMF.
+
+
+U s e r L o c a t i o n I n f o r m a t i o n : : = CHOICE {
+     userLocationInformationEUTRA                          UserLocationInformationEUTRA ,
+     userLocationInformationNR                             UserLocationInformationNR ,
+     userLocationInformationN3IWF                          UserLocationInformationN3IWF ,
+     c h o i c e −E x t e n s i o n s                      P r o t o c o l I E −S i n g l e C o n t a i n e r
+}
+   A second example is the generic definition of an Information Element (IE), which
+uses the SEQUENCE keyword. A SEQUENCE groups several fields together, each with a
+name, type, and constraints.
+P r o t o c o l I E −F i e l d : : = SEQUENCE {
+      id                     P r o t o c o l I E −ID ,
+      criticality Criticality ,
+      value                  P r o t o c o l I E −S i n g l e C o n t a i n e r
+}
+    By using ASN.1 definitions, the structure of each NGAP message can be clearly
+understood and its elements accurately serialized for transmission. Figure 18 illustrates
+how an NGAP message is represented in tabular form within the 3GPP specification.
+In addition to the IE or group name, the tables include supporting fields that ensure
+correct message interpretation and reliable network operation. The Presence, Range,
+IE type and reference, Semantics description, and Criticality columns collectively
+define how each IE is processed and how errors or unknown elements are handled by
+the receiver.
+
+
+
+                                                    29
+Figure 18: Example of the NGAP message UPLINK NAS TRANSPORT as stan-
+dardized in 3GPP specifications.
+
+
+2.5    IoT Security Enhancements Beyond 5G
+Conventional IoT security mechanisms alone are insufficient to meet the unique
+requirements of IIoT, such as low-latency communication, lightweight cryptography,
+and scalability in distributed environments. To address these challenges, recent
+research has focused on domain-specific security mechanisms, including Intrusion
+Detection Systems, blockchain-enabled IIoT, as well as mechanisms to enhance the
+cybersecurity and resilience of 5G- and beyond-enabled IoT systems.
+    IDS techniques monitor network traffic and detect anomalies or malicious behaviors
+using statistical, signature-based, or increasingly, machine learning methods to enhance
+detection accuracy and adaptability in dynamic environments [4]. Recent studies have
+demonstrated effective IDS designs using ensemble learning and optimization-based
+methods to improve precision and scalability in IIoT contexts [7–9]. Meanwhile,
+blockchain has gained attention as a decentralized and tamper-resistant framework
+for ensuring trust, integrity, and secure data management in industrial systems [10].
+Various implementations have applied blockchain for secure threat auditing, edge-
+assisted data protection, and lightweight consensus for mobile or resource-constrained
+devices [11–13]. Although these approaches show strong potential to complement
+5G-based IoT security, they also introduce challenges such as computational overhead,
+latency, and limited compatibility with existing 5G core authentication and management
+protocols [48].
+    There have been a significant number of studies proposing mechanisms to enhance
+the cybersecurity and resilience of 5G- and beyond-enabled IoT systems. A recent
+systematic literature review surveyed 79 research articles in this area [14], highlighting
+several dominant categories of security mechanisms. Specifically, twelve studies
+investigated blockchain-based authentication and trust frameworks for 5G-enabled
+IoT. For example, Aljumah et al. proposed a Blockchain-Based AKA protocol for
+5G networks [49], which improves mutual authentication while mitigating replay
+and man-in-the-middle attacks using distributed trust. In addition, twenty works
+
+                                           30
+focused on applied cryptography and lightweight security primitives. These schemes
+employ digital signatures, hash-chain authentication, or post-quantum cryptographic
+key exchanges to secure massive IoT connectivity under strict latency and energy
+constraints. Finally, two studies adopted graph-theoretical approaches to model and
+assess the resilience of 5G-enabled IoT infrastructures, particularly for smart home
+dependency modeling and connectivity impact analysis.
+    Beyond software-based security mechanisms, hardware-assisted security has gained
+attention due to its low latency and resistance to tampering. Papadopoulos et al. [50]
+presented an FPGA-based implementation of the 5G EAP-AKA’ authentication proto-
+col, demonstrating that hardware acceleration can significantly improve authentication
+efficiency and secure key derivation in 5G systems.
+
+
+3     System Design and Methodology
+3.1    Design Objectives
+While the solutions discussed in 2.5 demonstrate strong theoretical effectiveness in
+addressing security and resilience challenges, their real-world adoption remains limited.
+Many blockchain-based mechanisms demand substantial computational and storage
+resources, which are impractical for constrained IoT and IIoT devices. Similarly, post-
+quantum and advanced cryptographic schemes, though robust against sophisticated
+attacks, introduce considerable latency and processing overhead, hindering deployment
+in lightweight embedded systems. Graph-theoretical models, in turn, provide analytical
+insights but often lack direct applicability as operational security mechanisms.
+     To bridge this gap between theoretical security frameworks and deployable 5G
+IoT architectures, this work aims to design and implement a minimal yet functional
+UE–gNB system architecture that demonstrates secure, standard-compliant integration
+with a commercial 5G Core. The system focuses on offloading most control and
+security operations to the Core while minimizing device-side complexity. Because of
+this aim, and based on the limitations identified in the background review in Section 2.5,
+we specify the following design objectives for the proposed system architecture before
+detailing the implementation.
+     Objective 1: Lightweight and Modular Architecture. The system must maintain
+a minimal software footprint to ensure compatibility with low-power and embedded
+platforms (e.g., Raspberry Pi, Nordic nRF91xx). To achieve this, the UE and gNB
+gateway are designed as modular components implementing only the essential control-
+plane functions—registration, authentication, and session setup— while relying on
+the Core for heavy network management tasks.
+     Objective 2: Core-Dependent Security Offloading. Given the limited resources
+of IoT hardware, authentication, encryption, and session key derivation are delegated
+to the 5G Core’s standardized security procedures (5G-AKA and NAS security). This
+offloading approach reduces computational overhead on devices while preserving
+compliance with 3GPP security specifications.
+     Objective 3: Standard Compliance and Interoperability. The system must
+
+
+                                           31
+adhere strictly to 3GPP-defined interfaces and message formats for NAS and NGAP
+signaling. This ensures interoperability with commercial Core Network implemen-
+tations (e.g., Cumucore 5G Core) and facilitates future integration into industrial
+deployments.
+    Objective 4: Resource-Aware Operation. The architecture should be deployable
+on both general-purpose and embedded systems, allowing comparative evaluation
+under constrained computational and memory conditions. This dual-platform testing
+validates the design’s scalability and efficiency.
+    Objective 5: Transparent IoT-to-5G Integration. The solution should demon-
+strate that existing IoT nodes can register, authenticate, and exchange data through
+a minimal gNB gateway directly with a 5G Core over standard interfaces, without
+requiring proprietary middleware or protocol translation.
+    Objective 6: Experimental Validation and Observability. The system must
+enable traceable and reproducible testing. Packet captures and message traces (e.g.,
+NAS and NGAP logs) are used to verify successful authentication, registration, and
+security context establishment between the IoT-UE and the Core.
+    In summary, these objectives collectively guide the design of a deployable and
+cost-effective 5G-enabled IoT framework that demonstrates secure, standards-based
+connectivity for resource-limited devices in LAN-scale industrial environments. This
+section establishes the foundation upon which the subsequent implementation and
+evaluation are built.
+    In the prototype implementation, both the IoT-UE and the gNB gateway are
+hosted on Raspberry Pi platforms. The device reflects representative non-cellular,
+non-3GPP IoT and edge devices that are widely used in IoT prototyping. They provide
+generic IP connectivity toward the 5GC and offer a programmable environment for
+C-based development. At the same time, the software components are designed to
+be portable to more constrained platforms such as Nordic nRF91xx-based boards for
+future deployments.
+
+3.2    System Architecture Overview
+Figure 19 illustrates the system architecture. The system is composed of three main
+components: (i) the IoT-UE, representing a resource-constrained device (e.g., Nordic
+nRF91xx), (ii) the gNB gateway, implemented in C as a lightweight interface between
+the UE and 5GC, and (iii) the 5G Core, comprising the AMF, AUSF, and SMF
+services.
+    The gNB gateway establishes an SCTP association with the AMF to exchange
+NGAP signaling messages. The UE communicates with the gNB gateway through
+a simple socket interface, which forwards encapsulated NAS messages to the 5G
+Core. Control-plane security is provided through NAS integrity and ciphering once
+authentication succeeds. This modular separation allows IoT devices to leverage the
+Core’s native authentication and mobility management functions without implementing
+the full 5G radio and RRC stack.
+    The proposed architecture is designed with a focus on modularity, interoperability,
+and deployability within constrained environments. The system is divided into three
+
+                                          32
+                        Figure 19: System Architecture
+
+
+logical tiers—the IoT-UE, the gNB gateway, and the 5G Core—to balance performance,
+standard compliance, and implementation simplicity.
+
+   • Modularity and Isolation: Separating the IoT-UE from the 5G Core through a
+     lightweight gNB gateway maintains clear boundaries between device logic and
+     network signaling. This modular separation simplifies debugging, testing, and
+     protocol tracing, while allowing each component to evolve independently.
+
+   • Protocol Transparency: The gNB gateway serves as a transparent relay for
+     NAS-over-NGAP signaling, ensuring full compliance with 3GPP specifications
+     without requiring proprietary interfaces or modifications to the 5G Core. This
+     guarantees interoperability with standard Core implementations such as OAI
+     and Open5GS.
+
+   • Hardware Efficiency: Deploying the UE and gateway on platforms such as
+     the Raspberry Pi and Nordic nRF91xx enables evaluation across a range of
+     hardware capabilities—from general-purpose edge devices to more constrained
+     embedded systems. This separation ensures that the gNB gateway handles
+
+
+                                       33
+        signaling and processing tasks, avoiding unnecessary computational load on
+        lightweight IoT endpoints.
+
+    • Scalability and Maintainability: The modular gateway structure supports easy
+      extension to multiple UEs by maintaining separate IMSI contexts. This design
+      avoids the complexity of monolithic architectures, which are harder to scale,
+      maintain, and port across heterogeneous hardware.
+
+    • Security and Reliability: By leveraging the 5G Core’s built-in authentication
+      and key management procedures, the system minimizes device-side security
+      complexity while ensuring end-to-end protection. Designs that replicate authen-
+      tication at the edge increase the attack surface and introduce synchronization
+      challenges.
+
+   Overall, the selected architecture provides an optimal balance between minimalism
+and standard compliance, enabling secure, scalable, and practical integration of
+constrained IoT devices with 5G Core networks.
+
+3.2.1    IoT User Equipment (UE)
+The IoT UE represents a constrained or embedded device capable of initiating
+registration and authentication procedures toward the 5GC. At the logical level,
+the UE maintains a lightweight credential store—referred to as a software SIM
+(SoftSIM)—which holds essential identifiers such as the Mobile Country Code (MCC),
+Mobile Network Code (MNC), and Subscription Permanent Identifier (SUPI). The
+store also includes authentication material such as the long-term key 𝐾 and operator
+variant configuration 𝑂𝑃𝑐 required for the 5G-AKA algorithm. These credentials
+enable the UE to participate in the standard authentication and key agreement process
+as defined in 2.4. In real-world deployments, hardware-based SIM or eSIM modules,
+such as those supported by Nordic’s nRF91xx series, would securely store these
+credentials and generate the Subscription Concealed Identifier (SUCI) using public
+key encryption. The UE thus acts as the endpoint of trust within the system, initiating
+5G signaling while remaining agnostic to the transport layer beneath.
+
+3.2.2    gNB Gateway
+The gNB gateway functions as a lightweight intermediary that bridges the IoT UE
+with the 5G Core. It relays NAS signaling messages transparently between the UE
+and the AMF while preserving UE-specific identifiers such as the RAN_UE_NGAP_ID
+and AMF_UE_NGAP_ID. This component does not perform full RAN operations but
+provides sufficient logic to emulate a minimal gNB control-plane stack, facilitating
+authentication and registration through standard NAS/NGAP procedures.
+   The gateway is designed to operate within the trusted part of the 5G Core network,
+enabling direct AMF interaction without requiring the non-3GPP N3IWF interface,
+whose implementations are often incomplete or inconsistent. This simplifies deploy-
+ment and ensures broad compatibility across 5GC vendors, including OpenAirInterface
+
+                                          34
+(OAI) and Cumucore, and supports experimentation within private edge and industrial
+LAN environments.
+
+3.2.3   5G Core Network (5GC)
+The 5GC provides the control and user plane functions necessary for managing
+authentication, registration, and data sessions. The system supports integration
+with both the open-source OpenAirInterface 5GC [51, 52] and the commercial
+Cumucore 5GC [53]. OAI’s service-based architecture (SBA) enables modular
+experimentation through standard APIs, while Cumucore’s NFV-based design offers
+containerized and scalable deployments suitable for private networks. Both cores
+provide essential network functions such as the AMF, SMF, and AUSF for executing
+5G-AKA authentication and mobility management. Additionally, Cumucore extends
+the architecture with advanced features including TSN and network slicing to support
+industrial applications [53].
+    Overall, the modular arrangement of UE, gNB gateway, and 5GC components
+allows the system to replicate real 5G authentication and registration flows, while
+remaining lightweight and interoperable across multiple platforms.
+
+3.3     Control Plane Signaling and Security Mechanisms
+The implemented system follows the standardized 5G control-plane signaling pro-
+cedures defined in 3GPP specifications. In particular, Non-Access Stratum (NAS)
+messages conform to the TLV/LV encoding format specified in 3GPP TS 24.501,
+while NGAP messages between the gNB and the AMF are encoded using ASN.1
+Packed Encoding Rules (PER). Each message exchange advances the UE through
+a well-defined set of protocol states, including registration initiation, authentication
+challenge, security mode activation, and registration completion, ensuring compliance
+with the 5G-AKA-based registration procedure.
+    To ensure robustness, the workflow incorporates message validation, state syn-
+chronization, and timeout-based retransmission handling. Security mechanisms are
+integrated following 3GPP TS 33.501 [38], which define the confidentiality and in-
+tegrity protection of NAS signaling. Encryption is achieved using the NEA2 algorithm,
+based on AES in counter mode (CTR), while integrity protection is provided by the
+NIA2 algorithm employing AES-CMAC. These operations ensure confidentiality,
+authenticity, and replay protection for all control-plane exchanges between the UE and
+the core network.
+    Key derivation and authentication processes follow the Milenage algorithm set
+as defined in 3GPP TS 33.102 [44] and TS 33.501 [38]. The system computes the
+functions 𝑓1 , 𝑓1∗ , 𝑓2 – 𝑓5 , 𝑓5∗ for generating the MAC, RES, and CK, IK. Higher-level
+derivations, including 𝐾 𝐴𝑈𝑆𝐹 , 𝐾𝑆𝐸 𝐴𝐹 , and 𝐾 𝐴𝑀 𝐹 , are implemented to establish the
+secure context required for NAS message protection.
+    Figure 20 illustrates the end-to-end NAS security procedure and message flow
+between the IoT UE, gNB gateway, and AMF. Each stage highlights where key
+derivation, encryption (NEA2), and integrity protection (NIA2) are applied within
+
+                                          35
+Figure 20: Overview of the 5G NAS authentication and registration procedure
+between the IoT UE and the AMF, showing key derivation, encryption (NEA2), and
+integrity protection (NIA2) steps.
+
+
+the authentication and registration sequence. Together, these mechanisms ensure that
+the prototype accurately reproduces 5G-compliant security behavior while enabling
+detailed experimentation in IoT–5G integration scenarios.
+
+
+4     Implementation and Evaluation
+This section describes the implementation of the proposed IoT-UE and minimal gNB
+gateway and evaluates the system. First, the system setup are introduced. Then, the
+implementation details of the UE and gateway are outlined, followed by an experimental
+evaluation that examines functionality and interoperability with different 5G Core
+implementations, registration performance and basic scalability, and security related
+behaviour as observed from NAS and NGAP signaling traces.
+
+4.1    System Setup
+Fig. 21 presents the setup of this demonstration. The system architecture consists
+of IoT UEs, a minimal gNB gateway, and a commercial 5G Core. The UE runs
+a lightweight NAS stack in C, implementing the essential registration and session
+establishment procedures, with authentication based on 5G-AKA and NAS security
+using NIA2 and NEA2 [35, 47]. Credentials (IMSI, K, OPc, SQN) are stored locally
+on the device. The gNB gateway establishes NGAP signaling over SCTP, relays NAS
+
+
+                                         36
+Figure 21: System setup of the demonstration, consisting of IoT UEs, a minimal
+gNB gateway, and a commercial 5G Core.
+
+
+messages, and maintains basic UE context. The Core is provided by Cumucore Oy,
+that runs on a PC host and is connected with the gNB device over Ethernet. Raspberry
+Pi devices act as UEs, connecting via Wi-Fi through the gNB node to achieve full
+end-to-end registration with the 5G Core. The software implementation of the IoT UE
+and gNB gateway is organized into modular components to facilitate maintainability
+and clarity. The UE stack includes a NAS message encoder/decoder, a security
+module implementing 5G-AKA and NAS integrity/ciphering (NIA2/NEA2), and a
+state machine managing registration, authentication, and security procedures [35].
+The gNB gateway acts primarily as a transparent relay, encapsulating NAS messages
+into NGAP PDUs and forwarding them over SCTP to the AMF while maintaining UE
+context for signaling purposes.
+    In the demo setup, the gNB gateway establishes an NGAP association with the AMF
+and acts as a transparent relay for NAS signaling between the IoT UE and the Core.
+The IoT UE generates and transmits the required NAS messages (Registration Request,
+Authentication Response, Security Mode Complete, and Registration Complete), while
+the gNB maintains the minimal UE context and forwards Core-initiated procedures
+such as Initial Context Setup and PDU Session Setup.
+    All signaling exchanges were captured and analyzed in Wireshark, as shown
+in Fig. 22. Wireshark automatically recognizes, classifies, and decodes standard
+NAS and NGAP messages, and the successful decoding of all captured packets
+confirms the correctness of the protocol implementation. The traces clearly show the
+UE authentication challenge (RAND, AUTN), the computed response (RES*), the
+activation of NAS security, and the establishment of a PDU session. This provides a
+transparent view of how a constrained IoT device interacts with the 5G Core through
+the minimal gNB gateway.
+    Fig. 23 demonstrates the network architecture of the implementation with an
+
+
+                                        37
+Figure 22: Wireshark trace of NAS and NGAP signaling between the IoT UE, gNB
+gateway, and 5G Core.
+
+
+additional established data plane with Wireguard VPN tunnel between the 2 Raspberry
+Pis. This can be done using the encrypted NAS channel where the 5G core transports
+the VPN configuration to the 2 UEs. The configuration is only exposed to the UE that
+have the ciphering and encrypting key derive from KAMF.
+
+
+
+
+Figure 23: System architecture of the demonstration, consisting of IoT UEs stack, a
+minimal gNB gateway, and a commercial 5G Core.
+
+
+
+                                        38
+4.2     Implementation Details
+4.2.1   UE implementation and authentication handling
+In the system, the IoT UE maintains a lightweight SoftSIM implemented as a local
+credential database. The store contains the essential identifiers and authentication
+material needed to execute the 5G-AKA procedure. In the code, the information is
+stored in a global structure called UE.
+    For example, the UE stores the Mobile Country Code (MCC = 208) and Mobile
+Network Code (MNC = 95), together forming the PLMN identifier. The Mobile
+Subscriber Identification Number (MSIN) is generated programmatically and combined
+with the PLMN to form the SUPI. The database schema also includes the long-term key
+𝐾 and operator variant algorithm configuration 𝑂𝑃𝑐 , which are required inputs for the
+Milenage functions. For demonstration purposes, these values are statically assigned
+in the implementation. Additional fields include the International Mobile Equipment
+Identity Software Version (IMEISV), session counts for uplink and downlink NAS
+security, and the Single Network Slice Selection Assistance Information (S-NSSAI)
+with slice/service type (SST = 222) and slice differentiator (SD = 00007b). The default
+Data Network Name (DNN) is set to ‘default”.
+    The configuration is for seamless operation with OAI-5GCN, which database is
+already populated with such subscribers’ configuration. Cumucore 5G core can be
+configured with the same configuration. Therefore, we can run the same IoT UE+gNB
+simulation stack with both cores. This eases up the developing and testing process.
+    The SUPI is formatted as a concatenation of MCC, MNC, and MSIN. In
+real deployments, this permanent identifier would be protected by means of SUCI
+generation, using the UE’s physical SIM or eSIM to apply public key encryption
+according to 3GPP TS 33.501. The nRF91xx chipset series, for example, supports both
+nano-SIM and embedded SIM (eSIM), allowing secure storage and SUCI generation
+in hardware.
+    Table 4 summarizes the key fields in the credential store.
+
+              Table 4: IoT UE credential store fields in the prototype.
+
+           Field                  Example value
+           MCC / MNC              208 / 95
+           MSIN                   0000001234
+           SUPI                   208950000001234
+           Key 𝐾                  0c0a34601d4f07677303652c0462535b
+           𝑂𝑃𝑐                    63bfa50ee6523365ff14c1f45f88737d
+           IMEISV                 35609204079514
+           S-NSSAI (SST/SD)       222 / 00007b
+           DNN                    default
+
+  The authentication of IoT UEs follows the 5G-AKA procedure, relying on the
+3GPP-specified Milenage algorithms (functions 𝑓 1- 𝑓 5) and the standardized HMAC-
+SHA256 KDF. The complete pipeline ensures both mutual authentication and the
+
+                                          39
+derivation of session keys.
+    Upon receiving an Authentication Request, the UE parses the included
+parameters: RAND, AUTN (detailed structure can be observed in B), and ABBA. The
+response is computed as follows:
+
+   1. Using 𝑓 2- 𝑓 5 with inputs (𝐾, 𝑂𝑃𝑐, 𝑅 𝐴𝑁 𝐷), the UE derives 𝐶𝐾, 𝐼𝐾, 𝐴𝐾, and
+      𝑅𝐸 𝑆.
+
+   2. The sequence number is recovered as 𝑆𝑄𝑁 = (𝑆𝑄𝑁 ⊕ 𝐴𝐾) ⊕ 𝐴𝐾.
+
+   3. The network is authenticated by recomputing 𝑀 𝐴𝐶_𝐴 = 𝑓 1(𝐾, 𝑂𝑃𝑐, 𝑅 𝐴𝑁 𝐷, 𝑆𝑄𝑁, 𝐴𝑀 𝐹)
+      and verifying it against the received 𝑀 𝐴𝐶 in AUTN.
+
+   4. If validation succeeds, the UE derives the anchor key material: 𝐾 𝐴𝑈𝑆𝐹 , 𝐾𝑆𝐸 𝐴𝐹 ,
+      and 𝐾 𝐴𝑀 𝐹 using the HMAC-SHA256 KDF.
+
+   5. Finally, the UE computes the enhanced response 𝑅𝐸 𝑆 ∗ = KDF(𝑅 𝐴𝑁 𝐷, 𝑅𝐸 𝑆, 𝐶𝐾, 𝐼𝐾),
+      which is sent back to the AMF for verification.
+
+   This sequence ensures that the UE authenticates the core network and that the
+5GC can in turn verify the UE, while producing fresh session keys for 𝑁 𝐼 𝐴2 and
+𝑁 𝐸 𝐴2. After successful mutual authentication using the Milenage functions, the UE
+and the 5GC derive a set of hierarchical security keys in accordance with TS 33.501.
+The derivation process begins with the anchor key 𝐾 𝐴𝑈𝑆𝐹 , computed as a HMAC-
+SHA256-based KDF from the shared long-term key 𝐾 and the random challenge
+𝑅 𝐴𝑁 𝐷:
+
+               𝐾 𝐴𝑈𝑆𝐹 = KDF(𝐾, FC = 0𝑥6𝐴, P0 = 𝑅 𝐴𝑁 𝐷, L0 = 128)
+    Subsequently, the secondary key 𝐾𝑆𝐸 𝐴𝐹 is derived from 𝐾 𝐴𝑈𝑆𝐹 together with the
+serving network name 𝑆𝑁 − 𝑛𝑎𝑚𝑒:
+
+           𝐾𝑆𝐸 𝐴𝐹 = KDF(𝐾 𝐴𝑈𝑆𝐹 , FC = 0𝑥6𝐵, P0 = 𝑆𝑁-name, L0 = 128)
+   The NAS keys for encryption (𝐾 𝑁 𝐴𝑆𝑒𝑛𝑐 ) and integrity (𝐾 𝑁 𝐴𝑆𝑖𝑛𝑡 ) are then obtained
+from 𝐾 𝐴𝑀 𝐹 , which itself is derived as
+
+              𝐾 𝐴𝑀 𝐹 = KDF(𝐾𝑆𝐸 𝐴𝐹 , FC = 0𝑥6𝐶, P0 = 𝑆𝑄𝑁, L0 = 128)
+   Mathematically, the KDF is implemented via HMAC-SHA256 as follows:
+
+   1. Concatenate the function code FC with all input parameters 𝑃0 , 𝑃1 , . . . , 𝑃𝑛 .
+
+   2. Apply HMAC-SHA256 with the input key (e.g., 𝐾 or 𝐾 𝐴𝑈𝑆𝐹 ) to produce a
+      256-bit output.
+
+   3. Truncate or expand the result to the desired key length.
+
+
+
+                                           40
+The HMAC-SHA256 KDF and Milenage computations are implemented in our custom
+C functions. The Milenage primitives ( 𝑓 1– 𝑓 5) produce intermediate outputs such as
+𝑅𝐸 𝑆, 𝐶𝐾, 𝐼𝐾, and 𝐴𝐾, which are then fed into the HMAC-SHA256 KDF to generate
+the hierarchical keys.
+    This procedure guarantees that each session has fresh, cryptographically inde-
+pendent keys for 𝑁 𝐸 𝐴2, 𝑁 𝐼 𝐴2, and inter-network authentication. The mathematical
+combination of AES-based Milenage outputs and HMAC-SHA256 KDF ensures
+strong one-way key derivation, resistant to replay and impersonation attacks[45].
+
+4.2.2   gNB gateway integration and message forwarding
+The gNB gateway implements the essential NG-RAN control-plane procedures required
+for 5G UE registration and session management, including NG-Setup, Initial Context
+Setup, and PDU Session Setup. During NG-Setup, the gNB establishes the NG
+interface with the AMF by exchanging NG-Setup Request and Response messages to
+configure the RAN node. Upon receiving the Initial UE Message from a connected UE,
+the gNB allocates the UE-specific context and resources, enabling subsequent NAS
+message exchanges. For data connectivity, the gNB supports PDU session creation by
+constructing and routing PDU Session Establishment Request and Response messages.
+    Each UE context maintains the current state of the UE in the registration, authenti-
+cation, security, and PDU session establishment procedures. NAS messages are relayed
+transparently between the UE and AMF: messages from the UE are encapsulated in
+the appropriate NGAP container and forwarded to the AMF, while NAS messages
+from the AMF are decapsulated and delivered to the correct UE context. The gNB also
+handles connection management, including accepting new UE connections, cleaning
+up disconnected UEs, and retransmitting pending messages if required.
+    As shown in Fig. 24, the gNB operates using a minimal event-driven loop. After
+initializing its communication sockets, the gNB continuously polls for events from
+either the UE or the AMF. When receiving uplink NAS messages from a UE, it
+wraps them in NGAP and forwards them to the AMF, advancing the UE state as
+appropriate. Downlink NAS messages from the AMF are extracted and delivered
+to the corresponding UE. This flowchart abstracts the detailed protocol operations,
+highlighting the runtime control logic and NAS forwarding behavior of the gNB
+simulation.
+
+4.2.3   5GC configuration and interoperability validation
+The OAI 5GC is deployed on an Ubuntu laptop. Each network function is developed in a
+separate repository, such as oai-cn5g-amf, oai-cn5g-smf, and so on [52]. To build
+the complete core network, a federation repository called oai-cn5g-fed is provided.
+This repository includes the network components as submodules, a SQL database
+preloaded with 100 authentication subscriptions, YAML files for building network
+containers using Docker, and a Python script to orchestrate multiple docker-compose
+configurations corresponding to different network topologies.
+
+
+
+                                          41
+Figure 24: Simplified gNB runtime flowchart showing socket initialization, event
+polling, and NAS routing.
+
+
+    Before running docker-compose, the Docker images of the 5GC network com-
+ponents must be built. Users can either pull prebuilt images from the OAI Software
+Alliance Docker Hub [54] or build the images from source code. In this work, since
+the IoT-UE and gNB stacks mainly interact with the AMF, we opted to use prebuilt
+images for all components except the AMF. This allows us to modify the AMF source
+
+                                       42
+code for testing, logging, or exposing internal information, significantly facilitating
+development. Additionally, the deployment YAML files must be reconfigured to
+expose the correct SCTP ports externally, as the default configuration only allows
+access from other Docker containers.
+    For this study, the provided “basic with VPP-UPF” topology was used. This
+topology includes the essential 5G Core Network Functions: AMF, SMF, NRF,
+AUSF, UDM, UDR, and the VPP-based UPF. The deployment tool launches these
+containerized network functions, establishes their virtual network interconnections,
+and optionally starts packet capture processes. During initialization, the helper script
+performs automated health checks to ensure that each component reaches an operational
+state.
+    After deploying the core network, the logs of the network components can be
+monitored to validate the authentication and registration procedures. Fig. 25 shows
+the logs of the oai-amf component after successfully registering two UEs.
+
+
+
+
+Figure 25: Logs of the OAI AMF component after successful registration of two
+UEs.
+
+    The Cumucore 5GCN is provided by the company in the form of a binary package,
+accompanied by an installation bash script that automates the setup process. For
+installation, a dedicated PC is prepared and booted with Ubuntu Server 24.04 LTS.
+    After installation, unlike OAI 5GCN, which comes with a preconfigured database,
+the Cumucore 5GCN requires proper configuration to work with our stack. This
+includes setting the AMF’s network slices, tracking area codes, allowed PLMNs,
+selecting ciphering and integrity algorithms, configuring the IP address exposed via
+the Ethernet connection, adding authentication subscriptions, and activating the core
+with the license token provided by the company. Although some configurations require
+editing files directly in the core directory, Cumucore provides a user-friendly GUI
+accessible through a web browser, which simplifies these tasks.
+    Additionally, the GUI allows for the monitoring of subscribers in an organized
+manner, as illustrated in Fig. 26.
+
+4.3    Evaluation and Results
+This section evaluates the proposed IoT-UE and minimal gNB gateway through
+three categories of tests: (i) functionality, (ii) performance, and (iii) security-related
+behavior. The goal is to verify correct protocol operation, quantify registration latency
+under different conditions, and demonstrate secured data-plane communication.
+
+
+
+                                           43
+Figure 26: The GUI of Cumucore 5GCN after successful registration of two UEs.
+
+
+4.3.1   Functionality Validation
+Functionality tests focus on verifying that the proposed system correctly executes
+the 5G registration and authentication workflow. Using Wireshark, all NAS and
+NGAP messages exchanged between the IoT-UE, the gNB gateway, and the 5G Core
+were captured and automatically decoded. This confirms the correctness of message
+encoding, UE identifier handling, and the overall protocol state machine.
+    Figure 27 shows representative traces. The top portion illustrates the full 5G-AKA
+procedure, including the authentication challenge, the UE response, the activation of
+NAS security, and subsequent encrypted NAS exchanges. The lower portion shows
+encrypted WireGuard packets exchanged between two IoT UEs, validating data-plane
+functionality after successful registration.
+
+4.3.2   Performance Evaluation
+Performance tests measure end-to-end registration and authentication time under
+different hardware platforms, 5G Core implementations, and UE scaling conditions.
+    We evaluate three parameters:
+
+    • UE scaling: A single UE performs 100 registrations, and 100 UEs (100 IMSIs)
+      register sequentially.
+
+    • Hardware: (i) Ubuntu laptop and (ii) Raspberry Pi 5.
+
+    • 5G Core: Cumucore 5GC (commercial) and OAI 5GC (open-source).
+
+    Figure 28 presents average registration delays for all configurations. Measure-
+ment labels follow the format <5GCN>_<UE-scale>_<platform>. Table 5 provides
+detailed statistics (mean, standard error of the mean (SEM), standard deviation, and
+
+                                         44
+                                                    NGAP setup
+                                                    handshake
+
+
+
+
+                                                                    Authentication and Registration Procedure
+
+
+
+
+                                                                           Captured WireGuard-encrypted data packet
+
+
+
+
+            Encrypted NAS packet encapsulated in NGAP packet
+
+
+
+
+Figure 27: Wireshark captures illustrating 5G control-plane signaling (5G-AKA and
+encrypted NAS) and secured data-plane traffic over a WireGuard VPN tunnel.
+
+range). Table 6 additionally reports mean/min/max values normalized to the best
+(lowest) value in each column.
+    The Cumucore 5GC shows stable performance with registration delays of 0.07–
+0.08 s and a consistent SEM of ≈ 0.005 s across all conditions. This reflects predictable
+commercial-grade control-plane behavior.
+    The OAI 5GC exhibits shorter delays (0.02–0.03 s) with much lower variance,
+largely due to its simplified internal procedures and limited feature set. Both cores
+demonstrate full interoperability with the proposed IoT-UE and gNB gateway.
+
+
+
+
+Figure 28: Mean and standard error of end-to-end authentication time across platforms
+and 5G Core implementations (seconds).
+
+
+                                                               45
+Table 5: Statistical summary of registration delay across configurations (milliseconds).
+
+      Metric                      Mean     SEM          Std     Min       Max       n
+      cumucore_100ue_raspi         72.70    4.86       48.64   58.26    551.61   100
+      cumucore_100ue_ubuntu        78.50    4.75       47.55   55.38    535.06   100
+      cumucore_1ue_raspi           72.30    4.91       49.08   57.35    555.58   100
+      cumucore_1ue_ubuntu          73.00    4.91       49.08   50.02    550.67   100
+      oai_100ue_raspi              33.60    0.54        5.41   22.31     53.67   100
+      oai_100ue_ubuntu             30.40    0.59        5.88   21.48     59.12   100
+      oai_1ue_raspi                26.60    0.46        4.63   17.84     46.44   100
+      oai_1ue_ubuntu               27.30    0.66        6.60   19.98     62.70   100
+
+Table 6: Mean/min/max registration delay normalized by the best (lowest) value in
+each column (dimensionless). Best values: mean = 26.60 ms, min = 17.84 ms, max =
+46.44 ms (oai_1ue_raspi).
+
+        Metric                        Mean / best       Min / best     Max / best
+        cumucore_100ue_raspi                    2.73           3.27        11.88
+        cumucore_100ue_ubuntu                   2.95           3.10        11.52
+        cumucore_1ue_raspi                      2.72           3.21        11.96
+        cumucore_1ue_ubuntu                     2.74           2.80        11.86
+        oai_100ue_raspi                         1.26           1.25         1.16
+        oai_100ue_ubuntu                        1.14           1.20         1.27
+        oai_1ue_raspi                           1.00           1.00         1.00
+        oai_1ue_ubuntu                          1.03           1.12         1.35
+
+
+   To test control-plane robustness, we introduce concurrent user-plane traffic using
+iperf3. As shown in Fig. 29, registration latency remains stable under load for both
+5GC implementations. This demonstrates correct control–user plane separation and
+confirms that the gateway performs reliably in realistic deployment scenarios.
+
+4.3.3   Security-Related Evaluation
+Beyond the correct activation of NAS security, we demonstrate a secured data-plane
+tunnel between two IoT UEs. The gNB gateway relays WireGuard configuration
+messages, enabling the establishment of an encrypted VPN tunnel. All resulting
+traffic was verified through Wireshark captures and iperf3 throughput tests (Fig. 30),
+confirming correct setup and stable encrypted communication.
+
+4.4     Discussion
+The implementation of this system involves multiple technologies and platforms,
+which required careful planning and integration to harmonize the overall architecture.
+
+
+                                           46
+  Figure 29: Impact of user-plane traffic on registration performance (seconds).
+
+
+
+
+      (a) Cumucore 5GC under load                   (b) OAI 5GC under load
+
+
+
+
+      (a) WireGuard status on UE1                 (b) WireGuard status on UE2
+
+
+
+
+                    (c) Encrypted WireGuard packets in Wireshark
+
+   Figure 30: Demonstration of secured data-plane tunneling with WireGuard.
+
+
+The components of the implementation include various hardware devices, such as an
+Ubuntu laptop, a Raspberry Pi, and an Ubuntu server PC, interconnected through both
+wired and wireless interfaces. Ensuring seamless communication and interoperability
+
+
+                                        47
+between these heterogeneous devices posed significant technical challenges.
+    These challenges, however, also provided useful insights into the practicality of
+the proposed design. First, the split between IoT-UE, gNB gateway, and 5GC made
+it easier to isolate and debug faults. Second, running the C-based NGAP stack on
+a Raspberry Pi shows that the control-plane design is feasible on resource-limited
+hardware, though CPU and I/O limits matter for larger UE counts. It has low computing
+and memory needs, making it accessible to low-power IoT platforms. It opens up
+the possibility, with no changes to the existing Core network, to use it to manage
+IoT nodes in IoT platforms such as LiFi, DECT-2020 NR, or backscatter. Third,
+successful interoperability with both commercial and open-source 5G Cores indicates
+that following NAS/NGAP specifications closely is sufficient to avoid vendor-specific
+adaptations.
+    Overall, the result shows that a lightweight UE and gateway architecture can deliver
+standards-compliant 5G integration for IoT devices without specialized 5G hardware.
+This suggests a general deployment pattern in which small, programmable gateways
+bridge heterogeneous, non-3GPP IoT platforms to private 5G networks. The same
+approach can be applied over different short range access technologies, such as LiFi,
+DECT-2020 NR, or backscatter, in industrial and campus environments. Consequently,
+the design provides a practical blueprint for extending 5G-grade security and control
+to diverse IoT deployments, while its use of inexpensive off-the-shelf hardware enables
+low-cost, rapid deployment.
+
+
+5    Conclusion and Future Work
+In this work, we demonstrated a lightweight C-based implementation of an IoT
+UE and gNB gateway that can register directly with a commercial 5G Core. By
+focusing primarily on NAS and NGAP signaling, our system avoids the complexity
+and overhead of full protocol stacks while maintaining full interoperability with the
+5GC. The evaluation results show that even constrained devices such as Raspberry Pi
+and embedded development kits can reliably perform registration and authentication
+with carrier-grade infrastructure. This validates the feasibility of securely integrating
+IoT platforms into next-generation mobile networks without relying on heavyweight
+gateways or proprietary solutions.
+    Our contributions align with the long-term vision of 6G networks, particularly in
+enabling massive IoT connectivity, supporting heterogeneous access, and promoting
+security-driven orchestration. By demonstrating that lightweight devices can offload
+authentication, session management, and traffic control to the 5G Core, we provide a
+practical model for scalable and trustworthy IoT-to-5G integration in industrial and
+enterprise scenarios.
+    For future work, we plan to extend our implementation into a hybrid architecture
+that leverages DECT NR+ for control signaling of NAS packets between the IoT UE
+and gNB, while maintaining Wi-Fi for the data plane. Since DECT NR+ is designed
+for URLLC, this split-plane setup would ensure robust and low-latency delivery of
+control and management messages, leading to faster registration, authentication, and
+
+                                           48
+session updates. Meanwhile, the Wi-Fi data plane would continue to support bulk
+traffic efficiently without congesting 5G signaling resources. Such a design would
+optimize spectrum usage, enhance responsiveness for time-critical IoT applications,
+and improve overall system robustness in industrial or enterprise deployments.
+    This evolution of our system not only addresses immediate deployment needs
+but also anticipates 6G objectives by (i) integrating diverse spectrum and access
+technologies, (ii) improving responsiveness and reliability for time-sensitive IoT
+scenarios, and (iii) ensuring scalable, secure, and resilient operation in heterogeneous
+environments.
+
+
+References
+ [1] R. Salama et al. “(Benefits of Internet of Things (IoT) Applications in Health
+     care - An Overview)”. In: 2023 International Conference on Computational
+     Intelligence, Communication Technology and Networking (CICTN). 2023,
+     pp. 778–784. doi: 10.1109/CICTN57981.2023.10141452.
+ [2] N. N. Dlamini and K. Johnston. “The use, benefits and challenges of using
+     the Internet of Things (IoT) in retail businesses: A literature review”. In:
+     2016 International Conference on Advances in Computing and Communication
+     Engineering (ICACCE). 2016, pp. 430–436. d o i: 10.1109/ICACCE.2016.
+     8073787.
+ [3] L. Fetahu, A. Maraj, and A. Havolli. “Internet of Things (IoT) benefits,
+     future perspective, and implementation challenges”. In: 2022 45th Jubilee
+     International Convention on Information, Communication and Electronic
+     Technology (MIPRO). 2022, pp. 399–404. d o i: 10.23919/MIPRO55190.
+     2022.9803487.
+ [4] K. Bansal and A. Singhrova. “Review on intrusion detection system for
+     IoT/IIoT -brief study”. eng. In: Multimedia tools and applications 83.8 (2024),
+     pp. 23083–23108. issn: 1573-7721.
+ [5] Y. Lu. “Industry 4.0: A survey on technologies, applications and open research
+     issues”. In: Journal of Industrial Information Integration 6 (2017), pp. 1–10.
+     i s s n: 2452-414X. d o i: https://doi.org/10.1016/j.jii.2017.04.
+     005. u r l: https://www.sciencedirect.com/science/article/pii/
+     S2452414X17300043.
+ [6] E. P. I. ( 2. ). Ericsson Mobility Report, June 2025. Company Report. Available
+     at: https://www.ericsson.com/en/reports-and-papers/mobility-
+     report/reports. Ericsson, July 2025.
+ [7] A. N. Jahromi et al. “Toward Detection and Attribution of Cyber-Attacks in
+     IoT-Enabled Cyber–Physical Systems”. In: IEEE Internet of Things Journal
+     8.17 (2021), pp. 13712–13722. doi: 10.1109/JIOT.2021.3067667.
+
+
+
+
+                                          49
+ [8] S. M. Kasongo. “An Advanced Intrusion Detection System for IIoT Based
+     on GA and Tree Based Algorithms”. In: IEEE Access 9 (2021), pp. 113199–
+     113212. doi: 10.1109/ACCESS.2021.3104113.
+ [9] M. Mohy-Eddine et al. “An Ensemble Learning Based Intrusion Detection
+     Model for Industrial IoT Security”. In: Big Data Mining and Analytics 6.3
+     (2023), pp. 273–287. doi: 10.26599/BDMA.2022.9020032.
+[10] A. Ayub Khan et al. “Internet of Things (IoT) Security With Blockchain Tech-
+     nology: A State-of-the-Art Review”. In: IEEE Access 10 (2022), pp. 122679–
+     122695. doi: 10.1109/ACCESS.2022.3223370.
+[11] W. Zhang, Y. Bai, and J. Feng. “TIIA: A blockchain-enabled Threat Intelligence
+     Integrity Audit scheme for IIoT”. In: Future Generation Computer Systems
+     132 (2022), pp. 254–265. i s s n: 0167-739X. d o i: https://doi.org/10.
+     1016/j.future.2022.02.023. u r l: https://www.sciencedirect.
+     com/science/article/pii/S0167739X22000723.
+[12] Y. Wu, H.-N. Dai, and H. Wang. “Convergence of Blockchain and Edge
+     Computing for Secure and Scalable IIoT Critical Infrastructures in Industry
+     4.0”. In: IEEE Internet of Things Journal 8.4 (2021), pp. 2300–2317. d o i:
+     10.1109/JIOT.2020.3025916.
+[13] P. Bhattacharya et al. “MB-MaaS: Mobile Blockchain-based Mining-as-
+     a-Service for IIoT environments”. In: Journal of Parallel and Distributed
+     Computing 168 (2022), pp. 1–16. issn: 0743-7315. doi: https://doi.org/
+     10.1016/j.jpdc.2022.05.008. u r l: https://www.sciencedirect.
+     com/science/article/pii/S0743731522001228.
+[14] S. Pirbhulal et al. “IoT cybersecurity in 5G and beyond: a systematic literature
+     review”. eng. In: International journal of information security 23.4 (2024),
+     pp. 2827–2879. issn: 1615-5262.
+[15] ETSI. DECT-2020 New Radio (NR); Part 1: Overview; Release 2. Technical
+     Specification ETSI TS 103 636-1. Version 2.1.1. Available at: https :
+     //www.etsi.org/standards. European Telecommunications Standards
+     Institute (ETSI), Oct. 2024.
+[16] M. Vaezi et al. “Cellular, Wide-Area, and Non-Terrestrial IoT: A Survey on
+     5G Advances and the Road Toward 6G”. In: IEEE Communications Surveys &
+     Tutorials 24.2 (2022), pp. 1117–1174. doi: 10.1109/COMST.2022.3151028.
+[17] B. B. Gupta and M. Quamara. “An Overview of Internet of Things (IoT):
+     Architectural Aspects, Challenges, and Protocols”. In: Concurrency and
+     Computation: Practice and Experience 32 (2018). doi: 10.1002/cpe.4946.
+[18] F. Guo et al. “Enabling Massive IoT Toward 6G: A Comprehensive Survey”.
+     In: IEEE Internet of Things Journal 8.15 (2021), pp. 11891–11915. d o i:
+     10.1109/JIOT.2021.3063686.
+
+
+
+
+                                         50
+[19] T. S. S. (.-T. International Telecommunication Union. Overview of the Internet of
+     things. Recommendation ITU-T Y.4000/Y.2060 Y.4000/Y.2060. Formerly ITU-
+     T Y.2060, renumbered as ITU-T Y.4000 on 2016-02-05 without modification.
+     Geneva, Switzerland: ITU-T, June 2012. u r l: https://handle.itu.int/
+     11.1002/1000/11559.
+[20] K. Shafique et al. “Internet of Things (IoT) for Next-Generation Smart Systems:
+     A Review of Current Challenges, Future Trends and Prospects for Emerging
+     5G-IoT Scenarios”. In: IEEE Access 8 (2020), pp. 23022–23040. d o i:
+     10.1109/ACCESS.2020.2970118.
+[21] A. Mahmood et al. “Industrial IoT in 5G-and-Beyond Networks: Vision,
+     Architecture, and Design Trends”. In: IEEE Transactions on Industrial
+     Informatics 18.6 (2022), pp. 4122–4137. doi: 10.1109/TII.2021.3115697.
+[22] P. Varga et al. “5G support for Industrial IoT Applications— Challenges,
+     Solutions, and Research gaps”. eng. In: Sensors (Basel, Switzerland) 20.3
+     (2020), pp. 828–. issn: 1424-8220.
+[23] “IEEE Standard for Ethernet”. In: IEEE Std 802.3-2022 (Revision of IEEE Std
+     802.3-2018) (2022), pp. 1–7025. doi: 10.1109/IEEESTD.2022.9844436.
+[24]   url: https://1.ieee802.org/tsn/.
+[25] C. C. Sobin. “A Survey on Architecture, Protocols and Challenges in IoT”. eng.
+     In: Wireless personal communications 112.3 (2020), pp. 1383–1429. i s s n:
+     0929-6212.
+[26] A. Rana et al. “Architectures, Benefits, Security, and Privacy Issues of Internet
+     of Nano Things: A Comprehensive Survey, Opportunities, and Research
+     Challenges”. In: IEEE Communications Surveys & Tutorials 27.2 (2025),
+     pp. 1152–1190. doi: 10.1109/COMST.2024.3423477.
+[27] A. Al-Fuqaha et al. “Internet of Things: A Survey on Enabling Technologies,
+     Protocols, and Applications”. In: IEEE Communications Surveys & Tutorials
+     17.4 (2015), pp. 2347–2376. doi: 10.1109/COMST.2015.2444095.
+[28] I. H. Sarker et al. “Internet of things (iot) security intelligence: a comprehensive
+     overview, machine learning solutions and research directions”. In: Mobile
+     Networks and Applications 28.1 (2023), pp. 296–312.
+[29] Y. R. Siwakoti et al. “Advances in IoT Security: Vulnerabilities, Enabled
+     Criminal Services, Attacks, and Countermeasures”. In: IEEE Internet of
+     Things Journal 10.13 (2023), pp. 11224–11239. doi: 10.1109/JIOT.2023.
+     3252594.
+[30] E. Illi et al. “Physical layer security for authentication, confidentiality, and
+     malicious node detection: A paradigm shift in securing IoT networks”. In:
+     IEEE Communications Surveys & Tutorials 26.1 (2023), pp. 347–388.
+[31] A. Jahangeer et al. “A Review on the Security of IoT Networks: From Network
+     Layer’s Perspective”. In: IEEE Access 11 (2023), pp. 71073–71087. d o i:
+     10.1109/ACCESS.2023.3246180.
+
+                                           51
+[32] D. D. Rao et al. “Strategizing IoT network layer security through advanced
+     intrusion detection systems and AI-driven threat analysis”. In: Full Length
+     Article 12.2 (2024), pp. 195–95.
+[33] N. Mishra and S. Pandya. “Internet of Things Applications, Security Challenges,
+     Attacks, Intrusion Detection, and Future Visions: A Systematic Review”. In:
+     IEEE Access 9 (2021), pp. 59353–59377. d o i: 10.1109/ACCESS.2021.
+     3073408.
+[34] T. Cogalan et al. “5G-CLARITY: 5G-Advanced Private Networks Integrating
+     5GNR, WiFi, and LiFi”. In: IEEE Communications Magazine 60.2 (2022),
+     pp. 73–79. doi: 10.1109/MCOM.001.2100615.
+[35] 3. G. P. P. (3GPP). System Architecture for the 5G System (5GS). Technical
+     Specification TS 23.501. Version 18.10.0. Available at: https://www.3gpp.
+     org/. 3GPP, June 2025.
+[36] L. Chettri and R. Bera. “A Comprehensive Survey on Internet of Things (IoT)
+     Toward 5G Wireless Systems”. In: IEEE Internet of Things Journal 7.1 (2020),
+     pp. 16–32. doi: 10.1109/JIOT.2019.2948888.
+[37] 3. G. P. P. (3GPP). Study on scenarios and requirements for next generation
+     access technologies. Technical report TR 38.913. Version 17.0.0. Available at:
+     https://www.3gpp.org/. 3GPP, Apr. 2022.
+[38] 3. G. P. P. (3GPP). Security architecture and procedures for 5G System.
+     Technical Specification TS 33.501. Version 18.9.0. Available at: https:
+     //www.3gpp.org/. 3GPP, Apr. 2025.
+[39] J. Vollbrecht et al. Extensible Authentication Protocol (EAP). RFC 3748. June
+     2004. d o i: 10.17487/RFC3748. u r l: https://www.rfc-editor.org/
+     info/rfc3748.
+[40] O. Friel and D. Harkins. Bootstrapped TLS Authentication with Proof of
+     Knowledge (TLS-POK). Internet-Draft draft-ietf-emu-bootstrapped-tls-11.
+     Work in Progress. Internet Engineering Task Force, Oct. 2025. 16 pp.
+     u r l: https : / / datatracker . ietf . org / doc / draft - ietf - emu -
+     bootstrapped-tls/11/.
+[41] J. Arkko and H. Haverinen. Extensible Authentication Protocol Method for 3rd
+     Generation Authentication and Key Agreement (EAP-AKA). RFC 4187. Jan.
+     2006. d o i: 10.17487/RFC4187. u r l: https://www.rfc-editor.org/
+     info/rfc4187.
+[42] J. Arkko et al. Improved Extensible Authentication Protocol Method for
+     3GPP Mobile Network Authentication and Key Agreement (EAP-AKA’). RFC
+     9048. Oct. 2021. d o i: 10.17487/RFC9048. u r l: https://www.rfc-
+     editor.org/info/rfc9048.
+[43] 3. G. P. P. (3GPP). Generic Authentication Architecture (GAA); Generic
+     Bootstrapping Architecture (GBA). Technical Specification TS 33.220. Ver-
+     sion 16.4.0. Available at: https://www.3gpp.org/. 3GPP, June 2021.
+
+                                        52
+[44] 3. G. P. P. (3GPP). 3G security; Security architecture. Technical Specification
+     TS 33.102. Version 18.0.0. Available at: https://www.3gpp.org/. 3GPP,
+     Apr. 2024.
+[45] E. K. K. Edris, M. Aiash, and J. K.-K. Loo. “Formal Verification and Analysis
+     of Primary Authentication based on 5G-AKA Protocol”. In: 2020 Seventh
+     International Conference on Software Defined Systems (SDS). 2020, pp. 256–
+     261. doi: 10.1109/SDS49854.2020.9143899.
+[46] S. Sinha. State of IoT 2024: Number of Connected IoT Devices Growing 13%
+     to 18.8 Billion Globally. Accessed: Oct. 20, 2025. IoT Analytics. 2024. url:
+     https://iot-analytics.com/number-connected-iot-devices.
+[47] 3. G. P. P. (3GPP). Non-Access-Stratum (NAS) Protocol for 5G System (5GS).
+     Technical Specification TS 24.501. Version 18.11.1. Available at: https:
+     //www.3gpp.org/. 3GPP, July 2025.
+[48] M. A. Uddin et al. “A survey on the adoption of blockchain in IoT: challenges and
+     solutions”. In: Blockchain: Research and Applications 2.2 (2021), p. 100006.
+     i s s n: 2096-7209. d o i: https://doi.org/10.1016/j.bcra.2021.
+     100006. u r l: https://www.sciencedirect.com/science/article/
+     pii/S2096720921000014.
+[49] M. Hojjati, A. Shafieinejad, and H. Yanikomeroglu. “A Blockchain-Based
+     Authentication and Key Agreement (AKA) Protocol for 5G Networks”. In:
+     IEEE Access 8 (2020), pp. 216461–216476. d o i: 10.1109/ACCESS.2020.
+     3041710.
+[50] M. Papadopoulos, K. Lampropoulos, and P. Kitsos. “An FPGA Architecture of
+     Extensible Authentication Protocol EAP- AKA’ for 5G Networks”. In: 2025
+     14th Mediterranean Conference on Embedded Computing (MECO). 2025,
+     pp. 1–5. doi: 10.1109/MECO66322.2025.11049105.
+[51] OpenAirInterface5G. OpenAirInterface 5G Radio Access Network Project.
+     https://gitlab.eurecom.fr/oai/openairinterface5g. Accessed:
+     2025-09-08.
+[52] OpenAirInterface Software Alliance. OpenAirInterface 5G Core Network
+     Project. Accessed: 2025-10-20. 2025. url: https://openairinterface.
+     org/oai-5g-core-network-project/.
+[53] CumuCore Oy. CumuCore: The Mobile Private Network for Your Company.
+     Accessed: 2025-10-20. 2025. url: https://cumucore.com/.
+[54] OpenAirInterface Software Alliance. OAI. https://hub.docker.com/u/
+     oaisoftwarealliance. Accessed: 2025-10-21. 2025.
+[55] Software Radio Systems. srsRAN Project. https://github.com/srsran/
+     srsRAN_Project. Accessed: 2025-09-08. 2025.
+
+
+
+
+                                         53
+[56] 3. G. P. P. (3GPP). 3G Security; Specification of the MILENAGE algorithm
+     set: An example algorithm set for the 3GPP authentication and key generation
+     functions f1, f1*, f2, f3, f4, f5 and f5*; Document 2: Algorithm specification.
+     Technical Specification TS 35.206. Version 14.0.0. Available at: https:
+     //www.3gpp.org/. 3GPP, Mar. 2017.
+[57] H. Krawczyk, M. Bellare, and R. Canetti. HMAC: Keyed-Hashing for Message
+     Authentication. RFC 2104. Feb. 1997. d o i: 10.17487/RFC2104. u r l:
+     https://www.rfc-editor.org/info/rfc2104.
+[58] A. M. Bahaa-Eldin. “Intelligent Systems for Information Security”. eng. In:
+     arXiv.org (2014). issn: 2331-8422.
+[59] N. I. of Standards and Technology. “Advanced Encryption Standard”. In: NIST
+     FIPS PUB 197 (2001).
+[60] ETSI. DECT-2020 New Radio (NR); Part 1: Overview; Release 2. Tech-
+     nical Specification ETSI TS 103 636-1. Version 2.1.1 (2024-10). European
+     Telecommunications Standards Institute (ETSI), Oct. 2024. u r l: https:
+     //www.etsi.org/deliver/etsi_ts/103600_103699/10363601/02.
+     01.01_60/ts_10363601v020101p.pdf (visited on Nov. 25, 2025).
+
+
+
+
+                                        54
+A     Confidentiality Algorithm
+Within the 3GPP security architecture, seven core security functions are specified,
+namely 𝑓1 , 𝑓1∗ , 𝑓2 , 𝑓3 , 𝑓4 , 𝑓5 , and 𝑓5∗ . These abstract functions provide the primitives
+for authentication, key generation, and integrity/confidentiality protection in the
+Authentication and Key Agreement (AKA) family of protocols. In practice, the
+abstract functions 𝑓1 – 𝑓5∗ are instantiated by concrete algorithm sets; a widely adopted
+instantiation is the MILENAGE algorithm set, which maps the 𝑓 -functions to AES-
+based computations using operator-specific parameters (OP/OPc). The MILENAGE
+specification and its mapping of the 𝑓 -functions to concrete inputs/outputs is defined
+in 3GPP TS 35.206 [56]. The detailed inputs and outputs of the 𝑓 -functions used
+throughout this thesis are presented in Table A1.
+
+        Table A1: Inputs and Outputs of Functions 𝑓 1– 𝑓 5∗ adapted from [56]
+
+ Parameter        Size (bits)      Comment
+ Inputs to 𝑓 1 and 𝑓 1∗
+ 𝐾                128              Subscriber key 𝐾 [0] . . . 𝐾 [127].
+ 𝑅 𝐴𝑁 𝐷           128              Random challenge 𝑅 𝐴𝑁 𝐷 [0] . . . 𝑅 𝐴𝑁 𝐷 [127].
+ 𝑆𝑄𝑁              48               Sequence number 𝑆𝑄𝑁 [0] . . . 𝑆𝑄𝑁 [47] (for 𝑓 1∗ this
+                                   input is called 𝑆𝑄𝑁 𝑀𝑆 ).
+ 𝐴𝑀 𝐹                16            Authentication                management        field
+                                   𝐴𝑀 𝐹 [0] . . . 𝐴𝑀 𝐹 [15].
+ Inputs to 𝑓 2, 𝑓 3, 𝑓 4, 𝑓 5, and 𝑓 5∗
+ 𝐾                  128           Subscriber key 𝐾 [0] . . . 𝐾 [127].
+ 𝑅 𝐴𝑁 𝐷             128           Random challenge 𝑅 𝐴𝑁 𝐷 [0] . . . 𝑅 𝐴𝑁 𝐷 [127].
+ Outputs of 𝑓 1
+ 𝑀 𝐴𝐶_𝐴              64            Network            authentication                       code
+                                   𝑀 𝐴𝐶_𝐴[0] . . . 𝑀 𝐴𝐶_𝐴[63].
+ Outputs of 𝑓 1∗
+ 𝑀 𝐴𝐶_𝑆          64                Resynchronisation        authentication                 code
+                                   𝑀 𝐴𝐶_𝑆[0] . . . 𝑀 𝐴𝐶_𝑆[63].
+ Outputs of 𝑓 2
+ 𝑅𝐸 𝑆                64            Response 𝑅𝐸 𝑆[0] . . . 𝑅𝐸 𝑆[63].
+ Outputs of 𝑓 3
+ 𝐶𝐾                  128           Confidentiality key 𝐶𝐾 [0] . . . 𝐶𝐾 [127].
+ Outputs of 𝑓 4
+ 𝐼𝐾                  128           Integrity key 𝐼𝐾 [0] . . . 𝐼𝐾 [127].
+ Outputs of 𝑓 5
+ 𝐴𝐾                  48            Anonymity key 𝐴𝐾 [0] . . . 𝐴𝐾 [47].
+ Outputs of 𝑓 5∗
+                                                                      Continued on next page
+
+
+                                              55
+                       Table A1 – continued from previous page
+ Parameter         Size (bits) Comment
+ 𝐴𝐾                48          Resynchronisation anonymity key 𝐴𝐾 [0] . . . 𝐴𝐾 [47].
+
+    For completeness, the variables used in these algorithms are defined in Table A2,
+while the formal symbols and operators employed in their specification are listed
+in Table A3. Together, these tables provide the notation and definitions required to
+understand the derivation and operation of the 5G AKA security functions.
+
+            Table A2: List of Variables in 5G AKA adapted from [56]
+
+ Variable           Description
+ AK                 A 48-bit anonymity key that is the output of either of the functions
+                     𝑓 5 and 𝑓 5∗ .
+ AMF                A 16-bit authentication management field that is an input to the
+                    functions 𝑓 1 and 𝑓 1∗ .
+ 𝑐1, 𝑐2, 𝑐3, 𝑐4, 𝑐5 128-bit constants, which are XORed onto intermediate variables.
+ CK                 A 128-bit confidentiality key that is the output of the function
+                     𝑓 3.
+ IK                 A 128-bit integrity key that is the output of the function 𝑓 4.
+ IN1                A 128-bit value constructed from SQN and AMF and used in the
+                    computation of the functions 𝑓 1 and 𝑓 1∗ .
+ K                  A 128-bit subscriber key that is an input to the functions
+                     𝑓 1, 𝑓 1∗ , 𝑓 2, 𝑓 3, 𝑓 4, 𝑓 5, 𝑓 5∗ .
+ MAC-A              A 64-bit network authentication code that is the output of the
+                    function 𝑓 1.
+ MAC-S              A 64-bit resynchronisation authentication code that is the output
+                    of the function 𝑓 1∗ .
+ OP                 A 128-bit Operator Variant Algorithm Configuration Field used
+                    in 𝑓 1, 𝑓 1∗ , 𝑓 2, 𝑓 3, 𝑓 4, 𝑓 5, 𝑓 5∗ .
+ OPC                A 128-bit value derived from OP and K and used within the
+                    computation of the functions.
+ OUT1–OUT5 128-bit computed values from which the outputs of
+                     𝑓 1, 𝑓 1∗ , 𝑓 2, 𝑓 3, 𝑓 4, 𝑓 5, 𝑓 5∗ are obtained.
+ 𝑟1, 𝑟2, 𝑟3, 𝑟4, 𝑟5 Integers in the range 0–127 inclusive, defining the amounts by
+                    which intermediate variables are cyclically rotated.
+ RAND               A           128-bit         random          challenge  input      to
+                             ∗                          ∗
+                     𝑓 1, 𝑓 1 , 𝑓 2, 𝑓 3, 𝑓 4, 𝑓 5, 𝑓 5 .
+ RES                A 64-bit signed response that is the output of the function 𝑓 2.
+ SQN                A 48-bit sequence number input to 𝑓 1 and 𝑓 1∗ (for 𝑓 1∗ , more
+                    precisely called 𝑆𝑄𝑁 𝑀𝑆 ).
+ TEMP               A 128-bit value used within the computation of the functions.
+
+
+
+
+                                           56
+             Table A3: List of Symbols in 5G AKA adapted from [56]
+
+ Symbol              Description
+ =                   The assignment operator.
+ ⊕                   The bitwise exclusive-OR operation.
+ ||                  Concatenation of the two operands.
+ 𝐸 [𝑥] 𝑘             Result of applying a block cipher encryption to the input value
+                     𝑥 using the key 𝑘.
+ rot(𝑥, 𝑟)           Result of cyclically rotating the 128-bit value 𝑥 by 𝑟
+                     bit positions towards the most significant bit. If 𝑥 =
+                     𝑥 [0]||𝑥 [1]|| . . . ||𝑥 [127], and 𝑦 = rot(𝑥, 𝑟), then 𝑦 =
+                     𝑥 [𝑟]||𝑥 [𝑟 + 1]|| . . . ||𝑥 [127]||𝑥 [0]||𝑥 [1]|| . . . ||𝑥 [𝑟 − 1].
+ 𝑋 [𝑖]               The 𝑖 th bit of the variable 𝑋 (i.e., 𝑋 = 𝑋 [0]||𝑋 [1]||𝑋 [2]|| . . . ).
+
+    The functions 𝑓 1– 𝑓 5∗ rely heavily on symmetric key operations to ensure confi-
+dentiality, integrity, and authentication within the 5G AKA protocol. In particular,
+many of these functions make use of block cipher operations for key derivation and
+cryptographic transformations. The security of the 5G AKA procedure therefore
+depends on a robust and well-analyzed block cipher as its core primitive.
+    The 3GPP specifications standardize the use of the Rijndael block cipher, more
+commonly known as the Advanced Encryption Standard (AES), as the underlying
+block cipher for these functions. The following subsection briefly describes the
+Rijndael algorithm and its relevance to the 5G security functions.
+    Rijndael is a symmetric-key block cipher algorithm developed by Belgian cryp-
+tographers Joan Daemen and Vincent Rijmen. In 2001, it was selected by the U.S.
+National Institute of Standards and Technology (NIST) as the Advanced Encryption
+Standard (AES) [59]. Rijndael operates on fixed-size blocks of data and applies
+iterative transformations to achieve confidentiality, integrity, and authentication. It
+supports key lengths of 128, 192, or 256 bits; for 3GPP applications, both the block
+and key length are set to 128 bits.
+    AES accepts input as one-dimensional arrays of 8-bit bytes, which are mapped
+onto a 4 × 4 byte matrix called the state. The cipher key is similarly represented
+as a one-dimensional array of 8-bit bytes. Encryption proceeds through a series of
+transformations on the state, which include:
+
+    • Byte Substitution (SubBytes): Each byte in the state is replaced using a
+      non-linear substitution table (S-box).
+
+    • Row Shifting (ShiftRows): Bytes in each row of the state matrix are cyclically
+      shifted to the left by different offsets.
+
+    • Column Mixing (MixColumns): Columns of the state are transformed using
+      matrix multiplication over a finite field GF(28 ), with overflow bits reduced
+      modulo an irreducible polynomial.
+
+    • Add Round Key: A round-specific subkey is XORed with the state.
+
+                                            57
+   The number of rounds depends on the key size:
+    • 128-bit key: 10 rounds
+    • 192-bit key: 12 rounds
+    • 256-bit key: 14 rounds
+    Rijndael derives a set of round keys from the original cipher key using a key
+schedule. For 128-bit and 192-bit keys, each round key is generated by cyclically
+rotating the previous key word, applying the S-box, and XORing with a round-
+dependent constant. For 256-bit keys, additional S-box transformations are applied to
+specific words in the expanded key. These subkeys are then used in the Add Round
+Key step of each encryption round.
+
+Mathematical Representation of AES Operations Let the state at round 𝑟 be
+denoted as 𝑆 (𝑟) , a 4 × 4 byte matrix. The main AES operations can be expressed as
+follows:
+
+Byte Substitution (SubBytes)
+
+                         𝑠𝑖,(𝑟+1) = SBox 𝑠𝑖,(𝑟)𝑗 ,
+                                        (︁ )︁
+                              𝑗                              0 ≤ 𝑖, 𝑗 ≤ 3
+
+Row Shifting (ShiftRows)
+
+                         𝑠𝑖,(𝑟+1)
+                              𝑗
+                                     (𝑟)
+                                  = 𝑠𝑖,( 𝑗+𝑖) mod 4
+                                                    ,        0 ≤ 𝑖, 𝑗 ≤ 3
+
+Column Mixing (MixColumns) Each column vector 𝑐 = [𝑠0, 𝑗 , 𝑠1, 𝑗 , 𝑠2, 𝑗 , 𝑠3, 𝑗 ] 𝑇 is
+transformed using a fixed matrix over GF(28 ):
+                                     ⎡02         03     01    01⎤⎥
+                                     ⎢
+                                 ′
+                                     ⎢01         02     03    01⎥⎥
+                                𝑐 = ⎢⎢                             ·𝑐
+                                     ⎢01         01     02    03⎥⎥
+                                     ⎢03         01     01    02⎥⎦
+                                     ⎣
+
+Add Round Key
+                          𝑠𝑖,(𝑟+1)
+                               𝑗   = 𝑠𝑖,(𝑟)𝑗 ⊕ 𝑘 𝑖,(𝑟)𝑗 ,    0 ≤ 𝑖, 𝑗 ≤ 3
+    The overall transformation for one AES round can be compactly written as, and
+the graphical visualization can be observed in fig. A1:
+       𝑆 (𝑟+1) = AddRoundKey ◦ MixColumns ◦ ShiftRows ◦ SubBytes(𝑆 (𝑟) )
+
+
+   Finally, the complete AES encryption of a plaintext block 𝑃 with key 𝐾 over 𝑁
+rounds is:
+          𝐶 = AES𝐾 (𝑃) = Round𝑁−1 ◦ · · · ◦ Round1 ◦ InitialRound(𝑃, 𝐾)
+
+                                                   58
+     Figure A1: Visualization of the AES round function Adapted from [58]
+
+
+    AES provides strong security against linear and differential cryptanalysis, timing
+and power attacks, and opportunistic attacks. Its flexible key and block sizes, low
+memory requirements, and efficient implementation in both hardware and software
+make it suitable for a wide range of applications, including mobile devices, smart
+cards, and large-scale computing platforms. Compared to legacy algorithms such
+as DES, AES is significantly faster in software and allows for higher cryptographic
+security through increased key length and transformation rounds. In the context of 5G
+and 5G-AKA, Rijndael is used exclusively in encryption mode to derive confidentiality
+and integrity keys, ensuring secure exchange of authentication vectors, session keys,
+and subscriber data.
+    Keyed-Hashing for Message Authentication, commonly referred to as HMAC, is a
+mechanism for ensuring both data integrity and authenticity of messages [57]. HMAC
+combines a cryptographic hash function with a secret key, providing a secure method
+to verify that a message has not been altered and that it originates from a legitimate
+sender.
+    In the context of 5G-AKA, HMAC-SHA256 is used as a core component of key
+
+
+                                         59
+derivation functions (KDFs) to generate various session and authentication keys from
+master secrets. HMAC operates as follows:
+    • A secret key is first padded to the block size of the underlying hash function
+      (SHA-256 in this case).
+    • The padded key is XORed with an inner padding constant, then concatenated
+      with the message to be authenticated.
+    • The hash function is applied to the result, producing an intermediate hash.
+    • The padded key is then XORed with an outer padding constant and concatenated
+      with the intermediate hash.
+    • Finally, the hash function is applied again, yielding the HMAC output.
+    The resulting HMAC value is used as an input to various 5G key derivation
+functions to ensure that derived keys maintain integrity and resistance to tampering or
+replay attacks.
+    The detailed inputs and outputs of the KDF functions used in 5G-AKA, which
+rely on HMAC-SHA256, are presented in A1.
+    Mathematically, HMAC is expressed as:
+                                  (︂                                    )︂
+                HMAC𝐾 (𝑚) = 𝐻 (𝐾 ′ ⊕ opad) || 𝐻 ((𝐾 ′ ⊕ ipad) || 𝑚)
+
+    where:
+    • 𝐻 (·) is the hash function (SHA-256),
+    • 𝐾 ′ is the key padded to the block size,
+    • ipad = 0𝑥36 and opad = 0𝑥5𝐶 repeated to the block size,
+    • || denotes concatenation.
+   In 5G-AKA, the derived keys are computed via KDFs using HMAC-SHA256 as a
+pseudorandom function (PRF):
+                          𝐾derived = KDF(CK||IK, Context)
+    Here, the concatenated CK and IK form the secret input, while Context encapsulates
+identifiers such as SUPI, serving network name, and algorithm identifiers. This ensures
+that all session and authentication keys inherit strong integrity and confidentiality
+properties from the master secrets.
+    Together, AES and HMAC form the cryptographic backbone of 5G-AKA, providing
+confidentiality, integrity, and authentication for secure communication between the
+UE and the 5G Core network.
+
+
+B     NAS Content
+
+                                          60
+                 Table B1: Registration Request (UE → AMF)
+
+Information Element (IE)         Purpose / Function
+NAS key set identifier (ngKSI)   Identifies the active NAS security context between the UE
+                                 and the 5G Core. In 5G Standalone (SA), it always refers
+                                 to a native 5G context (KSI_AMF), ensuring the correct
+                                 authentication, integrity, and encryption keys are applied.
+5GS Mobile Identity              Concealed permanent identifier used for privacy protection
+                                 (SUPI concealment). The core network uses this field to
+                                 verify in the subscription database whether the UE is a valid
+                                 subscriber.
+UE Security Capability           Lists supported NAS integrity/ciphering algorithms (e.g.,
+                                 NIA2, NEA2).
+5GS update type / DNN            Indicates requested update type or connectivity, e.g., for CIoT
+                                 behaviour or SMS over NAS.
+
+               Table B2: Authentication Request (AMF → UE)
+
+Information Element (IE)         Purpose / Function
+ABBA                             5G parameter used to avoid bidding-down attacks between
+                                 authentication methods (e.g., ensuring consistency between
+                                 5G-AKA and EAP-AKA’). It protects against downgrade
+                                 attempts by malicious intermediaries.
+RAND                             Random parameter generated by the core network.
+AUTN                             Authentication token: contains the concealed sequence num-
+                                 ber (SQN ⊕ AK), the AMF field, and a MAC.
+
+               Table B3: Authentication Response (UE → AMF)
+
+Information Element (IE)         Purpose / Function
+RES*                             UE-computed response (RES or RES*)
+
+              Table B4: Security Mode Command (AMF → UE)
+
+Information Element (IE)      Purpose / Function
+NAS selected security algo-   Indicate the selected integrity algorithm (NIA) and ciphering
+rithms                        algorithm (NEA).
+UE Security Capability        Replay of the UE security capability IE that is sent in the
+                              Registration Request message.
+IMEISV request                Core requests a 16-digit number that identifies a mobile
+                              device and its specific software version.
+Additional 5G Security Infor- Core may request retransmission of Registration Request.
+mation
+
+
+                                        61
+             Table B5: Security Mode Complete (UE → AMF)
+
+Information Element (IE)     Purpose / Function
+IMEISV                       Send the requested parameter to the core.
+NAS Message Container        The requested retransmission of the Registration Request
+                             message is included in this IE
+
+
+
+
+                Table B6: Registration Accept (AMF → UE)
+
+Information Element (IE)     Purpose / Function
+5GS registration result      Result of the registration process
+Assigned 5G-GUTI / TAI       Temporary identifier and registration area information as-
+                             signed by AMF.
+Allowed NSSAI / DNN info     Slice and data network assignments approved by network.
+
+
+
+
+               Table B7: Registration Complete (UE → AMF)
+
+Information Element (IE)     Purpose / Function
+Optional NAS Container / IEs Confirms completion; may carry optional configuration or
+                             status information.
+
+
+
+
+                                    62
+C     Code Snippets
+
+                  Listing 1: UE authentication structure definition
+# i f n d e f UE_H
+# d e f i n e UE_H
+
+# include    < s t d i n t . h>
+# include    < s t d b o o l . h>
+# include    < s t r i n g . h>
+# include    < s t d l i b . h>
+
+typedef struct
+{
+    char ∗ opc ;
+    char ∗k ;
+    u i n t 8 _ t rand [ 1 6 ] ;
+    uint8_t autn [ 1 6 ] ;
+    u i n t 8 _ t sqn_xor_ak [ 6 ] ;
+    u i n t 8 _ t amf [ 2 ] ;
+    u i n t 8 _ t mac [ 8 ] ;
+    u i n t 8 _ t sqn [ 6 ] ;
+    u i n t 8 _ t ck [ 1 6 ] ;
+    uint8_t ik [16];
+    u i n t 8 _ t ak [ 6 ] ;
+    uint8_t resstar [16];
+    u i n t 8 _ t abba [ 2 ] ;
+    uint8_t kint [16];
+    u i n t 8 _ t kenc [ 1 6 ] ;
+} authparam ;
+
+typedef struct
+{
+    bool imeisv ;
+    bool rinmr ;
+} recv_flag ;
+
+typedef struct
+{
+     uint8_t pduSessionId ;
+     uint8_t procedureTransactionId ;
+} sm ;
+
+typedef struct
+{
+
+                                        63
+    char ∗ s d ;
+    int sst ;
+} snssai ;
+
+typedef struct
+{
+    char ∗ i m e i s v ;
+    char ∗ s u p i ;
+    char ∗ msin ;
+     int routing_indicator ;
+    char ∗ p r o t e c t i o n s c h e m e ;
+    char ∗ dnn ;
+     i n t mcc ;
+     i n t mnc ;
+     uint32_t dl_count ;
+     uint32_t ul_count ;
+     authparam auth ;
+     recv_flag recv_flag ;
+    sm sm ;
+     snssai snssai ;
+} UE ;
+
+e x t e r n UE ∗ ue ;
+
+UE ∗ u e _ i n i t ( ) ;
+v o i d u e _ f r e e (UE ∗u ) ;
+
+# endif
+
+
+D     Sequence Diagram
+
+
+
+
+                                               64
+Figure D1: Sequence diagram of the exchanging data packets and executed task in
+details
+
+
+
+
+                                      65
+

@@ -1,0 +1,78 @@
+Title: DECT-2020 NR for Professional Live Audio:
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—This paper presents an in-depth evaluation of the DECT-2020 New Radio (NR)
+standard for professional live audio applications, focusing on latency as a
+critical performance indicator. The evaluation uses the nRF91 modem series by
+Nordic Semiconductor, currently the first and only available devices with
+DECT-2020 support. We evaluate the potential of DECT-2020 by exploring the
+design space of the standard, explaining the complexity of trade-offs between
+latency, RF resource utilization, and transmission robustness. We then present
+our measurement setup, to analyze the performance. Based on a series of
+practical latency measurements with different configurations, we identify
+potential operation points for transmitting wireless audio over DECT-2020 and
+conclude that the minimum achievable latency with the current DECT2020 modem
+implementation is 2.312 ms, at a cost of about onethird of the RF channel
+resources. Our results represent a minimum latency estimation as only the
+physical layer is currently available as an implementation, and other key
+performance indicators were not considered in this work. These findings provide
+valuable insights into the current state of DECT-2020 for professional live
+audio applications and highlight areas for future exploration. reliability
+requirement for the transmission seems obvious in a live stage scenario, there
+are also latency limitations tolerable by professionals. This is related to the
+feedback loop from microphone to mixing console and back to the in-
+earmonitoring. The overall latency should not exceed about 4 ms for the full
+loop. While this includes a typical processing delay of about 2 ms in a mixing
+console, only 1 ms remains for each one-way wireless transmission [1] [2].
+Figure 1 illustrates this typical stage setup. The data rate of a wireless audio
+stream can be approximated to about 200 kbit/s, assuming 48000 samples / s and a
+state-of-the-art professional live audio codec. Packet error rates should be
+smaller than 10-6 to ensure sufficient quality-of-experience for audience and
+artists [3].
+
+Approach and methods:
+Local wireless transmission (TX) of audio plays an important role in many
+professional live audio applications. The combination of wireless microphones
+and in-earmonitoring (IEM) devices allow musicians to freely move on a live
+stage without having to manage cables. While the s ireless icrop one ax 2 s s
+Live Processing usician s n-Ear- onitor Fig. 1. Latency critical self-feedback
+loop in professional live audio applications II. WIRELESS TECHNOLOGIES FOR
+PROFESSIONAL LIVE AUDIO The selection and implementation of wireless
+technologies in the context of professional audio applications is a complex and
+heterogeneous field to navigate. A. Custom and non-standard As of today, the
+combination of all requirements from battery runtime, built size, deterministic
+transmission reliability and latency, cost, and spectrum access can be achieved
+with non-standard, hand-optimized, and highly interlinked audio and radio
+frontends, based on narrow- or wide-band analog or digital modulations. Although
+this approach results in commercially successful products, the customized nature
+of the overall stack leads to significant development costs with relatively slow
+innovation cycles. B. Application agnostic In contrast many successful
+standardized wireless technologies, such as Wi-Fi and 5G, are originally
+designed to be application agnostic. One major element in achieving this was to
+focus on
+
+Key findings:
+candidate technology ETSI: DECT-2020 new radio”, 2020 IEEE 3rd 5G World Forum
+(5GWF), IEEE, 2020 [11] K. Maliatsos, A. Gotsis, and A. Alexiou, “Evaluation of
+the IMT-2020 candidate radio interface technology DECT-2020 NR”, 2022 14th
+International Conference on COMmunication Systems & NETworkS (COMSNETS), IEEE,
+2022 [12] ETSI TS 103 636-1, ”DECT-2020 New Radio (NR); Part 1: Overview;
+Release 1”, 2024 [13] ETSI TS 103 636-2, “DECT-2020 New Radio (NR); Part 2:
+Radio reception and transmission requirements; Release 1”, 2024 [14] ETSI TS 103
+636-3, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1”, 2024 [15]
+ETSI TS 103 636-4, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1”,
+2024 [16] ETSI TS 103 636-5, “DECT-2020 New Radio (NR); Part 5: DLC and
+Convergence layers; Release 1”, 2024 [17] E. Llaguno, et al., “Physical Layer
+Performance of DECT-2020 New Radio for Factory Automation”, 2024 IEEE 20th
+International Conference on Factory Communication Systems (WFCS), IEEE, 2024
+[18] M. Waßmann et al., ”Performance of DECT-2020 NR in an industrial
+environment for varying RF bands“, EuCNC 06/2024, Antwerp Authorized licensed
+use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

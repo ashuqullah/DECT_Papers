@@ -1,0 +1,400 @@
+Title: A Pareto Optimality Approach
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT NR+ is a novel wireless IoT standard operating in the 1.9 GHz band, a band
+originally reserved for Digital Enhanced Cordless Telecommunications (DECT).
+This technology is also announced as the first non-cellular 5G standard and
+theoretically offers wide flexibility in its application, ranging from Wireless
+Personal Area Network (WPAN) to Wide Area Network (WAN) scenarios. While this
+versatility is enabled by a wide range of configurable parameters, the practical
+application range is determined by the vendor’s specific implementation. In this
+article, we investigate the impact of adjusting Modulation and Coding Scheme
+(MCS), transmit power and packet length. We formulate objective functions for
+data rate, energy consumption, and Packet Delivery Ratio (PDR), and analyze
+their dependence on the aforementioned parameters. To model specific
+relationships, we conduct practical experiments in two real-world testbeds using
+hardware from the Nordic nRF91 series. Finally, we present an approach for
+parameter selection based on the principle of Pareto optimality. I. I
+NTRODUCTION As 5G networks continue to expand, the International Mobile
+Telecommunications (IMT-2020) requirements define ambitious targets for a wide
+range of application scenarios, with increasing influence extending also into
+the Internet of Things (IoT) domain [1]. While enhanced mobile broadband (eMBB)
+services have been successfully implemented in 3GPP 5G New Radio (NR) systems,
+and massive machine-type communication (mMTC) is being addressed through
+cellular IoT solutions like LTE-M or NB-IoT. ultra-reliable low-latency
+communication (URLLC) IoT services still remains a significant challenge [2].
+DECT-2020 NR has emerged as a standardized 5G technology specifically designed
+for mMTC and URLLC applications, operating in the license-exempt 1.9 GHz band
+utilized by legacy Digital Enhanced Cordless Telecommunications (DECT) phones.
+This DECT-2020 NR standard, also referred to as DECT NR+, is announced as the
+first noncellular 5G standard [3]. DECT NR+ positions itself in the IoT
+landscape in a gap between traditional Wireless Personal Area Network (WPAN),
+Wi-Fi and Low Power Wide Area Network (LPWAN). DECT NR+ offers significantly
+higher data rates and extended range compared to typical low-rate WPAN such as
+Bluetooth Low Energy (BLE) or Zigbee. Its datarate is lower than Wi-Fi or
+cellular services such as 5G NR. For certain parameter configurations, DECT NR+
+can achieve considerable coverage and also compete with LPWAN standards such as
+IEEE 802.15.4g. While recent studies primarily concentrate on theoretical
+investigations concerning device density and latency [4], [2], the practical
+performance aspects of DECT NR+ remain barely explored in real-world deployments
+[5]. Particularly, the strategic selection of transmission parameters represents
+an open research area that significantly impacts overall network performance. In
+this work, we propose the first approach to link adaptation in DECT NR+. Link
+adaptation defines the process of dynamically optimizing transmission parameters
+based on instantaneous channel conditions and specific user requirements.
+Indeed, DECT NR+ explicitly incorporates this capability through dedicated
+fields in its Physical Layer Control Field, including Channel Quality Indicator
+(CQI) reporting mechanisms that facilitate informed transmission parameter
+adjustments. We focus on three critical performance metrics in DECT NR+: energy
+consumption, data rate, and Packet Delivery Ratio (PDR). Energy consumption
+remains crucial for battery-powered devices; data rate determines the system’s
+capacity to handle information flow; PDR directly impacts the reliability,
+latency and number of retransmissions. By characterizing the three-dimensional
+trade-off space formed by these metrics, we provide an approach for link
+adaptation that can dynamically adjust to meet diverse requirements. Our
+methodology is based on the concept of Pareto optimality, and combines
+theoretical analysis with experimental evaluation using commercial DECT NR+
+hardware (Nordic Semiconductor’s nRF91 series) in indoor and outdoor
+deployments. We characterize the achievable performance region and identify the
+Pareto-optimal configurations. This Pareto front comprises a set of optimal
+configurations where no single objective can be improved without simultaneously
+degrading at least one other. Conversely, any point not on the Pareto front is
+considered “dominated”: there exists at least one Paretooptimal configuration
+that is superior in at least one objective and not inferior in any other. Based
+on experiments in our two testbeds, we demonstrate how systems can navigate the
+resulting frontier to achieve superior performance compared to a fixed parameter
+selection. The remainder of this paper is organized as follows. Section II
+provides an overview of the DECT NR+ physical layer. Section III describes the
+link adaptation mechanism in DECT NR+. Section IV details our experimental
+setup. 979-8-3315-7729-2/26/$31.00 ©2026 IEEE Authorized licensed use limited
+to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026
+at 09:09:35 UTC from IEEE Xplore. Restrictions apply. 6 IEEE Wireless
+Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging
+Technologies, Network Architectures, and Applicat MCS 0 1 2 3 4 Modulation BPSK
+QPSK QPSK 16-QAM 16-QAM Nbps 1 2 2 4 4 Rcode 0.50 0.50 0.75 0.50 0.75 Table I:
+DECT NR+ Modulation and Coding Scheme 0-4. Section V presents the objective
+functions for parameter selection. Section VI introduces a Pareto optimality
+approach and evaluates beneficial operating points. Finally, Section VII
+concludes the paper and discusses future work. II. DECT NR+ PHY L AYER F
+UNDAMENTALS DECT-2020 NR is specified in the ETSI TS 103 636 standard [6]. This
+section offers a concise overview based on Release 2 dated October 2024,
+covering key aspects of the physical layer, including modulation, frequency
+allocations, and packet structure. A. Modulation The DECT NR+ physical layer
+employs Cyclic Prefix (CP) Orthogonal Frequency Division Multiplexing (OFDM) as
+its core modulation scheme. Three key modulation parameters determine the
+required bandwidth and data rate. The subcarrier spacing factor µ ∈ {1, 2, 4, 8}
+defines the spacing between adjacent subcarriers. Higher values of µ shorten the
+OFDM symbol duration, enabling lower latency at the cost of less multipath
+protection due to a shorter CP. The Fourier transform scaling factor β ∈ {1, 2,
+4, 8, 12, 16} determines the number of subcarriers used. Larger β values
+increase the channel bandwidth and potential data throughput, but also require
+more complex Fast Fourier Transform (FFT) operations, raising computational
+demands on the transceiver. The Modulation and Coding Scheme (MCS) defines both
+the modulation format and the Forward Error Correction (FEC) code rate. Lower-
+order MCSs use simpler modulation schemes, such as Binary Phase-Shift Keying
+(BPSK) or Quadrature Phase-Shift Keying (QPSK) and lower code rates for
+robustness, while higher-order MCSs are based on Quadrature Amplitude Modulation
+(QAM) and offer increased payload capacity at the expense of error resilience.
+The standard includes 12 MCS levels, with the first five listed in Table I. C.
+Packet Structure In DECT NR+, packet lengths are defined in “slots”. Slots
+consist of subslots. Subslots consist of OFDM symbols. And OFDM symbols consist
+of subcarriers carrying resource elements (REs). The structure is illustrated in
+Fig. 1. We are particularly interested in how many information bits fit into a
+packet of length Lslot . This conversion is explained in the following. The
+maximum number of slots in a radio frame is F RAM E Nslot = 24 with a duration
+of T F RAM E = 10 ms, slot,µ i.e. Tslot = 0.41667 ms. Each slot is divided into
+Nsubslot subslots depending on µ. For µ = 1, one slot consists slot,µ of
+Nsubslot = 2 subslots. Each subslot always consists of subslot Nsymb = 5 OFDM
+symbols. Consequently, we can compute the number of OFDM symbols in a packet by
+slot,µ P ACKET subslot Nsymb = Lslot · Nsubslot · Nsymb . However, not all OFDM
+symbols belong to the actual data frame (DF). For µ = 1 the number of symbols
+used for Synchronization Training Field (STF) and Guard Interval (GI) GI+ST F is
+Nsymb = 2. The length of the data frame in symbols is GI+ST F DF P ACKET Nsymb =
+Nsymb − Nsymb . β P ACKET OFDM symbols and the NDF The Nsymb T subcarriers span
+up a matrix-like structure, with cells that are called β β REs. However, from
+these NDF T subcarriers, just NOCC are β occupied and the remaining NCP act as
+CP. For β = 1, we β β have NDF T = 64 and NOCC = 56. The REs are shared among
+the Demodulation Reference Signal (DRS), Physical Control Channel (PCC), and
+Physical Data Channel (PDC). The number of PDC REs carrying the actual
+information bits is defined as β P DC DF DRS P CC Nre = Nsymb · NOCC − Nre − Nre
+. P CC = 98. The number of REs reserved for the PCC is Nre The number of REs
+reserved for the DRS is determined by the number of effective antennas NTefXf .
+If NTefXf ≤ 2 we have Nstep = 5. & ' P ACKET β Nsymb ef f NOCC DRS · Nre = NT X
+· 4 Nstep B. Frequency Band P DC P DC In the next step, Nre is converted into
+Nbits by   P DC P DC Nbits = NSS · Nre · Nbps · Rcode DECT was originally
+developed for cordless telephony, with dedicated frequency bands reserved for
+that purpose. DECT NR+ is intended to operate in these bands, which remain
+license-free, allowing operation without regulatory fees. The frequency
+allocations for DECT NR+ vary by region. In Europe, Band 1 (1880–1900 MHz) is
+mandated, offering 21 channels spaced at 0.864 MHz. In North America, Band 9
+(1920–1930 MHz) is used, comprised of 9 channels with the same spacing. The
+transmission power in this band is limited to +23 dBm. In a Single Input Single
+Output (SISO) scenario, the number of spatial streams is NSS = 1. The number of
+bits per modulation symbol Nbps and the code rate Rcode of the turbo code are
+dependent on the employed MCS in Table I. The turbo encoder granularity M is
+defined as  P DC 8, if Nbits ≤ 512    16, if N P DC ≤ 1024 bits M= P DC 
+32, if N  bits ≤ 2048   64, otherwise. Authorized licensed use limited to:
+Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at
+09:09:35 UTC from IEEE Xplore. Restrictions apply. 6 IEEE Wireless
+Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging
+Technologies, Network Architectures, and Applicat 0 1 2 Header Format 3 4 Length
+Type (Slot/ Subslot) 5 6 7 Packet Length Channel Short Network ID Feedback Info
+Transmitter Identity Slots Transmitter Identity Transmit Power DF MCS Receiver
+Identity Subslots Receiver Identity Spatial Streams 31 30 29 28 27 26 25 24 23
+22 21 20 19 18 17 16 STF PCC PCC PDC PDC PDC PDC PDC PDC GI 0 1 2 3 4 5 6 7 8 9
+8 7 6 5 4 3 0 0 -5 -6 -7 -8 -9 -10 -11 -12 -13 -14 -15 -16 -17 -18 -19 -20 -21
+-22 -23 -24 -25 -26 -27 -28 -29 Feedback Format DF HARQ Process Number 3
+Transmission Feedback 1 Buffer Status 4 Channel Quality Indicator 4 Explanation
+Indicates the process of the HARQ feedback. 0 = NACK 1 = ACK Bit field
+indicating the current Buffer Size Region Bit field indicating the MCS proposed
+for the next TX Feedback Info Feedback Info 0 0 0 0 0 0 0 0 0 2 1 0 -1 -2 -3 -4
+DF New Data Indication #bits Figure 2: Physical Layer Control Field Type 2
+(Header Format 0) and the Feedback Info Field (Header Format 1) 0 0 15 14 13 12
+11 10 9 OFDM Symbols DF Redundancy Version Field HARQ Process Number 0 0
+Resource Elements 0 0 0 0 0 0 0 0 0 0 0 -30 -31 -32 Figure 1: Packet Structure
+of a DECT NR+ frame (µ = 1, β = 1) with packet length Lslot = 1. devices with
+varying receiver capabilities, as performance reporting is independent of
+receiver architecture. However, the standard suggests that receiver shall select
+the index in such a manner that the Block Error Rate (BLER) does not exceed 10 %
+with the indicated MCS in the given channel conditions. Furthermore, the RD
+Capability Information Element (IE), exchanged during association, communicates
+the maximum MCS a device can support, ensuring the transmitter does not exceed
+the receiver’s capabilities. IV. T EST S ETUP P DC NM is the largest multiple of
+M not greater than Nbits .  P DC  Nbits NM = ·M M The maximum turbo encoder
+block size is Z = 2048 and therefore segmentation of the transport block might
+be necesCRC sary. Finally, the Cyclic Redundancy Check (CRC) Nbits = TB 24 is
+appended and the transport block size Nbits can be calculated as ( CRC NM − l
+Nbits , if NM ≤ Z TB m  CRC Nbits = NM −Nbits CRC NM − + 1 · Nbits otherwise. Z
+III. L INK A DAPTATION In DECT NR+, link adaptation, i.e. the adjustment of
+transmit power MCS and PT X , is based on a dual-channel transmission structure
+consisting of the PCC and PDC. The PCC always uses a fixed MCS, ensuring it can
+always be decoded by the receiver, while the PDC’s MCS is dynamically selected
+by the transmitter. Both channels are transmitted with the same power per
+transmission, but PT X itself can vary between transmissions to meet the
+required quality with minimal energy. The PCC includes the Physical Layer
+Control Field, which is shown in Fig. 2. It informs the receiver about the
+transmission parameters used for the PDC, including the selected MCS and
+transmit power. This allows the receiver to estimate the current path loss.
+Additionally, the Physical Layer Control Field contains Feedback Info, where the
+receiver can report a CQI, indicating the highest MCS it can decode under
+current conditions. The transmitter uses this CQI, along with calculated PDR and
+service quality targets, to adapt the MCS. The specific adaptation algorithm is
+not standardized and is left to vendor implementation, allowing differentiation
+and optimization. This design also supports interoperability across A. Hardware
+For the practical evaluation of link adaptation in DECT NR+, we use the nRF91
+series from Nordic Semiconductor with the RF modem firmware version mfw-
+nr+_nrf91x1_1.1.0. For energy estimation, the nRF9151 DK is used due to its
+dedicated measurement pins. For range testing, the nRF9131 EK is used due to its
+external antenna connector. Several parameters specified in the standard are
+fixed on the nRF91 chips, including µ = 1, β = 1, NTefXf = 1 and NSS = 1.
+Additionally, only MCS levels 0 through 4 are currently implemented. The
+transmit power on the nRF9131 can be configured from -40 dBm to +19 dBm, while
+the nRF9151 additionally features up to 21 dBm. Packet lengths between 1 and 16
+subslots are supported by the chips. However, not all combinations of packet
+length and MCS are possible. In particular, configurations where the transport
+block size exceeds 700 Bytes are not supported. B. Testbeds We test our link
+adaptation in two testbed environments. The indoors testbed is an office area
+with no line-of-sight (LOS), where the signal needs to travel through different
+rooms and is reflected by many objects. The Link adaptation testbed is an urban
+environment with LOS. The distance between transmitter and receiver is ≈ 15 m in
+the indoor testbed, ≈ 200 m in the outdoor testbed. As carrier frequency, DECT
+NR+ channel number 1657 (1881.792 MHz) is used. This is the first channel in the
+European DECT band. However, due to no interfering applications in this band in
+our testbed, the specific channel selection has only minor impact. V. O BJECTIVE
+F UNCTIONS FOR PARAMETER S ELECTION Identifying the most efficient parameter
+configuration can be formulated as a multi-objective optimization problem.
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore.
+Restrictions apply. 6 IEEE Wireless Communications and Networking Conference
+(WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and
+Applicat 400 300 3.3 V 3.7 V 5.0 V 300 t1 t0 200 I [mA] I [mA] 250 150 100 200
+100 50 0 0 -40 0 0.2 0.4 0.6 0.8 1 1.2 1.4 1.6 1.8 2 2.2 2.4 t [ms] Figure 3:
+Power profile of a TX operation (19 dBm, 3 slots, MCS 0) on a nRF9151 with 3.7 V
+supply voltage. -30 -20 -10 0 10 Transmit Power PT X [dBm] 20 Figure 4: Average
+current draw of the nRF9151 during transmit operation for different supply
+voltages. 3.5 A. Energy Consumption ET X = f (PT X , L) The objective function
+depends on the transmission power PT X and the packet length L. PT X influences
+the current draw during the transmit operation and L determines the duration.
+The energy per transmission is calculated by Z t1 ET X = QT X · U = I(t)dt · U.
+t0 For approximately constant current draw, we can estimate the charge drawn as
+QT X ≈ I · ∆t, where ∆t = t1 − t0 . Fig. 3 shows the power profile of a transmit
+operation on the nRF9151, at 3.7 V. We set transmit power PT X = 19 dBm and
+packet length Lslot = 3 slots. We measure a transmission duration of ∆t = 1.25
+ms. This duration can also be derived analytically using T P ACKET = Lslot ·
+Tslot . With slot duration Tslot = 0.41667 ms, the calculated transmission time
+precisely matches ∆t shown in Fig. 3. Fig. 4 illustrates the relationship
+between transmit power and average current consumption, measured across
+different supply voltages. At higher supply voltages, the current draw is
+reduced. However, from an energy efficiency standpoint, the impact of the chosen
+supply voltage remains relatively minor. For transmit powers up to PT X ≤ 8 dBm,
+the current remains stable between 60 mA and 70 mA. Beyond PT X ≥ 10 dBm, we
+observe a a sharp increase in current consumption. B. Data Rate 2.5 R [Mbit/s]
+The first objective is to minimize the energy per per transmitted frame. min ET
+X MCS 0 MCS 1 MCS 2 MCS 3 MCS 4 3 2 1.5 1 0.5 0 2 4 6 8 10 12 Packet Length L
+[Subslots] 14 16 Figure 5: Data Rates of DECT NR+ for different MCS (µ = 1, β =
+1) and transport block sizes smaller than 700 B. The objective function depends
+on MCS and packet length L. Fig. 5 plots the data rate per packet length for
+different MCS. The values of R can be computed based on the formulas for TB from
+Section II-C. the transport block size Nbits R= TB Nbits P ACKET T For all MCS
+levels, we observe a steep increase in data rate when moving from 1 to 2
+subslots. This is due to the significant overhead introduced by the PCC compared
+to the PDC. For MCS 0 to MCS 3, the data rate improves by approximately 0.5
+Mbit/s, while MCS 4 achieves an additional gain of 1 Mbit/s over MCS 3. Finally,
+it is evident that the curves for MCS 2 to MCS 4 do not span the entire range of
+L, as these combinations would exceed the 700 B limit imposed by the nRF. C.
+Packet Delivery Ratio The second objective is to maximize the data rate. The
+third objective is to maximize the PDR. max R max PDR R = f (MCS, L) PDR = f (PT
+X , MCS) Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore.
+Restrictions apply. 6 IEEE Wireless Communications and Networking Conference
+(WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and
+Applicat The objective function depends on transmission power PT X and the MCS.
+There is no analytical expression for the objective function, as it depends on
+the current channel conditions. Therefore, an iterative approach to channel
+quality estimation is essential. The system must continuously refine its
+understanding of channel conditions through both active traffic measurements and
+dedicated pilot sequences. The estimation process involves multiple iterations
+where transmissions are made at various power levels and MCS configurations.
+Initially, measurements show significant variance, but as iterations increase,
+the PDR curves stabilize. This convergence typically requires 5 to 10 iterations
+with 100 packets per (PT X , MCS) configuration. As illustrated in Fig. 6, the
+PDR versus transmit power curves exhibit distinctly different characteristics
+between different environments. The indoor scenario, characterized by non-LOS
+conditions, produces a steep “waterfall” shape with a sharp transition between
+low and high PDR regions. This abrupt transition occurs due to multipath
+effects, signal reflections, and obstructions typical in indoor settings. In
+contrast, the outdoor testbed curves display a more gradual slope because of LOS
+conditions where primarily free space path loss affects signal propagation,
+resulting in a more gradual degradation of signal quality with distance. Not
+only is the shape of the curves different among the testbeds, the gap between
+distinct MCS levels also is. This paper focuses on on static networks, it is
+therefore important to acknowledge that channel conditions inevitably change
+over time. Iterative recreation of the PDR curves is crucial for channel quality
+estimation, and serves as the fundamental building block of parameter
+optimization frameworks. VI. A PARETO O PTIMALITY A PPROACH A. Algorithm For
+this multi-objective optimization problem, we apply the principle of Pareto
+optimality [7]. This widely recognized concept has also found significant
+application in areas such as multi-user communications engineering [8]. We
+define the parameter space P as the set of all valid transmission
+configurations: p = (PTX , L, MCS) ∈ P Each configuration p yields a performance
+vector: u(p) = (R(p), −ETX (p), PDR(p)) ∈ R3 The minus sign in the energy
+dimension ensures that all objectives are formulated as maximization problems.
+We define the multi-objective utility region as the union over all feasible
+configurations: K [ U≜ {uk } ⊆ R3 k=1 where K is the total number of valid
+combinations in P. A point u ∈ U is Pareto optimal if there exists no other
+point v ∈ U such that: v ≥ u and v ̸= u where the inequality is component-wise.
+In other words, no other configuration achieves better or equal performance in
+all objectives and strictly better in at least one. A point is called “weak”
+Pareto optimal if no other point is strictly better in all objectives: ̸ ∃v ∈ U
+such that v > u The set of all Pareto optimal points forms the Pareto frontier
+of U, which represents the boundary of efficient trade-offs between the
+objectives. To compute the Pareto frontier in practice, we proceed as follows:
+1) Enumerate all valid configurations pk from the parameter space P. 2) For each
+configuration, compute the corresponding utility vector uk . 3) Compare all
+utility vectors pairwise to identify nondominated points: • A point uk is
+dominated if there exists another point uj such that uj ≥ uk and uj ̸= uk . •
+All non-dominated points form the Pareto frontier. This brute-force approach is
+feasible due to the discrete nature of the DECT NR+ parameter space. For larger
+spaces, more efficient algorithms such as Pareto sorting or evolutionary multi-
+objective optimization are usually employed. B. Practical Evaluation Fig. 7
+presents a visualization of the three-dimensional trade-off space for the
+outdoor LOS testbed. The plot shows the performance vector u for all possible
+operating points p in the parameter space P. The white triangle points represent
+the Pareto front, consisting of those configurations for which improving one
+objective necessarily degrades another. These Pareto-optimal points offer the
+most efficient operating conditions for different application requirements. Any
+point not on the Pareto front is “dominated”: there exists at least one
+configuration on the front that is superior in at least one objective and no
+worse in any other. The color scheme in Fig. 7 corresponds to the one in Fig. 6,
+and reveals how operating points corresponding to different MCS appear to be
+“stacked” along the data rate axis. For PDR values below 80%, the Pareto front
+is mostly formed by operating points using MCS 4. This is due to the higher
+number of bytes that can be transmitted per slot: shorter packet lengths
+compared to lower-order MCS can be used, resulting in a smaller energy per
+transmission. However, for a target PDR greater than 80%, lower MCS form the
+Pareto front. Also visible in Fig. 6, the performance in terms of PDR is very
+similar in the domain greater than -10 dBm for MCS 23 and MCS 0-1, respectively.
+This means that, due to the higher transport block size for the packet slot
+length, it is more efficient to choose MCS 1 instead of MCS 0 for instance.
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore.
+Restrictions apply. 6 IEEE Wireless Communications and Networking Conference
+(WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and
+Applicat 1 1 MCS 0 MCS 1 MCS 2 MCS 3 MCS 4 PDR 0.8 0.6 0.4 0.2 0 -40 -30 0.8 0.6
+0.4 0.2 -20 -10 0 PT X [dBm] 10 20 0 -40 -30 -20 -10 0 PT X [dBm] 10 20 R
+[Mbit/s] Figure 6: PDR per TX Power for non-LOS indoor testbed scenario (left)
+and LOS outdoor testbed (right). 2 0 2 0.2 0.4 0.6 0.8 1 1 PDR ET X [mJ] Figure
+7: Pareto front (triangles) of operating points for the LOS outdoor testbed. The
+choice of the operating point on the Pareto front depends on user requirements.
+We define the subset F ⊆ U as F = {u ∈ F | PDR ≥ PDRreq , ET X ≤ ET X,req , R ≥
+Rreq }. In a Low-Power and Lossy Network (LLN), typical requirements may be
+PDRreq = 90% and ET X,req = 0.5 mJ. When additionally requiring a data rate of
+at least Rreq = 1.5 Mbit/s, the Pareto front for the outdoor testbed reduces to
+4 values. A Pareto optimal operating point may therefore be poutdoor = (PTX = 16
+dBm, Lslot = 2, MCS = 3). When setting the same requirements for the indoor
+testbed, the Pareto optimal operating points mainly belong to even MCS 4. A
+beneficial operating point according to this Pareto optimality approach is
+therefore pindoor = (PTX = 10 dBm, Lslot = 3, MCS = 4). To this end, we remark
+that we set the user requirements for the needs of LLNs. For high throughput
+applications, the optimal operating points may be different. DECT NR+ can also
+be employed as LPWAN, covering distances going beyond the investigated 200 m
+LOS. For those scenarios, higher order MCS struggle to establish reliable
+communication and therefore the optimal configuration will necessarily tend to
+MCS 0. VII. C ONCLUSION This work applies Pareto optimality for link adaptation
+in the DECT NR+ standard. The relationship between transmit parameters is
+analyzed through both theoretical considerations and experimental validation. By
+analyzing the trade-off between data rate, energy consumption and PDR, efficient
+operating points are identified. Our current research focuses on integrating
+dynamic environmental factors into the optimization model and developing
+advanced adaptive algorithms for real-time parameter adjustment, leveraging the
+provided feedback information field. As part of future work, we roll this
+analytical work into a practical Application Performance Management (APM)
+framework.
+
+Approach and methods:
+To model specific relationships, we conduct practical experiments in two real-
+world testbeds using hardware from the Nordic nRF91 series. Finally, we present
+an approach for parameter selection based on the principle of Pareto optimality.
+I. I NTRODUCTION As 5G networks continue to expand, the International Mobile
+Telecommunications (IMT-2020) requirements define ambitious targets for a wide
+range of application scenarios, with increasing influence extending also into
+the Internet of Things (IoT) domain [1]. While enhanced mobile broadband (eMBB)
+services have been successfully implemented in 3GPP 5G New Radio (NR) systems,
+and massive machine-type communication (mMTC) is being addressed through
+cellular IoT solutions like LTE-M or NB-IoT. ultra-reliable low-latency
+communication (URLLC) IoT services still remains a significant challenge [2].
+DECT-2020 NR has emerged as a standardized 5G technology specifically designed
+for mMTC and URLLC applications, operating in the license-exempt 1.9 GHz band
+utilized by legacy Digital Enhanced Cordless Telecommunications (DECT) phones.
+This DECT-2020 NR standard, also referred to as DECT NR+, is announced as the
+first noncellular 5G standard [3]. DECT NR+ positions itself in the IoT
+landscape in a gap between traditional Wireless Personal Area Network (WPAN),
+Wi-Fi and Low Power Wide Area Network (LPWAN). DECT NR+ offers significantly
+higher data
+
+Key findings:
+with 5G DECT-2020 NR: Current State and the Road Ahead,” IEEE Comm. Magazine,
+vol. 63, no. 4, pp. 130–136, 2025. [3] M. D. Perez-Guirao, T. Weisshaupt, and A.
+Wilzeck, “DECT NR+:Unveiling the Essentials of a new non-cellular 5G Standard
+for Verticals,” in Mobile Communication - Technologies and Applications; 26th
+ITG-Symposium, 2022. [4] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe,
+J. Numminen, Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next Step
+toward 5G Massive Machine-Type Communications,” IEEE Communications Magazine,
+vol. 60, no. 6, pp. 58–64, 2022. [5] M. M. Haque, J. Säe, J. Pirskanen, and M.
+Valkama, “DECT-2020 NR Link Distance Performance in Varying Environments: Models
+and Measurements,” in 2025 19th European Conference on Antennas and Propagation
+(EuCAP), 2025. [6] DECT-2020 New Radio (NR) Part 1-5 Release 2, European
+Telecommunications Standards Institute (ETSI) Std. ETSI TS 103 636-1/2/3/4/5
+V2.1.1, October 2024. [7] Y. Censor, Pareto optimality in multiobjective
+problems. Springer, 1977, pp. 41–59. [8] E. Jorswieck and H. Boche, “Energy-
+Aware Utility Regions: Multiple Access Pareto Boundary,” in 2009 IEEE
+International Conference on Communications, 2009. Authorized licensed use
+limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July
+09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

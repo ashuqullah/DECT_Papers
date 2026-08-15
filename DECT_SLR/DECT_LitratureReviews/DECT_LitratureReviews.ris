@@ -1,0 +1,2017 @@
+TY  - CONF
+TI  - DECT-2020 NR for Professional Live Audio: Design Space Exploration and Practical Evaluation
+AU  - Dürre, Jan
+AU  - Werner, Norbert
+T2  - 2024 IEEE 5th International Symposium on the Internet of Sounds (IS2)
+AB  - This paper presents an in-depth evaluation of the DECT-2020 New Radio (NR) standard for professional live audio applications, focusing on latency as a critical performance indicator. The evaluation uses the nRF91 modem series by Nordic Semiconductor, currently the first and only available devices with DECT-2020 support. We evaluate the potential of DECT-2020 by exploring the design space of the standard, explaining the complexity of trade-offs between latency, RF resource utilization, and transmission robustness. We then present our measurement setup, to analyze the performance. Based on a series of practical latency measurements with different configurations, we identify potential operation points for transmitting wireless audio over DECT-2020 and conclude that the minimum achievable latency with the current DECT2020 modem implementation is 2.312 ms, at a cost of about onethird of the RF channel resources. Our results represent a minimum latency estimation as only the physical layer is currently available as an implementation, and other key performance indicators were not considered in this work. These findings provide valuable insights into the current state of DECT-2020 for professional live audio applications and highlight areas for future exploration.
+C1  - Erlangen, Germany
+C3  - 2024 IEEE 5th International Symposium on the Internet of Sounds (IS2)
+DA  - 2024/09/30/
+PY  - 2024
+DO  - 10.1109/IS262782.2024.10704159
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-6652-5
+ST  - DECT-2020 NR for Professional Live Audio
+UR  - https://ieeexplore.ieee.org/document/10704159/
+Y2  - 2026/03/24/13:20:36
+L1  - files/136/Dürre and Werner - 2024 - DECT-2020 NR for Professional Live Audio Design Space Exploration and Practical Evaluation.pdf
+L2  - files/809/85207817806.html
+KW  - 5G
+KW  - Resource management
+KW  - URLLC
+KW  - Standards
+KW  - Wireless communication
+KW  - Physical layer
+KW  - Current measurement
+KW  - DECT-2020 New Radio
+KW  - Modems
+KW  - NR+
+KW  - professional live audio
+KW  - Radio frequency
+KW  - Robustness
+KW  - Semiconductor device measurement
+KW  - Space exploration
+KW  - wireless microphone
+ER  - 
+
+TY  - CONF
+TI  - Performance of DECT-2020 NR and FCC-Based Mesh IoT Systems in DECT Bands
+AU  - Samuylov, Andrey
+AU  - Glazkov, Roman
+AU  - Moltchanov, Dmitri
+AU  - Pirskanen, Juho
+AU  - Numminen, Jussi
+AU  - Valkama, Mikko
+T2  - 2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring)
+AB  - DECT-2020 NR is a recently standardized radio access technology (RAT) for massive machine-type 5G communications operating in the license-exempt and licensed bands. By relying on multi-hop communications and listen-before-talk (LBT) medium access, DECT-2020 NR allows for cost-controlled flexible deployments. However, the medium access procedures for some of the bands currently used by classic DECT systems are strictly regulated by long-standing policies in the USA. The goal of this study was to evaluate and compare the performance of DECT-2020 NR and medium access specified by the Federal Communications Commission (FCC) for the Unlicensed Personal Communications Service (UPCS) band. Our results demonstrate that in a mesh system, the use of FCC access rules leads to drastic performance degradation, resulting in less than 85% of delivered packets compared to 98-99% for DECT-2020 NR. This results in a slight 1-2% degradation for coexisting classic DECT devices. For efficient use of the UPCS band, we recommend revisiting current FCC rules, allowing for LBT-based operations.
+C1  - Oslo, Norway
+C3  - 2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring)
+DA  - 2025/06/17/
+PY  - 2025
+DO  - 10.1109/VTC2025-Spring65109.2025.11174654
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 6
+LA  - en
+PB  - IEEE
+SN  - 979-8-3315-3147-8
+UR  - https://ieeexplore.ieee.org/document/11174654/
+Y2  - 2026/03/24/13:20:45
+L1  - files/140/Samuylov et al. - 2025 - Performance of DECT-2020 NR and FCC-Based Mesh IoT Systems in DECT Bands.pdf
+KW  - Topology
+KW  - Performance evaluation
+KW  - Resource management
+KW  - Timing
+KW  - algorithms
+KW  - Degradation
+KW  - DECT-2020 NR
+KW  - mMTC
+KW  - New Radio
+KW  - NR+
+KW  - IoT
+KW  - multi-hop
+KW  - Radio access technologies
+KW  - Vehicular and wireless technologies
+KW  - topology
+KW  - FCC
+KW  - Personal communication networks
+KW  - Stars
+ER  - 
+
+TY  - CONF
+TI  - Improving Near-URLLC Services Performance Over Multi-Hop Topologies in DECT-2020 NR Systems
+AU  - Glazkov, Roman
+AU  - Samuylov, Andrey
+AU  - Gaydamaka, Anna
+AU  - Moltchanov, Dmitri
+AU  - Pirskanen, Juho
+AU  - Numminen, Jussi
+AU  - Valkama, Mikko
+T2  - 2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring)
+AB  - DECT-2020 NR is a radio access technology designed for 5G Internet of Things (IoT) applications. By leveraging multi-hop communications and listen-before-talk (LBT) mechanisms, DECT-2020 NR offers a flexible and cost-effective deployment solution for massive machine-type communications (mMTC). The ETSI standardization committee currently considers extending use-case options to ultra-reliable low-latency communications by enabling scheduled access along with LBT. However, this approach can increase the cost of the end systems. The aim of this study is to investigate whether standardized physical and medium access control (MAC) mechanisms, including power control, LBT, and priority queuing, can provide nearURLLC operation over multihop topologies. Our results show that to improve loss performance one needs to disable power control, use a shorter back-off window, and enable priority data transmission. For improving latency performance it is critical to use shorter acknowledgement (ACK) timeout and send ACKs immediately after data packet reception. Applying these techniques allows us to improve multi-hop URLLC latency performance by up to 30-80% and loss performance by up to 1020% depending on URLLC and mMTC traffic conditions with only negligible impact on mMTC traffic performance.
+C1  - Oslo, Norway
+C3  - 2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring)
+DA  - 2025/06/17/
+PY  - 2025
+DO  - 10.1109/VTC2025-Spring65109.2025.11174908
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 979-8-3315-3147-8
+UR  - https://ieeexplore.ieee.org/document/11174908/
+Y2  - 2026/03/24/13:20:47
+L1  - files/141/Glazkov et al. - 2025 - Improving Near-URLLC Services Performance Over Multi-Hop Topologies in DECT-2020 NR Systems.pdf
+KW  - Topology
+KW  - Reliability
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Internet of Things
+KW  - Standardization
+KW  - NR+
+KW  - IoT
+KW  - DECT-2020
+KW  - Data communication
+KW  - Media Access Control
+KW  - multi-hop
+KW  - Power control
+KW  - Radio access technologies
+KW  - Vehicular and wireless technologies
+ER  - 
+
+TY  - CONF
+TI  - Optimizing Delays in Random Access Procedure of DECT-2020 by Estimation of Device States
+AU  - Gaidamaka, Yuliya
+AU  - Nikolaev, Dmitry
+AU  - Gaidamaka, Yuliya
+AU  - Koucheryavy, Yevgeni
+T2  - 2025 XIX International Symposium on Problems of Redundancy in Information and Control Systems (Redundancy)
+AB  - Massive Machine-Type Communication (mMTC) enables the seamless connectivity of billions energy-efficient devices, forming the intelligent infrastructure for smart cities, automated industries, and real-time data-driven decision making. In this paper we investigate the modern mMTC technology Digital Enhanced Cordless Telecommunication New Radio (DECT2020 NR), focusing on random access (RA) procedure. The study develops a mathematical model characterizing the RA phase and proposes a hidden Markov model (HMM)-based method for estimating the number of competing devices. The research introduces and evaluates a delay reduction strategy wherein the RA phase duration is adapted based on the HMM-based estimation of the device state. Numerical results demonstrate the effectiveness of the proposed approach in optimizing RA performance. The findings contribute to improving DECT-2020 network efficiency by balancing RA and data transmission phases while minimizing latency.
+C1  - Moscow, Russian Federation
+C3  - 2025 XIХ International Symposium on Problems of Redundancy in Information and Control Systems (Redundancy)
+DA  - 2025/11/05/
+PY  - 2025
+DO  - 10.1109/Redundancy68069.2025.11301564
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 5
+LA  - en
+PB  - IEEE
+SN  - 979-8-3315-4992-3
+UR  - https://ieeexplore.ieee.org/document/11301564/
+Y2  - 2026/03/24/13:20:53
+L1  - files/144/Gaidamaka et al. - 2025 - Optimizing Delays in Random Access Procedure of DECT-2020 by Estimation of Device States.pdf
+KW  - random access
+KW  - mMTC
+KW  - DECT-2020
+KW  - delay
+KW  - hidden Markov model
+ER  - 
+
+TY  - CONF
+TI  - Performance Assessment of DECT-2020 NR and Classic DECT Coexistence Mechanisms
+AU  - Samuylov, Andrey
+AU  - Moltchanov, Dmitri
+AU  - Pirskanen, Juho
+AU  - Numminen, Jussi
+AU  - Koucheryavy, Yevgeni
+AU  - Valkama, Mikko
+T2  - 2023 IEEE 97th Vehicular Technology Conference (VTC2023-Spring)
+AB  - The recently standardized ETSI DECT-2020 New Radio (NR) technology promises to enable operator-independent Internet-of-Things (IoT) services. One of the supported operating bands is the 1880 − 1900 MHz band where IoT devices use one or more 1.728 MHz wide channels for multi-hop communications. It has been shown that such systems scale well to satisfy the requirements of 5G massive machine-type communications (mMTC). During the standardization process, the coexistence with classic DECT technology was addressed but the benefits of different options have not been deeply explored. In this paper, by utilizing system-level simulation techniques we evaluate several coexistence solutions for DECT-2020 and classic DECT systems including conventional listen-before-talk access (LBT), last-minute scan, and scheduling-based mechanisms. Our numerical results illustrate that the standard LBT operation ensures excellent performance with no more than 2% of packet drops for classic DECT, and still results in satisfactory DECT2020 operation under 25% of resources allocated to classic DECT. The use of last-minute-scan leads to drastic performance degradation of DECT-2020 (by more than 10% in terms of packet drops) as compared to the standard LBT-only operation. Finally, a scheduling-based mechanism allows to improve the LBT performance for DECT-2020 devices by 2-5%.
+C1  - Florence, Italy
+C3  - 2023 IEEE 97th Vehicular Technology Conference (VTC2023-Spring)
+DA  - 2023/06//
+PY  - 2023
+DO  - 10.1109/VTC2023-Spring57618.2023.10200362
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-1114-3
+UR  - https://ieeexplore.ieee.org/document/10200362/
+Y2  - 2026/03/24/13:20:56
+L1  - files/145/Samuylov et al. - 2023 - Performance Assessment of DECT-2020 NR and Classic DECT Coexistence Mechanisms.pdf
+KW  - Performance evaluation
+KW  - Resource management
+KW  - Internet of Things
+KW  - Degradation
+KW  - New Radio
+KW  - IoT
+KW  - DECT-2020
+KW  - Vehicular and wireless technologies
+KW  - Safety
+KW  - coexistence
+ER  - 
+
+TY  - CONF
+TI  - Performance of DECT-2020 NR in an industrial environment for varying RF bands
+AU  - Waßmann, Mattes
+AU  - Poets, Alexander
+AU  - Peissig, Jürgen
+AU  - Pilz, Jens
+T2  - 2024 Joint European Conference on Networks and Communications &amp; 6G Summit (EuCNC/6G Summit)
+AB  - As there are no publications regarding the performance of DECT-2020 NR in real-life scenarios yet, this work constitutes a first performance assessment of DECT-2020 NR in the 450, 1350 and 3700 MHz frequency bands at different numerologies with bandwidths ranging from 1.728 to 13.824 MHz. To show the benefits of DECT-2020 NR, it is compared to classic DECT in a Rayleigh fading channel. In the course of this evaluation, performance metrics such as Bit Error Rate (BER) and Packet Error Rate (PER) were considered. Furthermore, MATLAB-generated DECT-2020 NR packets were transmitted utilizing GNU Radio and Ettus USRPs. The measurements were conducted in an industrial production line. Overall, the packet error rates were found to be the best at 450 MHz, with a packet loss of less than 5 %. At 1350 MHz, a packet error rate of 15 % was observed, whereas at 3700 MHz, a maximum value of 10 % was recorded. The differences in PER for the different frequencies are attributed to the internal losses at higher frequencies in the used USRP B210s. Another aspect of this work focuses on characterizing the indoor channel of the production line using OFDM-based channel sounding. On average, an RMS delay spread of 65 ns was measured for a bandwidth of 13.824 MHz in the selected frequency bands.
+C1  - Antwerp, Belgium
+C3  - 2024 Joint European Conference on Networks and Communications &amp; 6G Summit (EuCNC/6G Summit)
+DA  - 2024/06/03/
+PY  - 2024
+DO  - 10.1109/EuCNC/6GSummit60053.2024.10597084
+DP  - DOI.org (Crossref)
+SP  - 610
+EP  - 615
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-4499-8
+UR  - https://ieeexplore.ieee.org/document/10597084/
+Y2  - 2026/03/24/13:20:58
+L1  - files/146/Waßmann et al. - 2024 - Performance of DECT-2020 NR in an industrial environment for varying RF bands.pdf
+KW  - 5G
+KW  - DECT
+KW  - DECT-2020
+KW  - channel sounding
+KW  - channel statistics
+KW  - Doppler spectral density
+KW  - power delay profile
+ER  - 
+
+TY  - JOUR
+TI  - What to Expect When Using DECT NR+
+AU  - Graf, Fabian
+AU  - Watteyne, Thomas
+AU  - Villnow, Michael
+T2  - IEEE Communications Magazine
+AB  - DECT NR+ is the new kid on the block in wireless technologies: it re-purposes the 1.9 GHz Digital Enhanced Cordless Telecommunications (DECT) standard for IoT-type applications. How does DECT NR+ perform in practice and where should we be using it? The ambition of this article is to provide answers to those questions. We start by an overview of the fundamental principles of the physical layer. We then survey the DECT NR+ products on the market today. Using the nRF91 series from Nordic Semiconductor, we conduct a comprehensive set of hands-on power consumption and communication range measurements. Our results place DECT NR+ in a gap in-between existing technologies. Its range is comparable to long range standards such as IEEE 802.15.4g under certain parameter choices: 200 m in an urban setting, 6 km in the most favorable lineof-sight conditions. For higher order Modulation and Coding Schemes, range drops and is rather comparable to Wi-Fi. The nRF9161 draws significant power (at 3.7 V, 220 mA transmitting at +19 dBm, 45 mA receiving), approximately 10× higher than BLE radios. This is likely primarily due to earlystage design inefficiencies and the inherent complexity of the DECT NR+ physical layer, limiting its adoption in batterypowered applications. We conclude that DECT NR+ is particularly appropriate for applications that require a dynamic tradeoff between communication range and data rate, but are not cost-sensitive.
+DA  - 2026/02//
+PY  - 2026
+DO  - 10.1109/MCOM.001.2500286
+DP  - DOI.org (Crossref)
+VL  - 64
+IS  - 2
+SP  - 16
+EP  - 22
+J2  - IEEE Commun. Mag.
+LA  - en
+SN  - 0163-6804, 1558-1896
+UR  - https://ieeexplore.ieee.org/document/11303302/
+Y2  - 2026/03/24/13:21:00
+L1  - files/147/Graf et al. - 2026 - What to Expect When Using DECT NR+.pdf
+KW  - 5G mobile communication
+KW  - OFDM
+KW  - Standards
+KW  - Internet of Things
+KW  - Symbols
+KW  - Power demand
+KW  - Physical layer
+KW  - Semiconductor device measurement
+KW  - Costs
+KW  - Regulation
+ER  - 
+
+TY  - CONF
+TI  - Energy Consumption of DECT-2020 NR Mesh Networks
+AU  - Nihtila, Timo
+AU  - Berg, Heikki
+T2  - 2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+AB  - ETSI DECT-2020 New Radio (NR) is a new flexible radio interface targeted to support a broad range of wireless Internet of Things (IoT) applications. Recent reports have shown that DECT-2020 NR achieves good delay performance and it has been shown to fulfill both massive machine-type communications (mMTC) and ultra-reliable low latency communications (URLLC) requirements for 5th generation (5G) networks. A unique aspect of DECT-2020 as a 5G technology is that it is an autonomous wireless mesh network (WMN) protocol where the devices construct and uphold the network independently without the need for base stations or core network architecture. Instead, DECT-2020 NR relies on part of the network devices taking the role of a router to relay data through the network. This makes deployment of a DECT-2020 NR network affordable and extremely easy, but due to the nature of the medium access protocol, the routing responsibility adds an additional energy consumption burden to the nodes, who in the IoT domain are likely to be equipped with a limited battery capacity. In this paper, we analyze by system level simulations the energy consumption of DECT-2020 NR networks with different network sizes and topologies and how the reported low latencies can be upheld given the energy constraints of IoT devices.
+C1  - Grenoble, France
+C3  - 2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+DA  - 2022/06/07/
+PY  - 2022
+DO  - 10.1109/EuCNC/6GSummit54941.2022.9815770
+DP  - DOI.org (Crossref)
+SP  - 196
+EP  - 201
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-9871-5
+UR  - https://ieeexplore.ieee.org/document/9815770/
+Y2  - 2026/03/24/13:21:02
+L1  - files/148/Nihtila and Berg - 2022 - Energy Consumption of DECT-2020 NR Mesh Networks.pdf
+KW  - 5G
+KW  - Performance evaluation
+KW  - Ultra reliable low latency communication
+KW  - Wireless communication
+KW  - Analytical models
+KW  - NR
+KW  - IoT
+KW  - DECT-2020
+KW  - energy consumption
+KW  - Energy consumption
+KW  - mesh network
+KW  - Mesh networks
+KW  - Wireless mesh networks
+ER  - 
+
+TY  - CONF
+TI  - DECT-2020 NR Link Distance Performance in Varying Environments: Models and Measurements
+AU  - Haque, Md Mohaiminul
+AU  - Säe, Joonas
+AU  - Pirskanen, Juho
+AU  - Valkama, Mikko
+T2  - 2025 19th European Conference on Antennas and Propagation (EuCAP)
+AB  - Digital Enhanced Cordless Telecommunications 2020 New Radio (DECT-2020 NR) has garnered recognition as an alternative for cellular 5G technology in the internet of things industry. This paper presents a study centered around the analysis of the link distance performance in varying environments for DECT-2020 NR. The study extensively examines and analyzes received signal strength indicator and resulting path loss values in comparison with theoretical models, as well as packet success rates (SR) and signal-to-noise ratio against varying distances. The measurements show that with an SR of over 90 %, an antenna height of 1.5 m, indoor link distances with a single device-to-device connection with 0 dBm transmission (TX) power can reach over 60 m in non-line-of-sight (NLOS) areas and up to 190 m in LOS areas with smaller −8 dBm TX power. Similarly, for outdoor use cases, link distances of over 600 m can be reached with +19 dBm TX power.
+C1  - Stockholm, Sweden
+C3  - 2025 19th European Conference on Antennas and Propagation (EuCAP)
+DA  - 2025/03/30/
+PY  - 2025
+DO  - 10.23919/EuCAP63536.2025.10999279
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 5
+LA  - en
+PB  - IEEE
+SN  - 978-88-31299-10-7
+ST  - DECT-2020 NR Link Distance Performance in Varying Environments
+UR  - https://ieeexplore.ieee.org/document/10999279/
+Y2  - 2026/03/24/13:21:04
+L1  - files/149/Haque et al. - 2025 - DECT-2020 NR Link Distance Performance in Varying Environments Models and Measurements.pdf
+KW  - Performance evaluation
+KW  - Internet of Things
+KW  - Signal to noise ratio
+KW  - DECT-2020 NR
+KW  - Antenna measurements
+KW  - internet of things
+KW  - link-level measurements
+KW  - Power measurement
+KW  - radio propagation models
+KW  - Received signal strength indicator
+KW  - Smart buildings
+KW  - Smart cities
+KW  - Telecommunications
+KW  - Transmitting antennas
+ER  - 
+
+TY  - JOUR
+TI  - Empowering Near-URLLC IoT with 5G DECT-2020 NR: Current State and the Road Ahead
+AU  - Samuylov, Andrey
+AU  - Moltchanov, Dmitri
+AU  - Gaydamaka, Anna
+AU  - Lyczkowski, Eike
+AU  - Frotzscher, Andreas
+AU  - Von Schoettler, Frank
+AU  - Pirskanen, Juho
+AU  - Numminen, Jussi
+AU  - Salokannel, Juha
+AU  - Llaguno, Endika
+AU  - Pires, Rafael
+AU  - Bayar, Dilara
+AU  - Valkama, Mikko
+T2  - IEEE Communications Magazine
+AB  - DECT-2020 is a standardized multi-hop technology for 5G massive machine-type communications (mMTC). By relying on multi-hop communications, DECT-2020 allows for cost-controlled flexible deployments that enable a plethora of new services, whose requirements in terms of latency, reliability, and throughput are difficult to satisfy by utilizing cellular Internet-ofThings technologies (CIoT). In this article, we outline new DECT-2020 use-cases ranging from mMTC to ultra-reliable low-latency communications (URLLC), showing that many modern services lie between these two extremes. We utilize system level simulations to demonstrate how these “near-URLLC” use-cases are satisfied by the DECT-2020. We show that the current evolution of DECT-2020 can provide near-URLLC operation when no multi-hop communications are required, even under interference from competing URLLC/ mMTC traffic. However, provisioning of nearURLLC services over multiple hops requires additional enhancements.
+DA  - 2025/04//
+PY  - 2025
+DO  - 10.1109/MCOM.002.2400385
+DP  - DOI.org (Crossref)
+VL  - 63
+IS  - 4
+SP  - 130
+EP  - 136
+J2  - IEEE Commun. Mag.
+LA  - en
+SN  - 0163-6804, 1558-1896
+ST  - Empowering Near-URLLC IoT with 5G DECT-2020 NR
+UR  - https://ieeexplore.ieee.org/document/10945746/
+Y2  - 2026/03/24/13:21:30
+L1  - files/170/Samuylov et al. - 2025 - Empowering Near-URLLC IoT with 5G DECT-2020 NR Current State and the Road Ahead.pdf
+KW  - 5G mobile communication
+KW  - Protocols
+KW  - Throughput
+KW  - Reliability
+KW  - Ultra reliable low latency communication
+KW  - Standards
+KW  - Interference
+KW  - Cellular networks
+KW  - Spread spectrum communication
+KW  - Distance measurement
+ER  - 
+
+TY  - CONF
+TI  - Data Assisted Backscatter Communications Using DECT-2020 NR+ as Ambient Signal
+AU  - Liao, Jingyi
+AU  - Ruttik, Kalle
+AU  - Jäntti, Riku
+AU  - Han, Zhu
+T2  - 2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC)
+AB  - The Digital Enhanced Cordless Telecommunications (DECT-2020) New Radio (NR+), standardized by the European Telecommunications Standards Institute (ETSI), addresses International Telecommunication Union (ITU) IMT-2020 requirements for Internet of Things (IoT) and Industrial IoT. Although DECT2020 NR+ offers robust connectivity, it does not support ultra-low power or batteryless operation. The 3rd Generation Partnership Project’s (3GPP’s) Ambient Internet of Things (AIoT) initiative targets ultra-low power IoT devices operating on harvested ambient energy, with backscatter communication as a promising technology. This paper integrates backscatter-based AIoT functionality into DECT networks, leveraging existing DECT transmissions and data-assisted channel estimation to recover backscattered information. An Ambient Backscatter Communication (AmBC) receiver is symbiotically embedded within the DECT receiver, using Received Signal Strength (RSS) of DECT data traffic. We open-sourced the Matlab code for the DECT receiver in a Software-Defined Radio (SDR) platform. Over-theair experiments demonstrate feasibility, achieving Bit Error Rate (BER) performance as low as 0.02 under optimal conditions.
+C1  - Surrey, United Kingdom
+C3  - 2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC)
+DA  - 2025/07/07/
+PY  - 2025
+DO  - 10.1109/SPAWC66079.2025.11143257
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 5
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-7776-5
+UR  - https://ieeexplore.ieee.org/document/11143257/
+Y2  - 2026/03/24/13:21:33
+L1  - files/171/Liao et al. - 2025 - Data Assisted Backscatter Communications Using DECT-2020 NR+ as Ambient Signal.pdf
+KW  - Wireless networks
+KW  - Performance evaluation
+KW  - Receivers
+KW  - Internet of Things
+KW  - Artificial intelligence
+KW  - Software radio
+KW  - Bit error rate
+KW  - Telecommunications
+KW  - Ambient Backscatter Communications
+KW  - Backscatter
+KW  - Digital Enhanced Cordless Telecommunication
+KW  - Low power electronics
+KW  - Open-source Software
+KW  - Received Signal Strength
+KW  - Software-Defined Radio
+ER  - 
+
+TY  - CONF
+TI  - IRS-Assisted DECT-2020 NR Framework for Ensuring URLLC Constraints in Industrial IoT
+AU  - Bin Asif, Awais
+AU  - Ahmad, Hassan
+AU  - Peissig, Jürgen
+T2  - 2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+AB  - DECT 2020 NR is a Radio Interface Technology (RIT) introduced by ETSI for massive Machine Type Communications (mMTC) and Ultra-Reliable Low Latency Communications (URLLC) use cases. Notably, DECT 2020 NR stands as the sole non-cellular 5G technology apt for industrial IoT (IIoT) scenarios. However, achieving the stringent reliability and latency requirements of URLLC in dense industrial settings poses a significant challenge due to various propagation losses and severe shadowing. In this research work, we propose a novel DECT 2020 NR framework incorporating Intelligent Reflecting Surface (IRS) to meet the challenging URLLC constraints. The framework maps the system model in 3D space, including the 3D mapping of the radiation pattern of IRS, and employs the Separating Axis Theorem (SAT) to systematically identify shadowed regions within this 3D system model and mitigate the identified shadowed areas, leveraging the proposed novel MAC procedure for the IRS-assisted DECT 2020 NR network. Additionally, we propose a resource allocation scheme based on the priority given to radio devices ready to offload the data. Comparative analysis demonstrates that our proposed solution achieves significant improvements in received power, throughput, and reduction in round-trip time (RTT) when compared to both the existing approach and the conventional DECT 2020 NR standard.
+C1  - Marrakesh, Morocco
+C3  - 2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+DA  - 2025/10/20/
+PY  - 2025
+DO  - 10.1109/WiMob66857.2025.11257448
+DP  - DOI.org (Crossref)
+SP  - 223
+EP  - 230
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-9281-4
+UR  - https://ieeexplore.ieee.org/document/11257448/
+Y2  - 2026/03/24/13:21:35
+L1  - files/172/Bin Asif et al. - 2025 - IRS-Assisted DECT-2020 NR Framework for Ensuring URLLC Constraints in Industrial IoT.pdf
+KW  - Throughput
+KW  - Resource management
+KW  - Reliability
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Standards
+KW  - Wireless communication
+KW  - Industrial Internet of Things
+KW  - DECT 2020 NR
+KW  - Industrial IoT
+KW  - IRS
+KW  - Shadow mapping
+KW  - Solid modeling
+KW  - Three-dimensional displays
+ER  - 
+
+TY  - CONF
+TI  - Positioning in DECT-2020 NR with Proactive Measurement Selection
+AU  - Saikko, Antti
+AU  - Talvitie, Jukka
+AU  - Valkama, Mikko
+T2  - 2024 International Conference on Localization and GNSS (ICL-GNSS)
+C1  - Antwerp, Belgium
+C3  - 2024 International Conference on Localization and GNSS (ICL-GNSS)
+DA  - 2024/06/25/
+PY  - 2024
+DO  - 10.1109/ICL-GNSS60721.2024.10578492
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-8078-1
+UR  - https://ieeexplore.ieee.org/document/10578492/
+Y2  - 2026/03/24/13:21:38
+L1  - files/173/Saikko et al. - 2024 - Positioning in DECT-2020 NR with Proactive Measurement Selection.pdf
+KW  - Performance evaluation
+KW  - positioning
+KW  - DECT-2020 NR
+KW  - New Radio
+KW  - Energy consumption
+KW  - Fisher information
+KW  - Position measurement
+KW  - Energy measurement
+KW  - extended Kalman filter
+KW  - internet-of-things
+KW  - Mobility models
+KW  - non-cellular 5G
+KW  - Prediction algorithms
+ER  - 
+
+TY  - CONF
+TI  - Assessment of Candidate Technology ETSI: DECT-2020 New Radio
+AU  - Dhanwani, Vishakha
+AU  - Kumar, Navin
+AU  - Bachkaniwala, Akhil Kalpesh
+AU  - Rawal, Divyang
+AU  - Kumar, Sendil
+T2  - 2020 IEEE 3rd 5G World Forum (5GWF)
+AB  - A number of IMT-2020 candidate technologies including the 3GPP have been submitted to the ITU-R. All candidate technologies are expected to meet the minimum performance requirements set by ITU-R for getting recommended as IMT-2020. In this paper, based on the submissions for Digital Enhanced Cordless Telecommunication (DECT-2020 NR) technology, we have evaluated the performances of latency, reliability and connection density as per ITU-R evaluation methodology. We found that the latency requirements can only be met using half-slot transmissions or HARQ-less full-slot transmission in contrary to the results submitted in the self-evaluation report of the DECT-2020 NR. Due to lack of details in the submissions; like the channel and interference modeling between device to device relaying, scheduling and control of relay propagation direction, we could not conclude whether the DECT-2020 NR can meet the minimum performance requirement of connection density of IMT-2020.
+C1  - Bangalore, India
+C3  - 2020 IEEE 3rd 5G World Forum (5GWF)
+DA  - 2020/09//
+PY  - 2020
+DO  - 10.1109/5GWF49715.2020.9221186
+DP  - DOI.org (Crossref)
+SP  - 625
+EP  - 630
+LA  - en
+PB  - IEEE
+SN  - 978-1-7281-7299-6
+ST  - Assessment of Candidate Technology ETSI
+UR  - https://ieeexplore.ieee.org/document/9221186/
+Y2  - 2026/03/24/13:21:39
+L1  - files/174/Dhanwani et al. - 2020 - Assessment of Candidate Technology ETSI DECT-2020 New Radio.pdf
+KW  - Topology
+KW  - Performance evaluation
+KW  - Reliability
+KW  - Ultra reliable low latency communication
+KW  - Interference
+KW  - Latency
+KW  - 5G India Forum
+KW  - Beamformng
+KW  - Connection Density
+KW  - DECT
+KW  - New Radio
+KW  - NR
+KW  - Relays
+ER  - 
+
+TY  - CONF
+TI  - URLLC-Based Multi-Hop Communication Using DECT-2020 NR
+AU  - Asif, Awais Bin
+AU  - Ahmad, Hassan
+AU  - Preihs, Stephan
+AU  - Peissig, Jürgen
+T2  - 2025 IEEE Wireless Communications and Networking Conference (WCNC)
+AB  - DECT-2020 New Radio (NR) is a Radio Interface Technology (RIT) introduced by ETSI for massive Machine Type Communications (mMTC) and Ultra-Reliable Low Latency Communications (URLLC) use cases. A single DECT-2020 NR Radio Device (RD) in Fixed Termination (FT) mode announces radio resources for the connected RDs in Portable Termination (PT) mode. An RD can also operate in both modes simultaneously as an FT/PT. An RD in FT mode is responsible for packet routing for the connected radio devices. However, for multi-hop communication, RDs in FT mode flood the packet, which utilizes more network resources and introduces additional latency. In this paper, we propose a routing procedure for URLLC-based multihop communication using the MAC layer and convergence layer functionalities of DECT-2020 NR. Moreover, we formulate the optimization problem for optimal path selection based on userplane latency, which is our previous contribution to the ETSI self-evaluation technical report of DECT-2020 NR and propose a graph theory-based solution. The investigations demonstrate that an improvement of up to 15% in throughput and a reduction of up to 15% in end-to-end latency is observed in comparison with the standard flooding procedure.
+C1  - Milan, Italy
+C3  - 2025 IEEE Wireless Communications and Networking Conference (WCNC)
+DA  - 2025/03/24/
+PY  - 2025
+DO  - 10.1109/WCNC61545.2025.10978532
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-6836-9
+UR  - https://ieeexplore.ieee.org/document/10978532/
+Y2  - 2026/03/24/13:21:41
+L1  - files/175/Asif et al. - 2025 - URLLC-Based Multi-Hop Communication Using DECT-2020 NR.pdf
+KW  - Throughput
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Standards
+KW  - Optimization
+KW  - DECT-2020 NR
+KW  - Routing
+KW  - Floods
+KW  - Spread spectrum communication
+KW  - Costs
+KW  - Logic gates
+KW  - Multi-Hop Commu-
+KW  - Writing
+KW  - Multi-Hop Commu
+ER  - 
+
+TY  - CONF
+TI  - URLLC Performance Evaluation of IMT-2020 Candidate Technology: DECT-2020 New Radio
+AU  - Penner, Maxim
+AU  - Nabeel, Muhammad
+AU  - Peissig, Jurgen
+T2  - 2021 IEEE 94th Vehicular Technology Conference (VTC2021-Fall)
+AB  - The European Telecommunications Standards Institute (ETSI) Technical Committee (TC) Digital Enhanced Cordless Telecommunications (DECT) and DECT forum have recently introduced DECT-2020 New Radio (NR) as an International Mobile Telecommunications 2020 (IMT-2020) candidate technology for the massive Machine Type Communications (mMTC) and Ultra Reliable Low Latency Communications (URLLC) use cases. To consider DECT-2020 NR as an IMT-2020 technology, the International Telecommunication Union, Radiocommunication Sector (ITU-R) has determined different independent evaluation groups to assess its performance against the IMT-2020 requirements. These independent evaluation groups are now in the process of investigating DECT-2020 NR. In order to successfully assess a technology, one important aspect is to fully understand the underlying physical layer and its performance in different environments. Therefore, in this paper, we ﬁrst focus on the physical layer of DECT-2020 NR and investigate its linklevel performance with standard channel models provided by the ITU-R for evaluation. We then use these link-level results to perform system-level evaluation of DECT-2020 NR for its suitability for the URLLC use case of Fifth Generation (5G). By performing extensive simulations, we show that DECT-2020 NR is well suited for URLLC. The results presented in this work will be beneﬁcial for the independent evaluation groups and researchers as these results can help calibrating their physical layer performance curves and in comparing the system-level performance of DECT-2020 NR.
+C1  - Norman, OK, USA
+C3  - 2021 IEEE 94th Vehicular Technology Conference (VTC2021-Fall)
+DA  - 2021/09//
+PY  - 2021
+DO  - 10.1109/VTC2021-Fall52928.2021.9625340
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 7
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-1368-8
+ST  - URLLC Performance Evaluation of IMT-2020 Candidate Technology
+UR  - https://ieeexplore.ieee.org/document/9625340/
+Y2  - 2026/03/24/13:21:43
+L1  - files/176/Penner et al. - 2021 - URLLC Performance Evaluation of IMT-2020 Candidate Technology DECT-2020 New Radio.pdf
+KW  - Ultra reliable low latency communication
+KW  - Physical layer
+KW  - New Radio
+KW  - Vehicular and wireless technologies
+KW  - ETSI
+KW  - Spatial diversity
+KW  - Transceivers
+ER  - 
+
+TY  - CONF
+TI  - Examination of PHY Layer Features in DECT-2020 and LTE-M Networks
+AU  - Kizilirmak, Refik Caglar
+AU  - Askarov, Satzhan
+T2  - 2024 IEEE 10th Information Technology International Seminar (ITIS)
+AB  - This paper provides a comparative analysis of the physical layer (PHY) characteristics of DECT-2020 NR and LTE-M, two critical standards for IoT communication. DECT-2020 NR, developed by ETSI, is intended for industrial IoT applications and provides low-latency, reliable communication in high-density environments. In contrast, LTE-M, which is a member of the 3GPP family, is designed to provide broad coverage, energy efﬁciency, and mobility support for low-power devices. The study emphasizes the distinctions between the standards regarding data rates, modulation schemes, and frequency bands, displaying how each standard fulﬁlls speciﬁc IoT requirements. Furthermore, it highlights the complementing characteristics of DECT-2020 NR and LTE-M, by providing performance insights such as bit-error rate (BER) analysis and spectral efﬁciency.
+C1  - Surabaya, Indonesia
+C3  - 2024 IEEE 10th Information Technology International Seminar (ITIS)
+DA  - 2024/11/06/
+PY  - 2024
+DO  - 10.1109/ITIS64716.2024.10845321
+DP  - DOI.org (Crossref)
+SP  - 200
+EP  - 204
+LA  - en
+PB  - IEEE
+SN  - 979-8-3315-2129-5
+UR  - https://ieeexplore.ieee.org/document/10845321/
+Y2  - 2026/03/24/13:21:44
+L1  - files/177/Kizilirmak and Askarov - 2024 - Examination of PHY Layer Features in DECT-2020 and LTE-M Networks.pdf
+KW  - Performance evaluation
+KW  - Reliability
+KW  - Standards
+KW  - Industrial Internet of Things
+KW  - Low latency communication
+KW  - Energy efficiency
+KW  - Numerical simulation
+KW  - DECT-2020 NR
+KW  - Physical layer
+KW  - IoT
+KW  - LTE-M
+KW  - Seminars
+KW  - Spectral efficiency
+ER  - 
+
+TY  - JOUR
+TI  - Positioning and Tracking in DECT-2020 NR With Proactive Anchor Selection for Range, Angle, and RSS Measurements
+AU  - Saikko, Antti
+AU  - Talvitie, Jukka
+AU  - Säe, Joonas
+AU  - Pirskanen, Juho
+AU  - Valkama, Mikko
+T2  - IEEE Journal of Indoor and Seamless Positioning and Navigation
+AB  - This article addresses efﬁcient positioning and user device tracking in Internet-of-Things (IoT) networks with particular focus on the new DECT-2020 New Radio standard—the ﬁrst noncellular 5G technology standard in the world. Stemming from fundamental performance requirements of IoT networks, for example, related to energy consumption, latency, and reliability, it is important to utilize available radio resources efﬁciently, while avoiding redundant transmissions and signaling. In this article, we extend our earlier proposed tracking-based positioning solution, which utilized Fisher information to select the most beneﬁcial range and angle measurements, to cover also received signal strength (RSS)-based measurements and particle ﬁlter-based solutions. By exploiting prior information inherited from trackingbased positioning solutions, it is possible to proactively select the most valuable positioning measurements, and thus save valuable effort and time in acquiring and processing positioning measurements without sacriﬁcing the positioning performance in practice. Through extensive numerical evaluations, considering range, angle, and RSS measurements, we show that the proposed anchor selection method is able to outperform the traditional signal-to-noise ratio-based measurement selection approach, while enabling positioning with a smaller number of measurements. In addition, we illustrate the effect of prior information quality on the proposed method performance by varying the measurement interval in the tracking process. The numerical results show that when only two anchors are utilized, approximately up to 10%–50% reduction in positioning root-mean-square error can be achieved depending on the considered measurement type.
+DA  - 2025///
+PY  - 2025
+DO  - 10.1109/JISPIN.2025.3559907
+DP  - DOI.org (Crossref)
+VL  - 3
+SP  - 70
+EP  - 80
+J2  - J. Ind. Sea. Pos. Nav.
+LA  - en
+SN  - 2832-7322
+UR  - https://ieeexplore.ieee.org/document/10963685/
+Y2  - 2026/03/24/13:21:47
+L1  - files/178/Saikko et al. - 2025 - Positioning and Tracking in DECT-2020 NR With Proactive Anchor Selection for Range, Angle, and RSS M.pdf
+KW  - OFDM
+KW  - positioning
+KW  - New Radio
+KW  - Atmospheric measurements
+KW  - Digital Enhanced Cordless Telecommunications—2020 New Radio (DECT-2020 NR)
+KW  - Estimation
+KW  - extended Kalman filter (EKF)
+KW  - Fisher information
+KW  - Internet-of-Things (IoT)
+KW  - Measurement uncertainty
+KW  - Navigation
+KW  - noncellular 5G
+KW  - particle filter
+KW  - Particle filters
+KW  - Particle measurements
+KW  - Position measurement
+KW  - Time measurement
+KW  - tracking
+ER  - 
+
+TY  - GEN
+TI  - Link-Level Performance Evaluation of IMT-2020 Candidate Technology: DECT-2020 New Radio
+AU  - Penner, Maxim
+AU  - Nabeel, Muhammad
+AU  - Peissig, Jürgen
+AB  - The ETSI has recently introduced the DECT-2020 New Radio (NR) as an IMT-2020 candidate technology for the mMTC and URLLC use cases. To consider DECT-2020 NR as an IMT-2020 technology, the ITU-R has determined different independent evaluation groups to assess its performance against the IMT-2020 requirements. These independent evaluation groups are now in process of investigating the DECT-2020 NR. In order to successfully assess a technology, one important aspect is to fully understand the underlying physical layer and its performance in different environments. Therefore, in this paper, we focus on the physical layer of DECT-2020 NR and investigate its link-level performance with standard channel models provided by the ITUR for evaluation. We perform extensive simulations to analyze the performance of DECT-2020 NR for both URLLC and mMTC use cases. The results presented in this work are beneﬁcial for the independent evaluation groups and researchers as these results can help calibrating their physical layer performance curves. These results can also be used directly for future system-level evaluations of DECT-2020 NR.
+DA  - 2021/04/17/
+PY  - 2021
+DO  - 10.48550/arXiv.2104.08549
+DP  - arXiv.org
+LA  - en
+PB  - arXiv
+ST  - Link-Level Performance Evaluation of IMT-2020 Candidate Technology
+UR  - http://arxiv.org/abs/2104.08549
+Y2  - 2026/03/24/13:21:49
+L1  - files/179/Penner et al. - 2021 - Link-Level Performance Evaluation of IMT-2020 Candidate Technology DECT-2020 New Radio.pdf
+L2  - files/863/2104.html
+N1  - Comment: 6 pages, 5 figures, 3 tables
+N1  - Comment: 6 pages, 5 figures, 3 tables
+KW  - Computer Science - Networking and Internet Architecture
+ER  - 
+
+TY  - JOUR
+TI  - DECT-2020 New Radio: The Next Step toward 5G Massive Machine-Type Communications
+AU  - Kovalchukov, Roman
+AU  - Moltchanov, Dmitri
+AU  - Pirskanen, Juho
+AU  - Sae, Joonas
+AU  - Numminen, Jussi
+AU  - Koucheryavy, Yevgeni
+AU  - Valkama, Mikko
+T2  - IEEE Communications Magazine
+AB  - Massive machine type communications (mMTC) is one of the cornerstone services that must be supported by 5G systems. 3GPP has already introduced LTE-M and NB-IoT, referred to as cellular IoT (CIoT), in 3GPP Releases 13, 14, and 15, and submitted these technologies as part of 3GPP’s IMT-2020 technology submission to ITU-R. Even though NB-IoT and LTE-M have been shown to satisfy 5G mMTC requirements, it is expected that these CIoT solutions will not address all aspects of IoT and ongoing digitalization, including the support for direct communication between ”things” with flexible deployments, different business models, as well as support for even higher node densities and enhanced coverage. In this article, we first describe the Digital Enhanced Cordless Telecommunications (DECT) DECT-2020 standard recently published by ETSI for mMTC communications. We then evaluate its performance and compare it to the existing low-power wide area network solutions, showing that it outperforms those in terms of supported density of nodes while keeping delay and loss guarantees at the required level.
+DA  - 2022/06//
+PY  - 2022
+DO  - 10.1109/MCOM.001.2100375
+DP  - DOI.org (Crossref)
+VL  - 60
+IS  - 6
+SP  - 58
+EP  - 64
+J2  - IEEE Commun. Mag.
+LA  - en
+SN  - 0163-6804, 1558-1896
+ST  - DECT-2020 New Radio
+UR  - https://ieeexplore.ieee.org/document/9799793/
+Y2  - 2026/03/24/13:21:51
+L1  - files/180/Kovalchukov et al. - 2022 - DECT-2020 New Radio The Next Step toward 5G Massive Machine-Type Communications.pdf
+KW  - 3GPP
+KW  - 5G mobile communication
+KW  - Internet of Things
+KW  - Routing
+KW  - Low-power wide area networks
+KW  - Massive machine type communication
+KW  - Network topology
+KW  - Urban areas
+ER  - 
+
+TY  - CONF
+TI  - MAC Protocol for Reducing Outage Probability in DECT-2020 New Radio
+AU  - Ahmad, Hassan
+AU  - Asif, Awais Bin
+AU  - Peissig, Jürgen
+AU  - Penner, Maxim
+T2  - 2024 20th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+AB  - DECT-2020 New Radio (NR) is a Radio Interface Technology (RIT) recognized for fulfilling the requirements of IMT-2020 Ultra Reliable Low Latency Communications (URLLC) and massive Machine Type Communications (mMTC) application scenarios. A single DECT-2020 NR Radio Device (RD) in Fixed Termination (FT) mode announces the radio resources, while other RDs in Portable Termination (PT) mode directly connect to it. A single RD can also operate in both modes simultaneously as an FT/PT. In this research work, we consider the requirement of an ultra-reliable DECT-2020 NR private network with a limited number of RDs in a given Region Of Interest (ROI) and propose a Medium Access Control (MAC) protocol to reduce the outage probability by exploiting the FT/PT mode functionality of an RD. We utilize the Cluster and Network Beacon Messages periodically transmitted by the FT to prompt connected PTs to change to FT/PT mode and route the data for a specific RD positioned in an outage location, ensuring an outage rate of less than 1% in the ROI. Furthermore, we demonstrate the effectiveness of our proposed technique through event-based simulations.
+C1  - Paris, France
+C3  - 2024 20th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+DA  - 2024/10/21/
+PY  - 2024
+DO  - 10.1109/WiMob61911.2024.10770522
+DP  - DOI.org (Crossref)
+SP  - 42
+EP  - 49
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-8744-5
+UR  - https://ieeexplore.ieee.org/document/10770522/
+Y2  - 2026/03/24/13:21:53
+L1  - files/181/Ahmad et al. - 2024 - MAC Protocol for Reducing Outage Probability in DECT-2020 New Radio.pdf
+KW  - 5G
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Power system reliability
+KW  - Probability
+KW  - Wireless communication
+KW  - Network coding
+KW  - New Radio
+KW  - coverage
+KW  - DECT-2020
+KW  - Event detection
+KW  - MAC
+KW  - outage rate
+KW  - Planning
+KW  - Routing
+KW  - Routing protocols
+KW  - Simulation
+KW  - TDMA
+ER  - 
+
+TY  - CONF
+TI  - DECT-2020 New Radio System Level Assessment for Multi-Hop Assisted mMTC usage Scenario
+AU  - Singhwi, Tanmay
+AU  - Andra, Samya
+AU  - Seelam, Sai Jaswanth
+AU  - Makkar, Rahul
+AU  - Rawal, Divyang
+AU  - Sharma, Nikhil
+T2  - 2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS)
+AB  - All the candidate technologies submitted to the ITUR are expected to meet the minimum performance requirements for getting recommended as IMT-2020. This paper considered a submission for digital enhanced cordless telecommunication new radio (DECT-2020 NR) technology evaluation. We proposed various approaches for relay selection, channel/frequency allocation for the relay and device association with relays for massive machine type communication (mMTC) scenario based on DECT2020 NR speciﬁcations. These approaches are compared based on SINR received by the users. Simulation results conclude that the angles based approach is the most optimal method for relay selection and device association. For an average percentile of users, a difference of 7dB can be observed between the worst and best approach.
+C1  - Hyderabad, India
+C3  - 2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS)
+DA  - 2021/12/13/
+PY  - 2021
+DO  - 10.1109/ANTS52808.2021.9936990
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 6
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-4893-2
+UR  - https://ieeexplore.ieee.org/document/9936990/
+Y2  - 2026/03/24/13:21:55
+L1  - files/182/Singhwi et al. - 2021 - DECT-2020 New Radio System Level Assessment for Multi-Hop Assisted mMTC usage Scenario.pdf
+KW  - 5G
+KW  - Performance evaluation
+KW  - Interference
+KW  - New Radio
+KW  - Simulation
+KW  - Massive machine type communications
+KW  - digital enhanced cordless telecommunication (DECT)
+KW  - Telecommunications
+KW  - Communications technology
+KW  - massive machine type communication (mMTC)
+ER  - 
+
+TY  - CONF
+TI  - Physical Layer Performance of DECT-2020 New Radio for Factory Automation
+AU  - Llaguno, Endika
+AU  - Pretel, Ivan
+AU  - Angueira, Pablo
+AU  - Montalban, Jon
+T2  - 2024 IEEE 20th International Conference on Factory Communication Systems (WFCS)
+AB  - Derived from the work at IMT-2020, the standard DECT2020-NR provides non-cellular communication solutions for applications requiring strict latency and reliability for flexible and adaptive deployments. Examples include industrial and audiovisual communications. This work-in-progress analyzes the physical layer performance of DECT2020-NR in an industrial environment. Different types of communication links are considered and various propagation channel conditions and system configurations are simulated. The results obtained confirm the need for a MAC access layer with link control techniques to ensure the reliability requirements of industrial applications.
+C1  - Toulouse, France
+C3  - 2024 IEEE 20th International Conference on Factory Communication Systems (WFCS)
+DA  - 2024/04/17/
+PY  - 2024
+DO  - 10.1109/WFCS60972.2024.10540949
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 4
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-1934-7
+UR  - https://ieeexplore.ieee.org/document/10540949/
+Y2  - 2026/03/24/13:21:57
+L1  - files/183/Llaguno et al. - 2024 - Physical Layer Performance of DECT-2020 New Radio for Factory Automation.pdf
+L2  - files/812/85195415247.html
+KW  - 5G
+KW  - Reliability
+KW  - URLLC
+KW  - Standards
+KW  - Production facilities
+KW  - mMTC
+KW  - Communication systems
+KW  - DECT-2020NR
+KW  - Factory Automation
+KW  - Manufacturing automation
+KW  - Physical layer
+ER  - 
+
+TY  - CONF
+TI  - MAC-Layer Protocol for Ultra-Reliable Multi-Hop Communication in DECT-2020 NR IIoT Networks
+AU  - Ahmad, Hassan
+AU  - Bin Asif, Awais
+AU  - Poets, Alexander
+AU  - Peissig, Jürgen
+T2  - 2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+AB  - DECT-2020 New Radio (NR) is a Radio Interface Technology (RIT) that meets the IMT-2020 requirements for UltraReliable Low-Latency Communications (URLLC) and massive Machine-Type Communications (mMTC). ITU-R approval was gained by the end of 2021, and it remains the only non-cellular 5G technology to date. This work presents an enhanced Medium Access Control (MAC) protocol that utilizes the mesh-networking capability of DECT-2020 NR, extending the procedures and MAC messages beyond the standard. The protocol dynamically assigns radio devices (RDs) the role of intermediate nodes for routing data to RDs in locations prone to outages, thereby reducing the outage rate to below 1% and expanding the network’s coverage area. Furthermore, event-based simulations demonstrate the protocol’s potential to enable ultra-reliable 5G private networks, positioning DECT-2020 NR as a promising candidate for evolving into a 6G wireless technology in future releases of the standard.
+C1  - Marrakesh, Morocco
+C3  - 2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+DA  - 2025/10/20/
+PY  - 2025
+DO  - 10.1109/WiMob66857.2025.11257485
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 8
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-9281-4
+UR  - https://ieeexplore.ieee.org/document/11257485/
+Y2  - 2026/03/24/13:21:59
+L1  - files/184/Ahmad et al. - 2025 - MAC-Layer Protocol for Ultra-Reliable Multi-Hop Communication in DECT-2020 NR IIoT Networks.pdf
+KW  - 5G
+KW  - Protocols
+KW  - Wireless networks
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - 6G
+KW  - Standards
+KW  - Industrial Internet of Things
+KW  - 6G mobile communication
+KW  - New Radio
+KW  - DECT-2020
+KW  - Event detection
+KW  - MAC
+KW  - Routing
+KW  - TDMA
+KW  - Media Access Control
+KW  - Coverage
+KW  - Future Wireless Networks
+KW  - Outage Rate
+ER  - 
+
+TY  - CONF
+TI  - Professional Networked Audio over DECT NR+: Feasibility and Performance
+AU  - Poets, Alexander
+AU  - Mergler, Iwo
+AU  - Penner, Maxim
+AU  - Waßmann, Mattes
+AU  - Preihs, Stephan
+AU  - Peissig, Jürgen
+T2  - 2025 IEEE 6th International Symposium on the Internet of Sounds (IS2)
+AB  - DECT NR+, also known by its official designation DECT-2020 NR, is a new radio standard developed and maintained by the European Telecommunications Standards Institute (ETSI). It is the world’s first non-cellular 5G technology and fulfils the IMT-2020 requirements for both massive Machine Type Communications (mMTC) and Ultra-Reliable and Low Latency Communications (URLLC). The latter makes it a promising candidate for applications from the Programme Making and Special Events (PMSE) sector. In this paper, we investigate the feasibility of using DECT NR+ as a cable replacement solution for networked audio systems, with Dante serving as an example. Dante is an AV connectivity platform developed by Audinate that has become the de facto industry standard for digital audio networking. Using an open-source Software-Defined Radio (SDR) implementation of DECT NR+, we set up a wireless link between two Dante-enabled devices. Based on the metrics reported to Dante Controller, we assess the performance of Dante in the DECT NR+ wireless network and demonstrate that an average one-way latency of 1.7 ms can be achieved.
+C1  - L'Aquila, Italy
+C3  - 2025 IEEE 6th International Symposium on the Internet of Sounds (IS2)
+DA  - 2025/10/29/
+PY  - 2025
+DO  - 10.1109/IS264627.2025.11284656
+DP  - DOI.org (Crossref)
+SP  - 1
+EP  - 8
+LA  - en
+PB  - IEEE
+SN  - 979-8-3315-7294-5
+ST  - Professional Networked Audio over DECT NR+
+UR  - https://ieeexplore.ieee.org/document/11284656/
+Y2  - 2026/03/24/13:22:03
+L1  - files/186/Poets et al. - 2025 - Professional Networked Audio over DECT NR+ Feasibility and Performance.pdf
+KW  - 5G
+KW  - 5G mobile communication
+KW  - Industries
+KW  - Wireless networks
+KW  - Performance evaluation
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Standards
+KW  - NR+
+KW  - DECT-2020
+KW  - Dante
+KW  - ETSI
+KW  - Internet
+KW  - Massive machine type communications
+KW  - PMSE
+KW  - Software radio
+ER  - 
+
+TY  - CONF
+TI  - On Performance of multi-hop assisted mMTC for DECT-2020 New Radio System
+AU  - Soni, Sandhya
+AU  - Makkar, Rahul
+AU  - Singhwi, Tanmay
+AU  - Rawal, Divyang
+AU  - Sharma, Nikhil
+AU  - Minz, Laxmikant
+T2  - 2021 International Conference on Information and Communication Technology Convergence (ICTC)
+AB  - Digital enhanced cordless telecommunication new radio (DECT-2020 NR) is one of the candidate technology which fulﬁls the minimum requirements to serve as ﬁfth-generation (5G) standardization. It accomplishes one of the performance requirements for massive machine-type communications (mMTC) by enabling a high connection density, i.e. up to 1-million devices/km2. Reliable communication over such massive connections is achieved through a multi-hop relay system. This paper analyzes the link-level performance of DECT-2020 NR standards for mMTC using a multi-hop decode-and-forward (DF) relaying system for the outage probability and bit error rate (BER) performance metrics. Simulation results show the performance improvement in outage probability over various transmission rates, hops and signal-to-interference-plus-noise ratio (SINR). The numerical results corroborate with Monte-Carlo simulation results. Also, the link performance in terms of BER is compared for Turbo codes with puncturing.
+C1  - Jeju Island, Korea, Republic of
+C3  - 2021 International Conference on Information and Communication Technology Convergence (ICTC)
+DA  - 2021/10/20/
+PY  - 2021
+DO  - 10.1109/ICTC52510.2021.9620940
+DP  - DOI.org (Crossref)
+SP  - 984
+EP  - 988
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-2383-0
+UR  - https://ieeexplore.ieee.org/document/9620940/
+Y2  - 2026/03/24/13:22:05
+L1  - files/187/Soni et al. - 2021 - On Performance of multi-hop assisted mMTC for DECT-2020 New Radio System.pdf
+KW  - 5G
+KW  - outage probability
+KW  - multi-hop
+KW  - digital enhanced cordless telecommunication (DECT)
+KW  - new radio (NR)
+ER  - 
+
+TY  - CHAP
+TI  - Wireless Communication (Short Range and Long Range incl. LPWAN)
+AU  - Stiller, Burkhard
+AU  - Schiller, Eryk
+AU  - Schmitt, Corinna
+T2  - Springer Handbook of Internet of Things
+A2  - Ziegler, Sébastien
+A2  - Radócz, Renáta
+A2  - Quesada Rodriguez, Adrian
+A2  - Matheu Garcia, Sara Nieves
+AB  - This chapter classiﬁes communication technologies employed in the Internet of Things (IoT) as infrastructure, data, transport, discovery, messaging, and management protocol families and semantics and frameworks. Moreover, IoT networks are divided into IP and constrained networks with the latter not directly supporting the Transmission Control Protocol (TCP) and Internet Protocol (IP) stack on IoT devices. Furthermore, another distinction is considered dividing networks into personal (PAN), local (LAN), and wide (WAN) area Networks. Finally, here selected communication technologies are characterized according to the aforementioned classiﬁers and important aspects of select technologies are discussed in the remainder of this chapter.
+CY  - Cham
+DA  - 2024///
+PY  - 2024
+DO  - 10.1007/978-3-031-39650-2_9
+DP  - DOI.org (Crossref)
+SP  - 165
+EP  - 192
+LA  - en
+PB  - Springer International Publishing
+SN  - 978-3-031-39649-6 978-3-031-39650-2
+UR  - https://link.springer.com/10.1007/978-3-031-39650-2_9
+Y2  - 2026/03/24/13:22:07
+L1  - files/188/Stiller et al. - 2024 - Wireless Communication (Short Range and Long Range incl. LPWAN).pdf
+KW  - 5G
+KW  - IEEE 802.11
+KW  - DECT-2020 NR
+KW  - LoRa
+KW  - 1G
+KW  - 2G
+KW  - 3G
+KW  - 4G
+KW  - 6LoWPAN
+KW  - BLIP
+KW  - Bluetooth
+KW  - DASH7
+KW  - IEEE 802.15.4
+KW  - LAN
+KW  - LTE Cat. 0
+KW  - LTE Cat. M
+KW  - LTE Cat. M1
+KW  - LTE Cat. N
+KW  - MAN
+KW  - NB-IoT
+KW  - NFC
+KW  - PAN
+KW  - RFID
+KW  - Sigfox
+KW  - WAN
+KW  - ZigBee
+ER  - 
+
+TY  - JOUR
+TI  - Modeling DECT-2020 as a Tandem Queueing System and Its Application to the Peak Age of Information Analysis
+AU  - Nikolaev, Dmitry
+AU  - Zhivtsova, Anna
+AU  - Matyushenko, Sergey
+AU  - Gaidamaka, Yuliya
+AU  - Koucheryavy, Yevgeni
+T2  - Mathematics
+AB  - The Peak Age of Information (PAoI) quantifies the freshness of updates used in cyberphysical systems (CPSs), realized within the Internet of Things (IoT) paradigm, encompassing devices, networks, and control algorithms. Consequently, PAoI is a critical metric for real-time applications enabled by Ultra-Reliable Low Latency Communication (URLLC). While highly useful for system evaluation, the direct analysis of this metric is complicated by the correlation between the random variables constituting the PAoI. Thus, it is often evaluated using only the mean value rather than the full distribution. Furthermore, since CPS communication technologies like Wi-Fi or DECT-2020 involve multiple processing stages, modeling them as tandem queueing systems is essential for accurate PAoI analysis. In this paper, we develop an analytical model for a DECT-2020 network segment represented as a two-phase tandem queueing system, enabling detailed PAoI analysis via Laplace–Stieltjes transforms (LST). We circumvent the dependence between generation and sojourn times by classifying updates into four mutually exclusive groups. This approach allows us to derive the LST of the PAoI and determine the exact Probability Density Function (PDF) for M|M|1 → M|M|1 system. We also calculate the mean and variance of the PAoIs and validate our results through numerical experiments. Additionally, we evaluate the impact of different service time distributions on PAoI variability. These findings contribute to the theoretical understanding of PAoI in tandem queueing systems and provide practical insights for optimizing DECT-2020-based communication systems.
+DA  - 2026/01/04/
+PY  - 2026
+DO  - 10.3390/math14010186
+DP  - DOI.org (Crossref)
+VL  - 14
+IS  - 1
+SP  - 186
+J2  - Mathematics
+LA  - en
+SN  - 2227-7390
+UR  - https://www.mdpi.com/2227-7390/14/1/186
+Y2  - 2026/03/24/13:22:10
+L1  - files/190/Nikolaev et al. - 2026 - Modeling DECT-2020 as a Tandem Queueing System and Its Application to the Peak Age of Information An.pdf
+KW  - Internet of Things
+KW  - DECT-2020
+KW  - automatic control
+KW  - cyber–physical system
+KW  - information freshness
+KW  - Laplace–Stieltjes transforms
+KW  - PAoI
+KW  - peak age of information
+KW  - probability distribution
+KW  - queueing theory
+KW  - tandem queueing system
+ER  - 
+
+TY  - CONF
+TI  - Reliable and Low-Latency Communications for Critical Infrastructures Utilizing Wireless Mesh Networks
+AU  - Biswas, Ritayan
+AU  - Säe, Joonas
+AU  - Pirskanen, Juho
+AU  - Lempiäinen, Jukka
+T2  - 2024 International Conference on Computing, Networking and Communications (ICNC)
+AB  - The purpose of this paper is to evaluate the applicability of wireless mesh networks as a suitable alternative to traditional mobile networks for the monitoring and protection of critical infrastructures. Present-day mobile networks have to handle a large amount of data due to the increase in the need for mobile broadband and the number of users. Therefore, monitoring critical infrastructures exerts an additional load on the existing networks. Thus, the applicability of wireless mesh networks (operating at independent frequency bands) is investigated to determine if they are capable of protecting and monitoring critical infrastructures such as smart grids. The reliability and latency of optimally tuned wireless mesh networks free of other network traffic are studied with the help of simulations based on the DECT-2020 NR standard. It is observed that reliable communications can be realized, however, the end-to-end latency of the network increases with the number of hops and re-transmissions. The user plane latency varies between 10.55 ms to 25.07 ms over five hops and between 15.55 ms to 38.78 ms over eight hops based on the size of the packet. Furthermore, there is a 1.2 to 2 times increment in the latency with each re-transmission. Therefore, a trade-off is necessary to achieve ultra-reliable low-latency communications utilizing wireless mesh networks for monitoring and protection of critical infrastructures.
+C1  - Big Island, HI, USA
+C3  - 2024 International Conference on Computing, Networking and Communications (ICNC)
+DA  - 2024/02/19/
+PY  - 2024
+DO  - 10.1109/ICNC59896.2024.10556213
+DP  - DOI.org (Crossref)
+SP  - 100
+EP  - 105
+LA  - en
+PB  - IEEE
+SN  - 979-8-3503-7099-7
+UR  - https://ieeexplore.ieee.org/document/10556213/
+Y2  - 2026/03/24/13:22:52
+L1  - files/196/Biswas et al. - 2024 - Reliable and Low-Latency Communications for Critical Infrastructures Utilizing Wireless Mesh Network.pdf
+L1  - files/875/Biswas et al. - 2024 - Reliable and Low-Latency Communications for Critical Infrastructures Utilizing Wireless Mesh Network.pdf
+KW  - Delays
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Telecommunication traffic
+KW  - Robustness
+KW  - Wireless mesh networks
+KW  - Critical infrastructure
+KW  - low-latency
+KW  - reliable communications
+KW  - Smart grids
+KW  - wireless mesh networks
+ER  - 
+
+TY  - CONF
+TI  - ETSI/DECT-2020 Component RIT Technology Implementation and Evaluation Contributions in mMTC and URLLC Use Cases
+AU  - Smida, Oussama Ben
+AU  - Amor, Souheib Ben
+AU  - Affes, Sofiène
+T2  - ICC 2023 - IEEE International Conference on Communications
+AB  - We propose a comprehensive evaluation of ETSI/DECT-2020 New Radio (NR) as an IMT-2020 candidate technology for the mMTC (connection density) and URLLC (reliability) use cases. Several independent evaluation groups assessed DECT-2020 NR performance against the IMT-2020 requirements and INRS played a key role within the Canadian Evaluation Group (CEG) in evaluating the technology via simulation. In order to develop 5G link- and system-level simulators, it is necessary to identify and understand all key characteristics of DECT technology. Nevertheless, the mMTC use case offers D2D communications, which made simulation analysis extremely cumbersome. In this paper, we also explain the different maneuvers in order to fasten the simulations and reduce complexity while respecting all DECT speciﬁcations. Simulation results provided from link- and system-level simulations for both URLLC and mMTC use cases show that DECT-2020 component RIT meets the IMT-2020 requirements.
+C1  - Rome, Italy
+C3  - ICC 2023 - IEEE International Conference on Communications
+DA  - 2023/05/28/
+PY  - 2023
+DO  - 10.1109/ICC45041.2023.10279025
+DP  - DOI.org (Crossref)
+SP  - 1462
+EP  - 1467
+LA  - en
+PB  - IEEE
+SN  - 978-1-5386-7462-8
+UR  - https://ieeexplore.ieee.org/document/10279025/
+Y2  - 2026/03/24/13:22:55
+L1  - files/198/Smida et al. - 2023 - ETSIDECT-2020 Component RIT Technology Implementation and Evaluation Contributions in mMTC and URLL.pdf
+KW  - 5G
+KW  - Ultra reliable low latency communication
+KW  - New Radio
+KW  - Simulation
+KW  - Estimation
+KW  - channel mismatch
+KW  - channels estimation errors
+KW  - Complexity theory
+KW  - Connection density (mMTC)
+KW  - D2D
+KW  - Device-to-device communication
+KW  - direction-of-arrival (DoA)
+KW  - Direction-of-arrival estimation
+KW  - ETSI/DECT
+KW  - implementation impairments
+KW  - localization
+KW  - Reliability (URLLC)
+KW  - synchronization
+KW  - Technology evaluation
+ER  - 
+
+TY  - CONF
+TI  - Link-Level Assessment of NOMA Aided Multi-hop DECT-2020 New Radio for mMTC Applications
+AU  - Soni, Sandhya
+AU  - Makkar, Rahul
+AU  - Rawal, Divyang
+AU  - Sharma, Nikhil
+T2  - 2023 International Conference on Information Networking (ICOIN)
+AB  - Digital enhanced cordless telecommunication-2020 new radio (DECT-2020 NR) is an essential part of the fifth generation (5G) standards proposed by the international telecommunication union (ITU). With an achievable density of approximately one million connections per square km, it is a potential candidate which promises to fill in the actual gap in the wireless internet of things (IoT) market for the massive machine-type communications (mMTC). In this paper, we explore a non-orthogonal multiple access (NOMA) assisted cooperative multi-hop (MH) relaying system for DECT-2020 NR system for mMTC applications. The use of cooperative multi-hop (MH) relaying system allows a reliable long-haul communication system and further the use of NOMA scheme helps in achieving a better spectral efficiency and massive connectivity. The link level evaluation of the proposed system is carried out for the proposed NOMA aided MH DECT-2020 NR system and further error rate analysis is presented in terms of outage probability and the bit error rate (BER). Monte-Carlo simulations further corroborate the correctness of the analytical findings.
+C1  - Bangkok, Thailand
+C3  - 2023 International Conference on Information Networking (ICOIN)
+DA  - 2023/01/11/
+PY  - 2023
+DO  - 10.1109/ICOIN56518.2023.10048900
+DP  - DOI.org (Crossref)
+SP  - 478
+EP  - 482
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-6268-6
+UR  - https://ieeexplore.ieee.org/document/10048900/
+Y2  - 2026/03/24/13:22:57
+L1  - files/199/Soni et al. - 2023 - Link-Level Assessment of NOMA Aided Multi-hop DECT-2020 New Radio for mMTC Applications.pdf
+KW  - NOMA
+KW  - Wireless communication
+KW  - ITU
+KW  - Spectral efficiency
+KW  - Simulation
+KW  - multi-hop
+KW  - Bit error rate
+KW  - Spread spectrum communication
+KW  - Decode-and-forward
+KW  - digital enhanced cordless telecommunication-2020 new radio
+KW  - massive machine-type communication
+KW  - non-orthogonal multiple access
+ER  - 
+
+TY  - CONF
+TI  - Energy Saving Router Rotation Protocol for DECT-2020 NR
+AU  - Nihtila, Timo
+AU  - Taipale, Tarmo
+T2  - 2022 18th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+AB  - ETSI DECT-2020 New Radio (NR) is a new flexible radio interface targeted to support a broad range of wireless Internet of Things (IoT) applications. It has been shown to fulfill both massive machine-type communications (mMTC) and ultra-reliable low latency communications (URLLC) requirements for 5th generation (5G) networks. DECT-2020 NR is an autonomous wireless mesh network protocol where the devices can choose to become routers, forwarding the data of other devices in addition to their own data. Thus, a wireless mesh network does not need separate base stations or a core network architecture to extend coverage. This makes the deployment of DECT-2020 NR networks easy, but with the cost of increased energy consumption in the router nodes. Notably, the same energy consumption is not inflicted upon the non-routing leaf nodes whose operation is on the contrary very energy efficient. This role-induced disparity in node energy consumption results in the network not using the energy of its devices with maximal efficiency. A method to alleviate this problem could be a network rotation in which the roles of network nodes are periodically rotated and the energy consumption is thus distributed more evenly among the nodes. In this paper we propose a role rotation protocol for DECT-2020 NR and evaluate its impact to the expected lifetime and the performance of the network by system level simulations.
+C1  - Thessaloniki, Greece
+C3  - 2022 18th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob)
+DA  - 2022/10/10/
+PY  - 2022
+DO  - 10.1109/WiMob55322.2022.9941639
+DP  - DOI.org (Crossref)
+SP  - 69
+EP  - 74
+LA  - en
+PB  - IEEE
+SN  - 978-1-6654-6975-3
+UR  - https://ieeexplore.ieee.org/document/9941639/
+Y2  - 2026/03/24/13:23:00
+L1  - files/201/Nihtila and Taipale - 2022 - Energy Saving Router Rotation Protocol for DECT-2020 NR.pdf
+KW  - 5G
+KW  - Ultra reliable low latency communication
+KW  - Wireless communication
+KW  - Wireless sensor networks
+KW  - NR
+KW  - DECT-2020
+KW  - Energy consumption
+KW  - Mesh networks
+KW  - Wireless mesh networks
+KW  - energy saving
+KW  - Network architecture
+ER  - 
+
+TY  - JOUR
+TI  - DECT NR+: A new radio standard to benefit professional audio  applications
+AU  - Poets, Alexander
+AU  - WaÃ, Mattes
+AB  - DECT-2020 New Radio (marketed as NR+ by the DECT Forum) is an ETSI-developed Radio Interface Technology (RIT) that meets the IMT-2020 requirements for UltraReliable Low Latency (URLLC) and massive Machine Type Communication (mMTC). Therefore, in late 2021, it was approved by the ITU-R to be included in the 5G family of standards. Constituting the world’s first non-cellular 5G technology, DECT NR+ targets nomadic wireless applications that can be deployed anywhere by anyone at any time. Along with the option to operate in the license-exempt 1.9 GHz DECT band, the meshnetworking capability of NR+ makes the technology a compelling choice for Small and Medium-sized Enterprises (SMEs) and the Program Making and Special Events (PMSE) industry.
+DA  - 2024///
+PY  - 2024
+DP  - Zotero
+LA  - en
+L1  - files/584/Raftopoulou et al. - 2025 - Deployment and Performance Evaluation of 5G Private Networks, Enabling Use Cases in Rural Remote Are.pdf
+L1  - files/672/Raftopoulou et al. - 2025 - Deployment and Performance Evaluation of 5G Private Networks, Enabling Use Cases in Rural Remote Are.pdf
+L1  - files/209/Poets and WaÃ - 2024 - DECT NR+ A new radio standard to benefit professional audio  applications.pdf
+KW  - 5G mobile communication
+KW  - Radio access networks
+KW  - Throughput
+KW  - Sensors
+KW  - 5G private networks
+KW  - Europe
+KW  - field trials
+KW  - forestry
+KW  - Forestry
+KW  - Indoor environment
+KW  - indoor environments
+KW  - Key performance indicator
+KW  - Livestock
+KW  - livestock transportation
+KW  - mines
+KW  - network deployment
+KW  - remote areas
+KW  - Uplink
+ER  - 
+
+TY  - CONF
+TI  - Empirical Performance Assessment of DECT NR+ for Wireless Industrial Communication
+AU  - Ugarte, Paula Martinez
+AU  - Sanchez, Jon Montalban
+AU  - Izquierdo, Iñaki Eizmendi
+AU  - Gil, Eneko Iradier
+AU  - Andres, Marta Fernandez
+AU  - Barrenechea, Iñigo Bilbao
+T2  - 2026 IEEE 22nd International Conference on Factory Communication Systems (WFCS)
+AB  - DECT-2020 NR (DECT NR+) represents a paradigm shift in industrial wireless communications as the first non-cellular standard integrated into the IMT-2020 5G framework. Despite its potential for massive IoT and URLLC applications, empirical hardware-level evaluations in representative industrial environments have yet to be conducted. This paper presents a first step towards a physical layer performance characterization of DECT NR+ using pre-commercial evaluation boards interfaced with a real-time RF channel emulator. Following a baseline validation against Additive White Gaussian Noise (AWGN) model, we evaluate system performance across a non-line-of-sight (NLOS) factory profile. While SNR results align with theoretical models, performance in multipath environments suggests that integrating retransmission or diversity mechanisms would further optimize link reliability in dense industrial deployments.
+C3  - 2026 IEEE 22nd International Conference on Factory Communication Systems (WFCS)
+DA  - 2026/04//
+PY  - 2026
+DO  - 10.1109/WFCS67029.2026.11511563
+DP  - IEEE Xplore
+SP  - 1
+EP  - 5
+UR  - https://ieeexplore.ieee.org/document/11511563/
+Y2  - 2026/07/08/09:44:28
+L2  - files/781/105041003052.html
+KW  - 5G mobile communication
+KW  - Ultra reliable low latency communication
+KW  - Signal to noise ratio
+KW  - Production facilities
+KW  - wireless
+KW  - DECT-2020 NR
+KW  - Simulation
+KW  - Massive machine type communications
+KW  - Hardware
+KW  - industrial communications
+KW  - Modeling
+KW  - Printing
+KW  - reliability
+KW  - Technology
+ER  - 
+
+TY  - CONF
+TI  - DECT NR+:Unveiling the Essentials of a new non-cellular 5G Standard for Verticals
+AU  - Perez-Guirao, M. Dolores
+AU  - Weisshaupt, Thomas
+AU  - Wilzeck, Andreas
+T2  - Mobile Communication - Technologies and Applications; 26th ITG-Symposium
+AB  - DECT-2020 NR is a young radio standard developed by ETSI, which aims to provide a lean but powerful technical foundation for industrial IoT applications (IIoT) such as e.g. Industry 4.0, media content production, mission-critical or building automation and monitoring. The DECT Forum markets DECT-2020 NR as DECT NR+. In the fall of 2021, ITU-R adopted DECT-2020 NR as part of the IMT-2020 family of standards, also known as the 5th generation (5G) of wireless access technology. Driving underlying design objective of DECT-2020 NR has been to create a wireless communication technology, which can be deployed by anyone, be operated by anybody and used anywhere opening in that sense extensive opportunities for sustainable, independent or cooperative wireless connectivity solutions, especially for medium-sized industries. This paper provides an overview of the essentials of the state of the art in DECT NR+ represented by the ETSI TC DECT-2020 NR technical specifications. We describe the fundamental concepts of DECT-2020 NR, highlighting how application and solution development is facilitated, and propose various possible innovation paths influencing future standardization and spectrum policy concepts for local area private industrial networks. In addition, we point out options for governance models that can lead to democratisation of 5G and IIoT.
+C3  - Mobile Communication - Technologies and Applications; 26th ITG-Symposium
+DA  - 2022/05//
+PY  - 2022
+DP  - IEEE Xplore
+SP  - 1
+EP  - 6
+ST  - DECT NR+
+UR  - https://ieeexplore.ieee.org/document/9861863/
+Y2  - 2026/07/08/09:44:38
+L1  - files/858/Perez-Guirao et al. - 2022 - DECT NR+Unveiling the Essentials of a new non-cellular 5G Standard for Verticals.pdf
+KW  - 5G
+KW  - private networks
+KW  - DECT-2020 NR
+KW  - IMT-2020
+KW  - DECT NR+
+KW  - governance
+KW  - spectrum policy
+ER  - 
+
+TY  - CONF
+TI  - Data-Aided Channel Estimation for Robust DECT-2020 NR+ Links in Oil and Gas Equipment Data Communication
+AU  - Liu, Zheyuan
+AU  - Li, Qian
+AU  - Yang, Shuangye
+AU  - Yao, Chenyang
+AU  - Zhao, Kai
+AU  - Jia, Lufeng
+AU  - Zhang, Qiao
+AU  - Guo, Biao
+T2  - 2025 7th International Conference on Intelligent Control, Measurement and Signal Processing (ICMSP)
+AB  - Oil and gas extraction and processing environments impose stringent requirements on wireless data links used for equipment monitoring, control, and safety. Multipath-rich metallic structures, Radio Frequency(RF) blocking, and dynamic interference degrade channel estimation accuracy, especially at low SNR. This paper adapts and evaluates a data-aided least-squares (LS) channel estimation approach—originally developed and validated for Digital Enhancement Cordless Telecommunication2020 New Radio Plus(DECT-2020 NR+)—to oil and gas equipment data communication over Orthogonal Frequency Division Multiplexing(OFDM) links. By combining pilot symbols with previously decoded data symbols, the proposed receiver improves channel transfer function (CTF) estimates without increasing pilot overhead. MATLAB simulations on AWGN and 3GPP TDL channels, coupled with a lab validation using a DECT development board and a backscatter-like test signal, show consistent MSE gains over pilot-only LS across SNRs. Deployment aspects for oil and gas sites, including subcarrier numerology, packetization, and frequency planning in the 1.9 GHz frequency band, which is used in some industrial wireless systems. Detailed implementation guidance is provided for field gateways and sensor Radio Devices(RDs). Results indicate that data-aided estimation enhances reliability and spectral efficiency for real-time equipment telemetry and alarm reporting in harsh oilfield environments.
+C3  - 2025 7th International Conference on Intelligent Control, Measurement and Signal Processing (ICMSP)
+DA  - 2025/11//
+PY  - 2025
+DO  - 10.1109/ICMSP68723.2025.11407711
+DP  - IEEE Xplore
+SP  - 309
+EP  - 313
+UR  - https://ieeexplore.ieee.org/document/11407711/
+Y2  - 2026/07/08/09:44:39
+L1  - files/874/Liu et al. - 2025 - Data-Aided Channel Estimation for Robust DECT-2020 NR+ Links in Oil and Gas Equipment Data Communica.pdf
+KW  - OFDM
+KW  - Receivers
+KW  - Wireless sensor networks
+KW  - Symbols
+KW  - Signal to noise ratio
+KW  - Industrial IoT
+KW  - Channel estimation
+KW  - Channel Estimation
+KW  - Data-aided
+KW  - Decision-Directed Channel Estimation
+KW  - DECT-2020 NR+
+KW  - LS
+KW  - Oil and Gas Equipment
+KW  - Oils
+KW  - Safety
+KW  - Telemetry
+KW  - Transfer functions
+ER  - 
+
+TY  - JOUR
+TI  - EWDC: Integrating DECT-2020 With Wi-Fi for Enhanced Wireless Direct Connectivity
+AU  - Dang, Yongchao
+AU  - Quang, Ngo
+AU  - Roni, Fagerholm
+AU  - Veli-Matti, Rantanen
+AU  - Kalle, Ruttik
+AU  - Jäntti, Riku
+T2  - IEEE Internet of Things Journal
+AB  - The rapid growth of smartphones, laptops, and Internet of Things (IoT) devices has created an increasing demand for seamless, secure, and energy-efficient wireless direct communication. Current popular solutions, such as AirDrop and Intel Unison, rely on bluetooth low energy (BLE) for device discovery and pairing, alongside IEEE 802.11 (Wi-Fi) for high-speed data transmission. However, research has identified significant vulnerabilities in BLE, including information leakage and profile manipulation. To address these challenges, we propose an enhanced wireless direct connectivity (EWDC) framework that integrates digital enhanced cordless telecommunications (DECT)-2020 new radio (NR) with Wi-Fi. In this framework, DECT replaces BLE to enable secure and efficient device discovery, while Wi-Fi supports high-bandwidth data transmission. Specifically, DECT utilizes its licensed spectrum to establish a secure communication channel for sharing Wi-Fi configuration information, enabling a secure and reliable setup of high-speed Wi-Fi data transmission links between devices. To validate this approach, we implemented the DECT medium access control layer on the Nordic nRF9161-DK platform and evaluated the end-to-end delay between two devices. Our results demonstrate an impressive transmission delay of less than 1 \mu s for EWDC communication, enabling rapid device discovery and highly efficient operation. Furthermore, to enhance the security of wireless direct connections, the WireGuard, a VPN tunnel, is employed to encrypt data transmission over Wi-Fi providing robust protection for data shared on public frequency bandwidths. The proposed hybrid DECT-2020 NR and Wi-Fi solution significantly improves reliability, security, and communication efficiency, positioning it as a robust candidate for next-generation IoT communication systems.
+DA  - 2025/08//
+PY  - 2025
+DO  - 10.1109/JIOT.2025.3574407
+DP  - IEEE Xplore
+VL  - 12
+IS  - 15
+SP  - 31783
+EP  - 31796
+SN  - 2327-4662
+ST  - EWDC
+UR  - https://ieeexplore.ieee.org/document/11016710/
+Y2  - 2026/07/08/09:46:33
+L1  - files/777/Dang et al. - 2025 - EWDC Integrating DECT-2020 With Wi-Fi for Enhanced Wireless Direct Connectivity.pdf
+KW  - Reliability
+KW  - Standards
+KW  - Wireless communication
+KW  - Wireless sensor networks
+KW  - Internet of Things
+KW  - Bandwidth
+KW  - Wireless fidelity
+KW  - DECT-2020
+KW  - Data communication
+KW  - Authentication
+KW  - Communication system security
+KW  - digital enhanced cordless telecommunications (DECT)
+KW  - enhanced wireless direct connectivity (EWDC)
+KW  - wireless direct communication
+ER  - 
+
+TY  - CONF
+TI  - Demo: Toward Multi-Connectivity 6G IoT - Practical IoT Device-to-Core Integration
+AU  - Ngo, Quang Quoc
+AU  - Kalle, Ruttik
+AU  - Yongchao, Dang
+AU  - Riku, Jäntti
+AU  - Costa-Requena, Jose
+T2  - 2025 4th International Conference on 6G Networking (6GNet)
+AB  - The emerging 6G vision aims to enable massive IoT deployments, multi-connectivity, and heterogeneous networks while ensuring ultra-reliable low-latency communications, robust security, and intelligent network orchestration. Current approaches to IoT connectivity remain fragmented and isolated, lacking seamless interoperability and exposing gaps in end-to-end security. To address these gaps, we present a lightweight implementation for direct authentication and registration of IoT UEs with a commercial 5G Core (5GC) using Raspberry Pi 5 devices over Wi-Fi, enabling 5G-AKA authentication and secured NAS channel. Our implementation aims to provide a ready-to-use solution that can expand to other wireless standards, aligning with the 6G vision and emerging IoT standards such as DECT NR+. By offloading authentication, session management, and traffic control to the 5GC, resource-constrained IoT devices gain access to carrier-grade security and efficient traffic handling. Furthermore, we demonstrate a secured data-plane setup in which WireGuard configuration is exchanged between two UEs through the gNB, establishing an encrypted VPN tunnel. Validation through Wireshark captures and the 5GC GUI confirms compliance with 3 GPP specifications. This work provides a practical step toward 6G IoT integration, offering a scalable, secure, and multi-connectivity-ready solution for industrial and enterprise deployments.
+C3  - 2025 4th International Conference on 6G Networking (6GNet)
+DA  - 2025/12//
+PY  - 2025
+DO  - 10.1109/6GNet68413.2025.11314146
+DP  - IEEE Xplore
+SP  - 103
+EP  - 105
+ST  - Demo
+UR  - https://ieeexplore.ieee.org/document/11314146/
+Y2  - 2026/07/08/09:46:36
+L2  - files/802/105032197467.html
+KW  - 5G
+KW  - 5G mobile communication
+KW  - Ultra reliable low latency communication
+KW  - 6G
+KW  - Standards
+KW  - Wireless communication
+KW  - Internet of Things
+KW  - 6G mobile communication
+KW  - Security
+KW  - Heterogeneous networks
+KW  - Wireless fidelity
+KW  - Virtual private networks
+KW  - IoT
+KW  - Authentication
+KW  - Heterogeneous Networks
+KW  - Multi-Connectivity
+ER  - 
+
+TY  - CHAP
+TI  - Network of networks for the Tactile Internet
+AU  - Nguyen, Giang T.
+AU  - Höschele, Thomas
+AU  - Itting, Sebastian A.W.
+AU  - Kangavar Nazari, Hosein
+AU  - Senk, Stefan
+AU  - Scheinert, Tobias
+AU  - Liu, How-Hang
+AU  - Ulbricht, Marian
+AU  - Mudriievskyi, Stanislav
+AU  - Zhang, Jiajing
+AU  - Sridharan, Shreeja
+AU  - Krzywinski, Jens
+AU  - Pötter, Max A.
+AU  - Fitzek, Frank H.P.
+AU  - Güleçyüz, Başak
+AU  - Steinbach, Eckehard
+T2  - Humans, Robots and Virtual Worlds in the Tactile Internet
+A2  - Fitzek, Frank H.P.
+A2  - Li, Shu-Chen
+A2  - Speidel, Stefanie
+A2  - Strufe, Thorsten
+A2  - Mahmoodi, Toktam
+A2  - Reisslein, Martin
+AB  - This chapter delves into the architecture and interconnection of networked systems in the Tactile Internet, emphasising their crucial role in supporting human-machine interactions. It goes beyond conventional network areas (LAN/MAN/WAN) and expands into non-terrestrial networks. The chapter focuses on two critical aspects: (i) service differentiation, which involves network slicing to support multiple sensory modalities and (ii) determinism, achieved through time-sensitive networks for safety-critical applications. Wireless connections enabled by qualified technologies, such as 5G, lay the foundation. By exploring these aspects, the chapter showcases how the Tactile Internet network of networks is designed to provide low-latency, reliable, and differentiated services to enable seamless human-machine interactions. © 2026 Elsevier Inc. All rights reserved.
+DA  - 2026///
+PY  - 2026
+DO  - 10.1016/B978-0-44-330044-8.00023-3
+DP  - Scopus
+SP  - 167
+EP  - 186
+LA  - English
+PB  - Elsevier
+SN  - 978-0-443-30044-8
+KW  - 5G/6G campus networks
+KW  - DECT NR+
+KW  - non-terrestrial networks
+KW  - time-sensitive networks
+ER  - 
+
+TY  - CONF
+TI  - A Robust Routing Protocol for 5G Mesh Networks
+AU  - Führling, Niclas
+AU  - Sandoval, Ivan Alexander Morales
+AU  - De Abreu, Giuseppe Thadeu Freitas
+T2  - IEEE Workshop on Signal Processing Advances in Wireless Communications, SPAWC
+AB  - We consider a novel routing protocol suitable for ad-hoc networks with dynamically changing topologies, such as DECT 2020 NR (NR+) systems, which often lead to missing links between the nodes and thus, incomplete or inefficient routes. A key point of the proposed protocol is the combination of network discovery and matrix completion techniques, which allow the nodes to establish communication paths efficiently and reliably. Additionally, multihop localization is performed to estimate the location of the nodes without needing to broadcast each node's geographical position, thus preserving privacy during the routing process and enabling nodes in the network to independently find potentially missing paths in a decentralized manner instead of flooding the whole network. Simulation results illustrate the good performance of the proposed technique in terms of the average number of hops of the obtained routes in different scenarios, with different network densities and amounts of incompleteness.  © 2025 IEEE.
+C3  - IEEE Workshop Signal Process. Adv. Wireless Commun. SPAWC
+DA  - 2025///
+PY  - 2025
+DO  - 10.1109/SPAWC66079.2025.11143415
+DP  - Scopus
+LA  - English
+PB  - Institute of Electrical and Electronics Engineers Inc.
+SN  - 978-1-6654-7776-5
+L2  - files/804/105016906089.html
+KW  - DECT-2020 NR
+KW  - Matrix Completion
+KW  - Multihop Localization
+KW  - Network Routing
+KW  - Privacy
+ER  - 
+
+TY  - CONF
+TI  - DECT Evolution towards Meeting the Requirements for IMT-2020 in the Residential Environment
+AU  - Montalvo, Luis
+AU  - Túquerres, Gloria
+AU  - Bernal, Iván
+T2  - Proceedings of the LACCEI international Multi-conference for Engineering, Education and Technology
+AB  - Energy efficiency and spectrum efficiency have been identified by “IMT for 2020 and beyond” (International Mobile Telecommunications) as two of the current wireless network capabilities that need substantial enhancement to satisfy the exponential growth of IoT and high data rate applications.“Digital Enhanced Cordless Telecommunications” (DECT) is the leading standard around the world for cordless telecommunications and it has the great advantage to operate on a “designated” license-free RF band (1880/1900 MHz in Europe).However, the original DECT has very low energy efficiency and very low spectral efficiency, and therefore, DECT is neither suitable for ultra-low energy applications nor for high data rate multimedia streaming applications.The “European Telecommunications Standards Institute” Technical Committee DECT (ETSI TC DECT) is working on these two aspects, and it has proposed a new set of “Technical Specifications” that enables DECT to support both ultra-low energy (DECT-ULE) and high data rate (DECT-2020 New Radio) application domains.In this paper, we introduce an energy consumption model for the DECT “Portable Part” (PP) that lets us analyze in detail the operation of a PP in the “standby mode”.The model lets us show that the simple reduction on the requirement of how often the PP must monitor the “paging” beacon enables DECT for ultra-low energy applications.We then show that the use of the state-of-the-art multi-carrier “Orthogonal Frequency Division Multiplexing” (OFDM) modulation, and the spatial multiplexing “Multiple Input Multiple Output” (MIMO) antenna technique, enables DECT for high data rate multimedia streaming applications. © 2024 Latin American and Caribbean Consortium of Engineering Institutions. All rights reserved.
+C3  - Proc. LACCEI int. multi-conf. eng. educ. technol.
+DA  - 2024///
+PY  - 2024
+DO  - 10.18687/LACCEI2024.1.1.695
+DP  - Scopus
+LA  - English
+PB  - Latin American and Caribbean Consortium of Engineering Institutions
+SN  - 978-628-95207-8-1
+L1  - files/819/Montalvo et al. - 2024 - DECT Evolution towards Meeting the Requirements for IMT-2020 in the Residential Environment.pdf
+KW  - IMT-2020
+KW  - DECT-2020 New Radio
+KW  - 3GPP LTE
+KW  - DECT-ULE
+ER  - 
+
+TY  - JOUR
+TI  - Scalability and performance evaluation of DECT NR+ for IOT connectivity
+AU  - Hernández Jauregui, Iker
+DA  - 2025///
+PY  - 2025
+DP  - Google Scholar
+UR  - https://addi.ehu.es/handle/10810/73264
+Y2  - 2026/07/08/12:44:00
+ER  - 
+
+TY  - GEN
+TI  - Mari: Responsive Wireless Communication for Low-Power Large-Scale Robot Swarms
+AU  - Fedrecheski, Geovane
+AU  - Gao, Yinghao
+AU  - Maksimovic, Filip
+AU  - Abadie, Alexandre
+AU  - Vučinić, Mališa
+AU  - Chang, Tengfei
+AU  - Watteyne, Thomas
+AB  - Connecting large swarms of low-power micro-robots remains an open challenge: existing communication systems either lack the scalability to connect hundreds of units, or fail to deliver the low latency required for responsive control. For example, while Wi-Fi and BLE are commonly used in swarm robotics, scaling beyond 50 robots remains challenging. We introduce the Micro-robot Access Radio Infrastructure (Mari), a new link layer and architecture that aims to connect thousands of robots. Our TSCH-based link layer runs on commodity BLE radios, providing responsive control of up to 102 nodes using a single gateway. To scale beyond a single gateway, Mari supports multiple non-coordinated gateways with fast node-controlled handovers. We further provide a lightweight infrastructure for real-time remote control and monitoring. We implement Mari on the popular nRF52840 and nRF5340 platforms, and extensively evaluate it in large-scale testbeds. In experiments with 100 nodes connected to a single gateway, Mari achieves a packet delivery ratio above 97%, round-trip latency of 269 ms, and full association time of 3.5 s under a join storm. When moving 100 nodes together between two gateways, we obtain an average handover duration of only 0.34 s. A single node handover time can take less than 50 ms. In a setup with 200 nodes and two gateways, we measure round-trip latency of 274 ms and a packet delivery ratio above 93%. We integrate Mari with the DotBot testbed in an experimental deployment of several hundred robots, enabling remote firmware update of 600 robots in less than 4 min. We contribute Mari as an open-source platform, including firmware, libraries, and performance monitoring tools, enabling researchers to connect swarm systems from a handful of units up to hundreds.
+CY  - Rochester, NY
+DA  - 2026/04/13/
+PY  - 2026
+DO  - 10.2139/ssrn.6571600
+DP  - papers.ssrn.com
+LA  - en
+PB  - Social Science Research Network
+ST  - Mari
+UR  - https://papers.ssrn.com/abstract=6571600
+Y2  - 2026/07/08/13:09:12
+L1  - files/843/Fedrecheski et al. - 2026 - Mari Responsive Wireless Communication for Low-Power Large-Scale Robot Swarms.pdf
+KW  - BLE
+KW  - networking
+KW  - swarm robotics
+KW  - Testbeds
+KW  - TSCH
+ER  - 
+
+TY  - JOUR
+TI  - When IEEE 802.11 and 5G Meet Time-Sensitive Networking
+AU  - Atiq, Mahin K.
+AU  - Muzaffar, Raheeb
+AU  - Seijo, Óscar
+AU  - Val, Iñaki
+AU  - Bernhard, Hans-Peter
+T2  - IEEE Open Journal of the Industrial Electronics Society
+AB  - Many emerging applications require a higher level of flexibility, modularity, and efficiency but are dependent on advancements in communication infrastructure and distributed computing. Time-sensitive networking (TSN) standards aim at providing vendor agnostic, reliable, and deterministic communications over the Ethernet, but lack in flexibility and modularity provisions. In this context wireless communication systems are preferred given the obvious benefits in terms of increased flexibility, reduced deployment & maintenance costs, and inherent mobility support. However, the stochastic nature of the wireless medium poses several challenges in achieving these benefits. In this paper we comprehensively analyze the recent standardization efforts and developments in IEEE 802.11 and 5G to enable low-latency, deterministic communications and present the current status of their integration with wired TSN. Then, we present a set of use cases that may be enabled by wireless TSN including industrial automation, automotive, or audiovisual applications.
+DA  - 2022///
+PY  - 2022
+DO  - 10.1109/OJIES.2021.3135524
+DP  - IEEE Xplore
+VL  - 3
+SP  - 14
+EP  - 36
+SN  - 2644-1284
+UR  - https://ieeexplore.ieee.org/document/9652097/
+Y2  - 2026/07/08/13:09:29
+L1  - files/845/Atiq et al. - 2022 - When IEEE 802.11 and 5G Meet Time-Sensitive Networking.pdf
+KW  - 5G
+KW  - 5G mobile communication
+KW  - Protocols
+KW  - Reliability
+KW  - Standards
+KW  - Wireless communication
+KW  - Wireless sensor networks
+KW  - Wireless fidelity
+KW  - IEEE 802.11
+KW  - IEEE 802.11 Standard
+KW  - deterministic
+KW  - Real time
+KW  - reliable
+KW  - Sensitivity analysis
+KW  - time sensitive networking
+KW  - TSN
+KW  - Wi-Fi
+ER  - 
+
+TY  - JOUR
+TI  - Priority-aware Radio Resource Scheduling for mMTC in 5G Networks -- Balancing Efficiency and Fairness, Journal of Telecommunications and Information Technology, 2026, nr 1
+AU  - Baheti, Prashant Kumar
+AU  - Khunteta, Ajay
+T2  - Journal of Telecommunications and Information Technology
+AB  - kwartalnik
+DA  - 2026//01/nr
+PY  - 2026
+DP  - dLibra
+LA  - ang
+PB  - National Institute of Telecommunications
+UR  - https://bc.itl.waw.pl/dlibra/publication/2747/edition/2426
+Y2  - 2026/07/08/13:14:21
+L1  - files/849/Baheti and Khunteta - 2026 - Priority-aware Radio Resource Scheduling for mMTC in 5G Networks -- Balancing Efficiency and Fairnes.pdf
+L2  - files/850/2426.html
+KW  - quality of service
+KW  - 5G networks
+KW  - fairness
+KW  - efficiency
+KW  - priority-aware scheduling
+KW  - radio resource scheduling
+ER  - 
+
+TY  - JOUR
+TI  - Bridging Light and Radio: Hybrid Network Architectures for IoT in the 6G Era
+AU  - Khalili, Mohammad
+AU  - Perera, Amila
+AU  - Häkkinen, Juha
+AU  - Katz, Marcos
+AU  - Mikhaylov, Konstantin
+T2  - TechRxiv
+AB  - The massive scale and dense deployments of future Internet of Things (IoT), particularly within the 6G framework, expose the critical limitations of traditional Radio Frequency (RF) systems, namely spectral congestion, interference, and security vulnerabilities. Optical Wireless Communication (OWC) offers a compelling complement, providing vast, unlicensed spectrum, immunity to RF interference, and enhanced physical-layer security. However, OWC's susceptibility to blockages and limited mobility hinders its standalone deployment, as it cannot, on its own, meet the stringent connectivity and mobility requirements of many IoT applications. This article explores the convergence of optical and radio networks and proposes a flexible, adaptable, and resilient connectivity framework tailored for modern IoT ecosystems. We present a holistic system architecture that integrates single-mode RF, single-mode OWC, and unified hybrid Access Points (APs) to efficiently manage the diverse and often conflicting objectives of various IoT applications. While these hybrid RF/OWC APs offer significant advantages in cost, efficiency, and coordinated management, they also introduce a primary deployment challenge: the inherent coverage mismatch between the two technologies. To precisely address this critical issue, we demonstrate a practical solution supported by a coverage equivalence analysis to validate the proposed framework. This analysis quantifies the required OWC transmitter density to match a given RF range, offering tangible guidance for system planning.
+DO  - 10.36227/techrxiv.176462964.43051246/v1
+DP  - techrxiv.org (Atypon)
+VL  - 2025
+IS  - 1201
+PB  - TechRxiv
+ST  - Bridging Light and Radio
+UR  - https://www.techrxiv.org/doi/full/10.36227/techrxiv.176462964.43051246/v1
+Y2  - 2026/07/08/13:16:04
+L1  - files/852/Khalili et al. - Bridging Light and Radio Hybrid Network Architectures for IoT in the 6G Era.pdf
+ER  - 
+
+TY  - BOOK
+TI  - Enabling Massive Machine Type Communications with DECT-2020 Standard: A System-Level Performance Study
+AU  - Anttonen, Antti
+AU  - Karhula, Pekka
+AU  - Lasanen, Mika
+AU  - Majanen, Mikko
+T2  - VTT Research Report
+AB  - The goal of this research report is to objectively evaluate the performance of emerging DECT-2020 standard. The DECT-2020 standard from European Telecommunications Standards Institute (ETSI) is a candidate technology for International Mobile Telecommunications 2020 (IMT-2020) wireless technology. The target use scenario involves the massive machine type communications (mMTC) in an urban macro wireless channel environment. The International Telecommunication Union (ITU) sets the requirements for any IMT-compliant mMTC technology. Essentially, the supported device connection density must be at least 1 million devices per km2 while the packet outage rate and packet delay must be at most 1 % and 10 s, respectively.
+
+The used simulation environment is developed using the well-recognized Network Simulator 3 (NS-3) software in order to estimate the packet outage rate constrained by the packet delay and network density. The comprehensive system simulator can handle both the device association phase as well as the application data transmission phase according to the DECT-2020 standard specifications. A distinctive system parameter of interest is the proportion of routing devices out of all source devices in the mesh network.
+
+It is concluded that, for the given evaluation framework, the DECT-2020 is able to fulfil the aforementioned ITU requirements and it appears, therefore, a potential candidate for the IMT-2020-enabled mMTC digital services. During the project, VTT’s results also contributed to the ETSI evaluation group work and were used in corresponding interim evaluation report submitted to ITU-R by ETSI.
+
+The views and results of this report are those of authors.
+DA  - 2021///
+PY  - 2021
+DP  - VTT's Research Information Portal
+PB  - VTT Technical Research Centre of Finland
+ST  - Enabling Massive Machine Type Communications with DECT-2020 Standard
+N1  - <p>VTT-R-00367-21 (lisätty tiedosto Antti Anttosen pyynnöstä),128181/SySimD2020</p>
+KW  - DECT-2020
+KW  - ITU requirements
+KW  - massive machine type communications
+KW  - packet outage rate
+KW  - system simulations
+ER  - 
+
+TY  - ELEC
+TI  - Analysis of the performance of DECT NR+ radio access technology for the connectivity of unmanned aerial vehicles (UAVs)
+AU  - Jahangir, Muhammad Ahtasham Bin
+DA  - 2024/07/01/
+PY  - 2024
+LA  - eng
+PB  - M. A. B Jahangir
+UR  - https://oulurepo.oulu.fi/handle/10024/51118
+Y2  - 2026/07/08/13:24:49
+L1  - files/856/Jahangir - 2024 - Analysis of the performance of DECT NR+ radio access technology for the connectivity of unmanned aer.pdf
+ER  - 
+
+TY  - GEN
+TI  - Uni-RAT: A Unified DECT-2020 NR and Wi-Fi System for 6G Multi-RAT Networks
+AU  - Dang, Yongchao
+AU  - Quang, Ngo
+AU  - Kalle, Ruttik
+AU  - Requena, Jose Costa
+AU  - Jäntt, Rikui
+AB  - Future 6G networks aim to deliver seamless, secure, and low-latency connectivity across heterogeneous radio access technologies (RATs) such as 5G New Radio (NR), Wi-Fi, and DECT-2020 NR to support emerging applications including extended reality (XR) and the Industrial Internet of Things (IIoT). However, current Multi-RATs systems are operated and managed in isolation, which hinders users and devices from seamlessly leveraging heterogeneous connectivity in a unified and efficient manner. To address this fragmentation, 3GPP has introduced interworking functions such as the N3IWF for untrusted and the TNGF for trusted non-3GPP access, enabling IP-session continuity when users move across heterogeneous networks. Nevertheless, these mechanisms rely on mandatory IPsec, which requires each RAT to maintain a separate secure tunnel to the core network and prevents intra-cell device-to-device (D2D) communication, thereby introducing significant encryption latency, increasing data-plane load, and complicating network management. To overcome these limitations, we propose Uni-RAT, a unified Multi-RATs framework in which DECT-2020 NR operates as the Master-RAT, anchoring 3GPP control-plane security via 5G-AKA and NAS, while Wi-Fi functions as a Secondary-RAT for data-plane data delivery. Uni-RAT employs lightweight Layer-3 WireGuard tunnels to secure both D2D and multi-hop communication, significantly reducing the latency and computational overhead of IPsec-based interworking mechanisms used by N3IWF and TNGF. In addition, a customized SMS-over-NAS signaling mechanism is introduced to distribute WireGuard configuration and keying material, enabling unified authentication and efficient Multi-RATs security management. We implement a full prototype using Nordic nRF9161 DECT-2020 NR devices, Raspberry Pi Wi-Fi nodes, and a Cumucore 5G core, with security-critical functions protected inside Arm TrustZone. Experimental results indicate that Uni-RAT supports Multi-RATs communication with high throughput and low packet loss in intra-cell D2D scenarios, maintains bounded latency and jitter under relay-assisted and inter-cell configurations, and achieves stable UE registration latency below 100 ms with up to 100 concurrent devices under background traffic, demonstrating its practical feasibility and scalability and positioning Uni-RAT as an early architectural blueprint for 6G Multi-RATs networks.
+CY  - Rochester, NY
+DA  - 2026/03/23/
+PY  - 2026
+DO  - 10.2139/ssrn.6459430
+DP  - papers.ssrn.com
+LA  - en
+PB  - Social Science Research Network
+ST  - Uni-RAT
+UR  - https://papers.ssrn.com/abstract=6459430
+Y2  - 2026/07/08/13:27:29
+L1  - files/868/Dang et al. - 2026 - Uni-RAT A Unified DECT-2020 NR and Wi-Fi System for 6G Multi-RAT Networks.pdf
+KW  - DECT-2020 NR
+KW  - Wi-Fi
+KW  - 6G.
+KW  - Device-to-Device (D2D)
+KW  - Multi-RATs
+KW  - SMS-over-NAS
+ER  - 
+
+TY  - JOUR
+TI  - FPGA-based DECT-2020 New Radio packet detection
+AU  - Fagerholm, Roni
+AB  - A rapid increase in number and diverse applications of connected devices has forced digital wireless protocols to specialize further for specific purposes. One of such applications is the previously unanswered market for reliable wireless low-latency communication in private self-sustained networks. As a revision of an older standard, DECT-2020 New Radio aims to provide a solution for this market. To research different physical layer properties of DECT in real-world environments, a software-defined radio (SDR) framework would be required. Since such design already existing for IEEE 802.11, a well-utilized open-source project openwifi, an analogous solution for DECT could be realized. The goal of this thesis was to provide an implementation for the first part of this SDR framework. The main contribution of this thesis is an FPGA-based packet detector for DECT. Written in Verilog-2001 for an AMD Zynq system-on-chip, the implemented design manages Synchronization Training Field preamble detection and timing synchronization with hardware efficient autocorrelation approach. The proposed design was evaluated using a simulation environment that integrated MATLAB and the Icarus Verilog simulation tool. Both real-world and generated data were utilized during the simulation. Compared to a cross-correlation based detection, the implementation utilizes only two complex-valued multiplications at the expense of a higher signal-to-noise (SNR) ratio requirement. In comparison to a reference autocorrelation-based detection, the implementation requires at least 2.6 dB higher SNR depending on the utilized configuration, yet it does not suffer from co-channel interference and includes a simpler signal power estimator. The resource utilization of the proposed design is comparable to that of openwifi despite differences in communication protocols. Finally, different power scaling factors were simulated to analyze the implementation’s performance. The thesis thus provides an initial foundation to a hardware-based SDR for DECT-2020 NR.
+DA  - 2024/09/30/
+PY  - 2024
+DP  - aaltodoc.aalto.fi
+LA  - en
+UR  - https://aaltodoc.aalto.fi/handle/123456789/131768
+Y2  - 2026/07/08/13:27:35
+L1  - files/870/Fagerholm - 2024 - FPGA-based DECT-2020 New Radio packet detection.pdf
+ER  - 
+
+TY  - ELEC
+TI  - Experimental validation and analysis of the performance of DECT NR+ radio access technology
+AU  - Bandara, Isitha
+DA  - 2025/06/16/
+PY  - 2025
+LA  - eng
+PB  - I. Bandara
+UR  - https://oulurepo.oulu.fi/handle/10024/57076
+Y2  - 2026/07/08/13:29:04
+L1  - files/872/Bandara - 2025 - Experimental validation and analysis of the performance of DECT NR+ radio access technology.pdf
+ER  - 
+
+TY  - JOUR
+TI  - IoT device authentication in 5G networks
+AU  - Ngo, Quang
+AB  - The rapid expansion of the Internet of Things and Industrial IoT has accelerated the adoption of distributed sensing, automation, and data-driven decision-making across critical sectors such as manufacturing, energy, healthcare, and logistics. IoT devices typically possess limited computational resources, heterogeneous hardware architectures, and diverse communication protocols, making secure and scalable integration into modern communication infrastructures a persistent challenge. Although 5G provides high reliability, ultra-low latency, and massive connectivity---factors which makes it a promising foundation for IoT systems---current integration approaches often rely on complex architectures, proprietary gateways, and heavyweight security frameworks that limit their practicality in resource-constrained and industrial environments. To address these limitations, this thesis presents a lightweight and interoperable IoT-to-5G integration framework featuring a minimal User Equipment and gNB gateway stack implemented in C. The system can operate directly on embedded IoT devices such as Raspberry Pi and non-cellular IIoT platforms like DECT-2020 NR, e.g. Nordic Semiconductor nRF91 family. Moreover, the UE and gNB gateways are designed to connect seamlessly with the private 5G Core Networks for device authentication, enabling secure, scalable, and standards-compliant integration across heterogeneous IoT environments. Experimental validation demonstrates that the designed UE and gNB gateway interoperate seamlessly with both commercial and open-source 5G systems, including Cumucore, OpenAirInterface, and free5GC. Unlike traditional IoT gateways that locally handle protocol translation and security overhead, the proposed design offloads authentication, session management, and traffic control directly to the 5GC, thereby reducing the computational burden on edge IoT and IIoT devices while ensuring full compliance with 3GPP standards.
+DA  - 2025/12/15/
+PY  - 2025
+DP  - aaltodoc.aalto.fi
+LA  - en
+UR  - https://aaltodoc.aalto.fi/handle/123456789/142852
+Y2  - 2026/07/08/13:32:34
+L1  - files/878/Ngo - 2025 - IoT device authentication in 5G networks.pdf
+ER  - 
+
+TY  - CONF
+TI  - DL Routing Performance in DECT-2020 NR Massive Mesh Networks
+AU  - Alam, Mirza
+AU  - Pirskanen, Juho
+AU  - Salokannel, Juha
+T2  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+AB  - DECT-2020 NR, a global radio communication standard developed by ETSI, is designed to support industrial Internet of Things (IoT) applications. It complies with the requirements set by the ITU IMT-2020 framework. This study presents comprehensive simulations to evaluate downlink (DL) packet-forwarding performance in dense mesh networks using the DECT-2020 NR standard. Several studies address uplink performance; consequently, this specific downlink-focused research question has received limited attention in prior academic work. The study focuses on two routing mechanisms specified in the standard: Selective Flooding and Selective Source Routing, evaluated in a \mathbf1, 2 0 0-node, \mathbf1 0-hop, large-scale deep mesh network. The simulation results indicate that the downlink (DL) capacity for Selective Flooding-where no routing information is required-is approximately 6 packets per second. For Selective Source Routing, the downlink (DL) throughput increases with the number of deterministic routing hops, reaching close to \mathbf1 4 5 packets per second when the system uses only a single 1.728 MHz channel. Both capacities are achieved while keeping the packet outage rate below 1% to comply with the IMT-2020 requirements.
+C3  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+DA  - 2026/06//
+PY  - 2026
+DO  - 10.1109/EuCNC/6GSummit68295.2026.11577505
+DP  - IEEE Xplore
+SP  - 1224
+EP  - 1230
+UR  - https://ieeexplore.ieee.org/document/11577505/
+Y2  - 2026/07/09/09:06:06
+L1  - files/881/Alam et al. - 2026 - DL Routing Performance in DECT-2020 NR Massive Mesh Networks.pdf
+KW  - Downlink
+KW  - Delays
+KW  - Internet of Things
+KW  - DECT-2020 NR
+KW  - ITU
+KW  - IoT
+KW  - Routing
+KW  - ETSI
+KW  - Printing
+KW  - Technology
+KW  - Mesh networks
+KW  - Floods
+KW  - massive mesh networks
+KW  - selective flooding
+KW  - selective source routing
+ER  - 
+
+TY  - CONF
+TI  - A Robust Routing Protocol for 5G Mesh Networks
+AU  - Führling, Niclas
+AU  - Sandoval, Ivan Alexander Morales
+AU  - de Abreu, Giuseppe Thadeu Freitas
+T2  - 2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC)
+AB  - We consider a novel routing protocol suitable for ad-hoc networks with dynamically changing topologies, such as DECT 2020 NR (NR+) systems, which often lead to missing links between the nodes and thus, incomplete or inefficient routes. A key point of the proposed protocol is the combination of network discovery and matrix completion techniques, which allow the nodes to establish communication paths efficiently and reliably. Additionally, multihop localization is performed to estimate the location of the nodes without needing to broadcast each node's geographical position, thus preserving privacy during the routing process and enabling nodes in the network to independently find potentially missing paths in a decentralized manner instead of flooding the whole network. Simulation results illustrate the good performance of the proposed technique in terms of the average number of hops of the obtained routes in different scenarios, with different network densities and amounts of incompleteness.
+C3  - 2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC)
+DA  - 2025/07//
+PY  - 2025
+DO  - 10.1109/SPAWC66079.2025.11143415
+DP  - IEEE Xplore
+SP  - 1
+EP  - 5
+UR  - https://ieeexplore.ieee.org/document/11143415/
+Y2  - 2026/07/09/09:07:33
+L1  - files/883/Führling et al. - 2025 - A Robust Routing Protocol for 5G Mesh Networks.pdf
+KW  - Reliability
+KW  - Wireless communication
+KW  - DECT-2020 NR
+KW  - Routing
+KW  - Routing protocols
+KW  - Simulation
+KW  - Mesh networks
+KW  - Spread spectrum communication
+KW  - Network topology
+KW  - Location awareness
+KW  - Matrix Completion
+KW  - Multihop Localization
+KW  - Network Routing
+KW  - Privacy
+ER  - 
+
+TY  - CONF
+TI  - A Pareto Optimality Approach for Link Adaptation in DECT NR+
+AU  - Graf, Fabian
+AU  - Villnow, Michael
+AU  - Watteyne, Thomas
+T2  - 2026 IEEE Wireless Communications and Networking Conference (WCNC)
+AB  - DECT NR+ is a novel wireless IoT standard operating in the 1.9 GHz band, a band originally reserved for Digital Enhanced Cordless Telecommunications (DECT). This technology is also announced as the first non-cellular 5 G standard and theoretically offers wide flexibility in its application, ranging from Wireless Personal Area Network (WPAN) to Wide Area Network (WAN) scenarios. While this versatility is enabled by a wide range of configurable parameters, the practical application range is determined by the vendor's specific implementation. In this article, we investigate the impact of adjusting Modulation and Coding Scheme (MCS), transmit power and packet length. We formulate objective functions for data rate, energy consumption, and Packet Delivery Ratio (PDR), and analyze their dependence on the aforementioned parameters. To model specific relationships, we conduct practical experiments in two real-world testbeds using hardware from the Nordic nRF91 series. Finally, we present an approach for parameter selection based on the principle of Pareto optimality.
+C3  - 2026 IEEE Wireless Communications and Networking Conference (WCNC)
+DA  - 2026/04//
+PY  - 2026
+DO  - 10.1109/WCNC65185.2026.11555760
+DP  - IEEE Xplore
+SP  - 1
+EP  - 6
+UR  - https://ieeexplore.ieee.org/document/11555760/
+Y2  - 2026/07/09/09:09:34
+L1  - files/885/Graf et al. - 2026 - A Pareto Optimality Approach for Link Adaptation in DECT NR+.pdf
+KW  - Standards
+KW  - Internet of Things
+KW  - Symbols
+KW  - Optimization
+KW  - Printing
+KW  - Distance measurement
+KW  - Joining processes
+KW  - Equations
+KW  - Current
+KW  - Modulation
+ER  - 
+
+TY  - CONF
+TI  - Performance of MAC Layer Mechanisms in DECT-2020 NR mMTC Technology
+AU  - Samuylov, Andrey
+AU  - Moltchanov, Dmitri
+AU  - Alam, Mirza
+AU  - Pirskanen, Juho
+AU  - Numminen, Jussi
+AU  - Valkama, Mikko
+AU  - Koucheryavy, Yevgeni
+AU  - Valkama, Mikko
+T2  - 2024 IEEE 99th Vehicular Technology Conference (VTC2024-Spring)
+AB  - DECT-2020 is a recently standardized enabling technology for 5G massive machine-type communications operating in the unlicensed band. By relying upon multi-hop communications, DECT-2020 allows for cost-controlled flexible deployments, it requires an efficient solution for topology design, including the relay selection and next-hop selection mechanisms. The goal of this paper is to evaluate the impact of these algorithms on the fraction of successfully delivered packets for DECT-2020 technology. To this aim, we utilize the system-level simulation tool to capture the functionality of the physical and data-link DECT-2020 solutions. Our numerical results illustrate that the system is susceptible to the choice of the energy conservation parameters with the difference in the fraction of delivered packets reaching 10% and may effectively lead to non-operational conditions. Without simple analytical models, these parameters must be set with caution. The relay-selection mechanism procedure is generally insensitive to the parameters of the relay selection procedure, resulting in a deviation of at most 3%. Finally, the power control feature gives an additional gain of around 2-4% compared to the system without power control.
+C3  - 2024 IEEE 99th Vehicular Technology Conference (VTC2024-Spring)
+DA  - 2024/06//
+PY  - 2024
+DO  - 10.1109/VTC2024-Spring62846.2024.10683658
+DP  - IEEE Xplore
+SP  - 1
+EP  - 6
+UR  - https://ieeexplore.ieee.org/document/10683658/
+Y2  - 2026/07/09/09:11:05
+L1  - files/887/Samuylov et al. - 2024 - Performance of MAC Layer Mechanisms in DECT-2020 NR mMTC Technology.pdf
+KW  - 5G mobile communication
+KW  - Topology
+KW  - Analytical models
+KW  - algorithms
+KW  - mMTC
+KW  - New Radio
+KW  - Relays
+KW  - IoT
+KW  - DECT-2020
+KW  - multi-hop
+KW  - Power control
+KW  - Vehicular and wireless technologies
+KW  - Energy conservation
+KW  - topology
+ER  - 
+
+TY  - CONF
+TI  - Topology-Aware Deep Reinforcement Learning for Multi-Hop URLLC in DECT-2020 NR Mesh Networks
+AU  - Rauwolf, Benjamin
+AU  - Asif, Awais Bin
+AU  - Peissig, Jürgen
+T2  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+AB  - DECT-2020 New Radio (NR) is a radio interface technology (RIT) standardized by the European Telecommunications Standards Institute (ETSI) for large-scale massive machine-type communication (mMTC) and Ultra-Reliable and Low-Latency Communications (URLLC) deployments. In DECT2020 NR mesh networks, multi-hop delivery is typically realized by flooding-based forwarding, which is robust but increases network load and does not explicitly optimize end-to-end latency or reliability. In this paper, we propose a topology-aware Deep Reinforcement Learning (DRL) framework for URLLC-oriented multi-hop routing in DECT-2020 NR mesh networks. Nexthop selection is modeled as a Markov decision process (MDP) whose state combines link-level latency and packet error rate (PER) metrics with graph-structured topology information. An inductive graph neural network (GNN) encoder summarizes the current mesh topology and a per-edge Deep Q-Network (DQN) head selects the next hop using a URLLC-shaped reward that jointly captures end-to-end latency and reliability. To improve scalability, the agent is trained through a curriculum over progressively larger topologies. Simulation results over small to large mesh topologies show that the proposed GNN+DRL routing policy improves the URLLC trade-off compared with both the existing latency-only routing method and the DECT2020 NR flooding procedure. For a representative medium-sized mesh network, it reduces end-to-end latency by up to 19.9 %, lowers end-to-end PER by up to 10 %, and decreases the number of transmissions per delivered packet compared with the existing approach.
+C3  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+DA  - 2026/06//
+PY  - 2026
+DO  - 10.1109/EuCNC/6GSummit68295.2026.11577203
+DP  - IEEE Xplore
+SP  - 140
+EP  - 147
+UR  - https://ieeexplore.ieee.org/document/11577203/
+Y2  - 2026/07/09/09:11:33
+L1  - files/889/Rauwolf et al. - 2026 - Topology-Aware Deep Reinforcement Learning for Multi-Hop URLLC in DECT-2020 NR Mesh Networks.pdf
+KW  - Topology
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Timing
+KW  - DECT-2020 NR
+KW  - Routing
+KW  - ETSI
+KW  - Modeling
+KW  - Printing
+KW  - Joining processes
+KW  - deep reinforcement learning
+KW  - Equations
+KW  - graph neural networks
+KW  - Graph neural networks
+KW  - mesh networks
+KW  - routing
+ER  - 
+
+TY  - CONF
+TI  - Comparison of Two Models with Non-ordinary Arrival Process to Analyze the Cluster of the DECT-2020 Network
+AU  - Morozova, Uliana
+AU  - Nikolaev, Dmitry
+AU  - Gaidamaka, Elisaveta
+AU  - Vlaskina, Anastasia
+AU  - Gaidamaka, Yuliya
+A2  - Koucheryavy, Yevgeni
+A2  - Kumar, Neeraj
+A2  - Muthanna, Ammar
+A2  - Sharma, Sachin
+AB  - DECT-2020 NR is a wireless communication standard designed for large-scale IoT networks with a large number of devices. In such networks, a sink node collects data from multiple sources. In this paper, we modeled a DECT-2020 sink node as a discrete packet arrival system, where data packets are processed in batches. We compared two types of systems with different arrival disciplines, Early Arrival and Late Arrival, across several metrics, including the age of information (AoI), which measures the freshness of the received data. The results showed how the difference in the order of batch arrival affected network performance and Age of Information.
+C1  - Cham
+C3  - Internet of Things, Smart Spaces, and Next Generation Networks and Systems
+DA  - 2026///
+PY  - 2026
+DO  - 10.1007/978-3-032-19978-2_3
+DP  - Springer Link
+SP  - 27
+EP  - 47
+LA  - en
+PB  - Springer Nature Switzerland
+SN  - 978-3-032-19978-2
+L1  - files/892/Morozova et al. - 2026 - Comparison of Two Models with Non-ordinary Arrival Process to Analyze the Cluster of the DECT-2020 N.pdf
+KW  - URLLC
+KW  - mMTC
+KW  - DECT-2020
+KW  - age of information
+KW  - discrete time Markov chain
+KW  - queuing theory
+ER  - 
+
+TY  - CONF
+TI  - DECT-2020 NR for Energy and Power Grid Substation QoS Monitoring Use Cases
+AU  - Pires, Rafael
+AU  - Säe, Joonas
+AU  - Biswas, Ritayan
+AU  - Lasanen, Mika
+AU  - Pirskanen, Juho
+T2  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+AB  - Modern power grids and industrial systems require scalable and reliable wireless connectivity to support real-time monitoring and control. DECT-2020 New Radio (NR), an ETSI-standardized wireless technology operating in license-exempt spectrum, offers native mesh networking, low latency, and flexible deployment for industrial Internet-of-Things (IoT) applications. This paper investigates the suitability of DECT-2020 NR mesh networking for power grid monitoring within the Ultra Scalable Wireless Access (USWA) project. Two proof-of-concept (PoC) deployments are evaluated, collecting data from multiple sensors under varying conditions, including packet fragmentation, multi-hop communication, and different data rates to assess the end-to-end performance of the system in terms of quality-of-service (QoS) metrics. From the results, we found that DECT-2020 NR shows potential for larger scale energy and substation monitoring deployments.
+C3  - 2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit)
+DA  - 2026/06//
+PY  - 2026
+DO  - 10.1109/EuCNC/6GSummit68295.2026.11577420
+DP  - IEEE Xplore
+SP  - 372
+EP  - 377
+UR  - https://ieeexplore.ieee.org/document/11577420/
+Y2  - 2026/07/09/10:37:25
+L1  - files/894/Pires et al. - 2026 - DECT-2020 NR for Energy and Power Grid Substation QoS Monitoring Use Cases.pdf
+KW  - Jitter
+KW  - Timing
+KW  - Monitoring
+KW  - DECT-2020 NR
+KW  - Routing
+KW  - Massive machine type communications
+KW  - Printing
+KW  - Technology
+KW  - Mesh networks
+KW  - Internet of Things (IoT)
+KW  - Joining processes
+KW  - Measurement
+KW  - Mesh Networks
+KW  - Proof of Concept (PoC)
+ER  - 
+
+TY  - CONF
+TI  - CHEAP 5G: DECT NR+ for Tactile Internet With Human In The Loop Application
+AU  - Mudriievskyi, Stanislav
+AU  - Fitzek, Frank H.P.
+AU  - Seeling, Patrick
+T2  - European Wireless 2024; 29th European Wireless Conference
+AB  - 5G communication networks are suitable to realize Tactile Internet with Human in the Loop application due to the envisaged latency promises. Currently, 5G Release 15 is widely deployed. Latency performance to control robots or enable humans to engage with the metaverse will require higher releases. WiFi is widely used due to its cost, but has poor latency performance due to the “listen-before-talk” requirement in the ISM bands. Therefore, solutions that combine low cost and high latency performance are needed. This paper presents a detailed performance evaluation of a 5G DECT NR+ testbed with a focus on latency and data rate. While commercial off-the-shelf (COTS) 5G testbeds are still very expensive, we present a low-cost solution to achieve similar or even better latency performance with NR+. The testbed is composed of two NR+ platforms and will explore different settings such as packet length and Modulation and Coding Scheme (MCS). The main result of the paper is that non-optimized COTS DECT NR+ can provide latency values of 2 ms to 8 ms and a data rate of 2.3 Mbit/s to 2.5 Mbit/s.
+C3  - European Wireless 2024; 29th European Wireless Conference
+DA  - 2024/09//
+PY  - 2024
+DP  - IEEE Xplore
+SP  - 31
+EP  - 34
+ST  - CHEAP 5G
+UR  - https://ieeexplore.ieee.org/document/10925923/
+Y2  - 2026/07/09/10:37:56
+L1  - files/896/Mudriievskyi et al. - 2024 - CHEAP 5G DECT NR+ for Tactile Internet With Human In The Loop Application.pdf
+ER  - 
+
+TY  - CONF
+TI  - Evaluation of the IMT-2020 Candidate Radio Interface Technology DECT-2020 NR
+AU  - Maliatsos, Konstantinos
+AU  - Gotsis, Antonis
+AU  - Alexiou, Angeliki
+T2  - 2022 14th International Conference on COMmunication Systems & NETworkS (COMSNETS)
+AB  - This paper provides an overview of DECT-2020 NR technology evaluation conducted by the Wireless World Research Forum (WWRF) in the context of IMT-2020 Evaluation Process solicited by the International Telecommunication Union (ITU). DECT-2020 NR, a Radio Interface Technology developed by ETSI TC DECT and DECT Forum, was submitted as an IMT-2020 candidate along with five other technologies. It is applicable in various use cases and markets, with focus on consumer and industrial IoT applications, such as industry and building automation and monitoring. In particular, it is targeting Ultra-Reliable Low Latency (URLLC) and massive Machine Type Communication (mMTC) scenarios, based on decentralized network deployments. The WWRF performed a complete assessment of the technology which included a high-level assessment of services and spectrum capabilities, along with a minimum technical performance requirements analysis for the URLLC and mMTC test environments, based on inspection, analysis and simulation. For assessing characteristics using simulation, i.e., reliability and connection density, an in-house simulation tool was developed. The evaluation study addressed mesh topologies supported by DECT-2020 and proposed several enhancements to the ITU's evaluation methodology, which is defined for cellular topologies only. The technology was found to fulfill all the requirements specified by ITU's evaluation process for IMT-2020.
+C3  - 2022 14th International Conference on COMmunication Systems & NETworkS (COMSNETS)
+DA  - 2022/01//
+PY  - 2022
+DO  - 10.1109/COMSNETS53615.2022.9668561
+DP  - IEEE Xplore
+SP  - 889
+EP  - 893
+UR  - https://ieeexplore.ieee.org/document/9668561/
+Y2  - 2026/07/09/10:38:29
+L1  - files/898/Maliatsos et al. - 2022 - Evaluation of the IMT-2020 Candidate Radio Interface Technology DECT-2020 NR.pdf
+KW  - Ultra reliable low latency communication
+KW  - URLLC
+KW  - Wireless communication
+KW  - Analytical models
+KW  - Process control
+KW  - DECT-2020 NR
+KW  - IMT-2020
+KW  - Inspection
+KW  - ITU
+KW  - ITU evaluation
+KW  - mMTC
+KW  - Reliability engineering
+ER  - 
+
+TY  - CONF
+TI  - An Alternative to SubGHz for LPWAN
+AU  - Leugner, Swen
+AU  - Hellbrueck, Horst
+T2  - Mobilkommunikation; 29. ITG-Fachtagung
+AB  - Low Power Wide Area Networks (LPWAN) enable energy-efficient communication over long distances, making them interesting for Internet of Things (IoT) applications. Some applications require a higher data rate than standard LPWAN while keeping a moderate range for keeping infrastructure requirements low. This paper provides a comparative evaluation of two LPWAN technologies, LoRa operating at 2.4 GHz and DECT NR+ for these kind of applications. We conducted modeling and experimental evaluations to assess their performance in terms of range and data rate across indoor, indoor-outdoor, and outdoor scenarios. For modeling we applied the log-distance path loss model, accounting for environmental conditions. Results show that LoRa achieves significantly greater range, with up to 259 meters in indoor-outdoor scenarios, compared to DECT NR+ with a maximum of 16 meters. Outdoor evaluations revealed LoRa’s capability to maintain connectivity at distances exceeding 1 kilometer in non-line-of-sight conditions. However, DECT NR+ offers higher data rates, reaching up to 3744 kBit/s, making it advantageous for applications demanding robust data rates in limited-range scenarios. The findings highlight the trade-offs between range and data rate.
+C3  - Mobilkommunikation; 29. ITG-Fachtagung
+DA  - 2025/05//
+PY  - 2025
+DP  - IEEE Xplore
+SP  - 109
+EP  - 114
+UR  - https://ieeexplore.ieee.org/document/11048385/
+Y2  - 2026/07/09/10:38:56
+L1  - files/900/Leugner and Hellbrueck - 2025 - An Alternative to SubGHz for LPWAN.pdf
+ER  - 
+

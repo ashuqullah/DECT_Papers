@@ -1,0 +1,289 @@
+                                       European Wireless 2024 Ŏ 09 – 11 September 2024 Ŏ Brno, Czech Republic
+
+
+
+
+    CHEAP 5G: DECT NR+ for Tactile Internet With
+          Human In The Loop Application
+               Stanislav Mudriievskyi                                   Frank H.P. Fitzek                                   Patrick Seeling
+            Deutsche Telekom Chair of                            Deutsche Telekom Chair of                        Department of Computer Science
+       Communication Networks (ComNets)                      Communication Networks (ComNets)                       Central Michigan University
+          Technische Universität Dresden                      Technische Universität Dresden                       Mount Pleasant, MI, USA
+                 Dresden, Germany                                 Centre for Tactile Internet                        patrick.seeling@cmich.edu
+       stanislav.mudriievskyi@tu-dresden.de                    with Human-in-the-Loop (CeTI)
+                                                                      Dresden, Germany
+                                                                  frank.ﬁtzek@tu-dresden.de
+
+
+
+    Abstract—5G communication networks are suitable to realize                      hundreds of thousands of dollars, not considering the planning,
+ Tactile Internet with Human in the Loop application due to                         installation, and system integration overheads common to typ-
+ the envisaged latency promises. Currently, 5G Release 15 is                        ical campus network deployments. Even smaller deployments
+ widely deployed. Latency performance to control robots or enable
+ humans to engage with the metaverse will require higher releases.                  thus are cost prohibitive, e.g., for small businesses.
+ WiFi is widely used due to its cost, but has poor latency                             This paper’s main contribution is an overview of the latency
+ performance due to the “listen-before-talk” requirement in the                     performance in different technology environments, focusing on
+ ISM bands. Therefore, solutions that combine low cost and high                     how DECT-2020 NR+ compares to established 5G/6G tech-
+ latency performance are needed.                                                    nologies in a ﬁrst real-world implementation evaluation. While
+    This paper presents a detailed performance evaluation of
+ a 5G DECT NR+ testbed with a focus on latency and data                             5G/6G systems boast high data rates, the DECT-2020 NR+
+ rate. While commercial off-the-shelf (COTS) 5G testbeds are                        standard [1] is geared at modest data rates that are achieved
+ still very expensive, we present a low-cost solution to achieve                    with minimal latency — a critical requirement for applications
+ similar or even better latency performance with NR+. The                           relying on ultra-low latency connectivity. The recent DECT-
+ testbed is composed of two NR+ platforms and will explore                          2020 NR+ standard provides a frame structure similar to
+ different settings such as packet length and Modulation and
+ Coding Scheme (MCS). The main result of the paper is that                          cellular technologies, making it suitable for timing guarantees
+ non-optimized COTS DECT NR+ can provide latency values of                          of smaller data payloads. This circumvents CSMA issues
+ 2 ms to 8 ms and a data rate of 2.3 Mbit/s to 2.5 Mbit/s.                          that result in limited if any timing guarantees. We provide
+    Index Terms—DECT-2020 NR, DECT NR+, latency, tactile,                           a detailed analysis of latency and data rate metrics obtained
+ robotic                                                                            from real-world testing on our dedicated testbed. Through
+                                                                                    this empirical study, we provide insights that illuminate the
+                I. I NTRODUCTION AND M OTIVATION                                    practical implications of deploying DECT-2020 NR+ in the
+    In the ever-evolving landscape of telecommunications, the                       context of next-generation telecommunications infrastructure.
+ demand increases for advanced technologies capable of sup-
+ porting emerging applications such as robotics, the metaverse,                                     II. DECT-2020 NR E VALUATIONS
+ and the tactile internet. These emerging application scenarios                        Digital Enhanced Cordless Telecommunications (DECT)
+ typically require networked delivery of ultra-reliable and low                     2020 New Radio (NR) is a radio interface technology which
+ latency (URLLC) sensing and control information. Main tech-                        enhances the 5G ecosystem by promising robust, low-latency,
+ nology solutions currently anticipated to meet this challenge                      and highly reliable wireless communications [1]. This inno-
+ include 5G and anticipated successors such as 6G. While these                      vative standard operates in the unlicensed spectrum at 1.9
+ implementations boast impressive capabilities that meet the                        GHz providing a cost-effective and ﬂexible alternative to the
+ service-level demands, they commonly face several barriers,                        licensed 5G spectrum usage. Currently, only a limited number
+ such as associated costs for widespread adoption. The DECT-                        of studies exist that analyze DECT-2020 NR+ employing
+ 2020 NR+ standard offers a compelling alternative to 5G/6G                         simulations. Each of them implements its own simulation
+ standards-based implementations with their associated costs.                       framework, adding complexity for evaluations. The study
+    Delivering the low latency critical for real-time applications                  in [2] investigates the physical layer performance under indus-
+ at a signiﬁcantly lower cost, DECT-2020 NR+ represents                             trial conditions. Through their simulations, the authors show
+ a viable solution to bridge the gap between technological                          that the technology provides low-latency and high-reliability
+ capability and affordability. For example, the combination of                      communication, a crucial requirement for real-time industrial
+ a 5G Core Network and Radio Access Network (RAN) next                              applications. In [3], the authors present detailed simulations
+ to required small cells or base stations can readily approach                      evaluating the performance of DECT-2020 NR+ for URLLC
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:57 UTC from IEEE Xplore. Restrictions apply.
+
+    ISBN 978-3-8007-6496-9
+                                                                                                             © VDE VERLAG GMBH · Berlin · Offenbach
+                                       European Wireless 2024 Ŏ 09 – 11 September 2024 Ŏ Brno, Czech Republic
+
+
+
+
+ and massive Machine-Type Communication (mMTC) applica-                                                       TABLE I
+ tions. This particular study highlights the protocol’s ability to                   DECT-2020 NR+ M ODULATION AND CODING SCHEMES ( ACCORDING TO
+                                                                                                   STANDARD VERSION MCS0-MCS4).
+ achieve low latency and high reliability, again showcasing how
+ DECT-2020 NR+ is suitable for industrial automation and, in                                         MCS Index      Modulation      Nbps      R
+ the context of the paper, also smart city deployments. In [4],                                         0             BPSK           1       1/2
+                                                                                                        1             QPSK           2       1/2
+ an evaluation of DECT-2020 NR+ is presented that focuses on                                            2             QPSK           2       3/4
+ the multi-hop communication capabilities of the standard. The                                          3            16-QAM          4       1/2
+ simulation results reveal that multi-hop conﬁgurations enhance                                         4            16-QAM          4       3/4
+ coverage and reliability, making the technology ideal for large-
+ scale Internet of Things (IoT) networks in smart cities and
+ rural areas.                                                                       B. Physical Layer
+    While these studies have signiﬁcantly contributed to the                           The DECT-2020 NR+ physical layer is suitable for oper-
+ general understanding of the performance attainable with                           ation in frequency bands up to 6 GHz. The standard over-
+ DECT-2020 NR+, they have been limited to individual simula-                        all deﬁnes 19 different frequency bands from 450 MHz to
+ tion environments. In contrast, our work represents a pioneer-                     5875 MHz. However, in Europe and most of the world,
+ ing effort in testing real hardware for DECT-2020 NR+. For                         implementations are limited to the unlicensed but regulated
+ the ﬁrst time, we have moved beyond theoretical simulations                        DECT frequency band of around 1.9 GHz. Therefore, the
+ of individual DECT-2020 NR+ facets to practical, real-world                        hardware that was used for tests supports these 3 bands:
+ hardware testing. In turn, our contribution provides concrete                         • band 1: 1880 MHz to 1900 MHz
+ evidence of the technology’s capabilities and performance in                          • band 2: 1900 MHz to 1920 MHz
+ actual deployment scenarios.                                                          • band 9: 1910 MHz to 1930 MHz
+
+                                                                                       Depending on the subcarrier scaling factor and Fourier
+           III. DECT-2020 NR S TANDARD OVERVIEW                                     transform scaling factor, the transmission bandwidth can vary
+                                                                                    from 1.728 MHz up to 221.184 MHz.
+    The European Telecommunications Standards Institute
+                                                                                       The typical operation range should theoretically cover sev-
+ (ETSI) deﬁnes the DECT-2020 NR standard in [5]. However,
+                                                                                    eral hundreds of meters. However, as described in [7], up to
+ the DECT Forum promotes the standard under DECT NR+
+                                                                                    3 km are achievable within line of sight.
+ name [6]. Hereafter, we combine both namings and adopt
+                                                                                       Six different Modulation and Coding Schemes (MCSs) are
+ DECT-2020 NR+ throughout this paper.
+                                                                                    described in the standard MCS0-MCS5: BPSK, QPSK, 16-
+    The architecture overview and all the communication layers
+                                                                                    QAM, 64-QAM, 256-QAM, and 1024-QAM. Depending on
+ are detailed in [1]. In this section, we provide an introduction
+                                                                                    the number of bits per modulation symbol Nbps and coding
+ to some of the main features of the standard.
+                                                                                    rate R the hardware in the testbed supports the MCS indices
+                                                                                    provided in Tab. I.
+ A. Network Architectures
+                                                                                    C. Frame Structure
+   The DECT-2020 NR+ standard supports the following net-
+ work architectures:                                                                  The duration of the radio frame is ﬁxed to Tf rame = 10 ms
+                                                                                    with 24 slots of Tslot = 0.41667 ms duration (see Figure 1).
+     1) Point-to-Point and Point-to-Multipoint: This direct link
+                                                                                    These values ensure coexistence with legacy DECT systems
+        for low latency communication is suitable to replace
+                                                                                    as described in [8].
+        cables between, e.g., two isolated industrial devices
+                                                                                      Each DECT-2020 NR+ slot can be divided into 2, 4, 8
+        which require to communicate with each other.
+                                                                                    or 16 subslots, depending on the conﬁguration. In the tested
+     2) Single- or multi-cell topologies: One or multiple Radio
+        Devices (RDs) operate in Fixed Termination point (FT)
+        mode and act as base stations.
+     3) Mesh network topology: Each device can communicate
+        to all of its neighbors, and retransmits their messages to
+        extend the range and increase the reliability.
+     4) Internetworking with 3GPP 5G networks: A DECT
+        NR+ network can be connected as untrusted to the 5G
+        Core network via a Non-3GPP Inter-Working-Function
+        (N3IWF) or as trusted via a Trusted Non-3GPP Gateway
+        Function (TNGF).
+   In this paper, we focus on the Point-to-Point connection
+ as only the physical layer components of the standard were
+ implemented in the hardware we employ for experimentation.                                 Fig. 1. DECT-2020 NR+ frame structure with two subslots.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:57 UTC from IEEE Xplore. Restrictions apply.
+
+    ISBN 978-3-8007-6496-9
+                                                                                                             © VDE VERLAG GMBH · Berlin · Offenbach
+                                       European Wireless 2024 Ŏ 09 – 11 September 2024 Ŏ Brno, Czech Republic
+
+
+
+
+ Fig. 2. Hardware setup with two Nordic Semiconductor nRF9161 DK
+                                                                                    Fig. 3. Round trip time (RTT) averages for nRF9161 with different payloads
+ development test kits.
+                                                                                    and MCS settings.
+
+
+ hardware, one slot always contains two subslots. For the mea-
+                                                                                    The modem time difference and corresponding round trip time
+ surements, we use the number of subslots for the conﬁguration
+                                                                                    (RTT) are calculated by the receiving device.
+ of packet length.
+                       IV. M EASUREMENT S ETUP                                      B. Throughput Measurement
+    We employed two development kits from Nordic Semicon-                              Throughput measurements were performed with the help of
+ ductor (nRF9161 DK) for the experimentation and measure-                           the example application provided by Nordic Semiconductor
+ ments, illustrated in Figure 2. These devices provide access                       for reference only. The example application was conﬁgured
+ to the implemented DECT-2020 NR+ physical layer through                            to use MCS4 with 4 slots. The observed maximum data rate
+ a deﬁned and described Application Programming Interface                           for this example setup was between 2.3 Mbit/s and 2.5 Mbit/s.
+ (API) as part of their device ﬁrmware [9].                                         We note that these are only initial values that will be further
+    As illustrated, both kits are connected to the same laptop                      evaluated in a separate measurement campaign.
+ with a distance of approximately ten cm between each other.
+                                                                                                        V. M EASUREMENT R ESULTS
+ The tested hardware was conﬁgured to utilize 1.728 MHz
+ transmission bandwidth on channel 1677 with a center fre-                             Our measurement results for round-trip-times (RTTs) on
+ quency of 1899.072 MHz. All measurements employed the                              actual hardware are described in the following. In Figure 3,
+ maximum transmission power allowed by the hardware im-                             we illustrate the RTTs for all conﬁgurations supported by the
+ plementation (19 dBm).                                                             nRF9161 DK with respect to MCSs and payload lengths (ex-
+                                                                                    cept payload length less than 12 bytes). Each point represents
+ A. Latency Measurement                                                             the averaged value of 112 measurements.
+    The SDK from Nordic Semiconductor provides access to                               We initially observe a linear increase in the RTT with an
+ the 64-bit counter that represents modem time. Ahead of each                       increase in the payload size. This outcome is expected and
+ packet’s transmission, we generate the packet’s payload using                      explained straight-forwardly with the increased transmission
+ a 32-bit sequence number combined with the 64-bit modem                            times as the payload sizes increase. Similarly, we observe a
+ time. Subsequently, the minimal required payload size is 12                        decrease in the RTT with more modulation steps, i.e., MCS.
+ bytes.                                                                             Again, this behavior is anticipated as increased modulation
+    The nRF9161 development kit devices support 5 Mod-                              opportunities result in a higher bit/baud rate. Finally, we also
+ ulation and Coding Schemes (MCSs) and allow maximum                                note that higher payload sizes are attainable for similar RTTs
+ payload lengths of up to 16 subslots. We measured the latency                      or, alternatively, higher data rates are possible with inreased
+ using all available combinations of MCS and payload lengths                        modulation.
+ described in [9]. However, we excluded conﬁgurations that                             We provide a different view in Figure 4 for selected payload
+ resulted in a payload length of less than 12 bytes.                                lengths given this time in subslots. Comparing the RTTs for
+    The broadcast message type was used to measure latency                          the different MCSs but same payload duration in subslots. The
+ as follows:                                                                        RTT depends much more on payload length than on selected
+    1) One device conﬁgured as transmitter sends the message                        MCS. Each additional subslot of payload brings around 0.5 ms
+        and switches to reception mode.                                             for RTT for the same MCS. Increasing or decreasing the MCS-
+    2) The other device in reception mode receives the message                      index by one for the same payload length increases or reduces
+        and echos it back, i.e., it copies the payload into the                     the RTT by around 100 μs correspondingly. For robotic and
+        outgoing packet.                                                            tactile applications these values allow to increase robustness by
+    3) The ﬁrst device receives the echoed packet.                                  selection of lower MCS-index and longer payload in subslots.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:57 UTC from IEEE Xplore. Restrictions apply.
+
+    ISBN 978-3-8007-6496-9
+                                                                                                             © VDE VERLAG GMBH · Berlin · Offenbach
+                                       European Wireless 2024 Ŏ 09 – 11 September 2024 Ŏ Brno, Czech Republic
+
+
+
+
+                                                                                                             ACKNOWLEDGMENT
+                                                                                       Funded by the German Research Foundation (DFG,
+                                                                                    Deutsche Forschungsgemeinschaft) as part of Germany’s Ex-
+                                                                                    cellence Strategy – EXC 2050/1 – Project ID 390696704
+                                                                                    – Cluster of Excellence “Centre for Tactile Internet with
+                                                                                    Human-in-the-Loop” (CeTI) of Technische Universität Dres-
+                                                                                    den; funded by the German Research Foundation (DFG,
+                                                                                    Deutsche Forschungsgemeinschaft) – Project ID 508591287
+                                                                                    – Research Training Group (RTG) 2947 ”AirMetro”. The
+                                                                                    authors acknowledge the ﬁnancial support by the Federal Min-
+                                                                                    istry of Education and Research of Germany in the programme
+                                                                                    of “Souverän. Digital. Vernetzt.”. Joint project 6G-life, project
+                                                                                    identiﬁcation number: 16KISK001K
+             Fig. 4. RTT values obtained for same payload length.
+                                                                                                                  R EFERENCES
+                                                                                    [1] ETSI TS 103 636-1, “DECT-2020 New Radio (NR); Part 1: Overview;
+                                                                                        Release 1,” Jan. 2023.
+                                                                                    [2] E. Llaguno, I. Pretel, P. Angueira, and J. Montalban, “Physical Layer
+                                                                                        Performance of DECT-2020 New Radio for Factory Automation,” in 2024
+                                                                                        IEEE 20th International Conference on Factory Communication Systems
+                                                                                        (WFCS), 2024.
+                                                                                    [3] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+                                                                                        of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021
+                                                                                        IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021.
+                                                                                    [4] T. Singhwi, S. Andra, S. Seelam, R. Makkar, D. Rawal, and N. Sharma,
+                                                                                        “DECT-2020 New Radio System Level Assessment for Multi-Hop As-
+                                                                                        sisted mMTC usage Scenario,” in 2021 IEEE International Conference
+                                                                                        on Advanced Networks and Telecommunications Systems (ANTS), 2021.
+                                                                                    [5] [Online]. Available: https://www.etsi.org/committee/dect.
+                                                                                    [6] [Online]. Available: https://www.dect.org/userﬁles/Public/DF DECT%
+                                                                                        20NRplus.pdf.
+                                                                                    [7] [Online].     Available:      https://www.dect.org/news.aspx?id=390#:∼:
+                                                                                        text=To%20achieve%20the%203%20km,and%20dedicated%20to%
+                                                                                        20DECT%20systems.
+ Fig. 5. Cumulative distribution function of RTTs with different combiantions       [8] ETSI TS 103 636-3, “DECT-2020 New Radio (NR); Part 3: Physical
+ of MCS and payload sizes.                                                              layer; Release 1,” Jan. 2023.
+                                                                                    [9] Nordic Semiconductor, “DECT PHY Documentation,” [Online].
+                                                                                        Available:    https://docs.nordicsemi.com/bundle/ncs-latest/page/nrfxlib/
+                                                                                        nrf modem/doc/dectphy.html.
+    In Figure 5, we illustrate the cumulative distribution func-
+ tion of RTTs for different combinations of selected MCSs and
+ payload lengths.
+    The jitter stays low for all the conducted measurements and
+ RTT values are almost deterministic. This behavior is preferred
+ for robotic applications where constant low latency is crucial
+ for the control loop.
+
+                             VI. C ONCLUSION
+
+    While 5G and future 6G deployments provide highly accu-
+ rate and ultra low latency timing for command and control data
+ required for the tactile internet, including robotics and meta-
+ verse applications, this performance comes at a high cost for
+ deployment. Our measurements indicate that latency values as
+ well as packet delay variations, i.e., jitter, are all approaching
+ the thresholds required for tactile internet applications, such
+ as robotics or the metaverse.
+    Future evaluations will target overall performance measure-
+ ments including sustainable data rates. Further research will
+ target potentials for further latency reductions and combining
+ DECT-2020 NR+ with other approaches to derive a complete
+ system implementation.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:57 UTC from IEEE Xplore. Restrictions apply.
+
+    ISBN 978-3-8007-6496-9
+                                                                                                             © VDE VERLAG GMBH · Berlin · Offenbach
+

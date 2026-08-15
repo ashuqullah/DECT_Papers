@@ -1,0 +1,65 @@
+Title: Performance of MAC Layer Mechanisms in
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 is a recently standardized enabling technology for 5G massive
+machine-type communications operating in the unlicensed band. By relying upon
+multi-hop communications, DECT-2020 allows for cost-controlled flexible
+deployments, it requires an efficient solution for topology design, including
+the relay selection and next-hop selection mechanisms. The goal of this paper is
+to evaluate the impact of these algorithms on the fraction of successfully
+delivered packets for DECT-2020 technology. To this aim, we utilize the system-
+level simulation tool to capture the functionality of the physical and data-link
+DECT2020 solutions. Our numerical results illustrate that the system is
+susceptible to the choice of the energy conservation parameters with the
+difference in the fraction of delivered packets reaching 10% and may effectively
+lead to non-operational conditions. Without simple analytical models, these
+parameters must be set with caution. The relay-selection mechanism procedure is
+generally insensitive to the parameters of the relay selection procedure,
+resulting in a deviation of at most 3%. Finally, the power control feature gives
+an additional gain of around 2-4% compared to the system without power control.
+
+Approach and methods:
+to non-operational conditions. Without simple analytical models, these
+parameters must be set with caution. The relay-selection mechanism procedure is
+generally insensitive to the parameters of the relay selection procedure,
+resulting in a deviation of at most 3%. Finally, the power control feature gives
+an additional gain of around 2-4% compared to the system without power control.
+Index Terms—DECT-2020; New Radio; multi-hop; IoT; topology; algorithms; mMTC. I.
+I NTRODUCTION Internet of Things (IoT) applications are gradually becoming a
+part of our everyday life, enabling many remote applications from sensing to
+actuation [1]. Massive machine type communications (mMTC) technologies specified
+as one of the three primary services for 5G IMT-2020 systems serve as enablers
+for IoT [2]. Nowadays, NB-IoT technology [3] represents a 3GPP solution for
+cellular IoT (CIoT, [4]) while the leading non-cellular standard is DECT-2020
+[5]. DECT-2020 is the first 5G mMTC enabler operating in the unlicensed
+frequency band, 1880 − 1900 MHz band in Europe and Australia and 1900 − 1920 MHz
+band in other regions. The recent studies [6], [7] demonstrated that it can
+support up to multiple millions of radio devices (RD) per squared kilometer
+while satisfying the performance guarantees for 5G mMTC applications outlined in
+[8]
+
+Key findings:
+However, the standard does not specify several critical mechanisms and/or makes
+some of those optional. Motivated by this, in our paper, we evaluated the impact
+of energy conservation patterns, power control, relay, and next hop selection
+mechanisms on the packet delivery performance in DECT-2020 system. Our numerical
+results indicate that the impact of the sleep patterns in both routers and RDs
+have a linear impact on the system capacity, implying that the system can adapt
+well to different traffic conditions. The impact of relay selection mechanisms
+is relatively negligible in dense network conditions and generally depends on
+the number of connected RDs and relays having a packet to the sink.
+Specifically, the impact of the network density is an order of magnitude more
+significant as compared to the relay node selection parameters. Finally, power
+control has a mild effect on the packet delivery ratio, allowing it to improve
+it by around 3% even in dense network conditions. These observations highlight
+that DECT2020 offers robust solutions suitable for different network deployments
+and the implementation of optional mechanisms. Authorized licensed use limited
+to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026
+at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

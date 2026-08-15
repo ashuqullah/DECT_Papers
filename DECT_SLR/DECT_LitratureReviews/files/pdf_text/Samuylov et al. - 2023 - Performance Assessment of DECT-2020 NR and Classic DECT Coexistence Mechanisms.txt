@@ -1,0 +1,627 @@
+                                                                                                                                                                     Performance Assessment of DECT-2020 NR and
+                                                                                                                                                                         Classic DECT Coexistence Mechanisms
+2023 IEEE 97th Vehicular Technology Conference (VTC2023-Spring) | 979-8-3503-1114-3/23/$31.00 ©2023 IEEE | DOI: 10.1109/VTC2023-Spring57618.2023.10200362
+
+
+
+
+                                                                                                                                                                                         Andrey Samuylov1 , Dmitri Moltchanov1 , Juho Pirskanen2 , Jussi Numminen2 ,
+                                                                                                                                                                                                        Yevgeni Koucheryavy1 , Mikko Valkama1
+                                                                                                                                                                                                          1
+                                                                                                                                                                                                              Unit of Electrical Engineering, Tampere University, Finland
+                                                                                                                                                                                                                          2
+                                                                                                                                                                                                                             Wirepas Oy, Tampere, Finland
+                                                                                                                                                                                                                   Contact author’s e-mail: andrey.samuylov@tuni.fi
+
+
+
+                                                                                                                                                                   Abstract—The recently standardized ETSI DECT-2020 New                          packet loss rate (PLR) and 99% of packets experiencing delays
+                                                                                                                                                                Radio (NR) technology promises to enable operator-independent                     less than 10 s satisfying 5G IMT-2020 requirements for mMTC
+                                                                                                                                                                Internet-of-Things (IoT) services. One of the supported oper-                     services [5], [6]. Similarly to 3GPP New Radio (NR), DECT-
+                                                                                                                                                                ating bands is the 1880 − 1900 MHz band where IoT devices
+                                                                                                                                                                use one or more 1.728 MHz wide channels for multi-hop                             2020 NR utilizes advanced physical and data-layer techniques
+                                                                                                                                                                communications. It has been shown that such systems scale                         such as flexible numerologies, HARQ, and listen-before-talk
+                                                                                                                                                                well to satisfy the requirements of 5G massive machine-type                       (LBT) mechanisms but inherently builds upon multi-hop tree-
+                                                                                                                                                                communications (mMTC). During the standardization process,                        based topologies to deliver packets from the source mMTC
+                                                                                                                                                                the coexistence with classic DECT technology was addressed but                    device to the sink.
+                                                                                                                                                                the benefits of different options have not been deeply explored.
+                                                                                                                                                                In this paper, by utilizing system-level simulation techniques we                    As the main operational bands for DECT-2020 NR are the
+                                                                                                                                                                evaluate several coexistence solutions for DECT-2020 and classic                  DECT bands, the system design contains several features to
+                                                                                                                                                                DECT systems including conventional listen-before-talk access                     have strong coexistence with classic DECT systems. Specifi-
+                                                                                                                                                                (LBT), last-minute scan, and scheduling-based mechanisms. Our                     cally, DECT-2020 NR frame and slot lengths, 10 ms and 416, 6
+                                                                                                                                                                numerical results illustrate that the standard LBT operation                      µs, and one of the supported channel bandwidths of 1.728
+                                                                                                                                                                ensures excellent performance with no more than 2% of packet
+                                                                                                                                                                drops for classic DECT, and still results in satisfactory DECT-                   MHz are exactly the same as in the classic DECT. However,
+                                                                                                                                                                2020 operation under 25% of resources allocated to classic                        as classic DECT was designed to support mainly voice calls,
+                                                                                                                                                                DECT. The use of last-minute-scan leads to drastic performance                    DECT-2020 NR is designed for a wider variety of services,
+                                                                                                                                                                degradation of DECT-2020 (by more than 10% in terms of                            resulting complete re-design of the channel access method of
+                                                                                                                                                                packet drops) as compared to the standard LBT-only operation.                     the DECT-2020 NR.
+                                                                                                                                                                Finally, a scheduling-based mechanism allows to improve the
+                                                                                                                                                                LBT performance for DECT-2020 devices by 2-5%.
+                                                                                                                                                                                                                                                     The LBT is the primary method for random access transmis-
+                                                                                                                                                                   Index Terms—DECT-2020; New Radio; IoT; coexistence.                            sion to ensure coexistence with classic DECT or the other sys-
+                                                                                                                                                                                                                                                  tems [7], [8]. The standard considers additional rules to detect
+                                                                                                                                                                                                                                                  periodic classic DECT transmissions that can be implemented
+                                                                                                                                                                                           I. I NTRODUCTION
+                                                                                                                                                                                                                                                  to further improve coexistence. The question of coexistence
+                                                                                                                                                                   The amount of services offered by the Internet of Things                       is further complicated by the fact that the existing classic
+                                                                                                                                                                (IoT) is growing each year spanning all the commercial                            DECT technology does not utilize channel coding and existing
+                                                                                                                                                                sectors [1]. To enable connectivity for constantly growing IoT                    equipment still relies upon the old generation voice codecs
+                                                                                                                                                                equipment massive machine-type communications (mMTC)                              that are highly sensitive to packet losses. To enable smooth
+                                                                                                                                                                technologies are being specified as a part of 5G IMT-2020.                        DECT-2020 NR deployments and high spectrum utilization of
+                                                                                                                                                                NB-IoT and LTE-M are the main mMTC technologies devel-                            existing DECT bands, the coexistence between DECT-2020
+                                                                                                                                                                oped by 3GPP to provide cellular IoT (CIoT) connectivity with                     NR and classic DECT technologies needs careful evaluation.
+                                                                                                                                                                the former satisfying 5G IMT-2020 requirements [2].                                  In this paper, we investigate the performance of coexistence
+                                                                                                                                                                   In addition to 3GPP activities, there is an alternative                        between DECT-2020 NR and classic DECT technologies.
+                                                                                                                                                                ETSI initiative standardizing non-CIoT 5G mMTC technology.                        Specifically, we assess the performance of the DECT-2020
+                                                                                                                                                                These efforts recently commenced in ETSI DECT-2020 New                            NR mMTC system utilizing its base numerology and band-
+                                                                                                                                                                Radio (NR) standard in 2021 [3]. Current specifications define                    width option of 1.728 MHz, mesh network architecture, and
+                                                                                                                                                                19 different operating bands for DECT-2020 NR below 6                             random access transmission with LBT functionality. Then
+                                                                                                                                                                GHz, including unlicensed DECT bands [4]. The use of this                         we consider various enhancements allowed for DECT-2020
+                                                                                                                                                                1880−1900 MHz band in Europe and Australia or 1900−1920                           including different variants of the ”last-minute-scan” approach
+                                                                                                                                                                MHz band in other regions by utilizing eleven 1.728 MHz                           and scheduled-based mechanism. The main metric of interest
+                                                                                                                                                                wide channels can be a game-changing opportunity for many                         is the PLR experienced by both technologies.
+                                                                                                                                                                IoT applications. This technology has recently been shown to                         The main contributions of the paper are:
+                                                                                                                                                                provide mMTC device density of up to 4M/km2 with 0.05%                               • detailed system level simulation campaign investigating
+
+
+
+
+                                                                                                                                                                979-8-3503-1114-3/23/$31.00
+                                                                                                                                                            Authorized                           ©2023 IEEE
+                                                                                                                                                                       licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+         the performance of several DECT-2020 and classic DECT                                    Classic DECT                                                          Time
+                                                                                                                              a
+         coexistence mechanisms;                                                                         12 slots
+                                                                                                                    1 frame
+                                                                                                                                           12 slots
+       • numerical results showing that LBT-based enhancements
+                                                                                                  LBT
+         such as last-minute-scan operation drastically reduce                          b                                         c
+         DECT-2020 NR performance at no significant improve-
+         ment for classic DECT;                                                                   Last Minute Scan
+                                                                                              d                         1 frame                       e        f
+       • observation that the use of scheduled resource allocation
+         is useful mainly for improving DECT-2020 NR perfor-                                      Scheduled LBT
+                                                                                         g                                            h
+         mance in high load conditions.
+       Our paper is organized as follows. First, in Section II                                Classic DECT transmission
+    we describe the operation of DECT-2020 NR technology.                                     Successful DECT2020 sensing                 DECT2020 data transmission
+    Then, in Section III we introduce the considered coexistence                              Failed DECT2020 sensing                     DECT2020 restricted periods
+    mechanisms. The coexistence scenario and system parameters
+                                                                                            Fig. 1. DECT-2020 random access mechanisms on a single channel.
+    are introduced in Section IV. We report our numerical results
+    in Section V. Conclusions are drawn in the last section.
+
+                    II. DECT-2020 NR T ECHNOLOGY                                      attempts is sufficiently modest and the receiver may optimize
+       The DECT-2020 NR physical layer has been defined to                            detection order freely.
+    support Time Division Duplex (TDD) frequency bands below
+                                                                                         In DECT-2020 NR mesh network architecture relies upon
+    6 GHz. The physical layer employs Cyclic Prefix Orthogonal
+                                                                                      tree formations. In mesh architecture devices can communicate
+    Frequency Division Multiplexing (CP-OFDM) combined with
+                                                                                      directly with each other, extending the network range and
+    Time Division Multiple Access (TDMA) and Frequency Divi-
+                                                                                      increasing communication reliability by operating at high
+    sion Multiple Access (FDMA). The physical layer can support
+                                                                                      signal-to-noise ratio (SNR) conditions and providing multiple
+    multiple numerologies, with different subcarrier spacing (SCS)
+                                                                                      alternative paths for the data. Due to the designed physical
+    options from 27 kHz up to 216 kHz, with appropriate Cyclic
+                                                                                      layer packet structure, the mode of radio devices may change
+    Prefix (CP) lengths. The used fast Fourier transform (FFT)
+                                                                                      depending on the communication context. A device may
+    sizes scale as well from 64 up to 1024 subcarriers, and
+                                                                                      operate in so-called FT mode controlling radio resources of
+    when combined with SCS this allows operating with different
+                                                                                      a cluster and receiving transmissions from its cluster member
+    transmission channel bandwidths, symbol lengths, number of
+                                                                                      devices and initiate operation in so-called portable termination
+    symbols in slot, with the minimum transmission lengths of 5
+                                                                                      (PT) mode as a cluster member when forwarding received data
+    symbols.
+                                                                                      and its own data to next device in next cluster three topology
+       DECT-2020 NR transmission channel bandwidth can be                             towards external systems for example. In mesh topology any
+    from 1.728 MHz up to 221 MHz, whereas symbol duration                             device of the system may initiate operation in FT mode to
+    can vary from 41.667 us to 5.208 us with the corresponding                        allow other devices to associate with it. In that operational
+    minimum transmission length of 208.3 us to small as 26 us.                        mode, device selects operating channel, performs transmission
+    The physical layer utilizes Turbo channel coding for both                         of network and cluster beacon messages as well as announces
+    physical control and physical data channels, denoted as PCC                       random access channel (RACH) resources, where other de-
+    and PDC respectively. Transmission errors occurring for MAC                       vices may initiate communication with the device.
+    PDUs carried in PDC are corrected by Hybrid ARQ with
+    incremental redundancy allowing re-transmitting MAC PDUs                             Each device in PT mode select most optimum device(s)
+    and performing soft-combining between transmission and re-                        for association based on received link quality and signalled
+    transmission in the receiver.                                                     cost indicating how good path there is towards the external
+       To enable a single design for all radio devices, disregarding                  backend systems. Each device makes own autonomous routing
+    their operational role in the system, as well as to enable                        decisions based for each routing PDU to which device the
+    reception of the different transmissions without prior infor-                     corresponding PDU should be transmitted. Thus, device being
+    mation such as symbol synchronization, system broadcast,                          the source of the data, does not need establish and maintain
+    or ID of the transmitter, DECT-2020 NR defines a single                           data path before initiating communication, rather connection
+    transmission packet structure at physical layer. A transmission                   only to next hop is needed. This, together with the fact that
+    packet starts with a synchronization timing field (STF), fol-                     devices are identified in single network with 32 bit MAC
+    lowed by PCC and PDC. PCC supports two different payload                          address allows DECT-2020 NR to support very high number of
+    sizes and four different demodulation reference signal (DMRS)                     devices and with high device densities. In addition, that each
+    patterns supporting up to 8 transmit antennas. After packet                       routing device may select own operating channels DECT-2020
+    synchronization, it is required that the receiver is able to detect               NR allows different routing devices share their cluster beacon
+    the used PCC payload size as well as the used DMRS pattern                        message timing enabling, over the air synchronization between
+    by the means of blind decoding. The number of decoding                            different cluster to optimize local interference conditions.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+            III. C ONSIDERED C OEXISTENCE M ECHANISMS                                 DECT-2020 RD performs a regular LBT procedure in order
+      In this section, we first introduce the classic DECT channel                    to validate that there are no other contenders for the channel.
+    access mechanism and then proceed to specify the considered                       At that, RD is allowed to transmit data only if both sensing
+    coexistence mechanisms for DECT-2020.                                             windows detect no interference.
+                                                                                         This procedure can be implemented for data packets only
+    A. Classic DECT Channel Access                                                    or for both data and acknowledgement (ACK) packets. In
+       According to [9], classic DECT supports multiple frequency                     what follows, we will evaluate both options. We refer to these
+    channels in different bands and utilized time-division multiple                   options as basic and enhanced last-minute-scan, respectively.
+    access (TDMA) for channel access. Each channel is divided                         D. Schedule-Based Extension
+    into 10 ms frames and the frame consists of 24 slots. Prior to
+    the first transmission classic DECT devices have to select a                         According to [8], DECT-2020 also supports the scheduled
+    physical channel, which will be utilized throughout the whole                     channel access. Data transfer in this case is performed by
+    connection duration unless any interference is encountered.                       using pre-allocated resources. In this operational mode, the
+    Physical channel is a time-division duplex (TDD) pair, i.e.                       FT assigns the resources for RD to transmit and receive, thus,
+    two time slots use the same channel and are half frame apart.                     enabling the possibility to restrict RD random channel access
+       To select an appropriate slot pair, the classic DECT device                    if FT detects any recurrent interference in specific time slots,
+    first senses all possible slots in different frequency channels,                  Fig 1(g). This approach may partially suppress interference
+    orders them according to the measured receiver signal strength                    leading to packet losses. However, there are still hidden node
+    indicators (RSSI), and then selects the best slot pair on a                       cases or situations when the FT detection threshold is too high,
+    single frequency channel. This procedure establishes a pair of                    which still may result in failed receptions, see Fig. 1(h).
+    recurrent time slots on a given frequency channel, Fig. 1(a).                            IV. T HE C ONSIDERED S CENARIO AND M ETRICS
+    The selected slot pair is only allowed to be changed as a result
+                                                                                        In this section, we first define our coexistence evaluation
+    of high PLR. If this happens, the described procedure is re-
+                                                                                      scenario and then proceed with DECT-2020 and classic DECT
+    peated. With this in mind, DECT-2020 random channel access
+                                                                                      configurations. Finally, we define the metrics of interest.
+    should provide the means for detecting recurring transmissions
+    in order to minimize its interference with classic DECT.                          A. Evaluation Scenario
+    B. DECT-2020 LBT-Based MAC                                                          The original DECT spectrum specified 10 non-overlapped
+                                                                                      1.728 MHz channels in the 1880 − 1900 band. Even though
+       The default DECT-2020 MAC configuration shall support
+                                                                                      both systems have access to all of them, we consider the worst-
+    the LBT with binary exponential back-off (BEB) mechanism
+                                                                                      case scenario, where DECT-2020 and classic DECT utilize the
+    for RACH transmissions [8]. According to this channel con-
+                                                                                      same channel under variable deployment and load conditions.
+    tention procedure, the radio device (RD) must perform channel
+                                                                                        The second critical parameter is the device deployment and
+    sensing before the actual data transmission in order to avoid
+                                                                                      system load. For this there might not be a single solution,
+    collisions. The sensing window is only two symbols out of the
+                                                                                      however, ideally, deployments should be generic presenting the
+    full slot located at the beginning of each slot. This may lead
+                                                                                      overall situation, not focusing on a single type of deployment
+    to situations when data transmission after successful channel
+                                                                                      and not only the worst-case situation. Further, system loads
+    access will overlap with recurrent classic DECT transmissions
+                                                                                      should be variable increasing from low load to higher load to
+    as depicted in Fig. 1(b). Recall that the classic DECT reacts to
+                                                                                      assess the impact of interference.
+    the packet losses instead of explicitly employing the LBT-like
+    procedure. Accordingly, if RD senses any interference above
+                                                                                                                     150
+
+    the preset threshold, no data will be transmitted while entering
+    the back-off state, Fig. 1(c).
+                                                                                                                     100
+
+
+
+    C. Last-Minute-Scan Extensions
+       As classic DECT transmissions are recurrent in nature,                                                         50
+
+
+
+    i.e., another data transmission is assumed to happen exactly                                                                                    DECT-2020 sink
+
+    one frame after the previous one, the last-minute-scan was                                                                                      DECT-2020 router
+                                                                                                                             50      100     150
+                                                                                             -150    -100    -50
+                                                                                                                                                    DECT-2020 node
+    proposed as one of the mechanisms that enable DECT-2020                                                                                         Classic DECT
+
+    to detect this type of regular transmissions. The idea is to sense
+                                                                                                                    -50
+
+    the channel for a full slot as compared to only two symbols
+    sensing for the regular LBT procedure, making sure that this
+    specific time slot is not occupied by an ongoing classic DECT                                                   -100
+
+
+
+
+    transmission, see Fig 1(d). Otherwise, DECT-2020 RD will
+    have to backoff and wait for another full slot opportunity, see                                                 -150
+
+
+
+    Fig 1(f). One frame after that, Fig 1(e), under the assumption
+    that there are no interfering classic DECT transmissions,                                       Fig. 2. Illustration of the considered deployment.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+       When considering the co-existence between the DECT-2020                                                       TABLE I
+    NR mMTC solution, with a high number of devices and mainly                                         T HE CONSIDERED SYSTEM PARAMETERS .
+    utilizing RACH transmission, and the classic DECT system,
+    one option is to utilize the ITU-R mMTC evaluation scenario                                         Parameter                             Value
+                                                                                                            Simulation scenario parameters
+    defined in ITU-R M.2412 [10]. In that scenario, 80% of the                          DECT-2020 NR FT                          1, height 25 m, outdoors
+    devices are indoors and 20% of devices are outdoors with                            Carrier frequency                        1900 MHz
+    different channel models for RD to RD links and RD to FT                            Number of channels                       1
+                                                                                        Channel bandwidth                        1.728 MHz
+    links. However, the density of the DECT-2020 nodes should be
+                                                                                        Simulation area                          radius of 170 m, 90800 m2
+    lower than the ITU-R scenario which was intended to evaluate                        Number of DECT-2020 NR RD                1000
+    the maximum system capacity using multiple channels with                            DECT-2020 NR RD deployment               Uniformly random
+    5 MHz of total bandwidth. The classic DECT connections                              Number of classic DECT devices           2 − 8 (1 − 4 connections)
+                                                                                        Classic DECT deployment                  radius of 75
+    should be randomly located inside a given area. The locations                       Max distance between classic DECT        20 m
+    of the classic RDs are not the same as DECT-2020 NR FT as                           Building penetration loss                20 dB (ITU-R)
+    the two systems target different use cases.                                         Indoor/outdoor fraction                  80% / 20%
+                                                                                        Channel model, Sink-Node                 Urban macro
+       Fig. 2 shows the considered scenario while Table I provides                      Channel model, Node-Node                 Urban street canyon
+    simulation parameters. The scenario is defined such that a                          Number of node/sink antenna elements 1
+                                                                                        Sink/UE noise figure                     7 dB
+    single DECT-2020 NR FT (an FT with a backend connection                             Sink/UE antenna element gain             0 dBi
+    operating as a sink) is in the center of the simulation area. The                   Thermal noise level                      –174 dBm/Hz
+    area is a circle with a radius of 170 m which roughly presents                                            DECT-2020 NR parameters
+    a situation where DECT-2020 FT is deployed with 500 m ISD                           Traffic model                            Bursts of 2 packets
+                                                                                        Application data message size            32 bytes
+    as required by ITU-R. The data generated by the DECT-2020                           Inter-arrival time                       10-50 s
+    system is transferred to FT in a multi-hop manner.                                  Channel access                           LBT + extensions
+                                                                                        Contention window size                   min – 24, max – 768
+      Multiple DECT-2020 RDs are randomly distributed in the                            LBT threshold                            -75 dBm, -100 dBm
+    considered area and their subset is assumed to operate in                           Minimum link quality                     15 dB
+                                                                                        Error correction                         HARQ with 3 attempts
+    routing mode. Each RD operating in FT mode sends a beacon
+                                                                                        Sensitivity                              -99.7 dBm (TS 103.636-2)
+    with a 2 second interval, which is used to form clustered tree                      Tx power                                 10/19/23 dBm
+    routing topology towards the gateway FT. Each node generates                        Format                                   MSC 1,3,4 for 1,2,3 packets
+    application data which is transferred to gateway FT in a multi-                                            Classic DECT parameters
+                                                                                        Traffic                                  1/1 UL/DL frames, 360 bits
+    hop way. Data generation frequency increases from one packet                        Overall load                             3 calls, 25% of system load
+    burst every 50 to 10 s, where each transmission contains 2                          Interference                             DECT-2020 only
+    packets with 32 bytes of payload.                                                   Tx power                                 10 dBm
+                                                                                        Sensitivity                              -96 dBm
+       All the data transmissions are RACH transmissions with a                         Target BER/PER at -96dBm                 0.1% BER, 30% PER
+    length of one slot (416 µs), and modulation and coding scheme
+    (MCS) is selected in such a manner that MCS 1 can transfer                        B. Metrics of Interest
+    1 packet, MCS 3 is used for 2 packets, and MCS 4 – for 3
+    packets. The utilized MCS is selected based on link quality                          For a generic mMTC data service operating over DECT-
+    and the available number of packets in memory. All the DECT-                      2020 mesh system, the overall packet throughput and end-
+    2020 NR transmissions use constant power without power                            to-end PLR are often considered [10]. The overall end-to-
+    control. LBT is used to detect other transmissions and RD                         end PLR should remain at a sufficiently low level so that if
+    in FT maintains RACH resources constantly available -– thus                       fully lossless data delivery is needed, end-to-end loss recovery
+    not avoiding time moments, where interference is detected.                        operation would need to transmit a limited number of packets.
+                                                                                         For classic DECT, when considering voice service, PLR is
+       A number of classic DECT pairs are dropped into a simu-                        also considered as the main criterion. The PER should remain
+    lation environment at random locations within the circle of 75                    at such a level that after voice frame decoding, the quality of
+    m from the DECT-2020 sink. Each pair is then randomly and                         the connection remains acceptable for the user. By utilizing the
+    uniformly distributed within the circle of 20 m. In such a simu-                  results for PLR to mean opinion score (MoS) correspondence
+    lation scenario with Tx power of 10 dBm packet losses can be                      [11], for modern LC3plus codecs MOS is in the range of
+    significant. Thus, classic DECT performance is provided based                     3–4.5% PLR. However, however, with G.722 and G.726, for
+    on the condition that the received signal strength is at least -                  MOS to be over 3 PLR should be less than 2%.
+    85 dBm. In simulations, different classic DECT connections
+    are infinite and considered ideal with respect to mutual inter-                                         V. N UMERICAL R ESULTS
+    ference between each other, i.e., different classic connections                     In this section, we analyze the coexistence performance
+    use randomly selected time slots that are different from each                     of the baseline LBT mechanisms and those enhancements
+    other and synchronized. No synchronization between DECT-                          specified in Section III based on the scenario described in
+    2020 NR and classic DECT is assumed.                                              Section IV. The system parameters are specified in Table I.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+                                                 1.00                                                                                                 1.0
+
+
+                                                 0.98
+
+
+
+
+                    Delivered packets fraction
+
+
+
+
+                                                                                                                         Delivered packets fraction
+                                                                                                                                                      0.9
+
+                                                 0.96
+                                                                                                                                                      0.8
+                                                 0.94
+
+                                                                                                                                                      0.7
+                                                 0.92
+                                                                                                                                                                  LBT=-75 dBm, TxP=10 dBm         LBT=-75 dBm, TxP=23 dBm
+                                                                  DECT-2020        Classic DECT
+                                                                                                                                                                  LBT=-100 dBm, TxP=10 dBm        LBT=-100 dBm, TxP=23 dBm
+
+                                                 0.90                                                                                                 0.6
+                                                        10   20               30         40       50                                                         10           20                30          40             50
+                                                              Packet generation period, s                                                                                  Packet generation period, s
+
+                                                                                                                                                                         (a) DECT-2020
+              Fig. 3. DECT-2020 performance without classic DECT.
+                                                                                                                                                      1.00
+
+       We start with the assessment of DECT-2020 and classic                                                                                          0.99
+
+
+
+
+                                                                                                                    Delivered packets fraction
+    DECT technologies in isolation. In what follows, we will
+    utilize this as a baseline. To this aim, Fig. 3 shows the delivered                                                                               0.98
+
+    packets fraction for classic DECT and DECT-2020 technolo-
+                                                                                                                                                      0.97
+    gies when operating alone at a single channel with 10 dBm Tx
+    power when all transmissions are performed on RACH using                                                                                          0.96
+    LBT only. Note that the considered packet generation periods,                                                                                                 LBT=-75 dBm, TxP=10 dBm
+                                                                                                                                                                  LBT=-100 dBm, TxP=10 dBm
+                                                                                                                                                                                                  LBT=-75 dBm, TxP=23 dBm
+                                                                                                                                                                                                  LBT=-100 dBm, TxP=23 dBm
+
+    10, 30, and 50 s correspond to approximately 200, 75, and 45                                                                                      0.95
+                                                                                                                                                             10           20                 30         40              50
+    packets per second (pps) at the sink. Analyzing the presented                                                                                                           Packet generation period, s
+
+    data, one may observe that when the packet generation period                                                                                                       (b) Classic DECT
+    is less than 30 seconds, corresponding to 75 pps or less at
+                                                                                                          Fig. 4. DECT-2020 and classic DECT coexistence using LBT only.
+    the sink, the delivered packet fraction is virtually 100%. With
+    a packet generation period of 10 seconds, the corresponding
+                                                                                                       than a very strict LBT level (-100 dBm), as with a -75 dBm
+    load is 200 pps per sink, and the delivered packet ratio is
+                                                                                                       level almost 90% packet delivery rate is achieved with 10 dBm
+    slightly lower than 100%, i.e., is around 98%. Classic DECT
+                                                                                                       Tx power. Nevertheless, at these loads DECT-2020 starts to be
+    experiences virtually no packet losses.
+                                                                                                       saturated and practical system operation starts to be unfeasible.
+                                                                                                          At the classic DECT side, the considered metric increases
+    A. Conventional LBT Operation
+                                                                                                       from 1% to 3% rate which starts to be at the edge of
+       1) Standard System Parameters: We now proceed with the                                          sufficient voice quality, especially with classic voice codecs
+    conventional LBT operation of DECT-2020. To this aim, in                                           [11]. However, the Tx power of the DECT-2020 does not
+    Fig. 4(a) we show DECT-2020 performance when 3 classic                                             introduce significant differences (1% at most) to classic DECT.
+    DECT calls are active simultaneously for two Tx powers and                                         Interestingly, a lower LBT level does not result in better
+    two LBT thresholds, and 10 dBm classic DECT power. Fig.                                            coexistence than an LBT of -75 dBm, especially, with 10 dBm
+    4(b) presents the performance of classic DECT when DECT-                                           Tx power. This is due to higher system performance on the
+    2020 NR uses LBT method only. Here, the classic DECT Tx                                            DECT-2020 side. Finally, we can observe that in all the cases
+    power is kept constant at 10 dBm whereas DECT-2020 NR                                              the impact on the DECT-2020 side is significantly higher as
+    Tx power and LBT levels are modified.                                                              compared to the impact on the classic DECT side.
+       Analyzing the result, one can note that when DECT-2020                                             2) Increased Classic DECT Tx Power: Fig. 5 presents the
+    RDs generate data packets every 30 seconds or lower, the                                           same analysis when classic DECT Tx power is increased to 23
+    DECT-2020 NR performance is almost the same as operating                                           dBm. It can be observed that when classic DECT Tx power
+    alone at the channel (98%). When operating with 23 dBm                                             is increased, the impact on DECT-2020 increases. With low
+    Tx power and the lowest LBT levels the performance is very                                         loads the impact is modest but with high load conditions,
+    marginally better than operating with 10 dBm and the highest                                       the impact is more significant as the delivered packet fraction
+    LBT level. Similarly, classic DECT performance is very high                                        starts to be close to 70%. The increase of the impact occurs
+    at 99% for all the considered DECT-2020 NR configurations                                          independently from DECT-2020 Tx power but with higher Tx
+    with less than 0.5% differences between each other.                                                power DECT-2020 NR operates slightly better. Additionally,
+       Considering higher loads, e.g., inter-arrival period of 10 s                                    the more stringent LBT level (-100 dBm) shows slightly better
+    (200 pps at the sink), one can notice that DECT-2020 perfor-                                       performance than the high LBT level (-75 dBm).
+    mance goes down as compared to the case when operating                                                On the classic DECT side, the increase in Tx power does
+    alone, as the delivered packet fraction is between 80% to                                          not introduce any significant difference. This is due to the fact
+    90% as compared to 98%. Different Tx power levels have                                             that in the simulation minimum sensitivity level was set to -85
+    a somewhat higher impact than in the low load conditions.                                          dBm resulting in some ”unlucky” connections operating close
+    Further, a higher LBT level (-75 dBm) works clearly better                                         to sensitivity level in “bad locations”, where any interference
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+                                                      1.0
+                                                                                                                             when DECT-2020 NR performs the basic “last-minute-scan”
+                                                                                                                             for both data and ACK/NACK transmissions. It can be noted
+
+
+                         Delivered packets fraction
+                                                      0.9
+                                                                                                                             that with low load conditions (30 s inter-arrival period) there
+                                                                                                                             is no performance difference as compared to Fig. 4(b). Both
+                                                      0.8
+                                                                                                                             LBT and LBT with basic ”last-minute-scan” operation deliver
+                                                                                                                             roughly 99% packets. In high load conditions (10 s inter-
+                                                      0.7                                                                    arrival period), the “last-minute-scan” introduces roughly a 2%
+                                                                  LBT=-75 dBm, TxP=10 dBm         LBT=-75 dBm, TxP=23 dBm
+                                                                  LBT=-100 dBm, TxP=10 dBm        LBT=-100 dBm, TxP=23 dBm
+                                                                                                                             reduction to the classic DECT PLR, but performance is still
+                                                      0.6
+                                                             10           20                30          40             50    lower than the performance shown in Fig. 4.
+                                                                           Packet generation period, s
+                                                                                                                                The reported marginal classic DECT gains come at a high
+                                                                         (a) DECT-2020                                       cost for DECT-2020 NR system performance as seen in
+                                                      1.00                                                                   Fig.6(a). Recalling Fig. 4(a), it can be observed that with
+                                                                                                                             “last-minute-scan” the PLR is decreased from 99% to 88%
+                                                      0.99
+                                                                                                                             at low load (30 s inter-arrival period), and a staggering 66%
+                    Delivered packets fraction
+
+
+
+
+                                                      0.98
+                                                                                                                             at high load (10 s inter-arrival period). Thus, at low load, the
+                                                                                                                             performance is reduced by over 10% with no improvement to
+                                                      0.97                                                                   the classic DECT side, and at high load – by 15% with 2%
+                                                                                                                             PLR improvement at the classic DECT side.
+                                                      0.96
+                                                                  LBT=-75 dBm, TxP=10 dBm         LBT=-75 dBm, TxP=23 dBm
+                                                                  LBT=-100 dBm, TxP=10 dBm        LBT=-100 dBm, TxP=23 dBm     2) Enhanced ”Last-Minute-Scan”: We now proceed to
+                                                      0.95
+                                                             10           20                 30         40              50   present in Fig. 7 the enhanced version of the “last-minute-
+                                                                            Packet generation period, s
+                                                                                                                             scan” implementation, where both data and ACK/NACK trans-
+                                                                       (b) classic DECT                                      missions are subject to their own “last-minute-scan” process.
+    Fig. 5. The impact of increases DECT-2020 transmission power for DECT-                                                      The impact on classic DECT with these schemes is identical
+    2020 and classic DECT coexistence using LBT only.                                                                        to that shown in Fig. 6(b). However, it can be seen from Fig.
+                                                                                                                             7, that if the Tx side needs to evaluate separately both data
+    or bad channel realization introduces packet losses. When                                                                and ACK/NACK slot the performance is only slightly better
+    the delivered packet ratios are above 96%, those connections                                                             in high load scenarios, DECT-2020 NR performance is still
+    dictate the achieved overall performance.                                                                                very low. Thus, we may conclude that the use of the “last-
+       3) Increased Received Power: We now consider the case                                                                 minute-scan” for DECT-2020 RACH should be avoided.
+    when the minimum received signal power of classic DECT
+    is increased. This is achieved by reducing classic DECT RDs
+                                                                                                                                                                            1.0
+    distance from each other to a maximum of 5 m instead of
+    20 m. This leads to the maximum path loss to be between
+                                                                                                                                               Delivered packets fraction
+
+
+
+
+                                                                                                                                                                            0.9
+    50 to 80 dB, which corresponds to received signal levels of
+    -40 to -70 dBm with 10 dBm Tx power. The DECT-2020
+                                                                                                                                                                            0.8
+    NR system operates with LBT only with 10 dBm Tx power.
+    This simulation scenario represents the situation, where classic
+                                                                                                                                                                            0.7
+    DECT systems are used in a call center or in a restricted
+    environment for high-quality audio systems. Fig. 6(a) indicates                                                                                                                               LBT         LMS
+
+                                                                                                                                                                            0.6
+    small improvement as compared to performance shown in Fig.                                                                                                                     10    20             30           40   50
+                                                                                                                                                                                          Packet generation period, s
+    4(b). This can be explained by the fact that the overall area
+    where classic DECT interferes with DECT-2020 is reduced.                                                                                                                             (a) DECT-2020
+       Contrarily, Fig. 6(b) shows that the considered metric for                                                                                                           1.00
+    classic DECT is clearly reduced. Classic DECT performance
+                                                                                                                                                                            0.99
+    is high even in high DECT-2020 load conditions. It should be
+                                                                                                                                          Delivered packets fraction
+
+
+
+
+    noted that simulating PLR below 1%, starts to be challenging
+                                                                                                                                                                            0.98
+    from a system simulation point of view as simulation time
+    for getting enough packet losses in each drop of devices will                                                                                                           0.97
+
+    increase, increasing the total simulation time significantly.
+                                                                                                                                                                            0.96
+                                                                                                                                                                                                   LBT         LMS
+    B. Last-Minute-Scan Enhancements
+                                                                                                                                                                            0.95
+                                                                                                                                                                                   10    20              30          40   50
+      1) Basic ”Last-Minute-Scan”: Having studied LBT only                                                                                                                                Packet generation period, s
+    performance of DECT-2020, we now proceed to assess the                                                                                                                              (b) Classic DECT
+    proposed enhancements. We start with the basic ”last-minute-
+    scan” operation. Fig. 6 shows classic DECT performance                                                                       Fig. 6. Performance comparison of LBT and ”last-minute-scan”.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+                                                 1.0                                                                                            1.00
+
+
+                                                                                                                                                0.98
+
+
+
+
+                    Delivered packets fraction
+
+
+
+
+                                                                                                                   Delivered packets fraction
+                                                 0.9
+
+                                                                                                                                                0.96
+                                                 0.8
+                                                                                                                                                0.94
+
+                                                 0.7
+                                                                                                                                                0.92
+                                                                                                                                                            LBT=-75 dBm, TxP=10 dBm        LBT=-75 dBm, TxP=23 dBm
+                                                                     Basic        Enhanced
+                                                                                                                                                            LBT=-100 dBm, TxP=10 dBm       LBT=-100 dBm, TxP=23 dBm
+
+                                                 0.6                                                                                            0.90
+                                                       10     20             30          40   50                                                       10           20                30         40             50
+                                                               Packet generation period, s                                                                           Packet generation period, s
+
+                                                                                                                                                                  (a) DECT-2020
+    Fig. 7. DECT-2020 performance with enhanced ”last-minute-scan” operation.
+                                                                                                                                                1.00
+
+    C. Scheduled Operation
+                                                                                                                                                0.99
+
+
+
+
+                                                                                                                   Delivered packets fraction
+       Scheduled operation is the last coexistence option that we
+                                                                                                                                                0.98
+    evaluate. By analyzing the results presented in Fig. 8 and
+    also comparing them to those in Fig. 4, we observe that                                                                                     0.97
+    packet delivery at high loads improves by almost 10%. In
+    low loads, the difference is smaller as LBT only transmission                                                                               0.96
+                                                                                                                                                            LBT=-75 dBm, TxP=10 dBm        LBT=-75 dBm, TxP=23 dBm
+    can deliver data through also with high probability. Expectedly,                                                                                        LBT=-100 dBm, TxP=10 dBm       LBT=-100 dBm, TxP=23 dBm
+
+                                                                                                                                                0.95
+    this scheme still cannot replicate the performance when DECT-                                                                                      10           20                30         40             50
+                                                                                                                                                                     Packet generation period, s
+    2020 NR operates alone on the channel as a significant part
+    of the spectrum resources are used by another system.                                                                                                       (b) Classic DECT
+       Interestingly, the lower threshold of -100 dBm for detect-                                   Fig. 8. DECT-2020 and classic DECT coexistence using scheduled LBT.
+    ing classic DECT and for LBT provides lower performance
+    for DECT-2020 NR than the higher threshold of -75 dBm.                                         However, the use of sophisticated RACH resource allocation
+    This can be explained by the fact that with -100 dBm, the                                      is useful mainly for improving DECT-2020 NR performance
+    threshold level is too low and thus resources remain unused.                                   in high load conditions as it provides some additional safety
+    Analyzing the classic DECT performance, we observe that                                        margin towards classic DECT.
+    roughly 1% improvement is obtained in high DECT-2020 NR
+    load conditions as the packet delivery rate is improved from                                                                                            ACKNOWLEDGMENT
+    97% to 98% independently of the utilized detection threshold                                    The work on this paper has been supported by the CELTIC-
+    and Tx power. The lower threshold of -100 dBm for detecting                                    NEXT ”Ultra Scalable Wireless Access” (USWA) project.
+    classic DECT and for LBT provides lower performance also
+                                                                                                                                                                 R EFERENCES
+    for classic DECT than the higher threshold of -75 dBm. This
+    is due to the overall lower spectrum utilization and efficiency                                 [1] A. Khanna and S. Kaur, “Internet of things (iot), applications and chal-
+                                                                                                        lenges: a comprehensive review,” Wireless Personal Communications,
+    at the DECT-2020 NR side. At low load conditions, there is                                          vol. 114, no. 2, pp. 1687–1762, 2020.
+    no difference at all as the packet delivery ratio is above 99%.                                 [2] ITU-R, “Minimum requirements related to technical performance for
+                                                                                                        IMT-2020 radio interface,” ITU-R, M.2410-0, July 2017.
+                                                            VI. C ONCLUSIONS                        [3] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” ETSI, TS 103
+                                                                                                        636-1 v1.3.1, December 2021.
+       In this study, we evaluated several coexistence mechanisms                                   [4] ——, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+                                                                                                        transmission requirements; Release 1,” ETSI, TS 103 636-2 v1.3.1,
+    between DECT-2020 NR and the classic DECT. The consid-                                              December 2021.
+    ered enhancements can be implemented in the DECT-2020 NR                                        [5] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+    system without modifications to the current standards.                                              Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+                                                                                                        Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+       Our results showed that the “last-minute-scan” operation                                         munications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+    reduces DECT-2020 performance as compared to the clas-                                          [6] M. Penner, M. Nabeel, and J. Peissig, “Link-level performance evalu-
+    sic LBT mechanism. Therefore, instead of discussing more                                            ation of imt-2020 candidate technology: Dect-2020 new radio,” arXiv
+                                                                                                        preprint arXiv:2104.08549, 2021.
+    stringed requirements of “last-minute-scan” in DECT-2020                                        [7] ETSI, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release
+    NR RACH transmission, one may consider removing it from                                             1,” ETSI, TS 103 636-3 v1.3.1, December 2021.
+    RACH and rely only on LBT and FT’s capabilities to allocate                                     [8] ——, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+                                                                                                        ETSI, TS 103 636-4 v1.3.1, December 2021.
+    RACH resources. The use of scheduled access shows slight                                        [9] ——, “Digital Enhanced Cordless Telecommunications (DECT); Com-
+    improvements over the conventional LBT mechanism. The                                               mon Interface (CI); Part 1: Overview,” ETSI, TS 300 175-1 v2.9.1,
+    gains approach multiple percent in terms of the DECT-2020                                           March 2022.
+                                                                                                   [10] ITU-R, “Guidelines for evaluation of radio interface technologies for
+    NR delivered packet fraction at no degradation to the classic                                       IMT-2020,” ITU-R, M.2412-0, July 2017.
+    DECT system. This extension can be recommended for im-                                         [11] ETSI, “DECT(22)000193 Legacy Speech Codec Error Tolerance,” ETSI,
+    proving the coexistence between the two considered systems.                                         DECT-000193, July 2020.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:26:45 UTC from IEEE Xplore. Restrictions apply.
+

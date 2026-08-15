@@ -1,0 +1,1219 @@
+                                                                                                                                     TECHNOLOGY REVIEW
+
+
+                      What to Expect When Using DECT NR+
+                                                                                        Fabian Graf, Thomas Watteyne, and Michael Villnow
+
+
+
+
+                                                                                                                 Abstract                                                                              and designed to support the ultra-reliable lowla-
+                                                                  DECT NR+ is the new kid on the block in wire-                                                                                        tency communication (URLLC) [2] and massive
+                                                              less technologies: it re-purposes the 1.9 GHz Digital                                                                                    machinetype communication (mMTC) pillars of 5G
+                                                              Enhanced Cordless Telecommunications (DECT)                                                                                              [3]. One of its key features is its operation in the
+                                                              standard for IoT-type applications. How does DECT                                                                                        1.9 GHz license-free frequency band, traditionally
+                                                              NR+ perform in practice and where should we be                                                                                           reserved for Digital Enhanced Cordless Telecom-
+                                                              using it? The ambition of this article is to provide                                                                                     munications (DECT) phones, offering the advan-
+                                                              answers to those questions. We start by an overview                                                                                      tage of minimal external interference. DECT NR+
+                                                              of the fundamental principles of the physical layer.                                                                                     potentially enables self-organizing mesh networks,
+                                                              We then survey the DECT NR+ products on the                                                                                              long-range communication, and a wide range of
+                                                              market today. Using the nRF91 series from Nordic                                                                                         adjustable parameters, offering lots of flexibility. As
+                                                              Semiconductor, we conduct a comprehensive set of                                                                                         a newly emerging standard, DECT NR+ has sparked
+                                                              hands-on power consumption and communication                                                                                             significant interest. With promises of scalable con-
+                                                              range measurements. Our results place DECT NR+                                                                                           nectivity, DECT NR+ is being considered for smart
+                                                              in a gap in-between existing technologies. Its range                                                                                     city deployments, environmental and agricultural
+                                                              is comparable to long range standards such as IEEE                                                                                       monitoring, and even high-throughput scenarios
+                                                              802.15.4g under certain parameter choices: 200 m                                                                                         like audio streaming [4]. This raises the question:
+                                                              in an urban setting, 6 km in the most favorable line-                                                                                    Does DECT NR+ really deliver in practice?
+                                                              of-sight conditions. For higher order Modulation and                                                                                         This article serves as a primer on DECT NR+,
+                                                              Coding Schemes, range drops and is rather compa-                                                                                         aimed at researchers and advanced engineers
+                                                              rable to Wi-Fi. The nRF9161 draws significant power                                                                                      seeking hands-on insights and an intuition about
+                                                              (at 3.7 V, 220 mA transmitting at +19 dBm, 45 mA                                                                                         what to realistically expect from the technology.
+                                                              receiving), approximately 10× higher than BLE radi-                                                                                      We present a first real-world evaluation of DECT
+                                                              os. This is likely primarily due to earlystage design                                                                                    NR+ in terms of power consumption and range,
+                                                              inefficiencies and the inherent complexity of the                                                                                        complementing related work that has focused on
+                                                              DECT NR+ physical layer, limiting its adoption in bat-                                                                                   theoretical models and simulations [5, 6]. We carry
+                                                              terypowered applications. We conclude that DECT                                                                                          out a comprehensive series of range measurements
+                                                              NR+ is particularly appropriate for applications that                                                                                    using commercial off the shelf (COTS) hardware
+                                                              require a dynamic tradeoff between communication                                                                                         from Nordic Semiconductor. In indoor environ-
+                                                              range and data rate, but are not cost-sensitive.                                                                                         ments such as offices and factory halls, we observe
+                                                                                                                                                                                                       good performance, where even low transmit pow-
+                                                                                                             Introduction                                                                              ers below 0 dBm are sufficient to maintain a high
+                                                              Wireless connectivity is at the heart of Internet of                                                                                     Packet Delivery Ratio (PDR). In outdoor line-of-
+                                                              Things (IoT) applications, allowing devices to com-                                                                                      sight (LOS) conditions, we are able to push the sys-
+                                                              municate without the constraints of a wired infra-                                                                                       tem to its limits and achieve communication over
+                                                              structure. The scope of 5G standardization has                                                                                           distances of up to 6 km. However, in urban non-
+                                                              expanded into IoT applications [1]. While cellular                                                                                       LOS scenarios, the reliable communication range
+                                                              5G networks are well-suited for high-bandwidth                                                                                           drops significantly down to around 200 m, high-
+                                                              and lowlatency use cases, their infrastructure-heavy                                                                                     lighting the challenges posed by dense, obstructed
+                                                              nature and operational costs make them less ideal                                                                                        environments. We also present detailed energy
+                                                              for widespread IoT deployment, especially in                                                                                             consumption measurements, offering insights into
+                                                              industrial and private networks. To bridge the gap                                                                                       the operational costs of DECT NR+ and identify-
+                                                              between traditional cellular and unlicensed wire-                                                                                        ing parameter settings under which it can still be
+                                                              less IoT solutions, DECT-2020 NR, also known as                                                                                          considered a low-power technology. For example,
+                                                              “DECT NR+”, is announced as “the first non-cellular                                                                                      transmitting a 249 byte packet using Modulation
+                                                              5G standard” officially recognized by the Interna-                                                                                       and Coding Scheme (MCS) 0 at +19 dBm results
+                                                              tional Telecommunication Union Radiocommunica-                                                                                           in a substantial charge drawn of approximately
+                                                              tion Sector (ITU-R). The promise is that DECT NR+                                                                                        700 μC. Conversely, when choosing a higher-order
+                                                              avoids costly contracts and dependencies asso-                                                                                           MCS, the energy consumption per bit drops. We
+                                                              ciated with licensed bands, unlike cellular tech-                                                                                        emphasize that the classification as a low-power
+                                                              nologies such as 5G NR, LTE-M or Narrowband                                                                                              technology is heavily dependent on the design of
+                                                              IoT (NB-IoT). DECT NR+ is specified by Europe-                                                                                           the upper-layer protocols and the overall system
+                                                              an Telecommunications Standards Institute (ETSI)                                                                                         architecture. Nevertheless, since the Physical (PHY)
+ISSN: 0163-6804
+Digital Object Identifier: 10.1109/MCOM.001.2500286                             Fabian Graf and Michael Villnow are with Siemens AG, Erlangen, Germany; Thomas Watteyne is with Inria, Paris, France.
+
+
+
+16                                                    This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/             IEEE Communications Magazine • February 2026
+layer represents the fundamental physical limitation            code rate R characterizes the fraction of bits in
+that cannot be overcome by nature, and efforts in               the Physical Data Channel (PDC) that are actually                                                                                          The CP is a copy of the
+developing upper-layer protocols are still in their             used as information bits, whereas the rest is used                                                                                         end of an OFDM symbol
+early stages, we focus exclusively on PHY experi-               as redundancy to recover from transmission errors.
+ments in this article. By delivering the first bench-           The standard specifies in total 12 different MCS,                                                                                        appended to its beginning,
+marking of DECT NR+ performance in practical                    with the first five utilizing Binary Phase-Shift Keying                                                                                  serving as a guard interval
+scenarios, this article serves as a decision-making             (BPSK), Quadrature Phase-Shift Keying (QPSK) and                                                                                          to mitigate inter-symbol
+guide for IoT users who are reaching data rate or               16-Quadrature Amplitude Modulation (QAM):
+range limitations and are considering DECT NR+ as               • MCS 0: BPSK, R = 0.50,                                                                                                                 interference and preserve
+an alternative.                                                 • MCS 1: QPSK, R = 0.50,                                                                                                                  subcarrier orthogonality.
+    The article is organized as follows. A primer               • MCS 2: QPSK, R = 0.75,
+on the DECT NR+ PHY layer, details achievable                   • MCS 3: 16-QAM, R = 0.50,
+payload sizes and data rates. We provide an over-               • MCS 4: 16-QAM, R = 0.75.
+view of the current hardware platforms and soft-                As the MCS order increases, larger payload sizes
+ware stacks available for DECT NR+. We present                  fit into a packet, but robustness decreases.
+the results of power consumption measurements,
+offering insights into the rationale behind parame-                               Regulations, Frequency and Transmit Power
+ter selection and its impact on energy efficiency.              When DECT was standardized for cordless
+We explore various range test environments, and                 phones in 1992, frequency bands were set aside
+evaluates the performance of DECT NR+ in terms                  for this application. These are unlicensed bands:
+of PDR, through a comprehensive set of real-                    neither the vendor nor the end user need to pay
+world representative measurements. We discuss                   a fee to use them. Since DECT NR+ is under the
+what to expect when using DECT NR+ and how it                   DECT umbrella, it inherits from these license-free
+positions itself among other wireless communica-                attributes, making it attractive for technology
+tion standards.                                                 providers in the same way that Wi-Fi, Bluetooth
+                                                                and IEEE 802.15.4 operate in license-free bands.
+     The DECT NR+ Physical Layer: A Primer                      And because the DECT NR+ frequency bands
+DECT-2020 NR is specified in the ETSI TS 103 636                are less crowded than the 2.4 GHz bands (where
+standard [7]. We refer to release 2 from October                Wi- Fi and Bluetooth operate), the promise is that
+2024, which comprises the specification of radio                DECT NR+ deployments suffer less from external
+reception and transmission requirements (Part 2),               interference, at least early in the adoption. The
+the Physical layer (Part 3), the Medium Access                  frequency band designated for DECT is not glob-
+Control (MAC) layer (Part 4) and the Data Link                  ally standardized, and in some countries, such as
+Control (DLC) and Convergence layers (Part 5).                  China, no designated band is available.
+                                                                    The standard defines 22 frequency bands.
+                      Modulation                                European national regulations mandate the use
+DECT NR+ uses Cyclic Prefix (CP) Orthogonal                     of Band 1 (1880–1900 MHz), which contains 21
+Frequency Division Multiplexing (OFDM). OFDM                    channels (numbered 1657 to 1677), with cen-
+is a modulation technique that transmits data in                ter frequencies spaced by 0.864 MHz. In North
+parallel over multiple closely spaced subcarriers               America, Band 9 (1920–1930 MHz) must be
+to make it more robust against frequencyselective               used. It contains 9 channels (numbered 1703 to
+fading. The CP is a copy of the end of an OFDM                  1711), also spaced by 0.864 MHz.
+symbol appended to its beginning, serving as a                      The DECT NR+ standard specifies that trans-
+guard interval to mitigate inter-symbol interfer-               mission power levels for Class I devices — which
+ence and preserve subcarrier orthogonality. There               typically serve as gateways, base stations, or
+are three major configuration parameters in DECT                outdoor nodes for long-range communication —
+NR+ regarding modulation with OFDM.                             must not exceed +23 dBm. This aligns with local
+    The subcarrier scaling factor m  {1, 2, 4, 8}              regulations for the DECT frequency bands, allow-
+determines the spacing between two adjacent                     ing a peak effective radiated power (ERP) of 250
+orthogonal subcarriers. As m increases, the OFDM                mW (+23.98 dBm).
+symbol duration becomes shorter, leading to a                       Unlike sub-GHz bands, we are unaware of reg-
+higher required bandwidth. Therefore, latency                   ulations that limit duty-cycle or impose a minimal
+decreases and faster transmission is possible,                  inter-frame spacing.
+allowing for higher robustness against Doppler
+shifts. However, the shorter CP reduces protec-                                               Packet Structure and Data Rates
+tion against multipath effects.                                 Slots are the unit used for defining packet lengths
+    The Fourier transform scaling factor b  {1,                of a radio frame in DECT NR+, rather than bytes.
+2, 4, 8, 12, 16} determines the number of sub-                  The standard mandates that the duration of a
+carriers. Larger values of b lead to more subcarri-             frame cannot exceed 10 ms, corresponding to a
+ers and increase the available channel bandwidth                maximum of NFRAME
+                                                                                slot   = 24 slots.
+and, therefore, the data rate capacity at the                      Each slot is further divided into subslots, and
+cost of larger Fast Fourier Transform (FFT) sizes.              for a subcarrier spacing factor of m = 1, one slot
+Although this means that the PHY can achieve                    consists of NSLOT,m
+                                                                              subslot = 2 subslots. A subslot always
+                                                                               SUBSLOT
+higher data rates, processing power rises as the                consists of Nsymb        = 5 OFDMsymbols. Each
+transceiver complexity grows [8].                               OFDM-symbol is split up on a number of subcarri-
+    The MCS defines the modulation used for the                 ers, depending on the parameter b. For b = 1, the
+subcarrier symbols and the code rate of the turbo               PHY uses 64 subcarriers. This results in a matrix
+code used for Forward Error Correction (FEC). The               structure: columns represent OFDM symbols,
+modulation scheme indicates how many bits per                   rows subcarriers. The individual cells of this matrix,
+symbol can be transmitted on each subcarrier. The               known as resource elements (REs), form the small-
+
+
+IEEE Communications Magazine • February 2026            This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                                 17
+     MCS/Subslots          1        2               3                 4                5                6                7                8                9                10          11       12       13      14       15       16
+     MCS 0                 0        17              33                50               67               83               99               115              133              149         165      181      197     213      233      249
+     MCS 1                 4        37              69                103              137              169              201              233              263              295         327      359      391     423      463      495
+     MCS 2                 7        57               107              157              205              253              295              343              399              447         495      540      596     644      692      740
+     MCS 3                 11       77               141              209              271              335              399              463              532              596         660      732      793     857      929      993
+     MCS 4                 18       117              217              311              407              503              604              700              801              897         1001     1094     1198    1291     1395     1491
+TABLE 1. Payload size in bytes of the PDC as a function of MCS and the number of subslots computed for m = 1 and b = 1. Configurations leading to sizes larger than 700 bytes are not supported by the
+   nRF91 and therefore marked in italics.
+
+                                           est unit of the radio frame. Within these REs, the                                                                                       allows for greater flexibility as different dies can be
+                                           information bits, referred to as the PDC, are placed.                                                                                    included or excluded, but the resulting products are
+                                                Not all REs are used for the PDC. This is                                                                                           more costly as more complex to manufacture.
+                                           because, depending on the parameter selection                                                                                                We are conducting our experimental work
+                                           and number of slots, REs are also used for the                                                                                           with nRF91 chips. As is allowed in the standard,
+                                           Synchronization Training Field (STF), Demodu-                                                                                            they only implement a subset of the PHY con-
+                                           lation Reference Signal (DRS), Physical Control                                                                                          figurations of the DECT NR+ standard. That is,
+                                           Channel (PCC) and Guard Band (GB). The con-                                                                                              m is always equal to 1, resulting in a subcarrier
+                                           version from packet duration in slots/subslots into                                                                                      spacing of 27 kHz. Similarly, b is also always equal
+                                           bytes is therefore not straightforward, as it follows                                                                                    to 1, which means there always are 64 subcar-
+                                           a set of parameter-dependent formulas. Table 1 is                                                                                        riers, from which 56 are occupied and 8 acting
+                                           a quick reference. It contains a number of conver-                                                                                       as guard band. Finally, since nRF91 radios sup-
+                                           sions for m = 1 and = 1, for a packet length of up                                                                                       ports frequency bands 1, 2, 9, they can operate
+                                           to 8 slots, and for MCS 0 to MCS 4.                                                                                                      in all regions. The radios can output up to +19
+                                                The computation of the data rates from the                                                                                          dBm, which is within regulatory limits. The packet
+                                           values in Table 1 is straight-forward. For m = 1,                                                                                        length on nRF91 radios is limited to 8 slots (16
+                                           the duration of a single OFDM symbol is 41.667                                                                                           subslots), and the MCS can be set between 0
+                                           ms. As an example, a packet length of 8 subslots                                                                                         and 4. Table 1 summarizes the resulting packet
+                                           and MCS 4 yields an achievable transport block                                                                                           lengths. Note that not all configurations in this
+                                           size of 700 B. Since NSUBSLOT
+                                                                    symb     = 5 OFDM symbols                                                                                       table are achievable on nRF91 radios, since the
+                                           fit into 1 subslot, the transmission of those 700 B                                                                                      maximum payload size is limited to 700 B.
+                                           (5600 bits) in 8 subslots takes 1.666 ms, resulting
+                                           in a theoretical data rate of 3.36 Mbit/s.                                                                                                                 Power Consumption
+                                                                                                                                                                                    Power consumption is a key parameter when
+                                                        What is Available on the Market Today?                                                                                      evaluating DECT NR+ for applications where
+                                            Today, only two vendors offer DECT NR+-com-                                                                                             nodes are battery-powered.
+                                            pliant chipsets. The nRF91 series from Nordic                                                                                               We use the Nordic Power Profiler Kit (PPK)
+                                            Semiconductor features three chips: nRF9161,                                                                                            II to measure the power consumption of DECT
+                                            nRF9151, nRF9131. Last Mile Semiconductor                                                                                               NR+. The PPK can power the nRF9161 DK and
+                                            commercializes the LM10XX system-on-chip.                                                                                               display that board’s power consumption. It is
+                                               To explore the PHY, we use the Nordic Semi-                                                                                          accurate enough to evaluate the current draw
+                                            conductor nRF91 series. Their Connect SDK soft-                                                                                         during transmit (TX) and receive (RX) operations.
+                                            ware package includes basic sample applications                                                                                         The PPK measures the current draw of the entire
+                                            based on Zephyr, which we use as a base for                                                                                             nRF91 System-in-Package, including the current
+                                            our experiments.                                                                                                                        drawn by the Central Processing Unit (CPU) and
+                                               The nRF9161 was designed for cellular IoT,                                                                                           the radio frequency (RF) modules in the SiP.
+                                            and supports LTE-M and NB-IoT. Its radio front-                                                                                             We developed a PHY test firmware (FW) that
+                                            end is flexible enough that, by updating the core                                                                                       triggers TX and RX operations based on seri-
+                                            firmware on its radio co-processor, the chip                                                                                            al commands from a computer. This command
+                                            switches over to DECT NR+. The nRF9151 is                                                                                               allows the computer to select the TX power, MCS,
+                                            nRF9161’s successor, with higher output power.                                                                                          packet length and frequency. On the computer,
+                                            The nRF9131 is a cheaper version, at the cost of                                                                                        we developed a Python program to issue those
+                                            higher power consumption.                                                                                                               serial commands, looping through all combinato-
+                                               For all of the mentioned chips, dedicated                                                                                            rial possibilities of these parameters. This automat-
+                                            Development Kits (DK) or Evaluation Kits (EK)                                                                                           ed testing framework is based on the PPK Python
+                                            are available to support quick prototyping and                                                                                          Application Programming Interface (API) [9].
+                                            experimentation. Both the nRF9161- DK and                                                                                                   We measure the power consumption of
+                                            nRF9151-DK feature a PCB antenna. While they                                                                                            the nRF91 while it is running the mfw-nr+_
+                                            are functional, these boards are not designed for                                                                                       nrf91x1_1.0.2 RF modem FW version. The
+                                            maximum range so are not optimal for range test-                                                                                        supply voltage is 3.7 V. While the current draw
+                                            ing. Instead, we used the nRF9131-EK that fea-                                                                                          varies with supply voltage, the energy consump-
+                                            tures an external antenna connector. The range                                                                                          tion remains more or less constant. In the record-
+                                            measurement results we get with the nRF9131-EK                                                                                          ed current profile, TX operations are clearly visible
+                                            are representative of the nRF91 series.                                                                                                 as peaks with sharply rising and falling edges. The
+                                               A noteworthy point is that an nRF91 “chip” is in                                                                                     duration of these peaks depends on the subslot
+                                            fact a System-in-Package (SiP): multiple dies wire-                                                                                     length specified; they precisely match the time
+                                            bonded together in a single package. This approach                                                                                      durations defined in the DECT NR+ standard.
+
+
+18                                 This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/              IEEE Communications Magazine • February 2026
+                                                                                               MCS 1               4         37          69         103         137         169         201         233       263     295      327        359       391       423       463
+                                                                                               MCS
+                                                                                               MCS 32             11
+                                                                                                                   7         77
+                                                                                                                             57         141
+                                                                                                                                        107         209
+                                                                                                                                                    157         271
+                                                                                                                                                                205         335
+                                                                                                                                                                            253         399
+                                                                                                                                                                                        295         463
+                                                                                                                                                                                                    343       532
+                                                                                                                                                                                                              399     596
+                                                                                                                                                                                                                      447       660
+                                                                                                                                                                                                                               495          732
+                                                                                                                                                                                                                                          540         793
+                                                                                                                                                                                                                                                    596        857
+                                                                                                                                                                                                                                                              644         929
+                                                                                                                                                                                                                                                                        692
+                                                                                               MCS
+                                                                                               MCS 43             18
+                                                                                                                  11        117
+                                                                                                                             77         217
+                                                                                                                                        141         311
+                                                                                                                                                    209         407
+                                                                                                                                                                271         503
+                                                                                                                                                                            335         604
+                                                                                                                                                                                        399         700
+                                                                                                                                                                                                    463       801
+                                                                                                                                                                                                              532     897
+                                                                                                                                                                                                                      596      1001
+                                                                                                                                                                                                                               660         1094
+                                                                                                                                                                                                                                           732       1198
+                                                                                                                                                                                                                                                     793       1291
+                                                                                                                                                                                                                                                              857        1395
+                                                                                                                                                                                                                                                                         929
+                                                                                               MCS 4              18        117         217         311         407         503         604         700       801     897      1001       1094      1198      1291      1395
+                                                                   Table I: Payload size in bytes of the PDC as a function of MCS and the number of subslots computed for µ =
+                                                                   Table I: Payload
+                                                                   Configurations    size intobytes
+                                                                                  leading      sizesoflarger
+                                                                                                        the PDC
+                                                                                                             than as
+                                                                                                                  700a bytes
+                                                                                                                       function
+                                                                                                                             areofnotMCS and thebynumber
+                                                                                                                                      supported          of subslots
+                                                                                                                                                   the nRF91         computed
+                                                                                                                                                              and therefore   for µ in
+                                                                                                                                                                            marked   =i
+                                                                   Configurations leading to sizes larger than 700 bytes are not supported by the nRF91 and therefore marked in it
+     When the nRF9161 is actively transmitting, it
+                                                                                                                                                                                                           ForThrough     a comprehensive
+                                                                                                                                                                                                                  all range        tests, we deploy nRF9131-EK
+draws between 70 mA (at -40 dBm TX power)                                                700            +19 dBm
+                                                                                                                                                                                                        MCSFor 0,all frequency
+                                                                                                                                                                                                                       range tests,channel   we deploy  number nRF9131-EK
+                                                                                                                                                                                                                                                                      1657 (18
+and 220 mA (at +19 dBm TX power) of cur-                                                 700            +19 dBm
+                                                                                                        +16   dBm
+                                                                                                                                                                                                        MCS  measurement
+                                                                                                                                                                                                        and a 0,      frequency
+                                                                                                                                                                                                                 packet
+                                                                                                                                                                                                                                 campaign,
+                                                                                                                                                                                                                             length channel
+                                                                                                                                                                                                                                                we number
+                                                                                                                                                                                                                                         of 5 subslots.          The1657
+                                                                                                                                                                                                                                                                       PDR(188is m
+                                                                                         600
+rent. When the nRF9161 is actively receiving, it                                         600
+                                                                                                        +16 dBm
+                                                                                                        +13   dBm
+                                                                                                                                                                                                        and  ameasure
+                                                                                                                                                                                                        10,000  packet   thelength
+                                                                                                                                                                                                                   transmitted          ofa func-
+                                                                                                                                                                                                                                PDR aspackets5 subslots.
+                                                                                                                                                                                                                                                     per TXThe        PDR over
+                                                                                                                                                                                                                                                                  power,     is m
+                                                                                                        +13 dBm
+                                                                                                        +10   dBm
+draws 45 mA. We present measurements for the                                             500            +10
+                                                                                                        +7 dBmdBm                                                                                       10,000
+                                                                                                                                                                                                        4 hours.transmitted packets per TX power, over
+nRF9161-DK, but verified that we measure similar                                         500             +7  dBm
+                                                                                                          0 dBm
+                                                                                                                                                                                                               tion of distance between
+                                                                                                                                                                                                        4 hours.
+                                                                                                                                                                                                           The firmware we developed for the nodes
+
+
+
+
+                                                                         [µC]
+values on the nRF9151-DK.                                                                400              0 dBm
+                                                                                                        -40  dBm                                                                                           Thetransmitter
+                                                                                                                                                                                                        modes:    firmware
+                                                                                                                                                                                                                    initiatorandand we     developed
+                                                                                                                                                                                                                                            responder. for
+                                                                                                                                                                                                                                      receiver                At thethe initiato
+                                                                                                                                                                                                                                                                          nodes
+
+
+
+
+                                                                       [µC]
+     We plot the charge drawn during a single TX                                         400             -40 dBm                                                                                        modes:     initiator and
+                                                                                                                                                                                                        sends commands              to the responder.
+                                                                                                                                                                                                                                                nRF9131Atover     theainitiator
+                                                                                                                                                                                                                                                                         serial p
+                                                                                                                                                                                                                           nodes.to with
+
+
+
+
+                                                                      QQ
+                                                                                         300
+operation in Fig. 1. Although illustrated for MCS 0,                                     300
+                                                                                                                                                                                                        sends
+                                                                                                                                                                                                        transmitcommands
+                                                                                                                                                                                                                     operations         the nRF9131
+                                                                                                                                                                                                                                                 differentover       a serial po
+                                                                                                                                                                                                                                                                parameters.     A
+the values remain unchanged across different MCS                                                                                                                                                        transmit    operations
+                                                                                                                                                                                                        tor transmits       a wireless withframe,
+                                                                                                                                                                                                                                                different      parameters.
+                                                                                                                                                                                                                                                          it waits             Af
+                                                                                                                                                                                                                                                                      for an ack
+                                                                                         200                                                                                                            tor transmits
+configurations. As expected, the charge drawn                                            200                                                                                                            (ACK).      The adevicewireless       frame, it mode
+                                                                                                                                                                                                                                         in Initiator       waits for     an ack
+                                                                                                                                                                                                                                                                     is marked
+                                                                                                                                                                                                        (ACK).
+                                                                                                                                                                                                        maps ofThe     Fig.device       in call
+                                                                                                                                                                                                                                             Initiator     mode devices
+                                                                                                                                                                                                                                                                    is marked
+increases linearly with payload duration. Since the                                      100                                                                                                                                   3. We                the other                  th
+                                                                                         100                                                                                                            maps
+                                                                                                                                                                                                        nodes:ofthey  Fig.continuously
+                                                                                                                                                                                                                              3. We call the       listenother
+                                                                                                                                                                                                                                                             for devices
+                                                                                                                                                                                                                                                                   frames and the
+TX power is specified on a logarithmic scale, while                                                                                                                                                     nodes:    they setup
+                                                                                                                                                                                                                          continuously            listen    for frames      andst
+charge consumed increases as the transmit pow-                                             0                                                                                                            them. This                   allows us         to record       packet
+                                                                                           0    62      8  4  10       12    14      16                                                                 them.
+                                                                                                                                                                                                        initiatorThisandsetup
+                                                                                                                                                                                                                           several  allows       us to record
+                                                                                                                                                                                                                                          responder        devices.packet sta
+ers increases, it is not a linear relationship. That is,                                         2
+                                                                                                 6       8 4  10       12    14      16                                                                 initiator
+                                                                                             Payload Size [Subslots]                                                                                       Fig. 3and  showsseveral       responder
+                                                                                                                                                                                                                                  the four                devices.
+                                                                                                                                                                                                                                                 test environments.
+as shown for a packet length of 8 slots in Fig. 1,                                            Payload Size [Subslots]                                                                                      Fig.
+                                                                                                                                                                                                           Setup3 (a)showsis the theSiemens
+                                                                                                                                                                                                                                        four test Industrial
+                                                                                                                                                                                                                                                      environments.  Connectiv
+going from –40 dBm to +7 dBm only increases                         FIGURE
+                                                                   Figure  1.
+                                                                           1:Average
+                                                                   Figure 1: on
+                                                                                     charge
+                                                                               Average
+                                                                               Average
+                                                                                            drawn
+                                                                                          charge  during
+                                                                                                  drawna TX operation,
+                                                                                                           during  a TXas measured on theas
+                                                                                                                           operation,
+                                                                                          charge drawn during a TX operation, as                                                                        in Setup    (a) is The
+                                                                                                                                                                                                             Erlangen.         the Siemens
+                                                                                                                                                                                                                                        ICL is Industrial
+                                                                                                                                                                                                                                                      a factoryConnectivi
+                                                                                                                                                                                                                                                                       hall desi
+charge consumed by 70 mC, going from +7 dBm                        measured
+                                                                       nRF9161-DK. the nRF9161-DK.                                                                                                      in  Erlangen.
+                                                                   measured on the nRF9161-DK.                                                                                                          evaluation      of The         ICL IoT,
+                                                                                                                                                                                                                              industrial        is a and factory     hall desig
+                                                                                                                                                                                                                                                               is characterize
+to +19 dBm increases by 400 mC. Figure 2 shows                                                                                                                                                          evaluation
+                                                                                                                                                                                                        rich environmentof industrial          IoT, and
+                                                                                                                                                                                                                                     that causes              is characterized
+                                                                                                                                                                                                                                                         signal    reflections
+the charge consumed per bit. The plot shows the                                          0.7                                                MCS 0                     MCS 1
+                                                                                                                                                                                                        rich  environment
+                                                                                                                                                                                                        fading.    This makes       thatit causes
+                                                                                                                                                                                                                                             an ideal   signal    reflections
+                                                                                                                                                                                                                                                            testbed     for assea
+benefit of using a higher MCS scheme: more bytes                                         0.7                                                MCS 20
+                                                                                                                                            MCS                       MCS
+                                                                                                                                                                      MCS 13                            fading.    This makes
+                                                                                                                                                                                                        communication                   it an ideal
+                                                                                                                                                                                                                                  reliability              testbed for
+                                                                                                                                                                                                                                                   in industrial           asses
+                                                                                                                                                                                                                                                                       settings.
+fit into the same number of subslots as we increase                                      0.6                                                MCS 42
+                                                                                                                                            MCS                       MCS
+                                                                                                                                                                     +19   3
+                                                                                                                                                                         dBm                            communication reliability in industrial settings.
+                                                                                         0.6                                                MCS  4                   +19 dBm
+                                                                                                                                                                                                           Setup (b) is an office environment, chosen to
+MCS. The largest efficiency boost is when switching                                                                                        +16 dBm                    0 dBm                                Setup (b) of
+                                                                                                                                                                                                        penetration       is walls
+                                                                                                                                                                                                                                an office       environment,
+                                                                                                                                                                                                                                         and objects.                chosen
+                                                                                                                                                                                                                                                             This setup         to
+                                                                                                                                                                                                                                                                            refle
+                                                                                         0.5                                               +16 dBm                    0 dBm                             penetration of walls and objects. This setup reflec
+from MCS 0 to MCS 1. The plots for MCS 2, 3 and                                          0.5                                                                                                            indoor deployments where wireless signals m
+                                                                                / bit]
+                                                                                                                                                                                                        indoor deployments where wireless signals m
+                                                                           [µC/ bit]
+
+4 do not cover the entire range of payload sizes not                                     0.4                                                                                                            cubicles, furniture, and electronic devices, prov
+                                                                                                                                                                                                        cubicles, furniture, and electronic devices, provi
+to exceed the 700 B payload limit on the nRF91.                                          0.4                                                                                                            into indoor coverage, interference, and connecti
+                                                                                                                                                                                                        into indoor coverage, interference, and connectiv
+                                                                       QQ[µC
+
+
+
+Figure 2 also shows that it is more beneficial to use                                    0.3
+                                                                                         0.3
+                                                                                                                                                                                                           Setup (c) is the Siemens Campus in Erlangen,
+                                                                                                                                                                                                           Setup (c) is the Siemens Campus in Erlangen, G
+larger payload sizes rather than fragmenting. While                                                                                                                                                     resenting an urban outdoor environment. It allow
+                                                                                                                                                                                                        resenting an urban outdoor environment. It allow
+                                                                                         0.2                                                                                                            the suitability of DECT NR+ in smart city applic
+in all cases the charge per bit decreases with increas-                                  0.2                                                                                                            the suitability of DECT NR+ in smart city applic
+ing the number of bits, this is less true for higher                                                                                                                                                    high-rise buildings, moving vehicles, and dense
+                                                                                         0.1                                                                                                            high-rise buildings, moving vehicles, and dense
+                                                                                         0.1                                                                                                            impact signal propagation and network reliabili
+MCS values (i.e. the lines in Fig. 2 “flatten” for higher                                                                                                                                               impact signal propagation and network reliability
+                                                                                                                                                                                                           Setup (d) is located on top of an old castle
+MCS values) For instance, the charge drawn per                                            0
+                                                                                          02
+                                                                                                                                                                                                           Setup (d) is located on top of an old castle
+                                                                                                6    4  8        10       12      14       16                                                           extensive view of the surrounding rural area.
+bit in a packet transmitted at +19 dBm with MCS                                             2   6    4   8       10       12      14      16                                                            extensive view of the surrounding rural area. T
+                                                                                                                                                                                                        is to evaluate the performance of DECT NR+
+                                                                                              Payload Size [Subslots]
+0 reduces from 0.68 mC to 0.36 mC when going                                                   Payload Size [Subslots]                                                                                  is to evaluate the performance of DECT NR+ i
+                                                                                                                                                                                                        scenarios with minimal interference, making it
+from a payload size of 2 subslots to 16 subslots. We               Figure  2: Average     charge  drawn per      bit during aa TX
+                                                                                                                                TX operation,                                                           scenarios with minimal interference, making it r
+                                                                                                                                                                                                        of applications such as environmental monit
+can further see that the curves for MCS 4 are close,                FIGURE 2.2:Average
+                                                                    Figure
+                                                                   as
+                                                                                Averagecharge drawndrawn
+                                                                                          charge     per bitper
+                                                                                                             during
+                                                                                                                 bitaduring
+                                                                                                                      TX operation, asoperation,
+                                                                                                                                       measured                                                         of applications such as environmental monito
+                                                                    as measured
+                                                                       measured on  on the
+                                                                                        the nRF9161-DK.
+                                                                                            nRF9161-DK.
+                                                                              on the nRF9161-DK.                                                                                                        sensor networks,
+                                                                                                                                                                                                        sensor    networks, or      or long-range
+                                                                                                                                                                                                                                         long-range webcam  webcam image imaget
+showing that, for a high MCS index, the impact of                                                                                                                                                          Fig. 44 shows
+                                                                                                                                                                                                                      shows the   the PDRPDR results
+                                                                                                                                                                                                                                                  results of of the
+                                                                                                                                                                                                                                                                  the four
+                                                                                                                                                                                                                                                                        fourtest
+                                                                                                                                                                                                                                                                              test
+                                                                                                                                                                                                           Fig.
+TX power on the efficiency per bit is small.                                                                                                                                                               Setup      (a)  delivers         solid    performance          despite
+                                                                   16                                                                                                                                      Setup (a) delivers solid performance despite
+                                                                    16 subslots.
+                                                                         Setup (b)We
+                                                                                  We can
+                                                                                       is anfurther
+                                                                                                officesee  that
+                                                                                                           that the
+                                                                                                                the curves
+                                                                                                                    curves for
+                                                                                                      seeenvironment,          MCS 44 to
+                                                                                                                             chosen   are
+                Communication Range                                     subslots.
+                                                                   close,  showing
+                                                                    evaluate
+                                                                    close,
+                                                                   power
+                                                                            showing
+                                                                                       can
+                                                                                 the that,
+                                                                                            further
+                                                                                            for
+                                                                                             for aa high
+                                                                                      penetration
+                                                                                      that,         highofMCS
+                                                                                                           MCS   index,
+                                                                                                              walls  andthe
+                                                                                                                 index,
+                                                                                                                           for MCS
+                                                                                                                            impact of
+                                                                                                                          objects.
+                                                                                                                        the impact
+                                                                                                                                      are
+                                                                                                                                   of TX
+                                                                                                                                      TX
+                                                                                                                                    This
+                                                                                                                                                                                                        of-sight (LOS)
+                                                                                                                                                                                                        of-sight
+                                                                                                                                                                                                        a1,
+                                                                                                                                                                                                                     (LOS) and
+                                                                                                                                                                                                             all nodes
+                                                                                                                                                                                                        a1, all  nodes were
+                                                                                                                                                                                                                                 and no
+                                                                                                                                                                                                                            were in
+                                                                                                                                                                                                                                         no antenna
+                                                                                                                                                                                                                                               antenna alignment.
+                                                                                                                                                                                                                                      in non-LOS,
+                                                                                                                                                                                                                                           non-LOS,reflecting
+                                                                                                                                                                                                                                                             alignment. ExceExc
+                                                                                                                                                                                                                                                            reflectingrealistic
+                                                                                                                                                                                                                                                                          realist
+Another important key performance indicator is                      power onon the
+                                                                                the efficiency
+                                                                                    efficiency perper bit
+                                                                                                       bit is
+                                                                                                           is small.
+                                                                    setup reflects real-world indoor deployments where
+                                                                                                              small.                                                                                    conditions. A
+                                                                                                                                                                                                        conditions.       A transmit
+                                                                                                                                                                                                                                transmit power  power of    of -8-8 dBm
+                                                                                                                                                                                                                                                                      dBm was was
+communication range. Through a comprehensive                        wireless signals must navigate cubicles, furniture,                                                                                 maintain aa PDR
+                                                                                                                                                                                                        maintain         PDR above above 80%.  80%. As   As expected,
+                                                                                                                                                                                                                                                               expected, devic
+                                                                                                                                                                                                                                                                            devi
+                                                                                     V.   C
+measurement campaign, we measure the PDR as                         and electronic   V.devices,     providing R
+                                                                                          COMMUNICATION
+                                                                                             OMMUNICATION          ANGE
+                                                                                                                 Rinsights
+                                                                                                                   ANGE into indoor                                                                     show aa gradual
+                                                                                                                                                                                                        show       gradual PDR   PDR decline
+                                                                                                                                                                                                                                           decline followed
+                                                                                                                                                                                                                                                        followed by    byaasteep
+                                                                                                                                                                                                                                                                             stee
+a function of distance between transmitter and                      coverage,
+                                                                      Another     interference,      and   connectivity
+                                                                       Another important key performance indicator
+                                                                                important     key   performance            stability.
+                                                                                                                    indicator is commu-
+                                                                                                                              is commu-                                                                 contrast, a3
+                                                                                                                                                                                                        contrast,     a3 exhibits
+                                                                                                                                                                                                                           exhibits an     an unusual
+                                                                                                                                                                                                                                                unusual dip   dip atat 00 dBm,
+                                                                                                                                                                                                                                                                           dBm,
+receiver nodes.                                                    nication
+                                                                        Setup
+                                                                    nication range.
+                                                                                 (c)Through
+                                                                              range.             aa comprehensive
+                                                                                       is the Siemens
+                                                                                      Through                Campus
+                                                                                                    comprehensive     measurement
+                                                                                                                          in Erlangen,
+                                                                                                                      measurement     cam-
+                                                                                                                                      cam-                                                              by multi-path
+                                                                                                                                                                                                        by  multi-path interference
+                                                                                                                                                                                                                               interference from    from nearby
+                                                                                                                                                                                                                                                             nearby metal
+                                                                                                                                                                                                                                                                        metalsu  su
+                                                                   paign,  we
+                                                                           we measure
+                                                                    Germany,              the
+                                                                                           the PDR
+                                                                                   representingPDR as anaa urban
+                                                                                                           function  of
+                                                                                                                     of distance
+                                                                                                           functionoutdoor       between
+                                                                                                                               environ-                                                                    Setup (b),(b), although
+                                                                                                                                                                                                                           although entirely entirely non-LOS,
+                                                                                                                                                                                                                                                          non-LOS,achieves
+                                                                                                                                                                                                                                                                         achieve
+    For all range tests, we deploy nRF9131-EK boards                paign,      measure               as                distance between                                                                   Setup
+                                                                   transmitter  and
+                                                                                 and receiver   nodes.                                                                                                  values near
+                                                                                                                                                                                                                  near 100 100 %    % downdown to    to -4-4 dBm.
+                                                                                                                                                                                                                                                                dBm. Howeve
+                                                                                                                                                                                                                                                                         Howeve
+using MCS 0, frequency channel number 1657                          ment. It allows
+                                                                    transmitter           us tonodes.
+                                                                                      receiver    assess the suitability of DECT                                                                        values
+(1881.792 MHz) and a packet length of 5 subslots.                   NR+ in smart city applications, where high-rise
+The PDR is measured over 10,000 transmitted pack-                   buildings, moving vehicles, and dense infrastruc-
+ets per TX power, over a duration of 4 hours                        ture impact signal propagation and network reli-
+    The firmware we developed for the nodes                         ability. Setup (d) is located on top of an old castle
+support two modes: initiator and responder. At                      ruin with an extensive view of the surrounding
+the initiator, a computer sends commands to the                     rural area. The objective is to evaluate the perfor-
+nRF9131 over a serial port to execute transmit                      mance of DECT NR+ in ideal LOS scenarios with
+operations with different parameters. After the                     minimal interference, making it representative of
+initiator transmits a wireless frame, it waits for an               applications such as environmental monitoring,
+acknowledgment (ACK). The device in Initiator                       remote sensor networks, or long-range webcam
+mode is marked as TX in the maps of Fig. 3. We                      image transmission.
+call the other devices the “responder” nodes: they                      Figure 4 shows the PDR results of the four test
+continuously listen for frames and acknowledge                      setups.
+them. This setup allows us to record packet statis-                     Setup (a) delivers solid performance despite
+tics at the initiator and several responder devices.                limited lineof- sight (LOS) and no antenna align-
+    Figure 3 shows the four test environments.                      ment. Except for device a1, all nodes were in non-
+    Setup (a) is the Siemens Industrial Connectivi-                 LOS, reflecting realistic deployment conditions. A
+ty Lab (ICL) in Erlangen. The ICL is a factory hall                 transmit power of -8 dBm was sufficient to main-
+designed for the evaluation of industrial IoT, and                  tain a PDR above 80%. As expected, devices a2
+is characterized by a metalrich environment that                    and a4 show a gradual PDR decline followed by a
+causes signal reflections and multipath fading.                     steep drop-off. In contrast, a3 exhibits an unusual
+This makes it an ideal testbed for assessing wire-                  dip at 0 dBm, likely caused by multi-path interfer-
+less communication reliability in industrial settings.              ence from nearby metal surfaces [10].
+
+
+IEEE Communications Magazine • February 2026                This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                                        19
+MUNICATIONS MAGAZINE, VOL. X, NO. X, APRIL 2025                                                                                                                                                         5
+
+
+
+
+                                 Comparable detailed charge
+                                  measurements have been
+                                  conducted for the LTC5800
+                                 chip, which is part of Analog
+                                 Devices’ “SmartMesh” prod-
+      24 m
+                                  uct line and based on IEEE
+                                                        32 m
+
+
+                                                                b3
+                                                                                                                          24 m                                                 32 m
+
+
+                                                                                                                                                                                             b3
+             a2                                                                                                                  a2
+
+
+                                        802.15.4 O-QPSK.
+                       a3                                                                                                                  a3
+                                   20 m
+
+
+
+
+                                                                                     13 m
+
+
+
+
+                                                                                                                                                   20 m
+                                               b2                                                                                                               b2
+                                                                                                          a1
+
+
+                                                                       b4                                                                                                                                b4
+                  a4                                                                                                                  a4
+                                          b1              TX                                                      TX                                      b1                     TX
+
+
+
+ ndoors: Industrial                             (b) Indoors: Office                                             (a) Outdoors:
+                                                                                                                (c) Indoors: Industrial
+                                                                                                                              Urban                            (d)(b)
+                                                                                                                                                                   Outdoors:
+                                                                                                                                                                      Indoors:Rural
+                                                                                                                                                                               Office                                                                    (d) Outdoors: Rural
+                                                                                                                                                                                                                          (c) Outdoors: Urban
+ 3: The four range test setups (top: communication environment, bottom: map with relative position and distances)
+                                                                               FIGURE 3. The four range test setups (top: communication environment, bottom: map with relative position and distances).
+
+   drops sharply rather than gradually, likely due to                                                            1                                                                                                     element of comparison, the nRF52840, a popu-
+ e granularity of the available low-power transmission                                                                      a1                                                                                         lar Bluetooth Low Energy (BLE) radio also from
+ d the restrictive indoor environment with thick walls                                                                      a2
+                                                                                                                                                                                                                       Nordic Semiconductor representative of the state
+                                                                                  Packet Delivery Ratio (PDR)
+
+
+
+
+ow corridors.                                                                                                   0.8         a3
+(c) shows weak results despite elevated antenna place-                                                                      a4                                                                                         of the art, draws 4.8 mA when transmitting at 0
+d partial LOS for c2. While c1 performs reasonably                                                                          b1                                                                                         dBm, 4.6 mA when receiving. Of course, DECT
+ 80 m through an urban canyon, c3 (290 m) struggles                                                             0.6         b2                                                                                         NR+ can be configured to transmit faster than
+bstructions. Surprisingly, c2 underperforms despite a
+                                                                                                                            b3
+                                                                                                                            b4
+                                                                                                                                                                                                                       BLE, in which case the duration the radio is on
+ally clear 450 m street path. Although its Receive                                                                          c1                                                                                         (and drawing current), is shorter.
+                                                                                                                0.4
+ rength Indicator (RSSI) values are better than c3’s, its                                                                   c2                                                                                             At the maximum TX power of +19 dBm with a
+ ity is impaired by transient obstructions like vehicles                                                                    c3                                                                                         16-subslot payload (249 B using MCS 0) a charge
+ strians.
+                                                                                                                0.2
+                                                                                                                            d1
+                                                                                                                                                                                                                       around 700 μC is drawn in a single TX operation.
+ (d) demonstrates good long-range performance. Both                                                                         d2
+ 2 benefit from clear LOS to an elevated base station.                                                                                                                                                                 This is a lot of charge, which hinders the wide
+   maintains a strong connection at 1.2 km, d1 remains                                                                                                                                                                 adoption of DECT NR+ by applications with bat-
+                                                                                                                 0
+en at 6 km. These results exceed previously published                                                            -40        -30        -20      -10     0                             10           19                  tery-powered devices.
+NR+ range measurements [11] and highlight how                                                                                         Transmit Power [dBm]                                                                 Let’s put that number into perspective. Com-
+ R+ can be used for remote and outdoor IoT scenarios                                                                                                                                                                   parable detailed charge measurements have been
+ne-of-sight conditions are met.                                                FIGURE 4. PDR4:evaluated
+                                                                                   Figure               for differentfortransmit
+                                                                                                PDR evaluated                    powers.
+                                                                                                                           different transmit powers.
+                                                                                                                                                                                                                       conducted for the LTC5800 chip, which is part of
+                                                                                                                                                                                                                       Analog Devices’ “SmartMesh” product line and
+    VI. S O , IS DECT NR+ ANY G OOD ?                        Setup (b), although entirely non-LOS, achieves                                                                                                            based on IEEE 802.15.4 O-QPSK. For sending a 127-
+ng our Power Consumption Results into Perspective       strong
+                                                            Let’s PDR
+                                                                   put thatvalues
+                                                                             numbernear       100 % down
+                                                                                       into perspective.        to –4detailed
+                                                                                                          Comparable     dBm.                                                                                          byte frame at +8 dBm, this chip draws about 45 mC.
+ower consumption measurements in Section IV reveal
+                                                        However,        unlike
+                                                         charge measurements     (a),   the
+                                                                                     have     PDR
+                                                                                           been      drops
+                                                                                                 conducted   sharply
+                                                                                                            for         rather
+                                                                                                                 the LTC5800                                                                                           Transmitting a similar payload at +7 dBm with DECT
+ raws between 70 mA and 220 mA during transmis- than gradually, likely due to the coarse granularity
+                                                         chip, which is part of Analog Devices’ “SmartMesh” product                                                                                                    NR+ using 9 subslots at MCS 0 draws 171 mC.
+   45 mA during reception. These values are notably     of  theandavailable
+                                                         line        based on low-power
+                                                                                 IEEE 802.15.4   transmission
+                                                                                                    O-QPSK. Forlevels
+                                                                                                                    sendinganda                                                                                            It is possible to lower the power consumption
+ n comparing to other technologies. As an element of the restrictive indoor environment with thick walls
+                                                         127-byte frame at +8 dBm, this chip draws about 45 µC.                                                                                                        per bit by tuning the MCS: if setting MCS to 4,
+                                                         Transmitting a similar payload at +7 dBm with DECT NR+
+ on, the nRF52840, a popular Bluetooth Low Energy and narrow corridors.                                                                                                                                                only 2 subslots are needed, resulting in 39 μC
+                                                         using 9 subslots at MCS 0 draws 171 µC.
+ dio also from Nordic Semiconductor representative           Setup (c) shows weak results despite elevated                                                                                                             of charge needed. But this efficiency comes at a
+ ate of the art, draws 4.8 mA when transmitting at antenna           placement
+                                                            It is possible             andpower
+                                                                            to lower the      partial  LOS forperc2.
+                                                                                                  consumption           While
+                                                                                                                    bit by tun-                                                                                        cost: our experience from further experiments tell
+4.6 mA when receiving. Of course, DECT NR+ can ing the MCS: if setting MCS to 4, only 2 subslots are needed,                                                                                                           us that increasing the MCS significantly decreas-
+                                                        c1 performs reasonably well at 180 m through an
+gured to transmit faster than BLE, in which case the resulting in 39 µC of charge needed. But this efficiency
+ the radio is on (and drawing current), is shorter.
+                                                        urban     canyon, c3 (290 m) struggles due to obstruc-
+                                                         comes at a cost: our experience from further experiments tell
+                                                                                                                                                                                                                       es PDR and communication range. An IEEE
+  maximum TX power of +19 dBm with a 16-subslot tions.   us that Surprisingly,
+                                                                   increasing the MCS  c2 underperforms
+                                                                                            significantly decreasesdespite
+                                                                                                                     PDR anda                                                                                          802.15.4-based solution likely has higher PDR
+ (249 B using MCS 0) a charge around 700 µC is theoretically
+                                                         communicationclear  range. 450    m street
+                                                                                     An IEEE            path. Although
+                                                                                                802.15.4-based               its
+                                                                                                                solution likely                                                                                        for the same distance than DECT NR+ with MCS
+  a single TX operation. This is a lot of charge, which Receive
+                                                         has higherSignal
+                                                                       PDR for Strength
+                                                                                  the sameIndicator       (RSSI)
+                                                                                              distance than DECT  values
+                                                                                                                    NR+ withare                                                                                        4, potentially making it more energy efficient as
+he wide adoption of DECT NR+ by applications with better MCS 4,than      c3’s, its
+                                                                    potentially       link itquality
+                                                                                 making               is impaired
+                                                                                              more energy   efficient by  tran-
+                                                                                                                      as fewer                                                                                         fewer retransmissions are needed.
+ owered devices.                                        sient   obstructions
+                                                         retransmissions           like vehicles and pedestrians.
+                                                                             are needed.
+                                                             Setup (d) demonstrates good long-range per-                                                                                                                Putting Our Communication Range Results into Perspective
+                                                        formance. Both d1 and d2 benefit from clear LOS                                                                                                                The range performance results from an earlier
+                                                        to an elevated base station. While d2 maintains                                                                                                                section are promising. We need to keep in mind,
+                                                        a strong connection at 1.2 km, d1 remains sta-                                                                                                                 however, that these results are obtained with
+                                                        ble even at 6 km. These results exceed previously                                                                                                              MCS 0, i.e. when using the maximum 16 subslot
+                                                        published DECT NR+ range measurements [11]                                                                                                                     packet length (249 bytes) on the nRF, a data rate
+                                                        and highlight how DECT NR+ can be used for                                                                                                                     of 598 kbit/s is achievable.
+                                                        remote and outdoor IoT scenarios where line-of-                                                                                                                   In both indoor settings (industrial and office),
+                                                        sight conditions are met.                                                                                                                                      we see that PDR above 80% is achieved with out-
+                                                                                                                                                                                                                       put power above – 4 dBm. These good results can
+                                                                                                                        So, Is DECT NR+ Any Good?                                                                      in part be attributed to the fact that DECT NR+
+                                                                                                                                                                                                                       operates in the 1.9 GHz frequency band that is
+                                                                                         Putting Our Power Consumption Results into Perspective                                                                        mostly interference free, unless of course DECT
+                                                                               The power consumption measurements men-                                                                                                 phones or other DECT NR+ networks operate
+                                                                               tioned earlier eveal current draws between 70                                                                                           nearby. The indoor communication coverage
+                                                                               mA and 220 mA during transmission, and 45 mA                                                                                            exceeds what we typically see with IEEE 802.15.4
+                                                                               during reception. These values are notably high                                                                                         O-QPSK or Bluetooth based solutions. DECT NR+
+                                                                               when comparing to other technologies. As an                                                                                             occasionally even maintains a stable connection,
+
+
+                            20                                        This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/              IEEE Communications Magazine • February 2026
+IEEE COMMUNICATIONS MAGAZINE, VOL. X, NO. X, APRIL 2025                                                                                                                                                                                           7
+
+
+
+
+           Distance (m)
+       Wireless
+                             LoRa,
+                             Sigfox,
+                                                               LP-WAN
+                                                                                                                                     WiMAX                                                                                                               While the key differentiator
+      Wide Area                                                       NB-IoT               LTE-M                                  (IEEE 802.16)
+                              mioty
+      Networks
+       (WWAN)
+                   1000    (non-cell.)             IEEE 802.15.4g
+                                                                     (cellular)           (cellular)
+                                                                                                                  Cellular (up to 4G)                                                                                                                    between DECT NR+ and the
+                                                    (non-cellular)
+       Wireless
+      Local Area                                                                        DECT NR+
+                                                                                                                                                                                                                                                         mentioned WPAN standards
+                     100                                                                                                                                                         5G NR
+       Networks
+       (WLAN)                                                 IEEE 802.15.4                                                            Wi-Fi
+                                                                                                                                   (IEEE 802.11)
+                                                                                                                                                                                                                                                           is the larger achievable
+                                                                 O-QPSK
+       Wireless
+     Personal Area   10
+                                                             (Zigbee, Thread,
+                                                                6LoWPAN)
+                                                                                        Bluetooth                                                                                                                                                       range, this advantage dimin-
+       Networks                                                                                                                                                                             Wi-Fi 6
+        (WPAN)
+                                                         NFC
+                                                                 RFID                                                                                                                   (IEEE 802.11ax)                                                   ishes when using higher
+                                     0.01 (10 kbit/s)                0.1 (100 kbit/s)         1                              10                                   100                               1000        Data Rate (Mbit/s)                        MCS settings required for
+   FIGURE 5. Classification of DECT NR+ among other
+                                         Figure  5: standards.
+                                                     Classification of DECT NR+ among other standards.                                                                                                                                                       increased data rates.
+
+   whereas a smartphone connected point-to-point to
+layer of DECT NR+ allows devices to dynamically trade-off
+                                                                                                                       Can DECT NR+ be classified as a Wireless
+                                                                                                              project 6G-ANNA under Grant No. 16KISK098, and in part
+   a Wi-Fi router, operating at +20 dBm, had already
+data rate for communication range. This can be interesting
+                                                                                                               Local Area Network (WLAN)? IoT applications
+                                                                                                              by the European Union’s Horizon Europe Framework as part
+in lost  connectivity
+    at least  the following under usethe    same
+                                        cases.      conditions.
+                                                 First,  a company might                                       that
+                                                                                                              of therequire higher
+                                                                                                                     OpenSwarm     dataunder
+                                                                                                                                project ratesGrant
+                                                                                                                                              than No.
+                                                                                                                                                   typical WPANs
+                                                                                                                                                       101093046.
+        In a  perfectly      line-of-sight     scenario,
+be designing an advanced mesh networking protocol           tells us that
+                                                                      in the                                   while maintaining a similar range often turn to
+   DECT
+spirit       NR+ can
+       of g6TiSCH        [15],achieve       6 kmthecommunication
+                                 that matches           PHY-layer settings                                     Wi-Fi. This is largely due to Wi-Fi’s use of signifi-
+                                                                                                                                                R EFERENCES
+   range. This
+dynamically      on isa comparable
+                         link-by-link basis.to IEEE    802.15.4g
+                                                   Using             [12],as
+                                                            radios such                                        cantly wider channel bandwidths. Given that
+thebut
+     nRF91doesseries
+                 not reach
+                         is idealthe in communication
+                                          that case, as the range       of
+                                                                 networking                                    Wi-Fi’s     data    rates    are    substantially higher, particu-
+                                                                                                                [1] D. Wang, D. Chen, B. Song, N. Guizani, X. Yu, and X. Du, “From IoT
+                                                                                                                    to 5G I-IoT: The Next Generation IoT-Based Intelligent Algorithms and
+   LoRa.    Of    course,      even    if  LoRa    is  longer
+stack can dynamically set the modulation settings detailed      range,   it                                    larly5GinTechnologies,”
+                                                                                                                           recent revisions,          classifyingMagazine,
+                                                                                                                                          IEEE Communications            DECT vol.  NR+     as 10,
+                                                                                                                                                                                        56, no.  a pp.
+in has   a much
+    Section    II-A.lower
+                        Second,dataandratemaybe
+                                              and ismoresubject   to strict a
+                                                             importantly,                                      WLAN        technology
+                                                                                                                    114–120,   2018.          would be misleading.
+                                                                                                                [2] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+   duty cycle
+company     mightregulations
+                     be designing[13].         DECT
+                                        wireless         NR+ therefore
+                                                    networks    for a range                                         Can     DECT NR+ be classified as a Low Power
+                                                                                                                    of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in IEEE
+of appears
+    applications.usable
+                      Somefor   of long
+                                    these range       applications,
+                                              applications              as
+                                                              might require                                    Wide     AreaTechnology
+                                                                                                                    Vehicular     NetworkConference
+                                                                                                                                                 (LPWAN)?   (VTC),With2021. a 6 km com-
+   long    as  lineof-     sight   conditions       are
+long range, others high throughput. Using DECT NR+ then   met.   For   use                                     munication
+                                                                                                                [3] R. Kovalchukov, range      in the most
+                                                                                                                                         D. Moltchanov,              favorable
+                                                                                                                                                             J. Pirskanen,              condi-
+                                                                                                                                                                               J. Säe, J. Numminen,
+                                                                                                                    Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+   cases
+comes       where
+         in very   handyDECT      NR+ satisfies
+                            as different                the range can
+                                             types of applications    sce-be                                   tions,      DECT        NR+       does       challenge            traditional
+                                                                                                                    Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+   narios, without
+addressed    it has arequiring
+                          clear advantage
+                                     any redesign.of LoRa as its data                                          LPWAN          standards.
+                                                                                                                    munications                 Although
+                                                                                                                                   Magazine, vol.    60, no. 6, pp.it offers      far higher
+                                                                                                                                                                       58–64, 2022.
+   rate is higher, even at MCS 0.                                                                              data     ratesandasN. non-cellular
+                                                                                                                [4] J. Dürre          Werner, “DECT-2020     LPWAN,            DECT Live
+                                                                                                                                                                  NR for Professional      NR+  Audio:
+                                                                                                                    Design Space Exploration and Practical Evaluation,” in IEEE Interna-
+       Unfortunately, the range of DECT NR+ drops                                                              does     not    offer     the     extensive          range
+                                                                                                                    tional Symposium on the Internet of Sounds (IS2), 2024.     of   LoRa      or
+E. The Road Ahead for DECT NR+
+   significantly in non-line-of-sight scenarios. As                                                            Sigfox.      And,I.although
+                                                                                                                [5] E. Llaguno,                      it offers
+                                                                                                                                      Pretel, P. Angueira,    and J.a Montalban,
+                                                                                                                                                                        communication “Physical Layer
+   shownSemiconductor
+  Nordic    in our urban already
+                              tests, non-LOS      connections
+                                       offers commercially     avail-                                          range      comparable
+                                                                                                                    Performance     of DECT-2020to   IEEE     802.15.4g,
+                                                                                                                                                       New Radio       for FactoryitAutomation,”
+                                                                                                                    IEEE Int. Conference on Factory Comm. Systems (WFCS), 2024.
+                                                                                                                                                                                        suffers in
+   longer
+able DECT 200      m do not offer
+             NR+-compatible      chips. reliable  communica-
+                                        This availability facilitates                                          from     much      higher      power       consumption
+                                                                                                                [6] T. Nihtilä and H. Berg, “Energy Consumption of DECT-2020     and     price. NR
+   tion.
+both      Technologies
+      research and broadersuch       as IEEE
+                               adoption  of the802.15.4g
+                                                technology. and
+                                                              Com-                                             In terms        of datainrates,
+                                                                                                                    Mesh Networks,”                     DECT Conference
+                                                                                                                                               Joint European       NR+ aligns             more and
+                                                                                                                                                                                   on Networks
+                                                                                                                    Communications and 6G Summit (EuCNC/6G Summit), 2022.
+panies
+   LoRalike  Wirepas,
+          appear     moreStratum    9, LastinMile
+                             appealing             Semiconductor,
+                                               urban    environ-                                               closely      with cellular LPWAN standards like LTE-
+                                                                                                                [7] DECT-2020 New Radio (NR) Part 1-5 Release 2, European Telecom-
+andments
+     Sennheiser
+            as theyare offer
+                       investing   in the
+                               better      technology. as
+                                        penetration      While
+                                                             theythe                                           M, munications
+                                                                                                                    while offering Standardsthe    distinct
+                                                                                                                                               Institute (ETSI)advantage
+                                                                                                                                                                   Std. ETSI TS 103  of 636-1/2/3/4/5
+                                                                                                                                                                                          being
+ecosystem
+   operateisinstill very young,
+                sub-GHz           we expect it to grow. We expect
+                             frequencies.                                                                      non-cellular,
+                                                                                                                    V2.1.1, October  thus
+                                                                                                                                        2024.avoiding cellular network sub-
+other chip vendors to add DECT NR+-compliant chips to their                                                     [8] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of DECT-
+                                                                                                               scriptions
+                                                                                                                    2020 NR and in an their    associated
+                                                                                                                                                   environment costs.
+catalog.Comparing  DECTwill
+          Competition    NR+driveto Other  Wireless
+                                      prices        Technologies
+                                             and power   consumption                                                Can
+                                                                                                                    EuropeanDECT
+                                                                                                                                       industrial
+                                                                                                                                      NR+ on
+                                                                                                                                Conference   keep      up with
+                                                                                                                                                 Networks
+                                                                                                                                                                   for varying RF bands,” in Joint
+                                                                                                                                                                     5G NR? The
+                                                                                                                                                             and Communications        andques-
+                                                                                                                                                                                            6G Summit
+down,
+   Figurealthough,  given
+             5 is our       the complex
+                       attempt              nature
+                                    at placing      of the
+                                                 DECT    NR+PHY,onita is                                       tion might be odd, but it is important to answer
+                                                                                                                    (EuCNC/6G      Summit),   2024.
+unlikely   DECT NR+     chips    will be competitive                                                            [9] Institute for Development of Advanced Applied Systems (IRNAS),
+   distance/data      rate   continuum,      togetheronwiththose fronts
+                                                               other                                           clearly,
+                                                                                                                    “PPK since
+                                                                                                                            II Python DECT
+                                                                                                                                         API,” NR+       is marketed
+                                                                                                                                                 2023. [Online].     Available: ashttps://github.com/
+                                                                                                                                                                                     “the first
+with   traditional
+   wireless         WPAN or Creating
+               technologies.       LPWAN technologies.
+                                              such a plot isWhether
+                                                                nec-                                           non-cellular        5G standard”. DECT NR+ is standard-
+                                                                                                                    IRNAS/ppk2-api-python
+DECT     NR+imperfect
+   essarily    will ever beand low-power
+                                   cannotenough     to enable
+                                             represent         battery-
+                                                          technical                                            izedV. by
+                                                                                                              [10]           ETSI and
+                                                                                                                       C. Gungor      in G.the    context
+                                                                                                                                             P. Hancke,          of overarching
+                                                                                                                                                           “Industrial                       5G
+                                                                                                                                                                         Wireless Sensor Networks:
+powered     applications                                                                                            Challenges, Design Principles, and Technical Approaches,” IEEE Trans-
+   subtleties,    but it isis aanfair
+                                   open
+                                      way question.
+                                            to get On    thepicture
+                                                     a big    software                                         standardization
+                                                                                                                    actions on Industrialactivities,
+                                                                                                                                             Electronics,butvol.we     believe
+                                                                                                                                                                 56, no.            the state-2009.
+                                                                                                                                                                           10, pp. 4258–4265,
+front, we expect mesh networking protocols to be developed
+   view of the complementarity of solutions. Impor-                                                            ments
+                                                                                                              [11]  M. M. about
+                                                                                                                              Haque,DECT
+                                                                                                                                       J. Säe, NR+      and 5G
+                                                                                                                                                 J. Pirskanen,    and M. areValkama,
+                                                                                                                                                                                misleading.
+                                                                                                                                                                                          “DECT-2020
+on top of DECT NR+, driven by open-source communities and
+   tantly, it not depict strict performance boundaries,                                                        To NRmost      of   us,   the    term      “5G”       refers      to
+                                                                                                                          Link Distance Performance in Varying Environments: Models
+                                                                                                                                                                                      5G
+                                                                                                                    and Measurements,” 2024. [Online]. Available: https://arxiv.org/abs/
+                                                                                                                                                                                            NR,
+commercial entities. Having such implementations will allow
+   rather illustrates typical operating points. Ding et                                                        offering     the high-bandwidth constant connectivity
+                                                                                                                    2410.24112
+quicker evaluation of the technology. On the research front,
+   al. [14] already proposed a similar visualization.                                                          of our
+                                                                                                              [12]         smartphones.
+                                                                                                                    J. Muñoz,                     We believe
+                                                                                                                                  E. Riou, X. Vilajosana,                 that marketing
+                                                                                                                                                                P. Muhlethaler,     and T. Watteyne,
+we expect studies to be published about the applicability of                                                        “Evaluation of IEEE802.15.4g for Environmental Observations,” MDPI
+   Our classification is supported by their survey and                                                         DECT       NR+ as a “non-cellular 5G standard” con-
+                                                                                                                    Sensors, vol. 18, no. 10, 2018.
+DECT NR+ to specific use cases, in particular Industrial IoT,
+   our own practical experience with the respective                                                            veysF. the
+                                                                                                              [13]            notion
+                                                                                                                       Adelantado,     X. that    DECT
+                                                                                                                                           Vilajosana,       NR+ somehow
+                                                                                                                                                         P. Tuset-Peiro,     B. Martinez,“goes
+                                                                                                                                                                                             J. Melia-
+as well as studies on the coexistence between DECT NR+ and
+   technologies. It is also a good visual foundation                                                           beyond”
+                                                                                                                    Segui, and5G,     maybe“Understanding
+                                                                                                                                 T. Watteyne,      even suggesting the Limits of DECT      NR+IEEE
+                                                                                                                                                                                   LoRaWAN,”
+DECT phones.                                                                                                        Communications Magazine, vol. 55, no. 9, pp. 34–40, 2017.
+  for the discussion that follows.                                                                             is a J.new
+                                                                                                              [14]     Ding,version
+                                                                                                                               M. Nemati, of C.
+                                                                                                                                              5GRanaweera,
+                                                                                                                                                     that gives   and our     smartphones
+                                                                                                                                                                        J. Choi,   “IoT Connectivity
+      Can DECT NR+ be classified as a Wireless Per-                                                            the Technologies
+                                                                                                                     same connectivity              without
+                                                                                                                                     and Applications:            needing
+                                                                                                                                                           A Survey,”      IEEE to    connect
+                                                                                                                                                                                  Access,   vol. 8, pp.
+  sonal Area NetworkACKNOWLEDGMENT
+                            (WPAN)? Figure 5 clearly                                                           to the cellular base stations. This is, of course, not
+                                                                                                                    67 646–67    673, 2020.
+                                                                                                              [15] M. Rady, Q. Lampin, D. Barthel, and T. Watteyne, “g6TiSCH: General-
+  shows
+ This      thatis DECT
+        work             NR+
+                  supported in lies
+                                part close
+                                      by thetoGerman
+                                               Bluetooth/
+                                                       Federal                                                 at all
+                                                                                                                    izedthe    case.
+                                                                                                                          6TiSCH          DECT
+                                                                                                                                    for Agile        NR+Wireless
+                                                                                                                                               Multi-PHY       is notNetworking,”
+                                                                                                                                                                            in any way   IEEE inAccess,
+  BLE and
+Ministry     low-rate WPAN
+         of Education           standards
+                       and Research         based
+                                       (BMBF)      on IEEE
+                                                as part of the                                                 the vol.
+                                                                                                                      technological
+                                                                                                                         9, 2021.             realm of that definition of 5G
+  802.15.4 O-QPSK, such as Zigbee or Thread.                                                                   as that of our smartphones: it is a reuse of legacy
+  With the right settings, DECT NR+ can offer a data                                                           DECT cordless phone frequency band for IoT-
+  rate up to 3.36 Mbit/s, so faster that 2 Mbit/s BLE,                                                         type application.
+  and much faster than 250 kbit/s IEEE 802.15.4                                                                     So, where does DECT NR+ fit in? DECT NR+
+  O-QPSK. The difference in data rate compared                                                                 can be positioned as a technology that fills a gap
+  to BLE is hence more incremental than disrup-                                                                between cellular-LPWAN technologies, WPAN
+  tive. While the key differentiator between DECT                                                              standards and Wi-Fi.
+  NR+ and the mentioned WPAN standards is the
+  larger achievable range, this advantage diminish-                                                                                          Where Should I Use DECT NR+?
+  es when using higher MCS settings required for                                                               The lesson learned earlier is that DECT NR+ fills
+  increased data rates. Combined with significantly                                                            a narrow technological gap. And there are appli-
+  higher power consumption and cost, DECT NR+                                                                  cations that require just that, while not being cost
+  is unlikely to replace WPAN standards, as its pri-                                                           sensitive or needing a decade of battery-powered
+  mary benefit of extended range becomes less                                                                  operation. One example is neighborhood-scale
+  compelling in high-throughput scenarios.                                                                     mesh networks to connect electricity meters,
+
+
+   IEEE Communications Magazine • February 2026                                                        This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                                   21
+              which is exactly what company Wirepas success-                                                                                                                     References
+              fully uses DECT NR+ for.                                                                                                                [1] D. Wang et al., “From IoT to 5G I-IoT: The Next Generation
+                                                                                                                                                          IoT-Based Intelligent Algorithms and 5G Technologies,” IEEE
+                  This is a rather narrow gap. We believe that                                                                                            Commun. Mag., vol. 56, no. 10, 2018, pp. 114–20.
+              what makes DECT NR+ really stand out is that it                                                                                         [2] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance
+              offers something none of the technologies above                                                                                             Evaluation of IMT-2020 Candidate Technology: DECT-2020
+              offers: flexibility. The physical layer of DECT NR+                                                                                         New Radio,” IEEE Vehic. Tech. Conf. (VTC), 2021.
+                                                                                                                                                      [3] R. Kovalchukov et al., “DECT-2020 New Radio: The Next
+              allows devices to dynamically trade-off data rate                                                                                           Step toward 5G Massive Machine-Type Communications,”
+              for communication range. This can be interesting                                                                                            IEEE Commun. Mag., vol. 60, no. 6, 2022, pp. 58–64.
+              in at least the following use cases. First, a company                                                                                   [4] J. Dürre and N. Werner, “DECT-2020 NR for Professional
+              might be designing an advanced mesh networking                                                                                              Live Audio: Design Space Exploration and Practical Evalua-
+                                                                                                                                                          tion,” IEEE Int’l. Symp. Internet of Sounds (IS2), 2024.
+              protocol in the spirit of g6TiSCH [15], that matches                                                                                    [5] E. Llaguno et al., “Physical Layer Performance of DECT-2020
+              the PHY-layer settings dynamically on a link-by-link                                                                                        New Radio for Factory Automation,” IEEE Int’l. Conf. Factory
+              basis. Using radios such as the nRF91 series is ideal                                                                                       Comm. Systems (WFCS), 2024.
+              in that case, as the networking stack can dynam-                                                                                        [6] T. Nihtilä and H. Berg, “Energy Consumption of DECT-2020
+                                                                                                                                                          NR Mesh Networks,” Joint European Conf. Networks and
+              ically set the modulation settings detailed earlier.                                                                                        Communications and 6G Summit (EuCNC/6G Summit), 2022.
+              Second, and maybe more importantly, a company                                                                                           [7] DECT-2020 New Radio (NR) Part 1-5 Release 2, European
+              might be designing wireless networks for a range                                                                                            Telecommunications Standards Institute (ETSI) Std. ETSI TS
+              of applications. Some of these applications might                                                                                           103 636-1/2/3/4/5 V2.1.1, Oct. 2024.
+                                                                                                                                                      [8] M. Waßmann et al., “Performance of DECT-2020 NR in An
+              require long range, others high throughput. Using                                                                                           Industrial Environment for Varying RF Bands,” Joint Europe-
+              DECT NR+ then comes in very handy as different                                                                                              an Conf. Networks and Communications and 6G Summit
+              types of applications can be addressed without                                                                                              (EuCNC/6G Summit), 2024.
+              requiring any redesign.                                                                                                                 [9] Institute for Development of Advanced Applied Systems
+                                                                                                                                                          (IRNAS), “PPK II Python API,” 2023; https://github.com/
+                                             The Road Ahead for DECT NR+                                                                                  IRNAS/ppk2-api-python.
+                                                                                                                                                      [10] V. C. Gungor and G. P. Hancke, “Industrial Wireless Sen-
+              Nordic Semiconductor already offers commer-                                                                                                 sor Networks: Challenges, Design Principles, and Technical
+              cially available DECT NR+-compatible chips. This                                                                                            Approaches,” IEEE Trans. Industrial Electronics, vol. 56, no.
+                                                                                                                                                          10, 2009, pp. 4258–65.
+              availability facilitates both research and broad-                                                                                       [11] M. M. Haque et al., “DECT-2020 NR Link Distance Per-
+              er adoption of the technology. Companies like                                                                                               formance in Varying Environments: Models and Measure-
+              Wirepas, Stratum 9, Last Mile Semiconductor,                                                                                                ments,” 2024; https://arxiv.org/abs/2410.24112.
+              and Sennheiser are investing in the technology.                                                                                         [12] J. Muñoz et al., “Evaluation of IEEE802.15.4g for Environ-
+                                                                                                                                                          mental Observations,” MDPI Sensors, vol. 18, no. 10, 2018.
+              While the ecosystem is still very young, we expect                                                                                      [13] F. Adelantado et al., “Understanding the Limits of LoRaWAN,”
+              it to grow. We expect other chip vendors to add                                                                                             IEEE Commun. Mag., vol. 55, no. 9, 2017, pp. 34–40.
+              DECT NR+-compliant chips to their catalog. Com-                                                                                         [14] J. Ding et al., “IoT Connectivity Technologies and Applica-
+              petition will drive prices and power consumption                                                                                            tions: A Survey,” IEEE Access, vol. 8, 2020, pp. 67,646–73.
+                                                                                                                                                      [15] M. Rady et al., “g6TiSCH: Generalized 6TiSCH for Agile
+              down, although, given the complex nature of the                                                                                             Multi-PHY Wireless Networking,” IEEE Access, vol. 9, 2021.
+              PHY, it is unlikely DECT NR+ chips will be com-
+              petitive on those fronts with traditional WPAN                                                                                                                    Biographies
+              or LPWAN technologies. Whether DECT NR+                                                                                                 Fabian Graf (fabian.graf@siemens.com) is a Ph.D. candidate at
+              will ever be low-power enough to enable bat-                                                                                            Sorbonne University in Paris, France and works at Siemens AG
+                                                                                                                                                      in Erlangen, Germany. He holds a M.Sc. in Electrical Engineering
+              terypowered applications is an open question.                                                                                           from TU Munich, Germany. His research focuses on low-power
+              On the software front, we expect mesh network-                                                                                          wireless communication systems.
+              ing protocols to be developed on top of DECT
+              NR+, driven by open-source communities and                                                                                              T homas W atteyne (thomas.watteyne@inria.fr) is a Senior
+                                                                                                                                                      Research Director at Inria Paris, France. He is currently on a
+              commercial entities. Having such implementations                                                                                        sabbatical and works as a Principal Engineer at Analog Devices
+              will allow quicker evaluation of the technology.                                                                                        in Boston, USA. He holds a Ph.D. degree in Computer Science
+              On the research front, we expect studies to be                                                                                          from INSA Lyon, France. He was a postdoctoral research lead
+              published about the applicability of DECT NR+ to                                                                                        in Prof. Kristofer Pister’s team with the University of Califor-
+                                                                                                                                                      nia at Berkeley, USA. From 2005 to 2008, he was a Research
+              specific use cases, in particular Industrial IoT, as                                                                                    Engineer with France Telecom, Orange Labs. From 2023 to
+              well as studies on the coexistence between DECT                                                                                         2024, he served as the Scientific Coordinator of the Horizon
+              NR+ and DECT phones.                                                                                                                    Europe OpenSwarm Project. From 2013 to 2022, he co-chaired
+                                                                                                                                                      the IETF 6TiSCH Working Group to standardize how to use
+                                                           Acknowledgment                                                                             IEEE802.15.4e TSCH in IPv6-enabled mesh networks.
+              This work is supported in part by the German Fed-                                                                                       M ichael V illnow (michael.villnow@siemens.com) leads the
+              eral Ministry of Education and Research (BMBF)                                                                                          research group for sensor systems at Siemens AG in Erlangen,
+              as part of the project 6G-ANNA under Grant No.                                                                                          Germany. He received the Diploma degree in Mechatronics
+                                                                                                                                                      from Friedrich-Alexander-University (FAU) of Erlangen-Nurem-
+              16KISK098, and in part by the European Union’s                                                                                          berg, Germany. Since 2015, he has been a Project Manager at
+              Horizon Europe Framework as part of the Open-                                                                                           Siemens for IoT development projects.
+              Swarm project under Grant No. 101093046.
+
+
+
+
+22   This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/               IEEE Communications Magazine • February 2026
+

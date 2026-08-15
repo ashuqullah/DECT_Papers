@@ -1,0 +1,517 @@
+                                                                                                                                      INTERNET OF THINGS
+
+
+    Empowering Near-URLLC IoT with 5G DECT-
+    2020 NR: Current State and the Road Ahead
+      Andrey Samuylov, Dmitri Moltchanov, Anna Gaydamaka, Eike Lyczkowski, Andreas Frotzscher, Frank von Schoettler,
+       Juho Pirskanen, Jussi Numminen, Juha Salokannel, Endika Llaguno, Rafael Pires, Dilara Bayar, and Mikko Valkama
+
+
+
+
+                                                                                                                 Abstract                                                                              for 5G mMTC applications outlined in [4, 5] of no
+                                                                  DECT-2020 is a standardized multi-hop                                                                                                more than 1 percent packet loss rate (PLR) and
+                                                              technology for 5G massive machine-type com-                                                                                              ensuring that 99 percent of packets experience
+                                                              munications (mMTC). By relying on multi-hop                                                                                              end-to-end latency smaller than 10 seconds.
+                                                              communications, DECT-2020 allows for cost-con-                                                                                               The modern IoT market is characterized by the
+                                                              trolled flexible deployments that enable a pleth-                                                                                        appearance of new applications that fall between
+                                                              ora of new services, whose requirements in                                                                                               URLLC and mMTC. Use-cases such as industri-
+                                                              terms of latency, reliability, and throughput are                                                                                        al automation on the factory floor, connectivity
+                                                              difficult to satisfy by utilizing cellular Internet-of-                                                                                  between unmanned aerial vehicles (UAV), ener-
+                                                              Things technologies (CIoT). In this article, we                                                                                          gy grid monitoring are all characterized by stricter
+                                                              outline new DECT-2020 use-cases ranging from                                                                                             latency, higher reliability, and higher throughput
+                                                              mMTC to ultra-reliable low-latency communica-                                                                                            requirements than those specified for mMTC [4].
+                                                              tions (URLLC), showing that many modern ser-                                                                                             While they are still not as strict as those defined for
+                                                              vices lie between these two extremes. We utilize                                                                                         URLLC, CIoT solutions such as LTE-M and NB-IoT
+                                                              system level simulations to demonstrate how                                                                                              do not meet the throughput requirements of these
+                                                              these “near-URLLC” use-cases are satisfied by the                                                                                        use-cases due to limited bandwidth and may fail to
+                                                              DECT-2020. We show that the current evolution                                                                                            deliver latency and reliability requirements.
+                                                              of DECT-2020 can provide near-URLLC operation                                                                                                DECT-2020 operates over larger bandwidth
+                                                              when no multi-hop communications are required,                                                                                           than CIoT solutions, utilizes reliable link-lay-
+                                                              even under interference from competing URLLC/                                                                                            er mechanisms and simple access regime,
+                                                              mMTC traffic. However, provisioning of near-                                                                                             and is capable of operating in either single- or
+                                                              URLLC services over multiple hops requires addi-                                                                                         multi-hop topologies. Differently from other
+                                                              tional enhancements.                                                                                                                     customer-owned solutions, DECT-2020 NR is a
+                                                                                                                                                                                                       standardized one, is not limited to mMTC service,
+                                                                                                             Introduction                                                                              enables operation in the non-regulated DECT
+                                                              The main services specified by ITU-R and 3GPP                                                                                            bands, thus, allowing for flexible configurations
+                                                              for 5G systems are enhanced mobile broadband                                                                                             and network control. It also induces flexibility in
+                                                              (eMBB), massive machine type communications                                                                                              radio part implementation by allowing for differ-
+                                                              (mMTC), and ultra-reliable low-latency communi-                                                                                          ent levels of implementations depending on the
+                                                              cations (URLLC). The eMBB service has already                                                                                            customer needs. These characteristics allow to
+                                                              been supported by the current evolution of                                                                                               consider it as one of the solutions for near-URLLC
+                                                              3GPP 5G New Radio (NR) systems. The mMTC                                                                                                 use-cases. The aim of this article is to report the
+                                                              is expected to be delivered via cellular Internet of                                                                                     results of the Ultra-Scalable Wireless Access
+                                                              Things (CIoT) solutions such as LTE-M enhance-                                                                                           (USWA) Project [6], where we characterized the
+                                                              ments for machine type communications (eMTC)                                                                                             performance requirements of these use-cases,
+                                                              and Narrowband Internet-of-Things (NB-IoT), as                                                                                           benchmarked their performance using the DECT-
+                                                              well as unlicensed band solutions, such as DECT-                                                                                         2020 system, and outlined the enhancements that
+                                                              2020. However, the support for URLLC IoT ser-                                                                                            need to be introduced to fully support URLLC
+                                                              vices lags behind.                                                                                                                       use-cases in DECT-2020.
+                                                                  DECT-2020 NR is a 5G technology developed                                                                                                We provide an outlook of DECT-2020 in the
+                                                              for mMTC and URLLC operating in the license-ex-                                                                                          next section. Following that, we introduce the
+                                                              empt and licensed bands below 6 GHz in local                                                                                             use-cases and their requirements. Then, we eval-
+                                                              self-hosted deployments [1]. Recent studies [2, 3]                                                                                       uate the performance of DECT-2020 for selected
+                                                              demonstrated that it can support up to multiple                                                                                          use-cases. Following that, we discuss the enhance-
+                                                              millions of radio devices (RDs) per square kilome-                                                                                       ments for support of URLLC services in DECT-
+                                                              ter while satisfying the performance guarantees                                                                                          2020. Finally, conclusions are provided.
+
+                                                                   Andrey Samuylov, Dmitri Moltchanov, Anna Gaydamaka, and Mikko Valkama are with Tampere University, Finland; Juho Pirskanen,
+                                                                          Jussi Numminen, and Juha Salokannel are with Wirepas Oy, Finland; Eike Lyczkowski and Frank von Schoettler are with
+                                                                   SEW-EURODRIVE GmbH & Co. KG, Germany; Andreas Frotzscher is with Fraunhofer Institute for Integrated Circuits IIS, Germany;
+ISSN: 0163-6804                                                 Rafael Pires is with VTT Technical Research Center of Finland, Finland; Endika Llaguno is with Agile Content Research & Innovation, Spain;
+Digital Object Identifier: 10.1109/MCOM.002.2400385                                                           Dilara Bayar is with ACD Bilgi Islem, Turkiye.
+
+
+
+
+130                                                   This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/            IEEE Communications Magazine • April 2025
+            5G DECT-2020 Technology
+The DECT-2020 NR physical layer was designed
+to benefit from recent development in radio
+technologies and still allow for compatible low-
+cost implementation. To avoid reliance on local
+spectrum regulators, the utilized frequency bands
+are the DECT bands, 1880–1900 MHz band in
+Europe and Australia, and 1910–1920 MHz band
+in North America, supporting up to 11 or 5 chan-
+nels, respectively, with a bandwidth of 1.728 MHz
+each. Other bands are also supported including
+those in the sub-GHz region [7]. Coupled with dif-
+ferent emitted power allowed for devices, DECT-
+2020 can cover large territories.                                FIGURE 1. Illustration of DECT-2020 network formation.
+    Similar to 3GPP NR, the physical layer builds
+on cyclic prefix orthogonal frequency division mul-             and activities to bridge technical specifications
+tiplexing (CP-OFDM), allowing for flexible data                 with real-world use-cases.
+transmission. To manage communication, DECT-                        Figure 2 shows use-cases identified through
+2020 employs a time division duplex (TDD) system,               a series of contributions and stakeholder inter-
+allowing both uplink and downlink transmissions                 views. They are grouped according to their per-
+over the same channel. The system also supports                 formance requirements, based on the framework
+both time- and frequency-multiplexing. The physical             established in ITU-R M.2410 [4]. The figure cat-
+layer allows operation with different channel band-             egorizes the use-cases into conventional mMTC
+widths, symbol lengths, and number of symbols in a              and URLLC applications, while also highlighting a
+slot. This design facilitates harmonious coexistence            middle ground: near-URLLC services, which have
+between classic DECT and DECT-2020 [8].                         moderate requirements compared to full URLLC
+    In the medium access control (MAC) layer,                   but are still more demanding than mMTC.}
+DECT-2020 allows RDs to operate in either fixed                     In industrial factory automation, the main goal
+termination (FT) or portable termination (PT)                   is to replace the currently utilized specialized field
+mode, or in both modes, see Fig. 1. An RDFT serves              buses like EtherCAT and PROFINET. Energy grid
+as a router for its own cluster, managing local radio           applications necessitate the transmission of precise
+resources and allowing RDPT to connect to it. If                energy Quality-of-Service (QoS) and consumption
+required, it also forwards data from all connect-               information from Circuit Monitoring Sensor (CMS)
+ed RDPT to a next-hop RDFT. Both modes utilize                  devices. A large class of use-cases, called off-high-
+the listen before talk (LBT) approach with a binary             way vehicles, features diverse applications includ-
+back-off procedure for uplink transmission. The                 ing safety signalling, remote control, and video for
+minimum sensing time for LBT in random access                   applications such as smart agriculture, constructions,
+channel (RACH) transmission is designed to be as                and so on. Lastly, specific use-cases, such as elevator
+short as two symbols, allowing for rapid access.                safety signalling or audio conference system, impose
+    DECT-2020 uses a tree topology. Upon initializa-            stringent latency requirements close to URLLC but
+tion, each RDPT selects RDFT for association based              may require a limited number of RDs.
+on the received link quality and announced cost,
+indicating how “good” the path toward the external                                                    Use-Cases Requirements
+backend systems is. RDs do not need to establish a              The requirements for the use-cases can be clas-
+data path before initiating communication.                      sified by utilizing the Volere methodology into
+    The DECT-2020 MAC layer also offers                         functional, non-functional, and constraints [10].
+advanced features, including energy conserva-                   Functional requirements focus on the core
+tion and power control. The former is aimed at                  aspects of a product, describing what it needs to
+increasing the RD’s operational cycle, whereas                  do and the rules it must follow. Non-functional
+the latter helps to minimize interference with                  requirements are properties that the functions of
+other devices. Operating over multi-hop topolo-                 the system should have, such as performance and
+gies, the effect of these functions on the network              usability. Finally, constraints impose restrictions on
+performance is rather complex [9]. For energy                   the solution. They apply to the technology to be
+conservation DECT-2020 utilizes the duty-cycle                  used or any other hardware, software, or business
+approach. Standardization related to improving                  practice that must be conformed with.
+energy conservation mechanisms is underway.                         Table 1 lists the main functional and non-func-
+                                                                tional requirements for the considered use-cases.
+            Use-Cases and Requirements                          These requirements are estimated by USWA indus-
+In this section, use-cases ranging from mMTC to                 trial consortium members, based on existing stan-
+URLLC and their intermediate forms are introduced,              dards and practical testbeds. The only constraint
+and their key requirements are characterized.                   currently imposed is compatibility with DECT-2020,
+                                                                as discussed in [8]. From a technical standpoint,
+                 Near-URLLC Use-Cases                           the most critical non-functional requirements are
+The modern IoT world is shaped by market needs                  those related to system performance, particularly
+and driven by use-cases.A top-down approach                     latency, transmission capacity, and packet deliv-
+to designing a communications system should                     ery ratio (PDR). By analyzing the NF requirements
+begin with the main stakeholders and their practi-              further, one may observe that the main factor dif-
+cal needs. At the USWA consortium [6], we have                  ferentiating use-cases is latency. Many use-cases
+developed a methodology made up of actions                      require latency to fall within the range of tens to
+
+
+IEEE Communications Magazine • April 2025               This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/   131
+FIGURE 2. Classification of modern mMTC and URLLC use-cases.
+
+                                          a few hundred milliseconds, which is much stricter                                                                                      and maintenance of control, monitoring, and pro-
+                                          than mMTC but still far from URLLC.                                                                                                     tection components. By enabling alternative data
+                                              The use-cases also differ in terms of functional                                                                                    transmission routes, the system becomes more
+                                          requirements, including the security, communi-                                                                                          resilient to network failure. To meet the stringent
+                                          cation distance, and deployment density, where                                                                                          latency requirements of near-URLLC services,
+                                          latter is expressed as RDs per area, per site, or                                                                                       multi-hop DECT-2020 employs a random access
+                                          per facility. While a high level of security is crucial                                                                                 regime. When necessary, a single-hop operational
+                                          for only a few use-cases, device density is a criti-                                                                                    mode can be activated for even lower latency. To
+                                          cal parameter that can influence the NF metrics.                                                                                        ensure high reliability, flexible MCS and HARQ
+                                          As the main medium access method is LBT, in                                                                                             retransmissions are utilized. Operating over a
+                                          use-cases with high RD density, the self-system                                                                                         wider bandwidth compared to CIoT technologies,
+                                          interference may affect the system’s performance.                                                                                       multi-hop DECT-2020 can deliver the required
+                                              As an example, elevator shaft use-case pre-                                                                                         bitrates for near-URLLC applications.
+                                          sumes availability of real-time communications
+                                          between motor and elevator cabin. The commu-                                                                                                  Assessment of DECT-2020 Capabilities
+                                          nication distance may reach 1000 m for modern                                                                                           In this section, we assess the current state-of-the-
+                                          skyscrapers implying that multi-hop communica-                                                                                          art capabilities of DECT-2020 to support near-
+                                          tion might be required. Depending on the sig-                                                                                           URLLC applications.
+                                          naling scheme utilized by the vendor, latency
+                                          and PDR may vary. For example, it is common                                                                                                              Considered Scenarios
+                                          to detect a failure when more than a single con-                                                                                        We consider three typical scenarios that resemble
+                                          secutive packet is lost, that is, three packets lost                                                                                    near-URLLC use-cases of the previous section, and
+                                          in a row in approximately 50 ms would result in                                                                                         are characterized by different degrees of interfer-
+                                          malfunctioning and stoppage of the cabin. Packet                                                                                        ence, topology, and coexistence requirements:
+                                          loss probability of 10–4 would result in one emer-                                                                                      isolated URLLC scenario, device-to-device (D2D)
+                                          gency stop in 10 years.                                                                                                                 single-hop URLLC/mMTC scenario, and multi-hop
+                                                                                                                                                                                  URLLC/mMTC scenario. Parameters common for
+                                                                     Support of Near-URLCC Use-Cases                                                                              all scenarios are shown in Table 2.
+                                          Existing off-the-shelf technologies, like LTE-M and                                                                                         The isolated URLLC scenario corresponds to
+                                          NB-IoT, are designed primarily for conventional                                                                                         the use of RDs in deployments, where RDs do
+                                          mMTC applications. They rely on preamble repe-                                                                                          not experience interference from other networks
+                                          titions and a two-step access procedure, hindering                                                                                      or from competing mMTC traffic in the same net-
+                                          their ability to meet the stringent latency demands of                                                                                  work. We consider an elevator use-case with a
+                                          near-URLLC. To mitigate latency, NB-IoT standards                                                                                       sink located at the top of the shaft and RD asso-
+                                          were extended in Release 15 to support Early Data                                                                                       ciated with a moving cabin. Traffic is telemetry
+                                          Transmission, allowing small packets to be delivered                                                                                    with strict latency and reliability requirements. We
+                                          during the random access phase. However, this                                                                                           assess the case of multiple shafts (lanes) located
+                                          introduces constraints on preamble ensembles and                                                                                        nearby and operating at the same channel.
+                                          can potentially reduce coverage. While NR RedCap                                                                                            In the mixed URLLC/mMTC, we address those
+                                          addresses throughput requirements, it falls short in                                                                                    use-cases, where the network mainly provides mMTC
+                                          other areas, such as latency and reliability metrics.                                                                                   service, but some RDs are configured to operate in
+                                               Multi-hop DECT-2020 offers a versatile solution                                                                                    the D2D URLLC mode. This may resemble the con-
+                                          for near-URLLC applications, providing enhanced                                                                                         cert environment, where mMTC is utilized to control
+                                          reliability, reduced latency, and higher bitrates. Its                                                                                  specific equipment such as mixers or microphones,
+                                          modular architecture facilitates easy deployment                                                                                        while URLLC service provisions voice communica-
+
+
+132                              This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                IEEE Communications Magazine • April 2025
+                                                                                              Functional parameters                                                                  Non-functional parameters
+ Use-case
+                                                                                        Device density                                     Range                           PDR                              Latency     Rate
+
+                                                                              mMTC use-cases
+
+ Asset and people flow in large construction sites                                   >100 RDs/100 m3                                      100 m                            99 %                               1s       3 Mb/s
+
+ Off-highway vehicle — BIM data                                                           100 RDs/site                                   1000 m                            98 %                              10 s      2 Mb/s
+
+ Electricity consumption monitoring                                                    25000 RDs/km2                                     1000 m                          99.5 %                               1h       <1 Mb/s
+
+ Vibration data from sensor attached to a device                                   10–100 RDs/facility                                    200 m                          99.5 %                              60 s     2.5 Mb/s
+
+ Device health monitoring                                                          10-1000 RDs/facility                                   500 m                            99 %                               1s      2.5 Mb/s
+
+                                                                        Near-URLLC use-cases
+
+ Automatic device configuration based on wireless positioning                        >100 RDs/100 m3                                      100 m                            99 %                             100 ms    0.4 Mb/s
+
+ Off-highway vehicle — safety signalling                                                  100 RDs/site                                   1000 m                    >99.9999 %                                32 ms     5 Mb/s
+
+ Off-highway vehicle — remote control                                                     100 RDs/site                                   1000 m                    >99.9999 %                         10/300 ms        3 Mb/s
+
+ Off-highway vehicle — remote control video                                               100 RDs/site                                   1000 m                            98 %                             300 ms     10 Mb/s
+
+ Smart grid substation environmental monitoring — IoT sensors                           10-50 RDs/site                                    100 m                            99 %                               1s       <1 Mb/s
+
+ Smart grid substation environmental monitoring — video                                   100 RDs/site                                   1000 m                            99 %                        100 ms-1 s     1-20 Mb/s
+
+ Audio conference system                                                            10–50 RDs/facility                                      50 m                   > 99.9999 %                              < 15 ms    1 Mb/s
+
+ Wireless based machine/AMR collaboration in manufacturing                        > 1000 RDs/network                                      100 m                            99 %                              1 ms      2 Mb/s
+
+ Elevator safety signalling                                                               6 RDs/facility                                  100 m                            99 %                              16 ms     1 Mb/s
+
+                                                                              URLLC use-cases
+
+ Energy QoS monitoring and consumption                                                10–100 RDs/site                                    1000 m                            99 %                             1–10 ms   1–10 Mb/s
+
+ Industrial operations in harsh and noisy environments                                100 RDs/100 m2                                      100 m                     > 99.999 %                              < 1 ms    0.1 Mb/s
+
+ Everchanging factory — remote SLAM                                                200 RDs/30000 m2                                       300 m                    >99.9999 %                               < 30 ms   0.4 Mb/s
+
+ Everchanging factory – synchronized driving                                       200 RDs/30000 m2                                         50 m                   >99.9999 %                               < 10 ms   0.2 Mb/s
+
+ Teleoperation for robots                                                           10-100 RDs/facility                                     10 m                   >99.9999 %                               < 10 ms    10 Mb/s
+TABLE 1. Use-case requirements.
+
+tions. In this scenario, the URLLC RDs experience                      When performing simulations, we followed
+interference created by the mMTC service.                          ITU-R guidelines in M.2412 [5]. For specific envi-
+    In the URLLC/mMTC scenario, the URLLC ser-                     ronments, such as elevator shafts, we consider an
+vice is provisioned in a multi-hop manner between                  appropriate propagation model [11]. To gather
+RDs and a sink. This scenario corresponds to the                   the data, we employed the method of replications.
+use-cases with high communication distances, such                  Specifically, we ran simulations 25 times, each time
+as energy QoS monitoring, off-highway vehicles.                    gathering 105 observations in the steady state.
+Similar to the previous scenario, there is competing                   Recall that quality of service (QoS) for mMTC
+mMTC traffic. For this scenario, we implemented                    is specified by latency quantile [5]. For URLLC
+priority queuing for URLLC transmissions.                          applications not only latency is important but also
+                                                                   the PDR. Since we consider near-URLLC services,
+                     Simulation Environment                        we utilize both PDR and the 95th percentile of
+The complexity of LBT access operating in a multi-                 the packet latency as performance indicators.
+hop communications environment requires the
+use of a system-level simulation tool for perfor-                                                              Numerical Results
+mance assessment. The DECT-2020 system was                         In this section, we present and discuss the numer-
+implemented using the WINTERsim simulation                         ical results. Figure 3a shows the performance of
+tool which was utilized during the standardization                 the isolated URLLC scenario for different numbers
+process of DECT-2020 [2].                                          of communicating pairs representing the elevators
+    WINTERsim is a discrete event system-level sim-                in adjacent shafts. We observe that for a single
+ulator. For DECT-2020, we used node abstraction                    elevator case, the PDR remains almost unaffected
+as the basic class for RDs, which contains all the                 at values close to 100 percent whereas the laten-
+node parameters (e.g., position, mobility model,                   cy is constant at approximately 3 ms. This satisfies
+antenna parameters, and power) and serves as a                     the requirement of having latency less than 16
+container for L2 interfaces, forwarding, flow tables,              ms in the case of elevators. When more than a
+signalling engine, application handlers, traffic gen-              single elevator is installed in a shaft interference
+erators, physical interfaces, and so on. To simulate               starts to play a critical role. For two lanes the PDR
+high-density deployment, we implemented a physi-                   abruptly drops at high URLLC inter packet times.
+cal layer abstraction that stores all the bidirectional            This is accompanied by an increased 95th latency
+path loss states between the RDs.                                  percentile. Adding one more lane results in even
+
+
+IEEE Communications Magazine • April 2025                  This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                         133
+  Parameter                                                                Value                                                                                                  worse performance, as the operational regime of
+                                                                                                                                                                                  the system becomes feasible for rather large inter
+                                               Common parameters                                                                                                                  packet times of 20–35 ms.
+  Carrier frequency                                                        1900 MHz                                                                                                   Performance of the D2D URLLC/mMTC use-
+                                                                                                                                                                                  case is shown in Fig. 3b. Here, we observe that
+  Number of channels                                                       1                                                                                                      mMTC traffic has a limited impact on URLLC
+  Channel bandwidth                                                        1.728 MHz
+                                                                                                                                                                                  performance for considered mMTC inter packet
+                                                                                                                                                                                  times. Specifically, for URLLC inter packet times
+  RD noise figure                                                          7 dB                                                                                                   of 6 ms or more, the system provides a perfect
+                                                                                                                                                                                  packet delivery ratio starting from a mMTC inter
+  RD antenna element gain                                                  0 dBi
+                                                                                                                                                                                  packet time of 40 ms or longer. The 95th latency
+  Channel access                                                           Random access with LBT                                                                                 percentile in this regime is approximately 3 ms
+                                                                                                                                                                                  coinciding with that of the single lane case report-
+  Contention window duration                                               24–768 symbols
+                                                                                                                                                                                  ed in Fig. 3a. These results show that mMTC traf-
+  LBT threshold                                                            –75 dBm                                                                                                fic has less impact on D2D URLLC performance
+                                                                                                                                                                                  than competing URLLC traffic.
+  Error correction                                                         HARQ with 3 attempts                                                                                       Finally, we assess the performance of the
+  Sensitivity                                                              –99.7 dBm (TS 103.636-2)                                                                               most demanding scenario, where URLLC pack-
+                                                                                                                                                                                  ets are delivered in a multi-hop way, see Fig. 3c.
+  Tx power                                                                 10 dBm                                                                                                 We compare two cases: when URLLC device is
+  Data MCS                                                                 #3, #4, #5 for 1, 2, 3 packets                                                                         directly connected to the sink, and when the sink
+                                                                                                                                                                                  is one hop away. Despite the use of priority queu-
+  Packet processing time                                                   1 slot                                                                                                 ing, we see that even with an inter packet time
+                                                                                                                                                                                  of 16 ms for URLLC, reliable delivery cannot be
+  Simulation area                                                          Circle with radius of 170 m
+                                                                                                                                                                                  ensured even for the lowest considered load of
+  DECT-2020 NR FT                                                          1, height 25 m, outdoors                                                                               the mMTC service. The latency also increases by
+                                                                                                                                                                                  more than three times compared to the previous
+  mMTC RD deployment                                                       Uniformly random
+                                                                                                                                                                                  scenario. Even with a direct connection to the
+  mMTC building penetration loss                                           20 dB (ITU-R)                                                                                          sink, the latency increases as both services are
+                                                                                                                                                                                  implemented in a single network. As reported in
+  mMTC RD indoor/outdoor fraction                                          80 %/20 %                                                                                              [2], 99th latency percentile for NB-IoT and LTE-M
+  mMTC channel model, Sink-RD                                              Urban macro                                                                                            in underloaded conditions are around 600-700
+                                                                                                                                                                                  ms and 200 ms, respectively. While for DECT-
+  mMTC Channel model, RD-RD                                                Urban street canyon                                                                                    2020 operating in multi-hop way it is around 30
+  URLLC HARQ                                                               Enabled                                                                                                ms, the latency is expected to grow exponentially
+                                                                                                                                                                                  when traffic load increases. Thus, neither cellular
+  URLLC traffic inter packet time                                          CBR, 4–32 ms                                                                                           mMTC technologies nor DECT-2020 operating
+  mMTC traffic inter packet time                                           10–60 s
+                                                                                                                                                                                  in multi-hop way is capable of supporting near-
+                                                                                                                                                                                  URLLC applications. Generally, performance deg-
+  mMTC traffic load type                                                   Poisson, bursts of 2 packets                                                                           radation is due to two factors: multi-hop impact
+                                                                                                                                                                                  manifesting itself in latency accumulation when
+  Number of mMTC RDs                                                       1000
+                                                                                                                                                                                  packet needs to go via multiple hops, and addi-
+                                            Isolated URLLC scenario                                                                                                               tional impact caused by interference at each link.
+                                                                                                                                                                                      Summarizing the results, we note that out of the
+  URLLC RD deployment                                                      RD pairs along parallel lines
+                                                                                                                                                                                  considered scenarios, only that, where multi-hop is
+  Number of URLLC RDs                                                      2–6 (1–3 pairs)                                                                                        involved, is challenging for DECT-2020 to provide
+                                                                                                                                                                                  the services classified as near-URLLC ones. If one
+  URLLC RD-Sink distance                                                   100 m                                                                                                  wants to enable them over multi-hop topologies,
+  URLLC propagation model                                                  Elevator shaft [11]                                                                                    further standardization efforts are required.
+
+                                       D2D URLLC/mMTC scenario                                                                                                                          DECT-2020 Enhancements for URLLC
+  URLLC RD deployment                                                      Uniformly random in a circle                                                                           In this section, we discuss the potential enhance-
+                                                                                                                                                                                  ments that may enable strict URLLC services and
+  Number of URLLC RDs                                                      1                                                                                                      near-URLLC services over the multi-hop topologies.
+  URLLC RD-Sink distance                                                   < 50 m                                                                                                               Physical Layer Enhancements
+  URLLC propagation model                                                  Same as mMTC                                                                                           To provide principal feasibility of near-URLLC
+                                                                                                                                                                                  service provisioning over multi-hop DECT-2020
+                                  Multi-hop URLLC/mMTC scenario
+                                                                                                                                                                                  topologies, utilization of new numerologies with
+  URLLC RD deployment                                                      Uniformly random in a circle                                                                           smaller slot time is critical. As noted earlier, DECT-
+                                                                                                                                                                                  2020 supports multiple numerologies, which pro-
+  Number of URLLC RDs                                                      1                                                                                                      vide capabilities to lower the transmission delay
+  URLLC RD-Sink distance                                                   < 100 m, 0–1 hops to sink                                                                              and improve the payload data rate over the
+                                                                                                                                                                                  control data ratio of the transmission, as well as
+  URLLC propagation model                                                  Same as mMTC                                                                                           the channel fading performance. With 27 kHz
+  URLLC message copies sent                                                3                                                                                                      sub-carrier spacing, the slot duration is 416.7 ms
+                                                                                                                                                                                  which can be divided into two sub-slots. Increas-
+  URLLC/mMTC Tx queuing                                                    Priority-based                                                                                         ing the sub-carrier spacing to 54 kHz with 3.456
+TABLE 2. Considered system and evaluation parameters.                                                                                                                             MHz channel bandwidth doubles the symbols
+                                                                                                                                                                                  per transmission slot or alternatively reduces the
+
+
+134                              This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                 IEEE Communications Magazine • April 2025
+data transmission time by half when using sub-
+slots transmission [4], that is, the same amount
+of data can be transmitted in 208.3 ms. Using an
+even higher numerology would repeat this phe-
+nomenon and enable further reduction of latency.
+
+            Novel Data Dissemination Methods
+Meeting URLLC constraints in wireless mesh net-
+works remains an unresolved challenge. One pos-
+sible solution is to use network coding, which is
+typically applied at higher layers in the network
+stack. It enhances end-to-end communication reli-
+ability and reduces the latency caused by multi-
+hop scenarios using linear algebra over finite
+fields [12]. With this approach, data of end-to-end
+nodes are received at intermediate nodes, decod-
+ed and used to construct a specific composite
+data signals (e.g., by XOR operation). These sig-
+nals are then forwarded toward the destination
+nodes. By combining multiple received signals the
+destination node can extract the data intended
+for it. In the design of the network coding, it is
+worth noting that URLLC constraints are usually
+imposed only on the communication between
+a limited number of nodes within a small area.
+Therefore, in most cases it is sufficient to apply
+the network coding to the intra-cluster communi-
+cation. In some use-cases even a topology agnos-
+tic network coding is applicable, avoiding any
+signaling overhead for topology changes.
+    As DECT-2020 operates on a TDMA-based
+system, network coding can optimize scheduling
+time slots, reducing the total number of transmis-
+sion between devices and so reducing their ener-
+gy consumption. For this purpose, methods for
+constructing this composite signal are needed,
+focusing on seamless integration into the protocol
+stack. For an effective implementation, informing
+RDs about network coding-assisted communica-
+tion via MAC protocols is necessary.
+
+             AI-Based Network Management
+Disabling HARQ may be required to meet the
+requirements of URLLC. Alternatively, AI-based
+HARQ methods can reduce the latency of clas-
+sical HARQ while enhancing network reliability.
+For instance, Swift HARQ [13] applies a Support                 FIGURE 3. Performance of the considered scenarios: a) Isolated URLLC scenar-
+Vector Machine (SVM) based algorithm to predict                    io; b) D2D URLLC/mMTC scenario; c) Multi-hop URLLC/mMTC scenario.
+the probability of packet decodability in future
+retransmissions according to current channel                   will reduce the number of unnecessary retrans-
+conditions. Based on this, the transmitter reacts              missions in the DECT network, thus reducing the
+proactively by dropping non-decodable packets                  transmission delay for communicating RDs.
+and reallocating resources for transmissions to
+RDs with better channel conditions. Similarly, the                                              Adaptive Resource Allocation
+receiver can reduce latency by omitting unnec-                 Proper allocation of resources is critical for URLLC
+essary transmission of negative acknowledgment                 service. In this context, frequency diversity is essen-
+(NACK) messages during retransmission. Further-                tial, yet conventional approaches, such as multi-link
+more, the prediction of Swift HARQ enhances                    operation, face scalability issues. For optimal sched-
+system reliability by enabling the transmitter to              uling, channel-aware resource allocation performed
+schedule retransmissions at times when there is                within each cluster was proposed in [14]. A max-min
+a high likelihood of successfully decoding the sig-            allocation strategy is employed, iteratively optimizing
+nal. Initial simulations in [13] indicate that Swift           resource allocation based on the SNR. Herein, a
+HARQ outperforms classic HARQ mechanisms                       quality metric that applies a steeper gradient of a list
+in terms of two-way latency and block error rate.              with the SNRs of each user is the key to a resource
+As part of DECT-2020, RDs using Swift HARQ                     allocator. Allocating multiple users per iteration fur-
+receive packets and check for errors. If no errors             ther reduces computational complexity while ensur-
+are detected, an acknowledgment (ACK) message                  ing adaptability [15]. Channel quality is obtained
+is sent. Otherwise, a NACK message is returned                 by the FT node transmitting a sounding sequence
+with an estimate of how many retransmissions are               and the connected RDs reporting back their chan-
+required to successfully decode the packet. This               nel impulse response. This process ensures that
+
+
+IEEE Communications Magazine • April 2025              This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/   135
+                                          RDs entering the cluster are considered while RDs                                                                                       [12] P. Enenche, D. H. Kim, and D. You, “Network Coding as
+    The DECT-2020 standard-                                                                                                                                                           Enabler for Achieving URLLC Under TCP and UDP Environ-
+                                          leaving the cluster do not block unused spectrum.                                                                                           ments: A Survey,” IEEE Access, vol. 11, 2023, pp. 76,647–74.
+  ization process is currently            Although this represents an additional signaling over-                                                                                  [13] S. Almarshed, D. Triantafyllopoulou, and K. Moessner,
+                                          head, the approach presented in [14] outweighs this                                                                                         “Swift HARQ Based on Machine Learning for Latency Mini-
+  evolving toward supporting                                                                                                                                                          mization in URLLC,” IEEE Access, 2023.
+                                          by efficiently exploiting transmission resources. This
+                                                                                                                                                                                  [14] N. Schwarzenberg et al., “Channel-Aware Multi-User
+    capabilities emphasized               method may enhance the performance of networks                                                                                              Resource Allocation for Ultra-Reliable Low-Latency Com-
+   above. Once added, DECT-               with dynamic topologies, ensuring reliable commu-                                                                                           munications,” Proc. 2023 IEEE 34th Annual Int’l. Symposium
+                                          nication while maintaining low complexity to meet                                                                                           on Personal, Indoor and Mobile Radio Communications, IEEE,
+  2020 may become the first               the stringent latency constraints.                                                                                                          2023, pp. 1–7.
+                                                                                                                                                                                  [15] R. Walstab et al., “Analysis of Channel-Aware Multi-User
+     worldwide non-cellular
+     standard supporting a
+                                                                                         Conclusions                                                                                  Resource Allocators for Correlated Rayleigh Fading,” Proc.
+                                                                                                                                                                                      2023 IEEE 34th Annual Int’l. Symposium on Personal, Indoor
+                                          The aim of this article was to introduce the                                                                                                and Mobile Radio Commun., IEEE, 2023, pp. 1–6.
+  plethora of new near-URLLC              upcoming near-URLLC scenarios that are envi-
+    use-cases in a multi-hop              sioned to be supported in a DECT-2020 IoT sys-                                                                                                                     Biographies
+                                          tem, benchmark them, and specify enhancements                                                                                           A ndrey S amuylov is a doctoral researcher at Tampere Uni-
+              way.                        that need to be implemented to support them.                                                                                            versity. His research interests focus on performance evaluation
+                                                                                                                                                                                  of wireless networks with enabled D2D communications and
+                                              Our results show that the current implemen-                                                                                         mmWave-band communications.
+                                          tation of DECT-2020 can provide near-URLLC
+                                          operation for scenarios where no multi-hop com-                                                                                         Dmitri Moltchanov is a university lecturer at Tampere Univer-
+                                                                                                                                                                                  sity. He received Ph.D. degree in 2006. His research interests
+                                          munications are utilized even under interference                                                                                        include 5G/5G+ systems, terahertz communications, Industrial
+                                          coming from other D2D URLLC connections or                                                                                              IoT applications, and mission-critical V2V/V2X systems.
+                                          mMTC networks operating at the same frequency.
+                                          However, multi-hop communication shows a signif-                                                                                        A nna G aydamaka is a doctoral researcher at Tampere Uni-
+                                                                                                                                                                                  versity. She received M.Sc. degree in Computer Science from
+                                          icant decrease in performance. Thus, provisioning                                                                                       Universita di Pisa in 2021. Her research interests include 5G/6G
+                                          of near-URLLC services in DECT-2020 technology                                                                                          wireless networks and machine learning.
+                                          requires additional protocol and service delivery
+                                          enhancements, as outlined in this article.                                                                                              Eike Lyczkowski is a research engineer at SEW-EURODRIVE. He
+                                                                                                                                                                                  received his Ph.D. in 2023. His research interests are wireless
+                                              The DECT-2020 standardization process is                                                                                            communication and security on the factory floor.
+                                          currently evolving toward supporting capabilities
+                                          emphasized above. Once added, DECT-2020                                                                                                 A ndreas F rotzscher is a group manager Industrial wireless
+                                          may become the first worldwide non-cellular stan-                                                                                       communication at the Fraunhofer Institute for Integrated Ciru-
+                                                                                                                                                                                  cits. He received his Ph.D. degree in 2010. His research inter-
+                                          dard supporting a plethora of new near-URLLC                                                                                            ests are industrial wireless networks, as well as URLLC systems
+                                          use-cases in a multi-hop way.                                                                                                           for industrial automation applications.
+
+                                                                                       Acknowledgment                                                                             Frank von Schoettler is a Ph.D. Candidate at SEW-EURODRIVE
+                                                                                                                                                                                  GmbH & Co KG. He received M.Sc. in 2023. His research inter-
+                                          The work on this article has been supported by                                                                                          ests are industrial communications, wireless channel characteriza-
+                                          the CELTIC-NEXT “Ultra Scalable Wireless Access”                                                                                        tion, and evaluation of URLLC in wireless technologies.
+                                          (USWA) project, https://www.celtic-next-uswa.org.
+                                                                                                                                                                                  Juho Pirskanen is a Principal System Engineer at Wirepas. He
+                                                                                              References                                                                          received M.Sc. in 2000 from Tampere University. Currently, he
+                                                                                                                                                                                  acts as a project coordinator for CELTIC USWA project. His
+                                          [1] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” TS                                                                              research interests are wireless communications, radio protocols,
+                                               103 636-1 v1.5.1, ETSI, Mar. 2024.                                                                                                 and IoT systems.
+                                          [2] R. Kovalchukov et al., “DECT-2020 New Radio: The Next
+                                               Step Toward 5G Massive Machine-Type Communications,”                                                                               Jussi Numminen is the head of radio strategy and IPR at Wirepas.
+                                               IEEE Commun. Mag., vol. 60, no. 6, 2022, pp. 58–64.                                                                                His research interests are radio communications performance
+                                          [3] A. Anttonen et al., “Enabling Massive Machine Type Commu-                                                                           on physical and radio protocol layers for new wireless standards.
+                                               nications with DECT-2020 Standard: A System-Level Perfor-
+                                               mance Study,” 2021.                                                                                                                Juha Salokannel is a Senior Protocol System Designer at Wire-
+                                          [4] ITU-R, “Minimum Requirements Related to Technical Perfor-                                                                           pas. He received M.Sc. in 1998 from Tampere University. His
+                                               mance for IMT-2020 Radio Interface,” M.2410-0; accessed                                                                            main research interest is developing DECT-2020 NR.
+                                               13.09.24; https://www.itu.int/pub/R-REP-M.2410-2017,
+                                               ITU-R, July 2017.                                                                                                                  E ndika L laguno is a Ph.D. student at the University of the
+                                          [5] ITU-R, “Guidelines for Evaluation of Radio Interface Technol-                                                                       Basque Country (UPV/EHU) and a researcher at Agile Content.
+                                               ogies for IMT-2020,” M.2412-0; accessed 13.09.24; https://                                                                         He received his M.Sc. in Telecommunication Engineering in
+                                               www. itu.int/pub/R-REP-M.2412-2017, ITU-R, July 2017.                                                                              2022. His research interests include wireless communications,
+                                          [6] Ultra-Scalable Wireless Access (USWA) Project, “Consor-                                                                             artificial intelligence, and the Internet of Things.
+                                               tium Partners,” https://www.celticnext.eu/project-uswa/;
+                                               accessed 2024-5-16.                                                                                                                Rafael Pires is a research scientist at the VTT Technical Research
+                                          [7] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio Reception                                                                            Centre of Finland. He received his M.Sc. degree from Aalto
+                                               and Transmission Requirements; Release 1,” TS 103 636-2                                                                            University in 2022. His research interests include Intent-Based
+                                               v1.5.1, ETSI, Mar. 2024.                                                                                                           Networking (IBN) and wireless mesh networks.
+                                          [8] A. Samuylov et al., “Performance Assessment of DECT-2020
+                                               NR and Classic DECT Coexistence Mechanisms,” 2023                                                                                  D ilara B ayar is an R&D Engineer at ACD. She received her
+                                               VTC2023-Spring, IEEE, 2023, pp. 1–7.                                                                                               B.Sc. in 2024. Her research interests include wireless communi-
+                                          [9] A. Samuylov et al., “Performance of MAC Layer Mechanisms                                                                            cations and embedded systems.
+                                               in DECT-2020 NR mMTC Technology,” 2024 VTC Spring,
+                                               IEEE, 2024, pp. 1–5.                                                                                                               Mikko Valkama is a full professor and head of the Electrical
+                                          [10] S. Robertson and J. Robertson, Mastering the Requirements                                                                          Engineering Unit at Tampere University. His research interests
+                                               Process: Getting Requirements Right, Addison-Wesley, 2012.                                                                         include radio communications, localization, and sensing, with
+                                          [11] P. Koivumäki et al., “Dynamic Polarimetric Wideband Chan-                                                                          emphasis on 5G and beyond mobile networks.
+                                               nel Sounding in an Elevator Shaft,” Proc. 2019 European
+                                               Conf. Networks and Commun., IEEE, 2019, pp. 295–99.
+
+
+
+
+136                              This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/                    IEEE Communications Magazine • April 2025
+

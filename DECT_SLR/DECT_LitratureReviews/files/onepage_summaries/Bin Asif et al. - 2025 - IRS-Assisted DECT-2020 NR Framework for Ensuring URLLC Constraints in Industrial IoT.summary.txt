@@ -1,0 +1,69 @@
+Title: Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT 2020 NR is a Radio Interface Technology (RIT) introduced by ETSI for
+massive Machine Type Communications (mMTC) and Ultra-Reliable Low Latency
+Communications (URLLC) use cases. Notably, DECT 2020 NR stands as the sole non-
+cellular 5G technology apt for industrial IoT (IIoT) scenarios. However,
+achieving the stringent reliability and latency requirements of URLLC in dense
+industrial settings poses a significant challenge due to various propagation
+losses and severe shadowing. In this research work, we propose a novel DECT 2020
+NR framework incorporating Intelligent Reflecting Surface (IRS) to meet the
+challenging URLLC constraints. The framework maps the system model in 3D space,
+including the 3D mapping of the radiation pattern of IRS, and employs the
+Separating Axis Theorem (SAT) to systematically identify shadowed regions within
+this 3D system model and mitigate the identified shadowed areas, leveraging the
+proposed novel MAC procedure for the IRS-assisted DECT 2020 NR network.
+Additionally, we propose a resource allocation scheme based on the priority
+given to radio devices ready to offload the data. Comparative analysis
+demonstrates that our proposed solution achieves significant improvements in
+received power, throughput, and reduction in round-trip time (RTT) when compared
+to both the existing approach and the conventional DECT 2020 NR standard.
+
+Approach and methods:
+systematically identify shadowed regions within this 3D system model and
+mitigate the identified shadowed areas, leveraging the proposed novel MAC
+procedure for the IRS-assisted DECT 2020 NR network. Additionally, we propose a
+resource allocation scheme based on the priority given to radio devices ready to
+offload the data. Comparative analysis demonstrates that our proposed solution
+achieves significant improvements in received power, throughput, and reduction
+in round-trip time (RTT) when compared to both the existing approach and the
+conventional DECT 2020 NR standard. Index Terms—DECT 2020 NR, URLLC, IRS,
+Industrial IoT, I. I NTRODUCTION DECT 2020 NR, or DECT NR+, is a non-cellular
+Radio Interface Technology (RIT) for 5G private networks, released by ETSI in
+2020. It supports mMTC and URLLC use cases under the IMT-2020 guidelines [1].
+Operating in license-exempt and licensed sub-6GHz bands, DECT NR+ enables local,
+selfhosted deployments suited for industrial IoT (IIoT), factory automation, and
+energy grid monitoring [2]. It supports Radio Devices (RDs) operating in Fixed
+Termination (FT), Portable Termination (PT), and combined FT/PT modes, denoted
+as RDFT , RDPT , and RDFT/PT , respectively. In factory hall environments,
+obstacles like metallic racks and heavy machinery can severely attenuate signal
+strength. The standard DECT NR+ method
+
+Key findings:
+Machine-Type Communications,” IEEE Communications Magazine, vol. 60, no. 6, pp.
+58–64, 2022. [8] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance
+Evaluation of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021 IEEE
+94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp. 1–7. [9] H.
+Ahmad, A. B. Asif, J. Peissig, and M. Penner, “Mac protocol for reducing outage
+probability in dect-2020 new radio,” in 2024 20th International Conference on
+Wireless and Mobile Computing, Networking and Communications (WiMob), 2024, pp.
+42–49. [10] H. Taghvaee, S. Abadal, A. Pitilakis, O. Tsilipakos, A. C.
+Tasolamprou, C. Liaskos, M. Kafesaki, N. V. Kantartzis, A. Cabellos-Aparicio,
+and E. Alarcón, “Scalability Analysis of Programmable Metasurfaces for Beam
+Steering,” IEEE Access, vol. 8, pp. 105 320–105 334, 2020. [11] ETSI, “ETSI
+Evaluation Group; Final Evaluation Report on DECT2020 NR,” European
+Telecommunications Standards Institute, Technical Report (TR), vol. 103, p. 810,
+Nov, 2021. [12] ——, “DECT-2020 New Radio (NR); Part 5: DLC and Convergence
+layers; Release 1,” European Telecommunications Standards Institute, Technical
+Specification (TS), vol. 103, pp. 636–5, March, 2024. [13] [Online]. Available:
+https://tmytek.com/products/components/xrifledynamic-ris Authorized licensed use
+limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply. 230
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

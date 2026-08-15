@@ -1,0 +1,1582 @@
+     FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING
+       DEGREE PROGRAMME IN WIRELESS COMMUNICATIONS ENGINEERING
+
+
+
+
+ ANALYSIS OF THE PERFORMANCE OF THE
+  DECT NR+ RADIO ACCESS TECHNOLOGY
+FOR CONNECTIVITY OF UNMANNED AREIAL
+            VEHICLES (UAVs)
+
+
+
+
+           Author                         Muhammad Ahtasham Bin Jahangir
+
+           Supervisor                     Konstantin Mikhaylov
+
+           Second Examiner                Tuomo Hänninen
+
+
+
+
+                              June 2024
+Jahangir M. (2024) Analysis of the performance of DECT NR+ radio access technology
+for the connectivity of unmanned aerial vehicles (UAVs). University of Oulu, Faculty of
+Information Technology and Electrical Engineering, Degree Programme in Wireless
+Communications Engineering. Master’s Thesis, 46 p.
+
+
+                                         ABSTRACT
+Unmanned Aerial Vehicle (UAV) technology is rapidly growing in many fields, such as
+security, rescue operations, and delivery systems. However, it is important to remember
+that these UAVs require reliable connectivity in order to work efficiently.
+   As for this thesis, a detailed study is made to understand the capabilities or, in other
+words, the performance of Digital Enhanced Cordless Telecommunications New Radio
+(DECT 2020 NR) radio access technology for UAV connectivity. DECT 2020 NR is a
+roadmap for the future advancement of wireless communication systems that seek to
+address the increasing demands need for faster data speed and frequent communication
+in different settings. The link budget analysis is seen and used as one of the critical
+fundamentals of determining wireless communication systems’ ability to meet general
+design specifications and performance while using the available resources fully and
+effectively.
+   The research encompasses examining multiple frequencies and modulation schemes to
+determine their impact on communication performance. The study aims to identify
+optimal configurations that ensure reliable connectivity by simulating various conditions.
+Key parameters considered in the analysis include transmitter power, antenna gains,
+system losses, and environmental factors influencing path loss. The outcome of this thesis
+indicates that the lower frequency bands like 915 MHz are more effective for long distance
+communication due to low path loss while the higher frequencies like 1.89 GHz, 3.5 GHz
+suffer from high path loss and is more suitable for short range transmission.
+
+Key words: UAVs, DECT 2020 NR+.
+                                                    CONTENTS
+
+ABSTRACT
+CONTENTS
+FOREWORD
+ABBREVIATIONS
+1   INTRODUCTION ............................................................................................................ 6
+    1.1 Research objectives ................................................................................................. 6
+    1.2 Thesis structure........................................................................................................ 7
+2   DECT 2020 TECHNOLOGY ........................................................................................... 8
+    2.1 DECT 2020 overview .............................................................................................. 8
+        2.1.1 Physical layer ............................................................................................. 10
+        2.1.2 Medium access layer ................................................................................. 12
+        2.1.3 Data link control layer and convergence layer .......................................... 14
+3   RESEARCH STATE OF THE ART .............................................................................. 17
+    3.1 Current research focus area ................................................................................... 17
+    3.2 Literature review ................................................................................................... 17
+        3.2.1 ECC report 352 on spectrum solutions for governmental UAS ................ 17
+        3.2.2 DECT-2020 new radio: The next step towards 5G massive machine-type
+                communications ......................................................................................... 18
+        3.2.3 Performance assessment of DECT-2020 NR and classic DECT coexistence
+                mechanisms ............................................................................................... 22
+        3.2.4 DECT-2020 new radio system level assessment for multi-hop assisted
+                mMTC usage scenario ............................................................................... 25
+4   LINK BUDGET ANALYSIS ......................................................................................... 28
+    4.1 Importance of link budgeting ................................................................................ 28
+    4.2 Methodology ......................................................................................................... 29
+        4.2.1 Parameters and assumptions ...................................................................... 29
+        4.2.2 Simulation setup ........................................................................................ 30
+        4.2.3 MATLAB code structure ........................................................................... 30
+        4.2.4 Output of MATLAB code ......................................................................... 32
+5   RESULTS AND DISCUSSIONS ................................................................................... 33
+    5.1 Path loss analysis ................................................................................................... 33
+    5.2 Received power analysis ....................................................................................... 34
+    5.3 General insights and recommendations ................................................................. 37
+6   SUMMARY .................................................................................................................... 38
+7   REFERENCES ............................................................................................................... 39
+8   APPENDIX ..................................................................................................................... 41
+                                           FOREWORD
+The evolution of UAVs has made a significant impact not only in surveillance but also in
+disaster response, delivery services, and environmental preservation. The communication links
+of these UAVs must be reliable for proper functioning. DECT 2020 NR is an innovative
+technology that can offer high data rates, protection of communication links, and better spectral
+efficiency, making it a prospective candidate for UAV communication. Within the scope of this
+thesis, DECT 2020 NR technology is investigated concerning feasibility and performance on
+UAV Communications, including an extensive link budget analysis and results affected by the
+environmental and interference factors.
+   Assistant Professor Konstantin Mikhaylov of the University of Oulu supervised the progress
+of this research. His input and utter encouragement have been highly beneficial in defining the
+course and success of this research. The results of the work carried out in this thesis aim to
+come out with improvements in the UAV communication systems and offer a certain set of
+advice about DECT 2020 NR technology usage in specific UAV settings. I became very
+grateful to my supervisor, Konstantin Mikhaylov, for supporting and helping me accomplish
+this work. I would also like to acknowledge my friends and family that encouraged me during
+whole process. Last but not least, I thank the University of Oulu for providing me with the
+chance and facilities required to do this work.
+
+
+Oulu, June 24, 2024
+
+
+Muhammad Ahtasham Bin Jahangir
+                              ABBREVIATIONS
+ARQ       Automatic Repeat Request
+A2A       Air to air
+A2G       Air to ground
+C2        Command and Control
+CIoT      Cellular Internet of Things
+CP-OFDM   Cyclic Prefix Orthogonal Frequency Division Multiplexing
+DCS       Dynamic Channel Selection
+DECT      Digital Enhanced Cordless Telecommunications
+DF        Data Field
+DL        Downlink
+ECC       Electronic Communication Committee
+FDMA      Frequency division multiple access
+FFT       Fast Fourier transform
+FRMCS     Future Railway Mobile Communication System
+FSPL      Free space path loss
+FT        Fixed Termination point
+GI        Guard Interval
+HARQ      Hybrid Automatic Repeat Request
+IMT       International Mobile Telecommunications
+IoT       Internet of Things
+LTE-M     Long Term Evolution for Machines
+MCL       Minimum coupling loss
+MCSs      Modulation and Coding Scheme
+MFCN      Mobile Fixed Communication Network
+MIMO      Multiple-Input and Multiple-Output
+mMTC      Massive Machine Type Communications
+MSB       Most significant bit
+NB-IoT    Narrowband Internet of Things
+PCC       Physical control channel
+RD        Radio Device
+PDC       Physical data channel
+RMR       Railway Mobile Radio
+Rx        Receiver
+SDU       Service Data Units
+STF       Synchronization Training Field
+TDD       Time Division Duplex
+TDMA      Time division multiple access
+TPC       Transmit Power Control
+Tx        Transmitter
+UAS       Unmanned Aircraft Systems
+UAVs      Unmanned Aerial Vehicles
+UL        Uplink
+3GPP      3rd Generation Partnership Project
+                                  1     INTRODUCTION
+
+Unmanned Aerial Vehicles (UAVs) have been used in almost all sectors, from aerial
+surveillance, delivery, and disaster management to agriculture. Reliable communication is a
+critical factor in UAV operations and is crucial for controlling, navigating, and transmitting
+data to the UAV system. DECT 2020 NR is a prominent technology with enhanced features to
+support UAV connections. To address this issue, this thesis aims to investigate the outcome of
+DECT 2020 NR in UAV communication by performing link budget analysis.
+   Link budgeting is one of the basic techniques used to estimate the channel's performance by
+considering every gain and loss that occurred from the transmitter to the receiver. This analysis
+helps assess the reliability of a communicated link in various circumstances. Regarding scope
+and purpose of this thesis, the goal is to evaluate the link budget for air to air (A2A) or air to
+ground (A2G) scenarios at different frequencies with different modulation schemes.
+   DECT 2020 NR is an advancement of the classic DECT system that aims to deliver higher
+data rates, improved security qualities and better spectrum efficiency. The DECT 2020 NR
+operates in 1.9 GHz frequency spectrum which is suitable for short to medium-range
+connectivity and, as a result, qualifies to be a candidate for UAV connectivity. Some of its
+characteristics are TPC and DCS where, through which it can optimize the spectrum usage and
+minimise interference, hence ensuring reliable communication links.
+   Because UAVs require a robust and stable signal for communication, they still require
+excellent and stable links. It uses real-time commands for navigation and task completion. Data
+stability is essential in services such as live video broadcasts for surveillance, data collection
+for environmental analysis, or logistics. This is particularly relevant as applications of UAVs
+expand across crucial domains; hence, there is a need to evaluate advanced communication
+technologies such as DECT 2020 NR to meet connectivity needs.
+
+                                  1.1    Research objectives
+
+This purpose of this study is to investigate link budget analysis of a communication system
+under DECT 2020 NR standards employing the MATLAB tool. This includes studying the
+changes in signal loss and received power based on the distance and frequency depending on
+whether it is an A2G or A2A scenario and also the different approaches of modulations:
+The study aims to:
+
+   1. Perform link budget evaluations for DECT 2020 NR communication systems.
+   2. Examine signal loss and received power for A2G and A2A scenarios at different
+      distances and frequencies.
+   3. The given analysis should give an insight into how the various forms of modulation
+      can impact the system.
+   4. Use MATLAB's signal processing and visualization tools to model and study the
+      communication links.
+                                                                                                 7
+
+                                     1.2   Thesis structure
+
+The structure of this thesis is envisaged to appropriately satisfy the outlined research objectives
+and comprehensively discuss DECT 2020 NR technology for UAV link establishment. The
+structure is:
+
+   1. Chapter 1: Introduction - Describes the study's rationale and scope, as well as its
+      structure.
+   2. Chapter 2: Literature Review - Refers to earlier research on UAV links and DECT 2020
+      NR technology.
+   3. Chapter 3: Methodology: Understanding the methods of link budget analysis along with
+      the MATLAB simulation.
+   4. Chapter 4: Results and discussions: Describe the results of simulations and discusses its
+      findings.
+   5. Chapter 5: Conclusion and future work: Summarize the above findings, their
+      importance, and suggestions for future research areas.
+                                                                                                8
+
+
+                            2    DECT 2020 TECHNOLOGY
+
+                                  2.1    DECT 2020 overview
+
+DECT-2020 NR is a novel wireless technology. It is made to be simple but strong for many
+different uses. You can use it for cordless phones, streaming music, professional sound, and
+connecting smart devices in homes and industries. This technology is helpful for factory
+automation, intelligent buildings, monitoring utilities, smart cities, and local wireless networks
+indoors and outdoors. It intends to ensure ultra reliable low latency communication (URLLC)
+and massive machine type communication (mMTC) for many devices at once [1].
+    ITU-R approves DECT-2020 NR in Recommendation M.2150 because it meets the need for
+reliable and fast communication. It is part of the "DECT 5G SRIT" group, including 3GPP and
+DECT-2020 NR. DECT-2020 NR is mainly for local wireless use and can be set up by anyone,
+anywhere, anytime. It works on its own with little maintenance. It can also connect with more
+extensive networks like satellites, Fiber optics, and the internet, creating a network of network
+[1].
+    DECT-2020 NR is used for:
+    1. Very reliable direct connections (point-to-point) and one-to-many connections (point to
+        multi-points).
+    2. Local area wireless networks are set up in a star shape, similar to classic DECT systems,
+        for reliable and fast communication to achieve URLLC.
+    3. Self-organizing wireless networks in a mesh design can support several linked devices
+        [1].
+    Wireless networks organize themselves in a mesh pattern, allowing many devices to connect.
+In DECT, devices are called Radio Devices (RDs). They can work as either Fixed termination
+point (FT) or Portable termination point (PT) [1]. An RD in FT mode acts like a central station,
+controlling radio signals. Now RDs which are in PT mode connect to these central stations.
+RDs can work as both FT and PT in a mesh network simultaneously. DECT-2020 could be set
+up in several ways.
+    The simplest configurations are point-to-point and point-to-multipoint links. These replace
+cables between two devices or one device and many devices. During setups, an RD works as
+FT mode, managing the signals while the other devices connect to it in PT mode. Another setup
+is the cell type, like cell phone networks. In a single-cell setup, an RD which is in FT mode is
+the base station, and many RDs which are in PT mode connect to it. During a multi-point setup,
+many RDs which are in FT mode create fixed network, each with a separate area to cover. RDs
+which in PT mode can move between these areas, allowing flexible connections [1].
+    Figure 1 will illustrate the point-to-point and point-to-multipoint connections.
+
+
+
+
+       Point to point                   Point-to-Multipoint            Cell Topology
+                  Figure 1.Point-to-point and point-to-multipoint topologies [1].
+                                                                                                9
+
+   Mesh topology is the third form of configuration, in which devices communicate directly or
+via many devices. Devices can alter their role based on the situation. Each RD can send,
+forward, or receive messages. Communication can happen directly or through other devices.
+Figure 2 shows the Mesh topology. In a mesh network, an RD with internet initiates in FT
+mode, picks the desire frequencies, it then sends signals for other RDs which are operating in
+PT mode for connection. When these RDs sense the signals, they can connect using the signal
+details. Each RD decides which RD to connect to in FT or FT/PT mode. The connecting RD
+can then work as PT or FT/PT to connect more RDs. The RD can change its connection if
+needed. Once connected, it can start sending data. A unique address is used for backend traffic
+[1].
+
+
+
+
+                                  Figure 2. Mesh topology [1].
+
+    The beaconing process is identical for both mesh setup and star setup. Time between beacons
+can be long, lasting several seconds, for low power uses. For high-power and fast applications,
+it can be as short as 10 ms [1]. DECT-2020 mesh networks are built to handle many devices
+efficiently. The mesh automatically chooses the best path for data, so devices don't need to keep
+a route table. Important features include:
+   1. All RDs can route data on their own.
+   2. RDs can switch between FT and PT modes or work in both.
+   3. The network works without a central controller.
+   4. RDs in PT mode manage radio signals.
+   5. Many RDs which are operating in FT mode can connect to the backend. RDs can use
+      multiple number of radio channels.
+   DECT-2020 can proliferate, which serves as a significant benefit. It can be set up in different
+ways to work best for various needs, making it very efficient. DECT-2020 can also connect
+with both 3GPP and non-3GPP networks, so it performs well with these networks [1].
+   The DECT-2020 system has four main parts: Physical (PHY), Medium Access Control
+(MAC), Convergence (CVG) layers, and Data Link Control (DLC), the protocol stack of DECT
+2020 NR is shown in figure 3.
+                                                                                          10
+
+
+
+
+                                Figure 3. Protocol stack [1].
+
+  The detail of these layers will be discussed in upcoming subchapters.
+
+                                    2.1.1 Physical layer
+As per the ESTI TS 103 636-1 release, physical layer of DECT 2020 NR works with 17 different
+frequency bands below 6GHz, as shown in table 1.
+
+Table 1. Operating bands [3]
+ Band Number                   Receiving Band (MHz)             Transmitting Band (MHz)
+ 1                             1 880 to 1 900                   1 880 to 1 900
+ 2                             1 900 to 1 920                   1 900 to 1 920
+ 3                             2 400 to 2 483,5                 2 400 to 2 483,5
+ 4                             902 to 928                       902 to 928
+ 5                             450 to 470                       450 to 470
+ 6                             698 to 806                       698 to 806
+ 7                             716 to 728                       716 to 728
+ 8                             1 432 to 1 517                   1 432 to 1 517
+ 9                             1 910 to 1 930                   1 910 to 1 930
+ 10                            2 010 to 2 025                   2 010 to 2 025
+ 11                            2 300 to 2 400                   2 300 to 2 400
+ 12                            2 500 to 2 620                   2 500 to 2 620
+ 13                            3 300 to 3 400                   3 300 to 3 400
+ 14                            3 400 to 3 600                   3 400 to 3 600
+ 15                            3 600 to 3 700                   3 600 to 3 700
+ 16                            4 800 to 4 990                   4 800 to 4 990
+ 17                            5 725 to 5 875                   5 725 to 5 875
+
+   The physical layer of DECT-2020 works best with frequencies under 6 GHz. In 1.9 GHz
+band, it works smoothly with classical DECT. This 1.9 GHz band is used for DECT in Europe
+and among other places. In the United States, it operates on unapproved band called Personal
+Communications Service (UPCS), which is shared with different technologies but still works
+well [3].
+   The physical layer is the lower part of the DECT-2020 system. It supports MAC layer's PCC
+and PDC. This layer handles tasks like symbol modulation and demodulation, keeping
+frequencies and times in sync, measuring radio properties, beamforming, multiple input
+                                                                                               11
+
+multiple output (MIMO) processing, HARQ and error detection. When needed, it sends
+information like radio measurements to the higher layers [3].
+   DECT-2020 uses RF technology with TDD and CP-OFDM. It uses FDMA and TDMA for
+access. Resources are split into different channels by frequency and different slots by time. The
+modulation types it supports are 1024-QAM, 256-QAM, 64-QAM, 16-QAM, QPSK and
+BPSK. Turbo coding rates are 5/6, 3/4, 2/3, 1/2. These combinations of modulation and coding
+rates make up a Modulation and Coding Scheme (MCS), shown by an MCS index [3]. The
+details of these schemes and their MCS indexes are in table 2.
+
+Table 2. Modulation and coding schemes [3]
+ MCS Index             Modulation                 Bits per symbol         Turbo coding rate (R)
+ 0                     BPSK                       1                       1/2
+ 1                     QPSK                       2                       1/2
+ 2                     QPSK                       2                       3/4
+ 3                     16-QAM                     4                       1/2
+ 4                     16-QAM                     4                       3/4
+ 5                     64-QAM                     6                       2/3
+ 6                     64-QAM                     6                       3/4
+ 7                     64-QAM                     6                       5/6
+ 8                     256-QAM                    8                       3/4
+ 9                     256-QAM                    8                       5/6
+ 10                    1024-QAM                   10                      3/4
+ 11                    1024-QAM                   10                      5/6
+
+   DECT-2020 sends data in radio frames, each 10 ms long. Each frame has 24 slots, each
+0.41667 ms long, which can be split into 2, 4, 8, or 16 smaller parts. Depending on the subcarrier
+scaling factor (μ), a slot can have 10, 20, 40, or 80 OFDM symbols. Data can be sent in single
+slots. For error checking, a CRC of 16 bits or 24 bits is used. The frame structure of physical
+layer of DECT 2020 NR is shown in figure 4 [3].
+
+
+
+
+                                 Figure 4. Frame structure [3].
+                                                                                             12
+
+   Figure 4 shows the structure of a DECT-2020 physical layer packet. The packet starts with
+the STF, then comes the DF, and ends with the GI. A time structure is setup for the receiver by
+STF to estimate and equalize the channel. The Data Field contains PCC, PDC and
+Demodulation Reference Signal (DRS). The Guard Interval helps reduce overlap between time
+slots and makes it easier to switch between sending and receiving. The bitrates of DECT-2020
+can range from 326 kbit/s to 9 Gbit/s depending on the settings and MCS used [3].
+
+                                  2.1.2 Medium access layer
+
+Layer above the physical layer is MAC access layer. It starts broadcast signalling and
+transmission for paging, by picking and accessing channels it manages the physical layer
+resources, handles multiplexing and demultiplexing MAC Service Data Units (SDUs),
+prioritizes logical channels and between logical and transport channels it maps packets. It also
+does HARQ error correction, integrity protection, and encryption. Figure 5 depicts how the
+MAC operates in DECT-2020. The solid lines in the diagram represent the route of higher-layer
+data and MAC internal messages to physical channels, while dotted grey lines illustrate the
+inner MAC control route [4].
+
+
+
+
+                                   Figure 5. Mac route [4].
+                                                                                              13
+
+   In DECT-2020, various form of data is sorted into channels based on the kind of information.
+Transport channels and logical channels are the two main types of channels [4].
+    The MAC layer connects these logical channels to higher layers [4]:
+   1. Multicast (Broadcast) Traffic Channel (MTCH)
+   2. Dedicated Traffic Channel (DTCH)
+   Following channels are used in between physical and MAC layer [4]:
+   1. Random Access Channel (RACH)
+   2. Dedicated Channel (DCH)
+   3. Paging and Broadcast Channel (PCH/BCH)
+   Following channels are used for control information in MAC layer [4]:
+   1. Common Control Channel (CCCH)
+   2. Broadcast Control Channel (BCCH)
+   3. Dedicated Control Channel (DCCH)
+   4. Paging Control Channel (PCCH)
+   The DECT-2020 network has a 32-bit network ID. The first 24 bits (the most significant bits
+(MSB)) identify the network globally and are broadcast in Cluster Beacon Messages. The
+bottom eight bits (the least significant bits (LSB)) are utilized to identify local networks. The
+Fixed Terminal (FT) generates these bits for resources, which are then transmitted via the PCC
+channel [4].
+   DECT-2020 devices have dual unique identifiers. The 32-bit long radio device ID specifies
+a device in the DECT-2020 network. Each device additionally has a 16-bit Short Radio Device
+ID, which is determined at random by the device and used to identify who is sending and
+receiving packets on the PCC channel. The Long radio device ID is utilized when initially
+exchanging short radio device IDs and if there is any discrepancy between Short RD IDs. [4].
+   Figure 6 shows the MAC control structure. It has six parts: Paging Transmission Control
+(PTC), Beacon Scanning Control (BSC), Broadcast Control (BCC), Connection Configuration
+Control (CCC), Random Access Control (RAC), and Local Radio Control (LRC).
+
+
+
+
+                               Figure 6. MAC control entity [4].
+                                                                                          14
+
+   The LRC operation manages resources when the RD is in (FT) mode. The BCC function
+deals with beacon transmissions and other broadcast and multicast messages. CCC handles
+multiplexing, maps data to transport channels, manages MCS and HARQ settings, ensures
+MAC security, and works with local radio control for handovers. Beacon scanning control
+manages scanning tasks. Random access control handles random access transmissions. The
+paging transmission function sends paging messages when the RD is in FT mode [4].
+
+                    2.1.3 Data link control layer and convergence layer
+
+Layer above the MAC is data link control (DLC) layer it handles tasks like breaking data into
+segments and routing packets. The layer which makes overall DECT system to work well with
+other network protocols is convergence layer.
+   Figure 7 shows the DLC structure. every radio link between that link a FT and a PT has its
+own DLC entity. When a RD works in FT as well in PT modes simultaneously in a mesh
+network, each connection has a separate DLC entity [5].
+
+
+
+
+                               Figure 7. DLC architecture [5].
+                                                                                          15
+
+                         2.1.3.1 DLC architecture and functionality
+
+  The DLC entities can work in three different modes:
+   1. Transparent Mode (DLC-T): This mode is for simple transmission, using only a
+      transmitter buffer and adding a small protocol header.
+   2. Segmentation Mode (DLC-S): This mode handles sending and receiving whole or
+      segmented DLC Service Data Units (SDUs) and manages their maximum lifetime.
+   3. ARQ Mode (DLC-A): This mode includes all features of Segmentation Mode but also
+      has Automatic Repeat Request (ARQ), which works with the lower MAC layer
+      HARQ process using Acknowledgement (ACK) and Negative Acknowledgement
+      (NACK) instructions. Figure 8 shows how the ARQ mode works.
+
+
+
+
+                         Figure 8. DLC ARQ mode architecture [5].
+
+                        2.1.3.2 Protocol stack and communication flows
+   Figure 9 shows the complete protocol stack, containing the CVG and MAC layers, in two
+scenarios: a point-to-point or star setup with 2 nodes (figure 9a) and a mesh network (figure
+9b).
+   In the point-to-point setup (figure 9a):
+   •   RD1 works in PT mode and RD2 works in FT mode.
+   •   Uplink data goes from RD1, through chosen CVG and DLC services, to RD2 via the
+       DECT-2020 physical layer. At RD2, the data passes through matching CVG and DLC
+       services and then to the application or backend.
+   •   Downlink data follows an identical path from RD2 to RD1.
+  In the mesh networking setup (figure 9b):
+   •   RD1 works in PT mode, RD3 in FT mode, and RD2 works in both PT and FT modes
+       simultaneously.
+                                                                                         16
+
+•    Uplink data goes from RD1, through RD1's CVG and DLC layers, to RD2 via the
+     DECT-2020 physical layer. RD2, routes data to RD3 depending upon the routing
+     header. The data is subsequently routed to RD3, processed through its CVG and DLC
+     layers, and then to the application or backend.
+•    The downlink works the same way, with data going from RD3 to RD1.
+
+
+
+
+                                          (a) Point to point
+
+
+
+
+                                       (b) Mesh Networking
+    Figure 9. Overall Protocol Architecture of point to Point and Mesh Networking [5].
+                                                                                                17
+
+
+                       3    RESEARCH STATE OF THE ART
+
+                              3.1   Current research focus area
+
+Presently, there is limited work done toward the development of generalized models or
+connection frameworks; instead, current UAV connection research is concerned with the
+argument of specific communication systems that are optimal for the requirements of UAV
+operations. The key priority areas include
+   1. The research explores the future concept of UAV communication with Radio Access
+       Technologies, such as 5G and the future. Technologies, these technologies have good
+       reliability, URLLC and massive connectivity, making them useful for numerous UAV
+       applications [6].
+   2. Efficient interference management techniques for use in UAVs, such as cognitive radio,
+       enhanced power control solutions and dynamic spectrum access are currently being
+       devised to enhance handset communication reliability within a heavily crowded
+       environment [7].
+   3. Security and Privacy: Another risk is in the level of communication for UAVs, where
+       sensitive data must be handled. The research also targets developing and implementing
+       strong encryption methods for voice conversation, authentication, and intrusion
+       detection within UAV networks [8].
+   4. Future research will focus on integrating UAVs with larger IoT and Smart City
+       Infrastructure. This includes establishing communication interfaces that enable UAVs
+       to interface with different IoT entities [9].
+
+                                    3.2   Literature review
+DECT 2020 NR will further evolve the DECT technology to provide new, improved features
+that are well-suited for the latest communication requirements, including the connectivity of
+UAVs. Research into DECT 2020 NR technology within industry is of recent interest and a
+limited number of publications are available on the topic. However, this thesis will take a brief
+look at some of the relevant literature on the subject to get a sense of what literature exists and
+what is going on in this direction.
+
+             3.2.1 ECC report 352 on spectrum solutions for governmental UAS
+
+This research gives a thorough technical analysis of the possible spectrum options available to
+government unmanned aerial systems. This paper published by the electronic communication
+committee (ECC) of the European conference of postal along with telecommunications
+administrations (CEPT) aims to set relevant technical standards for spectrum distribution
+focusing on non-military government operations. The research focus solely is on the
+technological viability of spectrum utilization, leaving out any discussion of regulatory,
+operational, or electromagnetic compatibility (EMC) issues related to UAS avionics [10].
+   The report examines the feasibility of spectrum solutions for the operating requirements of
+government Unmanned Aircraft Systems (UAS). This report focuses on civil governmental
+applications such as public safety, disaster assistance, and law enforcement and ignores military
+usage. It looks at how well UAS work with current services in the 1880–1900 MHz as well as
+in 1910–1920 MHz frequency ranges [10].
+   Applications of UAS in government include emergency response, life and property
+protection, and law and order maintenance. These operations require reliable frequency usage
+                                                                                              18
+
+for these operations' payload and command and control (C2) communications. The differences
+in deployment scenarios between urban and rural locations affect the spectrum resources and
+operational range needed [10].
+   Specific spectral needs are assigned to governmental UAS, arising from the need for C2 and
+video payload quality. In the case of LTE-based technology, basic operations call for 5 MHz,
+whereas analytical operations need 10-15 MHz. As for DECT-2020 NR technology, it requires
+3.456 MHz for basic operations and analytical operations 6.912 MHz [10].
+   The spectrum band of 1880-1900 MHz used for DECT, and the 1910-1920 MHz frequency
+band is evaluated for compatibility with governmental UAS [10]. DECT currently operates
+under general authorization, creating a problem for prioritising unmanned aircraft systems used
+in these bands. The compatibility studies show that any operational arrangement of the UAS
+using LTE technology and DECT is not possible, given the high level of interference potential.
+Based on the use of Transmit Power Control (TPC) along with Dynamic Channel Selection
+(DCS) elements of the DECT-2020 NR system, the use of co-channel is possible under certain
+conditions [10]. Minimum coupling loss (MCL) studies are presented in table 3.
+
+Table 3. MCL separation distances between UAS and DECT [10]
+ DECT            UAS Tx DECT Rx DECT Indoor DECT                               DECT WLL
+ Protection      Power       Power       (km)          Outdoor                 (km)
+ Criterion                                             (km)
+ SINR of 21 dB 10 dBm        -65 dBm     0.08-0.12     0.48-0.67               1.9-2.68
+                             -75 dBm     0.27-0.38     1.51-2.14               6.05-8.56
+                 30 dBm      -65 dBm     0.85-1.2      4.8-6.8                 Not studied
+                             -75 dBm     2.68-3.82     15.1-21.4               Not studied
+                 28 dBm      -65 dBm     0.36-0.53     2.14-3.03               8.52-12.06
+                             -75 dBm     1.20-1.70     6.77-9.60               27.0-37.88
+
+   Interference risks that will act as a stumbling block to co-channel operation between UAS
+and Future Railway Mobile Communication System (FRMCS) in the 1900-1910 MHz band are
+as follows. Interference of adjacent channels requires operation separation distances of 300-
+500m in urban and rural surroundings. This is because of interference from Mobile Fixed
+Communication Network (MFCN) DL 1860-1880 MHz with UAS at 1880-1900 MHz causing
+significant throughput loss. Other steps involve enhancement of the receive selectivity as well
+as further filtering, which helps in making gains in the level of interference [10].
+
+        3.2.2 DECT-2020 new radio: The next step towards 5G massive machine-type
+                                            communications
+   The paper “DECT-2020: The next step towards 5G massive machine-type communications”
+by Roman Kovalchukov et al. offered a comprehensive assessment and analysis of the DECT-
+2020 for mMTC features and functionality. This literature review will strictly adhere to the
+technical nature of the paper, and it will highlight the architectural, protocol, and performance
+aspects related to DECT-2020.
+   New comes with mMTC as one of the vital services in 5G systems; it is targeted to ensure
+the availability of high-density, low-power devices necessary for the Internet of Things (IoT).
+The 3GPP has designed solutions like Long Term Evolution for Machine (LTE-M) along with
+Narrowband Internet of Things (NB-IoT) under the Cellular Internet of Things (CIoT) that fulfil
+some requirements of 5G. Still, they have some drawbacks concerning network deployment
+flexibility, node density, and supporting coverage improvements. There exists a gap in terms of
+                                                                                                19
+
+standard support for mMTC, which was filled by the DECT-2020 standard by ETSI that aims
+to address such issues [11].
+   Regarding the network structure, the DECT-2020 system uses the cluster-tree mesh network
+and does not need its own dedicated network resources and the establishment of a specific
+network; locally, DECT-2020 can be implemented in various environments. The architecture
+complements having FT or PT modes in the nodes to allow them to operate and manage local
+radio resources, as illustrated in figure 10. The most crucial advantage of offering flexibility in
+mode operation is to improve the range and network, reducing single point of failure [11].
+
+
+
+
+         Figure 10. Topology formation and different operational modes of RDs [11].
+
+   DECT-2020 uses physical layer suitable for multiple frequency bands up to 6 GHz utilizing
+time division duplex (TDD) along with cyclic prefix orthogonal frequency division
+multiplexing CP-OFDM [11]. This design supports scaling factors regarding the subcarrier
+spacing as well as fast Fourier transform (FFT) size for efficient bandwidth utilization. In
+DECT-2020, the MAC protocol enables both licensed spectrum as well as license exempt
+spectrum operation, and features such as hybrid automatic repeat request (HARQ) and listen-
+before-talk (LBT) are also provided. That is why the flexibility of the MAC layer in resource
+management and its possibility of considering different transmission regimes will provide high
+effectiveness in very different scenarios of mMTC. Figure 11 depicts an example of the protocol
+stack and packet parameters in DECT-2020 [11].
+                                                                                       20
+
+
+
+
+              Figure 11. Packet structure and protocol stack arhitecture [11].
+
+   This paper assesses DECT 2020 NR regarding specific performance parameters like packet
+loss rate (PLR), latency, and energy. The assessment is based on the WINTERsim simulation
+model, which creates a high-density developed deployment environment by ITU-R
+Recommendations. Table 4 shows the parameters of simulation.
+
+Table 4. Parameters of simulation [11]
+   Parameter                                          Value
+   Height of BS antenna                               5 m and 25 m
+   Thermal noise level                                -174 dBm/Hz
+   Node density                                       0.1-24 million devices per km²
+   Traffic model                                      1 message/2 hours/node
+   Frame size                                         10 slots (10 ms)
+   Number of channels                                 1 and 3
+   ACK/NACK transmission                              Single slot using QPSK ¾
+   Channel model Sink-Node                            Urban macro
+   Modulation scheme                                  CP-OFDM
+   Total Transmitter Power per TRxP in BS             7 and 17 dBm
+   Number of node/sink antenna elements               1
+   End node antenna height                            1.5 m
+   BS noise figure                                    7 dB
+   Channel bandwidth                                  1.728 MHz
+   MCS                                                QPSK ¾
+   Inter-site distance (sink)                         500 m
+   Inter-site interference modelling                  Explicitly modelled
+   Node power class                                   7 dBm
+   System Architecture                                57 sinks, 19 gateways and mesh
+                                                                                            21
+
+    Application data message size                       32 bytes
+    End node noise figure                               7 dB
+    SCS                                                 27 kHz
+    Carrier frequency                                   1900 MHz
+    Transport block size                                456 bits
+    Slot size                                           10 symbols (416 µs)
+    Node-Node channel model                             Urban street canyon
+    Maximal number of retransmissions                   3
+
+   Figure 12 shows PLR as a function of node density. DECT 2020 NR out compares single-
+hop solutions regarding networking node densities, particularly for the 5G and beyond
+networks. The multi-hop quirk of a mesh structure enhances the PLR greatly despite reaching
+a device density of up to 16 million devices per square kilometre, which meets the ITU-R
+prescribed PLR of below one percent [11].
+
+
+
+
+                Figure 12. Packet loss rate as a function of node density [11].
+
+    Another important performance metric is latency. The DECT 2020 NR system can achieve
+low latency with a 99th percentile delay not exceeding 10 seconds during the high density of
+devices. The particular use of multi-hop configuration with the bias parameters then allows for
+further optimisation of the delay performance, making DECT 2020 NR ideal for applications
+where delay can be a significant issue [11].
+    Energy efficiency quantified regarding megabits per joule (Mbit/J) becomes critical for
+device durability in the mMTC case. Based on the evaluation of various configurations, this
+paper reveals that DECT-2020 utilization in multi-hop setup is more energy efficient as
+compared to the single-hop configuration mainly due to the less transmission power needed for
+intermediate hop [11].
+    The paper finally compares DECT-2020 with LTE-M and proves that DECT-2020 can have
+more nodes and low latency. Overall, DECT-2020 has more advantages than LTE-M, especially
+in terms of low latency and high node density. This is due to the proposed architectural design
+of DECT-2020, which employs a mesh-based technique that reduces interference and the
+possible spatial reuse of the frequency bands, thus improving the system efficiency.
+                                                                                              22
+
+   Several state-of-the-art technologies integrated into DECT-2020 include several
+technologies applied in cellular networks and IEEE 802. 11 amendments:
+
+   1. Dynamic Channel Selection: Allows the ability to utilize the bandwidth effectively
+      without strict frequency.
+   2. Cognitive Radio Principles: Improves the efficiency of the spectrum used and the anti-
+      failure capability of networks.
+   3. Advanced Physical Layer Features: This layer comprises MIMO transmit diversity,
+      beam forming, adaptive modulation, and coding schemes and provides consistent
+      performance in different environments.
+   The new DECT-2020 standard is one of the most important progresses in the mMTC aspect
+because it helps solve the shortcomings of existing CIoT solutions and provides a more
+comprehensive and efficient solution for 5G networks regarding scalability, flexibility, and high
+performance. That is why its technical design and performance advantages are considered
+promising solutions for various applications in the IoT area, such as smart homes and industrial
+automation.
+
+                   3.2.3 Performance assessment of DECT-2020 NR and
+                             classic DECT coexistence mechanisms
+
+   The increase in demand for IoT services within different commercial domains calls for
+enhanced communication technologies that are also reliable and sustainable. With the rise of
+new technologies like DECT-2020 NR that are already being standardized by ETSI, these
+requirements may be satisfied by delivering operator-independent IoT services through the
+band 1880-1900 MHz with 1. 728 MHz wide channels. DECT-2020 NR aims to address mMTC
+within 5G IMT-2020 and is a possible alternative to 3GPP's NB-IoT and LTE-M technologies
+[12].
+   The classical DECT technology mainly deployed for voice calls employs the TDMA with a
+specific 10 ms frame structure further divided into 24 slots [12]. The DECT-2020 NR, although
+maintaining the same frame structure and slot size in common with the first generation, employs
+several modern physical and data-link layer features such as flexible numerology, Hybrid
+Automatic Repeat Request (HARQ), and Listen-Before-Talk (LBT) to accommodate a variety
+of IoT use cases [12].
+   Figure 13 shows the DECT-2020 random access mechanism. The presence of both new
+DECT-2020 NR and classical DECT technologies is essential since these standards operate in
+adjacent frequency ranges. Several mechanisms have been proposed and evaluated to ensure
+harmonious operation:
+    1. Listen-before-talk (LBT): LBT is the default random access transmission method
+        deployed by DECT-2020 NR to avoid collisions by sensing the channel before it
+        transmits the data. This mechanism, inherited from classic DECT, contributes to
+        minimising interference. Research shows that conventional LBT can maintain excellent
+        performance by allowing no more than 2% of packet drops for classic DECT even when
+        up to 25% of resources are allocated to classic DECT [12].
+    2. Last-minute-scan: This mechanism aims to improve Classic DECT transmission by
+        performing full slot sensing instead of the two-symbol sensing in LBT. As for the main
+        idea of extending the interoperability between classic DECT system and DECT 2020
+        NR, it has been shown to degrade DECT-2020 NR performance considerably over more
+                                                                                             23
+
+      than 10 % in terms of packet drops while providing no remarkable improvement for the
+      classical DECT [12].
+   3. Scheduled-based mechanism: Using pre-allocated resources enables DECT-2020 NR
+      to schedule transmissions, hence minimizing collisions with classic DECT. They
+      seemed to provide about 2-5% enhancement of DECT-2020 performance without
+      negatively impacting the classic DECT [12].
+
+
+
+
+                         Figure 13. Random access mechanisms [12].
+
+   In the DECT-2020 NR, the CP-OFDM is used along with TDMA and FDMA for user
+multiple numerologies [12], allowing flexibility in subcarrier spacing and symbol durations.
+This adaptability enables the system to operate over different transmission channel bandwidths
+and symbol durations, and this is very important in the context of IoT due to the various kinds
+of devices and applications that are to be integrated. The use of Turbo channel coding and High
+order modulation and accessing the retransmission with the help of HARQ with incremental
+redundancy guarantees that data is transmitted with effective means to counter errors [12].
+   DECT-2020 NR is scalable and reliable because the mesh network design enhances its
+scalability and robustness. This mesh network design can be helpful since the devices can
+connect directly and create tree-based topologies of networks; the network can extend its range,
+improving communication reliability. This architecture has been developed to enable
+autonomous routing decisions, enabling high device density and efficient resource utilization
+[12].
+   The studies on compatibility and interoperability between DECT-2020 NR and the classical
+DECT system have been conducted mainly at the system level through full system simulation.
+These simulations consider various deployment scenarios and system loads to assess the impact
+on packet loss rates (PLR) and overall system performance:
+     1. Low Load Conditions: DECT-2020 NR can operate with near-100 % packet delivery
+         with conventional LBT, demonstrating minimal interference with classic DECT.
+     2. High Load Conditions: While employing DECT-2020 NR, performance losses are
+         observed as traffic rises with the lower LBT limits. However, scheduled access
+         mechanisms improve packet delivery rates in these situations.
+Table 5 shows the general simulation parameters, Table 6 shows classic DECT parameters and
+Table 7 shows the parameters for DECT 2020 NR for simulation.
+                                                                                 24
+
+Table 5. Simulation scenario [12]
+   Parameter                                    Value
+   Carrier frequency                            1900 MHz
+   Classic DECT RDs                             2-8 (1-4 connections)
+   Classic DECT configuration                   radius of 75 meters
+   Indoor/outdoor fraction                      80% / 20%
+   UE noise figure                              7 dB
+   Number of node                               1
+   FT DECT-2020 NR                              1, height 25 m, outdoors
+   Sink-Node, Channel model                     Urban macro
+   Total number of RDs in DECT 2020 NR          1000
+   Simulation site                              radius of 170 meters, 90800 m²
+   DECT-2020 NR RD setup                        Uniformly random
+   Node-Node, Channel model                     Urban street canyon
+   Channel bandwidth                            1.728 MHz
+   The thermal noise level                      –174 dBm/Hz
+   Penetration loss in building                 20 dB (ITU-R)
+   How many channels                            1
+   Maximum distance in between classic DECT     20 m
+
+Table 6 Classic DECT parameters [12]
+ Classic DECT parameters
+ Sensitivity                             -96 dBm
+ Interference                            DECT-2020 only
+ Target PER in %/ BER IN % at -96dBm     0.1% BER, 30% PER
+ Traffic in UL/DL                        1/1 UL/DL frames, 360 bits
+ Overall system load                     3 calls, 25% of system load
+ Tx power                                10 dBm
+
+Table 7 DECT 2020 NR parameters [12]
+ DECT-2020 NR parameters
+ Time of inter- arrival                  10-50 s
+ Traffic model                           Bursts of two packets
+ Threshold LBT                           -75 dBm, -100 dBm
+ Data message size of application        32 bytes
+ Transmitter power                       10/19/23 dBm
+ Sensitivity value                       -99.7 dBm (TS 103.636-2)
+ Contention size of window               min – 24, max – 768
+ Format                                  MCS 1,3,4 for 1,2,3 packets
+ Channel access                          LBT + extensions
+ Quality of minimum link                 15 dB
+ Error correction                        HARQ with 3 attempts
+                                                                                              25
+
+   The performance evaluation begins with classic DECT and DECT 2020 NR operating
+independently. The results show that DECT-2020 NR exhibits near 100% packet delivery in a
+low load scenario (inter-arrival periods of 30 seconds or more). In high load situations (10-
+second inter-arrival period), there is a decrease in the performance, reaching 98% for DECT-
+2020 NR while it remains close to 100% for the classic DECT [12].
+   Under LBT operations, DECT-2020 NR performance declined under higher loads and Tx
+power levels. Classical DECT maintains high performance (99% packet delivery) even with
+DECT-2020 NR activity. Nevertheless, higher LBT thresholds (-100 dBm) do not increase the
+coexistence any further, which suggests that LBT higher thresholds (-75 dBm) may yield even
+better results [12].
+   When DECT Tx power increased to 23 dBm, DECT-2020 NR showed reduced performance,
+and the worst-case scenario was observed when the number of users was high. The fact that the
+classical DECT performance does not decrease indicates that higher classic DECT power levels
+elevate coexistence issues for DECT-2020 NR [12].
+   Specifically, the article reveals that while DECT-2020 NR brings monumental
+enhancements for IoT applications, selecting coexistence techniques is critical to sustaining the
+performance. Compared to conventional LBT, satisfactory results are derived in most cases,
+whereas last-minute-scan should be avoided as it negatively affects the DECT-2020 NR
+performance. Coexistence has been observed to be significantly challenged, especially in high
+load conditions; scheduled access mechanisms hold a lot of potential for addressing this
+problem. In general, such integration is needed to provide the required level of compatibility
+and ensure that DECT-2020 NR can co-exist alongside classic DECT, making the best use of
+existing DECT bands for IoT purposes.
+
+  3.2.4 DECT-2020 new radio system level assessment for multi-hop assisted mMTC usage
+                                               scenario
+   A new radio system level assessment for multi-hop assisted mMTC usage scenario DECT
+2020 by Tanmay Singhwi et al. highlights this work towards the assessment of the DECT 2020
+NR technology for mMTC scenarios [13]. This technology aims to fulfil the characteristics of
+the International Telecommunication Union Radiocommunication Sector (ITU-R) for the IMT-
+2020, specifically the scenarios with high-density connection and efficient usage of relay
+communication.
+   The ITU-R has set standards for IMT-2020 given the future needs of traffic data, updated
+connectivity of devices, increased quality of service and reduced costs. ITU-R report M. 2410
+defined the KPIs for Radio access technologies (RATs) in 2017. Technologies including NB-
+IoT NR and LTE-M have been designed to operate with such requirements. Moreover, various
+candidate technologies belonging to different organizations like ETSI-DECT Forum have
+asserted to fulfil these standards [13].
+   Specifically, for IMT-2020, ETSI-DECT boasts of complying with all the technical
+requirements. DECT-2020 NR supports high connection density and offers simultaneous mesh
+networking and multi-hop features. This paper involves the assessment of DECT-2020 NR in
+Urban-Macro mMTC scenarios, taking into consideration various relay selection and channel
+allocation mechanisms [13].
+   The DECT-2020 NR operates in the frequency range of 1880-1900 using ten frequency
+channels. It offers subcarrier spacing of 27, 54, 108 and 216 KHz and supports mesh topology
+for multi-device connectivity [13]. Figure 14 shows the Multiple FTs system operation or sinks.
+Portable devices (RDPT) can transmit or receive data while the RDFT, PT acts as a relay.
+                                                                                         26
+
+
+
+
+                       Figure 14. Multiple FTs system operation [13].
+
+  The RDFT, PT and RDFT form clusters with their own frequency or channel per the DECT-
+2020 NR specification. Table 8 demonstrates the process of finding out how many frequencies
+could be obtained with a bandwidth of 10 MHz in a cell.
+
+Table 8. Possible number of channels [13]
+                Total System bandwidth (max 10MHz: 46dBm), 36dBm/M
+ Channel         8.64 MHz      6.912 MHz   5.184 MHz   3.456 MHz   1.728 MHz
+ Bandwidth
+ 6.912 MHz       1             1           -           -           -
+ 44.395dBm
+ 3.456 MHz      2              2               1              1              -
+ 41.385dBm
+ 1.728 MHz      5              4               3              2              1
+ 38.375dBm
+
+
+
+  The paper proposes various approaches for relay selection and channel allocation to
+minimize interference in a dense urban environment. These approaches include:
+   1. Angles Approach: Involvement in central selection of the RDFT and PTs and channel
+      assigning according to the angular positions. The goal of this approach is to optimize
+      the spatial distribution relays.
+   2. Farthest Distance Approach: To minimize interference, channels are assigned to
+      RDFTs and PTs that are most distant from each other.
+   3. Random Approach: We selected RDFT, PTs, and channels randomly, keeping this as
+      a baseline for comparison.
+   4. Nearest Distance Approach: Designating channels to the RDFT and PTs that are
+      closest to each other to study the impact of close proximity relay placement.
+                                                                                           27
+
+
+
+   This probability of LOS or NLOS between devices is calculated based on distance. The 3D
+distance between the devices determines path loss for RDPT to RDFT PT connection [13].
+Effective SINR of a complete hop, which includes the link RDFT -> RDFT, PT, and the other
+link is RDFT, PT -> RDPT, is defined as the lowest value of SINR for the two links.
+   This paper includes simulation outcomes for the DECT-2020 NR mMTC network with 1000
+UEs per cell. The angles-based strategy would be the most effective for relaying selection and
+device association to users, with a significant improvement in SINR for such users. As
+mentioned above, several choices of relay selection and channel allocation are available for
+DECT-2020 NR, qualifying it for supporting high connection density requirements for mMTC
+scenarios. The angles-based approach offers the best performance in terms of SINR and
+minimized interference, which will benefit dense urban environments.
+                                                                                               28
+
+
+                           4     LINK BUDGET ANALYSIS
+
+In theory, the planning process of any radio network is to create a link budget analysis. The link
+budgeting is a complete analysis of every power loss at receiver and all the gains a
+communication signal encounter in a communication system. This process tracks the signal
+path from the transmitting device through the communication medium, such as radio waves and
+the receiver. Link budget evaluates signal loss in the propagation path for its analysis, and the
+backdrop of the complete analysis is how it behaves in the real world. Having the correct link
+budget analysis is crucial for communication system design. It makes predictions of the power
+received at the receiver based on the transmitter and receiver characteristics. It estimates the
+path loss of a signal between a transmitter and a receiver.
+
+                               4.1   Importance of link budgeting
+
+Link budget analysis helps determine whether a communication system works well in different
+conditions. It is helpful for:
+    1. Finding the maximum range.
+    2. Checking communication quality in various conditions.
+    3. Identifying key performance parameters like path loss, transmission power and antenna
+        gains.
+Link budget analysis is a essential procedure in wireless systems. It enables the systematic
+computation and evaluation of all power losses and gains from transmitter to receiver in a
+communication channel. Link budget analysis is crucial, particularly in our scenario of
+evaluating the performance of DECT 2020NR radio access technology for UAV connectivity
+in the following ways:
+
+   1. Link budget analysis calculates the maximum communication range between UAVs and
+      base stations or multiple UAVs. Engineers can assess the possible range for reliable
+      communication by calculating the received signal strength over different distances [14].
+   2. The analysis encounters aspects that affect communication link performance, including
+      path loss, antenna gains, and environmental losses. Understanding these parts is very
+      important to make system work its best [15].
+   3. Link budget analysis measures how different settings (like power, antenna strength, and
+      frequency) affect the system. This helps engineers design and set up the communication
+      system to work its best [16].
+   4. UAV communication needs are very different (like UAV to UAV vs. UAV to ground).
+      Link budget analysis can be adjusted for different environments and situations, helping
+      to design the system more accurately for each specific use [17].
+   5. Link budget analysis accurately predicts how the system will work, helping to design
+      solutions that are cost-effective without making the system too complicated or too
+      simple [14].
+   6. Link budget analysis ensures the communication system follows rules (like power limits
+      and frequency use) and works properly. This is very important for UAVs flying in
+      controlled airspace.
+                                                                                              29
+
+Link budget analysis is a vital tool for checking how well communication networks work,
+especially for UAVs. It measures every loss and gain from the transmitter to the receiver,
+showing the possible communication range and signal quality. This is crucial for ensuring
+UAVs have reliable communication links [19].
+   There are different ways to test UAV communication systems, each with pros and cons.
+Field testing measures real-world conditions and gives reliable data, but it is expensive and
+takes time. It can only be done in certain places and situations [20]. Simulating different
+modulation and coding schemes (MCS) allows testing many scenarios without real hardware.
+This makes testing more flexible and wide-ranging. However, these simulations can be
+complicated and might only show some real-world conditions accurately [21].
+   Analytical analysis of UAV communication looks at the theory behind it, helping us
+understand the basics. While useful, it can simplify real-world situations too much and often
+needs real-world testing to confirm the results [19].
+   There are many reasons to use link budget analysis. First, it provides a detailed and basic
+check, which is a good place to start for more studies. It costs less than field testing and is a
+good way to do the first checks [22]. Link budget analysis also clearly explains how important
+things like transmitter power, antenna gains, and path loss affect how well the communication
+works [23].
+   Link budget analysis also works well with other methods. It can check simulation results and
+help with field testing, resulting more completely and firmly to evaluate UAV communication
+systems [20]. This method matches our research goals of testing how far and well DECT 2020
+NR technology works for UAVs and finding the best frequency bands for different situations.
+Link budget analysis uses realistic ideas from literature and standards to ensure accuracy and
+relevance [22]. Examining various circumstances (for instance, A2G and A2A, as well as
+frequency ranges) allows us to gain further insights into how the system behaves in multiple
+conditions [24]. Examining various circumstances (for instance, A2G and A2A, as well as
+frequency ranges) allows us to gain further insights into how the system behaves in multiple
+conditions [24]. This system is adaptable, so it can be easily adapted to add new outcomes if
+the requirements of the environments, such as Complex environments or UAV missions,
+require them.
+                                       4.2 Methodology
+
+In this study link budget for a communication system is calculated with the help of a MATLAB
+code following DECT 2020 NR standards. This MATLAB code calculates path loss and
+received power in communication for A2G and A2A communication depending on the distance
+and the frequency of the communication. Further, it also assesses some modulation methods.
+
+                              4.2.1 Parameters and assumptions
+
+The link budget analysis parameters are as per the reference specification existing in the
+literature and the DECT 2020 NR standard. The following table 9 shows the parameters and
+assumptions:
+
+Table 9. Parameters and assumptions.
+ Parameters                             Values
+ Transmitter Power (𝑃𝑡𝑥 )               24 dBm [2]
+ Antenna Gain of transmitter (𝐺𝑡𝑥 )     3 dBi
+ Antenna Gain of receiver (𝐺𝑟𝑥 )        3 dBi
+                                                                                           30
+
+ Distance                              100 m to 5000 m (50 points)
+ Carrier Frequencies (f)               1.89 GHz, 915 MHz, 3.5 GHz [2]
+ Modulation Scheme                     QPSK, QPSK, 16-QAM [2]
+ Other losses (𝐿𝑜𝑡ℎ𝑒𝑟𝑠 )               2 dB
+ Additional loss term (A2G)            10 Db [26]
+
+   The additional path lost in A2G communications can be stated due to many factors that
+includes ground reflections, obstructions, and other environmental factors which are not
+significant in A2A communications. Studies has shown that these factors cause the A2G path
+loss to be higher than A2A. For instance, in a research study done on the UAV aided wireless
+communications, it is highlighted that the scenario of A2G is comparatively more complicated
+as well as experiences a higher path loss as compared to the A2A due to phenomena like
+environmental interactions and reflection by the ground [27]. Additional losses in UAV-to-
+ground communications can range between 7 and 15 dB, depending on urban clutter,
+vegetation, and other obstacles. The usually acknowledged average value for urban contexts is
+roughly 10 dB [26].
+
+                                   4.2.2 Simulation setup
+
+The functional link budget analysis for the specified frequencies and distances by MATLAB
+program is calculated using the parameters shown in table 9. MATLAB was selected because
+it contains built-in functions and toolboxes for designing signal-processing communications
+and wireless system analysis. This makes it helpful in computing and calculating path loss and
+received power values. MATLAB also offers considerable capabilities in plotting and graphing
+the data acquired with the help of visualizing tools, which are crucial for assessing the
+performance of the communication system.
+
+                               4.2.3 MATLAB code structure
+The MATLAB code is shown in section 8 computes link budget analysis to assess the
+performance of DECT-2020 NR communication link, the structure of code is as follows:
+   1. Free space path loss (FSPL): The simplest technique is a primary method known as
+      FSPL for free space path loss, which provides information about the number of losses
+      incurred based on distance and frequency and is valuable for quick comparison and
+      approximate calculations. It is particularly accurate in Line of sight (LOS) conditions,
+      which are common case in most A2A and A2G applications. The formula for FSPL is
+      [25]:
+       𝐹𝑆𝑃𝐿 (𝑑𝐵) = 20 𝑙𝑜𝑔10 (𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 𝑖𝑛 𝑚𝑒𝑡𝑒𝑟𝑠) + 20 𝑙𝑜𝑔10 (𝑓𝑟𝑒𝑞𝑢𝑒𝑛𝑐𝑦 𝑖𝑛 𝐻𝑧) +
+                 4π
+       20 𝑙𝑜𝑔10 ( 𝑐 ). (1)
+       = 20 𝑙𝑜𝑔10 (𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 𝑖𝑛 𝑚𝑒𝑡𝑒𝑟𝑠) + 20 𝑙𝑜𝑔10 (𝑓𝑟𝑒𝑞𝑢𝑒𝑛𝑐𝑦 𝑖𝑛 𝐻𝑧) − 147.55
+       This formula assesses potential reduction in signal power quality as it propagates
+       through the open environment without any obstacles.
+
+   2. Received power (𝑷𝒓𝒙 ): In the following calculations, the received power represents the
+      amount of power available at the receiver for each of the frequencies, distances, and
+                                                                                     31
+
+    modulation methods considered. The link budget equation for calculating the received
+    power (𝑃𝑟𝑥 ) is:
+
+    Calculation for received power (𝑃𝑟𝑥 ) is shown in equation 2:
+                      𝑃𝑟𝑥 = 𝑃𝑡𝑥 + 𝐺𝑡𝑥 − 𝐿𝑝𝑎𝑡ℎ + 𝐺𝑟𝑥 − 𝐿𝑜𝑡ℎ𝑒𝑟𝑠 (2)
+    Sample calculation
+
+1. Distance: 100 m, Frequency: 1.89 GHz
+    •   Path loss (A2A) calculation:
+
+              𝐹𝑆𝑃𝐿 = 20 𝑙𝑜𝑔10 (100) + 20 𝑙𝑜𝑔10 (1.89 ∗ 109 ) − 147.55
+             FSPL_A2A = 40 + 185.5 + (-147.6) = 77.9 dB
+
+    •   Path loss (A2G) calculation:
+FSPL_A2G = 77.9 + 10 = 87.9 dB
+
+    •   Received Power (A2A):
+𝑃𝑟𝑥 A2A = 24 + 3 - 77.9 + 3 - 2 = -48.9 dBm
+
+    •   Received Power (A2G):
+
+ 𝑃𝑟𝑥 A2G = 24 + 3 - 87.9 + 3 - 2 = -58.9 dBm
+
+2. Distance: 5000 m, Frequency: 1.89 GHz
+
+    •   Path Loss (A2A):
+
+                  𝐹𝑆𝑃𝐿 = 20 𝑙𝑜𝑔10 (5000) + 20 𝑙𝑜𝑔10 (1.89 ∗ 109 ) − 147.55
+
+FSPL_A2A = 74 + 185.5 + (-147.6) = 114.3 dB
+
+    •   Path Loss (A2G):
+
+FSPL_A2G = 114.3 + 10 = 124.3 dB
+
+     • Received Power (A2A):
+𝑃𝑟𝑥 A2A = 24 + 3 - 114.3 + 3 - 2 = -86.3 dBm
+
+     • Received Power (A2G):
+𝑃𝑟𝑥 A2G = 24 + 3 - 124.3 + 3 - 2 = -96.3 dBm
+                                                                                             32
+
+                               4.2.4 Output of MATLAB code
+
+In this section, we detail the implementation of the experiment, parameter variations, and
+MATLAB code overall operation for performing link budget analysis for A2A and A2G
+communication. We tried setting several parameters to the limit to see their effect on both path
+loss and received power. These parameters were the distance in between the transmitter and
+receiver (from 100 m to 5000 m in 50 steps), three frequency bands (1.89 GHz, 915 MHz, and
+3.50 GHz), and three modulation schemes (BPSK, QPSK, and 16-QAM) as defined by DECT
+2020 NR standards.
+   According to ETSI TS 103 636-2 V1.1.1 (2020-07), the receiver sensitivity for these
+modulation schemes was set at -101 dBm for BPSK, -93 dBm for QPSK, and -85 dBm for 16-
+QAM. An additional 10 dB loss term was included to account for factors such as ground
+reflections in A2G scenarios. The purpose was to discover trends based on deterministic
+calculations with known models.
+                                                                                               33
+
+
+                         5    RESULTS AND DISCUSSIONS
+
+                                    5.1   Path loss analysis
+In the following section we will explain about the outcomes of link budget analysis. This
+analysis covers several frequencies (1.89 GHz, 915 MHz, 3.5 GHz), distances (100 m to 5000
+m at 50 points), and modulation schemes (BPSK, QPSK, 16-QAM). The scenarios analysed
+include Air-to-Air (A2A) and Air-to-Ground (A2G) communications.
+   Path Loss (dB) quantifies the signal attenuation as it transmitted from the transmitter to the
+receiver, depending upon the signal's frequency and the distance travelled.
+
+
+
+
+              Figure 15. Path Loss Vs Distance for Different frequencies (A2G).
+
+   Figure 15 illustrates path loss at receiver as a function of distance for different frequencies
+for A2G scenario, revealing several significant findings. The analysed frequencies were 1.89
+GHz, 915 MHz, and 3.5 GHz. A notable trend observed is that higher frequencies result in more
+significant path loss; for example, the 3.5 GHz signal experiences significantly higher path loss
+than the 915 MHz signal at comparable distances. Additionally, the graph shows a strong
+distance dependency: as the distance increases, so does the route loss, indicating the natural
+attenuation of the signal over longer distances.
+
+
+
+
+              Figure 16. Path Loss Vs Distance for Different Frequencies (A2A).
+                                                                                               34
+
+Figure 16 displays path loss as a distance function for different frequencies in the A2A scenario,
+highlighting several vital facts. The frequencies used are the same as in the A2G scenario: 1.89
+GHz, 915 MHz, and 3.5 GHz. Higher frequencies exhibit more path loss, consistent with the
+A2G scenario, indicating an explicit frequency dependency. However, unlike the A2G scenario,
+the A2A route loss calculations do not include an additional 10 dB loss term for ambient and
+reflection losses. Consequently, the A2A scenario has lower route loss values than the A2G
+scenario for the same distance and frequency.
+
+                               5.2 Received power analysis
+Received power (dBm) is the power level of the signal received by the UAV, influenced by
+factors such as system losses, path loss, transmission power and antenna gains. Effective
+communication requires the received power to be higher than the receiver's sensitivity.
+   Received power levels are analysed for various frequencies and distances. Figures 17, 18,
+and 19 show the received power vs. distance for the A2G scenario with various MCSs, whereas
+figures 20, 21, and 22 show the received power vs. distance for the A2A scenario with various
+MCS.
+
+
+
+
+                   Figure 17. Received Power vs Distance (A2G) for BPSK.
+
+Figure 17 shows the received power at receiver as a function of distance for various frequencies
+in the A2G scenario using BPSK modulation. The BPSK modulation scheme has a specific
+receiver sensitivity threshold, represented by a horizontal line on the plot. For successful
+communication, the received power must be greater than this level. The graph clearly shows
+how frequency affects signal strength: the received power decreases as the distance increased.
+Higher frequencies experience a sharper drop in power due to increased path loss. Notably, the
+points where the received power curves intersect the sensitivity line mark the maximum
+communication range possible for BPSK modulation at each frequency.
+
+
+
+
+                   Figure 18. Received Power vs Distance (A2G) for QPSK.
+                                                                                               35
+
+Figure 18 illustrates how received power changes with distance for different frequencies in the
+A2G scenario using QPSK modulation. The QPSK system has a set receiver sensitivity level.
+For effective communication, the received power must stay above this threshold. As distance
+increases, received power decreases, especially at higher frequencies. The points where the
+power curves drop below the sensitivity line show the maximum range for QPSK modulation
+at each frequency.
+
+
+
+
+                 Figure 19. Received Power vs Distance (A2G) for 16-QAM.
+
+Figure 19 shows how received power changes with distance for different frequencies in the
+A2G scenario using 16-QAM modulation. This modulation system has a specific threshold for
+receiver sensitivity. Effective communication requires the received power to be above this line.
+The received power decreases with distance, with higher frequencies showing a greater decline.
+The points where the received power curves intersect the sensitivity line represent the maximum
+communication range for 16-QAM modulation at the specified frequency.
+
+
+
+
+                   Figure 20. Received Power vs Distance (A2A) for BPSK.
+
+Figure 20 depicts the received power at receiver as a function of distance for various frequencies
+in the A2A scenario using BPSK modulation. The A2A received power does not include the
+additional 10 dB loss term, resulting in higher values than the A2G scenario. The points where
+the received power curves cross the sensitivity line indicate the maximum communication range
+for BPSK modulation at each frequency. Similar trend goes for QPSK and 16- QAM
+modulation in figure 21 and figure 22.
+                                                                                        36
+
+
+
+
+                  Figure 21. Received Power vs Distance (A2A) for QPSK.
+
+
+
+
+                 Figure 22. Received Power vs Distance (A2A) for 16-QAM.
+
+
+
+
+Tabel 10 shows the 10 results for link budget analysis.
+Table 10. Link budget analysis results
+ Distance (m) Frequency Path Loss Path Loss               Received Power   Received Power
+                 (GHz)        A2A (dB) A2G (dB)           A2A (dBm)        A2G (dBm)
+   100             1.89          77.9    87.9               -48.9            -58.9
+   100             0.915         71.9    81.9               -42.9            -52.9
+   500             1.89          91.9    101.9              -62.9            -72.9
+   500             0.915         85.9    95.9               -56.9            -66.9
+   1000            1.89          97.9    107.9              -69.9            -79.9
+   1000            0.915         91.9    101.9              -62.9            -72.9
+   2000            1.89          103.9   113.9              -75.9            -85.9
+   2000            0.915         97.9    107.9              -68.9            -78.9
+   3000            1.89          108.3   118.3              -80.3            -90.3
+   3000            0.915         102.1   112.1              -73.1            -83.1
+   4000            1.89          111.9   121.9              -83.9            -93.9
+   4000            0.915         105.9   115.9              -76.9            -86.9
+   5000            1.89          114.3   124.3              -86.3            -96.3
+   5000            0.915         108.3   118.3              -79.3            -89.3
+                                                                                            37
+
+This link budget analysis highlights the impact of frequency, distance, modulation scheme, and
+scenario type (A2G vs. A2A) on path loss and received power. Key takeaways include:
+
+       •   Impact of Frequency: Higher frequencies result in greater path loss, reducing the
+           effective communication range.
+
+       •   Lower Frequencies for Longer Range: Select lower frequencies (e.g., 915 MHz)
+           for applications requiring longer communication ranges, as they experience less path
+           loss, allowing signals to travel further.
+
+       •   Higher Frequencies for Higher Data Rates: Use higher frequencies (e.g., 3.5
+           GHz) for applications where higher data rates are essential but be mindful of the
+           reduced range due to increased path loss.
+
+       •   Modulation Scheme Effects: The higher data rates such as provided by 16-QAM
+           needs stronger signals and therefore limiting their transmission range. Typically,
+           more elaborate techniques, such as BPSK, provide longer transmission distances
+           with the corresponding trade-off of lower data throughputs.
+
+
+                       5.3   General insights and recommendations
+   1. Trade-offs: Frequency, modulation order and distance have a clear trade off. Lower
+      frequencies and lower modulation orders are applied to the long-range communication
+      systems, whereas the higher frequencies and higher modulation orders are used in the
+      short, high throughput applications.
+   2. Practical Considerations: Additional factors such as surrounding environment,
+      interference, and regulations that must be taken into account in a real-life
+      implementation. The estimates given by the theoretical ones are good to develop a basic
+      framework, but a practical adjustment is needed to end up with reliable point estimates.
+   3. Recommendations:
+   •   For long-range communication systems it is prioritized to use low frequencies (e. g. 915
+       MHz) and low-order modulating techniques (e. g. QPSK).
+   •   For short distances and under high throughput requirements, the higher frequency (e. g.,
+       3.5 MHz) and with the higher order modulation (e. g., 16-QAM) can be employed,
+       provided if the corresponding sensitivity is achievable.
+   •   Optimize antenna gains and consider scenario-specific adjustments to enhance system
+       performance.
+                                                                                              38
+
+
+                                      6   SUMMARY
+
+The thesis "Analysis of the Performance of the DECT 2020 NR Radio Access Technology for
+Connectivity of Unmanned Aerial Vehicles (UAVs)” focuses on exploring the potential of
+DECT 2020 NR radio access technology for UAV communication.
+    This introduction of thesis highlights the increasing demands of UAVs in different sectors
+and the need to ensure that reliable connectivity. Thus, it defines the research objectives for
+evaluating the performance assessment of DECT 2020 NR through path loss calculations, link
+budget analysis and feasibility of communication links for both A2A and A2G communication.
+    In the literature review we discussed about current research in UAV connectivity, the new
+radio access technology, and UAV interference management, security, and integration with IoT
+and smart city environment. It also reviews relevant research articles on DECT-2020 NR
+technology, classical DECT and mMTC usage, and their coexistence.
+    The DECT 2020 Technology section contains information on DECT-2020 NRs, its
+architecture, and mode of functioning. It provides an overview of the operating structures such
+as the physical layer, MAC layer, data link control layer as well as the convergence layer and
+it outlines features like the dynamic channel selection, cognitive radio principles and the mesh
+network capabilities.
+    The methodology section outlines link budget analysis method and parameters used,
+assumptions made and MATLAB simulation scenario. It outlines procedures through which
+one can establish the path loss, received power, and link feasibility for the intended frequency,
+distance, and modulation type.
+    In the results and discussions section of the thesis, the thesis gives the outcomes of the
+simulations carried out for the study. This indicates that the lower frequency bands like 915
+MHz are more effective for long distance communication due to low path loss while the higher
+frequencies like 1.89 GHz, 3.5 GHz suffering from high path loss and is more suitable for short
+range transmission. The received power analysis reveals that lower order modulation schemes
+like as QPSK are better suited for long distances.
+                                                                                         39
+
+
+                                7   REFERENCES
+
+
+
+[1]    DECT, E. (2020). New Radio (NR); Part 1: Overview; Release 1. European
+       Telecommunications Standards Institute, Technical Specification (TS), 103, 636-1.
+
+[2]    DECT, E. (2020). New Radio (NR); Part 2: Radio reception and transmission
+       requirements; Release 1. European Telecommunications Standards Institute,
+       Technical Specification (TS), 103, 636-2.
+
+[3]    DECT, E. (2020). New Radio (NR); Part 3: Physical layer; Release 1. European
+       Telecommunications Standards Institute, Technical Specification (TS), 103, 636-4.
+
+[4]    DECT, E. (2020). New Radio (NR); Part 4: MAC layer; Release 1 European
+       Telecommunications Standards Institute, Technical Specification (TS), 103, 636-4.
+
+[5]    DECT, E. (2020). New Radio (NR); Part 5: DLC and Convergence layers; Release
+       1. European Telecommunications Standards Institute, Technical Specification
+       (TS), 103, 636-5.
+
+[6]    Zeng, Y., Zhang, R., & Lim, T. J. (2016). Wireless communications with unmanned
+       aerial vehicles: Opportunities and challenges. IEEE Communications
+       magazine, 54(5), 36-42.
+
+[7]    Mozaffari, M., Saad, W., Bennis, M., & Debbah, M. (2017). Mobile unmanned aerial
+       vehicles (UAVs) for energy-efficient Internet of Things communications. IEEE
+       Transactions on Wireless Communications, 16(11), 7574-7589.
+
+[8]    Shakhatreh, H., Sawalmeh, A. H., Al-Fuqaha, A., Dou, Z., Almaita, E., Khalil, I., ...
+       & Guizani, M. (2019). Unmanned aerial vehicles (UAVs): A survey on civil
+       applications and key research challenges. Ieee Access, 7, 48572-48634.
+
+[9]    Asadi, A., Wang, Q., & Mancuso, V. (2014). A survey on device-to-device
+       communication in cellular networks. IEEE Communications Surveys &
+       Tutorials, 16(4), 1801-1819.
+
+[10]   ECC Report 352, Harmonised conditions and spectrum bands for the operation of
+       governmental Unmanned Aircraft System (UAS) systems: European Conference of
+       Postal and Telecommunications Administrations. 2023 Jun 16.
+
+[11]   Kovalchukov, R., Moltchanov, D., Pirskanen, J., Säe, J., Numminen, J.,
+       Koucheryavy, Y., & Valkama, M. (2022). DECT-2020 new radio: The next step
+       toward 5G massive machine-type communications. IEEE Communications
+       Magazine, 60(6), 58-64.
+
+[12]   Samuylov, A., Moltchanov, D., Pirskanen, J., Numminen, J., Koucheryavy, Y., &
+       Valkama, M. (2023, June). Performance Assessment of DECT-2020 NR and Classic
+       DECT Coexistence Mechanisms. In 2023 IEEE 97th Vehicular Technology
+       Conference (VTC2023-Spring) (pp. 1-7). IEEE.
+                                                                                      40
+
+[13]   Singhwi, T., Andra, S., Seelam, S. J., Makkar, R., Rawal, D., & Sharma, N. (2021,
+       December). DECT-2020 New Radio System Level Assessment for Multi-Hop
+       Assisted mMTC usage Scenario. In 2021 IEEE International Conference on
+       Advanced Networks and Telecommunications Systems (ANTS) (pp. 1-6). IEEE.
+
+[14]   Rappaport, T. S. (2024). Wireless communications: principles and practice.
+       Cambridge University Press.
+
+[15]   Goldsmith, A. (2005). Wireless communications. Cambridge university press.
+
+[16]   Molisch, A. F. (2012). Wireless communications (Vol. 34). John Wiley & Sons.
+
+[17]   Sklar, B. (2021). Digital communications: fundamentals and applications. Pearson.
+
+[18]   Anttonen, A., Karhula, P., Lasanen, M., & Majanen, M. (2021). Enabling massive
+       machine type communications with DECT-2020 standard: A System-Level
+       Performance Study.
+
+[19]   Rappaport, T. S., Heath Jr, R. W., Daniels, R. C., & Murdock, J. N.
+       (2015). Millimeter wave wireless communications. Pearson Education.
+
+[20]   Gupta, L., Jain, R., & Vaszkun, G. (2015). Survey of important issues in UAV
+       communication networks. IEEE communications surveys & tutorials, 18(2), 1123-
+       1152.
+
+[21]   Bekmezci, I., Sahingoz, O. K., & Temel, Ş. (2013). Flying ad-hoc networks
+       (FANETs): A survey. Ad Hoc Networks, 11(3), 1254-1270.
+
+[22]   Skolnik, M. I. (2008). Radar Handbook. McGraw-Hill Education.
+
+[23]   Molisch, A. F. (2012). Wireless communications (Vol. 34). John Wiley & Sons.
+
+[24]   Yan, C., Fu, L., Zhang, J., & Wang, J. (2019). A comprehensive survey on UAV
+       communication channel modeling. IEEE Access, 7, 107769-107792.
+
+[25]   2024 Jan 9. Free-space path loss. Accessed: 2024-06-15. In Wikipedia.
+       https://en.wikipedia.org/w/index.php?title=Free-
+       space_path_loss&oldid=1194601441
+
+[26]   Matolak, D. W., & Sun, R. (2016). Air–ground channel characterization for
+       unmanned aircraft systems—Part I: Methods, measurements, and models for over-
+       water settings. IEEE Transactions on Vehicular Technology, 66(1), 26-44.
+
+[27]   Shafafi, K., Almeida, E. N., Coelho, A., Fontes, H., Ricardo, M., & Campos, R.
+       (2023, December). UAV-Assisted Wireless Communications: An Experimental
+       Analysis of A2G and G2A Channels. In International Conference on Simulation
+       Tools and Techniques (pp. 243-256). Cham: Springer Nature Switzerland.
+                                                                               41
+
+
+                                   8   APPENDIX
+
+MATLAB code for link budget analysis
+
+% Parameters
+P_tx = 24; % Transmit power in dBm
+G_tx = 3; % Transmit antenna gain in dBi
+frequencies = [1.89e9, 915e6, 3.5e9]; % Frequency bands in Hz
+G_rx = 3; % Receive antenna gain in dBi
+L_other = 2; % Other losses in dB
+
+% Speed of light
+c = 3e8; % Speed of light in m/s
+
+% Modulation schemes and code rates
+modulation_schemes = {'BPSK', 'QPSK', '16-QAM'};
+code_rates = [0.5, 0.75, 0.75]; % Code rates for each modulation scheme
+
+% Receiver sensitivities for DECT 2020 NR (in dBm)
+receiver_sensitivities = [-101, -93, -85]; % Sensitivity for each modulation
+scheme
+
+% Distance array (in meters)
+distances = linspace(100, 5000, 50); % 50 points from 100 m to 5000 m
+
+% Additional loss term for A2G (environmental and reflection losses)
+L_a2g_additional = 10; % Additional path loss in dB for A2G
+
+% Preallocate results for plotting
+path_loss_A2G = zeros(length(distances), length(frequencies));
+path_loss_A2A = zeros(length(distances), length(frequencies));
+received_powers_A2G = zeros(length(distances), length(frequencies),
+length(modulation_schemes));
+received_powers_A2A = zeros(length(distances), length(frequencies),
+length(modulation_schemes));
+
+% Loop over different distances
+for k = 1:length(distances)
+    d = distances(k);
+
+    % Loop over different frequency bands
+    for i = 1:length(frequencies)
+        f = frequencies(i);
+
+        % Free-space path loss calculation for A2A scenario
+        L_path_A2A = 20 * log10(d) + 20 * log10(f) + 20 * log10(4 * pi / c);
+
+        % A2G path loss includes additional environmental loss
+        L_path_A2G = L_path_A2A + L_a2g_additional;
+
+        % Store the path loss results
+        path_loss_A2G(k, i) = L_path_A2G;
+        path_loss_A2A(k, i) = L_path_A2A;
+
+        % Loop over different modulation schemes for received power
+        for j = 1:length(modulation_schemes)
+            modulation = modulation_schemes{j};
+                                                                                  42
+
+                  receiver_sensitivity = receiver_sensitivities(j);
+
+                  % Link budget calculation for received power in A2A
+                  P_rx_A2A = P_tx + G_tx - L_path_A2A + G_rx - L_other;
+
+                  % Link budget calculation for received power in A2G
+                  P_rx_A2G = P_tx + G_tx - L_path_A2G + G_rx - L_other;
+
+                  % Store the received power results
+                  received_powers_A2A(k, i, j) = P_rx_A2A;
+                  received_powers_A2G(k, i, j) = P_rx_A2G;
+            end
+      end
+end
+
+% Consolidate and plot Path Loss vs Distance for both A2G and A2A
+figure;
+subplot(2, 1, 1);
+for i = 1:length(frequencies)
+    plot(distances, path_loss_A2G(:, i), '-o', 'DisplayName', sprintf('%.3f GHz
+A2G', frequencies(i) / 1e9));
+    hold on;
+end
+xlabel('Distance (m)');
+ylabel('Path Loss (dB)');
+title('Path Loss vs Distance (A2G)');
+legend show;
+grid on;
+
+subplot(2, 1, 2);
+for i = 1:length(frequencies)
+    plot(distances, path_loss_A2A(:, i), '-o', 'DisplayName', sprintf('%.3f GHz
+A2A', frequencies(i) / 1e9));
+    hold on;
+end
+xlabel('Distance (m)');
+ylabel('Path Loss (dB)');
+title('Path Loss vs Distance (A2A)');
+legend show;
+grid on;
+
+% Consolidate and plot Received Power vs Distance for all modulation schemes (A2G
+and A2A)
+modulation_titles = {'BPSK', 'QPSK', '16-QAM'};
+receiver_sensitivities_lines = {'--k', '--r', '--b'};
+
+for j = 1:length(modulation_schemes)
+    figure;
+    subplot(2, 1, 1);
+    for i = 1:length(frequencies)
+        plot(distances, received_powers_A2G(:, i, j), '-o', 'DisplayName',
+sprintf('%.3f GHz', frequencies(i) / 1e9));
+        hold on;
+    end
+    yline(receiver_sensitivities(j), receiver_sensitivities_lines{j}, 'LineWidth',
+2, 'DisplayName', sprintf('%s Sensitivity', modulation_titles{j}));
+    xlabel('Distance (m)');
+    ylabel('Received Power (dBm)');
+                                                                                43
+
+    title(sprintf('Received Power vs Distance (A2G) for %s',
+modulation_titles{j}));
+    legend show;
+    grid on;
+
+    subplot(2, 1, 2);
+    for i = 1:length(frequencies)
+        plot(distances, received_powers_A2A(:, i, j), '-o', 'DisplayName',
+sprintf('%.3f GHz', frequencies(i) / 1e9));
+        hold on;
+    end
+    yline(receiver_sensitivities(j), receiver_sensitivities_lines{j}, 'LineWidth',
+2, 'DisplayName', sprintf('%s Sensitivity', modulation_titles{j}));
+    xlabel('Distance (m)');
+    ylabel('Received Power (dBm)');
+    title(sprintf('Received Power vs Distance (A2A) for %s',
+modulation_titles{j}));
+    legend show;
+    grid on;
+end
+

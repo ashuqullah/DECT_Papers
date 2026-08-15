@@ -1,0 +1,66 @@
+Title: URLLC-Based Multi-Hop Communication Using
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 New Radio (NR) is a Radio Interface Technology (RIT) introduced by
+ETSI for massive Machine Type Communications (mMTC) and Ultra-Reliable Low
+Latency Communications (URLLC) use cases. A single DECT-2020 NR Radio Device
+(RD) in Fixed Termination (FT) mode announces radio resources for the connected
+RDs in Portable Termination (PT) mode. An RD can also operate in both modes
+simultaneously as an FT/PT. An RD in FT mode is responsible for packet routing
+for the connected radio devices. However, for multi-hop communication, RDs in FT
+mode flood the packet, which utilizes more network resources and introduces
+additional latency. In this paper, we propose a routing procedure for URLLC-
+based multihop communication using the MAC layer and convergence layer
+functionalities of DECT-2020 NR. Moreover, we formulate the optimization problem
+for optimal path selection based on userplane latency, which is our previous
+contribution to the ETSI self-evaluation technical report of DECT-2020 NR and
+propose a graph theory-based solution. The investigations demonstrate that an
+improvement of up to 15% in throughput and a reduction of up to 15% in end-to-
+end latency is observed in comparison with the standard flooding procedure.
+
+Approach and methods:
+to DECT-2020 NR and its applications in a 5G mMTC use case. The author presented
+a system-level evaluation and compared the investigations with existing LPWAN
+solutions in terms of the supported density of nodes. Author in [8] performed a
+performance evaluation of DECT-2020 NR in a real-life industrial environment for
+various RF bands. The investigation includes the evaluation of PER, BER, and RMS
+delay spread for a bandwidth of 13.824 MHz. [9] also presented a link-level
+simulation for the use case of URLLC and evaluated PER for various modulation
+schemes with HARQ implementation. The simulation results verified the
+requirements of URLLC, achieving link latency below 1ms and reliability of
+99.99%. In this paper, we propose a multi-hop routing procedure leveraging the
+MAC and convergence layers of the DECT2020 NR network to meet URLLC
+requirements. The gateway 979-8-3503-6836-9/25/$31.00 ©2025 IEEE Authorized
+licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft.
+Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions
+apply. 2025 IEEE Wireless Communications and Networking Conference (WCNC)
+maintains the network topology, with link costs defined by user plane latency to
+fulfill the DECT-2020 NR URLLC specifications as outlined in the standard [10]
+and ETSI evaluation report
+
+Key findings:
+Joint European Conference on Networks and Communications 6G Summit (EuCNC/6G
+Summit), 2024, pp. 610–615. [9] M. Penner, M. Nabeel, and J. Peissig, “URLLC
+Performance Evaluation of IMT-2020 Candidate Technology: DECT-2020 New Radio,”
+in 2021 IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp. 1–7.
+[10] ETSI, “DECT-2020 New Radio (NR); Part 3: Overview; Release 1,” European
+Telecommunications Standards Institute, Technical Specification (TS), vol. 103,
+pp. 636–3, March, 2024. [11] ——, “ETSI Evaluation Group; Final Evaluation Report
+on DECT2020 NR,” European Telecommunications Standards Institute, Technical
+Report (TR), vol. 103, p. 810, Nov, 2021. [12] Y. Chai and X.-J. Zeng, “Delay-
+and Interference-Aware Routing for Wireless Mesh Network,” IEEE Systems Journal,
+vol. 14, no. 3, pp. 4119–4130, 2020. [13] ETSI, “DECT-2020 New Radio (NR); Part
+4: MAC layer; Release 1,” European Telecommunications Standards Institute,
+Technical Specification (TS), vol. 103, pp. 636–4, March, 2024. [14] E. Morgado,
+I. Mora-Jimenez, J. J. Vinagre, J. Ramos, and A. J. Caamano, “End-to-End Average
+BER in Multihop Wireless Networks over Fading Channels,” IEEE Transactions on
+Wireless Communications, vol. 9, no. 8, pp. 2478–2487, 2010. Authorized licensed
+use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

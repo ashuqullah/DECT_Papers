@@ -1,0 +1,75 @@
+Title: Modeling DECT-2020 as a Tandem Queueing System and Its
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Academic Editors: Leonid Piterbarg and Steve Drekic Received: 2 November 2025
+Revised: 2 December 2025 Accepted: 20 December 2025 The Peak Age of Information
+(PAoI) quantifies the freshness of updates used in cyberphysical systems (CPSs),
+realized within the Internet of Things (IoT) paradigm, encompassing devices,
+networks, and control algorithms. Consequently, PAoI is a critical metric for
+real-time applications enabled by Ultra-Reliable Low Latency Communication
+(URLLC). While highly useful for system evaluation, the direct analysis of this
+metric is complicated by the correlation between the random variables
+constituting the PAoI. Thus, it is often evaluated using only the mean value
+rather than the full distribution. Furthermore, since CPS communication
+technologies like Wi-Fi or DECT-2020 involve multiple processing stages,
+modeling them as tandem queueing systems is essential for accurate PAoI
+analysis. In this paper, we develop an analytical model for a DECT-2020 network
+segment represented as a two-phase tandem queueing system, enabling detailed
+PAoI analysis via Laplace–Stieltjes transforms (LST). We circumvent the
+dependence between generation and sojourn times by classifying updates into four
+mutually exclusive groups. This approach allows us to derive the LST of the PAoI
+and determine the exact Probability Density Function (PDF) for M | M |1 → M | M
+|1 system. We also calculate the mean and variance of the PAoIs and validate our
+results through numerical experiments. Additionally, we evaluate the impact of
+different service time distributions on PAoI variability. These findings
+contribute to the theoretical understanding of PAoI in tandem queueing systems
+and provide practical insights for optimizing DECT-2020-based communication
+systems. Published: 4 January 2026 Correction Statement: This article has been
+republished with a minor change. The change does not affect
+
+Approach and methods:
+The Internet of Things (IoT) is one of the most significant areas of
+technological development, built on three main components: devices, networks,
+and controls. This complex system requires not only the development of each
+component but also the evaluation of https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186 2 of 22 conditions for their coexistence. A critical
+aspect of this task is assessing communication networks regarding the
+feasibility of control implementation. Since control decisions rely heavily on
+device feedback, the relevance and timeliness of this information are paramount.
+As information relevance depends on delivery speed and reliability, careful
+network-level analysis is required for various systems. The Age of Information
+(AoI) has been proposed as a formal metric to evaluate update freshness [1]. In
+continuous-time systems, the AoI is defined as the time elapsed since the
+generation of the last successfully delivered update. Additionally, the
+discrete-time process formed by the local maxima of the AoI is analyzed to
+evaluate the delivery timeliness. This metric, known as the Peak AoI (PAoI), is
+defined as the sum of the inter-arrival time and the sojourn time for each
+update [1]. By exploring the AoI and PAoI, it is possible to assess the
+freshness of the information and
+
+Key findings:
+the IEEE INFOCOM 2020—IEEE Conference on Computer Communications Workshops
+(INFOCOM WKSHPS), Virtual, 6–9 July 2020; pp. 31–36. [CrossRef] Li, H.; Gong,
+G.; Zhang, J.; Zhao, H.; Zhou, L.; Wei, J. Analysis on Age of Information in
+Partial Computing Edge Computing Systems with Multi Source-Destination Pairs. In
+Proceedings of the 2022 IEEE 96th Vehicular Technology Conference (VTC2022Fall),
+Beijing, China, 26–29 September 2022; pp. 1–7. [CrossRef] Qin, X.; Li, Y.; Song,
+X.; Ma, N.; Huang, C.; Zhang, P. Timeliness of Information for Computation-
+Intensive Status Updates in Task-Oriented Communications. IEEE J. Sel. Areas
+Commun. 2023, 41, 623–638. [CrossRef] Burke, P.J. The Output of a Queuing
+System. Oper. Res. 1956, 4, 699–704. [CrossRef] Reich, E. Note on Queues in
+Tandem. Ann. Math. Stat. 1963, 34, 338–341. [CrossRef] ETSI. DECT-2020 New Radio
+(NR); Part 2: Radio Reception and Transmission Requirements; Release 1; TS 103
+636-2 v1.5.1; ETSI: Sophia Antipolis, France, 2024. Disclaimer/Publisher’s Note:
+The statements, opinions and data contained in all publications are solely those
+of the individual author(s) and contributor(s) and not of MDPI and/or the
+editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products
+referred to in the content. https://doi.org/10.3390/math14010186
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

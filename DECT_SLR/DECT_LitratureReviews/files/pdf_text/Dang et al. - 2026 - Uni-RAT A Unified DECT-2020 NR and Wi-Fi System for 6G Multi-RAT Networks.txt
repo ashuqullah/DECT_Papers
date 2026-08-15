@@ -1,0 +1,2334 @@
+       Uni-RAT: A Unified DECT-2020 NR and Wi-Fi
+
+
+
+
+                                                                                                          ed
+          Framework for 6G Multi-RAT Networks
+                       Yongchao Dang, Ngo Quang, Ruttik Kalle, Jose Costa Requena, and Riku Jäntti
+
+
+
+
+                                                                                                       iew
+     Abstract—Future 6G networks aim to deliver seamless, secure,              For instance, Wi-Fi primarily targets indoor environments
+  and low-latency connectivity across heterogeneous radio access               and achieves low deployment cost by operating in unlicensed
+  technologies (RATs) such as 5G New Radio (NR), Wi-Fi, and                    spectrum, which, however, makes it susceptible to interference
+  DECT-2020 NR to support emerging applications including
+  extended reality (XR) and the Industrial Internet of Things                  and security vulnerabilities [2]. In contrast, mobile cellular
+  (IIoT). However, current Multi-RATs systems are operated and                 networks such as 5G offer enhanced security, reliability, and
+  managed in isolation, which hinders users and devices from                   quality of service through the use of licensed spectrum and
+
+
+
+
+                                                                                           ev
+  seamlessly leveraging heterogeneous connectivity in a unified                network slicing, but at the expense of higher capital expen-
+  and efficient manner. To address this fragmentation, 3GPP                    diture and dependence on vendor-specific infrastructure [3].
+  has introduced interworking functions such as the N3IWF for
+  untrusted and the TNGF for trusted non-3GPP access, enabling                 Beyond Wi-Fi and 5G, DECT-2020 NR, recognized by the
+  IP-session continuity when users move across heterogeneous                   ITU as a non-cellular technique of the IMT-2020 (5G) family,
+  networks. Nevertheless, these mechanisms rely on mandatory                   has emerged as a promising technology for massive machine-
+
+
+
+
+                                                                              r
+  IPsec, which requires each RAT to maintain a separate secure                 type communications (mMTC) and ultra-reliable low-latency
+  tunnel to the core network and prevents intra-cell device-to-                communications (URLLC) in industrial and mission-critical
+  device (D2D) communication, thereby introducing significant
+                                                                               applications [4]. According to the ITU, future 6G systems
+  encryption latency, increasing data-plane load, and complicating
+  network management. To overcome these limitations, we propose
+  Uni-RAT, a unified Multi-RATs framework in which DECT-
+  2020 NR operates as the Master-RAT, anchoring 3GPP control-
+  plane security via 5G-AKA and NAS, while Wi-Fi functions as a
+                                                                           er  will adopt a Multi-RATs architecture, where cellular networks
+                                                                               serve as the primary Big-RAT in coordination with multiple
+                                                                               Lite-RATs, consist of non-cellular techniques such as Wi-
+                                                                               Fi and DECT-2020 NR, to support diverse use cases while
+                                                             pe
+  Secondary-RAT for data-plane data delivery. Uni-RAT employs
+  lightweight Layer-3 WireGuard tunnels to secure both D2D                     ensuring consistent performance, interoperability, and cost-
+  and multi-hop communication, significantly reducing the latency              effective connectivity [5].
+  and computational overhead of IPsec-based interworking mech-                    The 3rd generation partnership project (3GPP) specifies two
+  anisms used by N3IWF and TNGF. In addition, a customized                     interworking functions for non-3GPP access in TS23.502 [6],
+  SMS-over-NAS signaling mechanism is introduced to distribute                 which extend 5G connectivity beyond licensed cellular access
+  WireGuard configuration and keying material, enabling unified
+  authentication and efficient Multi-RATs security management.                 and enable the integration of heterogeneous RATs such as
+                                               ot
+
+  We implement a full prototype using Nordic nRF9161 DECT-2020                 Wi-Fi and LiFi with the 5G Core (5GC). In the untrusted
+  NR devices, Raspberry Pi Wi-Fi nodes, and a Cumucore 5G core,                non-3GPP access model, the non-3GPP interworking function
+  with security-critical functions protected inside Arm TrustZone.             (N3IWF) connects the user equipment (UE) to the 5GC via
+  Experimental results indicate that Uni-RAT supports Multi-RATs               an end-to-end (E2E) IPsec tunnel that secures both NAS
+  communication with high throughput and low packet loss in
+                                 tn
+
+
+
+  intra-cell D2D scenarios, maintains bounded latency and jitter               signaling and data-plane traffic. In contrast, the trusted non-
+  under relay-assisted and inter-cell configurations, and achieves             3GPP access model employs the Trusted non-3GPP gate-
+  stable UE registration latency below 100 ms with up to 100                   way function (TNGF), which enables direct NAS signaling
+  concurrent devices under background traffic, demonstrating its               between the UE and the access and mobility management
+  practical feasibility and scalability and positioning Uni-RAT as             function (AMF) while relying on trusted link-layer security
+  an early architectural blueprint for 6G Multi-RATs networks.
+                   rin
+
+
+
+
+     Index Terms—Multi-RATs, Wi-Fi, DECT-2020 NR, Device-to-                   mechanisms, such as IEEE 802.1X or MACsec. While both
+  Device (D2D), SMS-over-NAS, 6G.                                              N3IWF and TNGF enable non-3GPP access to the 5GC, they
+                                                                               are fundamentally designed to integrate each non-3GPP RAT
+                           I. I NTRODUCTION                                    independently through per-access secure connectivity to the
+     Emerging 6G services, such as extended reality (XR) and                   core network. Consequently, security contexts are not shared
+                                                                               across RATs, which prevents coordinated cross-RAT control
+     ep
+
+
+
+
+  the Industrial Internet of Things (IIoT), demand seamless wire-
+  less connectivity characterized by extreme data rates, ultra-low             and results in fragmented control-plane operation. Moreover,
+  latency, and high reliability [1]. However, existing radio access            although these mechanisms ensure E2E integrity and con-
+  technologies (RATs) cannot seamlessly meet these diverse                     fidentiality, their reliance on IPsec tunneling or link-layer
+  requirements across heterogeneous deployment environments.                   security increases configuration complexity and computational
+                                                                               overhead, whicih limitations constrain deployment flexibility
+Pr
+
+
+
+
+     Yongchao Dang, Ngo Quang, Ruttik Kalle and Jäntti Riku are with          in heterogeneous environments, particularly for time-critical
+  the Department of Information and Communications Engineering, School
+  of Electrical Engineering, Aalto University, 02150 Espoo, Finland (e-mail:   and resource-constrained IIoT scenarios envisioned for future
+  firstname.lastname@aalto.fi).                                                6G networks.
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+     A promising approach to addressing these limitations is             supporting scalable, secure Multi-RATs operation for 6G
+  a hierarchical Multi-RATs coordination framework, in which             networks.
+  one RAT is designated as a Master-RAT that maintains a               • Uni-RAT replaces the IPsec-based N3IWF and TNGF
+
+
+
+
+                                                                                                ed
+  persistent and secure connection to the 5GC for authentication         with lightweight Layer-3 WireGuard tunnels, enabling se-
+  and control, while Secondary-RATs operate under a shared               cure communication between UEs and the 5GC as well as
+  security context to provide data-plane connectivity. Related           D2D connectivity. To support scalable key management,
+  concepts can be observed in commercial systems such as                 Uni-RAT introduces a customized SMS-over-NAS sig-
+  AirDrop and Intel Unison, where Bluetooth low energy (BLE)             naling mechanism to distribute WireGuard configuration
+
+
+
+
+                                                                                             iew
+  is used for device discovery and signaling while Wi-Fi delivers        and keying material to devices, enabling unified security
+  high-speed data transfer [7]. However, these D2D solutions             control across heterogeneous RATs for both control and
+  operate in isolation and lack integration with a unified 3GPP          data planes while reducing cryptographic overhead and
+  control and security framework, making them vulnerable to              computational load.
+  spoofing, relay, and man-in-the-middle attacks [8]–[10]. While       • Uni-RAT introduces a hardware-assisted security archi-
+  existing 3GPP interworking mechanisms such as N3IWF and                tecture based on ARM TrustZone at both UEs and base
+  TNGF could, in principle, connect multiple RATs (e.g., BLE             station (BS), enabling secure integration of heterogeneous
+
+
+
+
+                                                                                  ev
+  and Wi-Fi) to the 3GPP network, they require independent               RATs under a unified 3GPP control framework. Security-
+  authentication and management procedures for each RAT,                 critical functions, including eSIM handling, 5G-AKA,
+  thereby increasing signaling complexity and processing over-           NAS key derivation, and WireGuard key management,
+  head. In contrast, by anchoring security and control at the            are executed exclusively within the TrustZone on the
+  Master-RAT, a hierarchical architecture enables unified secu-          DECT-2020 NR Master RAT and are exposed to Wi-Fi
+
+
+
+
+                                                                    r
+  rity management, cross-RAT key distribution, and coordinated           Secondary RATs only through controlled service inter-
+  operation among subordinate Lite-RATs, providing a scalable,           faces, enabling secure cross-RAT security-context sharing
+  low-latency, and secure foundation for Multi-RATs integration          without exposing control-plane credentials.
+  in future 6G networks.
+     Building on our prior work on enhanced wireless direct
+  connectivity and DECT-2020 NR base-station design [7], [11],
+  we present Uni-RAT, a unified Multi-RATs framework that
+                                                                 er    • A Uni-RAT prototype was implemented using Nordic
+                                                                         nRF9161 development boards, Raspberry Pi platforms,
+                                                                         and a Cumucore 5G Core. On the device side, the
+                                                                         Nordic platform supports DECT-2020 NR and provides
+                                                     pe
+  integrates DECT-2020 NR and Wi-Fi into a single control,               an ARM TrustZone execution environment for security-
+  authentication, and security domain, where DECT-2020 NR                critical operations, compensating for the lack of hardware
+  acts as the Master-RAT to anchor 3GPP security via 5G-                 security support on Raspberry Pi devices acting as Wi-
+  AKA and NAS and distributes the security context to Wi-                Fi-based Secondary-RATs. Within the 5GC, a customized
+  Fi as a coordinated high-throughput data-plane RAT, thereby            SMS-over-NAS procedure and a dedicated WG-AF were
+  mitigating fragmentation in heterogeneous Multi-RATs access            implemented for WireGuard configuration and key dis-
+                                         ot
+
+  architectures. Uni-RAT employs a lightweight, kernel-level             tribution. Experimental results demonstrate full system
+  Layer-3 WireGuard encryption mechanism with minimal code               interoperability and stable operation with up to 100 con-
+  complexity to efficiently secure both control-plane and data-          current RAT devices, validating Uni-RAT’s practicality,
+  plane traffic between the 5GC and UEs, as well as D2D                  scalability, and robustness as a foundation for future 6G
+                             tn
+
+
+
+  communication, significantly reducing latency and computa-             heterogeneous access systems.
+  tional overhead while preserving strong security. Moreover, a
+  dedicated WireGuard application function (WG-AF) is imple-
+  mented in the core network to manage and distribute Wire-
+  Guard configuration and keying material via short message             The remainder of this paper is organized as follows. Section
+                 rin
+
+
+
+
+  service over the 5G non-access stratum (SMS-over-NAS),             II reviews background topics, including multi-RAT technolo-
+  enabling rapid and secure data-plane establishment while           gies, multi-RAT cooperation and integration, and intelligent
+  maintaining bounded latency and jitter in intra-cell D2D, relay-   multi-RAT management and orchestration. Section III presents
+  assisted one-hop, and inter-cell multi-hop scenarios. The main     the Uni-RAT framework, including the system architecture and
+  contributions of this paper are summarized as follows:             control-plane and data-plane signaling. Section IV presents the
+                                                                     Uni-RAT architecture and procedures across the UE, BS, and
+     ep
+
+
+
+
+    •   We propose Uni-RAT, a unified Multi-RATs framework           5GC. Section V evaluates the Uni-RAT implementation and
+        in which DECT-2020 NR acts as a Master-RAT to                performance using a protocol testbed based on DECT-2020 NR
+        anchor 3GPP authentication and NAS security, which is        development boards, Raspberry Pi devices, and the Cumucore
+        shared with coordinated Wi-Fi secondary-RATs for high-       5GC, including data-plane performance analysis of WireGuard
+        throughput data delivery. By decoupling control-plane        D2D and multi-hop communication. Finally, Section VI dis-
+Pr
+
+
+
+
+        security from data-plane transmission, Uni-RAT enables       cusses limitations of the current work, outlines future research
+        Wi-Fi to inherit 3GPP-grade security without redundant       directions, and concludes the paper with perspectives on multi-
+        authentication, eliminating per-RAT fragmentation and        RAT in 6G networks.
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                                ed
+                Rel-13          Rel-14          Rel-15           Rel-16            Rel-17          Rel-18          Rel-19
+
+
+
+
+                                                                                             iew
+       2015       2016        2017       2018       2019       2020        2021      2022       2023        2024     2025      ...
+
+
+
+
+                                                                                  ev
+                                                 Fig. 1: 3GPP and non-3GPP RATs.
+
+
+                         II. R ELATED W ORK                           unified, and energy-efficient 5G-Advanced and 6G systems
+                                                                      connecting terrestrial and non-terrestrial networks.
+
+
+
+
+                                                                    r
+     This section reviews the evolution of multi-RAT technolo-
+  gies across 3GPP and non-3GPP domains, covering advances               2) Non-3GPP RATs: In parallel with 3GPP developments,
+  in cooperation, integration, intelligent management and or-         non-3GPP standardization bodies such as IEEE, Bluetooth SIG
+  chestration, and security.
+
+  A. Multi-RATs Technology Evolution
+                                                                 er   and ETSI have advanced their own RATs, including Wi-Fi
+                                                                      [21], Li-Fi [22], Bluetooth Low Energy (BLE) [23], LoRa [24],
+                                                                      Ultra-Wideband (UWB) [25], Zigbee [26], Huawei NearLink
+                                                                      [27], and ETSI DECT-2020 NR [4]. These technologies pro-
+                                                     pe
+     1) 3GPP RATs: Over the past decade, the rapid growth             vide complementary connectivity to 3GPP systems, enabling
+  of wireless data traffic and the increasing demand for higher       seamless and flexible communication across heterogeneous
+  performance and lower cost have driven 3GPP to evolve its           network environments. For instance, Wi-Fi (IEEE 802.11)
+  connectivity technologies beyond legacy systems such as 2G          offers high throughput from hundreds of Mb/s to several
+  and 3G, which can no longer meet the diverse requirements of        Gb/s over short to medium ranges for indoor broadband and
+  emerging IoT and machine-type communication applications            enterprise networks, while BLE (Bluetooth SIG) focuses on
+                                                                      ultra-low-power, short-range links ideal for wearables and
+                                         ot
+
+  [12]. From Release 13 (2016) to Release 19 (2025), 3GPP
+  has progressively extended connectivity from human-centric          sensors. LoRa supports up to 15 km at very low data rates
+  broadband to large-scale machine communications. Release 13         (50 kb/s), serving large-scale low-power IoT applications such
+  introduced NB-IoT and LTE-M (eMTC) to enable mMTC with              as smart cities and agriculture. UWB provides centimeter-
+                              tn
+
+
+
+  low power and cost [13], while Release 14 enhanced mobility,        level localization and low-latency short-range communication
+  positioning, and multicast capabilities within the Cellular IoT     for positioning, access control, and vehicular radar, whereas
+  (CIoT) framework. Release 15 (2018) marked the 5G era with          Zigbee offers moderate data rates with high energy efficiency
+  NR and the service-based 5GC in Non-Stand-Alone (NSA)               for mesh-based industrial and home automation networks.
+  mode, later evolving in Release 16 (2020) to fully integrate        Huawei NearLink, developed under China’s SparkLink Al-
+                                                                      liance, combines Bluetooth and Wi-Fi like features with
+                 rin
+
+
+
+
+  NB-IoT/LTE-M as native 5G RATs and introduce NR-based
+  V2X via sidelink [14], [15]. Release 17 (2022) extended 5G          lower latency and higher energy efficiency for short-range
+  to Non-Terrestrial Networks (NTN), standardizing NB-IoT-            control and vehicular use cases. ETSI DECT-2020 NR, the
+  over-NTN and NR-over-NTN for satellite IoT, and introduced          first non-3GPP technology recognized by the ITU as part
+  Reduced-Capability NR (RedCap) for mid-tier IoT devices             of the IMT-2020 5G family, delivers reliable, license/license-
+  [16], [17]. Release 18 (2024), the first 5G-Advanced phase,         exempt, time-synchronized links with deterministic latency
+     ep
+
+
+
+
+  emphasized energy efficiency, enhanced RedCap (eRedCap),            and decentralized control for industrial and massive IoT de-
+  and expanded NR-NTN to Ka-band and sub-3 GHz for                    ployments. Collectively, these non-3GPP RATs complement
+  improved reliability [18], [19]. Release 19 (2025) integrates       3GPP systems by addressing diverse requirements in range,
+  AI/ML-assisted mobility prediction, fast L1/L2 handovers, and       data rate, power efficiency, and deployment flexibility across
+  enhanced LEO channel models for direct-to-handset satellite         consumer, industrial, and critical IoT domains.
+Pr
+
+
+
+
+  links [1]. Overall, the evolution from Release 13 to 19, and the       However, these RATs were originally designed for dis-
+  upcoming Release 20 for 6G [20], illustrates the continuous         tinct communication purposes, 3GPP systems prioritize wide-
+  advancement of RATs from LTE-based IoT toward intelligent,          area mobility and reliability whereas non-3GPP technologies
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                               IoT Server
+                     5G Core Network (5GC)                                                                                            5GC
+                        AMF             UPF                                                       5GC
+                                                                                                                                N3IWF/TNGF
+
+
+
+
+                                                                                                                 ed
+                       N2                                                                       NG-eNB
+                                                                                                                            Untrusted/Trust AP/FT
+                                                    N3
+                                        N3IWF            TNGF         W-AGF             NB-IoT           NB-IoT            Non-3GPP     Non-3GPP
+                                               Y2                                       /LTE-M           /LTE-M               UE            UE
+     NG- X2            Satellite                             Y2           Y2
+            gNB                        Untrusted         Trusted      Wireline
+     eNB                 BS                                                       (a) NB-IoT/LTE-M do not support (b) Non-3GPP IPsec introduces additional
+                                        AP/FT             AP/FT       Access
+
+
+
+
+                                                                                                              iew
+                                                                                   direct UE-to-UE communication.    latency and computational overhead.
+                     3GPP Multi-RAT Networks                                                         5GC                       LoRa          Wi-Fi
+              Uu                                                                                                                       …
+                                                                                                NG-eNB/gNB                      BLE           UWB
+                                   Side Link
+      UE                             PC5                                                 3GPP UE            3GPP UE           (d) Non-3GPP RATs in
+             Phone     XR          Vehicles          Drone    Robot                                                      unlicensed spectrum are prone to
+                                                                                   (c) Side link specific for 3GPP UEs       interference and attacks.
+
+
+
+
+                                                                                                ev
+                                               Fig. 2: 3GPP Multi-RAT Architecture and Limitations.
+
+
+  target short-range, low-power, and cost-efficient connectivity.                integrate BLE for device discovery with Wi-Fi Direct for
+  Nevertheless, 3GPP-RATs provide global coverage but face                       data transfer, achieving fast and energy-efficient peer-to-peer
+
+
+
+
+                                                                                    r
+  limitations in indoor environments, whereas non-3GPP RATs,                     (P2P) connectivity [29]. In low-power domains, LoRaBee and
+  though flexible and inexpensive, often operate in unlicensed                   LoRaCP strengthen cross-technology connectivity between
+  spectrum and are more susceptible to interference and security                 LoRa and ZigBee, where LoRaBee embeds specific bytes
+  risks. The coexistence of these heterogeneous systems has
+  led to fragmented architectures, isolated control domains,
+  and inefficient spectrum utilization. Therefore, effective multi-
+  RAT cooperation and integration are essential to unify their
+                                                                                 er
+                                                                                 in LoRa packets to form detectable received signal strength
+                                                                                 patterns for one-hop control and synchronization, while Lo-
+                                                                                 RaCP establishes an out-of-band LoRaWAN control plane
+                                                                                 to enhance manageability and interference resilience [30],
+                                                                   pe
+  complementary strengths, enhance interoperability, and enable                  [31]. LoRaWAN and Wi-Fi integration extends this synergy
+  seamless, energy-efficient connectivity across diverse network                 by enabling Wi-Fi access points to host LoRaWAN servers,
+  environments.                                                                  merging wide-area low-power sensing with high-throughput
+                                                                                 local access for cost-effective and spectrum coexistent IoT
+  B. Multi-RATs Cooperation and Integration
+                                                                                 connectivity [32]. Recent physical layer cross technology
+     1) 3GPP RATs Cooperation and Integration: As shown                          communication schemes further enable direct LoRa and Wi-
+                                                    ot
+
+  in Fig.2, within the 3GPP ecosystem, multiple generations                      Fi interaction, where WiLo shapes 802.11g payloads into
+  of RATs coexist to serve diverse user groups, interconnected                   LoRa like chirps for gateway free communication, and LoFi
+  through standardized interfaces and service frameworks to en-                  allows Wi-Fi 6 receivers to reconstruct LoRa signals from
+  sure seamless interoperability [12]. For instance, LTE and NR                  OFDMA interference patterns using LDPC and neural recon-
+                               tn
+
+
+
+  are integrated via the NSA architecture, where LTE provides                    struction [33], [34]. Beyond low power systems, the DECT-
+  control-plane anchoring while NR delivers high-capacity user-                  2020 NR standard complements Wi-Fi in EWDC architectures
+  plane data through the Xx and S1/N2 interfaces [28]. NB-                       by providing a secure, time-synchronized control link over
+  IoT connects to the Evolved Packet Core (EPC) using the                        dedicated spectrum, supporting deterministic communication
+  S1-U/S1-MME interfaces and can also interoperate with the                      for practical wireless time-sensitive networking [7]. Despite
+                   rin
+
+
+
+
+  5GC via the N26 and N8 interfaces for seamless mobility. The                   the advantages of non-3GPP RAT cooperation and integration
+  sidelink (PC5) interface enables direct D2D communication in                   in balancing coverage, energy efficiency, and cost, most of
+  LTE and NR, supporting applications such as V2X and public                     these technologies operate in unlicensed ISM bands, making
+  safety. Additionally, NTN integrate with terrestrial 5G systems                them more vulnerable to security threats. Furthermore, their
+  through the NG interface, extending connectivity via satellite                 cooperative mechanisms often function in isolation, allowing
+  access nodes connected to the 5GC. These standardized inter-
+     ep
+
+
+
+
+                                                                                 a security breach in one RAT to propagate and compromise
+  connections allow heterogeneous 3GPP RATs to operate co-                       others.
+  hesively within a unified architecture while supporting diverse
+  service requirements.                                                             3) 3GPP and Non-3GPP RATs Cooperation and Integra-
+     2) Non-3GPP RATs Cooperation and Integration: Non-                          tion: To mitigate these challenges, 3GPP Releases 13 and
+  3GPP RAT cooperation enhances end-to-end connectivity by                       14 introduced LTE and WLAN Aggregation (LWA) and
+Pr
+
+
+
+
+  combining heterogeneous technologies to balance coverage,                      LTE and WLAN integration with IPsec Tunnel (LWIP) to
+  energy efficiency, and throughput. Commercial systems such                     enhance multi-RAT connectivity [35]. In Release 13, LWA
+  as Apple AirDrop, Google Nearby Share, and Intel Unison                        aggregates LTE and WLAN traffic at the PDCP layer via the
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  Xw interface and wireless termination node, enabling per-          management and orchestration, where AI/ML exploits cross-
+  packet scheduling and efficient spectrum utilization, while        RAT observations and real-time control to optimize traffic
+  LWIP integrates them at higher layers through IPsec tunnels to     steering, resource allocation, and mobility, thereby supporting
+
+
+
+
+                                                                                                ed
+  ensure compatibility with legacy WLAN deployments. Release         6G XR and IIoT services with extreme data rates, ultra-
+  14 further introduced uplink aggregation, mobility continuity,     low latency, and high reliability through cost efficient use of
+  and eNB assisted WLAN authentication, with results showing         complementary RAT capabilities.
+  LWA’s superior throughput and resource efficiency. Building
+  on this evolution, 3GPP Release 16 introduced the Access           C. Multi-RAT Management and Orchestration
+
+
+
+
+                                                                                             iew
+  Traffic Steering, Switching, and Splitting (ATSSS) framework          1) Foundations of Multi-RAT Management Frameworks:
+  to enable seamless multi-RATs integration under the 5GC            Building on 3GPP releases, various frameworks have been
+  through a unified multi-access session, leveraging multipath       developed to unify heterogeneous Lite-RATs (e.g., Wi-Fi)
+  TCP (MPTCP) and multipath QUIC (MP-QUIC) to dynam-                 under a common Big-RAT control architecture. In the LTE era,
+  ically steer, switch, and split traffic across heterogeneous       the EU SPEED-5G project introduced the extended Dynamic
+  links for adaptive, policy driven multipath connectivity with      Spectrum Access (eDSA) concept, featuring a hierarchical
+  improved throughput, latency, and reliability [36], [37]. Within   MAC (High/Low-MAC) and distributed/centralized Radio Re-
+
+
+
+
+                                                                                 ev
+  ATSSS, WLAN can function as either a trusted or untrusted          source Management (dRRM/cRRM) to enable adaptive spec-
+  access network, connecting to the 5GC through a TNGF for           trum allocation and traffic steering across licensed and unli-
+  trusted access or through a N3IWF for untrusted access, where      censed bands [42], [43]. These concepts evolved into enhanced
+  UEs select the access type based on network advertisement          RRM (eRRM) and distributed scheduling frameworks, achiev-
+  and exchange NAS signaling and user plane data over IPsec          ing fine-grained coordination between LTE and emerging NR
+
+
+
+
+                                                                    r
+  tunnels with the corresponding gateway. Beyond 5G and              layers; notably, Monteiro et al. [28] showed that distributed
+  WLAN integration, Mozny et al. [38] demonstrated a practical       RRM combining UE-side association and BS-side scheduling
+  multi-RAT prototype combining NB-IoT and LoRaWAN for               can achieve near-centralized performance. In the 5G domain,
+  Smart City applications, where LoRaWAN offers cost-efficient
+  primary connectivity and NB-IoT functions as a reliable fall-
+  back, thereby improving coverage, reliability, and overall QoS.
+     Recent research has further explored multi-RAT conver-
+                                                                 er  the 3GPP multi-RAT dual connectivity framework, specified in
+                                                                     TS 37.340 and validated through 5G-CARMEN trials, enables
+                                                                     simultaneous use of LTE and 5G NR via master and secondary
+                                                                     nodes to enhance user throughput and ensure real-time cross-
+                                                     pe
+  gence by integrating cellular and non-cellular technologies        RAT reliability [44]. Furthermore, Arendt et al. [45] developed
+  within unified network architectures. For example, the 5G-         an SDN-driven Multi-RAT broker for dynamic Wi-Fi and 5G
+  CLARITY project demonstrated private 5G networks com-              spectrum sharing, while Famili et al. [46] realized slice-aware
+  bining 5GNR, Wi-Fi, and LiFi to support multi-connectivity,        coordination in a cloud-native 5G/6G core. The emergence O-
+  high-precision localization, and cross-RAT slicing through the     RAN architecture further enabled hierarchical control via non-
+  N3IWF for untrusted access [39]. In this design, non-3GPP          RT rApps and near-RT xApps, where Habib et al. [47] applied
+                                         ot
+
+  RATs operate as independent systems connected to the 5GC           hierarchical reinforcement learning (RL) for adaptive LTE–NR
+  via standardized interfaces, enabling centralized management.      traffic steering. Within this evolving framework, AI and ML
+  However, current 5GC support for inter-RAT mobility is             based methods are becoming key enablers for intelligent,
+  largely limited to 3GPP systems such as LTE and NR via the         secure, and context-aware RAT selection and coordination.
+                             tn
+
+
+
+  N26 interface, while non-3GPP accesses provide only IP-level          2) AI-Enabled Multi-RAT Control and Optimization: The
+  session continuity through IPsec-based gateways [40]. As a re-     evolution of multi-RAT control has advanced from static,
+  sult, seamless radio-level handovers are not supported, and the    spectrum-centric coordination toward AI-native, software-
+  latency introduced by IPsec encapsulation and gateway-based        defined orchestration across radio and edge domains. Nguyen
+  control signaling renders real-time mobility impractical for       et al. [48] introduced network-assisted RL for distributed
+                 rin
+
+
+
+
+  time-sensitive IIoT and URLLC applications [41]. Although          RAT selection, improving convergence and fairness across
+  the TNGF enables trusted access by requiring direct NAS            access networks. Alwarafy et al. [49] proposed DeepRAT,
+  signaling with the AMF and secure link-layer protection, it        a hierarchical deep RL framework for joint RAT associ-
+  further increases configuration complexity and limits deploy-      ation and power control, while Allahham et al. [50] ex-
+  ment flexibility in heterogeneous environments [6]. Moreover,      tended this to multi-agent coordination using a Multi-Agent
+  both N3IWF and TNGF are primarily designed for individual          Deep Deterministic Policy Gradient (MADDPG) approach
+     ep
+
+
+
+
+  non-3GPP RAT integration rather than coordinated multi-RAT         for energy and QoS aware resource allocation. The aBRSL
+  operation, resulting in fragmented control, repeated authenti-     framework [51] further integrates matching-game theory with
+  cation, and limited scalability. While these cooperation and       double deep RL to enable bilateral, context-aware RAT ne-
+  integration mechanisms allow heterogeneous 3GPP and non-           gotiation. Building on these foundations, multi-agent RL has
+  3GPP RATs to interoperate at the protocol and interface levels,    emerged as a dominant paradigm for autonomous control in
+Pr
+
+
+
+
+  they still lack unified management and orchestration capable       O-RAN. More recently, LLM agents [52] have extended this
+  of handling diverse QoS requirements and rapidly evolving          paradigm by autonomously synthesizing interoperable APIs
+  RATs contexts. This gap motivates intelligent multi-RAT            across heterogeneous network functions, supporting semantic-
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  level coordination across RATs. These developments mark the         access networks, ensuring trusted operation in heterogeneous
+  transition from rule-based spectrum coordination toward AI-         multi-RAT environments.
+  native, agent-driven O-RAN ecosystems, enabling adaptive,              2) Untrusted Non-3GPP Access: Over untrusted WLAN
+
+
+
+
+                                                                                                  ed
+  interference-aware, and self-organizing control for intelligent     access, the UE first associates with the Wi-Fi network and
+  6G multi-RAT networks.                                              obtains an IP address, then selects a N3IWF and initiates
+     Despite significant progress in multi-RAT management and         the IKEv2 procedure to establish an IKE Security Association
+  orchestration, existing frameworks primarily optimize RAT           (SA) [56]. The UE triggers an IKE AUTH exchange without
+  selection, resource allocation, and QoS provisioning, yet they      an AUTH payload to initiate an EAP-5G session, where
+
+
+
+
+                                                                                               iew
+  do not resolve the fragmented control, authentication, and          NAS messages are encapsulated within IKEv2 signaling. UE
+  security models across heterogeneous 3GPP and non-3GPP              authentication is performed using either EAP-AKA’ or 5G-
+  RATs. Existing interworking mechanisms, such as N3IWF and           AKA. Upon successful authentication, the UE and N3IWF
+  TNGF, rely on IPsec to secure non-3GPP access, introducing          share a common N3IWF key from the AMF to the N3IWF and
+  substantial cryptographic overhead that increases latency and       derived at the UE. IKEv2 then establishes a signaling IPsec SA
+  processing load incompatible with stringent 6G XR and IIoT          providing both encryption and integrity protection, and the UE
+  requirements. Furthermore, each RAT maintains an indepen-           creates a TCP connection to carry subsequent NAS messages
+
+
+
+
+                                                                                   ev
+  dent secure connection to the 5GC, leading to repeated authen-      securely over this SA. For user-plane data transfer, one or more
+  tication, duplicated security contexts, and limited scalability.    IPsec child SAs are established via IKEv2 during PDU session
+  These limitations highlight the need for a unified multi-           setup, each ensuring encryption and integrity protection.
+  RAT architecture that offers a single control, authentication,
+  and security domain while supporting high-throughput data              3) Trusted Non-3GPP Access: Over trusted WLAN access,
+
+
+
+
+                                                                     r
+  transmission and seamless D2D communication. The next               the UE associates with a Trusted WLAN Access Point (TNAP)
+  section introduces Uni-RAT, a unified multi-RAT framework           and initiates an EAP procedure that triggers AAA signaling
+  designed to address these challenges.                               through the TNGF, which acts as a proxy to start an EAP-
+
+  D. Multi-RATs Security
+                                                                  er
+     Security and authentication remain critical for trusted inter-
+  working between 3GPP and non-3GPP RATs. As defined in
+                                                                      5G session [56]. The EAP-5G protocol encapsulates NAS
+                                                                      messages between the UE and TNGF, while authentication
+                                                                      is performed using either EAP-AKA’ or 5G-AKA, with NAS
+                                                                      signaling carried over IEEE 802.1X/EAPoL at Layer 2 and
+                                                      pe
+  3GPP TS 33.501 and TS 23.316 [53], [54], the 5G Residential         AAA (e.g., RADIUS) within the backhaul. After successful
+  Gateway (5G-RG) functions as a UE within the 5GC, connect-          authentication, a common TNGF key is established and used to
+  ing via the Next Generation RAN (NG-RAN), the Wireline              derive a TNAP key, which serves as the Pairwise Master Key
+  5G Access Network (W-5GAN), or both, using 5G-AKA for               (PMK) for executing the IEEE 802.11 four-way handshake to
+  3GPP access and EAP-AKA’ for non-3GPP access to ensure              establish Layer 2 security. Once WLAN link-layer security and
+  unified authentication and secure fixed–mobile convergence.         IP configuration are complete, the UE establishes a signaling
+                                                                      IPsec SA with the TNGF via IKEv2 using the common TNGF
+                                          ot
+
+     1) 5G-AKA and EAP-AKA’ for Multi-RAT Security: In
+  5G systems, mutual authentication between the UE and the            key (typically with NULL encryption), followed by a TCP
+  core network is performed through coordinated interactions          connection for reliable NAS message delivery. Subsequent
+  among several network functions. In the 5G-AKA procedure            user-plane traffic is then transported over secure IPsec tunnels.
+                             tn
+
+
+
+  [53], the UE initiates registration by sending a Subscription       Despite 5G introducing unified authentication mechanisms
+  Concealed Identifier (SUCI) to the AMF, which forwards an           such as 5G-AKA and EAP-AKA’ for 3GPP and non-3GPP ac-
+  authentication request to the Authentication Server Function        cess, it relies on IPsec/IKEv2, adding computational overhead
+  (AUSF). The AUSF retrieves the subscriber’s long-term key           and latency. In addition, the 3GPP framework requires each
+  and profile from the Unified Data Management (UDM) and              RAT to establish its own session through the 5G Core, which
+                                                                      prevents direct cross-RAT communication. While sidelink pro-
+                 rin
+
+
+
+
+  returns an authentication vector containing a random challenge
+  (RAND), an authentication token (AUTN), and a security              vides D2D connectivity exclusively for 3GPP UEs, commer-
+  anchor key (KSEAF ). The UE verifies AUTN and responds with         cial non-3GPP solutions such as Apple AirDrop offer low-
+  RES*, which the AUSF validates before both entities derive          latency direct communication but suffer from susceptibility to
+  session-specific keys for NAS and radio encryption. For non-        interference in unlicensed spectrum.
+  3GPP access, the Extensible Authentication Protocol–AKA’               To address these limitations, the next section presents a
+     ep
+
+
+
+
+  (EAP-AKA’) [55] follows a similar flow but encapsulates the         DECT-2020 NR based Uni-RAT architecture and procedure, in
+  exchange within an EAP tunnel carried over IPsec between            which the DECT-2020 NR RAT operates over licensed spec-
+  the UE and the N3IWF or TNGF. The Authentication, Au-               trum and connects to the 5G Core to perform authentication
+  thorization, and Accounting (AAA) server acts as the EAP            and NAS establishment following 3GPP security procedures
+  authenticator, interfacing with the AUSF/UDM to retrieve            [57], [58] and ETSI TR 103 670 [59] interworking guidelines.
+Pr
+
+
+
+
+  authentication vectors and validate responses. This unified         In this design, DECT-2020 NR acts as the master RAT,
+  authentication framework enables secure, privacy-preserving,        coordinating Wi-Fi and other non-3GPP links to enable fast,
+  and consistent key management across 3GPP and non-3GPP              secure, and direct cross-RAT connectivity.
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+            III. U NI -RAT A RCHITECTURE AND S IGNALING                                                      802.11be) [7]. This gap motivates a unified multi-RAT design
+                                                                                                             in which DECT-2020 NR anchors secure and deterministic
+     The Uni-RAT system integrates hardware-assisted UE and
+                                                                                                             control-plane functions, while Wi-Fi delivers high-throughput
+  BS architectures with the 5GC, providing a secure and efficient
+
+
+
+
+                                                                                                                                         ed
+                                                                                                             data-plane communication, as realized in Uni-RAT.
+  foundation for coordinated multi-RAT operation. It complies
+  with the standardized non-3GPP access framework defined in
+  3GPP TS 33.501 and TS 23.316 [53], [54], as well as the                                                      3GPP         3GPP    Uni-RAT AN
+  ETSI interworking model for DECT-2020 NR specified in                                                        NAS          NAS
+  TR 103 670 [59]. Conventional approaches interwork DECT-
+
+
+
+
+                                                                                                                                      iew
+  2020 NR with the 5GC via IPsec-protected N3IWF/TNGF                                                          𝑅𝐷𝑃𝑇      𝑅𝐷𝐹𝑇      3GPP      3GPP     3GPP Core     𝐼𝑛𝑡𝑒𝑟𝑛𝑒𝑡
+                                                                                                                                    AS      Access      (5GC)
+  gateways or fully 3GPP-capable relay devices, leading to                                                      STA       AP
+  higher deployment complexity and limited cross-RAT flexi-
+                                                                                                                               Fig. 4: Uni-RAT architecture.
+  bility. In contrast, Uni-RAT employs lightweight WireGuard
+  tunneling to secure both control-plane and data-plane commu-
+                                                                                                                Fig. 4 illustrates the Uni-RAT architecture, where a Uni-
+  nication, enabling efficient reuse of 3GPP security contexts for
+                                                                                                             RAT Access Network (AN) interfaces directly with the 5GC
+  D2D and multi-hop scenarios while reducing cryptographic
+
+
+
+
+                                                                                                                          ev
+                                                                                                             and supports the required 3GPP Access Stratum (AS) and
+  overhead and simplifying network management. Compliance
+                                                                                                             NAS procedures. Within the Uni-RAT, DECT-2020 NR RDFT
+  with 3GPP networks is validated through integration with a
+                                                                                                             (BS side) and RDPT (UE side) jointly form the Master-
+  standardized 5GC, as demonstrated in the following section.
+                                                                                                             RAT that anchors NAS signaling, authentication, and security
+                                                                                                             toward the 5GC, while Wi-Fi operates as a Secondary-RAT
+
+
+
+
+                                                                                                                r
+      3GPP                  3GPP         Integrated
+                            NAS          multi-standard                                                      providing high-throughput data-plane connectivity. On the BS
+      NAS
+                                         device         3GPP Access                                          side, RDFT is co-located with a Wi-Fi access point (AP) and
+                                                         (eNB/gNB)
+                       𝑅𝐷𝑃𝑇       3GPP                                                                       exposes the established NAS security context through con-
+      𝑅𝐷𝑃𝑇
+
+
+  Single
+  standard 𝑅𝐷𝑃𝑇
+  device
+                           𝐹𝑇      AS
+
+
+                                𝑅𝐷𝑃𝑇
+                                  𝐹𝑇
+                                            𝑅𝐷𝑃𝑇
+
+
+
+
+                                            𝑅𝐷𝑃𝑇
+                                                              Non-3GPP
+                                                          𝑅𝐷𝐹𝑇 Access
+                                                               Gateway
+                                                                                   3GPP Core
+                                                                                     (5GC)
+                                                                                                  𝐼𝑛𝑡𝑒𝑟𝑛𝑒𝑡
+
+                                                                                                             er
+                                                                                                             trolled interfaces, enabling Wi-Fi data delivery under Master-
+                                                                                                             RAT security control. Similarly, on the UE side, RDPT is
+                                                                                                             co-located with Wi-Fi stations (STAs) and provides the NAS-
+                                                                                                             derived security context for protected data-plane operation.
+                                                                                          pe
+                                                                                                             This architecture enables secure local cross-RAT context shar-
+   DECT-2020 NR radio interface    3GPP radio interface    Device internal interface   3GPP CN interface
+                                                                                                             ing at both endpoints (FT/AP and PT/STA), while anchoring
+   Fig. 3: ETSI DECT-2020 NR access to the 3GPP network.                                                     centralized 3GPP control-plane security in DECT-2020 NR,
+                                                                                                             leveraging deterministic TDMA operation over licensed spec-
+                                                                                                             trum to ensure reliable and predictable control signaling.
+  A. Uni-RAT Architecture
+                                                                                                             B. Uni-RAT Signaling
+                                                                       ot
+
+     Fig.3 illustrates the DECT-2020 NR architecture as a non-
+  3GPP radio access network (RAN) for integration with the                                                      Uni-RAT signaling aims to emulate 3GPP AS and NAS
+  3GPP system, as specified in ETSI TR103670 [59] and                                                        procedures through a trusted software module that imple-
+  aligned with the 3GPP non-3GPP access framework defined in                                                 ments standardized non-3GPP relay behavior, encompassing
+                                                 tn
+
+
+
+  TS33.501 [53] and TS23.316 [54]. In this architecture, DECT-                                               the DECT-2020 NR control-plane signaling, the Wi-Fi control-
+  2020 NR radio devices (RDs) operating in Fixed Terminal                                                    plane signaling, and the Uni-RAT user-plane over Wi-Fi.
+  (FT) mode can either access the 5GC through non-3GPP                                                          1) Uni-RAT control plane signaling with DECT-2020 NR:
+  interworking gateways or function as 3GPP-capable nodes that                                               Fig. 5 illustrates the Uni-RAT control-plane signaling, where
+  connect to the 5GC via an eNB/gNB and relay 3GPP NAS                                                       the Uni-RAT AN emulates the trusted non-3GPP access net-
+                            rin
+
+
+
+
+  signaling, thereby enabling non-3GPP RDs to access the 3GPP                                                work (TNAN), incorporating both TNAP and TNGF functions
+  network. Portable Terminals (PTs) subsequently reuse the NAS                                               to enable fast and secure association over the licensed DECT-
+  security context shared by the FT to perform authentication                                                2020 NR spectrum. Unlike conventional TNAN deployments,
+  and signaling with the 5GC. However, the former approach                                                   Uni-RAT executes essential NGAP procedures, including ini-
+  relies on N3IWF or TNGF with IPsec-based tunneling, requir-                                                tial UE message generation, security mode control, and UE
+  ing each RD to establish and maintain an independent secure                                                context management, while securely relaying NAS signaling
+      ep
+
+
+
+
+  connection to the 5GC, whereas the latter requires fully com-                                              from the DECT-2020 NR side. At the same time, Uni-RAT
+  pliant 3GPP devices and base stations, resulting in increased                                              replaces IPsec-based authentication with pre-installed Wire-
+  deployment complexity and operational cost. Nevertheless,                                                  Guard credentials to establish a secure and encrypted control-
+  while DECT-2020 NR provides deterministic TDMA-based                                                       plane connection with the AMF. This WireGuard-based trust
+  access well suited for IIoT and time-critical control, its peak                                            establishment effectively fulfills the authentication role of the
+Pr
+
+
+
+
+  data rate approximately only 1.2 Gbps remains significantly                                                TNGF, enabling verified and protected NAS signaling toward
+  lower than that of modern Wi-Fi technologies (e.g., up to                                                  the 5GC with reduced setup latency and lower computational
+  9.6 Gbps for IEEE 802.11ax and up to 46 Gbps for IEEE                                                      overhead. In the signaling procedure, DECT-2020 NR devices
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  first complete the native DECT association between the PT                 lished using the IP configuration and WG-L3 tunnel negotiated
+  and FT. The PT then initiates the EAP-5G procedure with                   during control-plane signaling, including the assigned inner
+  the Uni-RAT AN, which enables initial identity verification,              IP address, as illustrated in Fig. 7. On the UE side, user
+
+
+
+
+                                                                                                           ed
+  key establishment, and secure transport of NAS messages                   applications package data units (PDUs) are encapsulated with
+  toward the 5GC, supported by a minimal AAA function imple-                a generic routing encapsulation (GRE) header and an inner
+  mented within the Uni-RAT AN to satisfy 3GPP requirements.                IP header, then protected by the WG-L3 tunnel before being
+  For the N2 interface, the Uni-RAT AN follows the gNB                      transmitted over the Wi-Fi access link through the TNAP. The
+  control-plane architecture by constructing NGAP signaling                 encrypted packets traverse the TNGF and are forwarded via
+
+
+
+
+                                                                                                        iew
+  and encapsulating NAS messages into NGAP containers for                   the N3 interface toward the user plane function (UPF). Acting
+  delivery to the AMF. Once the N2 interface is established and             as the user-plane anchor, the UPF decapsulates the WG-L3
+  NGAP signaling is active, the UE completes the 5G-AKA                     and GRE headers, thereby preserving QoS enforcement, ses-
+  authentication procedure with the 5GC via the AMF, thereby                sion continuity, and routing transparency across heterogeneous
+  finalizing secure control-plane establishment.                            access networks, and delivers the user PDUs to the target data
+                                                                            network.
+     5G-AKA                                                        5G-AKA
+
+
+
+
+                                                                                         ev
+      NAS                                                           NAS         PDU                                                                 PDU
+                                                                                GRE                            GRE                    Relay
+     EAP-5G                                  EAP-5G                           Inner IP                       Inner IP
+                                                                               WG-L3                          WG-L3 N3
+                                                       N2           N2                                                           N3       N3        N3
+    DECT-2020    DECT-2020     AAA            AAA                                IP            IP               IP
+                                                      Stack        Stack                                              Stack      Stack   Stack     Stack
+      NR PT        NR FT      Lower          Lower                             Wi-Fi     Wi-Fi    Lower       Lower
+                              Layers         Layers                             STA       AP      Layers      Layers
+                                       NWt
+
+
+
+
+                                                                               r
+                                                              N2                 UE          TNAP        NWt       TNGF     N3
+                                                                                                                                      UPF
+     Wi-Fi STA    Wi-Fi AP     TNAP               TNGF             AMF
+                                                                                                                                                 UPF (Anchor)
+
+
+                                                                                   Fig. 7: Uni-RAT user plane signaling with Wi-Fi.
+  Fig. 5: Uni-RAT control plane signaling with DECT-2020 NR.
+
+     2) Uni-RAT control plane signaling with Wi-Fi: After
+  successful 5G-AKA authentication over the DECT-2020 NR
+  Master-RAT, Uni-RAT establishes control-plane signaling over
+                                                                            erThis section described the Uni-RAT architecture and sig-
+                                                                            naling procedures, in which control-plane and user-plane
+                                                                            functions are decoupled and coordinated across heterogeneous
+                                                                            RATs. By anchoring 3GPP authentication, NAS signaling, and
+                                                              pe
+  the Wi-Fi Secondary-RAT, as illustrated in Fig. 6. First, the
+  UE configures its Wi-Fi STA using network configuration                   security in the DECT-2020 NR Master RAT and extending
+  parameters delivered from the Uni-RAT AN via NAS signaling                the established security context to Wi-Fi for high-throughput
+  over DECT-2020 NR. These parameters, including the SSID                   data delivery, Uni-RAT enables unified multi-RAT operation.
+  and access credentials, are conveyed using the SMS-over-NAS               Building on this foundation, the next section focuses on the
+  mechanism, enabling the UE Wi-Fi STA to associate with the                concrete system realization of Uni-RAT.
+  Wi-Fi AP. Once the Wi-Fi association is completed, the Uni-                     IV. U NI -RAT S YSTEM D ESIGN AND P ROCEDURE
+                                              ot
+
+  RAT AN assigns the UE an outer IP address for data-plane data
+                                                                               The Uni-RAT system integrates hardware-assisted UE and
+  transmission. Using this outer IP address, the UE establishes
+                                                                            BS architectures with the 5GC, providing a secure and efficient
+  a Layer-3 WireGuard (WG-L3) tunnel with the Uni-RAT
+                                                                            foundation for coordinated multi-RAT operation. It complies
+  AN, through which an inner IP address and a protected
+                             tn
+
+
+
+                                                                            with the standardized non-3GPP access framework defined in
+  communication context are negotiated, enabling the UE to
+                                                                            3GPP TS 33.501 and TS 23.316 [53], [54], as well as the
+  securely access the core network. All subsequent control-
+                                                                            ETSI interworking model for DECT-2020 NR specified in
+  plane signaling between the UE and the 5GC is then carried
+                                                                            TR 103 670 [59]. Conventional approaches interwork DECT-
+  over this NAS-authorized WireGuard tunnel, which serves
+                                                                            2020 NR with the 5GC via IPsec-protected N3IWF/TNGF
+  as a lightweight and verifiable alternative to the IPsec-based
+                 rin
+
+
+
+
+                                                                            gateways or fully 3GPP-capable relay devices, leading to
+  tunneling employed in conventional TNAN deployments.
+                                                                            higher deployment complexity and limited cross-RAT flexi-
+                                                                            bility. In contrast, Uni-RAT employs lightweight WireGuard
+      NAS                                               NAS
+      TCP                              TCP                                  tunneling to secure both control-plane and data-plane commu-
+    Inner IP                         Inner IP                               nication, enabling efficient reuse of 3GPP security contexts for
+     WG-L3                            WG-L3    N2       N2
+     ep
+
+
+
+
+                                                                            D2D and multi-hop scenarios while reducing cryptographic
+       IP              IP               IP    Stack    Stack                overhead and simplifying network management. Compliance
+     Wi-Fi       Wi-Fi    Lower       Lower                                 with 3GPP networks is validated through integration with a
+      STA         AP      Layers      Layers
+      UE                                            N2 AMF                  standardized 5GC, as demonstrated in the following section.
+                     TNAP        NWt       TNGF
+
+       Fig. 6: Uni-RAT control plane signaling with Wi-Fi.                  A. Uni-RAT System Design
+Pr
+
+
+
+
+                                                                               Fig. 8 illustrates the Uni-RAT system design, which com-
+     3) Uni-RAT user plane signaling with Wi-Fi: After comple-              prises a Uni-RAT UE, a Uni-RAT BS acting as the TNAN,
+  tion of the control-plane procedures, the data plane is estab-            and corresponding enhancements in the 5GC. On the UE side,
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                        UE APP                           Arm Trust Zone                             Arm Trust Zone                      3GPP NGAP Messages Relay
+      Linux                             Zephyr                                       Zephyr                                 Linux
+                                                                                                    NAS          NGAP
+                       WireGuard                       eSIM     SMS Gateway                       Security      Security                  NGAP Message Framing
+       Wi-Fi             APP
+
+
+
+
+                                                                                                                               ed
+                                        DECT NR                                      DECT NR                                 Wi-Fi
+                                                      WG-keys        5G-AKA                       WG-keys       5G-AKA      protocol                  N2 Interface
+      protocol          SMS             protocol                                     protocol                                           WireGuard
+       stack           Gateway           stack         EAP-5G         NAS             stack       AAA Client    EAP-5G       stack         APP        Management
+
+                                     GPIO                                                                            GPIO
+          Raspberry Pi               UART
+                                                 Nodic nRF9161                         Nodic nRF9161                           Raspberry Pi               Ethernet
+                                                                                                                     UART
+
+
+
+
+                                                                                                                            iew
+                                                                                      Linux        AMF                           SMSF        WG-AF
+                                                                                                                      SMF
+                                                                                                                                                           5GC
+                                                                                                   AUSF               UPF        UDM            AF
+
+
+                                                                                                               Computing Infrastructure                   Ethernet
+
+
+
+
+                                                                                                               ev
+                                                                   Fig. 8: Uni-RAT System Design.
+
+
+  Uni-RAT integrates a DECT-2020 NR PT implemented on the                                    1) Uni-RAT UE: The UE is logically partitioned into a non-
+  Nordic nRF9161 platform with ARM TrustZone support and                                  secure UE stack and a secured UE stack, implemented across
+
+
+
+
+                                                                                          r
+  a Linux-based Wi-Fi subsystem running on a Raspberry Pi.                                a Linux-based system and a Zephyr-based DECT-2020 NR
+  Security-critical functions, including eSIM handling, EAP-5G,                           platform, as illustrated in Fig. 9. The non-secure UE stack
+  5G-AKA, NAS processing, and WireGuard key management,                                   runs on a Raspberry Pi and hosts the Wi-Fi protocol stack,
+  are executed inside the TrustZone, while the Linux domain
+  hosts the Wi-Fi protocol stack, WireGuard application, and
+  SMS gateway for flexible data-plane and control-plane inter-
+  action. On the BS side, the Uni-RAT BS combines a DECT-
+                                                                                       er WireGuard application, SMS gateway, and user applications.
+                                                                                          This stack is responsible for assembling control-plane signal-
+                                                                                          ing, including SUCI, EAP-5G messages, NAS PDUs, and Wi-
+                                                                                          Fi configuration parameters, which are forwarded to the secure
+                                                                       pe
+  2020 NR FT on the nRF9161 with a co-located Wi-Fi AP on a                               domain through GPIO or UART using the Secure Partition
+  Raspberry Pi, together emulating a TNAN that integrates both                            Manager (SPM) API. The secured UE stack executes within
+  TNAP and TNGF functionalities. The BS implements trusted                                the Arm TrustZone on the Nordic nRF9161 and is responsible
+  NAS and NGAP handling within TrustZone and relays 3GPP                                  for all security-critical operations 1 . These include eSIM
+  signaling to the 5GC via an N2 interface, while the Linux                               services, SUCI generation, EAP-5G processing, 5G-AKA au-
+  domain manages Wi-Fi access, WireGuard tunnels, and NGAP                                thentication, NAS key derivation and integrity protection, and
+  message framing. Within the 5GC, Uni-RAT extends standard                               WireGuard key management. Cryptographic primitives such as
+                                                      ot
+
+  core functions by incorporating enhanced SMS support and a                              AES, ECC, hashing, true random number generation (TRNG),
+  dedicated WG-AF, which jointly enable secure key distribu-                              and ChaCha-based encryption are offloaded to the CryptoCell-
+  tion, tunnel management, and rapid data-plane establishment                             310 accelerator, ensuring hardware-backed security and effi-
+  across heterogeneous RATs.                                                              cient cryptographic processing. With this hardware-assisted
+                                      tn
+
+
+
+                                                                                          design, Uni-RAT confines authentication, NAS key deriva-
+              Non-Secured UE Stack                                                        tion, and WireGuard key management to the DECT-2020 NR
+                                                               Secured UE Stack
+                                                                                          Master-RAT within ARM TrustZone and exposes them to Wi-
+          UE APP                                                  eSIM services
+                               SPM                            Secured SMS Gateway
+                                                                                          Fi Secondary-RATs only through controlled service interfaces,
+      WireGuard APP      GPIO/            SPM
+                                API                              WireGuard Key            enabling secure cross-RAT security-context sharing without
+                       rin
+
+
+
+
+      SMS Gateway        UART Server      API
+       Wi-Fi stack                                               EAP-5G handler
+                                                              5G-AKA, NAS security
+                                                                                          exposing control-plane credentials.
+      Linux on Rpi 5             Zephyr on ARM                                               2) Uni-RAT BS: The Uni-RAT BS functions as a TNAN,
+                                                         Zephyr on ARM TrustZone
+                                                                                          as illustrated in Fig. 10, and implements a control-plane
+    Non-Secure            Secured 3GPP and WireGuard Setup           CryptoCell-310
+    Procedures                       Procedures                                           state machine that manages UE access, NAS signaling, and
+                        TrustZone   Configures secure SRAM                  AES           NGAP interaction with the 5GC. The BS starts in the INIT
+     ep
+
+
+
+
+     Sends SUCI
+                        Firmware     offloads Cryptographic
+     and EAP-5G
+                       Cortex-M33 primitives to CryptoCell-310           HASH             state, where it initializes the TNAP components, ARM Trust-
+       to TNAN,
+     relays RES*
+                                                                                          Zone environment and SPM APIs, configures the internal
+                                                                            ECC
+    and NAS over        eSIM profile auth. and SUCI generation;                           TNAP–TNGF pipeline, and establishes the N2 interface using
+      DECT, and                  EAP-5G processing;                      TRNG
+                        5G-AKA (RES*, CK/IK, K_AUSF, K_SEAF);
+                                                                                          SCTP and NGAP. Upon successful initialization, the system
+      configures
+     WireGuard                  NAS key derivation and                  ChaCha            enters the IDLE/POLL state, continuously monitoring UE-side
+Pr
+
+
+
+
+    Wi-Fi tunnels            integrity/ciphering activation                               access traffic and control messages from the AMF. When a UE
+                                         ARM TrustZone
+
+                        Fig. 9: Uni-RAT UE Design.                                            1 https://docs.nordicsemi.com/bundle/ps nrf9151/page/cryptocell.html
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                        TABLE I: Uni-RAT 5GC API Summary
+
+     5GC                         API Description
+
+
+
+
+                                                                                                                                                 ed
+     AMF                         CreateUeContext: create the AMF UE context and process the initial NAS message.
+                                 SendUplinkNas: forward UE-originated NAS from the Uni-RAT BS to the AMF.
+                                 PushDownlinkNas: deliver NAS/NGAP messages from the AMF to the Uni-RAT BS.
+                                 ReleaseUeContext: deregister the UE and release associated N2 resources.
+     SMSF                        SubmitMoSms: handle a MO SMS sent by the UE via the Uni-RAT BS and AMF.
+
+
+
+
+                                                                                                                                              iew
+                                 SubmitMtSms: deliver a MT SMS to the UE, including Uni-RAT WireGuard bootstrap when required.
+                                 ReportSmsStatus: report SMS delivery outcomes and acknowledgment status.
+     WG-AF                       RequestWgTunnel: allocate WireGuard keys, tunnel endpoints, and configuration parameters.
+                                 UpdateWgTunnel: rekey, modify, or delete an existing WireGuard tunnel instance.
+                                 GetWgStatus: retrieve the operational state of a WireGuard tunnel.
+     UDM                         GetAuthData: provide authentication vectors for 5G-AKA or EAP-5G procedures.
+
+
+
+
+                                                                                                                         ev
+                                 GetWgProfile: return the subscriber’s WireGuard policy and allowed peer configuration.
+                                 ReportWgUsage: update subscriber WireGuard usage records and policy state.
+
+
+  attach is detected, the BS transitions to HANDLE ATTACH,                                                                                     TNAN                                 Core Networ k
+
+
+
+
+                                                                                                           r
+                                                                                                             UE                    TNAP                    TNGF                   AMF        UDM/UDR
+  where a UE context is created, authentication credentials                                                    1 DEC T PT association
+  (EAP-5G/5G-AKA) are retrieved from TrustZone, and an                                                          Request (DECT_ID)         DECT Fast
+                                                                                                               2 DECT FT                  Association
+  InitialUEMessage is sent to the AMF. During operation, HAN-
+  DLE UPLINK and HANDLE DOWNLINK states process
+  UE-originated and AMF-originated NAS/NGAP messages,
+  respectively, advancing the UE procedure state as required.
+  Finally, the CLEANUP state securely releases UE contexts
+                                                                                                        er     Response (Accepted)
+                                                                                                               3 L2/TLS
+                                                                                                                [EAP-5G(NAS)]              4 AAA
+                                                                                                                                          [EAP-5G(NAS)]
+
+                                                                                                                                        6 [EAP-5G(NAS)]
+                                                                                                                                                                   5 N2
+                                                                                                                                                                  [EAP-5G(NAS)]
+                                                                                    pe
+                                                                                                                                EAP-5G and NAS setup
+  and erases NAS and keying material from TrustZone upon
+                                                                                                                             7 5G-AKA a uthentication request over NAS
+  UE detachment or AMF-triggered release.                                                                                    8 5G-AKA a uthentication response over NAS
+
+
+                                                                                                                  Using 5G-AKA and non-IP NAS signaling, the UE securely
+                                                                        HANDLE ATTACH
+                                                                                                                   exchanges SMS with the AF over DECT before IP setup.
+               •    INIT                                       - Create UE context
+                                      INIT           UE        - TrustZone credentials (EAP-5G / AKA)
+       -   Init TNAP (FT/AP)
+       -   Init TrustZone (SPM API)   Done           ATTACH    - Send InitialUEMessage -> AMF                     Fig. 11: UE association and authentication.
+                                                                ot
+
+       -   Init TNAP-TNGF pipeline
+       -   Init N2 (SCTP/NGAP)                                        HANDLE DOWNLINK
+                                                   AMF         - If NAS: forward to UE
+                                                 Downlink      - Else: handle NGAP control              extended to provide authentication vectors and per-subscriber
+                             •    IDLE/POLL
+                                                       UE                                               WireGuard profiles. Together, these SBA interfaces enable
+                                                      Uplink            HANDLE UPLINK
+                                             tn
+
+
+
+                           Polling:                            - First NAS: InitialUEMessage            secure, scalable, and tightly coordinated control-plane and
+                           - Access link (UE)                  - Regular NAS: UplinkNASTransport        data-plane operations across heterogeneous RATs in Uni-RAT.
+                            - N2/NGAP socket (AMF)    Clean    - Advance UE state
+                                                       up                                               With the integrated UE, BS, and 5GC design, the Uni-RAT
+    Uni-RAT TNAN Control Plane                                              CLEANUP                     system procedures encompass UE association and authenti-
+                                                               - Clear UE keys in TrustZone
+          State Machine                                        - Remove UE context
+                                                                                                        cation, intra-cell D2D WireGuard tunnel establishment, and
+                       rin
+
+
+
+
+                                                                                                        inter-cell multi-hop WireGuard setup coordinated by the WG-
+                   Fig. 10: Uni-RAT BS (TNAN) Design.                                                   AF, as presented in the following subsections.
+
+     3) Uni-RAT 5GC: The 5GC adopts a service-based archi-                                              B. Uni-RAT Procedures
+  tecture (SBA), in which Uni-RAT extends existing network                                                 1) UE Association and Authentication: Fig. 11 illustrates
+  functions with a set of dedicated APIs to support unified                                             the UE association and authentication procedure based on
+     ep
+
+
+
+
+  multi-RAT authentication, signaling, and secure data-plane                                            DECT-2020 NR control-plane signaling. The process starts
+  establishment. As summarized in Table I, the AMF exposes                                              with a native DECT-2020 NR association between the UE-
+  APIs for UE context management and NAS/NGAP message                                                   side RDPT and the BS-side RDFT within the Uni-RAT AN.
+  exchange with the Uni-RAT BS, while the SMSF is enhanced                                              During this phase, the UE completes DECT link establishment
+  to support mobile-originated (MO) and mobile-terminated                                               and device identification, providing a deterministic and trusted
+Pr
+
+
+
+
+  (MT) SMS, including SMS-over-NAS–based WireGuard boot-                                                access channel over licensed spectrum. After DECT associa-
+  strap signaling. A dedicated WG-AF is introduced to allocate,                                         tion, the UE initiates the EAP-5G procedure over the DECT-
+  manage, and monitor WireGuard tunnels, and the UDM is                                                 2020 NR access. EAP-5G messages are encapsulated in NAS
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+      UE 1             TNAN1                AMF          Core Network          SMSF                       WG-AF                  UDM                     TNAN2           UE 2
+
+                                 𝑠𝑟𝑐       𝑑𝑠𝑡
+            1. SMS-over-NAS [𝐷𝐸𝐶𝑇𝑈𝐸1 , 𝐷𝐸𝐶𝑇𝑈𝐸2 ] via TNAN1 and AMF
+
+
+
+
+                                                                                                                                     ed
+                                                                                          2. Mapping [𝐷𝐸𝐶𝑇𝑖𝑑: → 𝑆𝑈𝑃𝐼/𝐼𝑀𝑆𝐼] and resolve serving TNAN(s)
+                                                                                          3. Return [𝐷𝐸𝐶𝑇𝑖𝑑: → 𝑆𝑈𝑃𝐼/𝐼𝑀𝑆𝐼] and TNAN(s) ID
+              NAS Secured Control Plane
+                                                                                   4. Notify the use of WG-AF relay with TNAN(s) ID
+                                                                                                               5.Query UE-TNAN associated network topology and policy
+
+                                                                                                              6. Resolved network policy and topology
+
+
+
+
+                                                                                                                                  iew
+                              7. Update source TNAN1 WireGuard tunnel policy (allow IP end points, forwarding policy)
+                                                                                                              8. Update target TNAN2 WireGuard tunnel policy
+            9. SMS-over-NAS [WG-AF-UE1.cfg]
+
+        10. SMS-over-NAS [UE1-WG-AF.cfg]
+                                                                                                              11. SMS-over-NAS [WG-AF-UE2.cfg]
+
+                                                                                                              12. SMS-over-NAS [UE2-WG-AF.cfg]
+
+
+
+
+                                                                                                                  ev
+        13a. WG UE1 and TNAN1 13b. WG WG-AF and TNAN1                                                             13c. WG WG-AF and TNAN2                13d. WG UE2 and TNAN2
+
+        14. Multi-hop WireGuard data-plane                                                                                   WG Secured data plane
+
+
+                                                   Fig. 12: Inter-cell multi-hop WireGuard setup via WG-AF.
+
+
+
+
+                                                                                                 r
+  signaling and forwarded by the Uni-RAT AN, which emulates                                       in different serving cells and are associated with different
+  a TNAN, toward the AMF via the N2 interface. The Uni-
+  RAT AN executes the required NGAP procedures and relays
+  EAP-5G(NAS) messages to the 5GC, supported by a minimal
+  AAA function to satisfy 3GPP authentication requirements.
+                                                                                              er  Uni-RAT TNANs. In this case, UE1 initiates the procedure
+                                                                                                  by sending an SMS-over-NAS message containing the source
+                                                                                                  and destination DECT identifiers (DECTsrc, DECTdst) via
+                                                                                                  its serving TNAN and the AMF. The 5GC resolves the
+                                                                           pe
+  Successful EAP-5G completion establishes an initial NAS                                         corresponding 3GPP identities and determines the serving
+  security context between the UE and the 5GC. Subsequently,                                      TNANs of both UEs using the UDM. Upon detecting an inter-
+  the UE performs the 5G-AKA authentication procedure over                                        cell scenario, the SMSF invokes the WG-AF to coordinate
+  the established NAS connection. Authentication challenges                                       multi-hop connectivity across TNANs. The WG-AF queries
+  and responses are exchanged between the UE and the AMF,                                         the UDM for UE-specific network topology and policy in-
+  resulting in mutual authentication and derivation of NAS                                        formation, then derives forwarding rules and tunnel policies
+                                                          ot
+
+  encryption and integrity keys. During this phase, Uni-RAT                                       for the source TNAN, target TNAN, and intermediate WG-
+  enables secure exchange of control information, including                                       AF relay. WireGuard configuration parameters are distributed
+  SMS-over-NAS messages with the SMS-AF, entirely over the                                        to UE1 , UE2 , and the involved TNANs via SMS-over-NAS.
+  DECT-2020 NR Master-RAT before IP-layer setup.                                                  Subsequently, WireGuard tunnels are established between UE1
+                                            tn
+
+
+
+                                                                                                  and its serving TNAN, between TNANs and the WG-AF, and
+     UE 2          UE 1            TNAN           AMF/UDM       Core Network     SMSF             between the WG-AF and the target TNAN, finally reaching
+                                            𝑠𝑟𝑐
+                       1. SMS-over-NAS [𝐷𝐸𝐶𝑇𝑈𝐸1       𝑑𝑠𝑡
+                                                , 𝐷𝐸𝐶𝑇𝑈𝐸2 , Wi-Fi.cfg]
+                                                                                                  UE2 . Subsequently, WireGuard tunnels are established be-
+                                                                                                  tween UE1 and its serving TNAN, between each TNAN and
+                                                        2. Mapping [𝐷𝐸𝐶𝑇𝑖𝑑: → 𝑆𝑈𝑃𝐼/𝐼𝑀𝑆𝐼]
+     NAS Secured Control Plane                                                                    the WG-AF, and between the WG-AF and the target TNAN,
+                       rin
+
+
+
+
+        4. Forward SMS-over-NAS [Wi-Fi.cfg]
+                                                        3. Return [𝐷𝐸𝐶𝑇𝑖𝑑: → 𝑆𝑈𝑃𝐼/𝐼𝑀𝑆𝐼]           ultimately reaching UE2 . These authenticated and encrypted
+                                                                                                  tunnel segments are chained at the WG-AF, forming a secure
+        5. Apply [Wi-Fi.cfg], Association
+                                                                                                  multi-hop WireGuard data plane across cells while preserving
+        6. SMS-over-NAS [WG−UE2.cfg]
+                                                                                                  a strict separation between the NAS-secured control plane and
+                                              7. Forward SMS-over-NAS [WG−UE2.cfg]
+                                                                                                  the WireGuard-protected data plane.
+                      8. SMS-over-NAS [WG−UE1.cfg]                                                   3) Intra-cell D2D WireGuard setup: Fig.13 illustrates the
+     ep
+
+
+
+
+                                            9. Forward SMS-over-NAS [WG−UE1.cfg]                  intra-cell D2D WireGuard setup procedure in Uni-RAT. Fol-
+       10. WG Tunnel
+                                                                                                  lowing successful NAS security establishment over the DECT-
+                                              WG Secured P2P Data Plane
+                                                                                                  2020 NR Master-RAT, the Uni-RAT AN coordinates D2D con-
+                Fig. 13: Intra-cell D2D WireGuard setup.                                          nectivity by distributing Wi-Fi and WireGuard configuration
+                                                                                                  parameters via SMS-over-NAS. In this procedure, Uni-RAT
+Pr
+
+
+
+
+    2) Inter-cell multi-hop WireGuard setup via WG-AF:                                            UE1 discovers UE2 within the same cell and initiates a D2D
+  Fig. 12 illustrates the inter-cell multi-hop WireGuard setup                                    connection by sending an SMS-over-NAS message via the
+  procedure, which is triggered when UE1 and UE2 are located                                      SMSF, carrying the DECTid of both UEs and the required
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                        ed
+                                                                                     iew
+                                                                 r           ev
+  Wi-Fi configuration parameters (e.g., SSID and credentials).
+                                                              er
+                                                Fig. 14: Uni-RAT System Setup.
+
+
+
+                                                                       TABLE II: Uni-RAT System Setup Parameters
+                                                   pe
+  The 5GC resolves the DECTid values to 3GPP identities
+  through the AMF and UDM and verifies that both UEs are
+                                                                  Device         Parameter / OS        Setting / Version
+  served by the same cell. Upon validation, the SMSF for-
+  wards the configuration to UE2 over the NAS-secured control     DECT-2020      Operating Frequency   1888.704 MHz
+  plane. After Wi-Fi association with the Uni-RAT TNAN,           NR             Channel Bandwidth     1.728 MHz
+  the UEs exchange additional SMS-over-NAS messages to                           Subcarrier Spacing    27 kHz
+  distribute WireGuard configuration parameters, including peer                  Frame Duration        10 ms
+                                       ot
+
+  keys and tunnel endpoints. Following mutual confirmation,                      Transmit Power        13 dBm
+  UE1 and UE2 establish a direct WireGuard tunnel, forming a                     Modulation Scheme     QPSK
+  secure point-to-point D2D data plane. This procedure enables    Wi-Fi AP       Channel Number        Channel 1
+  centrally controlled, low-latency D2D communication while
+                            tn
+
+
+
+                                                                  TNAN1          Center Frequency      2412 MHz
+  offloading traffic from the UPF and preserving unified 3GPP                    Channel Bandwidth     20 MHz
+  security control. Based on the Uni-RAT architecture and                        Transmit Power        31 dBm
+  signaling procedures described above, the following section
+  presents the concrete system implementation and experimental    Wi-Fi AP       Channel Number        Channel 11
+  evaluation of Uni-RAT.                                          TNAN2          Center Frequency      2462 MHz
+                rin
+
+
+
+
+                                                                                 Channel Bandwidth     20 MHz
+      V. U NI -RAT I MPLEMENTATION AND E VALUATION                               Transmit Power        31 dBm
+     This section details the hardware and software realization
+                                                                  Nordic         Modem Tick Rate       69.12 MHz
+  of the Uni-RAT UE, BS, and 5GC enhancements, followed by
+                                                                  nRF9161        UART Baud Rate        115200
+  protocol-level verification using captured NAS and WireGuard
+                                                                  Development    UART Buffer Size      200 Bytes
+     ep
+
+
+
+
+  signaling. It further evaluates data-plane performance in D2D
+                                                                  Kit            SDK                   v3.0.2
+  and multi-hop scenarios, as well as control-plane scalability
+                                                                                 Zephyr OS             v4.0.99
+  under large-scale UE and BS registration loads.
+                                                                  RPi AP         Debian                11.11
+  A. Uni-RAT System Setup                                         RPi STA        Debian                12.11
+     Fig. 14 illustrates the Uni-RAT system setup used for
+Pr
+
+
+
+
+                                                                  5GC Server     Ubuntu                24.04.3 LTS
+  implementation and evaluation. The testbed comprises a ded-
+                                                                  5GC Laptop     Ubuntu                22.04.5 LTS
+  icated server running the Cumucore 5GC and a manage-
+  ment laptop connected to the core network for operating the
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  graphical user interface (GUI). The GUI supports UE and            management field (AMF), and message authentication code
+  base station provisioning, subscriber profile configuration, and   (MAC), enables network authentication and protection against
+  access control based on context information maintained in          replay, impersonation, and downgrade attacks. Using these
+
+
+
+
+                                                                                               ed
+  the UDM. Through predefined 5GC APIs, the GUI enables              inputs, the TrustZone verifies the MAC, recovers the SQN,
+  real-time visualization and management of registered DECT-         and computes the 5G-AKA response (RES∗ ), which is encap-
+  2020 NR UEs and associated base stations. As shown in              sulated in the NAS Authentication Response PDU. In parallel,
+  the management interface, the device management AF groups          the TrustZone derives the NAS security context, including the
+  connected DECT-2020 NR devices under the uedectgroup,              NAS encryption key (Kenc ) and integrity key (Kint ), thereby
+
+
+
+
+                                                                                            iew
+  displays their corresponding IMSI information, and allows          securing all subsequent NAS signaling between the UE and
+  operators to manage or revoke device access. The appearance        the 5GC. After successful authentication, NAS messages are
+  of both DECT UEs and base stations in the GUI confirms             protected using the NEA2 algorithm specified in TS 33.501,
+  successful authentication and registration with the 5GC.           which is based on 128-bit AES in counter (CTR) mode.
+     Table II summarizes the radio configurations, platforms,           For WireGuard integration, the TrustZone logs confirm that
+  and operating systems used in the Uni-RAT experiments.             each UE generates a static public–private key pair using
+  The DECT-2020 NR radio operates at a carrier frequency             the PSA Crypto API. The private key is created, stored,
+
+
+
+
+                                                                                 ev
+  of 1888.704 MHz with a bandwidth of 1.728 MHz, 27 kHz              and accessed exclusively within the TrustZone and is never
+  subcarrier spacing, QPSK modulation with coding rate 1/2,          exposed to the non-secure domain, while the corresponding
+  and a transmit power of 13 dBm, providing a low-latency and        public key is safely exported for distribution to authorized
+  reliable control-plane access link. Two Wi-Fi access points are    peers via the SMS-over-NAS control channel. The TrustZone
+  configured on non-overlapping channels, with one operating         also securely stores public keys provisioned by the 5GC,
+
+
+
+
+                                                                    r
+  on Channel 1 (2412 MHz) and the other on Channel 11 (2462          enabling authenticated tunnel establishment between the UE,
+  MHz); both use a 20 MHz channel bandwidth and a transmit           TNAN, and core network. This design replaces the certificate-
+  power of 31 dBm to support data-plane transmission. The            based trust model of IPsec and TNGF with a lightweight,
+  DECT-2020 NR radios are implemented on Nordic nRF9161
+  platforms running nRF Connect SDK v3.0.2 and ZephyrOS
+  v4.0.99, while Uni-RAT BS and UE functions are hosted
+  on Raspberry Pi platforms, with the BS deployed on an
+                                                                 er  hardware-protected authentication mechanism. During data-
+                                                                     plane setup, WireGuard performs a Noise-based handshake to
+                                                                     derive ephemeral session keys from the static key pairs, pro-
+                                                                     viding mutual authentication, forward secrecy, and encrypted
+                                                     pe
+  RPi4 under Debian 11.11 to enable low-level Wi-Fi MAC              data-plane communication. Overall, this implementation an-
+  configuration required for controlled experiments, and the UE      chors authentication, NAS security, and WireGuard key man-
+  deployed on an RPi5 under Debian 12.11 using a Broadcom            agement within hardware-isolated TrustZone environments,
+  Wi-Fi chipset whose closed MAC layer limits fine-grained           enabling secure control-plane signaling and protected data-
+  channel control, reflecting current hardware constraints in        plane transmission for Uni-RAT in 6G.
+  practical evaluations. Respectively. The 5GC is deployed on           2) Uni-RAT 5GC Implementation: Fig.16 illustrates the
+                                         ot
+
+  an Ubuntu 24.04.3 LTS server with management and visual-           Uni-RAT system procedures observed during 5GC operation.
+  ization supported by an Ubuntu 22.04.5 LTS laptop, forming         The DECT-2020 NR association phase is captured using a
+  a complete E2E Uni-RAT testbed for both control and data           custom passive sniffer developed in our prior work [7]. This
+  plane evaluation.                                                  sniffer leverages the nRF9161 PHY-layer API to monitor
+                             tn
+
+
+
+                                                                     DECT-2020 channels, extract raw PHY frames, remove PHY
+  B. Uni-RAT System Implementation                                   headers, and forward hexadecimal payloads via a local UDP
+     1) Uni-RAT UE and BS Implementation: Fig. 15 present the        pipeline to Wireshark, where a custom dissector decodes
+  Uni-RAT UE and BS TrustZone during debugging logs. The             DECT-2020 MAC and SDU fields for detailed inspection of
+  logs first confirm secure boot and initialization of the nRF9161   beacons, association signaling, and data PDUs.
+                 rin
+
+
+
+
+  platform, followed by UE context creation using the provi-            Following DECT association, the Uni-RAT UE initiates the
+  sioned SUPI and construction of the NAS registration request       5G registration and authentication procedure by transmitting a
+  PDU, whose encoding is verified against the expected 3GPP          NAS message carrying an EAP-5G payload over the DECT-
+  format. During the 5G-AKA procedure, the TrustZone logs            2020 NR link to the TNAN (IP 10.42.1.1). In parallel, the
+  demonstrate that all security-critical NAS processing strictly     TNAN establishes the N2 control-plane connection with the
+  follows the authentication flow defined in 3GPP TS33.501 [53]      AMF (IP 10.42.1.27) using SCTP, beginning with the stan-
+     ep
+
+
+
+
+  and is executed entirely within the secure world. Specifically,    dard four-way handshake. The exchange of INIT and INIT-
+  upon reception of the NAS authentication request (AUTH-            ACK messages negotiates transport parameters, followed by
+  REQ), the TrustZone parses the NAS header and key set              COOKIE-ECHO and COOKIE-ACK messages that enable
+  identifier (KSI), extracts the anti-bidding down between ar-       stateless association setup and protect against spoofing and
+  chitectures (ABBA) parameter used to bind authentication           resource-exhaustion attacks. Once the association is estab-
+Pr
+
+
+
+
+  to the 5G security architecture, and processes the 128-bit         lished, SCTP Selective Acknowledgement (SACK) messages
+  RAND and 128-bit AUTN values. The AUTN, comprising                 ensure reliable, ordered, and loss-resilient transport of NGAP
+  the concealed sequence number (SQN ⊕ AK), authentication           signaling. Over the established SCTP association, the TNAN
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                               ed
+                                                                                            iew
+                                                                  r             ev
+                                                               er
+                                                           pe
+          Fig. 15: Uni-RAT UE TrustZone authentication, NAS security processing, and WireGuard key management log.
+                                                     ot
+
+
+  performs the NGAP Setup procedure and relays UE-related          such control-plane signaling is observable only during con-
+  NGAP and NAS signaling, including the InitialUEMessage           trolled debugging and development scenarios. In addition, the
+                                     tn
+
+
+
+  carrying the NAS Registration Request. Subsequent downlink       SMSF and WG-AF components used in this work are part of
+  and uplink NAS transport messages support the EAP-5G and         the Cumucore 5G Core and require appropriate licenses for
+  5G-AKA authentication exchange, security mode control, and       deployment and evaluation.
+  initial UE context setup. The observed signaling follows the        3) Uni-RAT WireGuard Implementation: Fig.17 illustrates
+  standardized 5G registration and authentication workflow, with   the Uni-RAT WireGuard configuration and data-plane opera-
+  NAS messages encapsulated in NGAP and transported over
+                     rin
+
+
+
+
+                                                                   tion corresponding to the SMS-assisted intra-cell D2D setup
+  SCTP, as confirmed by the captured NGAP/NAS traces. The          described in Fig.13. As shown in Fig.17a and Fig.17b, UE1
+  complete Wireshark trace files are publicly available in the     and UE2 establish a direct WireGuard tunnel after exchanging
+  project GitHub repository2 . Correct decoding of DECT-2020       configuration parameters via SMS-over-NAS, with each UE
+  NR packets requires the custom Wireshark dissector developed     maintaining a WireGuard interface whose policy is bound to
+  in [7], which is also provided in the repository and must be     the peer’s internal tunnel IP address. In this configuration, the
+     ep
+
+
+
+
+  installed to enable full protocol-level analysis.                endpoint IP corresponds to the peer’s Wi-Fi interface address
+     In real-world deployments, however, the NGAP setup and        and port, which are used to transport encrypted WireGuard
+  UE authentication signaling exchanged between the TNAN           packets over the local Wi-Fi link, while the AllowedIPs field
+  and the AMF cannot be directly captured, as the N2 interface     specifies the peer’s virtual tunnel IP address whose traffic is
+  is fully encrypted using WireGuard with pre-shared keys          routed through the secure WireGuard interface. This separation
+Pr
+
+
+
+
+  securely stored within the ARM TrustZone. Consequently,          between transport-layer addressing and tunnel-layer addressing
+                                                                   enables stable D2D communication and policy enforcement
+    2 https://version.aalto.fi/gitlab/dangy1/uni-rat.git           independent of the underlying access network. The Wireshark
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                                ed
+                                                                                             iew
+                                                                    r             ev
+                                                                 er
+                       Fig. 16: Wireshark packet capture and signaling procedure of the Uni-RAT system.
+                                                     pe
+  capture in Fig. 17c illustrates WireGuard data-plane communi-      C. Uni-RAT System Evaluation
+  cation between two Uni-RAT UEs over the Wi-Fi link. Each
+  packet labeled Transport Data represents an encrypted                 1) Uni-RAT UE and TNAN Evaluation: To evaluate the
+  WireGuard message carried over UDP, where the receiver             proposed Uni-RAT system in terms of throughput, packet
+  field enables each endpoint to map the packet to the correct       loss rate, latency, and jitter, three scenarios were designed
+  peer and cryptographic context, the monotonically increasing       and tested: intra-cell D2D communication, where two UEs
+                                                                     communicate directly within the same cell; a one-hop relaying
+                                         ot
+
+  counter enforces packet ordering and replay protection and
+  confirms session state synchronization between the UEs, and        scenario, where two UEs in the same cell cannot communicate
+  the datalen field indicates the size of the encrypted payload,     directly due to distance and the TNAN acts as a relay; and an
+  with larger values corresponding to encapsulated application       inter-cell scenario, where the two UEs are located in different
+                             tn
+
+
+
+  data and smaller values reflecting control or acknowledgment       cells and communication is relayed across cells via the TNAN.
+  traffic. The observed bidirectional exchange of packets with          Fig.18 presents the throughput performance measured using
+  valid receiver identifiers, increasing counters, and encrypted     Iperf3 under different target bandwidth configurations for all
+  payloads confirms successful WireGuard handshake comple-           scenarios. The results show that intra-cell D2D communication
+  tion and demonstrates that Uni-RAT provides E2E confi-             consistently achieves the highest throughput, closely tracking
+  dentiality, integrity, and replay protection while transparently
+                 rin
+
+
+
+
+                                                                     the target bandwidth until reaching the practical wireless
+  operating over Wi-Fi and offloading traffic from the 5GC UPF.      capacity limit. This is expected, as D2D communication
+                                                                     benefits from direct connectivity, involving only a single
+     AppendixA presents the multi-hop WireGuard configura-           WireGuard tunnel, and is supported by UE devices equipped
+  tions for Uni-RAT inter-cell communication. Two UEs connect        with more capable Wi-Fi chipsets compared to the TNAN
+  to different Uni-RAT TNANs, which establish WireGuard              AP. In contrast, the one-hop and inter-cell multi-hop scenarios
+     ep
+
+
+
+
+  tunnels to a shared relay node. Each TNAN maintains peers          exhibit comparable throughput and saturate at similar levels.
+  toward its UE and the relay and applies routing rules for          Both scenarios rely on the TNAN access point operating in
+  remote-cell traffic. The relay forwards encrypted traffic be-      the 2.4 GHz ISM band with a 20 MHz channel bandwidth,
+  tween TNANs using IP forwarding and NAT, enabling inter-           implemented on a Raspberry Pi 4, which lacks support for
+  cell multi-hop communication without involving the 5GC UPF.        newer Wi-Fi protocols and advanced PHY features. As a result,
+Pr
+
+
+
+
+  Listings6–7 show the corresponding nftables configura-             throughput in these scenarios is constrained by the practical
+  tion. Dynamic key management and topology adaptation via           capacity of the wireless backhaul, rather than by the Uni-RAT
+  the WG-AF are left for future work.                                architecture itself. These results indicate that the performance
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                                                                          ed
+                                                                                                       iew
+                  (a) WireGuard configuration at UE1.                                           (b) WireGuard configuration at UE2.
+
+
+
+
+                                                                                  r         ev
+                                                                               er
+                                                                  pe
+                                    (c) Wireshark capture of Uni-RAT WireGuard-protected data-plane transmission.
+  Fig. 17: Uni-RAT WireGuard configuration and data-plane operation: (a) WireGuard configuration at UE1, (b) WireGuard
+  configuration at UE2, and (c) WireGuard-protected data transmission observed in Wireshark.
+
+
+  bottleneck is primarily hardware-limited and is expected to                  to additional relay hops, where packets traverse the TNAN,
+                                                  ot
+
+  improve with wider channel bandwidths or next-generation                     introducing buffering constraints, processing overhead, and
+
+
+
+
+   - -
+  Wi-Fi technologies (e.g., Wi-Fi 7/8).                                        increased exposure to wireless interference. As a result, packet
+
+
+
+     --
+                                                                        •
+                                                                               loss increases with the number of forwarding nodes, which
+   -;;, 100
+                -•- Target                                              ,      is consistent with practical multi-hop wireless communication
+                                                                     ','
+    a.
+                                    tn
+
+
+
+   ..0
+                    Intra-cell D2D                                  '          systems. These results further indicate that the proposed Uni-
+   ::;:                                                            '
+         80         One-hop (UE-TNAN-UE)                          ,/           RAT framework supports not only high throughput but also
+    :::,
+                                                                ''
+    "'                                                   ---
+    a.              Inter-cell Multi-hop                       '
+   .c
+                                                            ''                 strong communication reliability.
+         60
+    e
+    :::,
+
+   .c
+   I-
+   X       40
+                     rin
+
+
+
+
+   er:
+   -0
+    ....
+    QJ
+
+
+    "' 20
+    :::,
+    VI
+
+    QJ
+   :E
+           0
+                  10.0    20.0        30.0      50.0      60.0         100.0
+                                 Target Throughput (Mbps)
+           ep
+
+
+
+
+    Fig. 18: Iperf3 bandwitdh testing on the Uni-RAT system.
+
+     Fig. 19 reports the average UDP packet loss observed during
+  the experiments. As shown, intra-cell D2D communication                       Fig. 19: Packet loss performance of the Uni-RAT system.
+  exhibits the lowest packet loss, remaining close to zero. In
+Pr
+
+
+
+
+  contrast, the one-hop and inter-cell multi-hop scenarios experi-               Fig. 20 reports the ping RTT and jitter measured dur-
+  ence higher packet loss, though it remains within an acceptable              ing the experiments. As shown in Fig. 20a, intra-cell D2D
+  range (below 0.5%). This behavior is primarily attributed                    communication achieves the lowest RTT, while the one-hop
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  scenario exhibits higher RTT than the inter-cell multi-hop                                  for each configuration. Both platforms achieve registration
+  case. This is because, in the one-hop scenario, UE traffic                                  latency below 0.1 s, which is acceptable for practical deploy-
+  traverses the TNAN access point over CSMA/CA based Wi-                                      ments. The Cumucore network exhibits slightly higher latency
+
+
+
+
+                                                                                                                            ed
+  Fi, where both UEs share the same channel and experience                                    and a larger SEM than OAI Open5GC, reflecting additional
+  contention on both uplink and downlink, resulting in increased                              processing overhead from management GUIs, network slicing
+  delay. In contrast, in the inter-cell multi-hop scenario, the                               support, and other core network procedures beyond basic UE
+  two UEs are associated with different access points operating                               registration, whereas OAI Open5GC completes registration at
+  on different Wi-Fi channels, thereby avoiding contention and                                the AMF stage. No significant difference is observed between
+
+
+
+
+                                                                                                                         iew
+  reducing access delay despite the longer path. Fig. 20b shows                               single-UE and 100-UE scenarios on either platform, as regis-
+  a similar trend for jitter. Due to the random nature of channel                             tration requests are effectively handled in a serialized manner
+  contention under CSMA/CA, the one-hop scenario experiences                                  due to core network signaling and processing constraints. Fur-
+  higher jitter compared to both D2D and inter-cell multi-hop                                 thermore, heterogeneous UEs running on different hardware
+  communication. Although the multi-hop scenario involves a                                   platforms and operating systems show comparable registration
+  longer transmission path with additional relays, its RTT and                                times, as the Uni-RAT UE and TNAN are implemented in C
+  jitter remain more stable because contention is distributed                                 and designed for cross-platform compatibility, demonstrating
+
+
+
+
+                                                                                                                  ev
+  across different channels. Overall, these results confirm that                              the practicality and scalability of the proposed Uni-RAT
+  the proposed Uni-RAT framework adapts well to diverse                                       system even under stressed registration conditions.
+  deployment scenarios, enabling reliable D2D communication
+  with acceptable latency and jitter for practical deployments.                                            0.08
+                                                                                                                                                   Cumucore
+                                                                                                                                                   OAI
+
+
+
+
+                                                                                                 r
+                                                                                                    'v, 0.06
+                                                      V)
+                                                      E     12.5                                    :E
+                                                      �                                             LJ.J
+                                                      �                                             Vl
+                                                                                                     +I 0.04
+                                                      -..,� 10.0
+                                                        Q)
+
+  "'
+  C:              8
+                                                                                                     "'
+                                                                                                     C:
+                                                       "' 7.5
+  Cl)
+  E 6
+  "'
+  .!:
+   a.
+  "'
+  Cl)
+
+  "'� 2
+  Cl)
+
+  �
+                  4
+                                                      .!:
+
+
+
+
+                                                      �
+                                                       ..,"' 5.0
+                                                       a.
+
+                                                       "'�
+                                                       Q)
+                                                             2.5                              er     (I)
+                                                                                                    :E
+                                                                                                           0.02
+
+
+
+                                                                                                           0.00
+                                                                                                                  No traffic             Traffic
+                                                                                  pe
+                                                                                              Fig. 22: Background traffic impact on authentication latency.
+
+                            (a) Average ping RTT.                  (b) Average ping jitter.      Fig. 22 illustrates the impact of background traffic on core
+                            Fig. 20: Uni-RAT ping test with different scenarios.              network authentication time, measured using one UE over
+                                                                                              100 authentication trials under 1 Gbps background traffic
+     2) Uni-RAT Core Network Evaluation: To further evaluate                                  conditions. The results show that background traffic does
+  the Uni-RAT system, the developed Cumucore (CU) network                                     not degrade authentication time, indicating that control-plane
+                                                                     ot
+
+  was tested under single UE registration and up to 100 con-                                  authentication procedures remain stable under concurrent data-
+  current UE registrations, measuring UE registration latency in                              plane load for both Cumucore and OAI Open5GC systems.
+  terms of the mean and standard error of the mean (SEM). In                                  In terms of variability, the SEM remains comparable for
+                                                                                              Cumucore, while a slight reduction is observed for OAI, which
+                                                    tn
+
+
+
+  addition, Open5GC was used as a reference platform to assess
+  the impact of the developed core network applications on UE                                 is likely attributable to system-level effects such as CPU fre-
+  registration latency.                                                                       quency scaling and warm service states under sustained traffic
+                                                                                              load, rather than a fundamental performance improvement.
+                            ci
+                            0
+                             co
+
+
+
+
+                                                                            ID
+
+
+
+
+                                                                                                      TABLE III: WireGuard vs. IPsec-Based VPNs
+                                       rin
+        (s) IIHS :;: ueaw
+                            ci
+                            0
+                            <l)
+
+
+
+
+                                                                                                   Metric            WG          IPsec               Gain
+                                                                                                   Throughput       High       ≈50% lower       >2×
+                            ci
+                            0
+                            <t
+
+
+
+
+                                                                                                   RTT              Low           High         ∼30–50%
+                            ci
+                            0
+                            N
+
+
+
+
+                                                                                                   CPU load         Low           High         ∼40–60%
+                      ep
+
+
+
+
+                                                                                                   Code size        ∼4k           >60k          ∼15×
+                            ci
+                            0
+                            0
+
+
+
+
+                                                                                                   Handshake      Stateless    IKEv2 + SA         –
+
+
+  Fig. 21: 100 UEs Authentication on CU and OAI Open5GC.                                      D. Comparison Between WireGuard and IPsec
+Pr
+
+
+
+
+                                                                                                WireGuard and IPsec follow fundamentally different VPN
+     Fig. 21 summarizes the UE registration latency, reported as                              design philosophies with clear performance implications, as
+  the mean and SEM in seconds, based on 100 test repetitions                                  summarized in Table III. Experimental results by Mackey et
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                       TABLE IV: Comparison of Non-3GPP RAT Cooperation and Integration Approaches
+          System            RAT Techniques                 Bandwidth               Range                 Security
+          AirDrop [29]      BLE + Wi-Fi Direct             High (∼Mbps)            Short (∼30 m)         Account-based
+
+
+
+
+                                                                                                       ed
+          LoRaBee [30]      LoRa + ZigBee (PHY)            Low (∼bps)              Long (∼km)            –
+          LoFi [34]         Wi-Fi 6 + LoRa (PHY)           Medium (∼kbps)          Long (∼km)            –
+          EWDC [7]          DECT-2020 NR + Wi-Fi           High (∼Mbps)            Short (∼30 m)         Secure control plane
+          Uni-RAT           DECT-2020 NR + Wi-Fi           High (∼Mbps)            Adaptive              Cellular NAS / 5G-AKA
+
+
+
+
+                                                                                                    iew
+  al. [60] show that WireGuard achieves more than 2× higher            interworking, Uni-RAT introduces a lightweight WireGuard-
+  throughput, 30–50% lower RTT, and 40–60% lower CPU                   based Layer-3 data plane, enabling efficient secure commu-
+  utilization than OpenVPN, which shares key architectural             nication between the core and devices as well as direct
+  characteristics with IPsec-based deployments. These gains are        D2D connectivity. A prototype implementation using Nordic
+  primarily enabled by WireGuard’s kernel-space implementa-            nRF9161 devices, Raspberry Pi platforms, and a Cumucore
+  tion, compact codebase, and native multi-threading, allowing         5GC demonstrates stable operation and scalability with up
+
+
+
+
+                                                                                      ev
+  efficient scaling on multi-core systems. In contrast, IPsec relies   to 100 concurrent RAT devices. These results indicate that
+  on IKEv2 negotiation, multiple security associations (SA),           Uni-RAT offers a practical, scalable, and security-centric
+  and complex policy management, resulting in higher control-          foundation for integrating non-3GPP RATs into future 6G
+  plane latency and sensitivity to context switching, particu-         heterogeneous access networks.
+  larly in multi-session and multi-RAT scenarios. Moreover,               Future work will extend Uni-RAT to support Wi-Fi 7
+
+
+
+
+                                                                      r
+  WireGuard’s stateless, noise-based cryptographic design sig-         and DECT-2020 NR low-energy operation, enabling higher
+  nificantly reduces handshake complexity and setup overhead,          throughput and improved energy efficiency in heterogeneous
+  making it a more efficient alternative to IPsec for scalable, low-
+  latency, and high-throughput data-plane protection in next-
+  generation multi-RAT and 6G systems.
+
+  E. Comparison of Uni-RAT with other Systems
+                                                                   er  access deployments. We will also investigate large-scale WG-
+                                                                       AF deployments in the core network, including scalability
+                                                                       analysis and performance evaluation under massive device
+                                                                       populations, with a focus on efficient WireGuard-based data
+                                                                       plane management, optimized key distribution, and reduced
+                                                       pe
+     Table IV compares Uni-RAT with representative non-3GPP            processing overhead. In addition, Uni-RAT will be expanded
+  RAT cooperation approaches. Commercial systems such as               to integrate other RATs, such as BLE and LoRa, as either
+  AirDrop [29], Google Nearby Share, and Intel Unison combine          Master or Secondary-RATs, enabling flexible Multi-RATs con-
+  BLE-based discovery with Wi-Fi Direct to achieve Mbps-               figurations while further strengthening security through unified
+  level throughput over short ranges, which limits scalability and     3GPP authentication and control mechanisms.
+  adds latency. Low-power cross-technology solutions, including
+                                          ot
+
+  LoRaBee [30] and LoFi [34], emphasize PHY-layer interoper-                                         R EFERENCES
+  ability, enabling kilometer-scale or long-range communication
+  at bps–kbps rates without integrated security. In contrast, Uni-      [1] X. Lin, “The bridge toward 6g: 5g-advanced evolution in 3gpp release
+  RAT, evolved from the EWDC architecture [7], integrates                   i9,” IEEE Communications Standards Magazine, vol. 9, no. 1, pp. 28–35,
+                              tn
+
+
+
+  DECT-2020 NR and Wi-Fi under a unified 3GPP security                      2025.
+                                                                        [2] N. Hoque and H. Rahbari, “Locking down relay and spoofing attacks
+  framework using NAS signaling and 5G-AKA, supports high-                  during concurrent connection establishments in 802.11 ax,” IEEE Trans-
+  throughput Wi-Fi data delivery, and enables secure cross-cell             actions on Dependable and Secure Computing, 2025.
+  communication via SMS-over-NAS and one-hop and multi-                 [3] E. Oughton, G. Geraci, M. Polese, V. Shah, D. Bubley, and S. Blue,
+                                                                            “Reviewing wireless broadband technologies in the peak smartphone
+  hop WireGuard, providing a scalable, network-grade founda-
+                 rin
+
+
+
+
+                                                                            era: 6g versus wi-fi 7 and 8,” Telecommunications Policy, vol. 48, no. 6,
+  tion for heterogeneous multi-RAT integration.                             p. 102766, 2024.
+                                                                        [4] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+             VI. C ONCLUSION AND F UTURE W ORK                              Y. Koucheryavy, and M. Valkama, “Dect-2020 new radio: The next step
+                                                                            toward 5g massive machine-type communications,” IEEE Communica-
+     This paper presented Uni-RAT, a unified Multi-RATs frame-              tions Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+                                                                        [5] Z. Pan, Z. Xu, R. Miao, T. Zhao, and J. Wang, “Prospects of 6g technol-
+  work that addresses the fragmentation and security limitations
+     ep
+
+
+
+
+                                                                            ogy framework: A big-lite multi-rats concept,” IEEE Communications
+  of current heterogeneous access architectures by consolidating            Magazine, 2025.
+  control, authentication, and security across non-3GPP RATs.           [6] “ETSI TS 123 502 V18.5.0 (2024-05): 5G; Procedures for the
+  By designating DECT-2020 NR as a Master RAT, Uni-                         5G System (5GS) (3GPP TS 23.502 version 18.5.0 Release 18),”
+                                                                            European Telecommunications Standards Institute (ETSI), Sophia
+  RAT preserves a secure 3GPP connection with the 5G core,                  Antipolis, France, Technical Specification V18.5.0, May 2024.
+  performs 5G-AKA authentication, and distributes the NAS                   [Online]. Available: https://www.etsi.org/deliver/etsi ts/123500 123599/
+Pr
+
+
+
+
+  security context to Secondary-RATs such as Wi-Fi, which                   123502/18.05.00 60/ts 123502v180500p.pdf
+                                                                        [7] Y. Dang, N. Quang, F. Roni, R. Veli-Matti, R. Kalle, and R. Jäntti,
+  provide high-throughput data-plane connectivity. To reduce                “Ewdc: Integrating dect-2020 with wi-fi for enhanced wireless direct
+  the overhead and complexity of conventional IPsec-based                   connectivity,” IEEE Internet of Things Journal, 2025.
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+   [8] H. Givehchian, N. Bhaskar, A. Redding, H. Zhao, A. Schulman, and                   {AirDrop},” in 30th USENIX Security Symposium (USENIX Security
+       D. Bharadia, “Practical obfuscation of ble physical-layer fingerprints on          21), 2021, pp. 3577–3594.
+       mobile devices,” in 2024 IEEE Symposium on Security and Privacy (SP).         [30] J. Shi, D. Mu, and M. Sha, “Enabling cross-technology communication
+       IEEE, 2024, pp. 2867–2885.                                                         from lora to zigbee via payload encoding in sub-1 ghz bands,” ACM
+
+
+
+
+                                                                                                                      ed
+   [9] J. Wu, R. Wu, D. Xu, D. J. Tian, and A. Bianchi, “Sok: The long journey            Transactions on Sensor Networks (TOSN), vol. 18, no. 1, pp. 1–26,
+       of exploiting and defending the legacy of king harald bluetooth,” in 2024          2021.
+       IEEE Symposium on Security and Privacy (SP). IEEE, 2024, pp. 2847–            [31] C. Gu, R. Tan, and X. Lou, “One-hop out-of-band control planes
+       228 066.                                                                           for multi-hop wireless sensor networks,” ACM Transactions on Sensor
+  [10] X. Che, Y. He, X. Feng, K. Sun, K. Xu, and Q. Li, “Blueswat: A                     Networks (TOSN), vol. 15, no. 4, pp. 1–29, 2019.
+       lightweight state-aware security framework for bluetooth low energy,”         [32] L. Alliance and W. I. WG, “Wi-fi & lorawan® deployment synergies:
+       in Proceedings of the 2024 on ACM SIGSAC Conference on Computer
+
+
+
+
+                                                                                                                   iew
+                                                                                          Expanding addressable use cases for the internet of things,” 2019.
+       and Communications Security, 2024, pp. 2087–2101.                             [33] D. Gao, H. Wang, S. Wang, W. Wang, Z. Yin, S. Mumtaz, X. Li,
+  [11] J. Costa-Requena, K. Ruttik, and R. Jäntti, “Unlicensed ran integration           V. Frascolla, and A. Nallanathan, “Wilo: Long-range cross-technology
+       with 5g for time-sensitive networking,” in NOMS 2025-2025 IEEE                     communication from wi-fi to lora,” IEEE Transactions on Communica-
+       Network Operations and Management Symposium. IEEE, 2025, pp.                       tions, 2024.
+       1–4.                                                                          [34] D. Gao, W. Jiang, R. Liu, W. Wang, Z. Han, and Y. Liu, “Lofi: Physical-
+  [12] X. Lin, “3gpp evolution from 5g to 6g: A 10-year retrospective,” in                layer ctc from lora to wifi with ieee 802.11 ax,” in IEEE INFOCOM
+       Telecom, vol. 6, no. 2. MDPI, 2025, p. 32.                                         2025-IEEE Conference on Computer Communications. IEEE, 2025,
+  [13] A. Hoglund, X. Lin, O. Liberg, A. Behravan, E. A. Yavuz, M. Van                    pp. 1–10.
+       Der Zee, Y. Sui, T. Tirronen, A. Ratilainen, and D. Eriksson, “Overview       [35] H.-L. Määttanen, G. Masini, M. Bergström, A. Ratilainen, and T. Dudda,
+
+
+
+
+                                                                                                     ev
+       of 3gpp release 14 enhanced nb-iot,” IEEE network, vol. 31, no. 6, pp.             “Lte-wlan aggregation (lwa) in 3gpp release 13 & release 14,” in 2017
+       16–22, 2017.                                                                       IEEE Conference on standards for communications and networking
+  [14] M. Harounabadi, D. M. Soleymani, S. Bhadauria, M. Leyh, and E. Roth-               (CSCN). IEEE, 2017, pp. 220–226.
+       Mandutz, “V2x in 3gpp standardization: Nr sidelink in release-16 and          [36] H. Wu, S. Ferlin, G. Caso, Ö. Alay, and A. Brunstrom, “A survey
+       beyond,” IEEE Communications Standards Magazine, vol. 5, no. 1, pp.                on multipath transport protocols towards 5g access traffic steering,
+       12–21, 2021.                                                                       switching and splitting,” IEEE access, vol. 9, pp. 164 417–164 439, 2021.
+
+
+
+
+                                                                                    r
+  [15] J. Peisa, P. Persson, S. Parkvall, E. Dahlman, A. Grøvlen, C. Hoymann,        [37] O. Bonaventure, C. Paasch, and F. Duchene, “Tcp extensions for
+       and D. Gerstenberger, “5g evolution: 3gpp releases 16 & 17 overview,”              multipath operation with multiple addresses,” RFC 8684, 2020.
+       Ericsson Technology Review, vol. 2020, no. 2, pp. 2–13, 2020.                 [38] R. Mozny, M. Stusek, P. Masek, K. Mikhaylov, and J. Hosek, “Unifying
+  [16] V. K. Shrivastava, S. Baek, and Y. Baek, “5g evolution for multicast and           multi-radio communication technologies to enable mmtc applications in
+       broadcast services in 3gpp release 17,” IEEE Communications Standards
+       Magazine, vol. 6, no. 3, pp. 70–76, 2022.
+  [17] K. Ganesan, P. B. Mallick, and J. Löhr, “Nr sidelink enhancement in
+       3gpp release 17,” Journal of ICT Standardization, vol. 9, no. 2, pp.
+       79–90, 2021.
+                                                                                 er       b5g networks,” in 2020 2nd 6G Wireless Summit (6G SUMMIT). IEEE,
+                                                                                          2020, pp. 1–5.
+                                                                                     [39] T. Cogalan, D. Camps-Mur, J. Gutiérrez, S. Videv, V. Sark, J. Prados-
+                                                                                          Garzon, J. Ordonez-Lucena, H. Khalili, F. Cañellas, A. Fernández-
+                                                                                          Fernández et al., “5g-clarity: 5g-advanced private networks integrating
+                                                                  pe
+  [18] X. Lin, “An overview of 5g advanced evolution in 3gpp release 18,”                 5gnr, wifi, and lifi,” IEEE Communications Magazine, vol. 60, no. 2,
+       IEEE Communications Standards Magazine, vol. 6, no. 3, pp. 77–83,                  pp. 73–79, 2022.
+       2022.                                                                         [40] “ETSI TS 133 501 V18.7.0 (2024-10): 5G; Security architecture and
+  [19] I. Rahman, S. M. Razavi, O. Liberg, C. Hoymann, H. Wiemann,                        procedures for 5G System (3GPP TS 33.501 version 18.7.0 Re-
+       C. Tidestav, P. Schliwa-Bertling, P. Persson, and D. Gerstenberger, “5g            lease 18),” European Telecommunications Standards Institute (ETSI),
+       evolution toward 5g advanced: An overview of 3gpp releases 17 and                  Technical Specification TS 133 501 V18.7.0, October 2024, avail-
+       18,” Ericsson Technology Review, vol. 2021, no. 14, pp. 2–12, 2021.                able at: https://www.etsi.org/deliver/etsi ts/133500 133599/133501/18.
+  [20] X. Lin, “A tale of two mobile generations: 5g-advanced and 6g in 3gpp              07.00 60/ts 133501v180700p.pdf.
+       release 20,” arXiv preprint arXiv:2506.11828, 2025.                           [41] T. Farnschläder, M. Dietrich, I. A. Saeed, W. Kiess, and E. Lyczkowski,
+                                                   ot
+
+  [21] K. Pahlavan and P. Krishnamurthy, “Evolution and impact of wi-fi                   “On the interplay of 5g nr, wifi and lifi towards 6g multi-connectivity,”
+       technology and applications: A historical perspective,” International              in 2024 Joint European Conference on Networks and Communications
+       Journal of Wireless Information Networks, vol. 28, no. 1, pp. 3–19,                & 6G Summit (EuCNC/6G Summit). IEEE, 2024, pp. 1009–1014.
+       2021.                                                                         [42] U. Herzog, A. Georgakopoulos, I.-P. Belikaidis, M. Fitch, K. Briggs,
+  [22] T. Subha, T. Subash, N. E. Rani, and P. Janani, “Li-fi: a revolution in            S. Diaz, Ó. Carrasco, K. Moessner, B. Miscopein, S. Mumtaz et al.,
+                                    tn
+
+
+
+       wireless networking,” Materials today: proceedings, vol. 24, pp. 2403–             “Quality of service provision and capacity expansion through extended-
+       2413, 2020.                                                                        dsa for 5g,” Transactions on Emerging Telecommunications Technolo-
+  [23] J. Yang, C. Poellabauer, P. Mitra, and C. Neubecker, “Beyond beaconing:            gies, vol. 27, no. 9, pp. 1250–1261, 2016.
+       Emerging applications and challenges of ble,” Ad hoc networks, vol. 97,       [43] V. Frascolla, B. Okyere, S. Mumtaz, J. Rodriguez, K. S. Huq, A. Geor-
+       p. 102015, 2020.                                                                   gakopoulos, E. Kosmatos, A. Skalidi, P. Demestichas, T. Oikonomou
+  [24] Z. Sun, H. Yang, K. Liu, Z. Yin, Z. Li, and W. Xu, “Recent advances in             et al., “Breaking the access technologies silos by enhancing mac and
+       lora: A comprehensive survey,” ACM Transactions on Sensor Networks,                rrm in 5g+ networks,” in 2018 European Conference on Networks and
+                     rin
+
+
+
+
+       vol. 18, no. 4, pp. 1–44, 2022.                                                    Communications (EuCNC). IEEE, 2018, pp. 1–9.
+  [25] D. Coppens, A. Shahid, S. Lemey, B. Van Herbruggen, C. Marshall,              [44] D. Garcia-Roger, E. E. González, and J. F. Monserrat, “Regional multi-
+       and E. De Poorter, “An overview of uwb standards and organizations                 rat dual connectivity management for reliable 5g v2x communications,”
+       (ieee 802.15. 4, fira, apple): Interoperability aspects and future research        in 2022 Joint European Conference on Networks and Communications
+       directions,” IEEE access, vol. 10, pp. 70 219–70 241, 2022.                        & 6G Summit (EuCNC/6G Summit). IEEE, 2022, pp. 320–325.
+  [26] C. Renit, T. A. B. Raj, and C. A. Beaula, “A review on the design of          [45] C. Arendt, S. Fricke, S. Boecker, and C. Wietfeld, “Empowering the
+       inverted f-antenna for bluetooth, wi-fi, wimax and zigbee applications,”           convergence of wi-fi and 5g for future private 6g networks,” in European
+     ep
+
+
+
+
+       Wireless Personal Communications, vol. 134, no. 2, pp. 953–973, 2024.              Wireless 2023; 28th European Wireless Conference. VDE, 2023, pp.
+  [27] D. Zhang and S. Ding, “Design of gripper remote operation based on                 266–272.
+       nearlink and hisilicon mcu,” in International Conference on Mechatronic       [46] A. Famili, T. Atalay, and A. Stavrou, “Demystifying the impact of
+       Engineering and Artificial Intelligence (MEAI 2024), vol. 13555. SPIE,             multi-rat ranging for 6g metaverse users,” in 2025 IEEE 15th Annual
+       2025, pp. 29–33.                                                                   Computing and Communication Workshop and Conference (CCWC).
+  [28] V. F. Monteiro, D. A. Sousa, T. F. Maciel, F. R. P. Cavalcanti, C. F.              IEEE, 2025, pp. 01 037–01 043.
+       e Silva, and E. B. Rodrigues, “Distributed rrm for 5g multi-rat multicon-     [47] M. A. Habib, H. Zhou, P. E. Iturria-Rivera, M. Elsayed, M. Bavand,
+Pr
+
+
+
+
+       nectivity networks,” IEEE Systems Journal, vol. 13, no. 1, pp. 192–203,            R. Gaigalas, Y. Ozcan, and M. Erol-Kantarci, “Hierarchical reinforce-
+       2018.                                                                              ment learning based traffic steering in multi-rat 5g deployments,” in ICC
+  [29] A. Heinrich, M. Hollick, T. Schneider, M. Stute, and C. Weinert,                   2023-IEEE International Conference on Communications. IEEE, 2023,
+       “{PrivateDrop}: Practical {privacy-preserving} authentication for apple            pp. 100–105.
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+  [48] D. D. Nguyen, H. X. Nguyen, and L. B. White, “Reinforcement learning
+       with network-assisted feedback for heterogeneous rat selection,” IEEE
+       Transactions on Wireless Communications, vol. 16, no. 9, pp. 6062–
+       6076, 2017.
+
+
+
+
+                                                                                       ed
+  [49] A. Alwarafy, B. S. Ciftler, M. Abdallah, M. Hamdi, and N. Al-
+       Dhahir, “Hierarchical multi-agent drl-based framework for joint multi-rat
+       assignment and dynamic resource allocation in next-generation hetnets,”
+       IEEE Transactions on Network Science and Engineering, vol. 9, no. 4,
+       pp. 2481–2494, 2022.
+  [50] M. S. Allahham, A. A. Abdellatif, N. Mhaisen, A. Mohamed, A. Erbad,
+       and M. Guizani, “Multi-agent reinforcement learning for network selec-
+
+
+
+
+                                                                                    iew
+       tion and resource allocation in heterogeneous multi-rat networks,” IEEE
+       Transactions on Cognitive Communications and Networking, vol. 8,
+       no. 2, pp. 1287–1300, 2022.
+  [51] B. Priya, J. Malhotra, and K. Singh, “abrsl: Ai based bilateral rat
+       selection framework for next-generation wireless networks,” Multimedia
+       Tools and Applications, vol. 83, no. 34, pp. 81 179–81 207, 2024.
+  [52] A. Dandekar, P. D. Thapa, A. Rahman, and J. Schulz-Zander, “Interface
+       on demand: Towards ai native control interfaces for 6g,” in 2025
+       IEEE International Conference on Communications Workshops (ICC
+
+
+
+
+                                                                                   ev
+       Workshops). IEEE, 2025, pp. 244–249.
+  [53] “3GPP TS 33.501 V19.4.0 (2025-09): Security architecture and proce-
+       dures for 5G System (Release 19),” 3rd Generation Partnership Project
+       (3GPP), Technical Specification Group Services and System Aspects,
+       Sophia Antipolis, France, Technical Specification TS 33.501 V19.4.0,
+       September 2025, available at: https://www.3gpp.org/ftp/Specs/archive/
+
+
+
+
+                                                                                  r
+       33 series/33.501/.
+  [54] 3rd Generation Partnership Project (3GPP), “3GPP TS 23.316 V19.3.0:
+       Wireless and Wireline Convergence Access Support for the 5G System
+       (5GS),” 3GPP Technical Specification Group Services and System
+       Aspects, Tech. Rep., Sep. 2025, Release 19. [Online]. Available:
+       https://www.3gpp.org/ftp/Specs/archive/23 series/23.316/
+  [55] J. Arkko, V. Lehtovirta, and P. Eronen, “Improved extensible
+       authentication protocol method for 3rd generation authentication and
+       key agreement (eap-aka’),” RFC 5448 (Informational), may 2009,
+       updates RFC 4187; Updated by RFC 9048 and RFC 9678. [Online].
+                                                                               er
+                                                                 pe
+       Available: https://www.rfc-editor.org/rfc/rfc5448
+  [56] “5G and Wi-Fi RAN Convergence: Aligning the Industry on Opportu-
+       nities and Challenges,” Wireless Broadband Alliance (WBA), 5G Work
+       Group, London, United Kingdom, White Paper Version 1.0, April 2021,
+       iEEE 802.11-21/0408r0.
+  [57] ETSI, “5G; Security Architecture and Procedures for the 5G System
+       (3GPP TS 33.501 version 18.7.0 Release 18),” European Telecommuni-
+       cations Standards Institute (ETSI), Sophia Antipolis, France, Technical
+                                                  ot
+
+       Specification ETSI TS 133 501 V18.7.0, Oct. 2024.
+  [58] ——, “5G; Procedures for the 5G System (5GS) (3GPP TS 23.502
+       version 18.5.0 Release 18),” European Telecommunications Standards
+       Institute (ETSI), Sophia Antipolis, France, Technical Specification ETSI
+       TS 123 502 V18.5.0, May 2024.
+                                   tn
+
+
+
+  [59] ——, “Digital Enhanced Cordless Telecommunications (DECT); Study
+       on Interworking of DECT with 3GPP Networks,” European Telecommu-
+       nications Standards Institute (ETSI), Sophia Antipolis, France, Technical
+       Report ETSI TR 103 670 V1.1.1, Mar. 2023.
+  [60] S. Mackey, I. Mihov, A. Nosenko, F. Vega, and Y. Cheng, “A perfor-
+       mance comparison of wireguard and openvpn,” in Proceedings of the
+       Tenth ACM Conference on data and application security and privacy,
+                    rin
+
+
+
+
+       2020, pp. 162–164.
+     ep
+Pr
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+                                                       A PPENDIX A
+                                       M ULTI - HOP W IRE G UARD C ONFIGURATION
+
+
+
+
+                                                                                      ed
+  [Interface]                                                [Interface]
+  # WireGuard interface on Uni-RAT TNAN1                     # WireGuard interface on the switch
+  PrivateKey = <private-key-TNAN1>                           PrivateKey = <private-key-RelaySwitch>
+  Address     = 10.0.0.1/32                                  Address     = 10.0.0.2/32
+  ListenPort = 51820                                         ListenPort = 51820
+
+  [Peer]                                                     [Peer]
+
+
+
+
+                                                                                   iew
+  # Relay switch (hub)                                       # Uni-RAT TNAN1 (AP1)
+  PublicKey = <public-key-RelaySwitch>                       PublicKey = <public-key-TNAN1>
+  Endpoint   = 192.168.88.1:51820                            AllowedIPs = 10.0.0.1/32, 10.42.0.0/24, 10.0.0.5/32
+  AllowedIPs = 0.0.0.0/0, ::/0                               PersistentKeepalive = 15
+  PersistentKeepalive = 15
+                                                             [Peer]
+  [Peer]                                                     # Uni-RAT TNAN2 (AP2)
+  # Uni-RAT UE1 (STA1)                                       PublicKey = <public-key-TNAN2>
+  PublicKey = <public-key-UE1>                               AllowedIPs = 10.0.0.3/32, 10.42.1.0/24, 10.0.0.4/32
+
+
+
+
+                                                                         ev
+  AllowedIPs = 10.0.0.5/32                                   PersistentKeepalive = 15
+
+       Listing 1: TNAN1 (AP1) WireGuard Configuration               Listing 5: WireGuard Configuration on Switch
+
+  [Interface]                                                #!/usr/sbin/nft -f
+  # WireGuard interface on Uni-RAT UE1
+
+
+
+
+                                                             r
+  PrivateKey = <private-key-UE1>                             flush ruleset
+  Address     = 10.0.0.5/32
+                                                             table ip nat {
+  [Peer]
+  # Uni-RAT TNAN1 (AP1)
+  PublicKey = <public-key-TNAN1>
+  Endpoint   = 10.42.0.1:51820
+  AllowedIPs = 10.0.0.0/24, 10.42.1.0/24
+  PersistentKeepalive = 15
+                                                          er     chain prerouting {
+
+                                                                 }
+                                                                     type nat hook prerouting priority -100;
+
+
+                                                                 chain postrouting {
+                                                                     type nat hook postrouting priority 100;
+                                               pe
+                                                                     # Masquerade all packets leaving wlan0 (
+        Listing 2: UE1 (STA1) WireGuard Configuration                    hotspot interface)
+                                                                     oifname "wlan0" masquerade
+                                                                 }
+  [Interface]                                                }
+  # WireGuard interface on Uni-RAT TNAN2
+  PrivateKey = <private-key-TNAN2>                           table ip filter {
+  Address     = 10.0.0.3/32                                      chain input {
+  ListenPort = 51820                                                 type filter hook input priority 0;
+                                     ot
+
+                                                                     accept
+  [Peer]                                                         }
+  # Relay switch (hub)
+  PublicKey = <public-key-RelaySwitch>                           chain forward {
+  Endpoint   = 192.168.88.1:51820                                    type filter hook forward priority 0;
+                          tn
+
+
+
+  AllowedIPs = 0.0.0.0/0, ::/0                                       accept
+  PersistentKeepalive = 15                                       }
+  [Peer]                                                         chain output {
+  # Uni-RAT UE2 (STA2)                                               type filter hook output priority 0;
+  PublicKey = <public-key-UE2>                                       accept
+  AllowedIPs = 10.0.0.4/32                                       }
+                rin
+
+
+
+
+                                                             }
+       Listing 3: TNAN2 (AP2) WireGuard Configuration
+                                                             Listing 6: nftables configuration for NAT and forwarding on
+  [Interface]                                                Uni-RAT relay node
+  # WireGuard interface on Uni-RAT UE2
+  PrivateKey = <private-key-UE2>
+     ep
+
+
+
+
+  Address     = 10.0.0.4/32                                  sudo systemctl enable nftables
+                                                             sudo systemctl restart nftables
+  [Peer]
+  # Uni-RAT TNAN2 (AP2)                                             Listing 7: Enable and Restart nftables Service
+  PublicKey = <public-key-TNAN2>
+  Endpoint   = 10.42.1.1:51820
+  AllowedIPs = 10.0.0.0/24, 10.42.0.0/24
+Pr
+
+
+
+
+  PersistentKeepalive = 15
+
+        Listing 4: UE2 (STA2) WireGuard Configuration
+
+
+
+
+This preprint research paper has not been peer reviewed. Electronic copy available at: https://ssrn.com/abstract=6459430
+

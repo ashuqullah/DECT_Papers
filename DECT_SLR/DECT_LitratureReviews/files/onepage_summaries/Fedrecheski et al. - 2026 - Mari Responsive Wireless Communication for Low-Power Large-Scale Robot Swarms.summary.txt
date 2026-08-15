@@ -1,0 +1,74 @@
+Title: Mari: Responsive Wireless Communication
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Connecting large swarms of low-power micro-robots remains an open challenge:
+existing communication systems either lack the scalability to connect hundreds
+of units, or fail to deliver the low latency required for responsive control.
+For example, while Wi-Fi and BLE are commonly used in swarm robotics, scaling pe
+beyond 50 robots remains challenging. We introduce the Micro-robot Access Radio
+Infrastructure (Mari), a new link layer and architecture that aims to connect
+thousands of robots. Our TSCH-based link layer runs on commodity BLE radios,
+providing responsive control of up to 102 nodes using a single gate- ot way. To
+scale beyond a single gateway, Mari supports multiple non-coordinated gateways
+with fast node-controlled handovers. We further provide a lightweight tn
+infrastructure for real-time remote control and monitoring. We implement Mari on
+the popular nRF52840 and nRF5340 platforms, and extensively evaluate it in
+large-scale testbeds. In experiments with 100 nodes connected to a single
+gateway, Mari achieves a packet delivery ratio above 97%, round-trip latency rin
+of 269 ms, and full association time of 3.5 s under a join storm. When moving
+100 nodes together between two gateways, we obtain an average handover duration
+of only 0.34 s. A single node handover time can take less than 50 ms. ep In a
+setup with 200 nodes and two gateways, we measure round-trip latency of 274 ms
+and a packet delivery ratio above 93%. We integrate Mari with the Pr Email
+address: geovane.fedrecheski@inria.fr (Geovane Fedrecheski) This preprint
+research paper has not been peer reviewed. Electronic copy available at:
+https://ssrn.com/abstract=6571600 iew ed DotBot testbed in an experimental
+deployment of several hundred robots, en- abling remote firmware update of 600
+robots in less than 4 min. We contribute Mari as an open-source platform,
+including firmware, libraries, and performance monitoring tools, enabling
+researchers to connect swarm systems from a handful of units up to hundreds. ev
+
+Approach and methods:
+er r Large-scale robotic swarms are the next frontier in distributed autonomous
+systems. Swarms of micro-robots [1] could perform inspection and damage repair
+in hard-to-reach places, such as engines, building interiors, and satellites in
+orbit. Their applications span from warehouse automation [2] to innovative pe
+user interfaces [3] and minimally invasive medicine [4]. Large swarms of small
+robots can also be useful to experiment with swarm behavior in more realistic
+scenarios before committing to full-scale robots, helping to close the
+simulationreality gap that is common in swarm robotics. Communication is a major
+challenge to the advance of swarm systems [5]. ot This includes not only peer-
+to-peer (P2P) communication among close-by robots, but also communication with
+“control towers” used to control and deploy a tn swarm. That is, even if robots
+have a robust P2P communication system, they still need some communication link
+with a central entity to receive missions. This includes the user interface and
+the user experience involved in humanswarm interactions, where users can want to
+dynamically change the behavior rin of a swarm dynamically [6]. Moreover, a
+global communication link with swarms is needed to perform operational tasks,
+such as uploading firmware [7] and collecting logs. ep As
+
+Key findings:
+This paper introduces Mari, a platform demonstrated to connect more than 700
+small robots while providing responsive communication and fast firmware ot
+updates. We use TSCH to enable predictable latency and mitigate interferences,
+and provide four semi-static schedules that balance several requirements,
+including latency, scalability, and association time. We perform extensive eval-
+tn uation on real hardware, showing how Mari can associate 100 nodes in less
+than 4 s and achieve latency of 45.7 ms and 269.3 ms for 10 and 102 connected
+nodes, respectively. We simulate a flocking behavior with 100 real nodes,
+achieving an rin average handover time of only 0.34 s even under severe
+contention. We demonstrate 200 nodes connected to two gateways achieving latency
+of 274 ms, as well as an uplink and downlink PDR above 93% and 95%,
+respectively. Our solution is open-source and runs on COTS low-power micro-
+controllers. Besides the ep firmware, we provide libraries that allow users to
+plug-and-play Mari in their swarm deployments. We integrated Mari as the
+communication layer in the Pr DotBot testbed, where we validated real time robot
+control and the firmware 33 This preprint research paper has not been peer
+reviewed. Electronic copy available at: https://ssrn.com/abstract=6571600 iew ed
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

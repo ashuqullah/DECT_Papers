@@ -1,0 +1,417 @@
+                                                                                                                                                              2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+
+                                                                                                                                                       ETSI/DECT-2020 Component RIT Technology
+                                                                                                                                                      Implementation and Evaluation Contributions in
+                                                                                                                                                             mMTC and URLLC Use Cases
+                                                                                                                                                                                     Oussama Ben Smida, Souheib Ben Amor, and Sofiène Affes
+                                                                                                                                                                                        INRS-EMT, Université du Québec, Montreal, QC, H5A 1K6, Canada
+                                                                                                                                                                                        Email: {oussama.ben.smida, souheib.ben.amor, sofiene.affes}@inrs.ca
+
+
+                                                                                                                                                  Abstract—We propose a comprehensive evaluation of                               submissions, ETSI TC DECT did not provide all technical spec-
+                                                                                                                                               ETSI/DECT-2020 New Radio (NR) as an IMT-2020 candidate                             ifications for mMTC use case, thereby preventing from deciding
+                                                                                                                                               technology for the mMTC (connection density) and URLLC                             whether the technology fulfills the specifications or not. After
+                                                                                                                                               (reliability) use cases. Several independent evaluation groups
+                                                                                                                                                                                                                                  a new submission [7]–[10] and several technical exchanges,
+ICC 2023 - IEEE International Conference on Communications | 978-1-5386-7462-8/23/$31.00 ©2023 IEEE | DOI: 10.1109/ICC45041.2023.10279025
+
+
+
+
+                                                                                                                                               assessed DECT-2020 NR performance against the IMT-2020
+                                                                                                                                               requirements and INRS played a key role within the Canadian                        it was possible to run link- and system-level simulations to
+                                                                                                                                               Evaluation Group (CEG) in evaluating the technology via                            evaluate connection density. DECT-2020 NR has to fulfill the
+                                                                                                                                               simulation. In order to develop 5G link- and system-level                          requirement of 99.999% reliability and support more than one
+                                                                                                                                               simulators, it is necessary to identify and understand all key                     million devices per km2 .
+                                                                                                                                               characteristics of DECT technology. Nevertheless, the mMTC
+                                                                                                                                               use case offers D2D communications, which made simulation                             In this paper, we point out key features of DECT-2020 NR
+                                                                                                                                               analysis extremely cumbersome. In this paper, we also explain the                  and most importantly the D2D challenge in our simulations and
+                                                                                                                                               different maneuvers in order to fasten the simulations and reduce                  the maneuvers made to the routing process to make such com-
+                                                                                                                                               complexity while respecting all DECT specifications. Simulation                    plex simulations in terms of time and memory run smoothly.
+                                                                                                                                               results provided from link- and system-level simulations for both
+                                                                                                                                               URLLC and mMTC use cases show that DECT-2020 component                             We propose a comprehensive evaluation of ETSI/DECT-2020
+                                                                                                                                               RIT meets the IMT-2020 requirements.                                               New Radio (NR) as an IMT-2020 candidate technology for the
+                                                                                                                                                  Index Terms—5G; ETSI/DECT; Technology evaluation; Con-                          mMTC (connection density) and URLLC (reliability). Several
+                                                                                                                                               nection density (mMTC); Reliability (URLLC); D2D; channel mis-                     independent evaluation groups assessed DECT-2020 NR per-
+                                                                                                                                               match; implementation impairments; channels estimation errors;                     formance against the IMT-2020 requirements and INRS played
+                                                                                                                                               synchronization; localization; direction-of-arrival (DoA)
+                                                                                                                                                                                                                                  an important part within the Canadian Evaluation Group (CEG)
+                                                                                                                                                                                                                                  in evaluating the technology via simulation.
+                                                                                                                                                                          I. I NTRODUCTION                                           In order to develop 5G link- and system-level simulators,
+                                                                                                                                                  The International Telecommunication Union Radiocommuni-                         it is necessary to identify and understand all key characteris-
+                                                                                                                                               cation sector (ITU-R) has set the requirements for International                   tics of DECT technology. Nevertheless, the mMTC use case
+                                                                                                                                               Mobile Telecommunications-2020 (IMT-2020 5G Standard).                             offers D2D communications, which made simulation analysis
+                                                                                                                                               With the rise of new wireless communications, artificial in-                       extremely cumbersome. [11] analyzed by system level simu-
+                                                                                                                                               telligence, and big data, several enabling radio technologies                      lations the energy consumption of DECT-2020 NR networks
+                                                                                                                                               standardized by different standardization organisms such as                        with different network sizes and topologies. In this paper, we
+                                                                                                                                               3GPP and ETSI have been proposed within the ITU-R Working                          also explain the different maneuvers in order to fasten the
+                                                                                                                                               Party 5D.                                                                          simulations and reduce complexity while respecting all DECT
+                                                                                                                                                  The European telecommunications standards Institute                             specifications.
+                                                                                                                                               (ETSI)-digital enhanced cordless telecommunications (DECT)                            Simulation results provided from link- and system-level
+                                                                                                                                               Forum was submitted to ITU-R; claiming to have met the                             simulations for both URLLC and mMTC use cases show that
+                                                                                                                                               minimum technology requirements that need to be fulfilled                          DECT-2020 component RIT meets the IMT-2020 requirements.
+                                                                                                                                               in order to pass [1]. Independent evaluation groups (IEG)                             The terminology (traditionally used in DECT) Fixed Part
+                                                                                                                                               participated in evaluating DECT submission involving Ultra                         (FP) and Portable Part (PP) is used to identify the two DECT
+                                                                                                                                               Reliable Low Latency Communications (URLLC) and massive                            radio end points. The FP is normally fixed and corresponds
+                                                                                                                                               Machine Type Communications (mMTC) and INRS took                                   to what is referred to as BS in mobile terminology, the PP is
+                                                                                                                                               part of the process within the Canadian evaluation group                           normally mobile and corresponds to what is referred to as UE
+                                                                                                                                               (CEG) using guidelines for the evaluation process in [2]. The                      in mobile terminology.
+                                                                                                                                               DECT evaluation also garnered the attention of the research                           The paper is organized as follows. Section II describes
+                                                                                                                                               community and led to several evaluation publications [3]–[6].                      the specifications. Assumptions and configuration for DECT
+                                                                                                                                                  The DECT-2020 NR offers star and mesh network topologies                        evaluation are detailed in Section III. Numerical evaluation
+                                                                                                                                               to support URLLC and mMTC use cases, respectively. In early                        results are analyzed in Sections IV and V draws out concluding
+
+
+
+                                                                                                                                            978-1-5386-7462-8/23/$31.00 ©2023 IEEE                                          1462
+                                                                                                                                            Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+                  2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+                                                                        TABLE I
+                                        E VALUATION PARAMETERS FOR UM I - STREET CANYON AND UM A SCENARIOS [12].
+
+                              Parameters                            UMi - street canyon                                                   UMa
+                              Cell layout                  Hexagonal grid, 19 micro sites, 3 sectors                    Hexagonal grid, 19 macro sites, 3 sectors
+                                                                   per site (ISD = 200m)                                        per site (ISD = 500m)
+                      BS antenna height hBS                                  10m                                                          25m
+                     UT location: indoor/outdoor                     indoor and outdoor                                           indoor and outdoor
+                      UT location: LOS/NLOS                            LOS and NLOS                                                 LOS and NLOS
+                          Indoor UT ratio                                    80%                                                          80%
+                  UT mobility (horizontal plane only)                       3km/h                                                        3km/h
+                     Min. BS - UT distance (2D)                              10m                                                          35m
+                     UT distribution (horizontal)                          uniform                                                      uniform
+
+
+
+                                                                                                           1500
+
+
+
+                                                                                                           1000
+
+
+
+
+                                                                                           Distance (m)
+                                                                                                            500
+
+
+
+                                                                                                              0
+
+
+
+                                                                                                          −500
+
+
+
+                                                                                                          −1000
+
+        Fig. 1. Formation of the clustered tree mesh network topology [7].
+                                                                                                          −1500
+                                                                                                            −1500      −1000     −500        0         500    1000   1500
+                                                                                                                                        Distance (m)
+   remarks.
+                                                                                                                    Fig. 2. D2D relaying UEs selection process.
+                        II. DECT SPECIFICATIONS
+      DECT-2020 NR has to fulfill the requirement of 99.999%
+   reliability and support more than one million devices per km2                      38.901 V16.1.0) [12] where mMTC devices deployed in low
+   [1]. These requirements are set by ITU-R WP5D to support                           heights and it has higher shadow fading compared to e.g.
+   different 5G use cases. To do so, DECT-2020 NR offers a new                        Urban Macro. Some key specifications can be shown in Table
+   physical layer numerology, advanced medium access control                          I. Additionally, it is assumed that all links between mMTC
+   algorithms, and supports mesh network topology in addition to                      devices to be NLOS to avoid too positive pathloss values
+   the star topology [9].                                                             between mMTC devices.
+      DECT-2020 NR technical specifications show that any Radio                          Regarding the mesh connection topology, all nodes can send
+   Device (RD) in the network is able to transmit and receive                         Beacon with very low rate. In multi channel case, they select
+   are free to choose any operation mode simultaniously or not                        used channel based on interference detect in each channel
+   simultaniously (fixed termination mode or portable termination                     i.e. other beacons and can measure the RSSI and list all
+   mode). A RD operating in fixed mode provides information to                        detected beacons where the RSSI value is high with reasonable
+   other RDs on how to initiate a connection and communicate                          detection quality (where there is a specific threshold sensitivity
+   with it and is also responsible for routing the data.                              for D2D communication). Thus, nodes that are too far away are
+      As seen in Fig. 1, the mesh network topology is realized by                     excluded. Nodes select next communication hop to the node
+   adding more RDs that connect themselves to any of the network                      sending the beacon that minimizes number hops to BTS. Each
+   nodes and autonomously choose or change their role between                         communication link is decode-and-forward with link specific
+   routing and non-routing, thereby, offering a scalable solution                     (H)-ARQ to ensure that transmission is not lost. In simulation,
+   for mMTC use case.                                                                 fixed MSC was used. All transmissions are QPSK with coding.
+      In the mMTC environment, several assumptions are made,
+   which include high tower and high transmission power macro
+                                                                                          III. A SSUMPTIONS AND C ONFIGURATION FOR DECT
+   cellular base station network deployment. Key DECT features
+                                                                                                            E VALUATION
+   such as gateways instead of high-power base stations are
+   adopted in DECT to operate in the DECT band.                                         Table II enumerates the parameters used for connection
+      Each gateway has three independent sinks that operate as                        density evaluation in mMTC use case while Table III presents
+   DECT FP. All devices have capability to route other devices                        the parameters for reliability evaluation in URLLC use case.
+   data. Urban Street canyon model was adopted as the D2D                               We had to tackle multiple issues to produce the desired
+   channel and its specifications were taken from (3GPP TR                            DECT evaluation metric. Full specifications required to set up
+
+
+
+                                                                                1463
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+                  2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+                                                                          TABLE II
+                                                  A SSUMPTIONS AND C ONFIGURATION OF U RBAN M ACRO - M MTC.
+
+              Parameters                                                        DECT                                INRS
+              Communication direction                         Uplink                                          Uplink
+              Channel bandwidth                               1.728 MHz                                       1.728 MHz
+              Number of channels                              1 and 3                                         5
+              Traffic model                                   Poisson; 1 packet/2h/device; non-full buffer    Poisson; 1 packet/2h/device; non-full buffer
+                                                              model                                           model
+              RD deployment                                   80% indoor, 20% outdoor                         80% indoor, 20% outdoor
+              Number of FTs                                   19                                              19
+              Number of RDs                                   4M                                              4M
+              Proportion of RD-Fs                             N/A                                             Dynamic
+              Maximum number of hops                          Up to 255                                       Up to 255
+              Inter-site distance (ISD)                       500 m                                           500 m
+              RX sensitivity                                  99.7 dBm                                        99.7 dBm
+              Transmission power                              23 dBm                                          23 dBm
+              Thermal noise power                             174 dBm/Hz                                      174 dBm/Hz
+              Noise figure                                    7 dB                                            7 dB
+              Carrier frequency                               700 MHz                                         700 MHz
+              Layer 2 packet size                             32 bytes                                        32 bytes
+              Slot length                                     417 us                                          417 us
+              Routing                                         Minimum hops                                    Minimum hops
+              Channel access                                  Random access, listen before talk               Random access, listen before talk
+              Number of random access slots                   FT: 9598; RD-F: 46                              FT: 9598; RD-F: 46
+              Number of antenna elements                      RD: 1; FT: 1                                    RD: 1; FT: 1
+              Maximum antenna gains                           RD: 0 dBi; FT: 8 dBi                            RD: 0 dBi; FT: 8 dBi
+              Antenna heights                                 RD: 1.5 m; FT: 25 m                             RD: 1.5 m; FT: 25 m
+              Spatial diversity                               None                                            None
+              Path loss model (incl. shadowing)               UMa-B, 3GPP-D2D                                 UMa-B, 3GPP-D2D
+              Link fading model                               UMa-B, 3GPP-D2D                                 UMa-B, 3GPP-D2D
+              Subcarrier spacing                              27 kHz                                          27 kHz
+              FFT length                                      64                                              64
+              Modulation and coding scheme                    MCS Index 1                                     MCS Index 1
+              Maximum HARQ retransmissions                    3                                               1
+              Channel estimation                              N/A                                             MMSE
+              RD velocity                                     3 km/h                                          3 km/h
+
+
+
+   the simulator were not entirely confirmed until after the 37th                     without generating all D2D channel coefficients between all
+   WP5D meeting. Besides, given the final setup adopted and                           RDs. In fact, as shown in Fig. 2, when a certain RD is not able
+   translating into exhaustive consideration a priori of all potential                to establish a communication, it starts searching for a potential
+   D2D channels between the user equipment (UE)/devices and                           relay from a set of potential RDs drawn from an elliptical zone
+   all potential multi-hop relaying paths (up to 255 in number),                      defined between the RD and the base station. This zone covers
+   the amount of data required to be generated for around                             a small area and dynamically changes until finding a relay that
+   77,000 UE/devices per sector/cell to reflect the criterion of                      satisfies the specification defined by DECT-2020. In doing so,
+   1 million users per km2 was cumbersome. Just a single                              only some D2D channel coefficients are generated dynamically
+   drop to carry out a simulation could take days for one BS                          and simulation complexity reduces drastically without fixing a
+   site and, as a consequent extension, many weeks for the full                       specific set of relaying nodes. Once the relay is chosen, the
+   layout of nineteen BS sites. Despite having powerful computing                     number of hops increases by 1 and the same process is again
+   servers, simply obtaining the required memory allocations was                      applied if 1 hop is not enough to establish the communication.
+   not possible. After the 38th meeting of WP5D in June 2021,                         This technique is not only much simpler but also adapts with
+   during which the DECT-2020 proponent provided the necessary                        each environment to find the set of relays able to establish
+   clarifications, significant progress was made to successfully                      a communication while reducing considerably the simulation
+   develop and integrate in the system-level simulator several                        complexity. The proposed simplification let the evaluation
+   processing-acceleration schemes that ultimately overcame the                       happen while respecting the configuration assumptions without
+   overwhelming a) memory consumption required by the DECT                            affection the system performance.
+   submission and b) computational complexity.
+                                                                                                   IV. N UMERICAL E VALUATION R ESULTS
+     Other evaluation groups, added additional simplification pa-                        The Wirless Lab developed both link- and system-level
+   rameters such as maximum number of hops and propotion of                           simulators using Matlab in order to evaluate both mMTC
+   RD-Fs where one can choose just a set of RDs capable of rout-                      and URLLC environments for ETSI/DECT candidate. In the
+   ing data while in the specifications, all RDs are able to route.                   first phase, simulations were carried on without adopting the
+   Our team proposed to adopt a dynamic approach to route data                        proposed strategy (i.e, each RD is capable of routing data and
+
+
+
+                                                                                1464
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+                  2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+                                                                     TABLE III
+                                      A SSUMPTIONS AND CONFIGURATION OF U RBAN M ACRO -URLLC (D OWNLINK CASE ).
+
+              Parameters                                                     ITU-R M.2412                           INRS
+                                                              Baseline evaluation configuration parameters
+              System architecture                             Star with 19 sites, each site has 3 TRxPs       Star with 19 sites, each site has 3 TRxPs
+                                                              (cells). Device connects directly to FT.        (cells). Device connects directly to FT.
+              Carrier frequency for evaluation                700MHz                                          700MHz
+              Channel model                                   Urban Macro                                     Urban Macro
+              BS antenna height                               25m                                             25m
+              Total Tx Power per TRxP in BS/sink              49dBm for 20MHz                                 Results provided with 23dBm and 49dBm
+                                                                                                              for 20MHz
+              UE/node power class                              23                                             Not applicable as DL only
+              Percentage of high loss and low loss build-      100% low loss                                  100% low loss
+              ing type
+              Percentage of high loss and low loss build-      100% low loss                                  100% low loss
+              ing type
+                                                            Additional parameters for system-level simulation
+              Inter-site distance                             500m                                            500m
+              Number of antenna elements per TxRP             Up to 64                                        Results provided with 20, (5x4)
+              UE antennas                                     Up to 4                                         4
+              Device deployment                               80% indoor, 20% outdoor                         80% indoor, 20% outdoor
+              Inter-site interference modelling               Explicitly modelled                             Explicitly modelled
+              BS noise figure                                 5 dB                                            Not applicable DL only
+              UE noise figure                                 7 dB                                            7 dB
+              BS/sink antenna element gain                    8 dBi                                           8 dBi
+              UE antenna element gain                         0 dBi                                           40 dBi
+              Thermal noise level                             174 dBm/Hz                                      174 dBm/Hz
+              Traffic model                                   Full buffer                                     Full buffer
+              Physical layer packet size                      Not defined                                     Not applicable but Single 32 byte can be
+                                                                                                              packet mapped to long pre-ample packet
+                                                                                                              modulated according MCS2 (QPSK ), in
+                                                                                                              link simulations.
+              Simulation bandwidth                            Up to 100 MHz                                   Channel Bandwidth 1.728 MHz.
+              UE density                                      10 UEs per TRxP                                 10 UEs per TRxP
+              UE antenna height                               1.5m                                            1.5m
+
+
+
+   trying all possible combinations is compulsory). This approach                     DECT’s self-evaluation. Table VI shows that the packet outage
+   did not work as expected since the computational cost is                           is 0.2138% for a threshold of 1%, which validates that DECT-
+   cumbersome. Applying in a second phase the proposed dynamic                        2020 component RIT meets the IMT-2020 connection density
+   selection strategy to our simulator made the production of the                     requirements.
+   following results possible owing to tremendous computational                          For URLLC use case, star architecture is adopted (mesh
+   gains. Therefore, for mMTC use case, 5 channels were used                          architecture for mMTC use case) with devices connecting
+   with 19 FTs and 1 million RDs per km2 , which translates                           directly to FTs. The number of antenna elements per TxRP
+   to more than 4 million RDs in a configuraion of 19FTs. As                          is set to 20 (5x4) while UEs antennas is set to 4. All other
+   explained in section III, we did not set a fixed proportion                        specifications are taken from DECT documents and some of
+   of RD-Fs for data relaying but the number is dynamic and                           them are presented in Table III.
+   adaptative to each environment without limiting the number of                         From Table V, we make similar conclusions for reliability
+   maximum hops. The RX sensitivity for routing is set to 99.7                        requirement in the URLLC use case. Indeed, DECT-2020 com-
+   dBm with a routing cost that aims to minimize the number                           ponent RIT meets the IMT-2020 reliability requirements. For
+   of hops and a maximum HARQ retransmissions of 1. Channel                           futher details regarding simulation results and interpretations,
+   access, antennas configuration and other specifications are taken                  please refer to CEG report [13].
+   from DECT [7]–[10].                                                                   We produced for the CEG ten confidential evaluation reports
+      To evaluate the performance of the mMTC case, we mea-                           representing the official results, both provisional and final, that
+   sured the Packet Error Rate (PER) at the receiver. Table IV                        cover not only ETSI/DECT, but also 3GPP and NuFront [13]–
+   explains the two approaches following ITU M. 2412 [2] and                          [15].
+   DECT’s methodology which calculates the packet outage rate                                                    V. C ONCLUSIONS
+   instead of connection density. The requirement is fulfilled if the                    In this paper, we proposed a comprehensive evaluation of
+   packet outage rate is lower than 1% for UEs density of 1 000                       ETSI/DECT-2020 New Radio (NR) as an IMT-2020 candidate
+   000 devices per km2 .                                                              technology for the mMTC (connection density) and URLLC
+     By conducting Mont-Carlo experiments, the PER plotted in                         (reliability) use cases. Several independent evaluation groups
+   Fig. 3 curves show the same behavior as those obtained by                          assessed DECT-2020 NR performance against the IMT-2020
+
+
+
+                                                                                1465
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+                          2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+                                                                                               TABLE IV
+                                      M MTC SIMULATION APPROACH FOLLOWING THE ITU M.2412 GUIDELINES AND DECT APPROACH .
+
+                            DECT non-full buffer                         ITU non-full buffer system-level            ITU full buffer system-level simulation followed by
+                           system-level simulation                               simulation [2]                                    link-level simulation [2]
+
+                      •    Step 1: Set system user num-              •   Step 1: Set system user number per            •   Step 1: Perform full-buffer system-level sim-
+                           ber 1 000 000 devices per                     TRxP as N.                                        ulation using the evaluation parameters for
+                           km2.                                      •   Step 2: Generate the user packet ac-              Urban Macro-mMTC test environment, deter-
+                      •    Step 2: Generate the user                     cording to the traffic model.                     mine the uplink SIN Ri for each percentile
+                           packet according to the traf-             •   Step 3: Run non-full buffer system-               i=199 of the distribution over users, and record
+                           fic model.                                    level simulation to obtain the packet             the average allocated user bandwidth.
+                      •    Step 3: Run non-full buffer                   outage rate. The outage rate is defined       •   Step 2: Perform link-level simulation and de-
+                           system-level simulation to                    as the ratio of the number of packets             termine the achievable user data rate Ri for
+                           obtain the packet outage rate.                that failed to be delivered to the desti-         the recoded SIN Ri and Wu ser values. ac-
+                           The outage rate is defined as                 nation receiver within a transmission             cording to the traffic model.
+                           the ratio of the number of                    delay of less than or equal to 10s to         •   Step 3: Calculate the packet transmission delay
+                           packets that failed to be de-                 the total number of packets generated             of a user. Step 4: Calculate the traffic generated
+                           livered to the destination re-                in Step 2.                                        per user.
+                           ceiver within a transmission              •   Step 4: Change the value of N and             •   Step 5: Calculate the long-term frequency re-
+                           delay of less than or equal                   repeat Step 2-3 to obtain the system              source requested under SIN Ri .
+                           to 10s to the total number of                 user number per TRxP N satisfying             •   Step 6: Calculate the number of supported
+                           packets generated in Step 2.                  the packet outage rate of 1%. Step 5:             connections per TRxP.
+                      •    Step 4: Increase the traffic                  Calculate connection density. The re-         •   Step 7: Calculate the connection density. The
+                           density.                                      quirement is fulfilled if the connection          requirement is fulfilled if the 99t h percentile
+                      •    Step 5: Calculate the packet                  density C is greater than or equal to             of the delay per user Di is less than or equal
+                           outage rate. The requirement                  1 000 000 devices per km2 .                       to 10s, and the connection density is greater
+                           is fulfilled if the packet out-                                                                 than or equal to 1 000 000 devices per km2 .
+                           age rate is lower than 1%.
+
+
+
+
+                                                                                                     requirements and INRS played an key role within the Canadian
+                                                                                                     Evaluation Group (CEG) in evaluating the technology via
+                                                                                                     simulation. In order to develop 5G link- and system-level
+          10 0
+                                                                                                     simulators, it is necessary to identify and understand all key
+                                                                                                     characteristics of DECT technology. Nevertheless, the mMTC
+                                                                                                     use case offers D2D communications, which made simulation
+          10 -1                                                                                      analysis extremely cumbersome. In this paper, we also explain
+                                                                                                     the different maneuvers in order to fasten the simulations and
+                                                                                                     reduce complexity while respecting all DECT specifications.
+          10 -2                                                                                      We showed that generating the D2D channels in a dynamic
+                                                                                                     way using elipses in certain keys areas makes simulations a
+                                                                                                     lot faster and feasible. Simulation results provided from link-
+          10 -3
+                                                                                                     and system-level simulations for both URLLC and mMTC use
+              -10            -5         0          5           10            15           20
+                                                                                                     cases show that DECT-2020 component RIT meets the IMT-
+                                                                                                     2020 requirements.
+                                                                                                        Furthermore, some future work directions consist not only
+                                  Fig. 3. PER vesus SNR (SISO).                                      in achieving a more comprehensive evaluation of ETSI/DECT
+                                                                                                     a technology (i.e, instead of evaluating the minimum require-
+                                                                                                     ments that are sufficient for the candidate to pass), but also
+                              TABLE V                                                                in improving the proposed algorithmic implementations of the
+     U RBAN M ACRO -URLLC (C ONFIGURATION A C HANNEL M ODEL A) -
+                                FDD.                                                                 simulators to further reduce the overwhelming computational
+                                                                                                     cost of any link- and system-level simulations involving a D2D
+            Metric                   Link              M.2410                  INRS                  communication layer while maintaining optimal performance.
+        Reliability [%]              DL                99.999%                >99.999%
+        Reliability [%]              UL                99.999%                >99.999%
+                                                                                                                                     R EFERENCES
+
+                                 TABLE VI                                                               [1] ITU-R, Minimum requirements related to technical performance for
+       U RBAN M ACRO - M MTC (C ANYON STREET D2D CHANNEL MODEL ).                                           IMT-2020 radio interface(s), International Telecommunication Union,
+                                                                                                            Report ITU-R M.2410-0, November 2017.
+                  Metric               Link               DECT                     INRS                 [2] ITU-R, Guidelines for evaluation of radio interface technologies for
+                                                       (threshold)                                          IMT-2020, International Telecommunication Union, Report ITU-R
+      Packet outage [%]                UL                  1%                     0.2138%                   M.2412-0, October 2017.
+
+
+
+
+                                                                                                1466
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+                  2023 IEEE International Conference on Communications (ICC): Mobile and Wireless Networks Symposium
+
+
+
+     [3] R. Kovalchukov et al., ”DECT-2020 New Radio: The Next Step to-                 [9] ETSI, DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,
+         ward 5G Massive Machine-Type Communications,” in IEEE Com-                         European Telecommunications Standards Institute, Technical Specifica-
+         munications Magazine, vol. 60, no. 6, pp. 58-64, June 2022, doi:                   tion (TS) 103 636-3, July 2020
+         10.1109/MCOM.001.2100375.                                                     [10] ETSI, DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1, Eu-
+     [4] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal and S. Kumar,                  ropean Telecommunications Standards Institute, Technical Specification
+         ”Assessment of Candidate Technology ETSI: DECT-2020 New Radio,”                    (TS) 103 636-4, July 2020.
+         2020 IEEE 3rd 5G World Forum (5GWF), 2020, pp. 625-630, doi:                  [11] Nihtilä, Timo and Berg, Heikki. Energy Consumption of DECT-2020
+         10.1109/5GWF49715.2020.9221186.                                                    NR Mesh Networks. 2022 Joint European Conference on Networks and
+     [5] M. Penner, M. Nabeel and J. Peissig, ”URLLC Performance Evaluation                 Communications & 6G Summit (EuCNC/6G Summit), 7 June 2022.
+         of IMT-2020 Candidate Technology: DECT-2020 New Radio,” 2021                  [12] 3GPP, Technical Specification Group Radio Access Network; Study on
+         IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.                channel model for frequencies from 0.5 to 100 GHz , Third Generation
+         1-7, doi: 10.1109/VTC2021-Fall52928.2021.9625340.                                  Partnership Project, TR 38.901 version 16.1.0 Release 16, December
+     [6] K. Maliatsos, A. Gotsis and A. Alexiou, ”Evaluation of the                         2019.
+         IMT-2020 Candidate Radio Interface Technology DECT-2020 NR,”                  [13] Canadian Evaluation Group. CEG Report on the Re-Evaluation of the
+         2022 14th International Conference on COMmunication Systems &                      ETSI (TC DECT) and DECT Forum Proponent and of the NuFront
+         NETworkS (COMSNETS), 2022, pp. 889-893, doi: 10.1109/COM-                          Proponent Candidate Technology Submissions. WP 5D, (738), 2021.
+         SNETS53615.2022.9668561.                                                           URL https://www.itu.int/md/R19-WP5D-C-0738
+     [7] ETSI, DECT-2020 New Radio (NR); Part 1: Overview; Release 1, Eu-              [14] Canadian Evaluation Group, Evaluation Report Received from the
+         ropean Telecommunications Standards Institute, Technical Specification             Canadian Evaluation Group (CEG) on the Candidate IMT-2020 Radio
+         (TS) 103 636-1, July 2020.                                                         Interface Technology Proposals. WP 5D, (30), 2020.
+     [8] ETSI, DECT-2020 New Radio (NR); Part 2: Radio reception and                   [15] Canadian Evaluation Group, Interim Evaluation Report on the Candidate
+         transmission requirements; Release 1, European Telecommunications                  Proposals for IMT-2020 Submitted to Working Party 5D - Report with
+         Standards Institute, Technical Specification (TS) 103 636-2, July 2020.            Provisional Results. WP 5D, (28), 2019.
+
+
+
+
+                                                                                1467
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 26,2026 at 08:02:32 UTC from IEEE Xplore. Restrictions apply.
+

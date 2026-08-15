@@ -1,0 +1,16 @@
+Title: Ngo - 2025 - IoT device authentication in 5G networks
+
+Summary:
+
+This paper addresses the key challenges and contributions of the work through a link-level summary of its objectives, methods, results, and practical implications.
+
+Core focus:
+The rapid expansion of the Internet of Things and Industrial IoT has accelerated the adoption of distributed sensing, automation, and data-driven decision-making across critical sectors such as manufacturing, energy, healthcare, and logistics. IoT devices typically possess limited computational resources, heterogeneous hardware architec- tures, and diverse communication protocols, making secure and scalable integration into modern communication infrastructures a persistent challenge. Although 5G provides high reliability, ultra-low latency, and massive connectivity—factors which makes it a promising foundation for IoT systems—current integration approaches often rely on complex architectures, proprietary gateways, and heavyweight security frame- works that limit their practicality in resource-constrained and industrial environments. To address these limitations, this thesis presents a lightweight and interoperable IoT- to-5G integration framework featuring a minimal User Equipment and gNB gateway stack implemented in C. The system can operate directly on embedded IoT devices such as Raspberry Pi and non-cellular IIoT platforms like DECT-2020 NR, e.g. Nordic Semiconductor nRF91 family. Moreover, the UE and gNB gateways are designed to connect seamlessly with the private 5G Core Networks for device authentication, enabling secure, scalable, and standards-compliant integration across heterogeneous IoT environments. Experimental validation demonstrates that the designed UE and gNB gateway interoperate seamlessly with both commercial and open-source 5G systems, including Cumucore, OpenAirInterface, and free5GC. Unlike traditional IoT gateways that locally handle protocol translation and security overhead, the proposed design offloads authentication, session management, and traffic control directly to the 5GC, thereby reducing the computational burden on edge IoT and IIoT devices while ensuring full compliance with 3GPP standards.
+
+Additional context and findings:
+7 2 Literature Review 9
+
+Key takeaways:
+- The paper presents a new or improved technical approach in the DECT-2020 NR / 5G / wireless communication domain.
+- It evaluates performance using simulation or experimental analysis to support claims and compare with relevant baselines.
+- The work contributes to understanding, optimizing, or validating DECT-2020 NR, URLLC, mMTC, mesh networking, or related 5G-enabled radio technologies.

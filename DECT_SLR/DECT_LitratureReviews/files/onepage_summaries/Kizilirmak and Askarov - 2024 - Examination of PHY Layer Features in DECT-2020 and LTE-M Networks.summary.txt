@@ -1,0 +1,61 @@
+Title: Surabaya, Indonesia, November 6 – 8, 2024
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—This paper provides a comparative analysis of the physical layer (PHY)
+characteristics of DECT-2020 NR and LTE-M, two critical standards for IoT
+communication. DECT-2020 NR, developed by ETSI, is intended for industrial IoT
+applications and provides low-latency, reliable communication in high-density
+environments. In contrast, LTE-M, which is a member of the 3GPP family, is
+designed to provide broad coverage, energy efﬁciency, and mobility support for
+low-power devices. The study emphasizes the distinctions between the standards
+regarding data rates, modulation schemes, and frequency bands, displaying how
+each standard fulﬁlls speciﬁc IoT requirements. Furthermore, it highlights the
+complementing characteristics of DECT-2020 NR and LTE-M, by providing
+performance insights such as bit-error rate (BER) analysis and spectral
+efﬁciency.
+
+Approach and methods:
+of the ETSI-DECT 2020 standard [9]. DECT-2020 New Radio (NR) extends the
+capabilities of earlier DECT versions, such as DECT and DECT Evolution. It is a
+5G Radio Interface Technology standard intended for use in time division duplex
+(TDD) frequency bands below 6 GHz, in which 17 distinct bands are supported at
+the physical layer centered at 1.9 GHz carrier frequency [10]. DECT-2020 NR
+largely employs DECT bands and has elements that allow easy integration with
+previous DECT systems into its system architecture. The DECT-2020 NR frame and
+slot lengths (10 ms and 41.6 μs) and supported channel bandwidth (1.728 MHz -
+221 MHz) are identical to the standard DECT. Fortunately, while old DECT was
+meant to serve 979-8-3315-2129-5/24/$31.00 ©2024 IEEE 200 Authorized licensed
+use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply. only
+voice calls, DECT-2020 NR is designed to enable a broader range of services
+[11]. DECT-2020 NR also utilizes stronger resistance to radio interference, also
+known as co-channel interference rejection [11]. DECT2020 NR presents a device-
+based wireless cluster-tree mesh network that can establish an independent
+network without additional base stations or a core network.
+
+Key findings:
+massive machine-type communications,” IEEE Communications Magazine, vol. 60, no.
+6, pp. 58–64, 2022. [10] A. Saikko, J. Talvitie, and M. Valkama, “Positioning in
+dect-2020 nr with proactive measurement selection,” in 2024 International
+Conference on Localization and GNSS (ICL-GNSS), pp. 1–7, 2024. [11] A. Samuylov,
+D. Moltchanov, J. Pirskanen, J. Numminen, Y. Koucheryavy, and M. Valkama,
+“Performance assessment of dect-2020 nr and classic dect coexistence
+mechanisms,” in 2023 IEEE 97th Vehicular Technology Conference (VTC2023-Spring),
+pp. 1–7, 2023. [12] X. Jiang, H. Zhang, E. A. Barsallo Yi, N. Raghunathan, C.
+Mousoulis, S. Chaterji, D. Peroulis, A. Shakouri, and S. Bagchi, “Hybrid low-
+power wide-area mesh network for iot applications,” IEEE Internet of Things
+Journal, vol. 8, no. 2, pp. 901–915, 2021. [13] T. Nihtilä and H. Berg, “Energy
+consumption of dect-2020 nr mesh networks,” in 2022 Joint European Conference on
+Networks and Communications 6G Summit (EuCNC/6G Summit), pp. 196– 201, 2022.
+[14] M. A. B. Jahangir, Analysis of the performance of DECT NR+ radio access
+technology for the connectivity of unmanned aerial vehicles (UAVs). PhD thesis,
+July 2024. 204 Authorized licensed use limited to: Hochschule Aalen (FH) -
+Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE
+Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

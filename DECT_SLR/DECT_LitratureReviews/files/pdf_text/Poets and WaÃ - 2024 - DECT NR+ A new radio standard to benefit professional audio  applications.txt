@@ -1,0 +1,307 @@
+DAGA 2024 Hannover
+
+
+
+         DECT NR+: A new radio standard to benefit professional audio applications
+
+         Alexander Poets, Mattes Waßmann, Maxim Penner, Stephan Preihs, and Jürgen Peissig
+                Leibniz Universität Hannover, Institut für Kommunikationstechnik, Appelstr. 9A, 30167 Hannover
+                                          Email: alexander.poets@ikt.uni-hannover.de
+
+
+
+   Abstract                                                           sion. Moreover, the system should not compromise on
+   DECT-2020 New Radio (marketed as NR+ by the DECT                   audio quality and offer a flat frequency response and full
+   Forum) is an ETSI-developed Radio Interface Technology             dynamic range. On the RF side, a wireless microphone
+   (RIT) that meets the IMT-2020 requirements for Ultra-              system is challenged by multipath propagation, frequency-
+   Reliable Low Latency (URLLC) and massive Machine                   selective fading, and multiple sources of interference. In
+   Type Communication (mMTC). Therefore, in late 2021,                case of belt-worn transmitters, the RF performance is
+   it was approved by the ITU-R to be included in the                 also adversely impacted by the human body which causes
+   5G family of standards. Constituting the world’s first             a loss in signal power. In spite of all this, a typical PMSE
+   non-cellular 5G technology, DECT NR+ targets nomadic               scenario requires a wireless microphone system to cover
+   wireless applications that can be deployed anywhere by             an area of operation of 100 m2 [4]. Finally, given the
+   anyone at any time. Along with the option to operate               scarcity of frequency resources, it is crucial that the spec-
+   in the license-exempt 1.9 GHz DECT band, the mesh-                 trum is utilized efficiently and in compliance with local
+   networking capability of NR+ makes the technology a                regulations.
+   compelling choice for Small and Medium-sized Enterprises
+   (SMEs) and the Program Making and Special Events                   Wireless microphone systems comprise a transmission
+   (PMSE) industry.                                                   chain that is either fully analog or digital, or makes use of
+                                                                      both analog and digital technology. Such hybrid systems
+                                                                      employ digital audio signal processing but rely on analog
+   In this paper, we first give an introduction to PMSE               modulation. In analog systems, which commonly employ
+   and its core application of wireless microphone systems.           frequency modulation (FM), the amplitude of the audio
+   We then provide an overview of DECT NR+ and show                   signal is used to vary the instantaneous frequency of the
+   how it can benefit wireless professional audio applica-            carrier wave. Carson’s rule states that the bandwidth
+   tions. Finally, we report on our activities within the             requirement BT of an FM signal is approximately equal
+   Franco-German joint research project MERCI which in-               to twice the sum of the peak frequency deviation ∆f and
+   corporates companies from the media and event sector to            the highest modulating frequency fm [1]:
+   work towards a shared vision of delivering fully immersive
+   audio-visual experiences through DECT NR+ coopera-                                                 BT = 2(∆f + fm ).                                     (1)
+   tive networks. As part of the project, we are developing a
+   Software-Defined Radio (SDR) platform to evaluate and              The frequency deviation in turn is calculated as the prod-
+   demonstrate the technology for the conceived use cases.            uct of the sensitivity of the frequency modulator and
+                                                                      the amplitude of the modulating signal. Consequently,
+   Introduction                                                       increasing the bandwidth allows a higher deviation from
+   A piece of equipment that is employed in virtually any ap-         the carrier center frequency and therefore leads to an
+   plication scenario from the Program Making and Special             improvement in dynamic range. For this reason, analog
+   Events (PMSE) sector is the wireless microphone. Televi-           wireless microphone systems usually employ wideband
+   sion and radio broadcasters utilize it for electronic news         FM, where ∆f  fm . However, in practice the band-
+   gathering (ENG), companies in the entertainment indus-             width available to an FM system is constrained. As a
+   try use it in film productions and stage performances, and         solution, a technique known as companding is used. To
+   equipment rental and installation companies supply it to           accommodate the limited dynamic range of the channel,
+   event venues such as convention centers [1]. Depending             the modulating signal is compressed at the transmitter
+   on the particular use case, a wireless microphone system           and then again expanded at the receiver (see Figure 1).
+   faces a variety of challenges and requirements. Generally          Clearly, the use of companding alters the original au-
+   speaking, parameters such as the cost per wireless audio           dio signal and might result in audible artifacts at the
+   link, the battery runtime, and the capability to encrypt           receiver’s output. Another aspect that requires consider-
+   the audio data need to be considered. In most PMSE                 ation is the innate characteristic of the FM demodulator
+   settings, latency is another critical factor. For example,
+   professional musicians who use in-ear monitoring usually
+   require the total round-trip time (i.e., measured from ana-
+                                                                                 Audio input
+
+
+   log input to analog output) to not exceed 4 ms [4]. Since          Audio output             Pre-emphasis        Compressor          FM modulator
+
+
+   audio dropouts would ruin any live performance and are                        De-emphasis            Expander
+                                                                                                                            FM                  IF filter
+   not acceptable in a professional audio context, a wireless                                                            demodulator            Limiter
+
+
+   microphone system is further expected to guarantee a
+   reliability comparable to that of a cable-based transmis-                 Figure 1: Analog wireless microphone system [1].
+
+
+
+                                                                 52
+                                                                                                                                              DAGA 2024 Hannover
+
+
+to amplify high-frequency noise. To combat this behavior,
+the high-frequency signal components are attenuated at
+the receiving end in a process called de-emphasis. Un-
+fortunately, this also suppresses the desired signal in the
+affected frequency range, making it further necessary to
+boost the high-frequency components of the modulat-
+ing signal prior to transmission in a process known as
+pre-emphasis.
+Fully digital wireless microphone systems utilize digital
+technology in both audio signal processing and modula-
+tion. Usually, bandwidth-efficient modulation schemes
+such as Gaussian Minimum Shift Keying (GMSK) are
+employed to occupy less frequency resources. Some digital                                            Figure 3: The 1.9 GHz DECT band is not as congested as
+systems, especially those operating in ISM bands, also                                               the 2.4 GHz ISM band (image created using DALL·E 3).
+make use of spread spectrum techniques such as direct
+sequence and frequency hopping to prevent eavesdrop-
+ping and avoid interference. By stepping away from the                                               the primary users (incumbents) and cannot claim any
+analog frequency modulation, digital systems no longer re-                                           protective measures against the interference caused by
+quire emphasis and companding and therefore potentially                                              the primary users. Some wireless microphone systems rely
+offer a higher audio quality. Moreover, digital systems                                              on operation in the unlicensed ISM frequency bands (e.g.,
+typically employ both audio and channel coding (see Fig-                                             at 2.4 GHz) which have the advantage of not being sub-
+ure 2) which improve the reliability of the transmission                                             ject to geographical restrictions. On the downside, these
+and increase the resistance to channel impairments. This                                             bands need to be shared with other radio technologies
+is achieved by making use of Forward Error Correction                                                such as the omnipresent Wi-Fi and Bluetooth. Conse-
+(FEC) codes in the channel coding and Packet Loss Con-                                               quently, the ISM bands are usually heavily congested.
+cealment (PLC) techniques in the audio coding. Unlike                                                Another frequency band which allows license-exempt op-
+analog systems that have virtually zero latency, digital                                             eration and has quasi-global availability is the 1.9 GHz
+systems are challenged by processing and coding delays.                                              DECT band. What sets it apart from the ISM bands is
+However, the absence of digital signal processing in analog                                          that it is exclusively available to radio devices utilizing
+systems renders error correction and concealment mecha-                                              DECT technology and therefore offers a low-interference
+nisms impossible. Additionally, only digital systems have                                            environment (see Figure 3).
+the capability to utilize encryption for the secure trans-
+                                                                                                     From DECT to NR+
+mission of sensitive data. Apart from offering negligible                                            The classic DECT may be considered fairly old tech-
+latency, analog systems also have the benefit of being                                               nology, as the first round of Digital Enhanced Cordless
+comparatively low in cost. Furthermore, in weak RF envi-                                             Telecommunications (DECT) standards was published
+ronments, the audio signal degrades gracefully as opposed                                            in 1992 by ETSI. The ETSI is a not-for-profit European
+to the “cliff effect” experienced in digital systems [1].                                            Standards Organization (ESO) that creates ICT stan-
+ Audio input
+                                                                                                     dards and, within the technical committee DECT (TC
+               A/D converter          Audio encoder
+                                                             Channel          Digital                DECT), develops, ratifies and maintains DECT technolo-
+                                                                                                     gies. In 1999, the ITU-R approved DECT as IMT-2000
+                                                             encoder         modulator
+
+
+Audio output          D/A converter          Audio decoder
+                                                                   Channel
+                                                                   decoder
+                                                                                    Digital
+                                                                                  demodulator        (3G) technology. Then, about 21 years later, the technical
+                                                                                                     specification of the new radio standard DECT-2020 New
+         Figure 2: Digital wireless microphone system [1].                                           Radio (NR) was first published. Merely one year later, in
+                                                                                                     the fall of 2021, the ITU-R included DECT-2020 NR in
+                                                                                                     the IMT-2020 family of standards and therefore approved
+After the terrestrial television broadcasters switched from                                          it as 5G technology. DECT-2020 NR is often referred
+analog to digital, the released radio spectrum was reallo-                                           to as just NR+, which is the marketing name that is
+cated as part of the so-called digital dividend [2]. Unfor-                                          being used by the DECT Forum, an organization that
+tunately, this was mostly to the benefit of mobile network                                           campaigns for DECT technologies and spectrum access.
+providers that offer wireless broadband services to the pub-
+lic. Due to regulatory decisions, the spectrum available to                                          DECT and NR+ are not only related by name but also
+wireless microphones is becoming increasingly scarce [6].                                            adhere to similar design principles. Both technologies
+PMSE equipment has to share the spectrum with other                                                  employ Frequency-Division Multiple Access (FDMA) and
+radio communication services and commonly operates as                                                Time-Division Multiple Access (TDMA) which means that
+a secondary user in locally vacant television broadcasting                                           the radio resources are divided into frequency channels
+channels, so-called TV White Spaces (TVWS), in the Very                                              and time slots. Since the communication follows a Time-
+High Frequency (VHF) and Ultra High Frequency (UHF)                                                  Division Duplex (TDD) manner, uplink and downlink
+bands [2]. As secondary users, wireless microphones have                                             share the same frequency channel but access it at different
+to follow a no-interference, no-protection policy. Devices                                           time slots. The radio frames have a duration of 10 ms and
+operating under such condition must not interfere with                                               are split into 24 time slots which, in NR+, are further
+
+
+                                                                                                53
+DAGA 2024 Hannover
+
+
+   subdivided into up to 16 subslots. Furthermore, a basic
+   channel width of 1.728 MHz is used in both technologies.
+
+   With NR+, the physical layer has seen significant improve-
+   ments by incorporation of the latest state-of-the-art tech-
+   nology. Classic DECT employs single-carrier modulation
+   which is significantly affected by multipath distortion and
+   frequency-selective fading. This holds particularly true
+   in scenarios where the delay spread exceeds 100 ns and
+   antenna diversity is not being used [3]. Therefore, NR+
+   utilizes Cyclic Prefix Orthogonal Frequency-Division Mul-
+   tiplexing (CP-OFDM) which is a multi-carrier modulation
+   scheme that is less prone to these effects. In CP-OFDM,
+   the data is transmitted in parallel on multiple orthogonal
+   narrowband subcarriers. This bears the advantage that,
+   in case of frequency-selective fading, only some subcarri-
+   ers are affected by the channel impairments. The use of
+   channel coding techniques then allows the corrupted data
+   still to be recovered. NR+ utilizes advanced Forward
+   Error Correction (FEC) by means of turbo coding. Fig-
+   ure 4 illustrates the results of link-level simulations that
+   were conducted for both classic DECT and NR+ under
+   different SNR conditions in a Rayleigh fading scenario                      Figure 5: DECT-2020 NR network in mesh topology as
+   with a delay spread of 100 ns and no receiver diversity. It                 shown in ETSI TS 103 636-1.
+   can be seen that NR+ (solid color curves) outperforms
+   classic DECT (dashed color curves) in terms of Packet
+   Error Rate (PER). In addition to CP-OFDM and turbo                          Being the first non-cellar private 5G technology, NR+
+   coding, Hybrid Automatic Repeat reQuest (HARQ) is an-                       fulfills the IMT-2020 requirements for Ultra-Reliable Low
+   other factor contributing to the reliability of NR+. With                   Latency Communication (URLLC) and massive Machine
+   HARQ, erroneous data is not discarded at the receiver                       Type Communication (mMTC). This basically means
+   but rather buffered for later combination with the data                     that NR+ qualifies as cable-replacement technology and
+   received in subsequent retransmissions. By applying a                       allows large-scale network deployments with high device
+   different puncturing pattern to the turbo encoder output                    density. Other than operation in the dedicated DECT
+   at each transmission, the receiver incrementally gains ex-                  band, NR+ principally also supports TDD IMT frequency
+   tra information. Therefore, this is referred to as Hybrid                   bands below 6 GHz. Since there are no base stations,
+   ARQ with incremental redundancy. In order to be able                        SIM cards, or subscriptions required to operate a NR+
+   to adapt to varying channel conditions and throughput                       network, the technology becomes accessible to anyone and
+   demands, NR+ offers various transmission configurations.                    can be nomadically deployed anywhere and at any time.
+   Accordingly, a total of twelve Modulation and Coding                        In contrast to 3GPP 5G NR, DECT-2020 NR does not
+   Schemes (MCS) are available, providing the possibility to                   know fixed device roles. The radio devices dynamically
+   use 1024-QAM at different coding rates. Depending on                        adapt their operation mode and can choose to operate
+   the number of subcarriers and their spacing, the band-                      as Fixed Termination point (FT), Portable Termination
+   width is scalable to a maximum of 221.184 MHz. On top                       point (PT), or take both roles at the same time. In FT
+   of that, NR+ also supports antenna diversity and up to                      mode, the radio devices autonomously coordinate the
+   8 x 8 MIMO operation.                                                       local radio resources and provide the PT mode devices
+                                                                               with the parameters that are necessary to perform an
+          100                                                                  association. The PT mode devices can then act on this
+                                                                               information and initiate communication to the devices
+                                                                               in FT mode. Generally, decisions on device associations
+                                                                               and data routing are made autonomously and do not
+         10!1
+
+                                                                               require external control. Therefore, DECT-2020 NR sets
+                                                                               the stage for decentralized, autonomous, and self-healing
+   PER
+
+
+
+
+         10!2
+                    4b (:/8-D8PSK)
+                    4a (:/4-DQPSK)
+                                                                               networks in a mesh topology (see Figure 5).
+                                                                               The MERCI project
+                    1b (:/2-DBPSK)
+         10!3
+                    1a (GMSK)
+                    MCS 3 (16-QAM)
+                    MCS 1 (QPSK)                                               Media and Event production via Resilient Communica-
+         10!4                                                                  tion on IoT Infrastructure (MERCI) is a government-
+                                                                               funded Franco-German joint research project that started
+                0   5      10        15      20       25   30   35   40
+                                          SNR in dB
+                                                                               in November 2022 and runs until April 2025. By the
+   Figure 4: Simulated Packet Error Rates in a Rayleigh fading                 incorporation of companies from the Industrial IoT (IIoT)
+   channel with one receiving antenna [5].                                     and PMSE sector, the project constitutes a collaborative
+
+
+                                                                          54
+                                                                                                            DAGA 2024 Hannover
+
+
+R&D ecosystem for private 5G networks based on or com-             dio applications such as wireless microphones. The im-
+plemented by DECT-2020 NR. MERCI follows the shared                proved physical layer with CP-OFDM, advanced FEC,
+vision of creating fully immersive audio-visual experiences        and HARQ brings the advantages of DECT to the 5G
+through NR+ cooperative networks that advantageously               world, and granted NR+ an ITU-R approval for the
+integrate nomadic PMSE devices into on-premises IoT                URLLC and mMTC scenarios. It supports various net-
+infrastructure. Aiming at a practical, application-driven          work configurations, is capable of communicating in a
+evaluation and demonstration of the technology, we are             mesh topology, and provides appealing features such as an
+currently developing a Software-Defined Radio (SDR)                automatic frequency and interference management. Other
+platform as part of the project. This enables us to test           than that, NR+ has access to the protected DECT spec-
+and showcase NR+, and explore the feasibility of employ-           trum but can also operate in TDD IMT frequency bands
+ing the technology in professional audio applications. In          below 6 GHz. In response to a mandate issued by the
+the course of the implementation, we identify issues and           European Commission, the CEPT (European Conference
+gaps in the technical specification and work collabora-            of Postal and Telecommunications Administrations) is
+tively with TC DECT to improve and extend the standard.            currently evaluating the technical conditions that are nec-
+Another objective is to examine different use cases and            essary to allow the shared use of the 3.8 GHz to 4.2 GHz
+investigate the extent to which they benefit from, for             frequency band. Consequently, another 400 MHz of spec-
+example, the mesh-networking capability of NR+. One                trum might become available. With this in mind, it is
+such application scenario is illustrated in Figure 6; in           fair to say that NR+ has a bright future ahead.
+this case a TV production of a large-scale sporting event
+(e.g., the Ultra-Trail du Mont-Blanc). In the scenario,            Acknowledgement
+wireless microphones are distributed along the race track          The authors would like to thank the BMWK for the
+of the sporting competition. The devices are organized             grants received as part of the MERCI project (FKZ:
+                                                                   01MJ22016D).
+in a mesh network topology and either connect to one
+another or to repeaters which can be nomadic or fixed-             References
+installation IoT devices. On the premises of the event,            [1]   Hong Liu et al. “Overview of Wireless Micro-
+different broadcasting companies operate multiple of these               phones—Part I: System and Technologies”. In: IEEE
+networks. Therefore, the use case not only requires the                  Transactions on Broadcasting 61.3 (2015), pp. 494–
+URLLC capability of NR+ but also its mMTC functional-                    504. doi: 10.1109/TBC.2015.2459661.
+ity. Clearly, the scenario benefits from the mesh topology         [2]   Hong Liu et al. “Overview of Wireless Micro-
+which increases the range of the network and extends                     phones—Part II: Frequency Bands, Interference, and
+its coverage area. In case of node failures, the network                 Regulation”. In: IEEE Transactions on Broadcasting
+heals itself by relying on autonomous routing decisions                  61.3 (2015), pp. 505–519. doi: 10.1109/TBC.2015.
+which are based on a cost value. Consequently, there is no               2459662.
+need to maintain routing tables in each device. The auto-          [3]   L.B. Lopes. “On the radio link performance of
+matic interference management of NR+ further reduces                     the Digital European Cordless Telecommunications
+the maintenance effort by making an extensive frequency                  (DECT) system”. In: [Proceedings] GLOBECOM ’90:
+planning redundant.                                                      IEEE Global Telecommunications Conference and
+                                                                         Exhibition. 1990, 1013–1017 vol.2. doi: 10 . 1109 /
+                                                                         GLOCOM.1990.116655.
+                                                                   [4]   Jens Pilz et al. “Professional Live Audio Production:
+                                                                         A Highly Synchronized Use Case for 5G URLLC
+                                                                         Systems”. In: IEEE Network 32.2 (2018), pp. 85–91.
+                                                                         doi: 10.1109/MNET.2018.1700230.
+                                                                   [5]   Mattes Waßmann et al. “Performance of DECT-
+                                           Repeater                      2020 NR in an industrial environment for varying
+                                                                         RF bands”. In: 2024 Joint European Conference on
+                                                                         Networks and Communications & 6G Summit (Eu-
+                                Repeater
+                                                                         CNC/6G Summit). Accepted for publication. 2024.
+                        NR+ Mesh Network                           [6]   Andreas Wilzeck. Insights into Frequency Coordi-
+      Audio Produc*on
+                                                                         nation of Broadband Wireless Multi-Channel Audio
+                                                                         Systems (WMAS) and Narrowband Wireless Equip-
+                                                                         ment. Tech. rep. Sennheiser electronic SE & Co. KG,
+                                                                         2023.
+Figure 6: NR+ in a wide-ranging broadcast production
+(adapted from the MERCI WP 1.1 deliverable on use cases,
+requirements and demonstration scenarios).
+
+
+
+Summary and perspectives
+This work gave an overview of the new radio standard
+DECT-2020 NR and how it benefits professional au-
+
+
+                                                              55
+

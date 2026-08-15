@@ -1,0 +1,85 @@
+Title: Energy Saving Router Rotation
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—ETSI DECT-2020 New Radio (NR) is a new flexible radio interface targeted to
+support a broad range of wireless Internet of Things (IoT) applications. It has
+been shown to fulfill both massive machine-type communications (mMTC) and ultra-
+reliable low latency communications (URLLC) requirements for 5th generation (5G)
+networks. DECT-2020 NR is an autonomous wireless mesh network protocol where the
+devices can choose to become routers, forwarding the data of other devices in
+addition to their own data. Thus, a wireless mesh network does not need separate
+base stations or a core network architecture to extend coverage. This makes the
+deployment of DECT-2020 NR networks easy, but with the cost of increased energy
+consumption in the router nodes. Notably, the same energy consumption is not
+inflicted upon the non-routing leaf nodes whose operation is on the contrary
+very energy efficient. This role-induced disparity in node energy consumption
+results in the network not using the energy of its devices with maximal
+efficiency. A method to alleviate this problem could be a network rotation in
+which the roles of network nodes are periodically rotated and the energy
+consumption is thus distributed more evenly among the nodes. In this paper we
+propose a role rotation protocol for DECT-2020 NR and evaluate its impact to the
+expected lifetime and the performance of the network by system level
+simulations. met and the data does not accumulate to relaying nodes. However,
+maintaining an active duty cycle consumes energy resources which may be scarce
+if the network consists of mainly battery-operated nodes, as is common in the
+IoT domain. Energy consumption is a well-known and well-studied problem of WMNs.
+Comprehensive surveys of different energy-efficient routing protocols proposed
+for wireless sensor/mesh networks have been presented in literature e.g. [2],
+[3]. The advantages and disadvantages of each considered algorithm has been
+quite extensively analyzed. However, no earlier work on the suitability or the
+performance of WMN energy saving protocols with DECT-2020 NR yet exists. The
+performance of DECT-2020 NR has been evaluated earlier e.g. in [4]-[7] but none
+of the studies gave consideration to the network energy consumption. In [8] it
+was demonstrated that especially when serving delay sensitive data, the lifetime
+of a battery-operated DECT-2020 NR network is limited by the energy consumption
+of the router nodes, due to their active duty cycle required to maintain low
+latencies. On the other hand, the leaf nodes of DECT-2020 NR were shown to be
+very energy efficient as they only need to be awake intermittently. Due to this
+disparity in energy efficiency, it is evident that if the DECT-2020 NR network
+could distribute the energy consumption more evenly between the nodes, the
+network lifetime would increase. More even energy consumption distribution can
+be achieved via node role rotation. The idea has been proposed for WMNs earlier
+in [9] where the authors proposed a Low-Energy Adaptive Clustering Hierarchy
+(LEACH) protocol. LEACH utilizes a randomized rotation of cluster-heads, which
+are elected head nodes of local sensor node clusters. Cluster-heads collect the
+data from the nodes in the cluster, aggregate it and transmit it to the target
+base station, so their function is roughly similar to DECT-2020 NR routers. A
+cluster-head node consumes more energy than a regular node so in LEACH the
+cluster nodes periodically elect a different node to act as a cluster-head to
+evenly distribute the energy load. Similar role rotation idea was also used in
+[10], where the Span algorithm was introduced for 802.11 ad hoc networks. In
+
+Approach and methods:
+The DECT-2020 NR standard was released by the European Telecommunications
+Standards Institute (ETSI) in 2020 [1]. It is intended for industrial Internet
+of Things (IoT) applications requiring either massive machine-type (mMTC) and/or
+ultra-reliable low latency (URLLC) communications. DECT-2020 NR introduces a
+device-based cluster-tree wireless mesh network (WMN), capable of forming an
+autonomous network without the need for separate base stations or core network.
+Nodes are capable of acting as routers between their neighbors, forwarding data
+between them in case direct connection is not possible. WMN coverage can
+theoretically reach extreme distances with minimal costs and effortless
+deployment. However, forwarding data through the network with a reasonable delay
+requires that each node passing the data onwards has an acceptable duty cycle,
+meaning the node is able to receive and transmit reasonably often so that the
+delay requirements are Authorized licensed use limited to: Hochschule Aalen (FH)
+- Technik und Wirtschaft. Downloaded on February 26,2026 at 08:03:27 UTC from
+IEEE Xplore. Restrictions apply. 69 Span, each network node periodically makes
+an independent decision on whether to sleep or stay awake as a coordinator node
+which is a similar node as DECT-2020 NR router node in a sense that it
+participates in forwarding
+
+Key findings:
+S In this paper we showed that a periodic router rotation is able to balance the
+energy consumption of DECT-2020 NR mesh network nodes more evenly and thus
+significantly increase the lifetime of a battery-operated IoT sensor network
+without degrading the network performance, such as traffic delay and network
+service rate. The gain in node router lifetime is inversely proportional to mesh
+network size in terms of both geographical area and number of nodes.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

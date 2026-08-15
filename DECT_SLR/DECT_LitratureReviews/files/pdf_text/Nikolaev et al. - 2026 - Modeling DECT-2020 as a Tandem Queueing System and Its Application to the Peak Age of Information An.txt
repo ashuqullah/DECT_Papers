@@ -1,0 +1,1567 @@
+Article
+
+Modeling DECT-2020 as a Tandem Queueing System and Its
+Application to the Peak Age of Information Analysis
+Dmitry Nikolaev 1,2 , Anna Zhivtsova 1,2, * , Sergey Matyushenko 2 , Yuliya Gaidamaka 2,3
+and Yevgeni Koucheryavy 1
+
+                                            1   Telecommunications R&D Institute, HSE University, Tallinskaya Str. 34, Moscow 123458, Russia;
+                                                dinikolaev@hse.ru (D.N.); ykoucheryavy@hse.ru (Y.K.)
+                                            2   Department of Probability Theory and Cybersecurity, Peoples’ Friendship University of Russia
+                                                (RUDN University), Miklukho-Maklaya Str. 6, Moscow 117198, Russia; matyushenko-si@rudn.ru (S.M.);
+                                                gaydamaka-yuv@rudn.ru (Y.G.)
+                                            3   Federal Research Center “Computer Science and Control” of the Russian Academy of Sciences
+                                                (FRC CSC RAS), 44-2 Vavilov Str., Moscow 119333, Russia
+                                            *   Correspondence: azhivtsova@hse.ru
+
+
+                                            Abstract
+                                            The Peak Age of Information (PAoI) quantifies the freshness of updates used in cyber-
+                                            physical systems (CPSs), realized within the Internet of Things (IoT) paradigm, encompass-
+                                            ing devices, networks, and control algorithms. Consequently, PAoI is a critical metric for
+                                            real-time applications enabled by Ultra-Reliable Low Latency Communication (URLLC).
+                                            While highly useful for system evaluation, the direct analysis of this metric is complicated
+                                            by the correlation between the random variables constituting the PAoI. Thus, it is often eval-
+                                            uated using only the mean value rather than the full distribution. Furthermore, since CPS
+                                            communication technologies like Wi-Fi or DECT-2020 involve multiple processing stages,
+                                            modeling them as tandem queueing systems is essential for accurate PAoI analysis. In this
+                                            paper, we develop an analytical model for a DECT-2020 network segment represented as a
+                                            two-phase tandem queueing system, enabling detailed PAoI analysis via Laplace–Stieltjes
+                                            transforms (LST). We circumvent the dependence between generation and sojourn times
+                                            by classifying updates into four mutually exclusive groups. This approach allows us to
+                                            derive the LST of the PAoI and determine the exact Probability Density Function (PDF)
+                                            for M | M |1 → M | M |1 system. We also calculate the mean and variance of the PAoIs and
+Academic Editors: Leonid Piterbarg
+                                            validate our results through numerical experiments. Additionally, we evaluate the impact
+and Steve Drekic
+                                            of different service time distributions on PAoI variability. These findings contribute to
+Received: 2 November 2025
+                                            the theoretical understanding of PAoI in tandem queueing systems and provide practical
+Revised: 2 December 2025
+Accepted: 20 December 2025
+                                            insights for optimizing DECT-2020-based communication systems.
+Published: 4 January 2026
+                                            Keywords: peak age of information; PAoI; information freshness; cyber–physical system;
+Correction Statement: This article
+has been republished with a minor
+                                            DECT-2020; automatic control; Internet of Things; tandem queueing system; queueing
+change. The change does not affect          theory; probability distribution; Laplace–Stieltjes transforms
+the scientific content of the article and
+further details are available within the    MSC: 60K20; 60K30; 68M20
+backmatter of the website version of
+this article.
+
+Copyright: © 2026 by the authors.
+Licensee MDPI, Basel, Switzerland.          1. Introduction
+This article is an open access article           The Internet of Things (IoT) is one of the most significant areas of technological devel-
+distributed under the terms and
+                                            opment, built on three main components: devices, networks, and controls. This complex
+conditions of the Creative Commons
+                                            system requires not only the development of each component but also the evaluation of
+Attribution (CC BY) license.
+
+
+
+
+Mathematics 2026, 14, 186                                                                                      https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                            2 of 22
+
+
+
+                            conditions for their coexistence. A critical aspect of this task is assessing communication
+                            networks regarding the feasibility of control implementation. Since control decisions rely
+                            heavily on device feedback, the relevance and timeliness of this information are paramount.
+                            As information relevance depends on delivery speed and reliability, careful network-level
+                            analysis is required for various systems.
+                                 The Age of Information (AoI) has been proposed as a formal metric to evaluate update
+                            freshness [1]. In continuous-time systems, the AoI is defined as the time elapsed since the
+                            generation of the last successfully delivered update. Additionally, the discrete-time process
+                            formed by the local maxima of the AoI is analyzed to evaluate the delivery timeliness. This
+                            metric, known as the Peak AoI (PAoI), is defined as the sum of the inter-arrival time and
+                            the sojourn time for each update [1]. By exploring the AoI and PAoI, it is possible to assess
+                            the freshness of the information and optimize the network to ensure timely updates.
+                                 A leading recent technology enabling URLLC for energy-efficient devices using
+                            machine-type communication (MTC) is Digital Enhanced Cordless Telecommunications
+                            New Radio (DECT-2020 NR), developed by the European Telecommunications Standards
+                            Institute (ETSI) [2]. The DECT-2020 is designed to operate over a mesh topology with
+                            multi-hop transmission. It is applicable in scenarios such as Vehicular Ad Hoc Networks
+                            (VANET) [3,4], Maritime Wireless Networks (MWN) [5], professional audio systems [6],
+                            and so on [7,8].
+                                 Specifically, we model the network layer behavior of a DECT-2020 link, abstracting the
+                            underlying TDMA frame structure and HARQ mechanisms into stochastic service times.
+                            A detailed mapping of these system features to the queueing model parameters is provided
+                            in Section 3.
+                                 Consequently, a tandem queueing model is an effective representation of such systems,
+                            as updates traverse multiple processing stages before reaching their destination. In this
+                            paper, we focus on analyzing the PAoI in a tandem queueing model. Specifically, we
+                            study the M| M |1 → M | M |1 system, characterized by Poisson arrivals and exponential
+                            service times.
+                                 The research problem addressed in this paper is the derivation of the exact distribution
+                            properties (LST and moments) of the Peak Age of Information in a two-phase tandem
+                            network with random service times and the quantification of how service time variance
+                            affects information freshness.
+                                 The primary contribution of this work includes the following:
+                            •    A detailed theoretical framework for computing PAoI using Laplace–Stieltjes trans-
+                                 forms (LST), accounting for four mutually exclusive events based on the state of the
+                                 system at the arrival of an update.
+                            •    Derivation of analytical expressions for PAoI in the exponential case, specifically
+                                 moments of PAoI.
+                                  The remainder of this paper is organized as follows. Section 2 reviews the recent
+                            advances in AoI and PAoI analysis for tandem queueing systems. Section 3 formalizes
+                            the mathematical model. Section 4 details the proposed PAoI framework and underlying
+                            theorems. This framework is applied in Section 5 to derive the PAoI LST for the exponential
+                            two-phase tandem system, followed by the derivation of moments in Section 6. Numer-
+                            ical analysis is presented in Section 7, and the paper concludes with a discussion in the
+                            final section.
+
+                            2. Tandem Queueing System Related Work
+                                 The analysis of AoI in tandem with multiple exponential queueing systems with queue
+                            capacities equal to 1 was established by Kam and Molnar [9], who derived expressions for
+                            the average AoI using a stochastic hybrid systems (SHS) model. Their work revealed the
+
+
+
+                                                                                       https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                            3 of 22
+
+
+
+                            dependence of AoI metrics on the number of queues and service rates, providing guidelines
+                            for minimizing the AoI in such configurations. SHS was also employed in [4] to assess the
+                            average AoI in an M | M|1|1 → M | M|1|1 network representing a VANET system.
+                                 Later, Kam [10] derived the mean AoI for an exponential tandem system with two
+                            infinite-capacity queues and equal service rates using a graphical approach. The same
+                            system is used in [3] as a VANET model. Here, the authors also utilize a graphical approach
+                            to obtain the average AoI.These results provide deep insights into VANETs, as the model
+                            incorporates wireless signal propagation and device placement parameters. Sinha et al. [11]
+                            expanded on these ideas by introducing a recursive framework to calculate the PAoI in
+                            tandem systems with memoryless arrivals, variable service policies, and bufferless servers.
+                            This work highlighted the impact of preemptive and non-preemptive service disciplines
+                            on PAoI.
+                                 Recent studies have explored more nuanced aspects of tandem queueing systems.
+                            Chiariotti et al. [12] investigated PAoI distributions in tandem queues M| M |1 → M | M |1
+                            and M| M |1 → M | D |1, emphasizing the relevance in satellite communication systems
+                            with relay nodes. Their results provided insights into the probabilistic characteristics of
+                            PAoI, extending beyond the mean values. Another notable contribution is by Koukout-
+                            sidis [13], who examined the AoI in overtaking-free networks of quasi-reversible tandem
+                            queues, deriving expressions for multiple M| M |1 First-Come-First-Served (FCFS) systems.
+                            Champati et al. [14] considered a tandem of multiple FCFS queues with constant update
+                            generation times and independent random service times. The authors examined the AoI
+                            violation probability and optimized its upper bound. In [15], the unreliable exponential
+                            tandem queueing system and the tandem of unreliable bufferless services with a general
+                            distributed service time were considered. For both models, the authors obtained the LSTs
+                            of the AoI by deriving them from the LSTs of the sojourn times.
+                                 Studies [16–18] consider featured tandem systems that capture an edge computing-
+                            enabled network. Specifically, the authors of [16] assume that the first stage of processing
+                            corresponds to computing and is carried out by a power-efficient and, hence, unreliable
+                            server. The second stage relates to transmission. It is executed for updates that do not
+                            exceed the deadline, and the buffer, where such updates are stored, has a unit-capacity.
+                            In this study, the input flow is assumed to be Poisson, the service time for the first stage
+                            is generally distributed, and the service time for the second stage follows an exponential
+                            distribution. The authors derive the average AoI and PAoI, and optimize the update
+                            deadline value.
+                                 The authors of [17,18], on the other hand, let the first server stage represent the
+                            transmission from the end device to the fog/edge server, and the second stage corresponds
+                            to the computing service. They also assume Poisson arrivals, exponentially distributed
+                            service times, and unlimited FCFS queues. As an additional feature, the authors of [18]
+                            consider a scenario in which the end device does not generate updates if the current one is
+                            not being transmitted. Moreover, they analyze a system with additional input for the second
+                            stage. The authors examine a timeliness of information metric, which is defined similarly
+                            to the AoI. They propose a framework for timeliness of information minimization by
+                            optimizing the task generation, bandwidth allocation, and computation resource allocation.
+                                 In [17], a model of partial computation is examined in which packets are processed
+                            partially on end devices and partially on edge servers. The study considers multiple sources,
+                            single transmission unit, and multiple receivers, where the last processing is performed.
+                            The authors derive the mean AoI by combining a graphical approach with a method that
+                            involves dividing packets into mutually exclusive groups; in the present paper, a variation
+                            of this method is used. They then optimize the fraction of processing performed on the end
+                            devices to minimize the mean AoI.
+
+
+
+                                                                                       https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                4 of 22
+
+
+
+                                 This review highlights the importance of AoI and PAoI analysis in exponential tandem
+                            queueing systems, which model a wide range of communication networks. However,
+                            most existing works focus on average characteristics rather than full distributions, such as
+                            Cumulative Distribution Functions (CDFs), which are necessary for flexible optimization
+                            and more nuanced performance insights. Addressing the PAoI PDF in an M| M|1 → M | M|1
+                            queue tandem will expand the range of available tools for system analysis and provide
+                            insights into the performance of state-update systems with two-stage processing.
+
+                            3. Model Formalization
+                                  We consider a system in which every update consecutively passes through two sequen-
+                            tial service phases, denoted as phase 1 and phase 2. In phase j (j = 1, 2), an update waits in
+                            an infinite-capacity FCFS queue before being processed for an exponentially distributed
+                            service time Bj , with CDF Bj (t) and LST β j (s). We assume that the inter-arrival time of
+                            updates, denoted by G, is exponentially distributed with CDF G (t) and LST α(s). Hence,
+                            we note that each phase is a queueing system M| M |1, and we illustrate the considered
+                            tandem in Figure 1.
+
+                                                       𝐵1 (𝑡)                             𝐵2 (𝑡)
+                                𝐴(𝑡)
+
+
+
+                                             Phase 1                            Phase 2
+
+                            Figure 1. Tandem queueing system M| M|1 → M | M|1.
+
+                                  For the analysis of the system, we will use the following random variables.
+                            •     Wj : the waiting time experienced by an update in phase j, with the CDF Wj (t) and
+                                  LST ω j (s).
+                            •     Ŵj : the waiting time in phase j, conditional on the server being busy on arrival of the
+                                  update, with CDF Ŵj (t) and LST ω̂ j (s).
+                            •     Tj : the sojourn time (total time spent) in phase j, defined as Tj = Wj + Bj ; its CDF and
+                                  LST are denoted as Tj (t) and θ j (s), respectively.
+                            •     T̂j : the sojourn time in phase j, conditional on the server being busy upon the update’s
+                                  arrival, with CDF T̂j (t) and LST θ̂ j (s).
+                                The purpose of the paper is to examine the PAoI Z, defined as the sum of the generation
+                            and sojourn times of an update, i.e.,
+
+                                                                   Z = G + T1 + T2 .                                        (1)
+
+                            The primary challenge in direct PAoI analysis is the dependence among its components
+                            G, T1 , and T2 [1]. To overcome this, we analyze the conditioned PAoI for four mutually
+                            exclusive update groups and combine them using the Law of Total Probability.
+                                  To justify the applicability of the M| M|1 → M | M |1 model to the DECT-2020 NR
+                            system, we consider the abstraction of the physical and MAC layer processes shown in
+                            Table 1.
+                                  While the physical medium is time-slotted, the variations in channel quality, retrans-
+                            missions (up to several frames), and scheduling wait times result in a randomized ser-
+                            vice interval at the application layer, which we approximate as exponential for analyti-
+                            cal tractability.
+
+
+
+
+                                                                                           https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                       5 of 22
+
+
+
+                            Table 1. Mapping DECT-2020 features to mathematical model.
+
+                             DECT-2020 Feature                  Model Assumption                      Justification
+                                                                                                      At the network layer,
+                                                                                                      the aggregation of
+                             TDMA frame (10 ms) with                                                  asynchronous packet arrivals
+                                                                Continuous time server
+                             dynamic slot allocation                                                  and random resource access
+                                                                                                      behaves as a continuous
+                                                                                                      server with variable rate.
+                                                                                                     The exponential distribution
+                                                                                                     provides a maximum-entropy
+                             HARQ retransmissions               Exponential service time             approximation for service
+                                                                                                     times with positive support
+                                                                                                     and known mean.
+                                                                                                     Data traverses the Fixed
+                                                                                                     Termination (FT) node before
+                             Mesh routing (multi-hop)           Tandem queue
+                                                                                                     reaching the sink, creating a
+                                                                                                     sequential service chain.
+
+
+                            4. Conditioned PAoI Framework
+                                 Let the number of updates in the j-th phase be denoted by n j , j = 1, 2, and introduce
+                            four outcomes indicating the state of the server (idle or busy):
+                                   (1)
+                            •    ω∅ : The first server is idle, i.e., there are no updates in the first phase (n1 = 0).
+                                                                   n       o
+                                                                       (1)      (1)
+                                 The probability of this event is P ω∅ = π0 .
+                                   (1)
+                            •    ω̸=∅ : The first server is busy, meaning that there is at least one update in the first
+                                                                                   n      o
+                                                                                      (1)       (1)
+                                 phase (n1 ≥ 1). The probability of this event is P ω̸=∅ = π≥1 .
+                                   (2)
+                            •    ω∅ : The second server is idle, i.e., there are no updates in the second phase (n2 = 0).
+                                                                   n        o
+                                                                        (2)      (2)
+                                 The probability of this event is P ω∅ = π0 .
+                                   (2)
+                            •    ω̸=∅ : The second server is busy, meaning that there is at least one update in the second
+                                                                                   n       o
+                                                                                       (2)         (2)
+                                 phase (n2 ≥ 1). The probability of this event is P ω̸=∅ = π≥1 .
+                                We categorize the updates into mutually exclusive groups based on the system state
+                            observed upon arrival at the corresponding phases:
+                            1.   Updates observing both servers busy upon arrival to the appropriate phase, i.e., up-
+                                                                                                        (1)           (2)
+                                 dates observing state (or event) A1 , implying outcomes ω̸=∅ and ω̸=∅ .
+                            2.   Updates observing server 1 busy and server 2 idle, i.e., updates observing state (or
+                                                                       (1)        (2)
+                                 event) A2 , implying outcomes ω̸=∅ and ω∅ .
+                            3.   Updates observing server 1 idle and server 2 busy, i.e., updates observing state (or
+                                                                       (1)       (2)
+                                 event) A3 , implying outcomes ω∅ and ω̸=∅ .
+                            4.   Updates observing both servers idle, i.e., updates observing state (or event) A4 ,
+                                                          (1)        (2)
+                                 implying outcomes ω∅ and ω∅ .
+                                  We denote by Zi the PAoI for updates from the i-th group, and we denote its LST by
+                            zi (s). For PAoI calculations, the four mutually exclusive events Ai , i = 1, . . . , 4, each leading
+                                                                                ( j)       ( j)
+                            to corresponding combinations of outcomes ω∅ and ω̸=∅ , require separate consideration
+                            of the conditional probability distributions for the busy and idle server states. For these
+                            considerations, we will use the previously introduced random variables for the waiting
+                            time Ŵj and the sojourn time T̂j of an update in the j-th phase, conditional on the server
+                            being busy.
+
+
+
+
+                                                                                                  https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                      6 of 22
+
+
+
+                                The conditions for an update to observe states (events) A1 –A4 , together with the
+                            conditioned PAoI formulas, are described in Table 2 and illustrated in Figure 2.
+
+                            Table 2. PAoI for different update groups.
+
+                                                                             PAoI for Updates        LST of PAoI for
+                             Observed
+                                                      Condition              That Observed This      Updates Observed
+                             States (Event)
+                                                                             Event                   This Event
+                                                                                                     z1 ( s ) =
+                             A1                       G ≤ T1 and B1 ≤ T2     Z1 = G + T̂1 + T̂2
+                                                                                                     α(s)θ̂1 (s)θ̂2 (s)
+                                                                                                     z2 ( s ) =
+                             A2                       G ≤ T1 and B1 > T2     Z2 = G + T̂1 + B2
+                                                                                                     α(s)θ̂1 (s) β 2 (s)
+                                                      G > T1 and                                     z3 ( s ) =
+                             A3                                              Z3 = G + B1 + T̂2
+                                                      G + B1 ≤ T1 + T2                               α(s) β 1 (s)θ̂2 (s)
+                                                      G > T1 and                                     z4 ( s ) =
+                             A4                                              Z4 = G + B1 + B2
+                                                      G + B1 > T1 + T2                               α(s) β 1 (s) β 2 (s)
+
+
+
+
+                                                                                                            Arrival instant of the
+                                                                                                            n-th update for the 1st
+                                                                                                                    phase
+                                                                                                           Arrival instant of the n-
+                                                                                                            th update for the 2nd
+                                                                                                           phase (end of service at
+                                                                                                                the 1st phase)
+                                                                                                           Departure instant of the
+                                                                                                            n-th update from the
+                                                                                                           system (end of service
+                                                                                                             on the 2nd phase)
+                                                                                                               Time between
+                                                                                                            generation of (n-1)-th
+                                                                                                              and n-th updates
+
+                                                                                                           Service time of the n-th
+                                                                                                           update at the j-th phase
+
+                                                                                                           Sojourn time of the n-th
+                                                                                                           update at the j-th phase
+                                                                                                                 Time axis
+                                                                                                           corresponding to the j-
+                                                                                                             th phase (and j-th
+                                                                                                                  queue)
+
+                                                                                                           Upon arrival instants to
+                                                                                                              phases, an update
+                                                                                                           observes both servers to
+                                                                                                              be in a busy states
+                                                                                                           Upon arrival instants to
+                                                                                                              phases, an update
+                                                                                                            observes 1st server to
+                                                                                                            be in a busy state and
+                                                                                                             2nd in an idle state
+                                                                                                           Upon arrival instants to
+                                                                                                              phases, an update
+                                                                                                            observes 1st server to
+                                                                                                            be in an idle state and
+                                                                                                             2nd in a busy state
+                                                                                                           Upon arrival instants to
+                                                                                                              phases, an update
+                                                                                                            observes both servers
+                                                                                                            to be in an idle states
+
+
+                            Figure 2. Example of a tandem queueing system M | M |1 → M | M |1 realization for four different
+                            events that form an exhaustive events.
+
+                                 To clarify the classification of updates into these four groups, we present the decision
+                            logic in Figure 3. This tree illustrates how the state of the servers observed by an arriving
+                            update determines the specific PAoI components.
+
+
+
+                                                                                         https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                   7 of 22
+
+
+
+
+                                                                             Incoming Update
+                                                                                Generated
+
+
+
+
+                                                                                Is Server 1
+                                                                                   Busy?
+                                                                       Yes                               No
+
+                                                Is Server 2                                                         Is Server 2
+                                                   Busy?                                                               Busy?
+
+
+                                          Yes                    No                                           Yes                  No
+
+                                 Event A1                    Event A2                           Event A3                           Event A4
+                                (Busy, Busy)                (Busy, Idle)                       (Idle, Busy)                       (Idle, Idle)
+                              Z1 = G + T̂1 + T̂2         Z2 = G + T̂1 + B2                  Z3 = G + B1 + T̂2                  Z4 = G + B1 + B2
+
+                            Figure 3. Logic tree for classifying updates into four mutually exclusive events A1 –A4 .
+
+                                 The probabilities of events Ai are derived based on their conditions and the indepen-
+                            dence of the involved random variables. Their detailed derivation is given below.
+                                 The derivation of these probabilities relies on the fundamental properties of tandem
+                            M | M|1 queues. According to Burke’s Theorem [19], the departure process of the first stable
+                            M | M|1 queue is a Poisson process with rate λ. Consequently, the second queue behaves
+                            as an independent M| M |1 system in equilibrium. Furthermore, Reich’s Theorem [20]
+                            establishes that the sojourn times T1 and T2 of a customer in a tandem of exponential
+                            queues are mutually independent. These properties justify the factorization of probabilities
+                            involving T1 , T2 , and the service times.
+                                 For event A1 , where an incoming update finds both servers busy ({ G ≤ T1 }, and
+                            { B1 ≤ T2 | G ≤ T1 }):
+
+                                                         p1 = P{ G ≤ T1 } · P{ B1 ≤ T2 | G ≤ T1 }.
+
+                            Using the independence of G, T1 , T2 , and B1 , this can be expressed as
+
+                                                                   p1 = P{ G ≤ T1 } · P{ B1 ≤ T2 }.
+
+                                 Then, evaluating P{ G ≤ T1 }
+                                                                 Z ∞                                      Z ∞
+                                                                    1
+                                           P{ G ≤ T1 } =               P{ G ≤ T1 } d( T1 (t1 )) =                 G (t1 ) d( T1 (t1 ))
+                                                                  0                                           0
+
+                            and P{ B1 ≤ T2 }
+                                                                 Z ∞                                      Z ∞
+                                          P{ B1 ≤ T2 } =               P{ B1 ≤ t2 } d( T2 (t2 )) =                B1 (t2 ) d( T2 (t2 )),
+                                                                  0                                           0
+
+                            we obtain                   Z ∞                           Z ∞                      
+                                                p1 =              G (t1 ) d( T1 (t1 )) ·     B1 (t2 ) d( T2 (t2 )) .
+                                                             0                                   0
+
+                            Finally, expressing G (t1 ) and B1 (t2 ) in terms of the probability density function (PDF),
+                            we get
+                                                   Z ∞Z t                                   Z ∞ Z t2
+                                                             1
+                                            p1 =                 d( G (y)) d( T1 (t1 )) ·                 d( B1 (u)) d( T2 (t2 )).                (2)
+                                                    0    0                                   0       0
+
+
+
+
+                                                                                                              https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                               8 of 22
+
+
+
+                                The remaining values pi , i = 2, . . . , 4, can be obtained by applying the procedure
+                            described above. Then, pi are calculated using the Formulas (3)–(5).
+                                                     Z ∞Z t                                         Z ∞Z ∞
+                                                                1
+                                    p2 = P{ A2 } =                  d( G (y)) d( T1 (t1 )) ·                      d( B1 (u)) d( T2 (t2 )),                 (3)
+                                                       0    0                                         0     t2
+                                                     Z ∞Z yZ ∞                                                         Z ∞
+                                    p3 = P{ A3 } =                         d( G (y)) d( T1 (t1 )) d( B1 (u)) ·                         d( T2 (t2 )),       (4)
+                                                       0    0       0                                                   y + u − t1
+                                                     Z ∞Z yZ ∞                                                         Z y+u−t
+                                                                                                                                   1
+                                    p4 = P{ A4 } =                         d( G (y)) d( T1 (t1 )) d( B1 (u)) ·                          d( T2 (t2 )).      (5)
+                                                       0    0       0                                                   0
+
+                                 Now, combining all conditional PAoI-obtained Zi , we obtain an LST of PAoI Z in the
+                            following theorem.
+
+                            Theorem 1. The LST of PAoI in the M | M |1 → M | M |1 tandem queueing system is calculated
+                            using the formula
+                                                                                            4
+                                                                             z ( s ) = ∑ p i z i ( s ),                                                    (6)
+                                                                                        i =1
+
+                            where zi (s) — LST of PAoI for the updates observing event Ai upon arrivals to queues, i = 1, . . . , 4.
+
+                                It should be noted that the described framework can be applied in more complicated
+                            networks, such as GI | GI |1 → GI | GI |1.
+
+                            5. LST of PAoI in M | M |1 → M | M |1
+                                 To derive the LST of the PAoI, we proceed as follows:
+                            1.   Determine the conditional LSTs of waiting and sojourn times for busy/idle states
+                                 (Lemma 1).
+                            2.   Calculate the probabilities pi of the four mutually exclusive events A1 –A4 (Lemma 2).
+                            3.   Combine these components using the law of total probability (Theorem 2) to obtain
+                                 the final closed-form expression.
+                                 In this section, we apply Theorem 1 to obtain the LST of the PAoI in an M| M |1 →
+                            M | M|1 tandem queue and subsequently derive expressions for the PAoI mean and variance.
+                            To this end, we first find θ̂ j , letting the rate of input flow be denoted by λ and the service
+                            times rates be denoted by µ1 and µ2 , respectively. We assume ρ1 = λ/µ1 < 1 and
+                            ρ2 = λ/µ2 < 1 to ensure the system is ergodic and a stationary distribution exists. Recall
+                            that the LSTs for generation and service times are given by
+
+                                                                                    λ
+                                                                         α(s) =         ,                                                                  (7)
+                                                                                  λ+s
+                                                                                    µj
+                                                                        β j (s) =         ,         j = 1, 2.                                              (8)
+                                                                                  µj + s
+
+                            The loads for each server are defined as
+                                                                                     λ
+                                                                            ρj =        ,       j = 1, 2,                                                  (9)
+                                                                                     µj
+
+                            where ρ j < 1 to ensure the stability of the system.
+                                To determine θ̂ j (s), we utilize the following lemma:
+
+                            Lemma 1. The LST of ω̂ j (s) is expressed as
+
+                                                                                     ω j ( s ) − (1 − ρ j )
+                                                                        ω̂ j (s) =                          .                                             (10)
+                                                                                                ρj
+
+
+                                                                                                                 https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                                       9 of 22
+
+
+
+                            Proof. Let the probability that there are k updates in the queue during the j-th phase
+                                      ( j)
+                            be πk . The previously introduced probability is that the server being busy in phase j
+                                     ( j)       ∞        ( j)                                                                                            ( j)
+                            is π≥1 = ∑ πk                       = ρ j , while the probability that the server being idle is π0 = 1 − ρ j .
+                                               k =1
+                                                                                                   ( j)
+                            Consequently, the conditional probability π̂k that there are exactly k updates in the system
+                            (M | M |1 for phase j) during phase j, given that the server is busy, is given by
+                                                                                                             ( j)
+                                                      ( j)                                      P nj = k    π
+                                                                                                           = k , k = 1, 2, . . . .
+                                                           
+                                                    π̂k = P n j = k | n j ≥ 1               =                                                                    (11)
+                                                                                              1 − P nj = 0   ρj
+
+                                                ( j)
+                            Note that π̂0 = 0, as it is impossible for the system to be empty under the condition that it
+                            is busy.
+                                 The CDF Wj (t) of the random variable Wj , representing the waiting time in phase
+                            j, can be expressed using the law of total probability and the unconditional probability
+                                                       ( j)
+                            distribution πk , k = 0, 1, . . ., as
+
+                                                                                            ∞
+                                                                                                   ( j) ∗(k)
+                                                                             Wj (t) = ∑ πk Bj                     (t), x ≥ 0,                                     (12)
+                                                                                          k =0
+
+                                             ∗(k)
+                            where Bj (t) denotes the j-fold convolution of the service time distribution at phase j.
+                            Consequently, the LST of Wj is
+
+                                                                                                  ∞
+                                                                                                          ( j)
+                                                                                 ω j (s) = ∑ πk ( β j (s))k .                                                     (13)
+                                                                                                 k =0
+
+
+                                 Similarly, the CDF of Ŵj , representing the waiting time in phase j under the condition
+                            of arrival to a busy system, can be expressed using the conditional probability distribution
+                              ( j)
+                            π̂k , k = 1, 2, . . ., as
+                                                                                            ∞
+                                                                                                   ( j) ∗(k)
+                                                                             Ŵj (t) = ∑ π̂k Bj                   (t), x ≥ 0,                                     (14)
+                                                                                          k =1
+
+                            and its LST is given by
+
+                                                                                 ∞                                 ∞        ( j)
+                                                                                         ( j)                          πk
+                                                                      ω̂ j (s) = ∑ π̂k ( β j (s))k = ∑                      ( β j (s))k .                         (15)
+                                                                                k =1                              k =1
+                                                                                                                        ρ j
+
+
+                            From this, we derive
+
+                                                                   1 ∞ ( j)                                       ∞
+                                                                                                                                                 !
+                                                                                            1                            ( j)             ( j)
+                                                                   ρ j k∑                                        ∑
+                                                        ω̂ j (s) =         πk ( β j (s))k =                             πk ( β j (s))k − π0          =            (16)
+                                                                        =1
+                                                                                            ρ j                  k =0
+                                                                      1                        
+                                                                  =      ω j ( s ) − (1 − ρ j ) .
+                                                                      ρj
+
+
+
+                                 With the LST of the waiting time under the condition of arrival to a busy system
+                            determined, the LST of the sojourn time under the same condition can be easily derived as
+
+                                                                                       θ̂ j (s) = ω̂ j (s) β j (s).                                               (17)
+
+                            As a result, for the exponential tandem queueing system, we obtain
+
+
+
+
+                                                                                                                               https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                               10 of 22
+
+
+
+
+                                                          µj − λ                                             µj − λ     µj
+                                           ω̂ j (s) =              = θ j ( s ),               θ̂ j (s) =             ·       ,             (18)
+                                                        µj − λ + s                                         µj − λ + s µj + s
+                                 For implementing Theorem 1, we specify pi , i = 1, . . . , 4 using the following Lemma.
+
+                            Lemma 2. For the exponential tandem queueing system M | M |1 → M| M|1, the probabilities of
+                            events Ai , i = 1, . . . , 4 defined by (2)–(5) have the form of
+
+                                                λ                                 λ ( µ2 − λ )
+                                    p1 =               ,                 p2 =                      ,                                       (19)
+                                         µ1 + µ2 − λ                          µ1 ( µ1 + µ2 − λ )
+                                             λ ( µ1 − λ )                     µ2 (µ1 − λ)(µ1 + µ2 − λ) − λµ1 (µ1 − λ)
+                                    p3 =                    ,            p4 =                                         .                    (20)
+                                         µ2 ( µ1 + µ2 − λ )                                µ1 µ2 ( µ1 + µ2 − λ )
+
+                            Proof. See Appendix A.
+
+                                 Finally, we present the following theorem determining the form of the PAoI LST, z(s).
+
+                            Theorem 2. The LST z(s) is given by
+
+                                                 µ1 − λ     µ2 − λ                     λs2
+                                                                                                       
+                                           λ
+                                z(s) =        ·          ·           · 1+                                 .                                (21)
+                                         λ + s µ1 − λ + s µ2 − λ + s      (µ1 + s)(µ2 + s)(µ1 + µ2 − λ)
+
+                            Proof. See Appendix B.
+
+                                Since the derived LST z(s) in Theorem 2 is a rational function of s, the Probability
+                            Density Function (PDF) f Z (t) can be obtained exactly via the inverse Laplace transform.
+                            We rewrite z(s) as a ratio of polynomials:
+
+                                                                                        Φ(s)
+                                                                          z(s) = Ω ·         ,                                             (22)
+                                                                                        Ψ(s)
+
+                            where the constant Ω, the numerator polynomial Φ(s), and the characteristic polynomial
+                            Ψ(s) are defined as
+
+                                                            λ(µ1 − λ)(µ2 − λ)
+                                                   Ω=                         ,                                                            (23)
+                                                               µ1 + µ2 − λ
+                                               Φ(s) = (µ1 + s)(µ2 + s)(µ1 + µ2 − λ) + λs2 ,                                                (24)
+                                                Ψ(s) = (λ + s)(µ1 − λ + s)(µ2 − λ + s)(µ1 + s)(µ2 + s).                                    (25)
+
+                            The roots of Ψ(s) correspond to five distinct poles of the system:
+
+                                                   {ϕk }5k=1 = {−λ, −(µ1 − λ), −(µ2 − λ), −µ1 , −µ2 }.                                     (26)
+
+                            Using the Residue Theorem for distinct poles, the PDF is a sum of exponential functions:
+
+                                                                                  5
+                                                                     f Z (t) = ∑ Ck eϕk t ,      t ≥ 0.                                    (27)
+                                                                              k =1
+
+                            The coefficients (residues) Ck are calculated analytically by
+
+                                                                                                    Φ(ϕk )
+                                                        Ck = lim (s − ϕk )z(s) = Ω ·           5
+                                                                                                                    .                      (28)
+                                                              s→ϕk                            ∏ j=1,j̸=k (ϕk − ϕj )
+
+                            This formula provides the exact distribution of PAoI, enabling the direct calculation of tail
+                            probabilities without numerical inversion.
+
+
+
+                                                                                                           https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                11 of 22
+
+
+
+                            6. Moments of PAoI
+                                 The moments of the PAoI can be derived from its Laplace–Stieltjes Transform (LST),
+                            z(s), using the standard moment-generating properties of the LST. The n-th moment is
+                            given by
+                                                                          dn z(s)
+                                                         E[ Z n ] = (−1)n          .
+                                                                           dsn s=0
+                            In particular, for the mean and the second moment, we have the following identities:
+
+                                                            E[ Z ] = −z′ (0),   E[ Z2 ] = z′′ (0).
+
+                                Using the expressions obtained, we can find the mean value of the PAoI
+                                                                                                    
+                                                         λ            1      1      1       1        1
+                                             E[ Z ] =                    +       +    +           +      +                  (29)
+                                                   µ1 + µ2 − λ        λ µ1 − λ µ1        µ2 − λ µ2
+                                                              λ ( µ2 − λ )
+                                                                                                    
+                                                                               1      1        1     1
+                                                     +                           +        +       +      +
+                                                         µ1 ( µ1 + µ2 − λ )    λ µ1 − λ µ1          µ2
+                                                              λ ( µ1 − λ )
+                                                                                                    
+                                                                               1      1        1     1
+                                                     +                           +        +       +      +
+                                                         µ2 ( µ1 + µ2 − λ )    λ µ1 − λ µ1          µ2
+                                            µ (µ − λ)(µ1 + µ2 − λ) − λµ1 (µ1 − λ)
+                                                                                                    
+                                                                                        1     1     1
+                                         + 2 1                                            +      +       =
+                                                     µ1 µ2 ( µ1 + µ2 − λ )              λ µ1        µ2
+                                                                                   1      1           1
+                                                                                 = +             +        .
+                                                                                   λ µ1 − λ µ2 − λ
+
+                                 Next, we find the expression of the second moment, for which, we explicitly express
+                            the derivatives of the PAoI LST z(s). The first derivative is expressed as
+
+                                                   µ1 − λ     µ2 − λ
+                                                                                                     
+                                             λ                         1          1            1
+                              z′ (s) = −                                   +           +                 ·
+                                           λ + s µ1 − λ + s µ2 − λ + s
+                                                                     λ + s µ1 − λ + s µ2 − λ + s
+                                                      λs2                             s(2µ1 µ2 + s(µ1 + µ2 ))
+                                                                                                             
+                                                                                λ
+                                    · 1+                                 −                                       ,
+                                         (µ1 + s)(µ2 + s)(µ1 + µ2 − λ)     µ1 + µ2 − λ ( µ1 + s )2 ( µ2 + s )2
+
+                            and the second derivative will take the form
+
+                                                  µ1 − λ      µ2 − λ
+                                                                                                                    
+                               ′′           λ                                   1           1                 1
+                              z (s) = −                                   −         +                +                  ·
+                                          λ + s µ1 − λ + s µ2 − λ + s         λ + s µ1 − λ + s µ2 − λ + s
+                                      "
+                                                                                                     λs2
+                                                                                                                        
+                                            1           1             1
+                                    ·           +              +                1+                                          −
+                                         λ + s µ1 − λ + s µ2 − λ + s                (µ1 + s)(µ2 + s)(µ1 + µ2 − λ)
+                                                                             # 
+                                              λ      s(2µ1 µ2 + s(µ1 + µ2 ))          1                1
+                                    −                                         −             +                     +
+                                       µ1 + µ2 − λ ( µ1 + s )2 ( µ2 + s )2        ( λ + s )2 ( µ1 − λ + s )2
+                                                                           λs2
+                                                                                            
+                                           1
+                                                      · 1+                                      +
+                                    ( µ2 − λ + s )2           (µ1 + s)(µ2 + s)(µ1 + µ2 − λ)
+                                                     "
+                                                                                                s(2µ1 µ2 + s(µ1 + µ2 ))
+                                                                                           
+                                              λ           1           1             1
+                                    +                          +             +                ·                            −
+                                       µ1 + µ2 − λ      λ + s µ1 − λ + s µ2 − λ + s               ( µ1 + s )2 ( µ2 + s )2
+                                        (µ1 + s)(µ2 + s)(µ1 µ2 + s(µ1 + µ2 )) − s(2µ1 µ2 + s(µ1 + µ2 ))(µ1 + µ2 + 2s)
+                                    −                                                                                 ·
+                                                                     ( µ1 + s )4 ( µ2 + s )4
+                                                        #!
+                                    · 2(µ1 + s)(µ2 + s)       .
+
+
+                                The second moment E[ Z2 ] of the PAoI is expressed as
+
+
+
+
+                                                                                            https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                               12 of 22
+
+
+
+
+                                                                                           "                        
+                                           2       ′′                1       1         1            1      1         1
+                                       E[ Z ] = z (s) s=0 = −1 −       +         +                    +         +        −
+                                                                     λ µ1 − λ µ2 − λ                λ µ1 − λ µ2 − λ
+                                                        #                                 
+                                                              1        1            1                         λ
+                                             (1 + 0) − 0 −      +            +               (1 + 0) +               ·
+                                                             λ2   ( µ1 − λ )2 ( µ2 − λ )2                µ1 + µ2 − λ
+                                                                                                     !
+                                                                                            2µ31 µ32
+                                                                    
+                                                  1     1       1                 λ
+                                              ·       +     +          ·0−                ·            .
+                                                  λ µ1 − λ µ2 − λ            µ1 + µ2 − λ µ41 µ42
+
+                                          Thus, we have the following expressions for the first and second moments of the PAoI
+                                    in a tandem queueing system
+
+                                                                                     1    1      1
+                                                                          E[ Z ] =     +     +       ,                                     (30)
+                                                                                     λ µ1 − λ µ2 − λ
+                                                        2
+                        2         1    1      1                   1          1              1                   2λ
+                   E[ Z ] =         +     +                   +     2
+                                                                      +            2
+                                                                                     +            2
+                                                                                                    +                       ,              (31)
+                                  λ µ1 − λ µ2 − λ                 λ     ( µ1 − λ )     ( µ2 − λ )     µ1 µ2 ( µ1 + µ2 − λ )
+                                    from which, we can express the variance Var[ Z ] and standard deviation σZ of PAoI.
+
+                                                                             1         1           1                2λ
+                                       Var[ Z ] = E[ Z2 ] − (E[ Z ])2 =         +            +           +                      ,          (32)
+                                                                             λ2   ( µ1 − λ )2 ( µ2 − λ )2 µ1 µ2 ( µ1 + µ2 − λ )
+                                                                      s
+                                                                          1          1              1                   2λ
+                                                     q
+                                              σZ =       Var[ Z ] =         2
+                                                                              +            2
+                                                                                             +            2
+                                                                                                            +                       .      (33)
+                                                                          λ     ( µ1 − λ )     ( µ2 − λ )     µ1 µ2 ( µ1 + µ2 − λ )
+
+                                        As a quick self-check, we can examine the first two Taylor series terms of the LST z(s)
+                                    around s = 0. A Taylor expansion yields
+
+                                                                                        1
+                                                                    z(s) = 1 − E[ Z ]s + E[ Z2 ]s2 + O(s3 ),
+                                                                                        2
+
+                                    where E[ Z ] and E[ Z2 ] are given by (30) and (31), respectively. Substituting the expressions
+                                    for E[ Z ] and E[ Z2 ] confirms the consistency of our derived LST.
+                                         To minimize the average Peak Age of Information, we formulate the optimization
+                                    problem with respect to the arrival rate λ, subject to the stability condition 0 < λ <
+                                    min(µ1 , µ2 ). The objective function is defined by Equation (30):
+
+                                                                                        1    1      1
+                                                                    min E[ Z ](λ) =       +     +       .                                  (34)
+                                                                      λ                 λ µ1 − λ µ2 − λ
+
+                                                                                      subject to
+
+                                                                                        λ > 0,                                             (35)
+
+                                                                                 λ < min(µ1 , µ2 ).                                        (36)
+
+                                    To find the critical points, we take the derivative with respect to λ and set it to zero:
+
+                                                              dE[ Z ]    1       1           1
+                                                                      =− 2+            +            = 0.                                   (37)
+                                                               dλ       λ   ( µ1 − λ )2 ( µ2 − λ )2
+
+                                    Rearranging terms, we isolate the arrival rate component:
+
+                                                                               1           1        1
+                                                                                     +            = 2.                                     (38)
+                                                                          ( µ1 − λ )2 ( µ2 − λ )2  λ
+
+
+
+                                                                                                          https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                       13 of 22
+
+
+
+                            Multiplying by λ2 (µ1 − λ)2 (µ2 − λ)2 to clear the denominators yields
+
+                                                    λ2 ( µ2 − λ )2 + λ2 ( µ1 − λ )2 = ( µ1 − λ )2 ( µ2 − λ )2 .                    (39)
+
+                            Let S = µ1 + µ2 , and P = µ1 µ2 . Expanding both sides reveals that the fourth-order terms λ4
+                            and the third-order terms −2Sλ3 on both sides cancel out. The resulting equation simplifies
+                            to a depressed quartic polynomial:
+
+                                                                 λ4 − 4Pλ2 + 2PSλ − P2 = 0.                                        (40)
+
+                            Substituting back P = µ1 µ2 and S = µ1 + µ2 , the optimal arrival rate λ∗ is the unique real
+                            root of the following polynomial in the interval (0, min(µ1 , µ2 )):
+
+                                                        λ4 − 4µ1 µ2 λ2 + 2µ1 µ2 (µ1 + µ2 )λ − µ21 µ22 = 0.                         (41)
+
+                            Special case (symmetric system): If the service rates are equal (µ1 = µ2 = µ), the condition
+                            simplifies to 2λ2 = (µ − λ)2 , yielding the closed-form solution:
+
+                                                                              µ
+                                                                    λ∗ =       √ ≈ 0.414µ.                                         (42)
+                                                                            1+ 2
+
+                            This analytical result allows for precise system tuning without an exhaustive numeri-
+                            cal search.
+
+                            7. Case Study
+                                Consider a two-hop wireless network based on DECT-2020, as shown in Figure 4.
+                            We analyze the network performance by focusing on the update process of a Portable
+                            Termination (PT) device. The PT generates updates according to a Poisson process and
+                            packs them into Transport Blocks (TBs) for transmission to a Fixed Termination (FT),
+                            with the transmission time following an exponential distribution. The FT receives the
+                            TBs and queues them for subsequent transmission to the sink, which also entails an
+                            exponentially distributed amount of time.
+
+                                                                       Portable Termination (PT)
+                                                         Sink          Fixed Termination (FT)
+
+
+                                                                  FT
+                                                                   2
+                                                   FT
+                                                    1
+                                                                              PT     PT
+                              PT    PT
+                                                                         PT
+                                         PT                       PT
+                                   PT                                          PT
+                                              PT                       PT
+                                         PT
+
+
+
+                            Figure 4. Considered example of DECT-2020 network.
+
+                                  According to the ETSI standard [21], 60 TBs can be transmitted within a frame con-
+                            sisting of 12 time slots. Assuming that there are six homogeneous PTs associated with the
+                            FT, the mean transmission speed is 10 TBs per frame. Assuming the sink has two directly
+                            connected FT devices receiving data from 6 PT devices, the average transmission rate on
+                            the second hop is 5 TBs per frame. Therefore, we model the DECT-2020 network as an
+                            exponential tandem queueing system with µ1 = 10 and µ2 = 5.
+
+
+
+
+                                                                                                   https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                                                                                                                                                                                          14 of 22
+
+
+
+                                          These rates are derived from the standard’s frame capacity. With a maximum of
+                                     60 Transport Blocks (TBs) per frame:
+                                     •                                          Hop 1 (PT to FT): Six PTs share the channel. Assuming fair resource division, the ser-
+                                                                                vice rate is µ1 ≈ 60/6 = 10 updates/frame.
+                                     •                                          Hop 2 (FT to Sink): The sink supports multiple streams. The reduced rate µ2 = 5 up-
+                                                                                dates/frame reflects the effective throughput after accounting for backhaul contention
+                                                                                at the concentration point.
+                                         The numerical validation was performed using a custom discrete-event simulation
+                                    (DES). For each data point, the system was simulated for a horizon of T = 400,000 frames.
+                                    A warm-up period of 1000 frames was discarded to remove transient initial conditions.
+                                    The simulation parameters are summarized in Table 3.
+
+                                    Table 3. Simulation parameters.
+
+                                                                                                      Parameter                                                                                                                                             Value
+                                                                                      Service rate µ1 (PT to FT)                                                                                                                               10 [upd/frame]
+                                                                                     Service rate µ2 (FT to Sink)                                                                                                                              5 [upd/frame]
+                                                                                            Simulation duration                                                                                                                                400,000 [frames]
+                                                                                            “Warm-up” period                                                                                                                                    1000 [frames]
+
+
+                                         To validate the analytical expressions, we conducted simulations in which the arrival
+                                   rate λ was systematically varied to examine its influence on the system’s performance.
+                                   The first and second moments of PAoI obtained from (30) and (31), respectively, are illus-
+                                   trated by solid red lines in Figure 5 along with blue circles representing the first and second
+                                   moment of PAoI obtained from simulations. For each λ value used in simulations, we
+                                   collect an empirical distribution of the PAoI and demonstrate a percentile-based interval for
+                                   this distribution using vertical blue lines, so that 95% of the obtained PAoI values are within
+                                   the bounds of the vertical line. The analytical model accurately captures the behavior of
+                                   the system. In particular, the mean PAoI is estimated with a mean relative error of less than
+                                   1% and a maximum relative error of less than 5%. This agreement validates the theoretical
+                                   framework and highlights its robustness in predicting PAoI under various load conditions.
+                                                                                               9 D O L G D W L R Q  R I  0 H D Q  3 $ R ,
+                                                                                                               $ Q D O \ W L F D O  0 R G H O                                                                                                                $ Q D O \ W L F D O  0 R G H O
+                                                                                                                 6 L P X O D W L R Q                                                                                                                               6 L P X O D W L R Q
+                                                                                                                                                                       6 H F R Q G  0 R P H Q W  [Z 2]  > I U D P H V2 @
+
+
+
+
+                                                                                                                                                                                                                               
+                             0 H D Q  3 $ R ,  [Z]  > I U D P H V @
+
+
+
+
+                                                                                                                                                                                                                               
+
+                                                                                                                                                                                                                                 
+
+                                                                                                                                                                                                                                 
+
+                                                                                                                                                                                                                                 
+
+                                                                                                                                                                                                                                 
+
+                                                                                                                                                                                                                                                                                                            
+                                                                                               $ U U L Y D O  U D W H    > X S G D W H V  I U D P H @                                                                                        $ U U L Y D O  U D W H    > X S G D W H V  I U D P H @
+
+                                     Figure 5. Validation of analytical models against simulation results: (Left) Mean PAoI E[ Z ]; (Right)
+                                     second moment E[ Z2 ]. Error bars (vertical blue lines) indicate 95% percentile-based intervals, so that
+                                     95% of the obtained PAoI/squared PAoI values are within the bounds of the vertical lines.
+
+                                         As we mentioned earlier, the mean values without information about the deviation
+                                    allow for limited analysis. For example, we consider a “three-sigma interval” from E[ Z ]
+                                    to E[ Z ] + 3σZ in Figure 6, using (30) and (33). This interval serves as a metric for PAoI
+                                    variability, covering approximately 99.7% of the probability mass if the distribution were
+                                    normal, and provides a heuristic bound for the tail behavior.
+
+
+                                                                                                                                                                                                                                          https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                                                         15 of 22
+
+
+
+                                                           
+                                                                                                $ Q D O \ W L F D O  0 H D Q
+                                                                                              $ Q D O \ W L F D O  [Z] ± 3 Z
+                                                                                                6 L P  ( P S L U L F D O  , Q W H U Y D O
+                                                           
+
+                                                           
+
+
+
+
+                             3 $ R ,  > I U D P H V @
+                                                           
+
+                                                           
+
+                                                           
+
+                                                           
+
+                                                                                                                                                  
+                                                                                   $ U U L Y D O  U D W H    > X S G D W H V  I U D P H @
+
+                            Figure 6. PAoI variability interval, defined as the range EZ ± 3σZ . This interval captures the empirical
+                            spread of the update ages.
+
+                                  To extend our analysis beyond the exponential assumption and formally validate the
+                            impact of service time variability, we conducted a rigorous statistical comparison. We
+                            simulated systems where service times follow Erlang and hyperexponential distributions
+                            alongside the baseline Exponential case, calculating the mean and standard deviation of
+                            the PAoI. For each configuration, we collected N = 50 independent batch means, where
+                            each batch consisted of 10,000 updates after a warm-up period of 500 updates.
+                                  An Erlang-distributed service time (k = 5) implies that each update in each phase
+                            undergoes five sequential processing stages with exponentially distributed durations.
+                            For the first phase, the individual stage rate is set to 50, and for the second phase, it is
+                            set to 25, preserving the aggregate mean service rates of µ1 = 10 and µ2 = 5. Technically,
+                            the Erlang distribution explicitly models the cumulative delay of multiple processing steps,
+                            such as wireless transmission, acknowledgment, digital-to-analog conversion, header
+                            addition, and data processing.
+                                  Conversely, the hyperexponential service time models a system with high variability.
+                            We assume that each update, with probability 0.5, is processed at one of two distinct
+                            rates. In the first phase, these rates are 30 and 6; in the second phase, they are 15 and
+                            6. From a DECT-2020 perspective, this distribution captures the stochastic nature of
+                            updates with different TB lengths or varying numbers of retransmissions required due to
+                            channel conditions.
+                                  We denote the mean PAoI for the systems with Erlang, hyperexponential, and expo-
+                            nential service times by E[ ZErl ], E[ ZHExp ], and E[ ZExp ], respectively. Similarly, σErl , σHExp ,
+                            and σExp denote their standard deviations. While all three distributions share the same
+                            mean service time, they possess distinct coefficients of variation (Cv < 1 for Erlang, Cv = 1
+                            for Exponential, and Cv > 1 for Hyperexponential).
+                                  First, we assessed the normality of the sample means using Q-Q plots. Figure 7
+                            presents the Quantile–Quantile (Q-Q) plots for the sample means under low (λ = 0.1),
+                            medium (λ = 2.5), and high (λ = 4.9) load conditions. While the distribution of means
+                            approximates normality in most regimes, deviations were observed at high loads due to the
+                            heavy-tailed nature of queueing delays near saturation. To ensure robustness, we employed
+                            two distinct statistical tests:
+                            1.                                  Welch’s t-test: a parametric test robust to heteroscedasticity (unequal variances).
+                            2.                                  Mann–Whitney U test: a non-parametric alternative that does not assume normality.
+
+
+
+
+                                                                                                                                                     https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                                                                                                                                                16 of 22
+
+
+
+                                                                                                 ( [ S R Q H Q W L D O                                           ( U O D Q J   N                                           + ( [ S   6 & 9    
+                                                                                                    = 0.1                                                         = 0.1                                                         = 0.1 
+                                                                                                                                                                                                          
+                                                                     
+
+
+
+
+                             6 D P S O H  4 X D Q W L O H V
+                                                                                                                                                                                                      
+
+
+                                                                                                                                                                                                      
+
+                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                   
+                                                                                                 ( [ S R Q H Q W L D O                                           ( U O D Q J   N                                           + ( [ S   6 & 9    
+                                                                                                    = 2.5                                                         = 2.5                                                         = 2.5 
+                                                                                                                                          
+                                                                                                                                                                                                              
+                             6 D P S O H  4 X D Q W L O H V
+
+
+
+
+                                                                                                                                                                                                          
+                                                                                                                                              
+
+                                                                                                                                                                                                          
+                                                                                                                                              
+                                                                                                                                                                                                          
+                                                                                                                                              
+                                                                                                                                                                                                                                                   
+                                                                                                 ( [ S R Q H Q W L D O                                           ( U O D Q J   N                                           + ( [ S   6 & 9    
+                                                                                                    = 4.9                                                         = 4.9                                                         = 4.9 
+                                                                                                                                                                                                               
+                                                                                
+                                            6 D P S O H  4 X D Q W L O H V
+
+
+
+
+                                                                                                                                                 
+                                                                                                                                                                                                               
+                                                                                
+                                                                                                                                                                                                               
+                                                                                                                                                 
+                                                                                                                                                                                                             
+                                                                                                                                                                                                             
+                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                   
+                                                                                      7 K H R U H W L F D O  4 X D Q W L O H V                     7 K H R U H W L F D O  4 X D Q W L O H V                   7 K H R U H W L F D O  4 X D Q W L O H V    
+                            Figure 7. Q-Q plots of mean PAoI samples for Exponential, Erlang, and Hyperexponential distribu-
+                            tions at various arrival rates (λ). The axes represent standard deviations (σ) from the mean.
+
+                                 The results are summarized in Table 4. At low loads (λ = 0.1), the p-values are high
+                            (>0.05), indicating no significant difference. This is physically expected, as queueing is
+                            negligible in this regime, and the PAoI is dominated by the mean service time, which
+                            is identical across all distributions. However, as the load increases (λ ≥ 0.4), both tests
+                            consistently yield p-values well below the α = 0.05 threshold (with only exception of
+                            the Erlang distribution for λ = 0.4, where the difference is also statictically insignificant),
+                            often reaching values as low as 10−20 . This confirms that the service time variance has
+                            a statistically significant impact on information freshness whenever queueing dynamics
+                            are present.
+                                 To optimize the information freshness, we formulate the minimization problem for
+                            the mean PAoI with respect to the arrival rate λ:
+
+                                                                                                                                            λ∗ =                    argmin                  E[ Z ](λ),                                                                      (43)
+                                                                                                                                                            0<λ<min(µ1 ,µ2 )
+
+
+                            where E[Z](λ) is given by Equation (30). Figure 8 illustrates the optimal arrival rate λ∗
+                            obtained by solving the polynomial Equation (40) for varying bottleneck capacities µ2 . As pre-
+                            dicted by the analytical derivation, λ∗ increases non-linearly with µ2 , allowing the system to
+                            support higher update frequencies and lower PAoI as the service capacity improves.
+
+
+
+
+                                                                                                                                                                                                          https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                                                                                                                                                         17 of 22
+
+
+
+                                   Table 4. Mean PAoI comparison with statistical significance tests (N = 50 independent runs). pW
+                                   denotes the p-value from Welch’s t-test and pU from the Mann–Whitney U test.
+
+                  Exp (Base)                                                                      Erlang (k = 5)                                                                        HExp (SCV = 4)
+     λ
+              Mean          Std                          Mean                                  Std            pW                          pU                         Mean          Std               pW                                                                         pU
+    0.1        10.41        0.30                               10.32                           0.32           0.20                      0.13                          10.31       0.31               0.12                                                                       0.04
+    0.4        2.82         0.04                                       2.82                    0.04           0.99                      0.97                           2.84       0.04       2.5 × 10−3                                       2.7 × 10−3
+    0.8        1.60         0.01                                       1.57                    0.01        1.1 × 10−11         3.2 × 10−10                             1.67       0.02       2.9 × 10−37                             7.1 × 10−18
+    1.1        1.28         0.01                                       1.25                    0.01        1.6 × 10−35         9.0 × 10−18                             1.39       0.02       1.1 × 10−45                             7.1 × 10−18
+    1.4        1.11         0.01                                       1.07                    0.01        2.0 × 10−53         7.1 × 10−18                             1.26       0.02       1.5 × 10−59                             7.1 × 10−18
+    1.7        1.01         0.01                                       0.95                    0.00        2.3 × 10−70         7.1 × 10−18                             1.21       0.02       2.9 × 10−52                             7.1 × 10−18
+    2.0        0.96         0.01                                       0.88                    0.00        8.5 × 10−71         7.1 × 10−18                             1.21       0.02       8.5 × 10−57                             7.1 × 10−18
+    2.3        0.94         0.01                                       0.84                    0.00        3.4 × 10−76         7.1 × 10−18                             1.25       0.03       6.4 × 10−56                             7.1 × 10−18
+    2.7        0.94         0.01                                       0.82                    0.00        3.1 × 10−75         7.1 × 10−18                             1.39       0.05       9.5 × 10−52                             7.1 × 10−18
+    3.0        0.98         0.01                                       0.82                    0.01        8.3 × 10−76         7.1 × 10−18                             1.54       0.06       2.6 × 10−53                             7.1 × 10−18
+    3.3        1.04         0.01                                       0.85                    0.01        5.3 × 10−77         7.1 × 10−18                             1.75       0.08       2.3 × 10−51                             7.1 × 10−18
+    3.6        1.15         0.02                                       0.90                    0.01        9.0 × 10−66         7.1 × 10−18                             2.08       0.09       1.1 × 10−55                             7.1 × 10−18
+    3.9        1.33         0.03                                       0.99                    0.02        1.5 × 10−63         7.1 × 10−18                             2.57       0.19       7.2 × 10−44                             7.1 × 10−18
+    4.2        1.65         0.06                                       1.18                    0.03        6.2 × 10−54         7.1 × 10−18                             3.50       0.29       6.0 × 10−44                             7.1 × 10−18
+    4.5        2.43         0.18                                       1.59                    0.09        2.0 × 10−42         7.1 × 10−18                             5.36       0.78       6.0 × 10−32                             7.1 × 10−18
+    4.7        3.74         0.51                                       2.40                    0.20        1.1 × 10−25         7.5 × 10−18                             8.85       1.98       3.5 × 10−24                             7.5 × 10−18
+
+
+
+
+                                                                                                                                                                                                            
+
+                                                                                                                                                                                                            
+
+
+
+
+                                                                                                                                                                                                                 0 L Q L P X P  0 H D Q  3 $ R ,  [Z] *   > I U D P H V @
+                                                                                                                                                                                                            
+                                    2 S W L P D O  *   > X S G  I U D P H @
+
+
+
+
+                                                                                                                                                                                                            
+
+                                                                                                                                                                                                               
+                                                                                    
+                                                                                                                                                                                                               
+                                                                                    
+                                                                                                                                                                                                               
+                                                                                    
+                                                                                                                                                                                                               
+                                                                                    
+                                                                                                                                                                                        
+                                                                                                                           6 H U Y L F H  5 D W H  2  > X S G  I U D P H @
+
+                                   Figure 8. Optimal arrival rate λ∗ (left axis) and corresponding minimum mean PAoI (right axis) as a
+                                   function of the service rate µ2 , derived from the roots of the characteristic quartic polynomial.
+
+                                   8. Discussion
+                                         This study provides a framework for the analysis of PAoI in a two-phase exponential
+                                   queueing system that represents the DECT-2020 network segment. The key idea for the
+                                   analysis is to divide updates into four mutually exclusive groups based on the system states
+                                   they observe upon arrival to the corresponding queue: (1) both servers are busy, (2) the
+                                   first server is busy, and the second is idle, (3) the first server is idle, and the second is busy,
+
+
+                                                                                                                                                                                   https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                    18 of 22
+
+
+
+                            and (4) both servers are idle. Once the updates have been divided, and the probability of
+                            belonging to each group has been identified, the LST of the PAoI is calculated for each group
+                            of packets. Then, by grouping the PAoI of different updates according to the law of total
+                            probability, an LST for the complete PAoI is obtained. This result allows us to estimate not
+                            only the mean values but also the variance and full distribution of the metric. The closed-
+                            form expressions accurately describe the system behavior under various configurations,
+                            and the analytical results demonstrate close alignment with simulations, showing a relative
+                            error of less than 1%. Furthermore, the analysis highlights the impact of the service time
+                            coefficient of variation. The hyperexponential distribution, having a higher coefficient
+                            of variation than the exponential distribution, leads to a higher mean PAoI. Conversely,
+                            the Erlang distribution results in a lower mean PAoI due to its lower coefficient of variation.
+                                 This study has limitations. First, the assumption of infinite queue capacity ignores
+                            packet drops, which are critical in high-load scenarios. Second, while the exponential ap-
+                            proximation allows for analytical tractability, it may overestimate the tail latency compared
+                            to the deterministic components of TDMA slots.
+                                 Future work will focus on the following: (1) extending the analytical framework to
+                            general G | G |1 tandem networks to model deterministic service times more accurately;
+                            (2) analyzing the impact of finite buffer sizes on PAoI.
+
+                            Author Contributions: Conceptualization, Y.G.; methodology, S.M.; software and visualization, Y.G.,
+                            D.N. and Y.K.; validation, A. Zhivtsova, Y.K.; formal analysis and investigation, D.N.; writing, original
+                            draft preparation, and editing, A.Z. and D.N.; supervision, project administration, and funding
+                            acquisition Y.G. and Y.K. All authors have read and agreed to the published version of the manuscript.
+
+                            Funding: This research is part of Strategic technological project “Complex of 6G Trusted Com-
+                            munication Systems Technologies” at HSE University (D. Nikolaev, A. Zhivtsova, and Y. Kouch-
+                            eryavy, Sections 2, 5 and 7). The reported study was funded by RSF, project number 24-19-
+                            00804, https://rscf.ru/en/project/24-19-00804/ accessed on 19 December 2025 (Yu. Gaidamaka,
+                            Sections 3 and 4).
+
+                            Data Availability Statement: The original contributions presented in this study are included in the
+                            article. Further inquiries can be directed to the corresponding author.
+
+                            Conflicts of Interest: The authors declare no conflicts of interest.
+
+                            Appendix A. Proof for Lemma 2
+                            Proof. We begin with the general expressions for the probabilities p1 , p2 , p3 , and p4 , given
+                            in Equations (2)–(5), and specialize them for the case where
+                            •    The arrival process is Poisson with rate λ.
+                            •    Service times at Phase 1 and Phase 2 are exponentially distributed with rates µ1 and
+                                 µ2 , respectively.
+                            •    Sojourn times T1 and T2 are exponentially distributed with parameters µ1 − λ and
+                                 µ2 − λ, respectively.
+                                 Let us start by simplifying p1 .
+                                 The general form of p1 is
+                                                          Z ∞                     Z ∞                   
+                                                   p1 =          G (t1 ) dT1 (t1 ) ×     B1 (t2 ) dT2 (t2 ) .
+                                                            0                          0
+
+                            For exponential distributions,
+
+                                                        G (t1 ) = 1 − e−λt1 ,    B1 (t2 ) = 1 − e−µ1 t2 .
+
+
+
+
+                                                                                               https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                              19 of 22
+
+
+
+                            The first integral becomes
+
+                                                                                                          µ1 − λ     λ
+                                                    E[ G ( T1 )] = 1 − E[e−λT1 ] = 1 −                             =    .
+                                                                                                        µ1 − λ + λ   µ1
+                            The second integral becomes
+
+                                                                                                   µ2 − λ         µ1
+                                              E[ B1 ( T2 )] = 1 − E[e−µ1 T2 ] = 1 −                         =             .
+                                                                                                µ2 − λ + µ1   µ1 + µ2 − λ
+
+                            Thus,                                                                  
+                                                                   λ                    µ1                           λ
+                                                      p1 =                  ×                               =               .
+                                                                   µ1               µ1 + µ2 − λ                 µ1 + µ2 − λ
+                            Then, we simplify p2 . The general form of p2 is
+                                                        Z ∞                                 Z ∞                                 
+                                                 p2 =           G (t1 ) dT1 (t1 ) ×                   (1 − B1 (t2 )) dT2 (t2 ) .
+                                                           0                                     0
+
+                            The first term remains the same
+                                                                                                     λ
+                                                                                E[ G ( T1 )] =          .
+                                                                                                     µ1
+                            The second term becomes
+                                                                                            µ1           µ2 − λ
+                                                     E[1 − B1 ( T2 )] = 1 −                         =             .
+                                                                                        µ1 + µ2 − λ   µ1 + µ2 − λ
+
+                            Thus,
+                                                                                   µ2 − λ                       λ ( µ2 − λ )
+                                                                                              
+                                                               λ
+                                                    p2 =                ×                             =                        .
+                                                               µ1               µ1 + µ2 − λ                 µ1 ( µ1 + µ2 − λ )
+                            Next, we proceed with p4 . The event A4 occurs when
+                            •    The first server is idle ({ G > T1 }).
+                            •    The second server is idle ({ G + B1 > T1 + T2 | G > T1 }).
+                            Let us define X = G − T1 . Since G > T1 in the event A4 , it follows that X > 0. The condition
+                            for the event A4 can then be expressed as
+
+                                      p4 = P{ X > 0} · P{ X + B1 > T2 | X > 0} =                                                                         (A1)
+                                              P{ X + B1 > T2 ∩ X > 0}
+                                          =                           · P{ X > 0} = P{ X + B1 > T2 ∩ X > 0}.                                             (A2)
+                                                     P{ X > 0}
+
+                            Here, X = G − T1 , where G ∼ Exp(λ), and T1 ∼ Exp(µ1 − λ). To compute the probability,
+                            we first derive the distribution of X, which is the difference of two independent exponential
+                            random variables. For X > 0, the PDF of X is
+                                                                                Z ∞
+                                                                f X (x) =               G ′ (t1 + x ) T1′ (t1 ) dt1 ,
+                                                                                    0
+
+                            where G ′ (t) = λe−λt , and T1′ (t) = (µ1 − λ)e−(µ1 −λ)t . Substituting these expressions,
+                                                                    Z ∞
+                                                        f X (x) =           λe−λ(t1 + x) (µ1 − λ)e−(µ1 −λ)t1 dt1 .
+                                                                        0
+
+                            We simplify
+                                                                    Z ∞                                                         Z ∞
+                                    f X ( x ) = λ(µ1 − λ)e−λx               e−(λ+µ1 −λ)t1 dt1 = λ(µ1 − λ)e−λx                          e−µ1 t1 dt1 .
+                                                                        0                                                       0
+
+                            The integral is evaluated as
+
+
+
+                                                                                                                  https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                       20 of 22
+
+
+
+                                                                         Z ∞
+                                                                                                     1
+                                                                                   e−µ1 t1 dt1 =        .
+                                                                           0                         µ1
+                            Thus,
+                                                                                λ(µ1 − λ) −λx
+                                                                f X (x) =                e    ,             x > 0.
+                                                                                   µ1
+                            Then, the probability P{ X > 0} can be obtained as
+                                                                Z ∞
+                                                                                               λ ( µ1 − λ )          µ −λ
+                                              P{ X > 0} =             f X ( x ) dx = −                      (0 − 1) = 1   .
+                                                                 0                                 λµ1                 µ1
+
+                                Next, we calculate P{ X + B1 > T2 ∩ X > 0}, where B1 ∼ Exp(µ1 ), T2 ∼ Exp(µ2 − λ),
+                            and X, B1 , and T2 are independent. Since T2 is exponential,
+                                                                               Z ∞ Z ∞
+                                     P{ T2 < X + B1 ∩ X > 0} =                                 P{ T2 < x + u} f X ( x ) dx dB1 (u) =              (A3)
+                                                                                   x =0 u =0
+                                         Z ∞                    Z ∞                                  Z ∞
+                                     =         f X ( x ) dx −         e−(µ2 −λ) x f X ( x ) dx ·            e−(µ2 −λ)u B1′ (u) du.                (A4)
+                                          0                     0                                     0
+
+                            Thus,
+                                                                                     µ1 − λ
+                                         P{ X + B1 > T2 ∩ X > 0} =                          − E[e−(µ2 −λ)X ] · E[e−(µ2 −λ) B1 ],
+                                                                                       µ1
+                            where independence allows factorization. Using the PDF of X
+                                                                           Z ∞
+                                                                                                     λ(µ1 − λ) −λx
+                                                   E[e−(µ2 −λ)X ] =                  e−(µ2 −λ) x ·            e    dx.
+                                                                               0                        µ1
+
+                            We combine exponents
+                                                                          Z ∞                                                Z ∞
+                                                         λ ( µ1 − λ )                                         λ ( µ1 − λ )
+                                    E[e−(µ2 −λ)X ] =                                e−(µ2 −λ+λ) x dx =                             e−µ2 x dx.
+                                                              µ1            0                                      µ1        0
+
+                            Thus,
+                                                                                                λ ( µ1 − λ )
+                                                                     E[e−(µ2 −λ)X ] =                        .
+                                                                                                    µ1 µ2
+                            Since B1 ∼ Exp(µ1 ), the Laplace transform of B1 in s = µ2 − λ is
+
+                                                                                         µ1              µ1
+                                                     E[e−(µ2 −λ) B1 ] =                            =             .
+                                                                                   µ1 + ( µ2 − λ )   µ1 + µ2 − λ
+
+                            Substitute the expectations into P{ X + B1 > T2 ∩ X > 0}
+
+                                                                                       µ1 − λ λ ( µ1 − λ )       µ1
+                                          P{ X + B1 > T2 ∩ X > 0} =                          −             ·             .
+                                                                                         µ1       µ1 µ2      µ1 + µ2 − λ
+
+                            Simplifying, we obtain the probability p4
+
+                                                                                         µ1 − λ           µ2 (µ1 + µ2 − λ) − λµ1
+                                                                                                                                
+                                      p4 = P{ X + B1 > T2 ∩ X > 0} =                            ·                                  .
+                                                                                           µ1                 µ2 ( µ1 + µ2 − λ )
+
+                                 Finally, by analogy with the event A4 , the probability of event A3 is defined as
+
+                                                                 p3 = P{ X + B1 ≤ T2 ∩ X > 0}.
+
+                            Since the only difference in the expression of the joint probability is in the first event
+                            { X + B1 ≤ T2 }, which is additional to { X + B1 > T2 }, the probabilities p3 and p4 will sum
+
+
+
+                                                                                                              https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                                 21 of 22
+
+
+
+                                     up to give the probability of the event P{ X > 0}. Thus, substituting the previously derived
+                                     result for p4 , we obtain
+
+                                                                µ1 − λ       µ − λ µ1 − λ λ ( µ1 − λ )       µ1
+                                                         p3 =          − p4 = 1   −      +             ·             ,
+                                                                  µ1           µ1    µ1       µ1 µ2      µ1 + µ2 − λ
+                                     which results in the following expression
+
+                                                                                          λ ( µ1 − λ )
+                                                                               p3 =                      .
+                                                                                      µ2 ( µ1 + µ2 − λ )
+
+
+
+                                     Appendix B. Proof for Theorem 2
+                                     Proof. Starting from Theorem 1, we substitute the expressions for pi (Lemma 2) and the
+                                                                                                   µ1    µ2
+                                     conditional LSTs zi (s). Factoring out the common terms λλ+s µ + s µ2 +s and the normalization
+                                                                                                               1
+                                     constant C = µ +µ1 2 −λ , the LST z(s) can be grouped as
+                                                           1
+
+
+                                                                                                  λ(µ1 − λ)(µ2 − λ)
+                                                                                             
+                                                                         λ     µ1    µ2
+                                                           z(s) = C ·                      ·                            +
+                                                                      λ + s µ1 + s µ2 + s      (µ1 − λ + s)(µ2 − λ + s)
+                                                                     λ ( µ2 − λ )       λ ( µ1 − λ )      p ·µ µ
+                                                                                                                  
+                                                                +                  +                   + 4 1 2 .                            (A5)
+                                                                  µ1 ( µ1 − λ + s ) µ2 ( µ2 − λ + s )        C
+
+                                     Through algebraic simplification and combining fractions over the common denominator
+                                     (µ1 − λ + s)(µ2 − λ + s), the terms in the brackets reduce to
+
+                                                         µ1 − λ     µ2 − λ                            λs2
+                                                                                                                    
+                     [ . . . ] = ( µ1 + µ2 − λ )                 ·                  1+                                   .                  (A6)
+                                                       µ1 − λ + s µ2 − λ + s             (µ1 + s)(µ2 + s)(µ1 + µ2 − λ)
+                                     Substituting this back yields the final expression in Theorem 2.
+
+References
+1.    Kosta, A.; Pappas, N.; Angelakis, V. Age of Information: A New Concept, Metric, and Tool. Found. Trends Netw. 2018, 12, 162–259.
+      [CrossRef]
+2.    ETSI. DECT-2020 New Radio (NR); Part 1: Overview; TS 103 636-1 v1.5.1; ETSI: Sophia Antipolis, France, 2024.
+3.    Jiang, N.; Yan, S.; Liu, Z.; Hu, C.; Peng, M. Communication and Computation Assisted Sensing Information Freshness Performance
+      Analysis in Vehicular Networks. In Proceedings of the 2022 IEEE International Conference on Communications Workshops (ICC
+      Workshops), Seoul, Republic of Korea, 16–20 May 2022; pp. 969–974. [CrossRef]
+4.    Asvadi, S.; Ashtiani, F. Evaluating Peak Age-of-Information via Stochastic Hybrid Systems. IEEE Trans. Veh. Technol. 2023,
+      72, 16923–16928. [CrossRef]
+5.    Cao, X.; Zhang, H.; Peng, M. Collaborative multiple access and energy-efficient resource allocation in distributed maritime
+      wireless networks. China Commun. 2022, 19, 137–153. [CrossRef]
+6.    Dürre, J.; Werner, N. DECT-2020 NR for Professional Live Audio: Design Space Exploration and Practical Evaluation. In
+      Proceedings of the 2024 IEEE 5th International Symposium on the Internet of Sounds (IS2), Erlangen, Germany, 30 September–2
+      October 2024; pp. 1–7. [CrossRef]
+7.    Samuylov, A.; Moltchanov, D.; Gaydamaka, A.; Lyczkowski, E.; Frotzscher, A.; von Schoettler, F.; Pirskanen, J.; Numminen, J.;
+      Salokannel, J.; Llaguno, E.; et al. Empowering Near-URLLC IoT with 5G DECT-2020 NR: Current State and the Road Ahead.
+      IEEE Commun. Mag. 2025, 63, 130–136. [CrossRef]
+8.    Kovalchukov, R.; Moltchanov, D.; Pirskanen, J.; Säe, J.; Numminen, J.; Koucheryavy, Y.; Valkama, M. DECT-2020 New Radio: The
+      Next Step toward 5G Massive Machine-Type Communications. IEEE Commun. Mag. 2022, 60, 58–64. [CrossRef]
+9.    Kam, C.; Molnar, J.P.; Kompella, S. Age of Information for Queues in Tandem. In Proceedings of the MILCOM 2018—2018 IEEE
+      Military Communications Conference (MILCOM), Los Angeles, CA, USA, 29–31 October 2018; pp. 1–6. [CrossRef]
+10.   Kam, C.; Kompella, S. On the age of information for non-preemptive queues in tandem. Front. Commun. Netw. 2022, 3, 932111.
+      [CrossRef]
+
+
+
+
+                                                                                                             https://doi.org/10.3390/math14010186
+Mathematics 2026, 14, 186                                                                                                      22 of 22
+
+
+
+11.   Sinha, A.; Singhvi, S.; Mankar, P.D.; Dhillon, H.S. Peak Age of Information under Tandem of Queues. In Proceedings of the 2024
+      IEEE International Symposium on Information Theory (ISIT), Athens, Greece, 7–12 July 2024. [CrossRef]
+12.   Chiariotti, F.; Vikhrova, O.; Soret, B.; Popovski, P. Peak Age of Information Distribution in Tandem Queue Systems. arXiv 2020,
+      arXiv.2004.05088. [CrossRef]
+13.   Koukoutsidis, I. Age of Information in an Overtake-Free Network of Quasi-Reversible Queues. In Proceedings of the 2020 28th
+      International Symposium on Modeling, Analysis, and Simulation of Computer and Telecommunication Systems (MASCOTS),
+      Nice, France, 17–19 November 2020; pp. 1–6. [CrossRef]
+14.   Champati, J.P.; Al-Zubaidy, H.; Gross, J. Statistical Guarantee Optimization for AoI in Single-Hop and Two-Hop FCFS Systems
+      With Periodic Arrivals. IEEE Trans. Commun. 2021, 69, 365–381. [CrossRef]
+15.   Senthilkumar, M.; Dadlani, A.; Tabassum, H. Age of Information in Unreliable Tandem Queues. IEEE Commun. Lett. 2025, 29,
+      2308–2312. [CrossRef]
+16.   Rafiee, P.; Zou, P.; Ozel, O.; Subramaniam, S. Maintaining Information Freshness in Power-Efficient Status Update Systems. In
+      Proceedings of the IEEE INFOCOM 2020—IEEE Conference on Computer Communications Workshops (INFOCOM WKSHPS),
+      Virtual, 6–9 July 2020; pp. 31–36. [CrossRef]
+17.   Li, H.; Gong, G.; Zhang, J.; Zhao, H.; Zhou, L.; Wei, J. Analysis on Age of Information in Partial Computing Edge Computing
+      Systems with Multi Source-Destination Pairs. In Proceedings of the 2022 IEEE 96th Vehicular Technology Conference (VTC2022-
+      Fall), Beijing, China, 26–29 September 2022; pp. 1–7. [CrossRef]
+18.   Qin, X.; Li, Y.; Song, X.; Ma, N.; Huang, C.; Zhang, P. Timeliness of Information for Computation-Intensive Status Updates in
+      Task-Oriented Communications. IEEE J. Sel. Areas Commun. 2023, 41, 623–638. [CrossRef]
+19.   Burke, P.J. The Output of a Queuing System. Oper. Res. 1956, 4, 699–704. [CrossRef]
+20.   Reich, E. Note on Queues in Tandem. Ann. Math. Stat. 1963, 34, 338–341. [CrossRef]
+21.   ETSI. DECT-2020 New Radio (NR); Part 2: Radio Reception and Transmission Requirements; Release 1; TS 103 636-2 v1.5.1; ETSI:
+      Sophia Antipolis, France, 2024.
+
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.
+
+
+
+
+                                                                                                  https://doi.org/10.3390/math14010186
+

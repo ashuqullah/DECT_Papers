@@ -1,0 +1,388 @@
+2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC) | 978-1-6654-7776-5/25/$31.00 ©2025 IEEE | DOI: 10.1109/SPAWC66079.2025.11143257
+
+
+
+
+                                                                                                                                                                                                                      Data Assisted Backscatter Communications using
+                                                                                                                                                                                                                           DECT-2020 NR+ as Ambient Signal
+                                                                                                                                                                                                                                Jingyi Liao, Kalle Ruttik, and Riku Jäntti                                                            Zhu Han
+                                                                                                                                                                                                                      Department of Information and Communications Engineering,                           Department of Electrical and Computer Engineering,
+                                                                                                                                                                                                                                          Aalto University,                                                             University of Houston,
+                                                                                                                                                                                                                                           Espoo, Finland                                                               Houston, Texas, USA
+
+
+
+                                                                                                                                                                                                                     Abstract—The Digital Enhanced Cordless Telecommunications                      enables devices to transmit data by reflecting existing Radio
+                                                                                                                                                                                                                  (DECT-2020) New Radio (NR+), standardized by the European                         Frequency (RF) signals without active transmission. The goal
+                                                                                                                                                                                                                  Telecommunications Standards Institute (ETSI), addresses Inter-                   of 3GPP’s AIoT work is to integrate these energy-harvesting
+                                                                                                                                                                                                                  national Telecommunication Union (ITU) IMT-2020 requirements
+                                                                                                                                                                                                                  for Internet of Things (IoT) and Industrial IoT. Although DECT-                   devices into 6G mobile networks, facilitating sustainable and
+                                                                                                                                                                                                                  2020 NR+ offers robust connectivity, it does not support ultra-low                maintenance-free IoT deployments.
+                                                                                                                                                                                                                  power or batteryless operation. The 3rd Generation Partnership                       In this paper, we first propose integrating ultra-low power
+                                                                                                                                                                                                                  Project’s (3GPP’s) Ambient Internet of Things (AIoT) initiative                   backscatter-based devices into DECT-2020 New Radio (NR)
+                                                                                                                                                                                                                  targets ultra-low power IoT devices operating on harvested                        networks as a low-cost and energy-efficient alternative to the
+                                                                                                                                                                                                                  ambient energy, with backscatter communication as a promis-
+                                                                                                                                                                                                                  ing technology. This paper integrates backscatter-based AIoT                      current 3GPP AIoT initiatives. While DECT-2020 NR+ offers
+                                                                                                                                                                                                                  functionality into DECT networks, leveraging existing DECT                        robust connectivity suitable for many IoT applications, it may
+                                                                                                                                                                                                                  transmissions and data-assisted channel estimation to recover                     not inherently support the ultra-low power requirements essen-
+                                                                                                                                                                                                                  backscattered information. An Ambient Backscatter Communi-                        tial for energy-autonomous AIoT devices [4]. By incorporating
+                                                                                                                                                                                                                  cation (AmBC) receiver is symbiotically embedded within the                       backscatter communication techniques, we aim to enable a
+                                                                                                                                                                                                                  DECT receiver, using Received Signal Strength (RSS) of DECT
+                                                                                                                                                                                                                  data traffic. We open-sourced the Matlab code for the DECT                        new class of batteryless devices within the DECT-2020 NR+
+                                                                                                                                                                                                                  receiver in a Software-Defined Radio (SDR) platform. Over-the-                    framework, enhancing its applicability to energy-constrained
+                                                                                                                                                                                                                  air experiments demonstrate feasibility, achieving Bit Error Rate                 AIoT scenarios.
+                                                                                                                                                                                                                  (BER) performance as low as 0.02 under optimal conditions.                           Second, we adopt the Ambient Backscatter Communication
+                                                                                                                                                                                                                     Index Terms—Ambient Backscatter Communications, Dig-                           (AmBC) approach for massive Machine Type Communication
+                                                                                                                                                                                                                  ital Enhanced Cordless Telecommunication, Received Signal
+                                                                                                                                                                                                                  Strength, Software-Defined Radio, Open-source Software                            (mMTC) [5], wherein backscatter devices (BDs) utilize exist-
+                                                                                                                                                                                                                                                                                                    ing ambient RF signals, specifically DECT-2020 NR+ trans-
+                                                                                                                                                                                                                                             I. I NTRODUCTION                                       missions, as a means of communication. Unlike traditional
+                                                                                                                                                                                                                                                                                                    Radio-Frequency Identification (RFID) systems that rely on
+                                                                                                                                                                                                                     The Digital Enhanced Cordless Telecommunications                               a dedicated unmodulated carrier emitted by an RFID reader,
+                                                                                                                                                                                                                  (DECT) standard was first established by the European                             AmBC devices modulate and reflect ambient signals already
+                                                                                                                                                                                                                  Telecommunications Standards Institute (ETSI) in 1992 to                          transmitted by other communication systems to convey infor-
+                                                                                                                                                                                                                  provide short-range wireless audio communication. Since                           mation. While most AmBC implementations assume separate
+                                                                                                                                                                                                                  then, DECT has undergone several revisions aimed at                               receivers for the ambient RF signal and the backscattered
+                                                                                                                                                                                                                  achieving lower energy consumption and wider bandwidth.                           signal as proposed in the original work [6], we adopt the sym-
+                                                                                                                                                                                                                  The latest specification DECT-2020 New Radio (NR+)                                biotic radio paradigm [7] and propose the use of the existing
+                                                                                                                                                                                                                  [1] defines a new physical layer based on Cyclic Prefix                           DECT-2020 NR+ receiver for both mMTC and backscatter-
+                                                                                                                                                                                                                  Orthogonal Frequency-Division Multiplexing (CP-OFDM)                              based AIoT communications. The proposed system achieves
+                                                                                                                                                                                                                  modulation. This standard is specifically designed for the                        high energy and spectral efficiency by leveraging the energy
+                                                                                                                                                                                                                  ultra-low energy Internet of Things (IoT) applications and                        already emitted by the DECT-2020 NR+ system and reusing
+                                                                                                                                                                                                                  massive Machine Type Communications (mMTC) in industrial                          the same spectral resources for backscatter communication.
+                                                                                                                                                                                                                  automation [2].                                                                      Finally, in the proposed system, the BD conveys information
+                                                                                                                                                                                                                     Recently, the 3rd Generation Partnership Project (3GPP)                        using Frequency Shift Keying (FSK). A modified DECT-2020
+                                                                                                                                                                                                                  initiated a study on the Ambient Internet of Things (AIoT),                       NR+ receiver employs data-assisted Received Signal Strength
+                                                                                                                                                                                                                  focusing on ultra-low power IoT devices that operate solely                       (RSS) to separate the BD modulated signal from natural multi-
+                                                                                                                                                                                                                  on energy harvested from ambient sources [3]. A promising                         path components in the Doppler-frequency domain. To validate
+                                                                                                                                                                                                                  technology for AIoT is backscatter communication, which                           the concept, we developed a proof-of-concept implementation
+                                                                                                                                                                                                                                                                                                    and conducted over-the-air measurements. We open-sourced
+                                                                                                                                                                                                                     This work is in part supported by the European Project Ambient-6G
+                                                                                                                                                                                                                  (grant number 101192113), and Business Finland Project eMTC (Dnro                 our Software-Defined Radio (SDR) Matlab DECT receiver on
+                                                                                                                                                                                                                  8028/31/2022).                                                                    GitHub online [8]. The experimental results demonstrate the
+
+
+
+
+                                                                                                                                                                                                              Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:34:13 UTC from IEEE Xplore. Restrictions apply.
+         DECT-2020                                        DECT-2020                   all scattered signal power. Consequently, the signal model is
+         Transmitter (Tx)             Direct Path         Receiver (Rx)               simplified as
+                                      Direct Link                                                         sr (t) = st (t) ∗ h(τ ; t) + w(t),                    (3)
+                                          hd
+                                               Scattered Path
+                                                                                      where overall channel h(τ ; t) is either hoff (τ ; t) = hd (τ ; t) or
+                                                                                      hon (τ ; t) = hd (τ ; t) + hf (τ ; t)hb (t). For further discussion
+                                                                                      convenience, (3) is normalized by σn . The channels are
+                          Backscatter Device (BD)
+                                                                                      normalized with σn as well. Therefore, Signal-to-Noise Ratio
+                                                       Modulate                       (SNR) is defined as γ = E[∥hst ∥2 ].
+                   Fig. 1: An AmBC based on DECT-2020 NR+.                              The off state SNR γoff is expressed as
+                                                                                                                                    2
+                                                                                                                    2           λ
+    feasibility of the proposed approach, with the BD achieving a                                       γoff = |hr | =                  ,               (4)
+                                                                                                                            4πdr σn
+    Bit Error Rate (BER) of 10−2 under the measured conditions.
+                                                                                      and on state SNR γon is expressed as
+       The remainder of this paper is organized as follows. Section
+    II presents the system model. In Section III, we implement the                    γon = |hd + hf hb |2                                     (5)
+    AmBC receiver based on DECT receiver. Section IV presents                                "             2                                  #
+    the measurement results. Finally, the last section concludes the                                  λdd        λdd cos [j2π(dd − df − db )/λ]
+                                                                                       = γoff 1 +              +                                  .
+    paper.                                                                                          4πdf db                  2πdf db
+                                                                                                                                               (6)
+                             II. S YSTEM M ODEL
+                                                                                      The performance of AmBC is influenced by the geometric
+       AmBC operates as a symbiotic communication system                              locations of TX, Rx and BD. This following inequality
+    within the DECT infrastructure [7]. In this framework, DECT                                             2                      2
+    acts as the primary communication system, transmitting its                                        λdd         γon          λdd
+                                                                                                 1−             ≤      ≤ 1+                 (7)
+    own data while simultaneously providing the RF signals that                                      4πdf db      γoff        4πdf db
+    illuminate the BD. The direct transmission between DECT
+                                                                                      indicates that the distance between BD and Rx—which can
+    nodes constitutes the direct path. Meanwhile, AmBC functions
+                                                                                      be more precisely defined as the wavelength number—impacts
+    as the secondary communication system by modulating its
+                                                                                      the backscatter SNR. In AmBC, it is desirable to maximize the
+    own information onto the reflected DECT RF signals. This
+                                                                                      difference between γon and γoff . In the most severe situation,
+    reflected transmission forms the scattered path. Notably, the
+                                                                                      γon = γoff , the backscatter states can not be disguised,
+    DECT system is capable of receiving both its own signals and
+                                                                                      rendering the AmBC system ineffective. According to (6), the
+    the scattered AmBC signals concurrently.
+                                                                                      BD is optimally positioned if 2(dd −df −db ) equals an integer
+    A. Channel Model                                                                  multiple of the wavelength. Conversely, BD is at an ineffective
+                                                                                      location if 2(dd − df − db ) equals half of the wavelength.
+       The channel model is depicted in Fig. 1. A transmitter (Tx)
+    transmits a DECT signal st to a receiver (Rx) through two                         B. DECT Frame Structure
+    distinct paths: scattered path and direct path. The scattered
+                                                                                         The ETSI published the DECT-2020 NR+ specification
+    path is composed by forward channel hf and backscatter
+                                                                                      physical layer in [1]. There are several configurations available
+    channel hb . The direct path is denoted as hd .
+                                                                                      for setting different bandwidths and slot durations. One frame,
+       The overall system is implemented in an indoor scenario.                                                                 frame
+                                                                                      denoted as Tframe , consists of the Nsymb       OFDM symbols.
+    The the large scale fading channels are expressed as
+                                                                                    Each OFDM symbol contains Nsc subcarriers. This physical
+                      λ          2πdi                                                 resource is mapped to Resource Element (RE) [k; l], where
+              hi =         exp j        , i ∈ {d, f, b},       (1)
+                     4πdi          λ                                                  k denotes the subcarrier index and l denotes the position of
+                                                                                      OFDM symbol in the time domain. In this study, we focus
+    where di , i ∈ {d, f, b} refers to corresponding distances, i.e.,                 on a Single-Input Single-Output (SISO) system. The received
+    distances of direct path dd , forward path df , and backscatter                   signal RE of (3) is rewritten as
+    path db . The direct and forward channels are either stationary
+    or slow-moving, while the backscatter channel is stationary.                        Sr [k; l] = (Hd [k; l] + Hf [k; l]Hb [k; l])St [k; l] + W [k; l]. (8)
+       The overall Rx received signal is modeled as
+                                                                                         The DECT transmission packet consists of Data Field (DF),
+    sr (t) = st (t)∗hd (τ ; t)+[(st (t)∗hf (τ ; t))·ρ(t)]∗hb (τ ; t)+w(t),            Synchronization Training Field (STF) and Guard Interval (GI).
+                                                                       (2)            The synchronization signal is consistently positioned at the
+    where w(t) ∼ CN (0, σn2 ) denotes Gaussian noise. The                             beginning of each DECT packet on every fourth subcarrier,
+    backscatter channel, hb (τ ; t), remains deterministic and flat-                  starting from the lowest occupied negative subcarrier and
+    fading, effectively becoming a scalar multiplier hb (t). If BD                    excluding the DC carrier, as illustrated in Fig. 2 red REs.
+    is ideal, the BD either reflects (ρ(t) = 1) or absorbs (ρ(t) = 0)                 Within a single frame, only NDF OFDM symbols are allocated
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:34:13 UTC from IEEE Xplore. Restrictions apply.
+                           Synchronization Training Field                                         The RSS of the l-th OFDM is denoted as
+                           Data Field                                                                                           N −1
+                                                                                                                               sc
+                                                                                                                            1 X
+                                                                                                                    y[l] =        |Sr [k; l]|2 .               (11)
+                  24                                                                                                       Nsc
+                                                                                                                                 k=0
+
+                  16                                                                              According to study [12], the random variable y follows a non-
+                                                                                                  central chi-square distribution with 2Nsc degrees of freedom
+                   8
+     Subcarrier
+
+
+
+
+                                                                                                  and noncentrality parameter Nsc γ. This noncentral chi-square
+                   0                                                                              distributed random variable leads to a highly complex opti-
+                                                                                                  mized receiver, as derived in [12, Eq. (62)]. Consequently, for
+                  -8
+                                                                                                  simplification, y is approximated with a Gaussian distribution,
+            -16                                                                                   which is expressed as
+                                                                                                                                           
+            -24                                                                                                                      1 + 2γ
+                                                                                                                      y ∼ N 1 + γ,            .              (12)
+                                                                                                                                       Nsc
+            -32
+                       0       10     20     30    40     50     60     70     80     90          Mean and variance of y depend on backscatter state, re-
+                                                  OFDM symbol                                     spectively γon or γoff . Consequently, the random variable
+                   Fig. 2: Illustration of DECT-2020 resource mapping, STF and DF.                y follows different Gaussian distribution based BD state:
+                                                                                                                  2                         2
+                                                                                                  yon ∼ N (µon , σon ) or yoff ∼ N (µoff , σoff ).
+          PACKET
+         Nsymb
+                                                                                                  B. Square-wave FSK Symbol Detection
+                                                                                                     As previously discussed, the channel remains stable dur-
+        0                            10               20               30                  40     ing one OFDM symbol. However, the channel experiences
+                       N∅                         Frame [ms]                                      changes over longer time scales due to BD modulation. The
+                              Fig. 3: Illustration of DECT frame structure and DF.                RSS is estimated in each OFDM symbol. Thus the sampling
+                                                                                                                                             frame
+                                                                                                  rate is the OFDM symbol rate, i.e., fs = Nsymb   /Tframe . The
+                                                                                                  BD only has two states on and off. The BD signal for FSK
+    to the DF, which is beneficial for AmBC. The DF employs 4-                                    symbol i is expressed as
+    QAM, providing an uniform symbol amplitude. The AmBC
+    signal experiences periodic interrupts due to the DECT GI, as                                             xi [l] = sgn[cos(2πlfi /fs )], i ∈ {0, 1},       (13)
+                  PACKET
+    a period of Nsymb    . As depicted in Fig. 3, these intervals last                            where sgn(·) is sign function and f0 , f1 are FSK frequencies.
+    for N∅ OFDM symbol duration.                                                                  BD is on when xi [l] is positive and is off when negative. The
+       To address the missing samples, various interpolation al-                                  FSK waveforms are two N × 1 column vectors, x0 and x1 . In
+    gorithms can be employed. If the packet exhibits a unique                                     this paper, we apply the matched filter reported in [13]. Define
+    pattern, as depicted in Fig. 3, the nonuniform sampling theo-                                 the AmBC square-wave FSK receiver as
+    rem [9, Ch. 10.2.2] can be utilized. Nevertheless, the DF may
+                                                                                                                                   H    H1
+    exhibit burstiness depending on the data traffic load. In such                                                      (x0 − x1 ) y ≶ 0,                      (14)
+    unpredictable scenarios, the Metropolis-Hastings algorithm                                                                          H0
+
+    [10] becomes an applicable alternative. In this paper, however,                               where Hi , i ∈ {0, 1} refers to hypothesis that symbol i is
+    we opted for the most conventional method, zero interpolation,                                transmitted by the BD.
+    despite the fact that it introduces aliasing.
+                                                                                                  C. Receiver Signal Processing
+                III. A M BC S IGNAL P ROCESSING
+                                                                                                     Fig. 4 illustrates the DECT system in the left side and the
+     In this section, we discuss the technique demodulating the                                   AmBC system in the right side as a symbiotic communication
+    AmBC signal from DECT signal power.                                                           system. In this paradigm, DECT, the primary communica-
+    A. BD State Estimation                                                                        tion system, is demodulated first. Subsequently, AmBC, the
+                                                                                                  secondary communication system, relies on the RSS results
+       The DECT OFDM symbol duration is less than channel
+                                                                                                  obtained from the primary DECT system.
+    coherence time. Study in [11] shows that the BD signal
+                                                                                                     After receiving the RF signal, the DECT receiver down-
+    predominantly influences the first channel tap h(0; t). The BD
+                                                                                                  converts it to the baseband. The receiver, aware of the
+    signal of interest exhibits a flat spectrum [11]. For a specific
+                                                                                                  synchronization signal beforehand, continuously correlates it
+    l-th OFDM symbol, Hr [l], Hf [l] and Hb [l] are scalars. The
+                                                                                                  with the received signal. The sample at the correlation peak
+    received signal in the “on” state is expressed as
+                                                                                                  marks the beginning of the DECT packet. Following this,
+                           Sr [k; l] = (Hr [l] + Hf [l]Hb [l])St [k; l] + W [k; l],         (9)   OFDM symbols are demodulated with cycle-prefix alignment.
+                                                                                                  The subsequent steps for DECT involve channel estimation
+    or in the “off” state is expressed as
+                                                                                                  and equalization. At this stage, the AmBC receiver diverges
+                                    Sr [k; l] = Hr [l]St [k; l] + W [k; l].                (10)   from the DECT process. The AmBC receiver is primarily
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:34:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                      Fig. 5: Illustration of the measurement setup consisting of a commercial
+                                                                                      DECT-2020 Tx, a BD, and a SDR implementation of a DECT-2020 Rx.
+
+       Fig. 4: Signal processing flow chart of DECT-2020 NR+ and AmBC.
+
+                                                                                      duration of 20 ms. The total packet comprised 101 bits lasting
+    concerned with the RSS of each OFDM symbol, which serves                          2.02 s. Between packets, a 0.1 ms idle interval was inserted
+    as “samples” for the AmBC signal.                                                 to separate consecutive packets and enable header synchro-
+                                                                                      nization on receiver side. The BD operated independently
+       The AmBC packet has its own synchronization header,
+                                                                                      without any knowledge of the DECT signal. Considering the
+    consisting of three 7-bit Barker codes. The synchronization
+                                                                                      clock drifting between Tx and Rx, the packet was deliberately
+    process for AmBC mirrors that of DECT. The start of sampling
+                                                                                      designed to be short to prevent clock error accumulation and
+    corresponds to the correlation peak with the known Barker
+                                                                                      to ensure symbol demodulated within correct duration.
+    code, thereby aligning the beginning of AmBC signal sam-
+    pling. The AmBC square-wave FSK receiver then demodulates                            For DECT signal reception, we created a Matlab DECT
+    the AmBC information bits as shown in (14).                                       toolbox, which we open-sourced on [8]. The toolbox imple-
+       While the receivers for both AmBC and DECT operate in                          ments DECT physical and MAC layers. The processing in
+    parallel, AmBC requires RSS data from the DECT receiver,                          Matlab is applied to I/Q samples acquired over the air by
+    forming a symbiotic relationship as depicted in Fig. 4. Without                   Universal Software Radio Peripheral (USRP) B210. The USRP
+    the DECT signal, AmBC cannot function independently, and                          has 12-bit Analog-to-Digital Converters (ADCs). The samples
+    therefore, the GI interrupts AmBC samples as well.                                were collected by disabling Auto Gain Controller (AGC). The
+                                                                                      DECT receiver in Matlab synchronizes with DECT packets,
+                            IV. M EASUREMENTS                                         decodes the data and re-encodes it for data assisted channel
+                                                                                      estimation. The channel estimates are fed to a separate AmBC
+       The objective of this work is to demonstrate the feasibility of
+                                                                                      receiver also implemented in Matlab.
+    AmBC in the DECT system. For this purpose, an indoor over-
+    the-air measurement campaign was conducted in this section.                       B. Results
+    A. Setup                                                                             Fig. 6 illustrates the RSS variations over a longer period
+       To evaluate the feasibility of AmBC based on DECT, an                          containing multiple frames. It exhibits slow changes due to
+    over-the-air experiment was conducted in an indoor office                         channel slow fading as well as faster, discontinuous steps
+    environment, as depicted in Fig. 5. The Tx, Rx and BD were                        superposed on the slow fading, which are visible in Fig. 6.
+    placed on a desk within a Line-of-Sight (LOS) propagation                         These steps are modulated by BD. The square-wave FSK
+    channel.                                                                          was designed to operate at a frequency higher than natural
+       A Commercial Off-the-shelf (COTS) DECT platform,                               Doppler frequency, allowing separation from slow changes in
+    Nordic Semiconductor nRF91, transmitted DECT signal at a                          the channel attributed to natural Doppler. However, the BD
+    central frequency of 1888.704 MHz with a bandwidth of 1.728                       state flipping frequency remains lower than the DECT OFDM
+    MHz.                                                                              symbol rate to avoid adversely affecting DECT performance.
+       The BD comprised three parts, a specially designed RF                             Fig. 7 illustrates the measured BER of AmBC compared to
+    front end, a Microcontroller Unit (MCU) and an antenna.                           the theoretical BER curve [15, Eq. (4.5-46)] expressed as
+    The bespoke RF front end, which switches between two load                                                          √
+                                                                                                                Pe = Q( γeff ),                (15)
+    impedances, has been previously studied in [14]. The antenna
+    used an Anritsu Portable Antenna P/N 2000-1030, operational                       where the x-axis is the normalized effective SNR of AmBC,
+    between 1.71 and 1.88 GHz. A Raspberry Pi nano RP2040 was                         denoted as γeff , and Q(·) is complement of the standard normal
+    embedded to provide clock signals and AmBC packet timing.                         cumulative distribution function. It was observed that proposed
+       The AmBC packet consisted of two parts: a synchronization                      AmBC achieved 0.02 BER. It was also found that the mea-
+    header and data. Symbols were modulated using square-wave                         sured results align well with the theoretical curve. The short
+    FSK, with frequencies of 300 Hz and 625 Hz, and a symbol                          AmBC packet only contains 101 bits. Consequently, BER
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:34:13 UTC from IEEE Xplore. Restrictions apply.
+          0.3                                                                                 indoor environment using a commercial DECT platform. Our
+                                                                                              measurement results found that a BER performance for the BD
+         0.25                                                                                 link as low as 0.02 was achieved under optimal conditions. The
+                                                                                              negligible power consumption of the RF diode switching in the
+                                                                                              BD, therefore AmBC aligns with the 6G vision of 3GPP in
+          0.2
+                                                                                              terms of ultra-low power communication. The acquired results
+                                                                                              demonstrate that AmBC effectively integrates with DECT,
+   amp
+
+
+
+
+         0.15                                                                                 offering a supplementary communication method particularly
+                                                                                              suited for AIoT.
+          0.1                                                                                                              R EFERENCES
+                                                                                               [1] DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1, Euro-
+         0.05                                                                                      pean Telecommunications Standards Institute (ETSI) Technical Commit-
+                                                                                                   tee Digital Enhanced Cordless Telecommunications (DECT) Technical
+                                                                                                   Specification TS 103 636-3, Rev. V1.5.1, Mar. 2024.
+                                                                                               [2] A. Samuylov, D. Moltchanov, A. Gaydamaka, E. Lyczkowski,
+                0   0.5         1          1.5        2       2.5       3      3.5                 A. Frotzscher, F. von Schoettler, J. Pirskanen, J. Numminen, J. Salokan-
+                                            time [samples]                            10 6         nel, E. Llaguno, R. Pires, D. Bayar, and M. Valkama, “Empowering
+                                                                                                   near-URLLC IoT with 5G DECT-2020 NR: Current state and the road
+    Fig. 6: Measured RSS for each DECT-2020 OFDM symbol. The square-wave
+                                                                                                   ahead,” IEEE Communications Magazine, vol. 63, no. 4, pp. 130–136,
+    pattern observed in the signal envelope results from the BD modulation.
+                                                                                                   Mar. 2025.
+                                                                                               [3] 3rd Generation Partnership Project (3GPP), “Study on solutions for
+          100
+                                                                                                   Ambient IoT (Internet of Things) in NR,” 3rd Generation Partnership
+                                                                                                   Project (3GPP), Tech. Rep. TR 38.769, 2025. [Online]. Available:
+                                                                            Theoretical
+                                                                            Measured
+                                                                                                   https://www.3gpp.org/ftp/Specs/archive/38_series/38.769/
+                                                                                               [4] T. Nihtilä and H. Berg, “Energy consumption of DECT-2020 NR
+                                                                                                   mesh networks,” in 2022 Joint European Conference on Networks and
+                                                                                                   Communications & 6G Summit (EuCNC/6G Summit), Grenoble, France,
+                                                                                                   Jun. 2022, pp. 196–201.
+                                                                                               [5] R. Duan, X. Wang, H. Yigitler, M. U. Sheikh, R. Jantti, and Z. Han,
+                                                                                                   “Ambient backscatter communications for future ultra-low-power ma-
+                                                                                                   chine type communications: Challenges, solutions, opportunities, and
+    BER
+
+
+
+
+          10-1                                                                                     future research trends,” IEEE Communications Magazine, vol. 58, no. 2,
+                                                                                                   pp. 42–47, Feb. 2020.
+                                                                                               [6] V. Liu, A. Parks, V. Talla, S. Gollakota, D. Wetherall, and J. R. Smith,
+                                                                                                   “Ambient backscatter: Wireless communication out of thin air,” ACM
+                                                                                                   SIGCOMM computer communication review, vol. 43, no. 4, pp. 39–50,
+                                                                                                   Aug. 2013.
+                                                                                               [7] Y.-C. Liang, Q. Zhang, E. G. Larsson, and G. Y. Li, “Symbiotic radio:
+                                                                                                   Cognitive backscattering communications for future wireless networks,”
+                                                                                                   IEEE Transactions on Cognitive Communications and Networking,
+                                                                                                   vol. 6, no. 4, pp. 1242–1255, Sep. 2020.
+          10-2                                                                                 [8] K. Ruttik, “DECT-2020 NR+ matlab toolbox,” https://github.com/
+             -10    -8     -6         -4         -2       0         2   4       6         8
+                                                                                                   Aalto5G/DECT-NR-Matlab-Toolbox, Apr. 2025.
+                                                 SNR [dB]
+                                                                                               [9] P. P. Vaidyanathan, Multirate systems and filter banks. Upper Saddle
+    Fig. 7: BER performance of data-assisted DECT-2020-based AmBC receiver.                        River, NJ: Prentice Hall, 1993.
+                                                                                              [10] W. K. Hastings, “Monte carlo sampling methods using markov chains
+                                                                                                   and their applications,” Biometrika, vol. 57, no. 1, pp. 97–109, Apr.
+                                                                                                   1970.
+    values lower than 10−2 were not included this measurement.                                [11] J. Liao, X. Wang, K. Ruttik, R. Jäntti, and D.-T. Phan-Huy, “In-band
+    Similarly, for packets without any error, BER is not applicable.                               ambient FSK backscatter communications leveraging LTE cell-specific
+                                                                                                   reference signals,” IEEE Journal of Radio Frequency Identification,
+                                                                                                   vol. 7, pp. 267–277, May 2023.
+    C. Discussion                                                                             [12] J. Liao, T. Zhang, K. Ruttik, R. Jäntti, and D.-T. Phan-Huy, “Ambient
+       According to the over-the-air measurement results in Fig.                                   backscatter communication in LTE uplink sounding reference signal,”
+                                                                                                   Jan. 2025. [Online]. Available: https://arxiv.org/abs/2501.10952
+    7, some packets exhibited relatively poor performance with                                [13] J. Liao, K. Ruttik, and R. Jäntti, “Data assistance cellular signal
+    BERs exceeding 10−1 . To address such cases and improve                                        based ambient backscatter receiver,” in 2024 IEEE 25th International
+    overall system robustness, incorporating channel coding tech-                                  Workshop on Signal Processing Advances in Wireless Communications
+                                                                                                   (SPAWC), Lucca, Italy, Sep. 2024, pp. 521–525.
+    niques—similar to those proposed in [16]—is a promising                                   [14] B. Badihi, A. Liljemark, M. U. Sheikh, J. Lietzén, and R. Jäntti,
+    direction for future work.                                                                     “Link budget validation for backscatter-radio system in sub-1GHz,” in
+                                                                                                   IEEE Wireless Communications and Networking Conference (WCNC),
+                                    V. C ONCLUSIONS                                                Marrakesh, Morocco, Apr. 2019, pp. 1–6.
+                                                                                              [15] J. Proakis and M. Salehi, Digital Communications, 5th ed. New York,
+       In this paper, we explored the integration of ultra-low power                               NY: McGraw-Hill, Nov. 2007.
+    backscatter-based devices into DECT-2020 NR+ networks in                                  [16] J. Liao, K. Ruttik, R. Jäntti, M. U. Sheikh, and D.-T. Phan-Huy, “Mea-
+    the AmBC framework. Additionally, we conducted over-the-                                       surement of coded backscatter communication utilizing commercial LTE
+                                                                                                   ambient signal,” in 3rd International Conference on 6G Networking
+    air experiments to validate the feasibility of the proposed                                    (6GNet), Paris, France, Oct. 2024, pp. 13–18.
+    system. The measurement campaign was conducted in a real
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:34:13 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,361 @@
+                                                                                                                                                                                            On Performance of multi-hop assisted mMTC
+                                                                                                                                                                                                for DECT-2020 New Radio System
+                                                                                                                                                                                                        Sandhya Soni                                    Rahul Makkar                                   Tanmay Singhwi
+2021 International Conference on Information and Communication Technology Convergence (ICTC) | 978-1-6654-2383-0/21/$31.00 ©2021 IEEE | DOI: 10.1109/ICTC52510.2021.9620940
+
+
+
+
+                                                                                                                                                                                                       ECE Engg.                                        ECE Engg.                                        ECE Engg.
+                                                                                                                                                                                                      The LNMIIT                                        The LNMIIT                                      The LNMIIT
+                                                                                                                                                                                                      Jaipur, India                                    Jaipur, India                                    Jaipur, India
+                                                                                                                                                                                                  18PEC002@lnmiit.ac.in                         rahul.makkar27@gmail.com                            17DEC006@lnmiit.ac.in
+
+                                                                                                                                                                                                       Divyang Rawal                                    Nikhil Sharma                                  Laxmikant Minz
+                                                                                                                                                                                                       Dept. of ECE                                     Dept. of ECE                                    Dept. of EE
+                                                                                                                                                                                                        The LNMIIT                                       The LNMIIT                                        KAIST
+                                                                                                                                                                                                       Jaipur, India                                    Jaipur, India                               Daejeon, South Korea
+                                                                                                                                                                                                 divyang.rawal@lnmiit.ac.in                      nikhil.sharma@lnmiit.ac.in                      laxmikant.minz@gmail.com
+
+
+
+                                                                                                                                                                                      Abstract—Digital enhanced cordless telecommunication new                         the needs stated above [4], [5]. Authors in [5] investigated
+                                                                                                                                                                                   radio (DECT-2020 NR) is one of the candidate technology which                       the observations on the assessment of candidate technology
+                                                                                                                                                                                   fulfils the minimum requirements to serve as fifth-generation                       component ETSI: DECT-2020 NR for mMTC and uRLLC
+                                                                                                                                                                                   (5G) standardization. It accomplishes one of the performance re-
+                                                                                                                                                                                   quirements for massive machine-type communications (mMTC)                           usage scenario and illustrated the evaluation results.
+                                                                                                                                                                                   by enabling a high connection density, i.e. up to 1-million                            The primary performance requirement for mMTC is to
+                                                                                                                                                                                   devices/km2 . Reliable communication over such massive connec-                      enable a massive connection up to 1-million devices/km2 ,
+                                                                                                                                                                                   tions is achieved through a multi-hop relay system. This paper                      which is almost ten times higher than the existing LTE
+                                                                                                                                                                                   analyzes the link-level performance of DECT-2020 NR standards                       technology [4], [5]. DECT-2020 NR is an essential new
+                                                                                                                                                                                   for mMTC using a multi-hop decode-and-forward (DF) relaying
+                                                                                                                                                                                   system for the outage probability and bit error rate (BER)                          standardization project aimed at meeting some of IMT-2020’s
+                                                                                                                                                                                   performance metrics. Simulation results show the performance                        criteria. It broadcasts in the 1880–1900 MHz range, with 10
+                                                                                                                                                                                   improvement in outage probability over various transmission                         frequency channels ranging from 1881.792 MHz to 1897.344
+                                                                                                                                                                                   rates, hops and signal-to-interference-plus-noise ratio (SINR).                     MHz with a bandgap of 1728kHz [6]. Similar to NR, DECT-
+                                                                                                                                                                                   The numerical results corroborate with Monte-Carlo simulation                       2020 NR also provides a subcarrier scaling factor (µ) ranges
+                                                                                                                                                                                   results. Also, the link performance in terms of BER is compared
+                                                                                                                                                                                   for Turbo codes with puncturing.                                                    {1, 2, 4, 8} results in subcarrier spacing {27, 54, 108, 216}
+                                                                                                                                                                                      Index Terms—5G, new radio (NR), digital enhanced cordless                        kHz, respectively. Also, it provides the mesh network topol-
+                                                                                                                                                                                   telecommunication (DECT), multi-hop, outage probability.                            ogy to connect multiple radio devices via fixed terminating
+                                                                                                                                                                                                                                                                       (FT) point [7].
+                                                                                                                                                                                                             I. I NTRODUCTION                                             For reliable communication over a densely populated de-
+                                                                                                                                                                                                                                                                       vices, the cooperative relaying technique results in the en-
+                                                                                                                                                                                      Fifth-generation (5G) communication system is broadly
+                                                                                                                                                                                                                                                                       hancement of quality of service (QoS) [8]. Outage probability
+                                                                                                                                                                                   classified into three features, namely enhanced mobile broad-
+                                                                                                                                                                                                                                                                       (OP) is also one of the performance metrics to investigate the
+                                                                                                                                                                                   band (eMBB), ultra-reliable and low latency communication
+                                                                                                                                                                                                                                                                       QoS. Literature shows that the analytical expression of outage
+                                                                                                                                                                                   (uRLLC) and massive machine-type communication (mMTC)
+                                                                                                                                                                                                                                                                       probability has been derived over various fading environments
+                                                                                                                                                                                   [1]. These areas serve multiple users or devices with reli-
+                                                                                                                                                                                                                                                                       [9], [10]. Authors in [11], [12] analyzed the performance
+                                                                                                                                                                                   able communication, high data rates, enhanced capacity, and
+                                                                                                                                                                                                                                                                       in terms of outage probability for the decode-and-forward
+                                                                                                                                                                                   low latency transmission capabilities in recent applications
+                                                                                                                                                                                                                                                                       (DF) system over the Nakagami-m fading channel. Authors
+                                                                                                                                                                                   such as device-to-device (D2D), machine-to-machine (M2M),
+                                                                                                                                                                                                                                                                       in [13], [14] investigated the performance of the multi-hop
+                                                                                                                                                                                   vehicle-to-vehicle (V2V), vehicle-to-infra (V2I) communica-
+                                                                                                                                                                                                                                                                       system over the generalized-K and fluctuating two-ray fading
+                                                                                                                                                                                   tion, etc. [2]. Apart from 3GPP technologies such as long
+                                                                                                                                                                                                                                                                       channels, respectively and showed the asymptotic outage
+                                                                                                                                                                                   term evolution (LTE) for machine type communication, new
+                                                                                                                                                                                                                                                                       probability. Also, authors in [14] showed the ASER perfor-
+                                                                                                                                                                                   radio (NR) and narrowband - Internet of things (NB-IoT),
+                                                                                                                                                                                                                                                                       mance of aforesaid multi-hop system. Bit error rate (BER)
+                                                                                                                                                                                   digital enhanced cordless telecommunication (DECT) claims
+                                                                                                                                                                                                                                                                       performance over NR specifications is investigated in [15]
+                                                                                                                                                                                   to satisfy the minimum technical criteria which address all of
+                                                                                                                                                                                                                                                                       over multiple interfering devices.
+                                                                                                                                                                                                                                                                          Based on the above-described research of multi-hop DF
+                                                                                                                                                                                     This work is supported by 5G India Forum (5GIF) Independent Evaluation            system, we used the inherent merits of relaying communica-
+                                                                                                                                                                                   Group (IEG) for IMT-2020: 5GIF is associated with COAI, India.                      tion for mMTC DECT-2020 NR environment and presented a
+
+
+
+                                                                                                                                                                              978-1-6654-2383-0/21/$31.00 ©2021 IEEE                                             984                                                                         ICTC 2021
+                                                                                                                                                                               Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions apply.
+              (a) DECT-2020 NR system model with multiple FTs                                       (b) Considered multi-hop relaying system
+                                     Fig. 1: An illustration of DECT-2020 NR with multi-hop relaying system
+
+
+    composite system model. The contributions of the paper are                                           TABLE I: DECT Frame Format
+    summarised as follows.                                                                    Parameters                             DECT
+       • We investigate the outage probability of the multi-hop                               Maximum Bandwidth                     10 MHz
+                                                                                              Symbol duration                        10 ms
+         system for various transmission rates (R), the number                                Numerology factor (µ)                {1, 2, 4, 8}
+         of hops (L) and signal-to-interference-plus-noise ratio                              Slots per frame                        Fixed
+         (SINR).                                                                              Subcarrier spacing (∆f )             27×µ kHz
+                                                                                              OFDM symbols/slot                      10×µ
+       • The analytical expression of outage probability is in-
+                                                                                              FFT points(∗)                  {64, 128, 256, 1024}
+         vestigated for aforesaid system over static and dynamic                              Useful subcarriers(∗)           {56, 112, 224, 896}
+         channel environment.                                                                 Cyclic prefix(∗)                  {8, 16, 32, 128}
+       • BER performance of DECT-2020 NR specifications is                                    Channel coding                Turbo Codes (CTC-1/3)
+                                                                                              Note: (∗) denotes the considered values used in simulation.
+         also presented for various FFT points.
+      The remainder of the paper is summarized as follows.
+    Section II presents the frame format of DECT-2020 NR                                                       III. S YSTEM M ODEL
+    specifications. Section III describes the system model for
+    considered multi-hop relaying system. Section IV provides                              Fig. 1a shows the system operation with multiple fixed
+    the analysis of outage probability for a multi-hop system                           transmission points (FT). Here, RDPT is the terminology used
+    with static and dynamic channels. Section V describes the                           to represent the receiving devices and RDFT,PT is used for a
+    numerical results, and the paper concludes in section VI.                           radio devices acting as intermediate relays that re-transmit the
+                                                                                        decoded data [4].
+                  II. F RAME S TRUCTURE IN DECT
+                                                                                           With reference to DECT-2020 NR system model, a single
+       The frame structure of DECT-2020 NR is quite similar to                          link multi-hop relaying system as shown in Fig. 1b is con-
+    NR. It provides the variable numerology factor (µ) that allows                      sidered. Here, the fixed source (FT) transmits the modulated
+    a different number of resource slots/frames with the subcarrier                     information data to the destination (RDPT ) through (L − 1)
+    spacing variation ∆f =27×µ kHz. It uses an orthogonal fre-                          intermediate relays. All the (L − 1) intermediate relays are
+    quency division multiplexing (OFDM) technique similar to                            expressed as RD1 , RD2 , . . . , RDL−1 , respectively and they
+    LTE/NR and multiple OFDM symbols to construct frames,                               utilize the decode-and-forward (DF) cooperative scheme. The
+    subframes, and subsequent slots. In DECT, 24 fixed slots                            average signal-to-noise ratio (SNR) of the lth hop is denoted
+    consist of various OFDM symbols per slot, i.e. 10×µ. One                            by γl , where l ∈ {1, 2, . . . , L}. Let the transmitted signal from
+    radio frame consists of 24 slots for the time duration of 10ms.                     FT in time-domain is x and the decoded signal at ith relay
+    Further based on µ, each slot divided into subslots with vary-                      node is x̂i , where i ∈ {1, 2, . . . , (L − 1)}. Considering the
+    ing OFDM symbols. With the variation in µ = {1, 2, 4, 8}, the                       independent and identically distributed (i.i.d.) Rayleigh fading
+    number of subslots and OFDM symbols in each slot varies                             coefficient distributed as ∼ CN (0, 1), the received signal at
+    as 2×µ and 10×µ, respectively [4], [6]. Table I shows the                           lth node is given as
+    DECT-2020 NR frame format for various numerology [7] and                                                           √
+    simulation parameters.                                                                                     yl = Phl x̂i + nl ,                        (1)
+
+
+
+                                                                                  985
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions apply.
+    where P is the transmitting power, x̂i is the decoded symbol                              B. Dynamic/Frequency-selective Channel
+    at i = (l − 1)th relay with x̂0 = x, nl denotes the additive                                 For a dynamic/frequency-selective channel over Rayleigh
+    white Gaussian noise (AWGN) at the lth node ∼ CN (0, N0 ).                                fading distribution with the given γth and channel taps (Lch ),
+    Without any loss of generality, the instantaneous SNR (γl )                               the Fγ (·) can be given as
+    over each hop is considered same for all the links and given                                                                  γ 
+                                    Eb                                                                                                th
+    as γl = |hl |2 γ, where γ = N         is the average SNR with                                               Fγ (·) = 1 − exp −        ,              (6)
+    average bit energy (Eb ).
+                                      0
+                                                                                                                                      Γ
+                                                                                                                 
+    DECT employs the OFDM transmission, in which modu-                                        where Γ = LNch γ is a factor used for converting the
+    lated symbols are allocated to orthogonal resource subcarriers                            multipath fading scenario to flat fading.
+    utilizing N-point FFT/filter banks. In frequency-domain, the
+                                                                                                                            V. N UMERICAL R ESULTS AND D ISCUSSION
+    received signal for mth subcarrier is given by
+                                                                                                 In this section, the simulation results in terms of outage
+                                
+                                   P                                                          probability and BER of a multi-hop system is presented.
+                Yl (m) = Hl (m)        x̂i (m) + Nl (m),       (2)                            For each hop, we assume the channel to be i.i.d. Rayleigh
+                                   N
+                                                                                              fading, for which the information is known at each node. For
+    where Hl is the N-point frequency representation of Lch                                   outage analysis, various transmission rates R = {1, 2, 3, 4, 5},
+    Rayleigh faded channel coefficients and Nl ∼ CN (0, N0 )                                  number of hops L = {2, 3, 4, 20} and SINR {5, 10, 15} dBm
+    is the receiver noise at lth hop, respectively.                                           are considered. Based on the different DECT-2020 NR con-
+                                                                                              figurations over various FFT points, we chose Lch =5 channel
+                          IV. O UTAGE P ROBABILITY                                            taps for multipath fading. For BER analysis, we consider
+                                                                                              µ=1 with 10 OFDM symbols per slot. BPSK modulated
+       This section presents the performance analysis of consid-                              symbols are transmitted over aforesaid frame considerations.
+    ered multi-hop relaying system in terms of outage probability                             Simulation results consist various number of FFT points with
+    and BER for static and dynamic channel environments.                                      N = {64, 128, 256, 1024}.
+       The outage event of a multi-hop relaying system occurs
+    when at least a single-hop has its SNR below the threshold
+    SNR (γth ). Thus, the outage probability (Pout ) of the L-hops                                                   100
+
+    over a given transmission rate (R) in bits per second (bps)
+    can be defined as
+                                          L
+                                          
+                       Pout = 1 −               Pr (γl > γth ) ,                  (3)
+                                                                                                Outage probability
+
+
+
+
+                                          l=1
+                                                                                                                     10-1
+
+    where Pr (·) is the probability operator and γth = 2     − 1.        (LR)
+
+    After simplifying the above mathematical expression, the Pout                                                                Analytical, Rate = 1 bps
+    for multi-hop system can be expressed as [14]                                                                                Analytical, Rate = 2 bps
+                                                                                                                                 Analytical, Rate = 3 bps
+                                                                                                                                 Analytical, Rate = 4 bps
+                          L
+                                                                                                                                Analytical, Rate = 5 bps
+          Pout = 1 −            [1 − Fγl (γth )],                                                                                Simulation
+
+                          l=1                                                                                        10-2
+                                                                                                                            0        5               10              15   20   25
+                    L
+                                            L
+                                                                                                                                                         SNR (dB)
+                =         Fγl (γth ) −               Fγk (γth )Fγl (γth ) · · ·
+                    l=1                   k=1,l=1
+                                                                                              Fig. 2: Outage performance of dual-hop system with trans-
+                                            k=l                                              mission rate R = {1, 2, 3, 4, 5} bps
+                                 L
+                                 
+                    + (−1)L            Fγl (γth ),                                (4)            Fig. 2 shows the outage performance of the dual-hop
+                                 l=1                                                          system with different rates R = {1, 2, 3, 4, 5} bps. It is
+                                                                                              observed that for a considered dual-hop system, the outage
+    where Fγl (·) denotes the cumulative distribution function                                probability increases with an increase in the rate, justifying
+    (CDF) of γl .                                                                             as the threshold increases with the transmission rate. Fig. 3
+                                                                                              depicts the performance of the system for a multi-hop system
+    A. Static Channel                                                                         with L = {3, 4, 20} over a constant transmission rate R = 1
+       For a static channel over Rayleigh fading distribution with                            bps. It is observed that the outage probability of the system
+    the given γth , the Fγ (·) can be given as                                                increases in proportion with the number of hops.
+                                                                                                 To know the impact of outage performance of the con-
+                                              
+                                           γth                                                sidered system over varying SINR, we also simulate and
+                      Fγ (·) = 1 − exp −         .             (5)                            show the result in Fig. 4 considering SINR {5, 10, 15}dBm
+                                            γ
+
+
+
+                                                                                        986
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions apply.
+                                100                                                                                   10 0
+
+
+
+                                                                                         L = 20
+
+                                                                                                                      10 -1
+           Outage probability
+
+
+
+
+                                                                                   L=4
+
+
+
+
+                                                                                                                BER
+                                                                                                                           -2
+                                                                                                                      10
+                                                                             L=3
+
+
+
+                                                                                                                                        N         = 64
+                                                                                                                                            FFT
+                                                                                                                      10 -3
+                                                                                                                                        NFFT = 128
+                                10-1                                                                                                    NFFT = 256
+                                              Analytical
+                                              Simulation                                                                                NFFT = 1024
+
+                                                                                                                      10 -4
+                                          0       5          10              15           20      25                            0   5              10     15      20      25   30   35   40
+                                                                  SNR (dB)                                                                                     SNR (dB)
+
+    Fig. 3: Outage performance of multi-hop system with hops                                                 Fig. 5: BER performance of single-hop coded system with
+    L = {3, 4, 20} and transmission rate R = 1 bps                                                           various FFT points
+
+
+                                100
+                                                                                                             enhances the BER performance over uncoded transmission.
+                                                                                                             For an error floor of 10−2 , there is a significant improvement
+                                                                                                             in SNR of almost 3-5 dB.
+
+
+                                                                                                                      10 0
+       Outage probability
+
+
+
+
+                                                                                                                      10 -1
+                                                                                                                BER
+
+
+
+
+                                              SINR = 5dbm
+                                     -1
+                                              SINR = 10dbm
+                                10            SINR = 15dbm
+                                                                                                                      10 -2
+                                          0       5          10              15           20      25
+                                                                  SNR (dB)
+                                                                                                                                        Turbo coded with code rate=0.33
+    Fig. 4: Outage performance of dual-hop system with various                                                                          Turbo coded with code rate=0.9
+                                                                                                                                        Uncoded transmission
+    SINR {5, 10, 15}dBm                                                                                               10 -3
+                                                                                                                                0   5              10     15      20      25   30   35   40
+                                                                                                                                                               SNR (dB)
+
+    for a dual-hop system with R = 1 bps. It is observed that                                                Fig. 6: BER performance comparison of coded and uncoded
+    increasing the SINR (in dBm) results in more unsatisfactory                                              system for various code rate
+    outage performance, which validates the simulated results.
+       Fig. 5 describes the comparative BER performance of
+    single-hop coded DECT-2020 NR transmission with dif-                                                                          VI. C ONCLUSION
+    ferent FFT points over BPSK transmission. For simula-                                                       This paper provides the simulation results of DECT-2020
+    tions, {56, 112, 224, 896} useful subcarriers is transmitted                                             NR specifications for a multi-hop relaying system over
+    for {64, 128, 256, 1024} FFT points, respectively. Also, a                                               Rayleigh fading channel. The outage performance of the
+    code rate of 1/3 is considered for turbo coders without                                                  proposed system deteriorates with increasing number of hops,
+    puncturing bits. It is observed that for smaller FFT points,                                             transmission rate and SINR for mMTC DECT-2020 NR
+    the performance is improved as the subcarrier power reduces                                              environment. Also, the BER performance of coded system
+    with increase in the number of FFT points.                                                               improves with less puncturing, i.e. 2-3 dB improvement.
+       Fig. 6 explains the comparative analysis of single-hop un-                                                                                        R EFERENCES
+    coded and coded transmission with a various code rate of 1/3
+                                                                                                              [1] Series, M. “Guidelines for evaluation of radio interface technologies
+    (without puncturing bits) and 9/10 (with puncturing bits) over                                                for IMT-2020”, 2017. [Online]. Available: https://www.itu.int/dms pub/
+    DECT-2020 NR specifications. The impact of channel coding                                                     itu-r/opb/rep/R-REP-M.2412-2017-PDF-E.pdf
+
+
+
+
+                                                                                                       987
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions apply.
+     [2] Agiwal, Mamta, Abhishek Roy, and Navrati Saxena, “Next generation
+         5G wireless networks: A comprehensive survey.” IEEE Commun.
+         Surveys Tuts. 18, no. 3, pp. 1617-1655. IEEE, 2016.
+     [3] R. Makkar, D. Rawal, N. Sharma and V. K. Chakka, “Performance
+         Analysis of Hybrid NOMA-OMA Scheme for 5G NR System,” IEEE
+         17th India Council Int. Conf. (INDICON), pp. 1-6, 2020.
+     [4] “DECT-2020 New Radio (NR); Part 1: Overview”, 2020.
+         https://www.etsi.org/deliver/etsi ts/103600 103699/10363601/01.
+         01.01 60/ts 10363601v010101p.pdf
+     [5] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal and S. Kumar,
+         “Assessment of Candidate Technology ETSI: DECT-2020 New Radio,”
+         IEEE 3rd 5G World Forum (5GWF), pp. 625-630, 2020.
+     [6] “DECT-2020 New Radio (NR); Part 2: Radio reception and transmis-
+         sion requirements”, 2020. https://www.etsi.org/deliver/etsi ts/103600
+         103699/10363602/01.01.01 60/ts 10363602v010101p.pdf
+     [7] “DECT-2020 New Radio (NR); Part 3: Physical layer”, 2020.
+         https://www.etsi.org/deliver/etsi ts/103600 103699/10363603/01.01.
+         01 60/ts 10363603v010101p.pdf
+     [8] X. Liang, I. Balasingham and V. C. M. Leung, “Cooperative Communi-
+         cations with Relay Selection for QoS Provisioning in Wireless Sensor
+         Networks,” IEEE Global Telecom. Conf., Honolulu, pp. 1-8, 2009.
+     [9] Y. Zhu, Y. Xin and P. Kam, “Outage Probability of Rician Fading Relay
+         Channels,” in IEEE Trans. Veh. Technol., vol. 57, no. 4, pp. 2648-2652,
+         July 2008, doi: 10.1109/TVT.2007.912603.
+    [10] A. Al-Rimawi, J. Siam and A. Abdo, “The outage probability of mobile
+         wireless networks over η − µ fading channel,” 2018 IEEE Middle East
+         and North Africa Commun. Conf. (MENACOMM), pp. 1-5, 2018.
+    [11] H. Yu, I. Lee and G. L. Stuber, “Outage Probability of Decode-and-
+         Forward Cooperative Relaying Systems with Co-Channel Interference,”
+         in IEEE Trans. Wireless Commun., vol. 11, no. 1, pp. 266-274, 2012.
+    [12] N. Suraweera and N. C. Beaulieu, “Outage Probability of Decode-
+         and-Forward Relaying with Optimum Combining in the Presence of
+         Co-Channel Interference and Nakagami Fading,” in IEEE Wireless
+         Commun. Lett., vol. 2, no. 5, pp. 495-498, 2013.
+    [13] J. Cao, L. Yang and Z. Zhong, ”Performance of Multihop Wireless
+         Links over Generalized-K Fading Channels,” IEEE 72nd Veh. Technol.
+         Conf. - Fall, pp. 1-5, 2010.
+    [14] D. Dixit, PR. Sahu, “Performance of multihop detect-and-forward relay-
+         ing system over fluctuating two-ray fading channels,” Trans. Emerging
+         Telecommunications Techno., 2018.
+    [15] R. Makkar, V. Kotha, M. Sheeba Kumari, D. Rawal, V. K. Chakka and
+         N. Kumar, “Performance of Downlink SISO NR System using MMSE-
+         IRC Receiver,” IEEE 3rd 5G World Forum (5GWF), pp. 619-624, 2020.
+
+
+
+
+                                                                                   988
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions apply.
+

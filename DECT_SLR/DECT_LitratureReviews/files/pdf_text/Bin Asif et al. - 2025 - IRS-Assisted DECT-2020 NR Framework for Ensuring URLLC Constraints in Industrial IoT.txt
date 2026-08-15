@@ -1,0 +1,681 @@
+                                                                                                                                                                                                                       Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+                                                                                                                                                                                                           IRS-Assisted DECT-2020 NR framework for
+                                                                                                                                                                                                          Ensuring URLLC Constraints in Industrial IoT
+2025 21th International Conference on Wireless and Mobile Computing, Networking and Communications (WiMob) | 979-8-3503-9281-4/25/$31.00 ©2025 IEEE | DOI: 10.1109/WIMOB66857.2025.11257448
+
+
+
+
+                                                                                                                                                                                                                                             Awais Bin Asif, Hassan Ahmad, and Jürgen Peissig
+                                                                                                                                                                                                                             Institute of Communications Technology, Leibniz Universität Hannover, Germany
+                                                                                                                                                                                                                                          {asif,ahmad,peissig}@ikt.uni-hannover.de
+
+                                                                                                                                                                                                     Abstract—DECT 2020 NR is a Radio Interface Technology                          an array of reflecting elements designed with periodic pat-
+                                                                                                                                                                                                  (RIT) introduced by ETSI for massive Machine Type Commu-                          terns that enable precise control over incident electromagnetic
+                                                                                                                                                                                                  nications (mMTC) and Ultra-Reliable Low Latency Communi-                          waves. This control facilitates functionalities such as directing
+                                                                                                                                                                                                  cations (URLLC) use cases. Notably, DECT 2020 NR stands
+                                                                                                                                                                                                  as the sole non-cellular 5G technology apt for industrial IoT                     the wave towards specific directions or fully absorbing it to
+                                                                                                                                                                                                  (IIoT) scenarios. However, achieving the stringent reliability and                prevent access by unauthorized users.
+                                                                                                                                                                                                  latency requirements of URLLC in dense industrial settings                        Current DECT NR+ literature primarily focuses on technology
+                                                                                                                                                                                                  poses a significant challenge due to various propagation losses                   evaluation. In [6], [7], the authors assess DECT NR+ at the
+                                                                                                                                                                                                  and severe shadowing. In this research work, we propose a novel                   link and system levels for mMTC. A link-level evaluation
+                                                                                                                                                                                                  DECT 2020 NR framework incorporating Intelligent Reflecting
+                                                                                                                                                                                                  Surface (IRS) to meet the challenging URLLC constraints. The                      for URLLC is presented in [8], confirming URLLC compli-
+                                                                                                                                                                                                  framework maps the system model in 3D space, including the                        ance. In [9], a MAC protocol is proposed to reduce outage
+                                                                                                                                                                                                  3D mapping of the radiation pattern of IRS, and employs                           probability and achieve 99.99% reliability in indoor industrial
+                                                                                                                                                                                                  the Separating Axis Theorem (SAT) to systematically identify                      settings. It targets a single cluster and addresses packet routing
+                                                                                                                                                                                                  shadowed regions within this 3D system model and mitigate                         via an intermediate node, using a broadcast mode-switch
+                                                                                                                                                                                                  the identified shadowed areas, leveraging the proposed novel
+                                                                                                                                                                                                  MAC procedure for the IRS-assisted DECT 2020 NR network.                          request from PT to FT/PT mode during outages. However,
+                                                                                                                                                                                                  Additionally, we propose a resource allocation scheme based on                    the node selection is suboptimal, and with the addition of
+                                                                                                                                                                                                  the priority given to radio devices ready to offload the data.                    each intermediate node nearly doubles the latency, increasing
+                                                                                                                                                                                                  Comparative analysis demonstrates that our proposed solution                      resource consumption [4].
+                                                                                                                                                                                                  achieves significant improvements in received power, throughput,                  Given the limitations of existing studies and the standard
+                                                                                                                                                                                                  and reduction in round-trip time (RTT) when compared to both
+                                                                                                                                                                                                  the existing approach and the conventional DECT 2020 NR                           DECT NR+ approach, neither its default MAC protocol
+                                                                                                                                                                                                  standard.                                                                         nor current research sufficiently meets URLLC requirements
+                                                                                                                                                                                                     Index Terms—DECT 2020 NR, URLLC, IRS, Industrial IoT,                          in dense industrial IoT environments. To address this, we
+                                                                                                                                                                                                                                                                                    propose a novel framework leveraging the DECT NR+ MAC
+                                                                                                                                                                                                                             I. I NTRODUCTION                                       layer [3] in conjunction with Intelligent Reflecting Surfaces
+                                                                                                                                                                                                     DECT 2020 NR, or DECT NR+, is a non-cellular Radio In-                         (IRS) to achieve the required reliability and latency for
+                                                                                                                                                                                                  terface Technology (RIT) for 5G private networks, released by                     URLLC. The framework constructs a 3D system model that
+                                                                                                                                                                                                  ETSI in 2020. It supports mMTC and URLLC use cases under                          includes the factory hall layout, initial positions of DECT
+                                                                                                                                                                                                  the IMT-2020 guidelines [1]. Operating in license-exempt and                      NR+ radio devices, IRS pool dimensions, and physical obsta-
+                                                                                                                                                                                                  licensed sub-6GHz bands, DECT NR+ enables local, self-                            cles like metallic racks. It applies the Separating Axis The-
+                                                                                                                                                                                                  hosted deployments suited for industrial IoT (IIoT), factory                      orem (SAT) on this 3D model to identify shadowed outage-
+                                                                                                                                                                                                  automation, and energy grid monitoring [2]. It supports Radio                     prone regions. The IRS radiation pattern is then mapped in
+                                                                                                                                                                                                  Devices (RDs) operating in Fixed Termination (FT), Portable                       3D space, considering directivity and half-power beamwidth
+                                                                                                                                                                                                  Termination (PT), and combined FT/PT modes, denoted as                            toward those regions. Using this joint 3D mapping, the
+                                                                                                                                                                                                  RDFT , RDPT , and RDFT/PT , respectively.                                         gateway assigns IRS elements to radio devices experiencing
+                                                                                                                                                                                                  In factory hall environments, obstacles like metallic racks                       outages via a novel IRS-assisted DECT NR+ MAC procedure.
+                                                                                                                                                                                                  and heavy machinery can severely attenuate signal strength.                       Finally, after network initialization, the gateway allocates sub-
+                                                                                                                                                                                                  The standard DECT NR+ method [3] suggests a multi-cluster                         slot resources based on a priority scheme favoring radio
+                                                                                                                                                                                                  approach for reliability; however, it relies on flooding-based                    devices ready to offload data. Evaluation of the proposed ap-
+                                                                                                                                                                                                  data transmission, which increases network resource usage                         proach against the DECT NR+ transmission configuration and
+                                                                                                                                                                                                  and does not guarantee optimal end-to-end latency [4]. Addi-                      existing methodologies [9] reveal enhancements in received
+                                                                                                                                                                                                  tionally, radio devices in outage or obstructed by shadowing                      power, throughput, and reductions in round-trip time. The
+                                                                                                                                                                                                  may experience long re-association delays with the gateway                        remainder of this paper is organized as follows: Section II
+                                                                                                                                                                                                  until signal conditions improve, posing challenges to meeting                     presents the system model, Section III outlines the proposed
+                                                                                                                                                                                                  URLLC’s strict reliability and latency demands.                                   solution, Section IV evaluates performance using simulations,
+                                                                                                                                                                                                  Intelligent Reflecting Surfaces (IRS) have recently emerged                       and Section V offers concluding remarks.
+                                                                                                                                                                                                  as a promising technology to address signal blockage issues
+                                                                                                                                                                                                  by leveraging reflection capabilities [5]. An IRS comprises
+
+
+
+
+                                                                                                                                                                                              Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                              979-8-3503-9281-4/25/$31.00 ©2025 IEEE                                           223
+                         Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+                                                                                      where Ggt is the transmitter gain of the gateway, Grr is the
+                                                                                      receiver gain of the RDP Tr , Git is the transmitter gain of the
+                                                                                      IRS, Pt is the transmit power of the gateway, and P Lig,r is
+                                                                                      the pathloss of the IRS-assisted channel from the gateway to
+                                                                                      the RDP Tr . The transmitter gain of the IRS is a function of
+                                                                                      the directivity, which is expressed as:
+                                                                                                                 Git = εD                          (4)
+
+                                                                                      where ε is the efficiency of the IRS and D is the directivity
+                                                                                      of the IRS. According to the guidelines in [10], the efficiency
+                                                                                      of the IRS is chosen ε = 0.9. The directivity of the IRS is
+                                                                                      defined as the ratio of the radiation intensity of the reflected
+                                                                                      wave in a given direction to the radiation intensity averaged
+                                                                                      over all directions. The directivity of IRS is calculated
+                                                                                      using the method proposed in [10]. The expression of the
+                                                                                      directivity is given by:
+                                Fig. 1: System model
+                                                                                                                              4πU (θ, φ)
+                                                                                                     D(θ, φ) = R 2π R π                                         (5)
+                                                                                                                     0    0
+                                                                                                                              U (θ, φ) sin θdθdφ
+                              II. S YSTEM M ODEL
+                                                                                      where U (θ, φ) is the radiation intensity of IRS in the direction
+       In this study, we investigate a DECT NR+ wireless net-
+                                                                                      defined by θ and φ. To calculate the SNR, denoted as γr , at
+    work designed for an industrial IoT scenario with IRS in-
+                                                                                      the RDP Tr , the following expression is used:
+    tegration, as illustrated in Fig. 1. The network includes
+    a central gateway, denoted as RDFT , a set of DECT                                                                     Pg,r
+    NR+ radio devices in PT mode, denoted as set RD =                                                            γg,r =         ≥ γt                            (6)
+                                                                                                                            N
+    {RDP T1 , RDP T2 , ..., RDP Tn }, and multiple IRS pools, de-
+                                                                                      where N is the noise power and γt is the SNR threshold
+    noted as Ip = {irsp1 : {irs1 , irs2 , ..., irsk }, irsp2 :
+                                                                                      value which is calculated using our previous work [8]. The
+    {irs1 , irs2 , ..., irsk }, ..., irspn : {irs1 , irs2 , ..., irsk }}. Each
+                                                                                      SNR threshold value corresponds to the packet error rate to
+    IRS pool is connected to an IRS controller, and each IRS
+                                                                                      achieve the reliability requirement of URLLC. The maximum
+    controller is linked to an RDPT to receive configuration
+                                                                                      achievable data rate at the RDP Tr is calculated using the
+    instructions from the gateway. A mobile edge computing
+                                                                                      formula given in equation (7).
+    (MEC) server is also connected to the gateway. Positioned
+                                                                                                                                 r
+                                                                                                                                   V −1
+    centrally in the factory hall, the RDFT is supported by a                                 Rg,r (n, ϵ) = B log2 (1 + γg,r ) −     Q (ϵ)    (7)
+                                                                                                                                   n
+    set of IRSs to cover shadowed regions. The RDPT devices,
+    equipped with sensors and functioning as an automated guided                      where B is the DECT NR+ supported bandwidth, V is
+    vehicles (AGVs), follow a predefined mobility path to collect                     the channel dispersion, n is the blocklength, ϵ is the error
+    data, which is subsequently offloaded to the MEC server for                       probability, and Q−1 (ϵ) is the inverse Q-function of the
+    processing.                                                                       error probability. Based on the maximum achievable data rate
+    Let Hg,i denotes the channel gain from the gateway to irsi ,                      and the data rate requirement of the application, a suitable
+    Gi,r denotes the channel gain between irsi and RDP Tr , Φi                        Modulation and Coding Scheme (MCS) [2] is selected. DECT
+    denotes the phase shift of the irsi . The IRS-assisted channel                    NR+ [2] supports various transmission configurations (µ, β)
+    gain between the gateway and RDP Tr is expressed as:                              as shown in Table I.
+                                                                                      The number of sub-slots required to transmit a packet is
+                               hig,r = Gi,r Φi Hg,i                           (1)     calculated by the following expression:
+                                                                                                                     & S·8 '
+    The path loss model between the gateway and RDP Tr is                                                                      Rg,r
+    chosen from the IMT-2020 guidelines [1] which is expressed                                                    Nsub =         g                              (8)
+                                                                                                                               Tsub
+    as:
+          P Lg,r = 16.9 log10 (dg,r ) + 32.8 + 20 log10 (fc ) (2)                     where S is the size of the packet in bytes, Rg,r is the
+                                                                                      throughput of the link between gateway and RDP Tr with unit
+    where dg,r is the distance from the gateway to RDP Tr , and                       bits per second (bps) calculated by the selected MCS, and
+    fc is the operating frequency. The received power of the IRS-                       g
+                                                                                      Tsub is the subslot length in seconds given by the supported
+    assisted channel from the gateway to RDP Tr is expressed                          transmission configuration (µ, β) of the DECT NR+ standard
+    as:                                                                               [2]. Thus, the data packet transmission duration is given by:
+                                 Gg Gr Gi Pt
+                          Pg,r = t r i t                       (3)                                                                g
+                                                                                                                  tdur = Nsub · Tsub                            (9)
+                                    P Lg,r
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 224
+                          Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+                                                                                                           III. P ROPOSED S OLUTION
+                                                                                         We propose an innovative DECT NR+ framework designed
+                                                 Performance Metrics                  to incorporate an IRS to uphold the reliability and latency
+                                 Parameters                                           requirements critical to URLLC-based IIoT networks. Fig. 2
+                            Parametrizable                                            provides a high-level overview of our proposed framework.
+                              Use-case                                                The procedure begins with the network operator introducing
+           System model
+            Description                 IRS assisted DECT NR+ Network                 high-level parameters into a parameterizable system model,
+                Infrastructure Parser
+                                                                                      outlining the configurations of an IRS-aided DECT NR+
+                                                     MEC server                       wireless network. The system model description includes the
+                Map system model in                                                   properties of computing nodes, like Mobile Edge Computing
+                     3D space                                                         (MEC) servers, the locations and properties of DECT NR+
+                  Obstacle Detector
+                                                                                      radio devices (such as RDFTs , RDFT/PTs and RDPTs ), and
+                Map radiation pattern                                                 the positions and parameters of IRS units (including IRS size,
+                 of IRS in 3D space
+                                                                                      cell size, and the number of IRS states). Additionally, the
+                 Resource Allocator               IRS-enabled DECT
+                                                     NR+ network                      model accounts for the characteristics of physical obstacles
+                   MAC Procedure                                                      in the factory environment, such as the dimensions of
+                                                 In memory IRS-DECT
+               DECT NR+ Network Builder              NR+ Structure                    the metallic racks, and all other necessary parameters to
+                                                                                      comprehensively describe a DECT NR+ network. Utilizing
+                          Emulation Framework Connector
+                                                                                      the system model description, the framework maps the radio
+                                                                                      devices, obstacles, and radiation pattern of the IRS in 3D
+                             Execution Environment                                    space. Subsequently, the framework employs the Separating
+                                                                                      Axis Theorem (SAT) on 3D representations of both radio
+                              Fig. 2: System architecture
+                                                                                      devices and obstacles to identify shadowed areas. Lastly,
+                                                                                      exploiting the 3D mapping of both the radio devices and
+                                                                                      the obstacles, alongside the identified shadowed zones and
+    The total user-plane latency [11] for the DECT NR+ supported                      3D mapping of IRS radiation patterns, the proposed MAC
+    frame-based system operation without Hybrid Automatic Re-                         procedure is initiated for an IRS-aided DECT NR+ wireless
+    peat request (HARQ) is expressed in equation (10).                                network. Detailed explanations of each sub-module are
+                N                                                                     provided in the subsequent sections.
+               Tg,r = tsym + trd tx + tFA switch + tdur + trd rx             (10)
+
+    where tsym is the symbol alignment time, trd tx is the transmit-                  A. Map system model in 3D space
+    ter (TX) side processing delay, tFA switch is the TX alignment                       Utilizing the system model, the framework begins by
+    and TDD switching time, and trd rx is the receiver (RX) side                      mapping the dimensions of the region of interest (ROI),
+    processing delay. The total user-plane latency with HARQ is                       specifically the factory hall. In 3D space, it is represented
+    calculated using the equation (11):                                               as F = {lf , wf , hf }, where lf , wf , and hf denote the
+                           H      N
+                                                                                      length, width, and height, respectively. Radio devices are
+                          Tg,r = Tg,r + n · [T1 + T2 ]                       (11)     modeled as one cubic meter box and represented as R =
+                                                                                      {RD1 (rdid1 , p1 , t1 ), RD2 (rdid2 , p2 , t2 ), .., RDn (rdidn , pn , tn )},
+    where n is the total number of re-transmissions. T1 and T2                        where rdidn is the ID, pn the position, and tn the
+    are calculated by the following expressions.                                      type (FT, FT/PT, or PT) of the nth radio device.
+                                                                                      RDPTs are designated as AGVs, each following a
+                     T1 = ttx + tFA switch + tHARQ + trd-rx                  (12)     predefined mobility path. These are represented as Ag =
+                                                                                      {agv1 (rdid1 , m1 ), agv2 (rdid2 , m2 ), ..., agvn (rdidn , mn )},
+                     T2 = trd tx + tFA switch + tdur + trd rx                (13)     where mn is the mobility path of the nth RDPT . IRS pools
+                                                                                      are mapped based on their location, size, unit cell dimensions,
+    where T1 represents HARQ feedback transmission delay and                          operating frequency, and orientation (horizontal/vertical). The
+    T2 represents data re-transmission delay. In equation (12),                       IRS and unit cell sizes are given as s · λ and λd , where s and
+    ttx is the TX side processing delay for HARQ feedback                             d are integers. Each pool contains k IRSs with k ∈ [2, 4],
+    transmission, tHARQ is the HARQ ACK/NACK transmission                             represented as Ip = {irsp1 : {irs1 , irs2 , .., irsk }, irsp2 :
+    delay, tFA switch is the TX alignment and TDD switching                           {irs1 , irs2 , .., irsk }, ..., irspn   :      {irs1 , irs2 , .., irsk }}.
+    time for HARQ ACK/NACK, and trd-rx is the receiver side                           Obstacles like metallic racks are modeled using the
+    processing delay for ACK/NACK. The symbols in equation                            3D coordinates of their vertices, forming polyhedra:
+    (13) are explained in equation (10). The detailed description                     P = {s1 (l1 ), s2 (l2 ), .., sn (ln )}, where sn is the nth side
+    of our proposed solution is presented in Section III.                             defined by coordinates ln .
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 225
+                            Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+              Vyb4                                                                                        HPBW
+              Vyb3
+
+              Vya4
+              Vyb2
+                                                                     B                                                            Directivity
+
+                                                                                                                                       HPBW
+              Vya3
+              Vyb1
+                                             A
+              Vya2                                                                                                                           θr θi
+              Vya1                                                                                                            y
+                                                                                                                                        φr           φi
+                                                                                                                                   x
+                                                                                                                          z
+
+
+              Origin (0,0)      Vxa1 Vxa2 Vxa3 Vxa4Vxb1Vxb2 Vxb3Vxb4                                           Fig. 4: 3D mapping of radiation pattern of IRS
+                      Fig. 3: Separating axis theorem in 2D space
+
+
+                                                                                                   LOS is confirmed if Equations (14), (15), and the overlap
+    B. Obstacle Detector                                                                           conditions along vectors orthogonal to each obstacle face are
+       This sub-module utilizes the Separating Axis Theorem                                        satisfied. The AGV follows its mobility path with a 1-meter
+    (SAT) to identify obstacles between the transmitter, specifi-                                  step size, using the obstacle detector to locate outage-prone
+    cally the gateway, and the RDPTs , in order to detect shadowed                                 shadowed areas. Nearby outage locations are clustered and
+    regions within the ROI. SAT is a computational geometry                                        represented as O = {o1 , o2 , ..., on }, where each oi denotes a
+    algorithm used to determine the collision or overlap between                                   3D coordinate of the identified outage location. After scanning
+    two convex polygons in 3D space. According to the SAT, two                                     the ROI, we obtain these outage sets and compute their
+    convex polygons do not overlap if and only if there exists                                     centroids, forming the set C = {C1 , C2 , ..., Cn }, which is
+    a line along which their projections do not intersect. Fig. 3                                  used in the next sub-module to map the IRS radiation pattern.
+    demonstrates the application of the SAT algorithm to detect
+    overlap between two squares, A and B, in a 2D space. The
+    vectors representing the vertices of square A are va1 , va2 , va3 ,                            C. Map radiation pattern of IRS in 3D space
+    and va4 , while those for square B are vb1 , vb2 , vb3 , and vb4 .
+                                                                                                      In this work, we consider metasurface-based IRS [10]
+    Furthermore, the vector projections of squares A and B along
+                                                                                                   and define the radiation pattern of the reflected wave using
+    the x − axis and y − axis are represented as vax1 , vax2 , vax3 ,
+                                                                                                   the directivity expression in equation (21). IRS directivity
+    vax4 , vbx1 , vbx2 , vbx3 , vbx4 and vay1 , vay2 , vay3 , vay4 , vby1 , vby2 , vby3 , vby4 ,
+                                                                                                   depends on the angle of incidence and angle of reflection
+    respectively. Squares A and B will overlap along the x − axis
+                                                                                                   of the incoming wave, as well as IRS properties such as its
+    if the following conditions are satisfied.
+                                                                                                   size, the size of reflecting elements, the number of states, and
+       if (min(vbx1 , vbx2 , vbx3 , vbx4 ) < max(vax1 , vax2 , vax3 , vax4 ))                      operating frequency.
+                                                                                         (14)      Let Φ denote the IRS reflection phase, with Φx = ∂Φ
+       {Overlaps along x axis}                                                                                                                             ∂x and
+                                                                                                   Φy = ∂Φ ∂y representing the desired phase gradients along the
+    Similarly, squares A and B overlap along the y − axis if                                       x and y axes, respectively. The phase of the mn-th IRS unit
+    following condition is satisfied:                                                              cell is given by:
+       if (min(vby1 , vby2 , vby3 , vby4 ) < max(vay1 , vay2 , vay3 , vay4 ))                                                 ∂Φ    ∂Φ
+                                                                                         (15)                    Φmn = (         m+    n)Du + Φ00               (16)
+       {Overlaps along y axis}                                                                                                ∂x    ∂y
+    To ascertain whether squares A and B overlap in a 2D                                           where Du denotes the unit cell size of the IRS, and Φ00 is
+    space, both Equation (14) and Equation (15) must hold true.                                    the phase of its first unit cell. To relate the incidence angles
+    Extending this to 3D space, it is essential that the condition                                 of the impinging wave, θi and φi , to the reflection angles, θr
+    along the z-axis is also satisfied, in addition to the conditions                              and φr , the momentum conservation law for wave vectors is
+    in Equations (14) and (15). Furthermore, for polyhedrons to                                    applied as follows:
+    overlap in 3D space, they must exhibit overlap along the
+    x − axis, y − axis, and z − axis, as well as along the vectors                                            Φx = kr sin θr cos φr − ki sin θi cos φi ,
+                                                                                                                                                                (17)
+    that are orthogonal to each face of the polyhedron.                                                       Φy = kr sin θr sin φr − ki sin θi sin φi ,
+    To identify shadowed regions, a straight line is assumed
+    between the transmitter (gateway) and receiver (AGV), rep-                                     where kr = 2π                2π
+                                                                                                                  λr and ki = λi are the wave vectors of the
+    resenting a line of sight (LOS). The SAT is applied to                                         reflected and incident mediums with wavelengths λr and λi ,
+    the line and the 3D obstacle map, modelled as polyhedra.                                       respectively. The target phase of the mn-th unit cell of IRS
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                              226
+                         Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+                                                                                                         TABLE I: Transmission configuration
+    for the normal incidence wave, i.e., θi = 0 can be expressed
+    as [10]:                                                                                   Properties            Config1      Config2     Config3     Config4
+                                                                                                 (µ, β)               (1,1)        (2,1)       (4,1)       (8,1)
+                    2πDu (m cos φr sin θr + n sin φr sin θr )                              Bandwidth (MHz)            1.728        3.456       6.912      13.824
+          Φmn =                                                              (18)         Symbol Length (µs)         41.667       20.833      10.417       5.208
+                                      λ0                                                Subcarrier Spacing (kHz)       27           54          108         216
+    where λ0 is the wavelength of the normal incidence wave.                              Subslot Length (ms)         0.208        0.104       0.052      0.0260
+    Further, using the Huygens principle in the far-field limit, the
+    scattering field can be expressed as [10]:
+                                 M X
+                                   N                                                  to the vector ⃗v . Let ⃗a be an arbitrary vector. Two perpendicular
+                                                                                      unit vectors, denoted as uˆ1 and uˆ2 , are calculated as follows:
+                                 X
+                                                     j[Φmn +k0 ζmn (θ,φ)]
+        E(θ, φ) = K cos θ                    Γmn e                           (19)
+                                m=1 n=1                                                                                   ⃗v × ⃗a
+                                                                                                                   uˆ1 =
+    where K is a constant defined by the amplitude of the incident                                                       |⃗a × ⃗v |
+                                                                                                                                                              (25)
+    wave, Γmn is the reflection coefficient, M and N are the                                                              ⃗v × uˆ1
+                                                                                                                   uˆ2 =
+    numbers of unit cells along the IRS rows and columns, k0 is                                                          |⃗v × uˆ1 |
+    the wave number, and ζmn (θ, φ) denotes the relative phase
+                                                                                      Step 3: Find side of trapezoidal prism or rectangular
+    shift of the unit cell at coordinates (θ, φ), given by:
+                                                                                      prism parallel to IRS
+                                1              1                                                                              L
+      ζmn (θ, φ) = Du sin θ[(m − ) cos φ + (n − ) sin φ] (20)                                                    h1 = C1 +        · uˆ1
+                                2              2                                                                              2
+    Lastly, the directivity of IRS is expressed as:                                                                           L
+                                                                                                             h2 = C1 − · uˆ1
+                                                                                                                              2                         (26)
+                                             4πU (θ, φ)                                                                      L
+                   D(θ, φ) = R 2π R π                                        (21)                            v1 = C1 + · uˆ2
+                                   0     0
+                                             U (θ, φ) sin θdθdφ                                                               2
+                                                                                                                             L
+    where U (θ, φ) ∝ |E(θ, φ)|2 denotes the radiation intensity                                              v2 = C1 − · uˆ2
+                                                                                                                              2
+    scattered in a given direction. The Half Power Beam Width
+    (HPBW) is calculated by taking the square root of the solid                       where 3D coordinates (h1 , h2 , v1 , v2 ) define one side of a
+    angle at the -3 dB point of a lobe’s peak, as shown in Fig. 4.                    trapezoidal or rectangular prism oriented parallel to the IRS
+    We use HPBW to map the IRS radiation pattern in 3D space.                         at position C1 . To determine the opposite side, the coordinates
+    Let hd be the HPBW in degrees; the corresponding arc length                       at C1 are interchanged with those at point B, and the
+    at a distance d is computed using equations (22) and (23).                        procedure outlined in Step 1, Step 2, and Step 3 is repeated.
+                                                                                      This results in a set of eight 3D coordinates, denoted as
+                                                π                                     R1 = [(h1 , h2 , v1 , v2 ), (h3 , h4 , v3 , v4 )] fully characterizing
+                                  hr = hd ·                                  (22)
+                                               180                                    the trapezoidal or rectangular prism shape. The arrangement
+                                     L = d · hr                              (23)     R1 signifies the IRS radiation pattern oriented towards the
+                                                                                      location C1 . The framework leverages the calculated centroids
+    where hr denotes the HPBW in radians, L represents the arc                        of shadowed regions, as detailed in Section III-B, to effec-
+    length of the HPBW, and d is the distance from the IRS to                         tively map the IRS radiation pattern towards each centroid, as
+    the outage location. If L > Dl , where Dl is the size of the                      expressed below:
+    IRS, the radiation pattern is modelled as a trapezoidal prism.
+                                                                                            Rc = {c1 : {r1 , r2 , .., rn }, c2 : {r1 , r2 , .., rn }},
+    Conversely, if L = Dl , the radiation pattern is represented
+    as a rectangular prism. Let C1 = (xc , yc , zc ) ∈ C denote                             c3 : {r1 , r2 , ..rn }, ..., cn : {r1 , r2 , ..rn }},             (27)
+    the 3D coordinates of the outage location as identified by the                          where ∀ni ri ∈ irspi and irspi ̸= irspj ∀i ̸= j
+    Obstacle Detector, and let B = (xb , yb , zb ) represent the 3D
+                                                                                      where cn represents the 3D coordinates of the nth centroid,
+    coordinates of the center of IRS. The mapping of the IRS
+                                                                                      while {r1 , r2 , .., rn } denotes the set of radiation patterns
+    radiation pattern to either a trapezoidal prism or a rectangular
+                                                                                      directed from n IRS units towards the location cn . The term
+    prism is determined as follows:
+                                                                                      irspi refers to the ith IRS pool, as defined in Section III-A.
+    Step 1: Compute normalized directional vector:
+                                                                                      The constraints outlined in Equation (27) ensure the selection
+        ⃗v = B − C1 = (xb − xc , yb − yc , zb − zc )                                  of a single IRS from the IRS pool for each centroid.
+               ⃗v                      ⃗v                                    (24)
+         v̂ =       =p                                                                D. Resource Allocator
+              |⃗v |    (xb − xc ) + (yb − yc )2 + (zb − zc )2
+                                 2
+                                                                                         We propose a resource allocation scheme focused on sub-
+    Step 2: Find two unit vectors perpendicular to ⃗v :                               slot allocation by assigning a priority to RDP Ts that are ready
+    Select an arbitrary vector (1, 0, 0) or (0, 1, 0) or (0, 0, 1) that is            to offload the data. RDP Ts advertise the amount of data to of-
+    not parallel to ⃗v and calculate two unit vectors perpendicular                   fload, exploiting the MAC layer functionalities of DECT NR+
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 227
+                         Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+    specifically MAC Service Data Units (SDUs) multiplexed into                       The gateway integrates resource allocation information within
+    a MAC Protocol Data Unit (PDU), as illustrated in Fig. 5.                         the MAC Information Element (IE) message [3] by configur-
+    Let Z(t) = {Z1 (t), Z2 (t), Z3 (t), . . . , Zn (t)} represent the                 ing the appropriate fields such as start sub-slot, length fields,
+    set of data that the RDPTs have advertised as ready for                           RDID , repeat, and validity fields, utilizing Nfi and Nsi as cal-
+    offloading. let RD = {RDP T1 , RDP T2 , ..., RDP Tn } be the                      culated from equations (32) and (31), respectively. The MAC
+    set of RDPTs connected to the gateway. The set P =                                IE message is then combined with a MAC multiplexing header
+    {p1 , p2 , p3 , .., pn } indicates the priority for each RDPT , where             and a unicast header of the convergence layer [12]. Each radio
+    ∀ni pi ∈ {0, 1}. Here, pi = 0 signifies that RDP Ti has no                        device (RD) connected to the gateway receives the Resource
+    data for offloading, whereas pi = 1 denotes that RDP Ti is                        Allocation IE elements from the gateway, allowing them to
+    prepared to offload data. The set P consequently divides RD                       reserve the necessary sub-slots for uplink transmission.
+    into two subsets: RDp = {RDP T1 , RDP T2 , ..., RDP Tl } and
+    RDq = {RDP T1 , RDP T2 , ..., RDP Tm }, where RDp contains                                                                     MAC-Protocol Data Unit (PDU)
+
+    the devices with p = 1, and RDq comprises those with p = 0.                                                                   MAC: DCCH      Higher Layer Data 1 Higher Layer Data 2
+
+    The sub-slot allocation scheme for radio devices within the                         Physical Header MAC header
+                                                                                             Field        type
+                                                                                                                     MAC Common MAC Mux-
+                                                                                                                       Header    Header
+                                                                                                                                         MAC SDU
+                                                                                                                                                 MAC Mux-
+                                                                                                                                                  Header
+                                                                                                                                                          MAC SDU
+                                                                                                                                                                     MAC Mux-
+                                                                                                                                                                      Header
+                                                                                                                                                                              MAC SDU
+
+    sets RDp and RDq is defined as follows:                                           Fig. 5: Physical Header Field and Protocol Data Unit (PDU) of MAC layer.
+
+                               p         100 + m · w
+                              Nsub =                                         (28)
+                                            l+m                                       E. MAC Procedure for IRS-assisted DECT NR+
+                            q     100 + m · w                                            After network initialization [3] and resource allocation, the
+                           Nsub =             −w                             (29)
+                                     l+m                                              DECT NR+ network supports uplink and downlink transmis-
+               p           q                                                          sion. However, due to AGV mobility, the received power
+    where Nsub      and Nsub  represent the percentage of sub-slots
+    allocated within a DECT NR+ frame to each radio device in                         may drop below the required threshold, violating URLLC
+    sets RDp and RDq , respectively. Here, l denotes the number                       constraints. The gateway periodically evaluates AGV signal
+    of nodes in RDp , and m is the number of nodes in RDq .                           quality using the Measurement Report IE [3], which includes
+    Based on the priority set P , we define an integer w, which                       RSSI-2, SNR, and RSSI-1 values. If the received power falls
+    represents the difference in sub-slot allocation between radio                    below the threshold, the framework selects a suitable IRS
+    devices in the RDp and RDq sets. Equations (28) and (29)                          to restore signal strength. Using the 3D IRS mapping from
+    facilitate the allocation of additional sub-slots to high-priority                equation (27), the framework selects the set of IRS radiation
+    radio devices while granting fewer sub-slots to those with                        pattern denoted as Rp = {r1 , r2 , ..., rn }. The framework then
+    lower priority. The total number of sub-slots allocated to the                    applies SAT on agvp (rdidp , mp ) and each rn ∈ Rp , selecting
+    ith radio device within a DECT NR+ frame, denoted as Nsub     i
+                                                                     ,                the radiation pattern that satisfies the condition defined in
+    is defined as follows:                                                            Section III-B. The SAT returns with the following three
+                              (                                                       potential outcomes:
+                  n     i       NTf · Nsub
+                                        p
+                                           , if i ∈ RDp                                  1) Case 1: SAT returns with one IRS
+                 ∀i=1 Nsub =      f     q                        (30)
+                                NT · Nsub , if i ∈ RDq                                   Let ri ∈ irspi denote the radiation pattern selected by
+                                                                                      the SAT algorithm, where irspi is the corresponding IRS
+    where n = l + m represents the total number of RDPTs . NTf                        pool. Each IRS pool is controlled by an IRS controller, paired
+    denotes the total number of available sub-slots in a frame,                       with an RDPT to receive configuration commands from the
+    which is determined by the transmission configuration (µ, β)                      gateway. The gateway generates the IRS configuration using
+    of DECT NR+ [2], as outlined in Table I. The total number                         an API such as [13] and embeds it into the MAC SDU and
+    of frames required to offload the advertised data is calculated                   PDU with a unicast MAC header, including the RDID of the
+    as follows:                                                                       RDPT connected to the IRS controller [3]. Upon receiving
+                                    &       '   Zi (t)·8
+                                                 Ri,g                                 the message, the RDPT forwards the configuration to the
+                              ∀ni=1 Nsi =           i
+                                                                             (31)
+                                                 Tsub                                 IRS controller. The gateway then updates the IRS pool by
+                                            &              '                          removing ri from the available IRS pool. For both uplink
+                                                  Nsi                                 and downlink, we propose to reuse the previously allocated
+                              ∀ni=1 Nfi =          i
+                                                                             (32)     resources to agvp (rdidp , mp ), as outlined in Section III-D.
+                                                 Nsub
+                                                                                         2) Case 2: SAT returns with no IRS
+    where Nsi represents the total number of sub-slots required                          If the SAT algorithm finds no suitable IRS, it implies that
+    to offload the data Zi (t) from the ith radio device. Ri,g                        the outage location is either beyond IRS coverage or the
+    denotes the data rate between the ith radio device and the                        gateway’s transmission power is insufficient for even single-
+    gateway. The sub-slot length, defined by the DECT NR+                             hop communication. In such cases, we propose a multi-hop
+                                                  i
+    transmission configuration, is indicated by Tsub . Finally, Nfi is                communication scheme to maintain the required reliability.
+                                                    th
+    the total number of frames necessary for the i radio device                       The framework identifies the nearest possible intermediate
+    to complete the data offloading process.                                          radio device and sends a mode-switch request, prompting a
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 228
+                         Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+    change from PT to FT/PT mode. This request is sent via a                                                        −60          DECT standard
+    Cluster Beacon Message IE with a unicast header, setting                                                                     Existing technique
+                                                                                                                    −70
+    the RDID of the nearest radio device as the destination                                                                      Proposed solution
+
+
+
+
+                                                                                                  Rx power (dBm)
+    address. The agvp (in outage) then associates with the selected                                                 −80
+    intermediate AGV and performs uplink/downlink transmission                                                      −90
+    to the gateway through this temporary node. Once agvp moves
+                                                                                                                   −100
+    into a region where either the gateway’s beacon exceeds the
+    threshold or IRS-assisted communication becomes feasible, it                                                   −110
+    re-establishes direct connectivity with the gateway.                                                           −120
+       3) Case 3: SAT returns with more than one IRS                                                                       -10      -5      0         5      10
+
+       To determine the most appropriate IRS to utilize, the gate-                                                                   Tx power (dBm)
+
+    way assesses the AGV’s trajectory and selects the IRS that the                                                 Fig. 6: Received power versus Transmit power
+    AGV is approaching. Let p⃗(t) = (x1 , y1 , z1 ) represent the 3D
+    position vector of the AGV at time t, and ⃗q(t) = (x2 , y2 , z2 )                                               −50                          Tx Power = -10
+    denote the 3D position vector of IRS. The velocity vector                                                                                    Tx Power = -5
+    of the AGV, ⃗vp (t), indicates its movement direction at time                                                   −60
+                                                                                                                                                 Tx Power = 0
+
+
+
+
+                                                                                                  Rx power (dBm)
+    t. This velocity vector characterizes the rate of change of                                                                                  Tx Power = 5
+                                                                                                                    −70
+                                                                                                                                                 Tx Power = 10
+    displacement over time. It is mathematically expressed as
+                                                                                                                    −80
+    follows:                d⃗
+                             p
+                                 
+                                   dx1 dy1 dz1
+                                                      
+                  ⃗vp (t) =    =       ,      ,                  (33)                                               −90
+                            dt      dt    dt      dt
+                                                                                                                   −100
+     The displacement vector from p⃗(t) to ⃗q(t) is defined as
+     follows:                                                                                                      −110
+                                                                                                                          16       256        625      1296
+     ⃗ = ⃗q(t)−⃗
+     d(t)          p(t) = ⟨x2 (t)−x1 (t), y2 (t)−y1 (t), z2 (t)−z1 (t)⟩                                                          IRS reflecting elements
+                                                                  (34)                           Fig. 7: Received power versus IRS reflecting elements
+     The gateway selects the considered IRS if the dot product
+              ⃗
+    ⃗vp (t) · d(t)  > 0. The gateway then initiates the MAC
+     procedure for IRS-assisted DECT NR+ downlink and uplink                          NR+ standard [3]. By utilizing a 3D IRS radiation pattern
+     transmissions for the chosen IRS, as delineated in Case 1.                       map and a MAC procedure for IRS-assisted DECT NR+,
+                   IV. P ERFORMANCE E VALUATION                                       our solution effectively detects shadowed areas and minimizes
+       The performance of the proposed solution is evaluated                          outage probability while meeting URLLC constraints. Fig. 6
+    using a topology consisting of one RDFT (gateway), eight                          shows that a minimum transmit power of 0 dBm is needed
+    RDPTS devices deployed as AGVs, and four IRS pools, each                          to maintain received power above the -88 dBm sensitivity
+    containing four IRS units. Additionally, four static RDPT de-                     threshold. In contrast, the existing approach [9] initiates mode
+    vices are connected to IRS controllers to receive configuration                   switching request (PT to FT/PT) for all connected RDPTs to
+    updates from the gateway, and a MEC server is connected                           route packets via intermediate nodes. However, the interme-
+    to the gateway. The setup is within a factory hall of size                        diate node selection is random, which fails to ensure optimal
+    100×200×50 meters, with the gateway deployed at its center.                       reliability, and multi-hop communication induces additional
+    The RDPT devices move along predefined paths at speeds up                         latency, conflicting with URLLC constraints. The DECT NR+
+    to 1 m/s, navigating around an obstacle, as shown in Fig. 1.                      baseline performs the worst, as it relies on connecting to new
+    We evaluate the proposed solution against four DECT NR+                           FT or FT/PT nodes during outage, which is ineffective if all
+    transmission configurations (µ, β) listed in Table I. Simulation                  nearby nodes are in PT mode, leaving the affected device
+    parameters include a 1.88 GHz operating frequency, IRS size                       disconnected until signal conditions improve.
+    of 5λ, unit cell size of λ2 , four IRS states, 32-byte packet                      Fig. 7 evaluates the proposed solution with respect to the
+    size, and -88 dBm receiver sensitivity. The simulation of the                     number of IRS reflecting elements and the transmit power
+    proposed solution was implemented in Python. A detailed                           of radio devices. Results show that at least 256 reflecting
+    comparison is provided with an existing method [9] and                            elements with 0 dBm transmit power are needed to meet the
+    the DECT NR+ standard [3]. In each run, mobile devices                            received power threshold. The IRS reaches saturation at 625
+    complete 1000 rounds at 1 m/s, sending one packet every                           elements, as indicated in [5], with further increase in reflecting
+    meter. Received power is averaged over 1000 samples per                           elements adding fabrication complexity. Fig. 8 presents the
+    step.                                                                             round-trip time (RTT) for data offloading between RDPTs
+     In the first experiment, we evaluate the proposed solution’s                     and the gateway, which is connected to a MEC server. RTT is
+    performance against varying transmit power levels, as shown                       defined as the total duration for a packet to reach the gateway
+    in Fig. 6. The results demonstrate that our approach consis-                      and return to the RDPT . Link-level latency is computed
+    tently outperforms both the existing method [9] and the DECT                      via equation (11). Our solution outperforms both existing
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 229
+                                Eighteen International Workshop on Selected Topics in Mobile and Wireless Computing - 2025
+
+
+
+
+                                                    Proposed solution                                                           DECT Standard
+                            3                       DECT Standard                                                     60        Existing technique
+
+
+
+
+                                                                                                  Throughput (Mbps)
+                                                    Existing Technique                                                          Proposed solution
+                 RTT (ms)
+
+
+                            2                                                                                         40
+
+
+
+                            1                                                                                         20
+
+
+                                                                                                                       0
+                            0
+                                 1           2         3              4                                                     1           2          3           4
+                                           Tx Configuration                                                                           Tx configuration
+                                Fig. 8: RTT versus Tx configuration                                                    Fig. 9: Throughput versus Tx configuration
+
+
+
+    technique [9] and DECT NR+ standard approach, achieving                                                ACKNOWLEDGMENT
+    high reliability by redirecting radio waves via IRS-assisted                         The work in this paper was part of the C ELTIC -N EXT
+    links, avoiding intermediate nodes and retransmissions. In                        project USWA and received funding from the Federal Ministry
+    contrast, [9] uses intermediate nodes to meet reliability targets,                of Education and Research of Germany (BMBF, funding code:
+    increasing latency. DECT NR+ relies on HARQ for reliable                          16KISK254). We would like to thank the funding organization
+    delivery, adding retransmission delays to RTT as defined in                       for the financial support.
+    equations (12) and (13). Finally, throughput is analyzed for                                              R EFERENCES
+    our method, [9], and DECT NR+ across four transmission                             [1] ITU-R, “Detailed specifications of the terrestrial radio interfaces of
+    configurations (µ, β) listed in Table I. Throughput is calcu-                          Inter-national Mobile Telecommunications-2020 (IMT-2020),” Interna-
+                                                                                           tional Telecommunication Union, Report ITU-R, vol. M., pp. 2150–0,
+    lated as:                     m · Sp · 8                                               February 2021.
+                         η=                                      (35)
+                             (Tend − Tstart ) · 106                                    [2] ETSI, “DECT-2020 New Radio (NR); Part 3: Overview; Release 1,” Eu-
+                                                                                           ropean Telecommunications Standards Institute, Technical Specification
+    where m is the number of successfully received packets, Sp                             (TS), vol. 103, pp. 636–3, March, 2024.
+    is the packet size in bytes, Tstart is the time when the first                     [3] ——, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+                                                                                           European Telecommunications Standards Institute, Technical Specifica-
+    packet is sent by the gateway, and Tend is when the last                               tion (TS), vol. 103, pp. 636–4, March, 2024.
+    packet is received at the destination. The proposed solution                       [4] A. B. Asif, H. Ahmad, S. Preihs, and J. Peissig, “Urllc-based multi-hop
+    ensures reliable transmission without requiring retransmis-                            communication using dect-2020 nr,” in 2025 IEEE Wireless Communi-
+                                                                                           cations and Networking Conference (WCNC), 2025, pp. 1–7.
+    sions or intermediate nodes, minimizing transmission time and                      [5] A. B. Asif, C. Liaskos, A. Pitsillides, H. K. Qureshi, and M. Lestas,
+    thereby achieving higher throughput compared to the existing                           “Optimal Path Selection in Cascaded Intelligent Reflecting Surfaces,”
+    technique [9] and the DECT NR+ default approach [3], as                                in 2022 IEEE 96th Vehicular Technology Conference (VTC2022-Fall),
+                                                                                           2022, pp. 1–5.
+    shown in Fig. 9. Throughput in DECT NR+ drops to zero                              [6] O. B. Smida, S. B. Amor, and S. Affes, “ETSI/DECT-2020 Compo-
+    for transmission configurations three and four due to severe                           nent RIT Technology Implementation and Evaluation Contributions in
+    shadowing and the higher sensitivity of wide bandwidths to                             mMTC and URLLC Use Cases,” in ICC 2023 - IEEE International
+                                                                                           Conference on Communications, 2023, pp. 1462–1467.
+    noise. The proposed solution yields up to 10% improvement                          [7] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+    over both [9] and [3]. Moreover, the 3D mapping of the system                          Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The
+    and IRS radiation patterns is computed only once, introducing                          Next Step toward 5G Massive Machine-Type Communications,” IEEE
+                                                                                           Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+    negligible additional time complexity for the proposed MAC                         [8] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+    procedure.             V. C ONCLUSION                                                  of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021
+                                                                                           IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+       In this paper, we propose an innovative framework for IRS-                          1–7.
+                                                                                       [9] H. Ahmad, A. B. Asif, J. Peissig, and M. Penner, “Mac protocol
+    assisted DECT NR+ within an Industrial Internet of Things                              for reducing outage probability in dect-2020 new radio,” in 2024
+    (IIoT) context. The framework employs a 3D description of                              20th International Conference on Wireless and Mobile Computing,
+    the system model to address shadowing issues encountered in                            Networking and Communications (WiMob), 2024, pp. 42–49.
+                                                                                      [10] H. Taghvaee, S. Abadal, A. Pitilakis, O. Tsilipakos, A. C. Tasolamprou,
+    such environments. Leveraging the Separating Axis Theorem                              C. Liaskos, M. Kafesaki, N. V. Kantartzis, A. Cabellos-Aparicio, and
+    (SAT) along with the 3D system model, our approach accu-                               E. Alarcón, “Scalability Analysis of Programmable Metasurfaces for
+    rately identifies areas affected by shadowing. To address these                        Beam Steering,” IEEE Access, vol. 8, pp. 105 320–105 334, 2020.
+                                                                                      [11] ETSI, “ETSI Evaluation Group; Final Evaluation Report on DECT-
+    shadowed regions, we propose a MAC procedure tailored for                              2020 NR,” European Telecommunications Standards Institute, Technical
+    DECT NR+ that effectively mitigates the impact of shadow-                              Report (TR), vol. 103, p. 810, Nov, 2021.
+    ing. The evaluations demonstrate significant enhancements in                      [12] ——, “DECT-2020 New Radio (NR); Part 5: DLC and Convergence
+                                                                                           layers; Release 1,” European Telecommunications Standards Institute,
+    received signal power, throughput, and a reduction in round-                           Technical Specification (TS), vol. 103, pp. 636–5, March, 2024.
+    trip. For future work, we plan to incorporate deep learning                       [13] [Online]. Available: https://tmytek.com/products/components/xrifle-
+    techniques to further explore and refine the 3D mapping of                             dynamic-ris
+    system models in complex indoor industrial environments.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:35:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 230
+

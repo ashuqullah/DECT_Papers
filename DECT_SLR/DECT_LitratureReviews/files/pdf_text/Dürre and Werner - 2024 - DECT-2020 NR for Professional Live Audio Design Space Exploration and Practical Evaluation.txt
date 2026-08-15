@@ -1,0 +1,475 @@
+                                                                                                                                                                DECT-2020 NR for Professional Live Audio:
+                                                                                                                                                              Design Space Exploration and Practical Evaluation
+
+                                                                                                                                                                                           Jan Dürre                                                                      Norbert Werner
+                                                                                                                                                                                    Research Department                                                                Research Department
+                                                                                                                                                                              Sennheiser electronic SE & Co. KG                                                  Sennheiser electronic SE & Co. KG
+                                                                                                                                                                                    Wedemark, Germany                                                                  Wedemark, Germany
+                                                                                                                                                                                 jan.duerre@sennheiser.com                                                        norbert.werner@sennheiser.com
+
+
+
+
+                                                                                                                                                                Abstract—This paper presents an in-depth evaluation of the                    reliability requirement for the transmission seems obvious in
+                                                                                                                                                            DECT-2020 New Radio (NR) standard for professional live                           a live stage scenario, there are also latency limitations
+                                                                                                                                                            audio applications, focusing on latency as a critical performance                 tolerable by professionals. This is related to the feedback loop
+                                                                                                                                                            indicator. The evaluation uses the nRF91 modem series by                          from microphone to mixing console and back to the in-ear-
+2024 IEEE 5th International Symposium on the Internet of Sounds (IS2) | 979-8-3503-6652-5/24/$31.00 ©2024 IEEE | DOI: 10.1109/IS262782.2024.10704159
+
+
+
+
+                                                                                                                                                            Nordic Semiconductor, currently the first and only available                      monitoring. The overall latency should not exceed about 4 ms
+                                                                                                                                                            devices with DECT-2020 support. We evaluate the potential of                      for the full loop. While this includes a typical processing delay
+                                                                                                                                                            DECT-2020 by exploring the design space of the standard,                          of about 2 ms in a mixing console, only 1 ms remains for each
+                                                                                                                                                            explaining the complexity of trade-offs between latency, RF                       one-way wireless transmission [1] [2]. Figure 1 illustrates this
+                                                                                                                                                            resource utilization, and transmission robustness. We then
+                                                                                                                                                                                                                                              typical stage setup. The data rate of a wireless audio stream
+                                                                                                                                                            present our measurement setup, to analyze the performance.
+                                                                                                                                                            Based on a series of practical latency measurements with
+                                                                                                                                                                                                                                              can be approximated to about 200 kbit/s, assuming
+                                                                                                                                                            different configurations, we identify potential operation points                  48000 samples / s and a state-of-the-art professional live audio
+                                                                                                                                                            for transmitting wireless audio over DECT-2020 and conclude                       codec. Packet error rates should be smaller than 10-6 to ensure
+                                                                                                                                                            that the minimum achievable latency with the current DECT-                        sufficient quality-of-experience for audience and artists [3].
+                                                                                                                                                            2020 modem implementation is 2.312 ms, at a cost of about one-
+                                                                                                                                                            third of the RF channel resources. Our results represent a                           II.    WIRELESS TECHNOLOGIES FOR PROFESSIONAL LIVE
+                                                                                                                                                            minimum latency estimation as only the physical layer is                                                           AUDIO
+                                                                                                                                                            currently available as an implementation, and other key                               The selection and implementation of wireless technologies
+                                                                                                                                                            performance indicators were not considered in this work. These                    in the context of professional audio applications is a complex
+                                                                                                                                                            findings provide valuable insights into the current state of                      and heterogeneous field to navigate.
+                                                                                                                                                            DECT-2020 for professional live audio applications and
+                                                                                                                                                            highlight areas for future exploration.                                           A. Custom and non-standard
+                                                                                                                                                                                                                                                  As of today, the combination of all requirements from
+                                                                                                                                                               Keywords—DECT-2020 New Radio, NR+, professional live                           battery runtime, built size, deterministic transmission
+                                                                                                                                                            audio, wireless microphone, URLLC, 5G
+                                                                                                                                                                                                                                              reliability and latency, cost, and spectrum access can be
+                                                                                                                                                                                         I.       INTRODUCTION                                achieved with non-standard, hand-optimized, and highly
+                                                                                                                                                                                                                                              interlinked audio and radio frontends, based on narrow- or
+                                                                                                                                                                Local wireless transmission (TX) of audio plays an                            wide-band analog or digital modulations. Although this
+                                                                                                                                                            important role in many professional live audio applications.                      approach results in commercially successful products, the
+                                                                                                                                                            The combination of wireless microphones and in-ear-                               customized nature of the overall stack leads to significant
+                                                                                                                                                            monitoring (IEM) devices allow musicians to freely move on                        development costs with relatively slow innovation cycles.
+                                                                                                                                                            a live stage without having to manage cables. While the
+                                                                                                                                                                                                                                              B. Application agnostic
+                                                                                                                                                                                                                                                  In contrast many successful standardized wireless
+                                                                                                                                                                                                      s
+                                                                                                                                                                                                                                              technologies, such as Wi-Fi and 5G, are originally designed to
+                                                                                                                                                                                                                                              be application agnostic. One major element in achieving this
+                                                                                                                                                                                  ireless
+                                                                                                                                                                                icrop one
+                                                                                                                                                                                                                                              was to focus on the IP-convergence layer to create a data
+                                                                                                                                                                                                                                              pipeline for many concurring users and applications. This
+                                                                                                                                                                                                                                              came with certain trade-offs e.g., in terms of efficiency and
+                                                                                                                                                                                                                                2 s           latency, which made those technologies incapable of realizing
+                                                                                                                                                                                        ax    s                                               URLLC (ultra-reliable and low-latency communication) use
+                                                                                                                                                                                                              Live Processing                 cases such as wireless microphones on a stage. Still, the
+                                                                                                                                                                    usician                                                                   number of targeted applications due to the agnostic approach
+                                                                                                                                                                                                          s                                   is significant, resulting in commercially feasible highly
+                                                                                                                                                                                                                                              integrated modem solutions that are able to make up for some
+                                                                                                                                                                                                                                              disadvantages, especially in efficiency. In the recent past the
+                                                                                                                                                                              n-Ear- onitor
+                                                                                                                                                                                                                                              standardization of these widespread technologies are
+                                                                                                                                                                                                                                              beginning to broaden their scope to applications with
+                                                                                                                                                              Fig. 1. Latency critical self-feedback loop in professional live audio          deterministic latency requirements [3] [4]. This is driven by
+                                                                                                                                                                    applications                                                              the respective technology stakeholders (e.g., modem
+
+
+                                                                                                                                                            XXX-X-XXXX-XXXX-X/XX/$XX.00 ©20XX IEEE
+                                                                                                                                                       Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+     manufacturers or network operators) interested in external                                 With its feature set DECT-2020 could in principle deliver
+     investment, political weight in spectrum negotiations, and                             a wide range of highly demanding use cases. DECT-2020 was
+     finally market growth. The example of 5G has shown that                                approved as an IMT-2020 standard for massive machine type
+     even years after standardization many promised features have                           communications (MMTC) and URLLC applications
+     yet to be commercialized. The gap between standardization                              [9] [10] [11]. As the standardization recently finalized
+     and available implementations remains significant [2] [5] [6].                         release version 1 [12-16], the commercialization of
+     Professional audio applications being able to benefit from off-                        implementations is about to begin. A first modem
+     the-shelf Wi-Fi or 5G modems still remain a future vision [7].                         manufacturer will start to sell the implementation of the
+                                                                                            physical layer in 2024. All this makes the new DECT standard
+     C. Consumer audio focussed                                                             a promising technology candidate for delivering reliable low
+         In addition, there are some, also standardized, wireless                           latency wireless audio for future professional live
+     technologies that are optimized for specific audio                                     applications.
+     applications, e.g., Bluetooth and DECT. Both standards have
+     had a narrow focus on mass market consumer use cases,                                      It is not to be expected that the first available DECT-2020
+     wireless headphones and cordless telephony, with relatively                            implementations will cover the full range of features described
+     relaxed reliability and latency requirements, and successful                           in the standard. Instead, radio or modem manufacturers will
+     trade-offs for compatibility and unit price. The past has shown                        naturally focus on first viable business cases. In this work we
+     that also some (semi-) professional audio applications, such as                        present the evaluation of aforementioned first commercially
+     wireless microphones for presentations with more relaxed                               available DECT-2020 physical layer implementation and
+     latency requirements could be delivered based on DECT                                  place it in the context of professional live audio. Our goal is
+     technology. To achieve this goal, only parts of the available                          to capture the state of the art in order to highlight what is
+     mass-market modems could be used, as the available full-                               already feasible and identify room for optimization to
+     stacks are optimized for telephony. Although large parts of the                        potentially meet the use case requirements. In this work we
+     stack needed to be customized and required some trade-offs in                          have a strong focus on latency as one of the most important
+     latency, the availability of mass-market physical layers made                          Key Performance Indicators (KPI) for professional live audio
+     such implementations attractive.                                                       applications.
+
+            III. DECT-2020 NR AND SCOPE OF THIS WORK                                                             IV.       EVALUATION SETUP
+         After classic cordless telephone applications have lost                                For our evaluation we used two nRF9151 System-in-
+     relevance in recent years, DECT stakeholders shifted their                             Package (SiP) modems by the manufacturer Nordic
+     focus first towards home automation, and now to data and IoT                           Semiconductor. To the best of our knowledge, the nRF91
+     (Internet-of-Things) applications. For that purpose, a new                             modems are currently the only available devices with
+     standard called DECT-2020 New Radio (NR) is being                                      DECT-2020 support on the market. The modems also support
+     developed and published since 2020. The new scalable                                   LTE-M, as the physical layers are very similar. For our
+     physical layer (PHY) is OFDM-based and similar to the one                              measurements we used evaluation boards (nRF9151-DK)
+     of 3GPP 5G. According to the new standard different                                    available for the SiP to enable physical access to interfaces.
+     subcarrier spacings, modulation schemes, and frame sizes can                           The modem SiP includes a 64 MHz Arm Cortex-M33
+     be combined and traded-off to allow operation in different                             application processor to simplify interfacing with the modem.
+     channel bandwidths with different data rates, latencies and                            As already mentioned, the SiP currently only offers an
+     robustness. The bandwidth can range from a minimum of                                  implementation of the DECT-2020 physical layer. Control of
+     1.728 MHz up to 221.184 MHz. A radio frame is 10 ms of                                 medium access could be implemented on the application
+     length, consisting of 24 slots of each 416.67 µs. Slots can be                         processor, but is currently not offered by the manufacturer. No
+     further split into a maximum of 16 subslots, potentially                               scheduling or collision mitigation mechanisms are available,
+     enabling very short transmissions. Additional features are                             which would be necessary for the modem to operate in
+     modern turbo coding schemes and Hybrid ARQ (HARQ), as                                  accordance to the DECT standard and therefore coexist with
+     well as MIMO (multiple input multiple output) operation. [8]                           other (legacy, or 2020) devices. These mechanisms would
+     The medium access control (MAC) in DECT-2020 is                                        most likely have major implications for latency and other KPIs
+     fundamentally different from 3GPP 5G. Cellular 5G systems                              of an application. Thus, as a first step we focus on a scenario
+     follow a synchronized and coordinated approach where the                               where no concurring devices are nearby. This can be
+     scheduling and control of medium access are centralized by a                           understood as a best-case latency estimation.
+     single base station. In DECT no central instance coordinates                           A. Configurable modem parameters
+     all devices using the same band. Devices are assumed to be
+     asynchronous, so mitigation methods for transmission and                                  The nRF9151 DECT-2020 physical layer implementation
+     scheduling collisions are required. Concurring DECT systems                            supports a subset of the (partially optional) standardized
+     should be able to self-manage.                                                         parameter set. The modem operates in single input single
+                                                                                            output (SISO) mode only. The subcarrier spacing is fixed at
+
+                                                                                     ra e    0 s
+                                 Slot       s                 Su slot 20     s
+
+             Slots       0       2                                               0             2                                         20   2     22    2
+
+         Su slots    0       2                   0     2                     20 2 22 2 2 2 2 2 2 2           0         2                0     2
+
+        Fig. 2. DECT channel radio resource structure and nRF9151 parameter space
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+                                               DECT-2020 Ne Radio                                 DECT-2020 Ne Radio
+                     P A- ased audio              ode P    onl                                       ode P    onl                    P A- ased audio
+                     pac et generator                                                                                                pac et receiver
+                                        SP                                                                               SP
+
+
+
+
+                                                                          Ti e s nc roni ation
+
+        Fig. 3. Measurement setup to capture precise timestamps of individual audio packets transmitted over DECT-2020 New Radio
+
+     27 kHz, resulting in an also fixed bandwidth of 1.728 MHz,                        measurement results. Modem antennas were placed about
+     (µ,β) = (1,1) in standardization nomenclature. The radio                          30 cm from each other.
+     frontend can operate in the 1.9 GHz band for DECT. Some
+     parameters can be configured: the device supports five                                                        V.        DESIGN SPACE
+     different modulation and coding schemes (MCS), BPSK 1/2                               As explained above the DECT-2020 standard allows the
+     (termed as MCS0), QPSK 1/2 (MCS1), QPSK 3/4 (MCS2),                               configuration of parameters to trade-off different
+     16-QAM 1/2 (MCS3), and 16-QAM 3/4 (MCS4), allowing                                characteristics. The implementation of any application in
+     the trade-off between data rate and robustness. Currently not                     DECT-2020 requires a decision on how to use the available
+     supported are 64-QAM, 256-QAM, and 1024-QAM.                                      resources (see Figure 2) through selecting a matching
+     Furthermore, the modem allows selection of different                              parameter configuration. The parametrization influences KPIs
+     transmission lengths by granularity of half-slots, 208.33 µs                      such as latency, and also the number of simultaneously
+     length each, as illustrated in Figure 2. Our evaluation is based                  operable devices, as RF resources are shared in principle.
+     on modem firmware version 1.0.1, SDK version 2.7.0-rc3.
+                                                                                           A subset of the full parameter set is implemented in the
+     B. Audio stream emulator                                                          modem we used for our measurements. The potential
+         In order to emulate a realistic professional live audio                       parameter space is still significant in size, but not all
+     stream to be sent over DECT-2020 we used configurable                             configurations have the potential to produce KPIs matching
+     FPGA-based audio packet generator and receiver devices. The                       the use cases requirements. In order to focus the design space
+     generator device is constantly creating an audio stream of                        exploration on meaningful areas we made some preliminary
+     ~200 kbit/s. Depending on the configuration of an audio                           considerations.
+     packet periodicity, the stream is split into precise periodic and                     As latency is an important optimization goal for our
+     equidistant audio packets. This allows to emulate real audio                      application, we start here. On the DECT-2020 physical layer
+     packet splits depending on the transmission system or                             there are two transmission parameters that are directly related
+     parameters used. Whenever an audio packet is generated a                          to the application latency.
+     unique packet number and a precise timestamp is logged. The
+     audio packet receiver is able to take timestamps on received                      A. Periodicity of transmissions
+     packets. Both devices synchronize their internal timestamping                         The constant audio stream dictates steady periodic
+     clock with a wired pulse-per-second (PPS) link. Logged                            transmission of audio samples. Individual audio samples are
+     packet numbers and timestamps allow high-precision analysis                       generated at a fixed rate of 48000 samples / second. Samples
+     of transmission latency, jitter, packet loss, and reordering in                   could be transmitted individually or collected to form audio
+     nano seconds resolution.
+     C. Measurement system
+         Figures 3 and 4 give an overview of the measurement
+     setup. The audio packet generator is connected via Serial
+     Peripheral Interface (SPI) to a first nRF9151 modem, the
+     audio packet receiver is linked to the second modem via SPI.
+     The modem SiP offers multiple interfaces for data insertion
+     and extraction, SPI being one with small added delay with
+     sufficient data rate. The nRF9151 application processor                                              P A- ased audio
+     firmware implemented by us acts as a middleware between                                              pac et generator
+                                                                                                                                              P A- ased audio
+     our audio application emulator and the modem itself. Its main                                                                            pac et receiver
+     task is to configure the modem parameters and transfer the
+                                                                                                     SP
+     audio packet data between SPI interfaces and modem. The
+     sender is sending audio packets as soon as possible after                                                                           SP
+     reception via SPI. The receiver is permanently listening for
+     packets.                                                                                    Nordic nR     -D
+                                                                                                  DECT-2020 sender
+                                                                                                                                       Nordic nR     -D
+        The spatial placement of the modems was selected in a                                                                          DECT-2020 receiver
+     way that RF conditions had minimal influence on
+                                                                                         Fig. 4. Measurement system and spatial placement
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+                                 Periodicit    Trans ission lengt
+
+             Slots       0        2                                                         0             2                                    20     2    22   2
+
+         Su slots    0       2                       0         2                          20 2 22 2 2 2 2 2 2 2        0    2                  0      2
+
+                     Radio resource allocation: pac et lengt        su slot periodicit       su slots 0       s
+                                                                                                (a)
+
+                                       Periodicit              Trans ission lengt
+
+             Slots       0        2                                                         0             2                                    20     2    22   2
+
+         Su slots    0       2                       0         2                          20 2 22 2 2 2 2 2 2 2        0    2                  0      2
+
+                     Radio resource allocation: pac et lengt       2 su slot periodicit      su slots     2   s
+                                                                                                (b)
+
+        Fig. 5. Illustration of exemplary radio channel allocation. (a) packet length = 1 subslot, periodicity = 4 subslots (0.83 ms) (b) packet length = 2 subslots,
+              periodicity = 6 subslots (1.25 ms)
+
+     packets for joint transmission. Duration of sample collection                                    increased application latency. Furthermore, the selection of a
+     will result in additional application latency, but could be                                      modulation and coding scheme forces to trade-off available
+     necessary in order to match the transmission system                                              data rate and robustness.
+     packetization scheme. In the case of our DECT-2020 modem
+     the smallest packet granularity is one subslot of 208.33 µs,                                         Summarizing, the very flexible resource grid in
+     meaning that in theory every subslot a packet of audio could                                     DECT-2020 requires some trade-offs to meet application
+     be sent over the air. This means that the minimum application                                    requirements while not simply taking all available RF
+     latency is 208.33 µs for sample collection while waiting for                                     resources. Table 1 gives an overview on the necessary
+     the next transmission subslot, plus at least the latency for the                                 trade-offs. Qualitatively speaking, for a professional live
+     actual RF transmission of 208.33 µs. Drawback of selecting                                       audio use case, the system design should aim for:
+     smaller periodicities could be the occupancy of more                                                 -    latency as low as possible, to ensure best
+     resources in a DECT channel, leaving less room for other                                                  quality-of-experience
+     participants (e.g., other microphones).
+                                                                                                          -    occupation of as little RF resources as possible to
+     B. Transmission length                                                                                    allow the operation of as many microphones as
+         Furthermore, the length of a transmission can be                                                      possible
+     configured with subslot granularity. Selecting a longer TX                                           -    most robust transmission in order to minimize audio
+     length results in more bits being transferred per transmission.                                           drop-outs
+     It could be necessary to allocate more than one subslot per
+     transmission to meet the data rate requirements of our                                              In this work we start exploring this complex DECT-2020
+     application. Again, increased transmission length results in                                     design space with quantitative data from practical
+     added latency and allocation of more RF resources.                                               measurements with the first available PHY implementation.
+        For illustration Figure 5 shows two exemplary                                                         VI.   MEASUREMENT RESULTS AND DISCUSSION
+     configurations of different periodicities and transmission
+                                                                                                         For our measurement we selected a two-step approach,
+     lengths.
+                                                                                                      which is as follows:
+     C. Other considerations                                                                              First, we calculated available data rates for the three
+         Finally, to decide on operation points for our application,                                  smallest available TX lengths (1 subslot, 2 subslots, and 3
+     we need to consider the data rate. The available data rate for a                                 subslots) in dependency of the available MCSs (MCS0-4) and
+     device in DECT-2020 is a trade-off between a selected pair of                                    potential periodicities up to half a DECT-2020 frame
+     periodicity and transmission length, and the selected MCS.                                       (Tables 2, 4, and 6). We selected only periodicities which are
+     While periodicity and TX length mainly trade-off the                                             an even divider of the 48 subslots in a frame, as they would
+     application latency, and the allocation of overall RF resources,                                 make backwards coexistence with legacy DECT devices more
+     they also have an impact on TX overhead. Generally,                                              feasible. For better understanding, the tables also show the
+     overhead is necessary with each individual transmission.                                         resulting RF resource allocation in percent of all 48 subslots
+     Transmitting less often results in less overhead, and increased                                  in a frame of one DECT channel. This gives an indication on
+     efficiency. For example, the configuration in Figure 5 (b) is                                    how many other devices might fit into the same channel.
+     more efficient than (a) in terms of overhead, but has an
+                                              TABLE 1: TRADE-OFF BETWEEN LATENCY, RESOURCE ALLOCATION, AND DATA RATE
+
+                                                                                                        System parameters
+                                                         Application latency               Resource occupancy     Efficiency [Bits / Hz]           Robustness
+                                  Periodicity ↑                   ↑                                 ↓                       ↑                          -
+          Configuration           TX length ↑                     ↑                                 ↑                       ↑                          -
+                                    MCS ↑                         -                                 -                       ↑                          ↓
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+         Second, we selected the configurations with a resulting                       A. TX length = 1 subslot
+     data rate equal or larger than 200 kbit/s, as only those are                          Table 2 and 3 show the results of the data rate calculation
+     potential candidates to deliver our application (marked in                        and the measured latencies for a transmission length of
+     green in Tables 2, 4, and 6). Subsequently, we measured the                       1 subslot. Green marked cells in Table 2 show that only five
+     latencies only for the selected configurations (Tables 3, 5,                      configurations in total produce enough data rate to potentially
+     and 7) while limiting the transmitted data rate to about                          support our application. For those it is required to take at least
+     200 kbit/s.                                                                       50 % of the DECT channel resources. And, only the higher
+         For all data rate calculations, we are assuming the smallest                  modulations (MCS2-4) produce enough data rate. To evaluate
+     possible PHY header (physical layer control field type 1).                        the design space for our application we focus on only the green
+     Potential other overhead from other layers (e.g., MAC) was                        marked configurations for further measurements, whose
+     not considered here, as only the PHY is implemented.                              results are shown in Table 3. We found that none of the
+                                                                                       parameter sets are feasible with the available modem
+          Latency measurements were conducted from SPI-transfer                        implementation. After some investigation we found that with
+     in the sender to SPI-transfer in the receiver (see section IV.C).                 transmission periodicities below about 1 ms the modem starts
+     For each configuration we measured latency and jitter of                          to ignore increasingly more transmission requests. Our
+     20,000 individual transmissions. The tables presented contain                     assumption is, that the modem has an internal processing
+     the respective maximum latency we observed. Generally,                            overhead with each TX. The modem seems occupied with
+     jitter was very low with little to none outliers, meaning the                     each transmission for some time, which is larger than our
+     maximum latency is a good indication on the potential                             periodicity. Thus, the modem is not able to handle or queue
+     application latency. Exemplarily, for the configuration                           TX requests during that time. Based on that we can state that
+     TX length of 2 subslots, MCS1, periodicity 1.25 ms the                            our application is not feasible with the available modem
+     observed latency was between 1.058 and 1.062 ms with a                            implementation at a TX length of 1 subslot.
+     mean latency of 1.060 ms and a standard deviation of 0.7 µs.
+
+       TABLE 2: AVAILABLE APPLICATION DATA RATE (TX LENGTH = 1 SUBSLOT),                      TABLE 3: MAXIMUM MEASURED LATENCY FOR 20000 PACKETS
+                 DATA RATES >= 200 KBIT/S HIGHLIGHTED IN GREEN.                             (TX LENGTH = 1 SUBSLOT) WITH TARGET DATA RATE OF 200 KBIT/S.
+                                 TX length = 1 subslot                                                        TX length = 1 subslot
+            Packet           RF-ch.        Available data rate [kbit/s]                                   RF-ch.               Latency [ms]
+          Periodicity        alloc.                    MCS                             Packet Periodicity alloc.                    MCS
+        [ms]    [subslots]    [%]         0      1        2        3         4           [ms]   [subslots]    [%]       0        1        2        3        4
+        0.21        1         100     0       153.6    268.8    422.4      691.2         0.21       1         100                       not supported by modem
+        0.42        2          50     0       76.8     134.4    211.2      345.6         0.42       2          50                                not supported
+        0.83        4          25     0       38.4     67.2     105.6      172.8         0.83       4          25
+        1.25        6         16.7    0       25.6     44.8     70.4       115.2         1.25       6         16.7
+        2.50       12          8.3    0       12.8     22.4     35.2       57.6          2.50      12          8.3
+        3.33       16         6.25    0       9.6      16.8     26.4       43.2          3.33      16         6.25
+        5.00       24          4.2    0       6.4      11.2     17.6       28.8          5.00      24          4.2
+
+       TABLE 4: AVAILABLE APPLICATION DATA RATE (TX LENGTH = 2 SUBSLOTS),                    TABLE 5: MAXIMUM MEASURED LATENCY FOR 20000 PACKETS
+                 DATA RATES >= 200 KBIT/S HIGHLIGHTED IN GREEN.                            (TX LENGTH = 2 SUBSLOTS) WITH TARGET DATA RATE OF 200 KBIT/S.
+                                 TX length = 2 subslots                                                          TX length = 2 subslots
+            Packet           RF-ch.         Available data rate [kbit/s]                     Packet          RF-ch.                Latency [ms]
+          Periodicity        alloc.                     MCS                                Periodicity       alloc.                     MCS
+        [ms]    [subslots]    [%]         0      1        2        3         4           [ms]   [subslots]    [%]       0        1        2        3        4
+        0.21        1         200             configuration not feasible                 0.21       1         200             configuration not feasible
+        0.42        2         100     326.4   710.4 1094.4 1478.4 2246.4                 0.42       2         100              not supported by modem
+        0.83        4          50     163.2   355.2 547.2 739.2 1123.2                   0.83       4          50                   not supported by modem
+        1.25        6         33.3    108.8   236.8 364.8 492.8 748.8                    1.25       6         33.3            1.062 1.080 1.098 1.134
+        2.50       12         16.7    54.4    118.4 182.4 246.4 374.4                    2.50      12         16.7                               1.171 1.207
+        3.33       16         12.5    40.8    88.8     136.8 184.8 280.8                 3.33      16         12.5                                       1.254
+        5.00       24          8.3    27.2    59.2     91.2      123.2 187.2             5.00      24          8.3
+
+       TABLE 6: AVAILABLE APPLICATION DATA RATE (TX LENGTH = 3 SUBSLOTS),                    TABLE 7: MAXIMUM MEASURED LATENCY FOR 20000 PACKETS
+                 DATA RATES >= 200 KBIT/S HIGHLIGHTED IN GREEN.                            (TX LENGTH = 3 SUBSLOTS) WITH TARGET DATA RATE OF 200 KBIT/S.
+                                 TX length = 3 subslots                                                          TX length = 3 subslots
+            Packet           RF-ch.         Available data rate [kbit/s]                     Packet          RF-ch.                Latency [ms]
+          Periodicity        alloc.                     MCS                                Periodicity       alloc.                     MCS
+        [ms]    [subslots]    [%]         0      1        2        3         4           [ms]   [subslots]    [%]       0        1        2        3        4
+        0.21        1         300             configuration not feasible                 0.21       1         300             configuration not feasible
+        0.42        2         150             configuration not feasible                 0.42       2         150             configuration not feasible
+        0.83        4          75     316.8   662.4 1027.2 1353.6 2083.2                 0.83       4          75              not supported by modem
+        1.25        6          50     211.2   441.6 684.8 902.4 1388.8                   1.25       6          50     1.267   1.296          not supported
+        2.50       12          25     105.6   220.8 342.4 451.2 694.4                    2.50      12          25             1.370 1.400 1.432 1.494
+        3.33       16         18.8    79.2    165.6 256.8 338.4 520.8                    3.33      16         18.8                     1.450 1.481 1.543
+        5.00       24         12.5    52.8    110.4 171.2 225.6 347.2                    5.00      24         12.5                               1.576 1.638
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+     B. TX length = 2 subslots                                                          TABLE 8: SUMMARY OF MEANINGFUL CONFIGURATIONS FOR PROFESSIONAL
+         With a transmission length of 2 subslots we found several                        AUDIO STREAMING; LATENCIES INCLUDE THE MEASURED SPI-TO-SPI
+                                                                                                         LATENCY AND THE PERIODICITY.
+     configurations      producing     more       than     200 kbit/s
+     (green markings in Table 4). Selecting a TX length of 2                                              TX length = 2 subslots        TX length = 3 subslots
+     subslots, while transmitting each subslot is not feasible within                      Packet       Audio-     MCS      RF-ch.     Audio-     MCS      RF-ch.
+     one DECT channel (row 1 in Table 4), as it would require                            Periodicity    Latency             alloc.     Latency              alloc.
+     more RF resources than are available in one channel.                                   [ms]         [ms]                [%]        [ms]                 [%]
+                                                                                            1.25        2.312      1        33.3       2.517      0       50
+         In the measurement phase (Table 5) we found again that                             2.50        3.671      3        16.7       3.87       1       25
+     some configurations (row 2 and 3) with a small periodicity                             3.33        4.587      4        12.5       4.783      2       18.8
+     result in the modem ignoring a significant number of TX                                5.00        -          -        -          6.576      3       12.5
+     requests. Successful measurements were possible with a
+     periodicity of 1.25 ms and upwards. Looking at row 4 a slight                     supports our earlier assumption, that the modem is not able to
+     increase in measured latency with higher MCS is evident,                          handle new TX requests while the last is still on-going.
+     indicating that there is a (relatively small) interdependence
+     between MCS and processing duration in the modem.                                                            VII. SUMMARY
+                                                                                           We want to place our measurement results in the context
+         Furthermore, when comparing row 4 and 5 or 6, we see an                       of a professional live audio application. Our work gives a first
+     increase in latency. This is most likely related to the increase                  realistic overview on the state of the art of DECT-2020 for this
+     in individual packet size. In average the data rate is the same,                  use case. Based on that it is possible to estimate potential
+     independent of selected periodicity. But, depending on                            realistic latencies of a professional wireless microphone
+     periodicity, individual packets are of different size. Simply                     utilizing DECT-2020. Potential feasible configurations can be
+     put, higher periodicity means fewer packets of larger size. Yet,                  extracted from our Tables 3, 5 and 7. For a better overview we
+     on DECT-2020 PHY it is not intended to transmit smaller than                      summarized all meaningful operation points in Table 8.
+     a subslot granularity. Independent of your payload size, the
+     full length of subslots are transmitted. In this case, the modem                      The table shows the following: for both feasible
+     will always transmit two full subslots. The sender will fill the                  TX lengths we composed the entries for the different packet
+     transmission with padding. Information about padding is not                       periodicities with the respective most robust MCS. Where
+     transmitted on PHY layer. Meaning the receiver is not aware                       multiple MCSs (one row in our Tables 3, 5 and 7) are able to
+     of the padding. This could be implemented in a MAC layer.                         produce the required data rate, it makes sense to always select
+     As a result, the duration of a transmission should not be related                 the MCS with the smallest index. It gives more robustness and
+     to the periodicity. Still, we measure an increase. The reason                     slightly lower latency, without any obvious downsides. The
+     for that is most likely related to multiple overlapping effects.                  given latencies in Table 8 are audio application latency
+     Although the RF transmissions itself are of the same length,                      estimations and contain the sum of packet periodicity and
+     the SPI transfers differ in number of bytes transferred, leading                  measured transmission latency. These values are the minimum
+     to more time required for SPI at higher periodicities. We also                    application layer latency estimation for a potential practical
+     found, that the increase in SPI duration cannot be the only                       implementation of our use case. In addition, we show the
+     reason for increased latency. The longer SPI transfers would                      related RF channel resource allocation in percent. Table 8
+     imply an even higher addition to latency than we measure.                         gives a valuable condensation of the design space for
+     This implies that there is at least a second overlapping effect,                  transmitting wireless audio over DECT-2020. For example, it
+     resulting in slightly smaller latency with higher periodicities.                  can be read as: it is most likely not possible to achieve a
+                                                                                       smaller latency than 2.312 ms with the available DECT-2020
+     C. TX length = 3 subslots                                                         modem implementation, at a cost of about 1/3 of the RF
+         Moving to 3 subslots as a TX length, even more                                resources of one channel. A configuration set with slightly
+     configuration constellations are able to produce more than                        increased minimum audio latency of 2.517 ms at TX length =
+     200 kbit/s of application data rate (see Table 6, green cells).                   3 can be chosen. This operation point will require more
+     Naturally, this comes with the cost of generally using more RF                    resources (50 %), but will have a better robustness (MCS0).
+     resources. Latencies are higher than our measurements with a
+     TX length of 2 subslots (Table 7 vs. Table 5). The increase in                        It should again be emphasized that currently only the
+     latency is consistent with one added subslot of about                             physical layer is available as an implementation. For a
+     208.33 µs.                                                                        DECT-2020 compliant system, some parts of the MAC layer
+                                                                                       are required, namely the mechanisms to handle coexistence
+         With our latency measurement we found again that some                         with other devices. Furthermore, many elements that will have
+     parameter sets result in modem failures on RF transmissions.                      relevant impact on the latency in a practical implementation
+     Interestingly, we see in row 4 (periodicity of 1.25 ms) that the                  were not considered in this work. These are for example jitter
+     point of failure is in-between switching MCSs from 1 to 2.                        (processing,      scheduling,       RF-transmission,     etc.),
+     This implies two things. First, when comparing to our                             synchronization between devices, remote control channels,
+     measurement with a TX length of 2 subslots of the otherwise                       audio A/D and D/A conversion, and audio en- and decoding.
+     same configuration (Table 5, row 4), the threshold for failing                    For that reason, the results of our work have to be understood
+     seems to be related to the transmission latency. And second,                      as a minimum latency estimation.
+     that we were probably operating at the threshold of failure at
+     MCS1 (same row). When switching to MCS2, the latency                                  Lastly, other KPIs were not considered or only looked
+     most likely increased a small amount (see section VI.B),                          upon qualitatively in our work, but are equally important in
+     meeting the threshold of the modem not being able to handle                       delivering a professional live audio use case. First simulations
+     a new TX request every 1.25 ms. It is also noticeable that the                    have shown that the DECT-2020 physical layer alone might
+     threshold is very close to the actual periodicity which again                     not be able to meet the strict reliability requirements of some
+                                                                                       factory automation use cases, which show some similarities to
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+     our live audio scenarios [17]. In [18] the bit- and packet error                  [7]  M. Centenaro, P. Casari, and L. Turchet, “Towards a 5G
+     rates in different frequency bands were evaluated with SDR-                            communication architecture for the Internet of Musical Things”, 2020
+                                                                                            27th Conference of Open Innovations Association (FRUCT), IEEE,
+     based measurements.                                                                    2020
+                                                                                       [8] M. D. Perez-Guirao, T. Weisshaupt, and A. Wilzeck, “DECT NR+:
+                         VIII. ACKNOWLEDGEMENT                                              Unveiling the Essentials of a new non-cellular 5G Standard for
+         This work was partially conducted within the context of                            Verticals”, Mobile Communication-Technologies and Applications;
+     the MERCI project (“ edia and Event Production via                                     26th ITG-Symposium, VDE, 2022
+     Resilient Communication on oT nfrastructure”). The project                        [9] M. Penner, M. Nabeel, and J. Peissig, ”URLLC performance
+                                                                                            evaluation of IMT-2020 candidate technology: DECT-2020 new
+     received funding from the German Federal Ministry for                                  radio”, 2021 IEEE 94th Vehicular Technology Conference (VTC2021-
+     Economic Affairs and Climate Protection and the French                                 Fall), IEEE, 2021
+     Ministry of Economy, Finance and Industrial and Digital                           [10] V. Dhanwani, et al., “Assessment of candidate technology ETSI:
+     Sovereignty.                                                                           DECT-2020 new radio”, 2020 IEEE 3rd 5G World Forum (5GWF),
+                                                                                            IEEE, 2020
+                                   REFERENCES                                          [11] K. Maliatsos, A. Gotsis, and A. Alexiou, “Evaluation of the IMT-2020
+     [1]   M. Lester, and J. Boley, “The effects of latency on live sound                   candidate radio interface technology DECT-2020 NR”, 2022 14th
+           monitoring”, Audio engineering society convention 123, Audio                     International Conference on COMmunication Systems & NETworkS
+           Engineering Society, 2007.                                                       (COMSNETS), IEEE, 2022
+     [2]   J. Dürre, et al., “A Disaggregated 5G Testbed for Professional Live         [12] ETSI TS 103 636-1, ”DECT-2020 New Radio (NR); Part 1: Overview;
+           Audio Production”, 2022 IEEE International Symposium on                          Release 1”, 2024
+           Broadband Multimedia Systems and Broadcasting (BMSB), IEEE,                 [13] ETSI TS 103 636-2, “DECT-2020 New Radio (NR); Part 2: Radio
+           2022.                                                                            reception and transmission requirements; Release 1”, 2024
+     [3]   3GPP Technical Report 22.827 SA 1 Rel. 17, “Stud on Audio-Visual            [14] ETSI TS 103 636-3, “DECT-2020 New Radio (NR); Part 3: Physical
+           Service Production”, 2020                                                        layer; Release 1”, 2024
+     [4]   D. Cavalcanti, C. Cordeiro, M. Smith and A. Regev, “WiFi TSN:               [15] ETSI TS 103 636-4, “DECT-2020 New Radio (NR); Part 4: MAC
+           Enabling Deterministic Wireless Connectivity over 802.11”, in IEEE               layer; Release 1”, 2024
+           Communications Standards Magazine, vol. 6, no. 4, pp. 22-29,                [16] ETSI TS 103 636-5, “DECT-2020 New Radio (NR); Part 5: DLC and
+           December 2022                                                                    Convergence layers; Release 1”, 2024
+     [5]   S. Hämäläinen, J. Dürre, and A. Schmidt, “Low Latency 5G for                [17] E. Llaguno, et al., “Physical Layer Performance of DECT-2020 New
+           Professional Audio Trans ission”, Whitepaper, 2021                               Radio for Factory Automation”, 2024 IEEE 20th International
+     [6]   M. Seidel, A. I. Grohman, C. Lehmann, J. Rischke and F. H. P. Fitzek,            Conference on Factory Communication Systems (WFCS), IEEE, 2024
+           “On the Impact of 5G User Equipments on Latency across Chipset              [18] M. Waßmann et al., ”Performance of DECT-2020 NR in an industrial
+           Generations“, 2024 IEEE 25th International Symposium on a World of               environment for varying RF bands“, EuCNC 06/2024, Antwerp
+           Wireless, Mobile and Multimedia Networks (WoWMoM), Perth,
+           Australia, 2024
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:19:12 UTC from IEEE Xplore. Restrictions apply.
+

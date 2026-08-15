@@ -1,0 +1,16 @@
+Title: Saikko et al. - 2025 - Positioning and Tracking in DECT-2020 NR With Proactive Anchor Selection for Range, Angle, and RSS M
+
+Summary:
+
+This paper addresses the key challenges and contributions of the work through a link-level summary of its objectives, methods, results, and practical implications.
+
+Core focus:
+—This article addresses efficient positioning and user device tracking in Internet-of-Things (IoT) networks with particular focus on the new DECT-2020 New Radio standard—the first noncellular 5G technology standard in the world. Stemming from fundamental performance requirements of IoT networks, for example, related to energy consumption, latency, and reliability, it is important to utilize available radio resources efficiently, while avoiding redundant transmis- sions and signaling. In this article, we extend our earlier proposed tracking-based positioning solution, which utilized Fisher information to select the most beneficial range and angle measurements, to cover also received signal strength (RSS)-based measurements and particle filter-based solutions. By exploiting prior information inherited from tracking- based positioning solutions, it is possible to proactively select the most valuable positioning measurements, and thus save valuable effort and time in acquiring and processing positioning measurements without sacrificing the positioning performance in practice. Through extensive numerical evaluations, considering range, angle, and RSS measurements, we show that the proposed anchor selection method is able to outperform the traditional signal-to-noise ratio-based measurement selection approach, while enabling positioning with a smaller number of measurements. In addition, we illustrate the effect of prior information quality on the proposed method performance by varying the measurement interval in the tracking process. The numerical results show that when only two anchors are utilized, approximately up to 10%–50% reduction in positioning root-mean-square error can be achieved depending on the considered measurement type. Index Terms—Digital Enhanced Cordless Telecommunications—2020 New Radio (DECT-2020 NR), extended Kalman filter (EKF), Fisher information, Internet-of-Things (IoT), noncellular 5G, particle filter, positioning, tracking.
+
+Additional context and findings:
+positioning approaches are evaluated and classified in an IoT infrastructure applicable framework, while also considering as- CCOMMODATING to growing demand on Internet-of- A Things (IoT)-based services, the new Digital Enhanced Cordless Telecommunications—2020 New Radio (DECT-2020 pects of power consumption and energy efficiency. Furthermore, potential positioning
+
+Key takeaways:
+- The paper presents a new or improved technical approach in the DECT-2020 NR / 5G / wireless communication domain.
+- It evaluates performance using simulation or experimental analysis to support claims and compare with relevant baselines.
+- The work contributes to understanding, optimizing, or validating DECT-2020 NR, URLLC, mMTC, mesh networking, or related 5G-enabled radio technologies.

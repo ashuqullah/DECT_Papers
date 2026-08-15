@@ -1,0 +1,62 @@
+Title: Performance of DECT-2020 NR and FCC-Based
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 NR is a recently standardized radio access technology (RAT) for
+massive machine-type 5G communications operating in the license-exempt and
+licensed bands. By relying on multi-hop communications and listen-before-talk
+(LBT) medium access, DECT-2020 NR allows for cost-controlled flexible
+deployments. However, the medium access procedures for some of the bands
+currently used by classic DECT systems are strictly regulated by long-standing
+policies in the USA. The goal of this study was to evaluate and compare the
+performance of DECT-2020 NR and medium access specified by the Federal
+Communications Commission (FCC) for the Unlicensed Personal Communications
+Service (UPCS) band. Our results demonstrate that in a mesh system, the use of
+FCC access rules leads to drastic performance degradation, resulting in less
+than 85% of delivered packets compared to 98-99% for DECT-2020 NR. This results
+in a slight 1-2% degradation for coexisting classic DECT devices. For efficient
+use of the UPCS band, we recommend revisiting current FCC rules, allowing for
+LBT-based operations.
+
+Approach and methods:
+85% of delivered packets compared to 98-99% for DECT-2020 NR. This results in a
+slight 1-2% degradation for coexisting classic DECT devices. For efficient use
+of the UPCS band, we recommend revisiting current FCC rules, allowing for LBT-
+based operations. Index Terms—DECT-2020 NR; NR+; New Radio; multi-hop; IoT;
+topology; algorithms; mMTC. I. I NTRODUCTION Internet of Things (IoT)
+applications are already tightly integrated into our daily lives, enabling a
+wide range of remote functions from sensing to actuation [1]. Massive machine-
+type communication (mMTC) technologies, as a core component of 5G IMT-2020
+systems, provide essential support for IoT [2]. NB-IoT [3] is a 3GPP-
+standardized solution for cellular IoT (CIoT) [4], whereas DECT-2020 NR [5]
+leads the way for non-cellular IoT standards. DECT-2020 NR is the pioneering 5G
+mMTC enabler operating in the unlicensed frequency band: 1880-1900 MHz in Europe
+and Australia, and 1900-1920 MHz in other regions. Recent research [6], [7] has
+demonstrated its capacity to support millions of radio devices (RDs) per square
+kilometer, while meeting the performance requirements for 5G mMTC applications
+outlined in [8]. These requirements include a packet loss rate (PLR) of less
+than 0.05% and an end-toend latency of no more than 10 seconds for 99% of
+
+Key findings:
+s are presented in the last section. • II. DECT-2020 NR AND FCC RULES In this
+section, we first overview the requirements imposed by the FCC on operation in
+the UPCS band at 1920-1930 MHz. Then, we outline the basics of LBT-based access,
+as specified in the DECT-2020 NR. A. FCC Requirements for UPCS Band The set of
+rules imposed by the FCC on the operation in the UPCS bands is summarized in
+[11]. Existing FCC rules state that both asynchronous and isochronous devices
+may operate in these bands. However, current spectrum access rules only define
+the old isochronous access method, as discussed above. The isochronous access
+method is illustrated in Fig. 1. Specifically, according to Rule 1 in [11],
+before initiating transmission, devices must monitor the combined time and
+spectrum windows in which they intend to transmit for a minimum of 10 ms in
+systems with 10-millisecond or shorter frames or 20 ms in systems with
+20-millisecond frames. Thus, spectrum resources are considered free if the
+device intends to use them full time. Peak measurements over each symbol were
+performed with the threshold set to -82 dBm, as according to Rule 2 in [11],
+this threshold must not be
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

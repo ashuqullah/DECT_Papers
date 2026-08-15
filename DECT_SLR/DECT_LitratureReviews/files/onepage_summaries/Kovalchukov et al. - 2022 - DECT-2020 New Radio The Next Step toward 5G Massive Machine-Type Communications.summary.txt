@@ -1,0 +1,65 @@
+Title: DECT-2020 New Radio: The Next Step toward
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Massive machine type communications (mMTC) is one of the cornerstone services
+that must be supported by 5G systems. 3GPP has already introduced LTE-M and NB-
+IoT, referred to as cellular IoT (CIoT), in 3GPP Releases 13, 14, and 15, and
+submitted these technologies as part of 3GPP’s IMT-2020 technology submission to
+ITU-R. Even though NB-IoT and LTE-M have been shown to satisfy 5G mMTC
+requirements, it is expected that these CIoT solutions will not address all
+aspects of IoT and ongoing digitalization, including the support for direct
+communication between ”things” with flexible deployments, different business
+models, as well as support for even higher node densities and enhanced coverage.
+In this article, we first describe the Digital Enhanced Cordless
+Telecommunications (DECT) DECT-2020 standard recently published by ETSI for mMTC
+communications. We then evaluate its performance and compare it to the existing
+low-power wide area network solutions, showing that it outperforms those in
+terms of supported density of nodes while keeping delay and loss guarantees at
+the required level.
+
+Approach and methods:
+This work was supported by the Business Finland 5G-FORCE project. Digital Object
+Identifier: 10.1109/MCOM.001.2100375 58 For many years, the Internet of Things
+(IoT) has been predicted to have almost exponential growth [1]. However, this
+progress has taken much longer than expected. With the rise of big data and
+artificial intelligence, IoT has become a new megatrend foreseen to impact many
+industry areas [2]. This progress depends on the availability of off-the-shelf
+enabling radio technologies. Conventionally, applications act as a driving
+factor toward developing enabling technologies. The Industry 4.0 concept
+dictates small delays in the air interface, enabling real-time synchronization
+and reconfiguration capabilities [3]. On the other hand, condition monitoring
+and logistics applications are characterized by high node density, and do not
+pose strict requirements on delay and single packet loss performance [4]. These
+new service requirements are taken into account in the International
+Telecommunication Union Radiocommunication Sector (ITU-R) International Mobile
+Telecommunications-2020 (IMT-2020) process such that any IMT-2020 technology
+proposal shall meet all the requirements of usage scenarios to be recognized as
+5G technology by ITU-R [5]. Addressing these requirements, 3rd Generation
+Partnership Project (3GPP) has specified two services and associated enablers —
+Narrowband IoT (NB-IoT), Long-Term Evolution MTC (LTE-M), and
+
+Key findings:
+s are drawn in the last section. Roman Kovalchukov, Dmitri Moltchanov, Joonas
+Säe, Yevgeni Koucheryavy, and Mikko Valkama are with Tampere University,
+Finland; Juho Pirskanen and Jussi Numminen are with Wirepas Oy, Tampere,
+Finland. 0163-6804/22/$25.00 © 2022 IEEE IEEE Communications Magazine • June
+2022 Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore.
+Restrictions apply. Cloud Cloud Cloud 2 2 Radio Device operating in FT mode
+Radio Device operating in PT mode Radio Device operating in FT and PT modes
+simultaneously Cloud External network connection to Internet, Cloud or data
+server Radio link operating at channel 2 Radio link operating at channel 1 Radio
+link operating at channel 3 FIGURE 1. Illustration of topology formation and
+RDs’ operating modes in DECT-2020 technology. 5G mMTC State of the Art and
+Requirements 5G mMTC Service Requirements The requirements for 5G mMTC vary and
+depend on the application. For conventional monitoring applications, ITU-R
+mandates the network to achieve node density of at least one million devices per
+square kilometer with the minimum message intensity of one packet per two hours
+[5]. At this traffic intensity, the packet loss ratio (PLR)
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

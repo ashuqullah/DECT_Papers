@@ -1,0 +1,493 @@
+                                                                                                                                                                                             2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                                                                                                                                                                                                     International Workshop on 5G and Future Wireless Technology
+
+
+
+
+                                                                                                                                                                                      DECT-2020 New Radio System Level Assessment
+                                                                                                                                                                                       for Multi-Hop Assisted mMTC usage Scenario
+2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS) | 978-1-6654-4893-2/21/$31.00 ©2021 IEEE | DOI: 10.1109/ANTS52808.2021.9936990
+
+
+
+
+                                                                                                                                                                                                     Tanmay Singhwi                                         Samya Andra                                 Sai Jaswanth Seelam
+                                                                                                                                                                                        Electronics and Communication Engg.                      School of Electrical Engineering                 School of Electrical Engineering
+                                                                                                                                                                                                     The LNMIIT                                       Shiv Nadar University                            Shiv Nadar University
+                                                                                                                                                                                                     Jaipur, India                                    Greater Noida, India                             Greater Noida, India
+                                                                                                                                                                                                17dec006@lnmiit.ac.in                                   sa891@snu.edu.in                                 ss197@snu.edu.in
+
+                                                                                                                                                                                                    Rahul Makkar                                        Divyang Rawal                                         Nikhil Sharma
+                                                                                                                                                                                     Electronics and Communication Engg.                  Electronics and Communication Engg.                  Electronics and Communication Engg.
+                                                                                                                                                                                                  The LNMIIT                                           The LNMIIT                                            The LNMIIT
+                                                                                                                                                                                                  Jaipur, India                                        Jaipur, India                                        Jaipur, India
+                                                                                                                                                                                           rahul.makkar27@gmail.com                             divyang.rawal@lnmiit.ac.in                           nikhil.sharma@lnmiit.ac.in
+
+
+
+                                                                                                                                                                                     Abstract—All the candidate technologies submitted to the ITU-                    introduced their candidate technologies and claim to have
+                                                                                                                                                                                  R are expected to meet the minimum performance requirements                         met the requirements mentioned above [4]. ITU-R provides a
+                                                                                                                                                                                  for getting recommended as IMT-2020. This paper considered                          guideline for the evaluation process with all the system speci-
+                                                                                                                                                                                  a submission for digital enhanced cordless telecommunication
+                                                                                                                                                                                  new radio (DECT-2020 NR) technology evaluation. We proposed                         fications, including self-evaluation and independent evaluation
+                                                                                                                                                                                  various approaches for relay selection, channel/frequency alloca-                   by independent evaluation groups (IEGs).
+                                                                                                                                                                                  tion for the relay and device association with relays for massive                      ETSI-DECT claims to have satisfied the minimum technical
+                                                                                                                                                                                  machine type communication (mMTC) scenario based on DECT-                           criteria to address all of the needs stated above [5]. Authors in
+                                                                                                                                                                                  2020 NR specifications. These approaches are compared based
+                                                                                                                                                                                  on SINR received by the users. Simulation results conclude that                     [4] investigated the evaluation results and observations on the
+                                                                                                                                                                                  the angles based approach is the most optimal method for relay                      assessment of candidate technology component ETSI: DECT-
+                                                                                                                                                                                  selection and device association. For an average percentile of                      2020 NR for mMTC and ultra-reliable low-latency commu-
+                                                                                                                                                                                  users, a difference of 7dB can be observed between the worst                        nication (uRLLC) usage scenario. Another essential candidate
+                                                                                                                                                                                  and best approach.                                                                  technology that promises to meet the requirements set by ITU-
+                                                                                                                                                                                     Index Terms—5G, digital enhanced cordless telecommunication
+                                                                                                                                                                                  (DECT), massive machine type communication (mMTC).                                  R for IMT-2020 is the 5G NR. Following the self-evaluation
+                                                                                                                                                                                                                                                                      report submitted by 3GPP, several other groups, including
+                                                                                                                                                                                                             I. I NTRODUCTION                                         5GIF, evaluated the technology’s compliance with performance
+                                                                                                                                                                                                                                                                      requirements such as connection density, spectral efficiency,
+                                                                                                                                                                                     The international telecommunication union radiocommu-                            mobility, reliability, etc., foreseeing the future demands of
+                                                                                                                                                                                  nication sector (ITU-R) has set the requirements for the                            cellular communication. The obtained results are compared
+                                                                                                                                                                                  international mobile telecommunications-2020 (IMT-2020) for                         from various proponents, and it is concluded that the ITU
+                                                                                                                                                                                  serving the future demands such as accommodating more                               requirements have been satisfied. Additionally, it is inves-
+                                                                                                                                                                                  traffic, massive devices connectivity, enhanced quality of ser-                     tigated that full-buffer simulation outperforms the non-full
+                                                                                                                                                                                  vice, and better affordability through cost reduction [1]. The                      buffer simulation for different connection density parameters
+                                                                                                                                                                                  requirements for some key performance indicators (KPI’s) for                        [6], [7].
+                                                                                                                                                                                  radio access technologies (RAT) have been adopted in ITU-R
+                                                                                                                                                                                                                                                                         The primary performance requirement for mMTC is to en-
+                                                                                                                                                                                  report M.2410 in November 2017 [2]. 3GPP has developed
+                                                                                                                                                                                                                                                                      able a high connection density of up to 1-million devices/km2 ,
+                                                                                                                                                                                  RAT’s such as NR, Long term evolution - machine type
+                                                                                                                                                                                                                                                                      which is ten times higher than current LTE technology [4], [5].
+                                                                                                                                                                                  communication (LTE-M) and narrowband - Internet of things
+                                                                                                                                                                                                                                                                      DECT-2020 is an important new standardization project aimed
+                                                                                                                                                                                  (NB-IoT) which together meet all the requirements set by
+                                                                                                                                                                                                                                                                      at meeting some of IMT-2020’s criteria. It broadcasts in the
+                                                                                                                                                                                  the ITU [3]. Additionally, several other organizations such
+                                                                                                                                                                                                                                                                      1880–1900 MHz range, with 10 frequency channels ranging
+                                                                                                                                                                                  as China, Korea, the European telecommunications standards
+                                                                                                                                                                                                                                                                      from 1881.792 MHz to 1897.344 MHz with the bandgap
+                                                                                                                                                                                  institute (ETSI)-digital enhanced cordless telecommunications
+                                                                                                                                                                                                                                                                      of 1728kHz [8]. Similar to NR, DECT-2020 also provides
+                                                                                                                                                                                  (DECT) Forum, enhanced ultra high throughput (EUHT), etc.,
+                                                                                                                                                                                                                                                                      a subcarrier scaling factor (µ) ranges {1, 2, 4, 8} results in
+                                                                                                                                                                                                                                                                      subcarrier spacing {27, 54, 108, 216} kHz, respectively. Also,
+                                                                                                                                                                                    This work is supported by 5G India Forum (5GIF) Independent Evaluation            it provides the mesh network topology to connect multiple
+                                                                                                                                                                                  Group (IEG) for IMT-2020: 5GIF is associated with COAI, India.                      radio devices via fixed terminating (FT) point.
+
+
+
+
+                                                                                                                                                                               Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                          978-1-6654-4893-2/21/$31.00 ©2021 IEEE
+              2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                      International Workshop on 5G and Future Wireless Technology
+
+
+
+
+      This paper has carried out the simulations over DECT-2020
+   NR specifications for the Urban-Macro mMTC scenario. Based
+   on the channel/frequency assignments, proximity of devices
+   and relay (RDFT,PT ) selection, we proposed the different ap-
+   proaches to avoid the interference by numerous interfering
+   devices in a massive connecting Urban-Macro environment as
+   follows.
+      • Angles approach: selection of equidistant RDFT,PT s,
+      • Farthest distance approach: channel assignment based on
+        RDFT,PT s that are farthest from each other,
+      • Nearest distance approach: channel assignment based on
+        RDFT,PT s that are nearest to each other, and
+      • Random approach: random selection of RDFT,PT s and
+        channel assignment.
+      Rest of the paper is organized as follows. Section II de-
+   scribes the system model of massive connecting devices over
+   DECT-2020 NR specifications. Section III provides the CDF
+   analysis of such a system. Section IV describes the simulation                             Fig. 1: Illustration of multi-hop DECT model [9]
+   results, and the paper is concluded in section V.
+      Notations: The symbol notation used in this paper are
+   tabulated in Table I.                                                               frequency/channel for transmission. Table II shows the cal-
+                                                                                       culation for number of different frequencies possible in a cell
+          TABLE I: Summary of Symbols Used in the Paper
+                                                                                       with 10MHz bandwidth as specified [10] for Configuration
+          Symbols         Descriptions                                                 A (ISD=500m). With minimum cluster bandwidth allowed by
+           RDPT           User equipment (portable radio device)
+           RDFT           Base station (fixed radio device)                            DECT to be 1.728MHz, five different frequencies can be used,
+          RDFT,PT         Relay (portable radio device acting as relay)                one of which is utilized by the FT and the other four by
+           d3D out        3D Euclidean distance for indoor devices between             RDFT,PT ’s.
+                          the RDFT and building wall.
+           d3D in         3D Euclidean distance for indoor devices between                          TABLE II: Number of channels possible
+                          building wall and the RDPT .
+       d3D out +d3D in
+                          p
+                             (d2D out + d2D in )2 + (hBS − hUT )2                              Total System BW (max 10MHz : 46dBm), 36dBm/MHz
+                                                                                                             1.728   3.456  5.184  6.912  8.64
+             din          2D Euclidean distance for indoor devices between                     Channel BW
+                                                                                                              MHz    MHz    MHz    MHz    MHz
+                          building wall and the RDPT                                            1.728 MHz
+            dout          2D Euclidean distance for indoor devices between                                     1       2      3      4      5
+                                                                                                38.375dBm
+                          the RDFT and building wall                                            3.456 MHz
+            hBS           Height of base station = 10 m                                                        -       1      1      2      2
+                                                                                                41.385dBm
+            hUT           Height of user equipment = 1.5m≤ hUT ≤ 22.5m                          6.912 MHz
+                                                                                                               -       -      -      1      1
+             fc           Carrier frequency = 0.7 GHz                                           44.395dBm
+             C            Speed of light = 3×108 m/sec
+             hE           Effective environment height = 1.0m                             As a first step, it is found whether the two devices under
+            h0BS          hBS − hE = 9m                                                consideration (here the RDPT and RDFT,PT ) are in line-of-sight
+            h0UT          hUT − hE = 0.5m                                              (LOS) or non-line-of-sight (NLOS), which is calculated by
+            d0BP          4 h0BS h0UT fc /C = 42m                                      the probability of LOS (PrLOS ) between the two devices as a
+            Lg            Penetration loss of glass = 2+0.2f = 2.14                    function of distance and given as [11]
+            LIRg          Penetration loss of IRglass = 23+0.3f = 23.21                              (
+            Lc            Penetration loss of concrete = 5+4f = 7.8                                                   1             , dout ≤ 18m
+                                                                                           PrLOS = 18           (− d36
+                                                                                                                     out
+                                                                                                                         )     18                  (1)
+                                                                                                       dout + e            1 − dout   , 18m < dout
+
+                             II. S YSTEM M ODEL                                        where dout is the 2D Euclidean distance for indoor devices
+                                                                                       between the RDFT and building wall.
+      Fig. 1 shows the system operation with multiple fixed                               Depending on the LOS-NLOS condition, the path loss is
+   transmission points (FT) or sinks [9]. For portable devices                         calculated with designated formulae [11] for the RDPT to
+   the symbol used is RDPT which sends or receives data. Also,                         RDFT,PT link. This path loss as a function of the 3D distance
+   RDFT,PT is used when a radio device acts as relay and re-                           (d3D ) between both the devices under consideration [11] is
+   transmits the decoded data [5].                                                     given as
+      According to DECT-2020 NR specifications RDFT,PT
+   and RDFT from clusters and each cluster has its own                                      PLNLOS = max(PLLOS , PL0NLOS ), 10m ≤ d ≤ 5km                        (2)
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+               2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                       International Workshop on 5G and Future Wireless Technology
+
+
+
+
+   where d = dout + din and din is the 2D Euclidean distance                           A. Angles approach
+   between building wall to the devices. Also, the path-loss for                          STEP-1: Take N UE’s/cell. x number of RDFT,PT s are to
+   PLLOS and PL0NLOS components utilizing in (2), are given as                         be chosen from these N devices, where x=1% of N.
+   PLLOS                                                                                  STEP-2: Filter out all the outdoor devices which is 20%
+                                                                                       of the total devices.
+                                              , 10m ≤ d ≤ d0BP
+     
+          32.4 + 21 log d3D + 10 log fc
+   =                                                                                      STEP-3: Potential RDFT,PT s are filtered from these 0.2N
+      32.4 + 10 log d3D fc − 9.510 log(deff ) , d0BP ≤ d ≤ 5km
+                      4
+                                                                                       devices by calculating their distance (d) from the RDFT such
+                                                             (3)
+                                                                                       that dmin < d < dmax and SINR>4dB, as shown in Fig. 2.
+      PL0NLOS = 22.85 + 35.3 log d3D + 21.3 log fc − 0.3hU , (4)
+
+   where deff = (d0BP )2 − (hB − hU )2 , d3D is the 3D distance
+   between RDPT and RDFT,PT , hB and hU is the height of RDFT
+   and RDPT , respectively.
+      Further, outdoor to indoor (O2I) penetration loss is another
+   loss type and is observed when the signal is transmitted
+   from an outdoor RDFT,PT to an indoor RDPT . Here we have
+   considered all RDFT,PT s to be strictly outdoor devices for sim-
+   plification, which otherwise will lead to unwanted complexities
+   concerning the O2I loss experienced. The O2I loss is ac-
+   counted for based on various parameters such as basic outdoor
+   path loss, building penetration loss through the external wall,
+   the inside loss dependent on the depth into the building and
+   more. This loss type as specified in [10] for Configuration A                                 Fig. 2: Possible RDFT,PT s for angles approach
+   is 20% high loss, 80% low loss. The formulae [11] in terms
+   of path loss due to the basic outdoor (PLb ) shown in (3), (4)                         STEP-4: Angle of each potential RDFT,PT is calculated with
+   depends on LOS and NLOS conditions, through external wall                           respect to center of the cell in which the UE is located.
+   (PLtw ) and indoor loss (PLin ), respectively and given as                             STEP-5: Device which has best SINR among potential
+                                                                                       RDFT,PT s is selected as first RDFT,PT . The next x − 1 RDFT,PT s
+                 PLO2I = PLb + PLtw + PLin + N (0, σp2 ).                       (5)                                                       360◦
+                                                                                                                  are positioned at n × x from the
+                                                                                       are selected such that they
+                                                                                       first RDFT,PT where n ∈ 1, 2, ..., x − 1 . As it is probable that
+   TABLE III: O2I building penetration loss model (in dB) [11]                         no possible RDFT,PT may be available at that angle so a range
+                                                                                       of (θ1 -30◦ < θ2 < θ1 +30◦ ). Here θ1 is the previous angle and
+       Model                         PLtw                         PLin     σP
+                                      −Lg              −Lc                             θ2 next angle to be found out. If there are multiple possible
+      Low-loss     5−10 log(0.3×10 10 + 0.7×10 10 )             0.5d2D-in 4.4          RDFT,PT s available in this range the one with best SINR is
+                                     −LIRg              −Lc
+      High-loss 5−10 log(0.7×10        10    + 0.3×10 10 ) 0.5d2D-in 6.5               selected.
+                                                                                          STEP-6: Channels are assigned to these RDFT,PT s using the
+      After calculating all the losses, we add them to get the                         modulo-4 operator. The 4 possible frequencies were mapped
+   coupling loss for each link, received power (transmit power                         to f2, f3, f4 and f5, as shown in Fig. 3.
+   plus coupling loss) is estimated. In the next step, the device
+   with best received power is selected, and the rest of the links
+   are considered as interference for the best connection with -
+   104.625dB constant noise. Using these values, the best SINR
+   is given as follows
+                                  Best received power
+                      SINR =                           .                        (6)
+                                  Interference + Noise
+      The effective SINR of a complete hop that consists of two
+   links,RDFT -> RDFT,PT and RDFT,PT -> RDPT , is calculated
+   as the minimum SINR of the two links.
+
+                      III. P ERFORMANCE A NALYSIS
+      This section presents various approaches taken towards
+   selecting RDFT,PT s and assigning channels/frequencies to them.
+   These approaches are compared with each other to find out the                       Fig. 3: RDFT,PT identification and channel assignment in angles
+   optimal one.                                                                        approach
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+              2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                      International Workshop on 5G and Future Wireless Technology
+
+
+
+
+     STEP-7: After selecting the RDFT,PT s, assigned to different
+   channels, the RDFT,PT -device association is calculated by the
+   best SINR received from every channel and selecting the best
+   among them. The interference here is considered from the
+   RDFT,PT s operating on a frequency in all the cells. A device
+   can connect to a nearby RDFT if it provides better SINR when
+   compared to any other RDFT,PT in the cell.
+     STEP-8: Effective SINR is calculated by taking min SINR
+   of both the links if a hop exists.
+   B. Farthest distance approach
+     STEP-1: are same as STEP-1 and STEP-2 of Angles
+   approach.
+     STEP-2: Potential RDFT,PT s are filtered from these 0.2N
+                                                                                       Fig. 5: RDFT,PT identification and channel assignment in far-
+   devices by selecting UE’s with SINR>min(SINR), i.e. 10dB,
+                                                                                       thest distance approach
+   as shown in Fig. 4.
+
+
+
+
+                                                                                       Fig. 6: RDFT,PT identification and channel assignment in ran-
+   Fig. 4: Possible RDFT,PT s for {farthest distance, random,                          dom approach
+   smallest distance} approach
+
+      STEP-3: x RDFT,PT s are selected randomly out of these                              STEP-2: 10 RDFT,PT s are selected randomly out of these
+   possible RDFT,PT s.                                                                 possible RDFT,PT s.
+      STEP-4: Frequency is assigned to these RDFT,PT s such that                          STEP-3: Frequency is assigned to these RDFT,PT s on the
+   RDFT,PT s that are farthest from each other are assigned the                        basis that RDFT,PT s closest from each other are assigned same
+   same frequency so as to reduce interference to an extent, as                        frequency, as shown in Fig. 7.
+   shown in Fig. 5.                                                                       STEP-4: are same as STEP-7 and STEP-8 as mentioned
+      STEP-5: are same as STEP-7 and STEP-8 as mentioned                               in Angles approach.
+   in Angles approach.
+                                                                                                            IV. S IMULATION R ESULTS
+   C. Random RDFT,PT selection approach                                                   This section presents the simulation results of the DECT-
+      STEP-1: are same as STEP-1, STEP-2 and STEP-3                                    2020 NR for mMTC system’s performance. The number of
+   mentioned in farthest distance approach.                                            devices under consideration is 1000 UEs per cell (i.e. 19000
+      STEP-2: x RDFT,PT s are selected randomly out of these                           UEs in the simulation area of 19 cells). For simulation, we
+   possible RDFT,PT s.                                                                 assumed 1% of users in each cell as the number of RDFT,PT s
+      STEP-3: Frequency/channel assignment to the RDFT,PT s                            for all strategies. For a device to RDFT,PT , we considered the
+   is done randomly as shown in Fig. 6                                                 minimum SINR {4, 10} dB for random and angle approach, re-
+      STEP-4: are same as STEP-7 and STEP-8 as mentioned                               spectively. Also, we chose dmin =80m and dmax =180m distance
+   in Angles approach.                                                                 for angle approach. For the farthest distance approach case, the
+                                                                                       channel assignment of m channels for n RDFT,PT s is based on
+   D. Smallest distance approach                                                       an intuitive sense of assigning channels for farthest distances.
+    STEP-1: are same as STEP-1, STEP-2 and STEP-3                                      Shadow loss is not considered due to inadequate information,
+   mentioned in farthest distance approach.                                            and only path loss and O2I loss are simulated between
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+                     2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                             International Workshop on 5G and Future Wireless Technology
+
+
+
+
+                                                                                             TABLE IV: Pseudo Algorithm for Angle Approach
+
+                                                                                        function [arr] = Ang(devices(out, Xtx , Xtx , Ytx , Xrx , Yrx , SINR), N, x)
+                                                                                            for i in devices
+                                                                                                if devices · out(i) == 1
+                                                                                                     OD(n) == devices(i)
+                                                                                                     n = n + 1;
+                                                                                                else
+                                                                                                     Users(k) == devices(i)
+                                                                                                     k = k + 1;
+                                                                                                end
+                                                                                            end
+                                                                                            for i =p 1 in OD
+                                                                                                d = (OD(i) · Xtx −OD(i) · Xrx )2 +(OD(i) · Ytx −OD(i) · Yrx )2
+                                                                                                if (d > dmin and d < dmax and OD(i) · SINR > SINRth )
+                                                                                                     possiblerelay(j) == OD(i)
+   Fig. 7: RDFT,PT identification and channel assignment in near-                                    j = j + 1;
+                                                                                                else
+   est distance approach                                                                             Users(k) == OD(i)
+                                                                                                     k = k + 1;
+                                                                                                end
+                                                                                            end
+                1
+                                                                                            bestSINRrelay = maximum(Possiblerelay · SINR);
+               0.9                                                                          for i in possiblerelay
+                                                                                                sectorangle = (360/x) × l + bestSINRrelay · angle;
+               0.8                                                                              angle = tan−1 ((Yrx − Ytx )/(Xrx − Xtx ));
+               0.7
+                                                                                                if (angle < sectorangle+30 and angle > sectorangle−30)
+                                                                                                     relay(m) == possiblerelay(i)
+               0.6                                                                                   m=m+1
+                                                                                                else
+         CDF
+
+
+
+
+               0.5
+                                                                                                     Users(k) == possiblerelay(i)
+               0.4                                                                                   k =k+1
+                                                                                                end
+               0.3                                                                              if (m == x − 1)
+               0.2
+                                                                                                     break;
+                                                                                                end
+               0.1                                          Angles approach                 end
+                                                            Without relays
+                                                                                            for i = 1 in relay
+                0
+                -10       0     10    20          30   40        50           60                relay(i) · freq = i mod 4
+                                           SINR                                             end
+                                                                                            for i in Users
+   Fig. 8: RDFT,PT device association SINR CDF for the best                                     for j in relay
+                                                                                                     d = d2d(Users[i], relay[j])
+   approach                                                                                          LOS = isLOS(d);
+                                                                                                     PL = pathloss(d, LOS);
+                                                                                                     O2I = o2iloss(d, 0, “NA”);
+                                                                                                     CL = couplingLoss(PL, O2I);
+   the device and the relay. From the specifications suggested                                       RxPower = CL + TxPower;
+   by ITU-R for IMT-2020, we considered the transmit power                                           RxPower lin = 10(RxPower/10) ;
+   (TxPower) and the noise power as 23dBm and -104.625 dB,                                           if (relay(j) · freq == 2)
+                                                                                                           CH 2[] · push(RxPower lin)
+   respectively. A detailed algorithm about the process followed
+                                                                                                      elseif (relay(j) · freq == 3)
+   in the best approach is given in Table IV.
+                                                                                                           CH 3[] · push(RxPower lin)
+      Fig. 8 shows the comparison plot of RDFT,PT device associ-                                      elseif (relay(j) · freq == 4)
+   ation SINR CDF of the devices with and without any RDFT,PT                                              CH 4[] · push(RxPower lin)
+   assistance. Clear distinction is visible in terms of the maximum                                  else
+   SINR achieved with RDFT,PT s. The maximum SINR received                                                CH 5[] · push(RxPower lin)
+                                                                                                     end
+   by a device without any RDFT,PT s is 26dB while in the case                                  end
+   RDFT,PT s are introduced, it can go as high as 90dB. By utilizing                            for k = 2 : 5
+   a strategic approach, the number of devices seeing an SINR                                        Interference(k) = sum(CH(k)) − maximum(CH(k))
+                                                                                                                                maximum(CH(k))
+   <0dB have reduced. All devices experience better SINR for                                         SINR lin(k) =
+                                                                                                                        (Interference(k)+10(Noise/10)
+   all the proposed approaches over the case without relays.                                         SINR(k) = 10 log10 (SINR lin(k))
+                                                                                                     Users[k] · SINR = maximum(SINR(k))
+      Fig. 9 shows the comparison plot of effective SINR CDF                                         Users[k] · Relay = Relay corresponding to User · SINR
+   with and without the presence of RDFT,PT s. Though an im-                                    end
+                                                                                                Users · SINR Eff = minimum(Users[i] · SINR, Relay · SINR)
+   provement cannot be seen in the maximum SINR achieved                                    end
+   with the intervention of a strategy, a significant difference can                    end function
+   be observed in terms of the minimum SINR and SINR received
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+                     2021 IEEE International Conference on Advanced Networks and Telecommunications Systems (ANTS): W7 :6th
+                                             International Workshop on 5G and Future Wireless Technology
+
+
+
+
+                1                                                                                   1
+
+               0.9                                                                                 0.9
+
+               0.8                                                                                 0.8
+
+               0.7                                                                                 0.7
+
+               0.6                                                                                 0.6
+         CDF
+
+
+
+
+                                                                                             CDF
+               0.5                                                                                 0.5
+
+               0.4                                                                                 0.4
+
+               0.3                                                                                 0.3
+                                                                                                                                             Angles approach
+               0.2                                                                                 0.2                                       Farthest approach
+                                                                                                                                             Nearest approach
+               0.1                                        Angles approach                          0.1                                       Random approach
+                                                          Without relays                                                                     Without relays
+                0                                                                                   0
+                -10       -5   0    5     10     15     20       25          30                     -10   -5    0      5      10     15     20       25          30
+                                         SINR                                                                                SINR
+
+   Fig. 9: CDF of effective SINR of the link in the best approach                      Fig. 11: Comparison of CDF of effective SINR of the link for
+                                                                                       all approaches
+
+                1
+
+               0.9                                                                     introducing these approaches we have improved the connection
+               0.8
+                                                                                       between device and RDFT,PT in terms of the SINR received,
+                                                                                       while the RDFT,PT to RDFT link remains as it is.
+               0.7
+
+               0.6                                                                                                  V. C ONCLUSION
+         CDF
+
+
+
+
+               0.5                                                                        This paper provides simulation results of various approaches
+               0.4
+                                                                                       adopted for RDFT,PT selection, channel/frequency allocation for
+                                                                                       the RDFT,PT and device association with RDFT,PT s in DECT-
+               0.3
+                                                         Angles approach               2020 NR technology proposed by ETSI-DECT Forum. We
+               0.2                                       Farthest approach
+                                                         Nearest approach              conclude that the Angles approach gives the best result as far
+                                                         Random approach
+               0.1
+                                                         Without relays
+                                                                                       as RDFT,PT device association is concerned. A difference of
+                0                                                                      7dB is observed between the worst and the angles approach
+                -10       0    10   20    30     40     50       60          70
+                                         SINR                                          for an average percentile of users.
+
+   Fig. 10: Comparison of RDFT,PT device association SINR CDF                                                        R EFERENCES
+   for all approaches                                                                   [1] M. Series, “IMT vision–framework and overall objectives of the future
+                                                                                            development of imt for 2020 and beyond,” Recommendation ITU,
+                                                                                            vol. 2083, 2015.
+                                                                                        [2] M. Series, “Minimum requirements related to technical performance for
+   by 50-70% of the users.                                                                  IMT-2020 radio interface (s),” Report, 2017.
+      Fig. 10 shows the comparison plot of RDFT,PT device associ-                       [3] M. 2411, “Requirements, evaluation criteria and submission templates
+   ation SINR CDF of the devices with all of the aforementioned                             for the development of IMT-2020,” Report, 2017.
+                                                                                        [4] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal, and S. Kumar,
+   approaches and that without RDFT,PT s. All the approaches give                           “Assessment of candidate technology ETSI: DECT-2020 new radio,” in
+   better results when compared to a situation without RDFT,PT s.                           2020 IEEE 3rd 5G World Forum (5GWF), pp. 625–630, IEEE, 2020.
+   However, when compared among the approaches, the angles                              [5] “DECT-2020 New Radio (NR); part 1: Overview,” 2020.
+                                                                                        [6] A. P. K. Reddy, M. S. Kumari, V. Dhanwani, A. K. Bachkaniwala,
+   approach gave better results. For an average percentile of users,                        N. Kumar, K. Vasudevan, S. Selvaganapathy, S. K. Devar, P. Rathod, and
+   a difference of 7dB can be observed between the worst and the                            V. B. James, “5G new radio key performance indicators evaluation for
+   angles approach. These approaches don’t differ significantly in                          IMT-2020 radio interface technology,” IEEE Access, vol. 9, pp. 112290–
+                                                                                            112311, 2021.
+   the achieved maximum or received minimum SINR received.                              [7] S. Henry, A. Alsohaily, and E. S. Sousa, “5G is real: Evaluating the
+      Fig. 11 shows the comparison plot of effective SINR CDF                               compliance of the 3GPP 5G new radio system with the ITU IMT-2020
+   in all the considered approaches and the one without RDFT,PT s.                          requirements,” IEEE Access, vol. 8, pp. 42828–42840, 2020.
+                                                                                        [8] “DECT-2020 New Radio (NR); part 2: Radio reception and transmission
+   Compared to all the approaches, nothing can be observed                                  requirements,” 2020.
+   distinctively about the trend followed in the approaches as                          [9] “DECT-2020 NR introduction for mMTC communication,” 2021.
+   mentioned above. However, from discretion, it is observed                           [10] M. Series, “Guidelines for evaluation of radio interface technologies for
+                                                                                            IMT-2020,” Report ITU-R M. 2412, Tech. Rep., 2017.
+   that the angles approach is the best. The cause of maximum                          [11] “5G: Study on channel model for frequencies from 0.5 to 100 GHz
+   effective SINR received being the same in all approaches can                             (3GPP TR 38.901 version 15.0.0 release 15),” 2018.
+   be attributed to the fact that effective SINR is the minimum
+   SINR of the two links through which transmission is done. By
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:43:46 UTC from IEEE Xplore. Restrictions apply.
+

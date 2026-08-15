@@ -1,0 +1,379 @@
+                                                                                                                                                                2024 IEEE 10th Information Technology International Seminar (ITIS)
+                                                                                                                                                                Surabaya, Indonesia, November 6 – 8, 2024
+
+
+
+
+                                                                                                                                                                             Examination of PHY Layer Features in
+                                                                                                                                                                               DECT-2020 and LTE-M Networks
+2024 IEEE 10th Information Technology International Seminar (ITIS) | 979-8-3315-2129-5/24/$31.00 ©2024 IEEE | DOI: 10.1109/ITIS64716.2024.10845321
+
+
+
+
+                                                                                                                                                                                                  Refik Caglar Kizilirmak                       Satzhan Askarov
+                                                                                                                                                                                                  Dept. of Electrical and                     Dept. of Electrical and
+                                                                                                                                                                                                  Computer Engineering,                       Computer Engineering,
+                                                                                                                                                                                                  Nazarbayev University                        Nazarbayev University
+                                                                                                                                                                                                     Astana, Kazakhstan                          Astana, Kazakhstan
+                                                                                                                                                                                                refik.kizilirmak@nu.edu.kz                   satzhan.askarov@nu.edu.kz
+
+
+                                                                                                                                                                   Abstract—This paper provides a comparative analysis of                  compared to LTE-M, NB-IoT stands out in scenarios
+                                                                                                                                                                the physical layer (PHY) characteristics of DECT-2020 NR                   where extensive coverage and deep signal penetration
+                                                                                                                                                                and LTE-M, two critical standards for IoT communication.                   are necessary while maintaining low power consumption.
+                                                                                                                                                                DECT-2020 NR, developed by ETSI, is intended for in-
+                                                                                                                                                                dustrial IoT applications and provides low-latency, reliable               According to [6], NB-IoT improves coverage in atten-
+                                                                                                                                                                communication in high-density environments. In contrast,                   uated settings like basements and subterranean places.
+                                                                                                                                                                LTE-M, which is a member of the 3GPP family, is designed                   The results show that NB-IoT’s single-tone transmission
+                                                                                                                                                                to provide broad coverage, energy efﬁciency, and mobility                  and narrow 200 kHz bandwidth allow it to penetrate
+                                                                                                                                                                support for low-power devices. The study emphasizes the                    challenging locations, such as basements and under-
+                                                                                                                                                                distinctions between the standards regarding data rates,
+                                                                                                                                                                modulation schemes, and frequency bands, displaying how                    ground areas, making it particularly well-suited for smart
+                                                                                                                                                                each standard fulﬁlls speciﬁc IoT requirements. Further-                   city applications such as water and gas metering or
+                                                                                                                                                                more, it highlights the complementing characteristics of                   parking sensors installed in subterranean environments.
+                                                                                                                                                                DECT-2020 NR and LTE-M, by providing performance                           [5]. LTE-M devices can offer maximum of 1 Mbps data
+                                                                                                                                                                insights such as bit-error rate (BER) analysis and spectral                rate, while for NB-IoT it is limited to 220 Kbps [7].
+                                                                                                                                                                efﬁciency.
+                                                                                                                                                                   Index Terms—DECT-2020 NR, LTE-M, IoT                                    Autonomous vehicles and other applications requiring
+                                                                                                                                                                                                                                           very low latency and high reliability are ideally suited
+                                                                                                                                                                                     I. I NTRODUCTION                                      for URLLC, a 5G service.
+                                                                                                                                                                   The IoT industry has witnessed signiﬁcant growth                           In response to these needs, the Digital Enhanced
+                                                                                                                                                                and is expected to continue expanding, driven by ad-                       Cordless Telecommunications (DECT) working group
+                                                                                                                                                                vancements in data science and artiﬁcial intelligence.                     of the European Telecommunications Standards Institute
+                                                                                                                                                                As new applications emerge, the number of impacted                         (ETSI) set up initiatives to create a new IoT communi-
+                                                                                                                                                                industries is also increasing, each with varying demands.                  cation technology. This technology ﬁts the 5G standards
+                                                                                                                                                                For example, for Industry 4.0, real-time, low latency is a                 and enables deployment without the need for network
+                                                                                                                                                                primary requirement, while in others, like environmental                   infrastructure. Owing to their energy economy, low la-
+                                                                                                                                                                monitoring, battery life and energy efﬁciency are critical                 tency, and high reliability, 5G networks are becoming
+                                                                                                                                                                [1]. Various IoT standards have been proposed to address                   essential for smart and sustainable city applications [8].
+                                                                                                                                                                these diverse needs over the years.                                        These efforts culminated in 2020 with the introduction
+                                                                                                                                                                   The 3rd Generation Partnership Project (3GPP) has                       of the ETSI-DECT 2020 standard [9].
+                                                                                                                                                                speciﬁed different services to meet these requirements.                       DECT-2020 New Radio (NR) extends the capabilities
+                                                                                                                                                                The major ones are Narrowband IoT (NB-IoT), Long                           of earlier DECT versions, such as DECT and DECT
+                                                                                                                                                                Term Evolution—Machine Type Communication (LTE-                            Evolution. It is a 5G Radio Interface Technology stan-
+                                                                                                                                                                M) [2], and New Radio (NR)-based Ultra-Reliable Low-                       dard intended for use in time division duplex (TDD)
+                                                                                                                                                                Latency Communications (URLLC). In NB-IoT, the data                        frequency bands below 6 GHz, in which 17 distinct
+                                                                                                                                                                rate is low, but power consumption is minimal, providing                   bands are supported at the physical layer centered at
+                                                                                                                                                                long battery life. It is less expensive than LTE-M owing                   1.9 GHz carrier frequency [10]. DECT-2020 NR largely
+                                                                                                                                                                to its simple technology. LTE-M is similar to NB-IoT                       employs DECT bands and has elements that allow easy
+                                                                                                                                                                but offers higher data rates with mobility support while                   integration with previous DECT systems into its system
+                                                                                                                                                                having a low cost [3]. It is speciﬁcally developed for                     architecture. The DECT-2020 NR frame and slot lengths
+                                                                                                                                                                machine-to-machine communication and IoT applica-                          (10 ms and 41.6 μs) and supported channel bandwidth
+                                                                                                                                                                tions, with support for end-to-end encrypted connections                   (1.728 MHz - 221 MHz) are identical to the standard
+                                                                                                                                                                [4]. According to the ﬁndings of a recent study in [5],                    DECT. Fortunately, while old DECT was meant to serve
+
+                                                                                                                                                                 979-8-3315-2129-5/24/$31.00 ©2024 IEEE
+                                                                                                                                                                                                                                       200
+
+
+
+                                                                                                                                                     Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply.
+           only voice calls, DECT-2020 NR is designed to enable                       quency band globally, whereas LTE-M utilizes licensed
+           a broader range of services [11]. DECT-2020 NR also                        spectrum typically below 1 GHz, such as 700 MHz to
+           utilizes stronger resistance to radio interference, also                   900 MHz, which is advantageous for broader coverage
+           known as co-channel interference rejection [11]. DECT-                     and better penetration through obstacles. In terms of
+           2020 NR presents a device-based wireless cluster-tree                      channel bandwidth, DECT-2020 NR supports a wider
+           mesh network that can establish an independent network                     bandwidth of 1.728 MHz compared to LTE-M’s 1.08
+           without additional base stations or a core network.                        MHz, which may impact data rates and spectral ef-
+           Hybrid low-power wide-area mesh networks have shown                        ﬁciency. DECT-2020 NR uses a range of modulation
+           mesh-based architectures’ potential for IoT applications                   schemes including up to 1024-QAM, whereas LTE-M
+           with their wide-area coverage and energy efﬁciency [12].                   supports QPSK, 16-QAM, and 64-QAM, enabling higher
+           Wireless mesh networking (WMN) allows coverage to                          data rates but requiring more complex receiver designs.
+           function as routers for their neighbors, transferring data                    Both systems employ convolutional, turbo, and LDPC
+           between them when a direct connection is not feasible                      codes for channel coding, but their multiplexing meth-
+           while covering long distances at a minimal cost [13].                      ods diverge, with DECT-2020 NR using TDMA and
+              Under high device density, the DECT-2020 NR system                      LTE-M leveraging OFDMA and SFDMA in the down-
+           provides minimal latency, with a 99th percentile delay                     link and uplink respectively. Latency is another distin-
+           of no more than 10 ms. Using a multi-hop system with                       guishing factor, with DECT-2020 NR achieving sub-10
+           modiﬁed bias settings may improve delay performance                        ms latency, beneﬁcial for applications requiring quick
+           in DECT-2020 NR. This strategy improves the system’s                       response times, whereas LTE-M typically experiences
+           ability to handle applications when low latency is neces-                  latency between 10-15 ms. Additionally, while DECT-
+           sary [9]. Owing to its architectural design, which utilizes                2020 NR is designed for shorter-range applications with
+           WMN to decrease interference and allow for spatial                         up to a few km, often extended with mesh networks,
+           reuse of frequency bands, DECT-2020 better enhances                        LTE-M supports a much greater range of 10-15 km,
+           system efﬁciency than LTE-M, particularly in terms of                      making it more suitable for wide-area deployments.
+           low latency and high node density [14].                                    These differences underscore the tailored applications
+              In this work, we particularly discuss LTE-M and                         of each technology, with DECT-2020 NR excelling in
+           DECT-2020 NR, focusing on their PHY features and                           localized, high-capacity environments and LTE-M offer-
+           performance across various channel conditions. These                       ing extensive coverage and higher data rates for broader
+           two standards have been selected because they address                      areas.
+           critical IoT communication requirements from different                        Further in Table II, we compare key Orthogonal
+           perspectives. LTE-M, part of the 3GPP family, provides                     Frequency Division Multiplexing (OFDM) parameters
+           an infrastructure-based solution optimized for broad cov-                  between DECT-2020 NR and LTE-M downlink, high-
+           erage, mobility, and energy efﬁciency, making it ideal                     lighting distinct characteristics. DECT-2020 NR features
+           for applications like smart metering, logistics, and asset                 a subcarrier spacing of 27 kHz, which is wider than LTE-
+           tracking. On the other hand, DECT-2020 NR, standard-                       M’s 15 kHz, potentially enhancing its performance in
+           ized by ETSI, offers a decentralized, infrastructure-free                  reducing interference. Both systems use an FFT size of
+           solution, well-suited for high-density, low-latency IoT                    64, though it is tailored to their respective subcarrier
+           applications in environments such as smart cities and                      spacings. DECT-2020 NR employs a cyclic preﬁx (CP)
+           industrial automation. Rather than a direct comparison,                    of 4.63 μs and a symbol duration of 41.67 μs, while
+           we aim to consider how each of these standards meets                       LTE-M provides options for a normal cyclic preﬁx of 4.7
+           the demands of different IoT scenarios, examining their                    μs and extended options of 16.67 μs, with corresponding
+           PHY features and analyzing their BER performances.                         symbol durations of 71.36 μs and 83.34 μs. Additionally,
+              This paper is organized as follows. In Section II, we                   DECT-2020 NR supports a variable number of bits per
+           introduce the PHY parameters of DECT-2020 NR (1x)                          subcarrier (1, 2, 4, 6, 8, or 10), whereas LTE-M is limited
+           and LTE-M (Cat-M1). In Section III, we discuss the                         to 2, 4, or 6 bits per subcarrier. These differences under-
+           achievable data rates for these systems, followed by their                 score the design and application-speciﬁc optimizations
+           BER results in Section IV. Finally, Section V concludes                    of each OFDM scheme.
+           the paper.
+                                                                                                     III. ACHIEVABLE DATA R ATES
+                              II. S YSTEM E VALUATION                                   We consider the following key factors in calculating
+              Table I compares PHY layer parameters between                           the achievable rates of downlinkgs of DECT-2020 and
+           DECT-2020 NR and LTE-M (Cat-M1), revealing notable                         LTE-M: subcarrier spacing Δf , the total number of data
+           differences that reﬂect their distinct design goals. DECT-                 subcarriers (N ), modulation order (M e.g., 4 for QPSK,
+           2020 NR operates predominantly in the 1.9 GHz fre-                         16 for 16-QAM) used in each subcarrier, cyclic preﬁx
+
+
+                                                                                  201
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply.
+                                                                      TABLE I
+                                       C OMPARISON OF PHY L AYER PARAMETERS : DECT-2020 NR VS . LTE-M (R EL -13)
+
+             Parameter                          DECT-2020 NR (1x)                                       LTE-M (Cat-M1)
+             Frequency Bands                    1.9 GHz (globally)                                      Licensed spectrum, typically sub-1 GHz (e.g., 700
+                                                                                                        MHz, 800 MHz, 900 MHz)
+             Channel Bandwidth                  1.728 MHz                                               1.08 MHz (6 resource blocks of 12x15 KHz)
+             Modulation                         GMSK, π/2-BPSK, π/2-QPSK, 16-QAM                        QPSK, 16-QAM , 64-QAM
+             Data Rate                          Up to several Mbps                                      Up to 1 Mbps (1.4 MHz bandwidth)
+             Duplexing Method                   TDD (Time Division Duplex)                              FDD (Frequency Division Duplex) and TDD
+             Maximum Transmit Power             23 dBm                                                  20 dBm
+             Receiver Sensitivity               -102 dBm                                                -132 dBm to -140 dBm
+             Spectral Efﬁciency                 1 to 4 bits/s/Hz                                        Up to 2.5 bits/s/Hz
+             Coding Schemes                     Convolutional, Turbo, and LDPC codes                    Convolutional, Turbo, and LDPC codes
+             Multiplexing                       TDMA (Time Division Multiple Access)                    OFDMA (Orthogonal Frequency Division Multiple
+                                                                                                        Access), SFDMA (Single Carrier Frequency Divi-
+                                                                                                        sion Multiple Access)
+             Channel Coding                     Convolutional Coding (with optional Turbo or            Turbo Coding (with optional LDPC)
+                                                LDPC)
+             Latency                            Sub-10 ms (low latency)                                 10-15 ms
+             MIMO Support                       Optional                                                Optional (Single-Input Single-Output or 2x2 MIMO)
+             Synchronization                    TDMA-based frame synchronization                        OFDMA-based frame synchronization
+             Error Detection                    CRC (Cyclic Redundancy Check)                           CRC (Cyclic Redundancy Check)
+             Handover Support                   Not applicable (for mesh networks)                      Supported (within LTE network)
+             Maximum Range                      Up to 300 meters (extendable with mesh)                 Up to 10-15 km (depending on deployment)
+
+
+                                                                       TABLE II
+                                                C OMPARISON OF OFDM PARAMETERS : DECT-2020 NR VS . LTE-M
+
+              OFDM Parameter                         DECT-2020 NR (1x)                                   LTE-M (Cat-M1)
+              Subcarrier Spacing (Δf )               27 kHz                                              15 kHz (standard LTE)
+              FFT Size                               64 (for 27 kHz subcarrier spacing)                  64 (for 15 kHz subcarrier spacing)
+              Cyclic Preﬁx Duration (Tcp )           4,63 μs (8 unit)                                    4.7 μs (Normal CP), 16.67 μs (Extended CP)
+              Symbol Duration (Tsym )                41,67 μs (72 unit)                                  71.36 μs (normal CP), 83.34 μs (extended CP)
+              Number of data subcarriers per         52 unit                                             10 of 12 unit per OFDM symbol (the exact
+              OFDM symbol                                                                                number may vary slightly depending on the
+                                                                                                         speciﬁc conﬁguration).
+              Number of bits per subcarrier          1,2, 4, 6, 8 or 10                                  2, 4, 6
+
+
+
+           duration and OFDM symbol duration including cyclic                             • DECT-2020 NR1 : Achievable capacity is approxi-
+           preﬁx (Tsym ). The capacity C (bps) can be calculated                            mately 12.47 Mbps with 1024-QAM for the exam-
+           using                                                                            ple parameters provided in Table II.
+                                                                                        Fig. 1 shows achievable rates versus number of bits
+                                                           1                           per subcarrier for the two standards. DECT-2020 NR
+                          C = N × log2 (M ) ×                        .        (1)
+                                                          Tsym                         generally provides higher capacity due to higher subcar-
+                                                                                       rier count and higher modulation order within shorter
+              The OFDM symbol duration can be further repre-                           OFDM symbol duration. It is further optimized for
+                                                           1
+           sented as Tsym = Tfft + Tcp where Tfft = Δf         is the                  low-latency and reliable communication in industrial
+           duration of the FFT (Fast Fourier Transform) process,                       environments, which might not always prioritize max-
+           which is the inverse of the subcarrier spacing Δf . Tcp is                  imum throughput but focuses on robustness and energy
+           the cyclic preﬁx duration, often expressed as a fraction                    efﬁciency. LTE-M, on the other hand, is designed pri-
+           of Tfft .                                                                   marily for broader coverage and extended battery life,
+              •   LTE-M1 : Achievable capacity with 64-QAM is                          supporting a variety of low-power devices over wide
+                  approximately 4.31 Mbps and 5.04 Mbps respec-                        geographic areas.
+                  tively for extended and normal CP settings. Note
+                                                                                         IV. R ELIABILITY R ESULTS FOR DECT-2020 AND
+                  that, extending CP provieds extra protection against
+                                                                                                             LTE-M
+                  intersymbol interference due to larger delay spread,
+                  however, it reduces the achievable rates.                              To assess the reliability performance of the two stan-
+                                                                                       dards, we run bit-error-rate (BER) simulations for the
+             1 These calculations are based on the versions in Table I and can         parameters given in Tables I and II. In our analysis,
+           vary depending on speciﬁc conﬁgurations.                                    the path loss (PL) is calculated using the COST 231
+
+
+                                                                                 202
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply.
+                                              14                                                                       100
+                                                           LTE-M (LTE Cat M1)
+                                                           DECT-2020 NR (1x)
+                                              12
+                                                                                                                       10-1
+                Achievable Data Rate (Mbps)
+
+
+
+
+                                              10
+                                                                                                                       10-2
+
+                                              8
+
+
+
+
+                                                                                                                 BER
+                                                                                                                       10-3
+                                              6
+                                                                                                                                                 BPSK
+                                                                                                                                                 BPSK (coded)
+                                                                                                                       10-4
+                                              4                                                                                                  4QAM
+                                                                                                                                                 4QAM (coded)
+                                                                                                                                                 16QAM
+                                              2                                                                        10-5                      16QAM (coded)
+
+
+
+                                              0                                                                        10-6
+                                                   1   2       3       4        5   6      7     8   9   10              1000   1200   1400   1600   1800    2000   2200   2400   2600   2800
+                                                                     Number of bits per symbol                                                    TX-RX distance (m)
+
+
+           Fig. 1. Data Rate vs Modulation Order for LTE-M (LTE Cat M-1)                                       Fig. 2. BER of DECT-2020 (1x) versus TX-RX distance for the
+           and DECT-2020 (1x)) and the parameters in Table II.                                                 speciﬁcations in Tables I and II.
+
+
+
+                                                                                                                       100
+
+
+
+           Walﬁsch Ikegami model, which was proposed for fre-
+                                                                                                                       10-1
+           quencies in the range of 800 to 2000 MHz, as P L =
+           42.6 + 26 log10 (dm ) + 20 log10 (f ) where dm is the
+           distance between transmitter and receiver, and f is the                                                     10-2
+
+           carrier frequency [15]. The operating frequencies for
+                                                                                                                 BER
+
+
+
+
+           DECT-2020 NR and LTE-M are 1.9 GHz and 700 MHz,
+                                                                                                                       10-3
+           respectively, with transmitter powers set at 20 dBm. The                                                                       BPSK
+                                                                                                                                          BPSK (coded)
+           noise spectral density is -174 dBm/Hz and the noise                                                                            4QAM
+                                                                                                                                          4QAM (coded)
+           ﬁgure is taken is 8 dB in both analyses. The channel                                                        10-4               16QAM
+           is assumed to be ﬂat and only additive white Gaussian                                                                          16QAM (coded)
+
+           noise is considered at the receiver.
+                                                                                                                       10-5
+                                                                                                                         3000      4000       5000        6000      7000      8000       9000
+              In Fig. 2, we present the BER results versus the                                                                                    TX-RX distance (m)
+           transmitter-receiver distance for DECT-2020 for modula-
+           tion orders 2, 4, and 16 with and without coding. Turbo                                             Fig. 3. BER of LTE-M (LTE Cat M-1) versus TX-RX distance for
+                                                                                                               the speciﬁcations in Tables I and II.
+           coding with a rate of 1/3 has been implemented. While
+           coded implementation provides better performance, for
+           a target BER of 10−3 , the coverage with BPSK can                                                                              V. C ONCLUSION
+           go up to 2.4km. For larger modulation orders, e.g., 16-
+           QAM on the other hand, the coverage shrinks down to                                                    In this study, we discussed the physical layer features
+           around 1.4km. In Fig. 3, we present the BER results                                                 of two popular IoT standards, LTE-M and DECT-2020,
+           for LTE-M; this time coverage extends signiﬁcantly as                                               and presented the results of their achievable rates and
+           compared to DECT-2020 NR with the cost of reduced                                                   BER. Our work, however, primarily focused on numer-
+           data rates as discussed in the previous section. The                                                ical simulations under certain assumptions and speciﬁc
+           increase in coverage results from the reduced noise                                                 versions of the two standards. While our analyses pro-
+           bandwidth (from 27 KHz to 15 KHz per subcarrier) and                                                vide valuable insights, they represent only a fraction of
+           lower carrier frequency, which lead to less attenuation                                             the broader picture. In practice, evaluating the effective-
+           during propagation, and overall higher signal-to-noise                                              ness of these standards requires a comprehensive con-
+           ratio at the receiver. For the same target BER, LTE-                                                sideration of many factors, including energy efﬁciency,
+           M can cover a region up to 7-8 km with coded BPSK.                                                  latency, reliability, coverage, deployment cost, spectrum
+           For larger modulation orders, with coded 16-QAM, the                                                availability, and the speciﬁc application scenarios for
+           coverage is around 3-4 km.                                                                          which they are intended. The diverse use cases for LTE-
+
+
+                                                                                                         203
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply.
+           M and DECT-2020 NR, such as LTE-M’s focus on wide-                         [15] P. E. Mogensen and J. Wigard, “Cost action 231: Digital mobile
+           area IoT networks and DECT-2020 NR’s emphasis on                                radio towards future generation system, ﬁnal report.,” in Section
+                                                                                           5.2: On antenna and frequency diversity in GSM. Section 5.3:
+           industrial IoT and private networks, further challenge                          Capacity study of frequency hopping GSM network, 1999.
+           the direct comparisons. These standards are optimized
+           for different environments and requirements, making it
+           difﬁcult to declare one as superior to the other.
+                                 ACKNOWLEDGMENT
+             This work was supported by the Faculty Development
+           Competitive Research Grant Program of Nazarbayev
+           University (grant no. 20122022FD4125)
+                                      R EFERENCES
+            [1] A. Al-Fuqaha, M. Guizani, M. Mohammadi, M. Aledhari, and
+                M. Ayyash, “Internet of things: A survey on enabling technolo-
+                gies, protocols, and applications,” IEEE Communications Surveys
+                Tutorials, vol. 17, no. 4, pp. 2347–2376, 2015.
+            [2] R. Ratasuk, D. Zhou, and R. Sinha, “Lte-m coexistence within 5g
+                new radio carrier,” in 2020 IEEE 3rd 5G World Forum (5GWF),
+                pp. 224–228, IEEE, 2020.
+            [3] O. Liberg, M. Sundberg, E. Wang, J. Bergman, and J. Sachs,
+                Cellular Internet of Things: Technologies, Standards, and Per-
+                formance. Cambridge, MA: Academic Press, 2017.
+            [4] M. T. Abbas, K.-J. Grinnemo, J. Eklund, S. Alfredsson, M. Ra-
+                jiullah, A. Brunstrom, G. Caso, K. Kousias, and Alay, “Energy-
+                saving solutions for cellular internet of things–a survey,” IEEE
+                Access, vol. 10, pp. 62073–62096, 2022.
+            [5] C. G. Khushi Prasad, A. B. Jain, V. G. Usha, V. Rajeshwari,
+                and R. Kumaraswamy, “A study on performance analysis of nb-
+                iot,” in 2024 International Conference on Smart Systems for
+                applications in Electrical Sciences (ICSSES), pp. 1–9, 2024.
+            [6] A. Adhikary, X. Lin, and Y.-P. E. Wang, “Performance evaluation
+                of nb-iot coverage,” in 2016 IEEE 84th Vehicular Technology
+                Conference (VTC-Fall), pp. 1–5, 2016.
+            [7] A. Khalifeh, K. A. Aldahdouh, K. A. Darabkh, and W. Al-Sit, “A
+                survey of 5g emerging wireless technologies featuring lorawan,
+                sigfox, nb-iot and lte-m,” in 2019 International Conference on
+                Wireless Communications Signal Processing and Networking
+                (WiSPNET), pp. 561–566, 2019.
+            [8] M. J. Shehab, I. Kassem, A. A. Kutty, M. Kucukvar, N. Onat,
+                and T. Khattab, “5g networks towards smart and sustainable
+                cities: A review of recent developments, applications and future
+                perspectives,” IEEE Access, vol. 10, pp. 2987–3006, 2022.
+            [9] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Nummi-
+                nen, Y. Koucheryavy, and M. Valkama, “Dect-2020 new radio:
+                The next step toward 5g massive machine-type communications,”
+                IEEE Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+           [10] A. Saikko, J. Talvitie, and M. Valkama, “Positioning in dect-2020
+                nr with proactive measurement selection,” in 2024 International
+                Conference on Localization and GNSS (ICL-GNSS), pp. 1–7,
+                2024.
+           [11] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen,
+                Y. Koucheryavy, and M. Valkama, “Performance assessment of
+                dect-2020 nr and classic dect coexistence mechanisms,” in 2023
+                IEEE 97th Vehicular Technology Conference (VTC2023-Spring),
+                pp. 1–7, 2023.
+           [12] X. Jiang, H. Zhang, E. A. Barsallo Yi, N. Raghunathan,
+                C. Mousoulis, S. Chaterji, D. Peroulis, A. Shakouri, and
+                S. Bagchi, “Hybrid low-power wide-area mesh network for iot
+                applications,” IEEE Internet of Things Journal, vol. 8, no. 2,
+                pp. 901–915, 2021.
+           [13] T. Nihtilä and H. Berg, “Energy consumption of dect-2020 nr
+                mesh networks,” in 2022 Joint European Conference on Networks
+                and Communications 6G Summit (EuCNC/6G Summit), pp. 196–
+                201, 2022.
+           [14] M. A. B. Jahangir, Analysis of the performance of DECT NR+
+                radio access technology for the connectivity of unmanned aerial
+                vehicles (UAVs). PhD thesis, July 2024.
+
+                                                                                    204
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:47 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,978 @@
+                                                                                                                          1	  
+                                                                                                                                                                                                                              2024 EuCNC & 6G Summit - PHY 1570997178
+                                                                                                                                                                                             2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                                                                                          2	                                                                                                                        (PHY)
+                                                                                                                          3	  
+                                                                                                                          4	  
+2024 Joint European Conference on Networks and Communications &amp; 6G Summit (EuCNC/6G Summit) | 979-8-3503-4499-8/24/$31.00 ©2024 IEEE | DOI: 10.1109/EuCNC/6GSummit60053.2024.10597084
+
+
+
+
+                                                                                                                          5	                                                                         Performance of DECT-2020 NR in an industrial
+                                                                                                                          6	  
+                                                                                                                          7	  
+                                                                                                                          8	  
+                                                                                                                                                                                                            environment for varying RF bands
+                                                                                                                          9	  
+                                                                                                                          10	                                                                              Mattes Waßmann, Alexander Poets, and Jürgen Peissig                                                      Jens Pilz
+                                                                                                                          11	                                                                                         Institute of Communications Technology                                           Spectrum Policy and Standards
+                                                                                                                          12	                                                                                                Leibniz University Hannover                                             Sennheiser electronic SE & Co. KG
+                                                                                                                          13	                                                                                                    Hannover, Germany                                                          Hannover, Germany
+                                                                                                                          14	                                                                                      {wassmann, poets, peissig}@ikt.uni-hannover.de                                         jens.pilz@sennheiser.com
+                                                                                                                          15	  
+                                                                                                                          16	  
+                                                                                                                          17	  
+                                                                                                                          18	                                                                     Abstract—As there are no publications regarding the perfor-                     link control (DLC) and convergence (CVG) layer [2]. On the
+                                                                                                                          19	                                                                  mance of DECT-2020 NR in real-life scenarios yet, this work                        physical layer, DECT-2020 NR utilizes channel coding for error
+                                                                                                                          20	                                                                  constitutes a first performance assessment of DECT-2020 NR                         correction and supports a vast range of bandwidths by adjusting
+                                                                                                                          21	                                                                  in the 450, 1350 and 3700 MHz frequency bands at different
+                                                                                                                                                                                                numerologies with bandwidths ranging from 1.728 to 13.824                          the transmission numerology consisting of the subcarrier and
+                                                                                                                          22	                                                                  MHz. To show the benefits of DECT-2020 NR, it is compared to                       Fourier transform scaling factors µ and β, respectively. The
+                                                                                                                          23	                                                                  classic DECT in a Rayleigh fading channel. In the course of this                   technology can achieve bandwidths between 1.782 and 221.184
+                                                                                                                          24	                                                                  evaluation, performance metrics such as Bit Error Rate (BER)                       MHz. Moreover, the standard allows a license-exempt operation
+                                                                                                                          25	                                                                  and Packet Error Rate (PER) were considered. Furthermore,                          in the DECT frequency band (1880 to 1900 MHz in the
+                                                                                                                          26	                                                                  MATLAB-generated DECT-2020 NR packets were transmitted
+                                                                                                                                                                                                                                                                                   EU) which at the moment is exclusively available to classic
+                                                                                                                          27	                                                                  utilizing GNU Radio and Ettus USRPs. The measurements were
+                                                                                                                                                                                                conducted in an industrial production line. Overall, the packet                    DECT devices (e.g., telephones). Constituting an IMT-2020
+                                                                                                                          28	                                                                  error rates were found to be the best at 450 MHz, with a packet                    technology, operation in the IMT frequency bands below 6
+                                                                                                                          29	                                                                  loss of less than 5 %. At 1350 MHz, a packet error rate of 15 %                    GHz is also possible.
+                                                                                                                          30	                                                                  was observed, whereas at 3700 MHz, a maximum value of 10 %                            In this paper, the performance of DECT-2020 NR is evaluated
+                                                                                                                          31	                                                                  was recorded. The differences in PER for the different frequencies
+                                                                                                                                                                                                                                                                                   in frequencies which are approved in Germany for the PMSE
+                                                                                                                          32	                                                                  are attributed to the internal losses at higher frequencies in
+                                                                                                                                                                                                the used USRP B210s. Another aspect of this work focuses on                        sector (470 and 1350 MHz) and for the campus networks (3700
+                                                                                                                          33	  
+                                                                                                                                                                                                characterizing the indoor channel of the production line using                     MHz) by utilizing different numerologies. Since a maximum
+                                                                                                                          34	                                                                  OFDM-based channel sounding. On average, an RMS delay spread                       bandwidth of 20 MHz is specified for wideband audio systems
+                                                                                                                          35	                                                                  of 65 ns was measured for a bandwidth of 13.824 MHz in the                         [3], the bandwidth is limited to 13.824 MHz in the measurement
+                                                                                                                          36	                                                                  selected frequency bands.
+                                                                                                                                                                                                                                                                                   setup, as this is the closest possible bandwidth in DECT-
+                                                                                                                          37	                                                                     Index Terms—DECT-2020, 5G, DECT, channel sounding, power
+                                                                                                                                                                                                                                                                                   2020 NR. The measurements were conducted in an industrial
+                                                                                                                          38	                                                                  delay profile, Doppler spectral density, channel statistics
+                                                                                                                                                                                                                                                                                   environment by using two USRP B210 Software-Defined
+                                                                                                                          39	  
+                                                                                                                                                                                                                                                                                   Radios (SDR). Moving the receiver during the measurements
+                                                                                                                          40	                                                                                             I. I NTRODUCTION
+                                                                                                                          41	                                                                                                                                                     introduces a time-varying channel. Additionally, the wireless
+                                                                                                                                                                                                   DECT-2020 NR, a new Radio Interface Technology (RIT)                            doubly-selective channel is measured by using the setup as a
+                                                                                                                          42	  
+                                                                                                                                                                                                published and maintained by the European Telecommunications                        channel sounder.
+                                                                                                                          43	  
+                                                                                                                          44	                                                                  Standards Institute (ETSI), was evaluated and approved to
+                                                                                                                                                                                                be an IMT-2020 (5G) technology in 2021 [1]. The standard                                      II. DECT-2020 NR VS C LASSIC DECT
+                                                                                                                          45	  
+                                                                                                                          46	                                                                  focuses on the IMT-2020 use cases of massive Machine Type                             The results were obtained by implementing the physical layer
+                                                                                                                          47	                                                                  Communications (mMTC) and Ultra-Reliable and Low Latency                           of the classic Digital Enhanced Cordless Telecommunications
+                                                                                                                          48	                                                                  Communications (URLLC). Therefore, the technology targets                          (DECT) standard by means of a link-level simulation. This
+                                                                                                                          49	                                                                  the Industrial Internet of Things (IIoT) as well as application                    link-level simulation achieves the same results for configuration
+                                                                                                                          50	                                                                  scenarios from the Program Making and Special Events (PMSE)                        1a which was the focus of the evaluation in [4]. The DECT-
+                                                                                                                          51	                                                                  sector.                                                                            2020 NR results were achieved by using an existing link-level
+                                                                                                                          52	                                                                     The standard describes a non-cellular radio technology                          simulator [1], [5]. Fig. 1 and Fig. 2 show the simulated packet
+                                                                                                                          53	                                                                  which allows independent, nomadic and self-organizing network                      error rates for a Rayleigh channel model (ITU-i in [6]) with a
+                                                                                                                          54	                                                                  deployments. Following the decentralized approach of mobile                        delay spread of 100 ns for classic DECT and DECT-2020 NR
+                                                                                                                          55	                                                                  ad hoc networks, a Radio Device (RD) acts as a Fixed                               packets. The simulations apply to a single DECT channel (i.e.,
+                                                                                                                          56	                                                                  Termination point (FT) and/or as a Portable Termination point                      a bandwidth of 1.728 MHz) and packets occupying a single slot
+                                                                                                                          57	                                                                  (PT). The FTs serve as access points and the PTs are the                           which has a duration of 416.67 µs. Both simulations were over-
+                                                                                                                          60	                                                                  devices which connect and associate to the FTs. The Technical                      sampled to 27.648 MHz and conducted under the assumption
+                                                                                                                          61	                                                                  Specification (TS) is divided into four layers, namely the                         of a perfect time and frequency synchronisation. The dashed
+                                                                                                                          62	                                                                  physical (PHY) layer, the medium access (MAC) layer, the data                      curves refer to the packet error rate of classic DECT that was
+                                                                                                                          63	  
+                                                                                                                          64	  
+                                                                                                                          65	  
+                                                                                                                                                                                            979-8-3503-4499-8/24/$31.00
+                                                                                                                                                                                            Authorized                              ©2024
+                                                                                                                                                                                                       licensed use limited to: Hochschule   IEEE
+                                                                                                                                                                                                                                           Aalen (FH) - Technik und Wirtschaft. 610
+                                                                                                                                                                                                                                                                                Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                                                                                                               1
+ 2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                         (PHY)
+           100                                                                                 100
+
+
+
+          10!1                                                                                10!1
+    PER
+
+
+
+
+                                                                                        PER
+          10!2                                                                                10!2
+                     4b (:/8-D8PSK)                                                                      4b (:/8-D8PSK)
+                     4a (:/4-DQPSK)                                                                      4a (:/4-DQPSK)
+                     1b (:/2-DBPSK)                                                                      1b (:/2-DBPSK)
+          10!3                                                                                10!3
+                     1a (GMSK)                                                                           1a (GMSK)
+                     MCS 3 (16-QAM)                                                                      MCS 3 (16-QAM)
+                     MCS 1 (QPSK)                                                                        MCS 1 (QPSK)
+          10!4                                                                                10!4
+                 0   5      10        15      20       25     30       35      40                    0   5      10        15      20       25   30       35      40
+                                           SNR in dB                                                                           SNR in dB
+    Fig. 1: Simulated packet error rates in a Rayleigh fading channel with one          Fig. 2: Simulated packet error rates in a Rayleigh fading channel with two
+    receiving antenna.                                                                  receiving antennas.
+
+
+
+                                                                                        bits (configuration 1a and MCS 1), it can be seen that the MCS
+    calculated on the 16-bit checksum of the control field (A-Field)                    1 curve is shifted by approximately 15 dB to the left.
+    which is more sensitive to errors than the 4-bit checksum in                           The results change drastically when using receiver diversity,
+    the data field (B-Field). Four different configurations of the                      which is illustrated in Fig. 2. In this case, Maximum Ratio
+    classic DECT standard from the physical layer specification                         Combining (MRC) is used for both simulations. However, the
+    [7] are shown in Fig. 1 and Fig. 2, which determine the used                        DECT-2020 NR algorithm is more efficient because it uses
+    modulation type. In this case only configuration 1a, which refers                   the channel equalization for weighting the antenna streams.
+    to Gaussian Minimum Shift Keying (GMSK) as modulation                               In this case, the DECT-2020 NR curves move to the left by
+    scheme, uses error correction in the form of a Viterbi decoder.                     about 15 dB as compared to when using no receiver diversity.
+    For the other classic DECT configurations 1b, 4a and 4b,                            In the case of classic DECT, there is also a performance gain
+    which refer to the modulation types π/2-Differential Binary                         which is only noticeable for the configurations 1a and 1b. For
+    Phase Shift Keying (π/2-DBPSK), π/4-Differential Quadrature                         the higher order modulation schemes the performance gain is
+    Phase Shift Keying (π/4-DQPSK) and π/8-Differential 8-                              almost negligible.
+    Phase Shift Keying (π/8-D8PSK) respectively, no channel
+    coding was used. The two solid color curves refer to the                                                  III. W IRELESS CHANNEL
+    DECT-2020 NR simulation where the packet error rate is                              A. Channel Modelling
+    calculated on the Physical Data Channel (PDC) since the
+    Physical Control Channel (PCC) only uses Binary Phase Shift                            The wireless channel describes how a transmitted signal gets
+    Keying (BPSK). The DECT-2020 NR simulation uses a Wiener                            distorted by path loss, shadowing and fading. Fading is caused
+    filter for equalization and a turbo coder for error correction. In                  by multipath components which are added up at the receiver.
+    this case, MCS 1 uses Quadrature Phase Shift Keying (QPSK)                          The cause for multipath components is scattering by objects.
+    at a coding rate of 1/2, which results in a Transport Block Size                    This is described in the following Eq. 1, where y(t) is the
+    (TBS) of 296 bits. MCS 3 refers to 16-Quadrature Amplitude                          received signal, x(t) is the transmitted signal, h(t) the channel
+    Modulation (16-QAM) and a coding rate of 1/2, which results                         impulse response and n(t) the thermal noise which is added at
+    in a TBS of 616 bits. The TBS corresponds to the number                             the antenna of the receiver. The impact of the wireless channel
+    of user bits on the physical layer. These packet formats were                       is depicted by h(t).
+    chosen because they have a size comparable to the 320 (for                                                 y(t) = h(t) ∗ x(t) + n(t)                        (1)
+    GMSK and π/2-DBPSK) and 640 (for π/4-DQPSK) user bits
+    in a classic DECT packet.                                         The channel can be regarded as a linear system that follows
+       Fig. 1 shows the simulation results for one receiving antenna. a Wide-Sense Stationary Uncorrelated Scattering (WSSUS)
+    For classic DECT, the GMSK configuration shows the best model [8], [9]. The wide-sense stationary part refers to the
+    performance since it uses a Viterbi decoder for error correction. statistical properties of the channel which are in this case
+    However, it reaches an error floor at approx. 10−3 . The other considered to change very slowly. Therefore, the channel is seen
+    classic DECT formats also reach such an error floor with an as wide-sense stationary over short periods. The uncorrelated
+    overall poorer performance due to a higher number of bits per scatterer part means that the reflected signals from the scatterers
+    symbol. Overall, the DECT-2020 simulation shows a massive are not correlated. The channel impulse response itself refers to
+    improvement in comparison to classic DECT, even when using a declining exponential function which is usually represented
+    a higher modulation scheme (MCS 3, i.e., 16-QAM at a coding as a tapped-delay line model in Eq. 2.
+    rate of 1/2). Additionally, in the range of 0 to 40 dB, the error                        XN
+    rates do not reach an error floor because OFDM is more robust                  h(τ, t) =     βn (t)ejθn (t) δ (t − τn (t))    (2)
+    to fading. When comparing packets in the same order of user                              n=1
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 611
+                                                                                    Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                    2
+ 2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                         (PHY)
+                                                                                                                                                 h(t, τ)
+     Each of the N scattered waves reaches the receiver with an                                    external         10 MHz                                                                          10 MHz     external
+                                                                                                    clock                        USRP                                   USRP                                    clock
+    amplitude βn (t), a phase θn (t) and a delay of τn (t). Applying                                                             B210                                   B210
+                                                                                                              UHD                                                                                        UHD
+    the Fourier transform on the dimension of τ to the channel                                                                                                             Automatic Gain Control
+
+
+    impulse response h(τ, t) results in the channel transfer function                    frequency, gain,                                                                                                      frequency,
+    H(f, t).                                                                             sampling rate                                                                                                         sampling rate
+
+
+
+                             H(f, t) = F {h(τ, t)}                             (3)                                              Host 1                                 Host 2
+
+
+    The channel statistics are derived from the correlation function                                                         preprocessing                          postprocessing
+
+
+    RH (t, t+∆t, f, f +∆f ) of the channel transfer function which
+    is described in the following Eq. 4 [10] where E {·} represents                                                                   Fig. 3: Measurement setup
+    the expected value.
+                 RH (t, t + ∆t, f, f + ∆f )                                                                                   TABLE I: Measurement parameters
+                                                                                         Attribute                                                         Value
+                       = E {H ∗ (t, f )H(t + ∆t, f + ∆f )}                     (4)
+                                                                                         Signal bandwidth [MHz]                                            1.728, 3.456, 6.912, 13.824
+    Since the channel is considered WSSUS, the correlation                               Carrier frequency [MHz]
+                                                                                                                                                           450 (-11.5), 1350 (-9.5), 3700 (-21)
+                                                                                         (antenna reflection coefficient [dB])
+    function does not depend on the absolute time t and the
+                                                                                         MCS                                                               1 (QPSK)
+    frequency f which is shown in the following term.                                    Receiver equalizer                                                Wiener filter
+                                                                                         CFO and STO correction                                            active
+                RH (t, t + ∆t, f, f + ∆f ) = RH (∆t, ∆f )                      (5)       Measurement duration                                              15 s
+    The power delay profile Ph (τ ) is the function from which
+    the RMS delay spread Sτ is derived. There are two ways to
+    obtain the power delay profile. The first option is to average                       The RMS Doppler spread is the second central moment which
+    the channel impulse response over time t, which can be                               is calculated in Eq. 10 for discrete values.
+                                                                                                            v
+    done because the channel is considered WSSUS. The second                                                u PN                  2
+    option is to use the inverse Fourier transform on the frequency
+                                                                                                            u        (νi − TB,m ) PB (νi )
+                                                                                                      Sν = t i=1 PN                           (10)
+    dimension of the channel correlation function RH (∆t, ∆f ) as                                                        i=1 PB (νi )
+    shown in Eq. 6.
+                                                                                                                                                   PN
+                    Ph (τ ) = F −1 {RH (∆t, ∆f )|∆t=0 }                        (6)                                                                              PB (νi )νi
+                                                                                                                             with TB,m = Pi=1
+                                                                                                                                           N
+                                                                                                                                                                                                                    (11)
+                                                                                                                                                             i=1 PB (νi )
+    The delay spread Sτ is defined as the second central moment
+    of the power delay profile Ph (τ ). The Eq. in 7 is for discrete                     B. Channel Sounding with OFDM
+    values.                                                                                 Channel sounding can be done by using an OFDM signal
+                       v
+                       u PN                                                              which is showcased in [12]. The channel is then obtained by
+                                            2
+                       u         (τi − TD ) Ph (τi )                                     using the received signal in the frequency domain after the
+                 Sτ = t i=1PN                                    (7)
+                                                                                         cyclic prefix is removed and equalizing it with the original
+                                    i=1 Ph (τi )
+                                                                                         transmitted signal in the frequency domain. This is represented
+                                   PN                                                    in the following Eq. 12, where Y (t, f ) and X(t, f ) denote
+                                        Ph (τi )τi                                       the received and transmitted signals in the frequency domain,
+                         with TD = Pi=1
+                                     N
+                                                                               (8)
+                                     i=1 Ph (τi )
+                                                                                         respectively.
+       The RMS delay spread Sτ should also not be calculated over                                                               H(t, f ) = Y (t, f )/X(t, f )                                                       (12)
+    all signal components of the power delay profile but instead
+                                                                                                                IV. M EASUREMENT C ONFIGURATION
+    only over a limited delay interval [11]. The delay interval is
+    defined as the fraction of the power delay profile up to the last                    A. Measurement Setup
+    significant component and can be set as the period in which                             The measurement setup is shown in Fig. 3. For every DECT-
+    the power delay profile exceeds a certain threshold value at                         2020 NR numerology, packets are pre-generated as binary files
+    the first time and falls below this threshold at the last time. A                    via the link-level simulation [5]. Depending on the numerology,
+    typical threshold value is, e.g., 20 dB below the maximum of                         the packets are between eight and 24 slots in length. The files
+    the power delay profile Ph (τ ).                                                     are repeatedly transmitted (without pauses) via an USRP B210
+       The RMS Doppler spread Sν is calculated from the Doppler                          which is controlled by GNU Radio. The receiver side also
+    power spectral density PB (ν) which is derived from the channel                      utilizes a USRP B210 with GNU Radio where the samples are
+    correlation function by using the Fourier transform on the time                      stored in a binary file. During a measurement, the receiver gain
+    ∆t dimension where ν represents the Doppler frequencies.                             is continuously controlled by an automatic gain control (AGC),
+                                                                                         which is implemented as a GNU Radio block [13]. The AGC
+                     PB (ν) = F {RH (∆t, ∆f )|∆f =0 }                          (9)       prevents clipping by ensuring that the ADCs of the USRPs
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 612
+                                                                                    Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                     3
+ 2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                         (PHY)
+
+                     TABLE II: Transmitter output power in dBm
+    µ            β             Bandwidth    450 MHz     1350 MHz 3700 MHz
+                                [MHz]        [78 dB]     [78 dB]  [80 dB]
+    1            1                1.728           7          4            -6
+    1            2                3.456           7          4            -6
+    1            4                6.912           4         1.5          -8.5
+                                                                                                                                   Receiver
+    1            8               13.824          1.5         -1          -13
+    2            1                3.456           6         3.5           -6                                   Transmitter
+    2            2                6.912          5.5         3            -7
+    2            4               13.824           2          -1           -5                                             approx.
+    4            1                6.912           4         1.5          -10                                              30 m
+    4            2               13.824          1.5         -1          -10
+    8            1               13.824           2         -0.5        -10.5
+
+
+                       TABLE III: Calculated channel statistics
+    Frequency [MHz]                        450          1350         3700
+    RMS Doppler spread [Hz]                1.68          4.27        13.32
+    RMS delay spread [ns] (avg.)           65.34        67.86        64.36
+    RMS delay spread [ns] (min.)            7.18        7.22          7.26                               Fig. 4: The production line at the IFW.
+    RMS delay spread [ns] (max.)            150          160          185
+
+
+
+    are working on a balanced level. The receiver gain values                          higher output signal power at the lower carrier frequencies and
+    are also written to a file while a measurement is running and                      therefore a overall better Signal-to-Noise Ratio (SNR) at the
+    later used for calculating the channel. The stored binary file is                  receiver. The error rates for the measurements in 1350 and
+    then processed offline in MATLAB. Both USRPs are using an                          3700 MHz are higher (maximum BER of 0.4 % and maximum
+    external rubidium oscillator as a reference clock because the                      PER of 13 % in the 1350 MHz frequency band) due to a lower
+    accuracy of the internal clock (2 ppm [14]) is not sufficient.                     SNR. When comparing the error rates in the 1350 and 3700
+    The measurement parameters are depicted in Table I.                                MHz bands, it is noticed that the error rates are almost on the
+       The transmitter signal power varies depending on the carrier                    same level (which is especially true for the bit error rates in
+    frequency due to internal losses inside the USRP (output power                     Fig. 5(b) and 5(c)). Due to the decreased output power level
+    at 6 GHz is almost 20 dB lower than the output power at 600                        at 3700 MHz and therefore a lower SNR at the receiver, the
+    MHz). Furthermore, the highest transmitter gain level is shown                     error rates at this carrier frequency were expected to be the
+    to result in a distorted output signal (this is described in detail                overall lowest.
+    in [15]). For the measurement, the gain is set to a level at which
+                                                                           When observing the BER or PER for a frequency band,
+    the output signal is mostly free of this distortion. Moreover, the
+                                                                       it shows that the error rates increase when using a higher
+    signal power has to be decreased when increasing the signal
+                                                                       number of subcarriers (e.g., Fig. 5(a): (µ, β) = (1, 2), (1, 4),
+    bandwidth (i.e., increasing the number of subcarriers, β in
+                                                                       etc.). This is due to the channel which is more or less flat
+    DECT-2020 NR) due to the higher Peak-to-Average Power
+                                                                       for the lower bandwidths and becomes frequency selective
+    Ratio (PAPR). The measured output power in dBm for the
+                                                                       for higher bandwidths (especially for 13.824 MHz) which
+    used numerologies is shown in Table II.
+                                                                       makes the channel estimation more difficult for the Wiener
+    B. Measurement Scenario                                            filter and results in a higher error rate. This can be verified
+                                                                       in the derived channel transfer functions in Fig. 6. The
+       The described measurement setup was used in a production
+                                                                       channel transfer functions for 1.728 MHz show little to no
+    line (depicted in Fig. 4) at the Institute of Production Engineer-
+                                                                       changes on the frequency axis for a time point (e.g. Fig.
+    ing and Machine Tools (IFW) which is part of the mechanical
+                                                                       6(a)), while the channels with the highest bandwidth (e.g.,
+    engineering campus at Leibniz University Hannover. The
+                                                                       Fig. 6(d)) show variety due to fading. Therefore, the 1.728
+    measurements were conducted by moving the receiver down
+                                                                       MHz signal bandwidth can be interpreted to be below the
+    the production line in walking speed which takes approximately
+                                                                       coherence bandwidth. It is also noticeable that numerologies
+    15 seconds. The transmitter is kept stationary in the middle of
+                                                                       of the same bandwidth differ significantly in their error rate
+    the line.
+                                                                       (e.g. µ = 1, β = 8 and µ = 8, β = 1 in Fig. 5(b)). This is
+                              V. R ESULTS                              due to a shorter cyclic prefix when using wider subcarriers
+                                                                       which makes the transmission more vulnerable to inter-symbol
+    A. Performance Measurements                                        interference if the channel impulse function is longer than
+       The results of the measurements are shown in Fig. 5. The the cyclic prefix. In addition, using more subcarriers instead
+    Bit Error Rates (BERs) below 0.1 % and Packet Error Rates of an increased subcarrier bandwidth also raises the number
+    (PERs) below 5 % in Fig. 5(a) and 5(d) in the 450 MHz of reference signals which provide more information to the
+    spectrum are the lowest. This was expected because of the Wiener filter resulting in a better channel estimation.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 613
+                                                                                    Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                   4
+ 2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                         (PHY)
+     BER in %
+
+
+
+
+                                                                                                                                      BER in %
+
+
+
+
+                                                                                                                                                                                                                                                                        BER in %
+                         0.4         PCC
+                                                                                                                                                           0.4          PCC
+                                                                                                                                                                                                                                                                                             0.4             PCC
+                         0.3                                                                                                                               0.3                                                                                                                               0.3
+                                     PDC                                                                                                                                PDC                                                                                                                                  PDC
+                         0.2                                                                                                                               0.2                                                                                                                               0.2
+                         0.1                                                                                                                               0.1                                                                                                                               0.1
+                           0                                                                                                                                 0                                                                                                                                 0
+                                 )
+
+                                         )
+
+                                               )
+
+                                                              )
+
+                                                              )
+
+                                                              )
+
+                                                              )
+
+                                                              )
+
+                                                              )
+
+                                                              )
+
+
+
+
+                                                                                                                                                                  )
+
+                                                                                                                                                                           )
+
+                                                                                                                                                                                    )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                   )
+
+
+
+
+                                                                                                                                                                                                                                                                                                    )
+
+                                                                                                                                                                                                                                                                                                             )
+
+                                                                                                                                                                                                                                                                                                                                      )
+
+                                                                                                                                                                                                                                                                                                                                                )
+
+                                                                                                                                                                                                                                                                                                                                                          )
+
+                                                                                                                                                                                                                                                                                                                                                                  )
+
+                                                                                                                                                                                                                                                                                                                                                                           )
+
+                                                                                                                                                                                                                                                                                                                                                                                  )
+
+                                                                                                                                                                                                                                                                                                                                                                                         )
+
+                                                                                                                                                                                                                                                                                                                                                                                                  )
+                               ,1
+
+                                     ,2
+
+                                             ,4
+
+                                                    ,8
+
+                                                           ,1
+
+                                                           ,2
+
+                                                           ,4
+
+                                                           ,1
+
+                                                           ,2
+
+                                                           ,1
+
+
+
+
+                                                                                                                                                                 ,1
+
+                                                                                                                                                                       ,2
+
+                                                                                                                                                                               ,4
+
+                                                                                                                                                                                         ,8
+
+                                                                                                                                                                                                ,1
+
+                                                                                                                                                                                                ,2
+
+                                                                                                                                                                                                ,4
+
+                                                                                                                                                                                                ,1
+
+                                                                                                                                                                                                ,2
+
+                                                                                                                                                                                                ,1
+
+
+
+
+                                                                                                                                                                                                                                                                                                   ,1
+
+                                                                                                                                                                                                                                                                                                         ,2
+
+                                                                                                                                                                                                                                                                                                                                     ,4
+
+                                                                                                                                                                                                                                                                                                                                               ,8
+
+                                                                                                                                                                                                                                                                                                                                                      ,1
+
+                                                                                                                                                                                                                                                                                                                                                              ,2
+
+                                                                                                                                                                                                                                                                                                                                                                       ,4
+
+                                                                                                                                                                                                                                                                                                                                                                               ,1
+
+                                                                                                                                                                                                                                                                                                                                                                                       ,2
+
+                                                                                                                                                                                                                                                                                                                                                                                                 ,1
+                           (1
+
+                                    (1
+
+                                          (1
+
+                                                   (1
+
+                                                            (2
+
+                                                        (2
+
+                                                        (2
+
+                                                        (4
+
+                                                        (4
+
+                                                        (8
+
+
+
+
+                                                                                                                                                             (1
+
+                                                                                                                                                                      (1
+
+                                                                                                                                                                               (1
+
+                                                                                                                                                                                        (1
+
+                                                                                                                                                                                              (2
+
+                                                                                                                                                                                             (2
+
+                                                                                                                                                                                             (2
+
+                                                                                                                                                                                             (4
+
+                                                                                                                                                                                             (4
+
+                                                                                                                                                                                             (8
+
+
+
+
+                                                                                                                                                                                                                                                                                               (1
+
+                                                                                                                                                                                                                                                                                                        (1
+
+                                                                                                                                                                                                                                                                                                                        (1
+
+                                                                                                                                                                                                                                                                                                                                           (1
+
+                                                                                                                                                                                                                                                                                                                                                    (2
+
+                                                                                                                                                                                                                                                                                                                                                           (2
+
+                                                                                                                                                                                                                                                                                                                                                                      (2
+
+                                                                                                                                                                                                                                                                                                                                                                             (4
+
+                                                                                                                                                                                                                                                                                                                                                                                    (4
+
+                                                                                                                                                                                                                                                                                                                                                                                             (8
+                                                                    (7, -)                                                                                                                           (7, -)                                                                                                                                               (7, -)
+                         (a) Bit error rate in the 450 MHz spectrum.                                                                                       (b) Bit error rate in the 1350 MHz spectrum.                                                                                      (c) Bit error rate in the 3700 MHz spectrum.
+
+                         15                                                                                                                                15                                                                                                                                15
+     PER in %
+
+
+
+
+                                                                                                                                      PER in %
+
+
+
+
+                                                                                                                                                                                                                                                                        PER in %
+                                     PCC                                                                                                                                PCC                                                                                                                                  PCC
+                         10                                                                                                                                10                                                                                                                                10
+                                     PDC                                                                                                                                PDC                                                                                                                                  PDC
+                           5                                                                                                                                5                                                                                                                                 5
+                           0                                                                                                                                0                                                                                                                                 0
+                                 )
+
+                                     )
+
+                                             )
+
+                                                          )
+
+                                                          )
+
+                                                          )
+
+                                                          )
+
+                                                          )
+
+                                                          )
+
+                                                         )
+
+
+
+
+                                                                                                                                                                  )
+
+                                                                                                                                                                         )
+
+                                                                                                                                                                                )
+
+                                                                                                                                                                                         )
+
+                                                                                                                                                                                                     )
+
+                                                                                                                                                                                                                          )
+
+                                                                                                                                                                                                                                     )
+
+                                                                                                                                                                                                                                           )
+
+                                                                                                                                                                                                                                                   )
+
+                                                                                                                                                                                                                                                  )
+
+
+
+
+                                                                                                                                                                                                                                                                                                    )
+
+                                                                                                                                                                                                                                                                                                             )
+
+                                                                                                                                                                                                                                                                                                                                      )
+
+                                                                                                                                                                                                                                                                                                                                               )
+
+                                                                                                                                                                                                                                                                                                                                                          )
+
+                                                                                                                                                                                                                                                                                                                                                                  )
+
+                                                                                                                                                                                                                                                                                                                                                                           )
+
+                                                                                                                                                                                                                                                                                                                                                                                  )
+
+                                                                                                                                                                                                                                                                                                                                                                                         )
+
+                                                                                                                                                                                                                                                                                                                                                                                                   )
+                             ,1
+
+                                    ,2
+
+                                           ,4
+
+                                                  ,8
+
+                                                       ,1
+
+                                                       ,2
+
+                                                       ,4
+
+                                                       ,1
+
+                                                       ,2
+
+                                                       ,1
+
+
+
+
+                                                                                                                                                              ,1
+
+                                                                                                                                                                        ,2
+
+                                                                                                                                                                               ,4
+
+                                                                                                                                                                                      ,8
+
+                                                                                                                                                                                               ,1
+
+                                                                                                                                                                                                         ,2
+
+                                                                                                                                                                                                                                ,4
+
+                                                                                                                                                                                                                                       ,1
+
+                                                                                                                                                                                                                                                ,2
+
+                                                                                                                                                                                                                                                ,1
+
+
+
+
+                                                                                                                                                                                                                                                                                                ,1
+
+                                                                                                                                                                                                                                                                                                       ,2
+
+                                                                                                                                                                                                                                                                                                                      ,4
+
+                                                                                                                                                                                                                                                                                                                                             ,8
+
+                                                                                                                                                                                                                                                                                                                                                    ,1
+
+                                                                                                                                                                                                                                                                                                                                                             ,2
+
+                                                                                                                                                                                                                                                                                                                                                                        ,4
+
+                                                                                                                                                                                                                                                                                                                                                                               ,1
+
+                                                                                                                                                                                                                                                                                                                                                                                      ,2
+
+                                                                                                                                                                                                                                                                                                                                                                                                 ,1
+                           (1
+
+                                  (1
+
+                                         (1
+
+                                                (1
+
+                                                    (2
+
+                                                    (2
+
+                                                    (2
+
+                                                    (4
+
+                                                    (4
+
+                                                    (8
+
+
+
+
+                                                                                                                                                            (1
+
+                                                                                                                                                                      (1
+
+                                                                                                                                                                             (1
+
+                                                                                                                                                                                    (1
+
+                                                                                                                                                                                             (2
+
+                                                                                                                                                                                                       (2
+
+                                                                                                                                                                                                                              (2
+
+                                                                                                                                                                                                                                     (4
+
+                                                                                                                                                                                                                                              (4
+
+                                                                                                                                                                                                                                                     (8
+
+
+
+
+                                                                                                                                                                                                                                                                                              (1
+
+                                                                                                                                                                                                                                                                                                     (1
+
+                                                                                                                                                                                                                                                                                                                    (1
+
+                                                                                                                                                                                                                                                                                                                                           (1
+
+                                                                                                                                                                                                                                                                                                                                                  (2
+
+                                                                                                                                                                                                                                                                                                                                                           (2
+
+                                                                                                                                                                                                                                                                                                                                                                      (2
+
+                                                                                                                                                                                                                                                                                                                                                                             (4
+
+                                                                                                                                                                                                                                                                                                                                                                                    (4
+
+                                                                                                                                                                                                                                                                                                                                                                                             (8
+                                                                    (7, -)                                                                                                                           (7, -)                                                                                                                                               (7, -)
+               (d) Packet error rate in the 450 MHz spectrum.                                                                               (e) Packet error rate in the 1350 MHz spectrum.                                                                                     (f) Packet error rate in the 3700 MHz spectrum.
+
+                                                                                                                                                                      Fig. 5: Bit and packet error rates.
+
+
+
+
+                                                                                                                      dB                                                                                                                             dB                                                                                                                                          dB
+                         -29                                                                                               0                               -29                                                                                                0                              -29                                                                                                      0
+
+
+                         -18                                                                                               -10                             -18                                                                                                -10                            -18                                                                                                      -10
+    Subcarrier index k
+
+
+
+
+                                                                                                                                      Subcarrier index k
+
+
+
+
+                                                                                                                                                                                                                                                                        Subcarrier index k
+                          -6                                                                                               -20                              -6                                                                                                -20                             -6                                                                                                      -20
+
+
+                           5                                                                                               -30                              5                                                                                                 -30                             5                                                                                                       -30
+
+
+                          16                                                                                               -40                             16                                                                                                 -40                            16                                                                                                       -40
+
+
+                          27                                                                                               -50                             27                                                                                                 -50                            27                                                                                                       -50
+                                     2          4               6         8        10               12                                                                   2          4            6                        8          10        12                                                            2                             4          6           8         10         12
+                                                        time in s                                                                                                                            time in s                                                                                                                                          time in s
+             (a) (µ, β) = (1, 1) in the 450 MHz spectrum.                                                                                (b) (µ, β) = (1, 1) in the 1350 MHz spectrum.                                                                                      (c) (µ, β) = (1, 1) in the 3700 MHz spectrum.
+                                                                                                                      dB                                                                                                                             dB                                                                                                                                          dB
+                         -225                                                                                              0                               -225                                                                                               0                              -225                                                                                                     0
+
+
+                         -135                                                                                              -10                             -135                                                                                               -10                            -135                                                                                                     -10
+    Subcarrier index k
+
+
+
+
+                                                                                                                                      Subcarrier index k
+
+
+
+
+                                                                                                                                                                                                                                                                        Subcarrier index k
+
+
+
+
+                          -45                                                                                              -20                              -45                                                                                               -20                             -45                                                                                                     -20
+
+
+                           44                                                                                              -30                              44                                                                                                -30                             44                                                                                                      -30
+
+
+                          133                                                                                              -40                             133                                                                                                -40                            133                                                                                                      -40
+
+
+                          223                                                                                              -50                             223                                                                                                -50                            223                                                                                                      -50
+                                     2         4            6         8       10    12                          14                                                       2          4        6              8                   10       12     14                                                           2                         4          6           8       10       12       14
+                                                        time in s                                                                                                                            time in s                                                                                                                                            time in s
+            (d) (µ, β) = (1, 8) in the 450 MHz spectrum.                                                                                  (e) (µ, β) = (1, 8) in the 1350 MHz spectrum.                                                                                      (f) (µ, β) = (1, 8) in the 3700 MHz spectrum.
+
+                                             Fig. 6: Channel transfer functions for bandwidths of 1.728 MHz and 13.824 MHz (in the first and second row, respectively).
+    Doppler PSD in dB
+
+
+
+
+                                                                                            Doppler PSD in dB
+
+
+
+
+                                                                                                                                                                                                      Doppler PSD in dB
+
+
+
+
+                                                                                                                                                                                                                                                                                                                 Doppler PSD in dB
+
+
+
+
+                           0                                                                                     0                                                                                                         0                                                                                                          0
+
+                         -20                                                                                    -20                                                                                                       -20                                                                                                        -20
+
+                         -40                                                                                    -40                                                                                                       -40                                                                                                        -40
+
+                         -60                                                                                    -60                                                                                                       -60                                                                                                        -60
+                            -5                          0                               5                         -15          -10                -5              0        5        10        15                            -15      -10       -5         0         5                        10         15                             -30        -20         -10       0         10        20        30
+                                     Doppler frequency in Hz                                                                     Doppler frequency in Hz                                                                                 Doppler frequency in Hz                                                                                      Doppler frequency in Hz
+
+    (a) Calibration measurement with fixed                                                                                           (b) 450 MHz                                                                                          (c) 1350 MHz                                                                                                 (d) 3700 MHz
+    transmitter and receiver.
+
+                                                                                                                                                                 Fig. 7: Doppler power spectral density
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 614
+                                                                                    Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                                   5
+ 2024 European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Physical Layer and Fundamentals
+                                                         (PHY)
+
+                                                                                                                 VI. C ONCLUSION
+                     0
+                                                                                              To make a first performance evaluation of DECT-2020 NR
+    h(t,= ) in dB
+
+
+
+                    -20                                                                    in different frequency bands, measurements were conducted in
+                                                                                           a real industrial setup. The measurements show packet error
+                    -40
+                                                                                  3        rates less than 5 % for 450 MHz, less than 15 % for 1350
+                                                                              2
+                                                                         1
+                      0   2    4          6          8         10    0                     MHz, and less than 10 % for 3700 MHz depending on the
+                                         = in 7s                             t in ms       DECT-2020 numerology which determines the bandwidth of
+    Fig. 8: Channel impulse response for (µ, β) = (1, 8) in the 450 MHz                    the signal. In addition, the channel statistics were derived by
+    spectrum.                                                                              using the OFDM system as a channel sounder. The channel
+                                                                                           sounding of the industrial environment resulted in a measured
+                                                                                           RMS delay spread of approximately 65 ns on average for
+    B. Channel Sounding                                                                    all frequency bands and a maximum delay spread of 180 ns
+                                                                                           for the 3700 MHz spectrum. In classic DECT, these channel
+        In Fig. 6, the measured channels for the 450, 1350 and
+                                                                                           conditions would cause severe packet losses.
+    3700 MHz frequency bands are shown as surface plots. The
+    vertical axis represents the subcarriers, each having a bandwidth                             ACKNOWLEDGMENT
+    of 27 kHz. The channel transfer functions are corrected by            The authors would like to thank the BMWK for the grants
+    the measured receiver gains to highlight the fading effect. The received as part of the Franco-German joint research project
+    maximum at 6-8 seconds represents the point in time where the “Media and Event Production via Resilient Communication on
+    receiver passes the transmitter. The channels show a different IoT Infrastructure” (MERCI, FKZ: 01MJ22016D).
+    fading behavior which can be attributed to the wavelength of
+    the carrier frequency. Also, as previously mentioned, the signal                                 R EFERENCES
+    bandwidth of 1.728 MHz for the numerology µ = 1, β = 1 [1] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+    shows very little variety on the frequency axis for a time point        of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021
+                                                                            IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+    which allows the conclusion that this bandwidth is below the            1–7.
+    coherence bandwidth. The opposite can be seen for the signal        [2] ETSI, “TS 103 636 - DECT-2020 New Radio (NR) Specifications,”
+    bandwidth of 13.824 MHz in the Fig. 6(d), 6(e) and 6(f) which           2023. [Online]. Available: https://www.etsi.org/committee/1394-dect
+                                                                        [3] ETSI, “ETSI TR 103 450 V1.2.1 - System Reference document; Technical
+    show frequency-selective behaviour.                                     characteristics and parameters for Wireless Multichannel Audio Systems
+        The derived Doppler spectral density can be seen in Fig. 7          (WMAS).” [Online]. Available: https://www.etsi.org/standards/types-of-
+    where Fig. 7(a) represents a calibration measurement with a             standards
+                                                                        [4] L. Lopes, “On the radio link performance of the Digital European
+    stationary receiver. Since the receiver is moving in a direct line      Cordless Telecommunications (DECT) system,” in [Proceedings] GLOBE-
+    towards and away from the transmitter, the Doppler spectrum             COM ’90: IEEE Global Telecommunications Conference and Exhibition,
+    is expected to spread up to the maximum Doppler frequency.              1990, pp. 1013–1017 vol.2.
+                                                                        [5] M. Penner, “DECT-2020 New Radio (NR) Link-Level
+    The spreading of the spectrum depends on the carrier frequency          Simulation       Environment,”     17.03.2023.   [Online].     Available:
+    which determines the maximum Doppler frequency as can be                https://github.com/maxpenner/DECT-2020-NR-Simulation
+    clearly seen in Fig. 5(b) and 5(c). This can be confirmed by        [6] 3GPP, “3GPP TR 38.901 V17.0.0: Study on channel model for
+                                                                            frequencies from 0.5 to 100 GHz (Release 17),” 20.08.2023. [Online].
+    calculating the Doppler frequency for the receiver moving with          Available: https://www.3gpp.org/ftp/Specs/archive/38 series/38.901/
+    a velocity of approximately 2 ms . If the receiver is not moving, [7] ETSI, “EN 300 175-2 - V2.4.1: - Digital Enhanced Cordless
+    the Doppler spectrum is expected to show no spreading which             Telecommunications (DECT); Part 2: Physical Layer (PHL).” [Online].
+                                                                            Available: https://www.etsi.org/committee/1394-dect
+    is verified in the calibration measurement in Fig. 7(a). The        [8] P. Hoeher, “A statistical discrete-time model for the WSSUS multipath
+    RMS Doppler spreads, which were calculated according to Eq.             channel,” IEEE Transactions on Vehicular Technology, vol. 41, no. 4, pp.
+    10 for the used frequency bands, are shown in table III. For            461–468, 1992.
+                                                                        [9] H. Hashemi, “The indoor radio propagation channel,” Proceedings of
+    the calculation, only values of the spectral densities above a          the IEEE, vol. 81, no. 7, pp. 943–968, 1993.
+    defined threshold (10 dB below the maximum) were used.             [10] A. F. Molisch, Wireless communications, 2nd ed. Piscataway, NJ and
+        In Fig. 8 the channel impulse response in the 450 MHz [11] Chichester:            IEEE Press and Wiley, 2011.
+                                                                            ITU-R, “Multipath propagation and parameterization of its characteristics.”
+    frequency band is shown. It can be seen that the impulse                [Online]. Available: https://www.itu.int/rec/R-REC-P.1407/en
+    response falls below the 20 dB threshold before 1 µs. The [12] Y. Samayoa, M. Kock, H. Blume, and J. Ostermann, “Low-Cost Channel
+                                                                            Sounder Design Based on Software-Defined Radio and OFDM,” in 2021
+    channel impulse responses for 1350 and 3700 MHz look similar            IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+    which is represented in the average RMS delay spread according          1–5.
+    to Eq. 8 in Table III which shows that the average RMS [13] Wheberth Dias, “USRP (x310) AGC Code for a GNU
+                                                                            Radio Embedded Python Block,” 27.08.2023. [Online]. Available:
+    delay spread is the same for all three frequency bands. The             https://gist.github.com/wheberth/a358dac24fecbb9dcfb7035e66d2ca85
+    calculation of the RMS delay spread is based on the numerology [14] Ettus Research, “USRP B200/B210 Bus Series Datasheet.” [Online].
+    µ = 1, β = 8 since it has the highest resolution for the delay          Available: https://www.ettus.com/all-products/ub210-kit/
+                                                                       [15] M. W. O’Brien, J. S. Harris, O. Popescu, and D. C. Popescu, “An
+    τ . A difference for the measured delay spreads can be seen             Experimental Study of the Transmit Power for a USRP Software-Defined
+    for for the maximum delay spread of 185 ns in the 3700 MHz              Radio,” in 2018 International Conference on Communications (COMM),
+    band.                                                                   2018, pp. 377–380.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 615
+                                                                                    Downloaded on February 25,2026 at 12:27:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                       6
+

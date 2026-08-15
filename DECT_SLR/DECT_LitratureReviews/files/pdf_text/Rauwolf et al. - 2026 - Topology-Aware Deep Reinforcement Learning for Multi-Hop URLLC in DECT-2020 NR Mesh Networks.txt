@@ -1,0 +1,710 @@
+                                                                                                                                                                                            Topology-Aware Deep Reinforcement Learning for
+2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit) | 979-8-3315-7019-4/26/$31.00 ©2026 IEEE | DOI: 10.1109/EUCNC/6GSUMMIT68295.2026.11577203
+
+
+
+
+                                                                                                                                                                                              Multi-Hop URLLC in DECT-2020 NR Mesh
+                                                                                                                                                                                                              Networks
+                                                                                                                                                                                                         Benjamin Rauwolf                                      Awais Bin Asif                                      Jürgen Peissig
+                                                                                                                                                                                               Institut für Kommunikationstechnik                 Institut für Kommunikationstechnik                 Institut für Kommunikationstechnik
+                                                                                                                                                                                                  Leibniz Universität Hannover                       Leibniz Universität Hannover                       Leibniz Universität Hannover
+                                                                                                                                                                                                         Hanover, Germany                                    Hanover, Germany                                    Hanover, Germany
+                                                                                                                                                                                                       b.rauwolf@outlook.de                              asif@ikt.uni-hannover.de                          peissig@ikt.uni-hannover.de
+
+
+
+
+                                                                                                                                                                                            Abstract—DECT-2020 New Radio (NR) is a radio interface                          layer, Medium Access Control Layer (MAC)-layer, and data-
+                                                                                                                                                                                         technology (RIT) standardized by the European Telecommu-                           link/convergence-layer procedures are specified in a series of
+                                                                                                                                                                                         nications Standards Institute (ETSI) for large-scale massive                       ETSI standards [1]–[4].
+                                                                                                                                                                                         machine-type communication (mMTC) and Ultra-Reliable and
+                                                                                                                                                                                         Low-Latency Communications (URLLC) deployments. In DECT-                              In the standardized DECT-2020 NR system, multi-hop com-
+                                                                                                                                                                                         2020 NR mesh networks, multi-hop delivery is typically realized                    munication is typically realized via flooding at the data-link
+                                                                                                                                                                                         by flooding-based forwarding, which is robust but increases                        layer [4]. Flooding is robust against link failures and topology
+                                                                                                                                                                                         network load and does not explicitly optimize end-to-end latency                   changes, but it also causes redundant transmissions, higher
+                                                                                                                                                                                         or reliability. In this paper, we propose a topology-aware Deep                    interference, and increased resource consumption in dense
+                                                                                                                                                                                         Reinforcement Learning (DRL) framework for URLLC-oriented
+                                                                                                                                                                                         multi-hop routing in DECT-2020 NR mesh networks. Next-                             deployments [5]. Deterministic routing based only on hop
+                                                                                                                                                                                         hop selection is modeled as a Markov decision process (MDP)                        count or latency can reduce this overhead, but such schemes do
+                                                                                                                                                                                         whose state combines link-level latency and packet error rate                      not explicitly capture time-varying packet errors, interference,
+                                                                                                                                                                                         (PER) metrics with graph-structured topology information. An                       and the coupled reliability-latency constraints that are central
+                                                                                                                                                                                         inductive graph neural network (GNN) encoder summarizes the                        to ultra-reliable and low latency communication (URLLC)
+                                                                                                                                                                                         current mesh topology and a per-edge Deep Q-Network (DQN)
+                                                                                                                                                                                         head selects the next hop using a URLLC-shaped reward that                         [6]. Consequently, efficient multi-hop communication under
+                                                                                                                                                                                         jointly captures end-to-end latency and reliability. To improve                    end-to-end URLLC constraints remains challenging in dense
+                                                                                                                                                                                         scalability, the agent is trained through a curriculum over                        industrial IoT environments.
+                                                                                                                                                                                         progressively larger topologies. Simulation results over small                        Recent work on DECT-2020 NR has mainly focused on
+                                                                                                                                                                                         to large mesh topologies show that the proposed GNN+DRL                            standard evaluation, link-level characterization, and latency-
+                                                                                                                                                                                         routing policy improves the URLLC trade-off compared with
+                                                                                                                                                                                         both the existing latency-only routing method and the DECT-                        oriented routing. Anttonen et al. report system-level per-
+                                                                                                                                                                                         2020 NR flooding procedure. For a representative medium-sized                      formance for dense massive machine-type communication
+                                                                                                                                                                                         mesh network, it reduces end-to-end latency by up to 19.9%,                        (mMTC) deployments [7], while Kovalchukov et al. summa-
+                                                                                                                                                                                         lowers end-to-end PER by up to 10%, and decreases the number                       rize the overall DECT-2020 NR design and positioning as a 5G
+                                                                                                                                                                                         of transmissions per delivered packet compared with the existing                   mMTC technology [5]. ETSI evaluation and standardization
+                                                                                                                                                                                         approach.
+                                                                                                                                                                                            Index Terms—DECT-2020 NR, URLLC, routing, deep rein-
+                                                                                                                                                                                                                                                                            documents characterize link-level and system-level latency and
+                                                                                                                                                                                         forcement learning, graph neural networks, mesh networks.                          reliability under multiple deployment scenarios [1]–[4], [8].
+                                                                                                                                                                                                                                                                            Measurement and simulation studies further analyze practical
+                                                                                                                                                                                                                                                                            link behavior via testbed-based measurements [9] and an
+                                                                                                                                                                                                                     I. I NTRODUCTION
+                                                                                                                                                                                                                                                                            open-source link-level simulator [10]. More recent work has
+                                                                                                                                                                                            Digital Enhanced Cordless Telecommunications (DECT),                            started to address routing-related optimization: [11] proposes a
+                                                                                                                                                                                         standardized by European Telecommunications Standards In-                          MAC-layer mechanism to reduce outage probability in indoor
+                                                                                                                                                                                         stitute (ETSI), has evolved into Digital Enhanced Cordless                         industrial scenarios, and [6] uses disseminated link metrics
+                                                                                                                                                                                         Telecommunications-2020 New Radio (DECT-2020 NR) as a                              together with Dijkstra’s shortest-path algorithm to minimize
+                                                                                                                                                                                         radio interface technology tailored for large-scale, low-power                     end-to-end latency instead of relying on flooding.
+                                                                                                                                                                                         Internet of Things (IoT) and industrial scenarios. Operating                          In parallel, learning-based wireless networking has ad-
+                                                                                                                                                                                         in license-exempt spectrum with decentralized scheduling and                       vanced rapidly in the last few years [12]. Deep Reinforcement
+                                                                                                                                                                                         mesh support, DECT-2020 NR enables self-organizing multi-                          Learning (DRL) has shown promise for routing and sequential
+                                                                                                                                                                                         hop topologies in which battery-powered radio devices (RDs)                        decision problems under uncertainty [13]–[15], while recent
+                                                                                                                                                                                         may operate in Fixed Termination (FT), Portable Termination                        surveys highlight Graph Neural Networks (GNNs) as a natural
+                                                                                                                                                                                         (PT), or combined FT/PT modes. The corresponding physical-                         model class for wireless and graph-structured communication
+
+
+
+
+                                                                                                                                                                                                                                                                        140
+                                                                                                                                                                                        Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+ problems because they encode topology, link features, and                          receiver processing delay, and tdur is the packet transmission
+ neighbourhood context directly [16]–[18]. Recent routing-                          duration,
+                                                                                                                          Ps ·8
+                                                                                                                &      '
+ oriented combinations of GNNs and DRL further indicate that                                                               Rij      ij
+ topology-aware learning can generalize across unseen graphs                                                   tdur =       ij
+                                                                                                                                   Tsub ,                      (2)
+                                                                                                                          Tsub
+ and capture routing objectives beyond shortest-path latency
+ [19].                                                                              with packet size Ps in bytes, link throughput Rij in bit/s
+    Motivated by these observations, we propose a topology-                         determined by the selected modulation and coding scheme
+                                                                                                                  ij
+ aware GNN+DRL multi-hop routing framework for dynamic                              (MCS), and subslot length Tsub   determined by the supported
+ DECT-2020 NR mesh networks that explicitly targets the                             DECT-2020 NR transmission configuration (µ, β) [3]. The
+ URLLC reliability-latency trade-off. The gateway maintains                         packet error rate, denoted as pij , depends on the signal-to-
+ a time-varying network graph whose edge costs are defined                          interference-plus-noise ratio (SINR) and the selected MCS
+ by user-plane latency Lij and packet error rate pij , consis-                      [1], [5]. In the simulator, pij is obtained from a SINR-to-
+ tent with the DECT-2020 NR system model [3] and ETSI                               PER mapping derived from our DECT-2020 NR link-level
+ evaluation methodology [8]. RDs operating in FT/PT mode                            simulations [10]. Operationally, we define
+ disseminate these link metrics to the gateway via existing                                                          nd
+                                                                                                              pij =     ,                     (3)
+ MAC and convergence-layer signaling, extending the latency-                                                         nt
+ centric graph construction of [6]. The gateway then executes                       where nd is the number of corrupted packet receptions and nt
+ a GNN encoder and a per-edge Deep Q-Network (DQN)                                  is the number of transmitted packets observed for link (i, j).
+ policy to compute topology-aware next-hop decisions. For                              Let S ∈ V denote the gateway, let T ∈ V denote the
+ downlink transmission, routing information is multiplexed into                     destination node, and let Π(S, T ) be the set of paths from
+ MAC Service Data Units (SDUs) and packets are forwarded                            S to T . For a candidate path P ∈ Π(S, T ), the end-to-end
+ hop-by-hop using unicast MAC headers, thereby avoiding the                         latency and end-to-end success probability are expressed as
+ standard flooding procedure. Compared with [6], the proposed                       follows:
+ framework preserves the latency-awareness of centralized path                                                 X
+ computation while explicitly incorporating reliability and scal-                                      LP =         Lij ,                      (4)
+ ing to larger, time-varying mesh topologies.                                                                         (i,j)∈P
+                                                                                                                        Y               
+    The remainder of this paper is organized as follows: Section                                              PP =               1 − pij .                     (5)
+ II presents the system model and problem formulation. Section                                                        (i,j)∈P
+ III outlines the proposed GNN-enhanced DRL framework.
+                                                                                    The routing objective is to find a path that minimizes a
+ Section IV describes the simulator and evaluation parameters.
+                                                                                    weighted reliability-latency cost while satisfying URLLC con-
+ Section V discusses the performance results. Section VI con-
+                                                                                    straints:
+ cludes the paper.                                                                                     X                              
+                                                                                                min.          wL Lij − wp log 1 − pij xij
+       II. S YSTEM M ODEL AND P ROBLEM F ORMULATION                                                      (i,j)∈E
+                                                                                                     X
+                                                                                            s.t.              Lij xij ≤ Lmax
+    We consider an industrial indoor DECT-2020 NR mesh
+                                                                                                    (i,j)∈E
+ deployment for URLLC, represented by an undirected graph                                            X                   
+ G = (V, E), where V = {v1 , v2 , . . . , vn } denotes the set                                                log 1 − pij xij ≥ pmin
+ of DECT-2020 NR RDs and E ⊆ V × V denotes the set                                                  (i,j)∈E
+                                                                                                     X
+ of wireless links. The topology contains one gateway node                                                    xij = 1, iϵS,
+ that provides backhaul access and acts as the downlink traffic                                                                                                (6)
+                                                                                                    (i,j)ϵE
+ source, while the remaining RDs operate in FT, PT, or                                               X
+ combined FT/PT mode. Combined FT/PT nodes can relay                                                          xij = 1, jϵT,
+                                                                                                    (i,j)ϵE
+ traffic and therefore enable multi-hop connectivity and self-                                       X                 X
+ organization.                                                                                                xij =             xju ∀jϵV − {S, T }
+    For each link e = (i, j) ∈ E, we model a user-plane latency                                     (i,j)ϵE           (j,u)ϵE
+ Lij and a packet error rate pij . Following the ETSI evaluation                                   cij ≥ xij ∀(i, j)ϵE,
+ methodology for frame-based DECT-2020 NR operation [8],                                           xij ϵ{0, 1} ∀(i, j)ϵE,
+ the single-hop latency without hybrid automatic repeat request
+ (HARQ) is                                                                          where wL and wp balance latency and reliability, while Lmax
+                                                                                    and pmin denote the target end-to-end latency and reliability
+       Lij = tsym + trd tx + tF A switch + tdur + trd rx ,                  (1)     requirements. Moreover E is the set of edges in the network
+                                                                                    and xij is the binary decision variable of the optimization
+ where tsym is the symbol alignment time, trd tx is the trans-                      problem, which represents whether a link (i, j) is selected or
+ mitter processing delay, tF A switch is the frame-alignment                        not. If the link (i, j) is selected for packet transmission, the
+ and time-division duplex (TDD) switching time, trd rx is the                       value of xij is set to 1; otherwise, the value of xij is set to 0.
+
+
+
+
+                                                                                141
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+ The constraints in equation (6) ensure that there should be one                              State st
+                                                                                                                            Action at                       Environment
+                                                                                          current node it
+ neighbour node connected to the source node S (i.e., gateway)                         neighbour set N (it )
+                                                                                                                         choose next hop                DECT link outcomes
+                                                                                                                            j ∈ N (it )                 loop/dead-end checks
+ to transmit data packets. Similarly, for the destination node T ,                    edge features {Le , pe }
+ there should be one node connected to receive the data packets.                                                 learning update                      reward
+ The other constraints ensure the loop-free intermediate links
+ to deliver the packets successfully to the destination. The                                                                Reward rt
+                                                                                                                        latency+reliability
+ existence of links in the network is ensured by the binary                                                              URLLC penalty
+                                                                                          Next state st+1
+ constant cij ϵ{0, 1}. Equation (6) also inspired the hop-wise                        packet at node it+1 = j                      state transition
+ reward in the proposed learning framework, which keeps the
+ optimization objective and the learned policy aligned.                             Fig. 1: MDP abstraction for next-hop routing: the agent selects
+                                                                                    a neighbour, observes the resulting transition, and receives a
+             III. GNN-E NHANCED DRL F RAMEWORK                                      URLLC-shaped reward.
+ A. Overview
+    The proposed framework follows a closed-loop control
+ pipeline. First, each RD estimates per-link cost metrics to                            1) Agent: The routing agent determines the forwarding
+ its neighbours, namely user-plane latency Lij and packet                           decision at each hop. In our implementation, the learned policy
+ error rate P ERij . These metrics are periodically (or event-                      is executed at the controller/gateway that has access to the
+ triggered) disseminated to the gateway by piggybacking them                        current network graph and disseminated link metrics, and it
+ in DECT-2020 NR MAC and convergence-layer signaling                                outputs next-hop decisions (equivalently, an end-to-end route)
+ using the MAC multiplexing header, such that control infor-                        for packet forwarding.
+ mation and user data can be carried within the same MAC                                2) State: At decision step t, the packet resides at node
+ protocol data unit (PDU) [2], [6]. Second, the gateway aggre-                      it . The state st captures the local decision context: (i) the
+ gates the reported metrics and constructs a weighted, time-                        current node index it (and optionally the destination index),
+ varying network graph Gt = (V, E) whose edge attributes are                        (ii) an ordered list of neighbour indices j ∈ N (it ), and (iii)
+ {Lij , pij }, yielding a global topology view consistent with                      a per-neighbour feature matrix denoted as Xt ∈ R|N (it )|×2
+ the DECT-2020 NR system model and ETSI evaluation report                           with rows [Le , pe ] for candidate edges e = (it , j). In addi-
+ on DECT-2020 NR [3], [8]. Third, given Gt , the gateway                            tion, topology-aware node embeddings produced by the GNN
+ executes the GNN encoder to obtain topology-aware node                             encoder are exploited as part of the state representation.
+ embeddings and applies the per-edge DQN head to score                                  3) Action: The action at is the selection of a next-hop
+ feasible next-hop candidates, thereby computing hop-by-hop                         neighbour j ∈ N (it ). We restrict actions to feasible neigh-
+ forwarding decisions (equivalently, an end-to-end route) that                      bours (connectivity) and enforce hard per-hop bounds by
+ optimize the URLLC-shaped objective. Finally, the selected                         masking actions that violate the URLLC constraints, i.e.,
+ route is used for data delivery: the gateway embeds the routing                    maximum allowable latency and PER thresholds.
+ information inside the packets via DECT-2020 NR control                                4) Transition: After selecting at = j, the packet is for-
+ signaling (e.g., convergence-layer/DCCH SDUs) that is multi-                       warded over link (it , j) and the next state becomes it+1 = j.
+ plexed into MAC PDUs using the MAC MUX header [2] and                              The episode terminates when the packet reaches the destina-
+ packets are forwarded hop-by-hop using unicast transmissions                       tion (success) or when forwarding becomes invalid, e.g., due to
+ along the chosen next hops, avoiding flooding and reducing                         a dead-end (no feasible neighbour) or loop detection (revisiting
+ redundant transmissions and network load. In the remainder                         nodes).
+ of this paper, whenever an edge is written as e = (i, j), we                           5) Reward: To align hop-wise decisions with the URLLC
+ use the shorthand notation Le ≡ Lij and pe ≡ pij .                                 latency-reliability objective, we define a shaped per-step re-
+                                                                                    ward that penalizes both latency and reliability violation. The
+ B. Proposed Framework                                                              reward for the chosen edge e at step t is expressed as follows:
+    We model multi-hop routing as an episodic finite-                                          rt = − wp · log(1 − pe ) − wL · Le − rurllc ,                             (7)
+ horizon standard Markov decision process (MDP) M =                                                   |      {z      } | {z }       | {z }
+                                                                                                                 reliability             latency        U RLLC
+ (S, A, P, R, γ), where S denote state, A denote actions, P                                                         cost                   cost           cost
+ represents the transition probability, R represents reward, and
+                                                                                    where wp and wL weight reliability and latency, respectively
+ γ is the discount factor. An episode corresponds to forwarding
+                                                                                    and are tuned to reflect the URLLC requirements. The condi-
+ one packet from a source node S to a target node T over a
+                                                                                    tional penalty term is defined as follows:
+ time-varying graph. At each decision step t, the agent selects                                 
+ the next hop based on local link metrics (i.e., latency and                                    0,
+                                                                                                           URLLC bounds not violated,
+ packet error rate (PER)) and the topology context encoded by                           rurllc = curllc , latency or PER bound violated,     (8)
+ the GNN.                                                                                       
+                                                                                                  2curllc , both bounds violated.
+                                                                                                
+    This formulation follows the standard Reinforcement Learn-
+ ing (RL) element-wise description ( i.e., agents, states, actions,                 where curllc is a large positive value. The agent maximizes
+ reward, and policy) as shown in Fig. 1.                                            its reward and rurllc ensures URLLC compliance by applying
+
+
+
+
+                                                                                142
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+ a ”soft shield”, contrary to ”hard shielding”, where violating
+ links would be flat out banned from selection. If the destination                              DECT-2020 NR
+ has not been reached on termination, we apply a failure cost                                   Mesh Network
+ as expressed in equation (9) and (10).                                                         s
+                      X                                                                                           t
+            r =rf +       rt ,                                 (9)
+                        t
+                   (
+                    0,    target reached (success),
+              rf =                                                         (10)
+                    −cf , target not reached (failure).                                                GNN
+    We propose a topology-aware routing agent that combines                                                graph + node
+ an inductive message-passing GNN with a local per-edge                                                    embeddings
+ Q-function, as illustrated in Fig. 2. The GNN encodes the
+ current network graph into node embeddings that summarize                                                               (new)
+                                                                                                       DQN                               Environment
+ the surrounding multi-hop topology, while the DQN scores the                                                             state
+ feasible next-hop candidates at the current node.                                                         step
+    More specifically, each node i is initialized with a compact
+ feature vector
+             (0)                                    
+            hi = ⊮{i = S}, ⊮{i = T }, deg(i) ,              (11)                                 target reached
+                                                                                                                                   no
+                                                                                                       OR
+ while each edge e = (i, j) carries the attributes eij =
+                                                                                                 loop detected
+ [Lij , pij ]. For message-passing layer ℓ, node embeddings are
+ updated as
+                                                 
+                   (ℓ+1)               (ℓ)  (ℓ)
+                           X
+                mi       =      ϕm hi , hj , eij ,         (12)                                            yes
+                              j∈N (i)
+                                                    
+                    (ℓ+1)             (ℓ)    (ℓ+1)                                                                                      fallback:
+                  hi        = ϕu hi , mi                 ,                 (13)                       target           no
+                                                                                                                                        heuristic
+ where ϕm (·) and ϕu (·) denote learnable message and update                                         reached
+                                                                                                                                        Dijkstra
+ functions. After K layers, the topology-aware node represen-
+                 (K)                                                                                       yes
+ tation is zi = hi . The encoder is shared across episodes and
+ graph sizes, which enables inductive generalization to unseen                                         path
+ topologies.
+    Given node embeddings, the per-edge DQN evaluates the                           Fig. 2: Routing decision process with GNN-enhanced DRL
+ feasible next hops of the current node. For a packet currently                     and heuristic fallback.
+ located at node i, a candidate next hop j ∈ N (i), and the
+ corresponding edge e = (i, j), we construct
+                                                                                  C. Dataset
+               xe = zi ∥ zj ∥ Le ∥ pe ∥ ⊮{j = T } ,        (14)
+                                                                                       Because no public dataset jointly provides measured
+ where ∥ denotes concatenation. Thus, xe explicitly contains                        DECT-2020 NR link-level latency and PER for the considered
+ the current-node context, the candidate-neighbour context, the                     operating modes, we construct a link-metric dataset that maps
+ link latency, the link PER, and a flag indicating whether                          radio conditions and configuration parameters to the edge
+ the candidate is already the destination. A small multilayer                       attributes {Le , pe } used by the routing agent. We build upon
+ perceptron (MLP) then outputs the action value                                     our previous measurement work [9], which records SINR
+                                                                                    (and additional physical layer (PHY)/MAC metadata) for two-
+                          Qθ (s, a = j) = fθ (xe ).                        (15)
+                                                                                    device DECT-2020 NR links under varying conditions such as
+ At decision time, the agent evaluates only the neighbours of                       distance, interference, and different DECT-2020 NR transmis-
+ the current node, which makes the local decision cost scale                        sion configurations (e.g., carrier frequency f , numerology µ,
+ with the node degree rather than the total graph size.                             and Fourier scaling factor β).
+    For worst-case situations in which the learned policy pro-                         Each dataset row corresponds to one measurement snapshot
+ duces an invalid route, e.g., due to a dead end or a loop,                         and includes radio-quality indicators (e.g., SINR) and con-
+ we invoke a deterministic fallback. Each link e is assigned                        figuration parameters (e.g., f , µ, β). In addition, we derive
+ the scalar cost ce = wL Le − wp log(1 − pe ), and Dijkstra’s                       the user-plane latency Le using the DECT-2020 NR-compliant
+ shortest-path algorithm is run on the weighted graph to recover                    frame-based latency model adopted in the paper [6]. To obtain
+ a feasible route [6]. This fallback is used only when the DQN                      PER values aligned with the standard PHY behaviour, we
+ fails to terminate successfully; the episode-level failure cost in                 use our previous link-level simulation environment to generate
+ equation (9) therefore remains outside the edge weights.                           PER-vs-SINR characteristics per configuration (e.g., numerol-
+
+
+
+
+                                                                                143
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+ ogy) and interpolate pe for each measured SINR sample [10].                        of latency, delivery failures, and transmission overhead. For
+ The resulting dataset provides consistent paired labels (Le , pe )                 each graph realization, the gateway is fixed and the destination
+ for every edge instance used during graph generation.                              node is sampled from a connected randomly generated mesh
+                                                                                    topology. The reported end-to-end latency equals the sum of
+ TABLE I: DECT-2020 NR numerologies (β in relation to f                             the path latency and the route-computation time. For flooding,
+ and µ) [3].                                                                        the simulator additionally counts all replicated MAC-layer
+              f         µ=1            µ=2          µ=4        µ=8
+                                                                                    transmissions until delivery or termination.
+                                                                                       The evaluation is therefore simulation-based; measured
+             450      { 1, 2, 4 }      { 1, 2 }      {1}        –
+             1350    { 1, 2, 4, 8 }   { 1, 2, 4 }   { 1, 2 }   {1}                  SINR samples are only used offline to parameterize the link
+             3700    { 1, 2, 4, 8 }   { 1, 2, 4 }   { 1, 2 }   {1}                  metrics. No physical hardware setup is involved in this study,
+                                                                                    so Fig. 3 illustrates a representative generated mesh instance
+                                                                                    rather than a laboratory measurement setup. To mimic typical
+ D. Training                                                                        DECT-2020 NR deployments, we model the network as a
+    We train the routing agent using a double deep Q-learning                       set of interconnected clusters, where each cluster contains
+ variant with standard stabilizers [12]–[14], [20]. Specifically,                   approximately 5 to 10 RDs. A single gateway operates in FT
+ we employ experience replay and update the Q-network using                         mode and provides backhaul access and downlink connectivity.
+ mini-batches sampled from a replay buffer to reduce temporal                       Within and across clusters, RDs operating in FT/PT mode
+ correlations between transitions. To mitigate overestimation                       act as relays to extend coverage and interconnect clusters,
+ bias, we maintain a separate target network whose parameters                       whereas RDs operating in PT mode are primarily end nodes
+ are updated periodically and used to compute the bootstrap                         within a cluster. Network topologies are generated according
+ targets. Exploration is realized via an ϵ-greedy policy with                       to connected clustered random-graph models with randomized
+ a decaying exploration rate, enabling broad exploration early                      link conditions. Fig. 3 shows one representative graph instance
+ in training and more exploitative behaviour as learning pro-                       used by the simulator.
+ gresses. Finally, we normalize rewards to improve numerical
+ stability and learning dynamics, which is particularly impor-                                                              PT
+                                                                                                                              8
+ tant due to the log-reliability component in the URLLC-shaped
+ reward.
+
+
+
+                                                                                                                               P=00.427
+                                                                                                                                L=
+                                                                                                                                   .01
+    To improve convergence and robustness, we adopt a cur-
+
+
+
+                                                                                                                                       0,
+                                                                                                                                                                        FT
+ riculum over topology sizes. Training starts on smaller, sim-                                                                       FT/PTP=                           06, 0 L =0.012 FT/PT
+                                                                                                                                                                              P
+                                                                                                                                                    0.0            0.0        =0.1 ,
+ pler mesh networks and then increases the admissible graph                                                                                 7   L=0.1212, FT/PT P==0.427 S           27
+                                                                                                                                                        7        L                         9
+
+
+                                                                                                                                   35 5,
+                                                                                                                                                  P          3    P=0.0                12,
+                                                                                                                                                 L= =0.0
+
+                                                                                                                                 0. 00
+                                                                                                                                      8
+                                                                                                                                                                         0        0 .0
+ size in stages, approximately doubling the node range after                                                                                                     L=0.0 3,       =
+                                                                                                                                                                              P 0.127
+                                                                                                                               L= =0.
+                                                                                                                                                   0.2 02
+                                                                                                                                                       05 , PT
+
+
+
+
+                                                                                                                                                                                        41 ,
+                                                                                                                                                                        97 1 L=
+
+
+
+
+                                                                                                                                                                                      0. 01
+                                                                                                                     FT/PT
+                                                                                                                                P
+
+
+
+
+                                                                                                                                                                                           9
+                                                                                                                                                                                    L= =0.0
+ convergence on the current stage before progressing to the                                                                                                  5 P=0.0
+                                                                                                                            , 13                               L=0.1 09, FT/PT
+                                                                                                                         10
+
+
+
+
+                                                                                                                                                                                     P
+                                                                                                                      0.0 31                                        64
+                                                                                                                              P= 0.42
+                                                                                                                               L=
+
+
+
+
+ full training range [15], [19]. Domain randomization over link                                   FT/PT            P==0.5                                                       4
+                                                                                                                                0.0 7
+
+
+
+
+                                                                                                                                                                            ,
+                                                                                                 ,                  L                                                    03
+                                                                                                                                   10
+
+
+
+
+                                                                                            .004    12                P=0.009,        FT/PT                           0.1 8
+                                                                                         P=0 .228
+                                                                                                                                      ,
+
+
+
+
+ qualities and interference patterns further encourages policies                    PT
+                                                                                         L=0
+                                                                                                                     L=0.502         10         P=0.001,      PT    P= 0.42
+                                                                                     2
+                                                                                                   FT/PT                                        L=0.324              L=
+ that generalize beyond the training set. The GNN encoder                                P=0.011,    6 P                        3,                            14
+                                                                                         L=0.407                              02
+                                                                                     T                L= =0              = 0. .506
+ uses a small number of message-passing layers with hidden                                              0. .02          P =0
+                                                                                                          48 2            L
+                                                                                                            9 , PT
+ dimension chosen to balance expressibility and compute cost.                                                 11
+ The per-edge Q-network is a shallow MLP. Training hyperpa-
+ rameters such as learning rate, batch size, replay buffer size,                    Fig. 3: Representative simulated DECT-2020 NR mesh graph
+ and target update period follow established Double Deep Q-                         with source S, destination T , node operating modes, and edge
+ Network (dDQN) practice [12], [13] and are tuned empirically                       annotations for PER and latency.
+ for stability and convergence.
+    Because URLLC emphasizes rare-failure avoidance, we                               All experiments were implemented in Python 3.11.9 using
+ apply action masking during training and inference to remove                       PyTorch 2.1.0 and PyTorch Geometric 2.3.1. NetworkX 3.1
+ neighbours that violate hard connectivity or loop-avoidance                        was used for graph processing, Pandas 1.5.3 for data handling,
+ constraints. Reliability and latency are otherwise handled                         NumPy 1.24.3 for numerical routines, TensorBoard 2.13.0 for
+ through the shaped reward in (7), which proved sufficient for                      logging, and Optuna 4.5.0 for hyperparameter tuning. Table II
+ the results reported in Section V.                                                 summarizes the most relevant simulator settings.
+
+                        IV. E VALUATION S ETUP                                                            V. R ESULTS AND D ISCUSSION
+    We evaluate the proposed routing policy in a custom                                Fig. 4–9 report the averaged performance of the proposed
+ discrete-event simulator that reflects slot-based DECT-2020                        approach and the baselines as a function of node count.
+ NR operation and multi-hop forwarding in an industrial indoor                      Each node-count point is obtained from 104 independently
+ scenario. The simulator couples four steps: topology genera-                       generated connected graphs. We compare against two base-
+ tion, assignment of edge attributes {Le , pe } from the dataset in                 lines: (i) the DECT-2020 NR flooding procedure [4], and
+ Section III-C, route computation, and packet-level accounting                      (ii) the latency-only centralized routing method of [6], which
+
+
+
+
+                                                                                144
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+ computes the shortest path with Dijkstra’s algorithm using
+
+
+
+
+                                                                                                                  mean end-to-end latency (ms)
+ expected per-hop latency.                                                                                                                       50           DECT-2020 NR standard
+                                                                                                                                                              existing method
+            TABLE II: Summary of the simulation setup.                                                                                           40           proposed method
+   Parameter                                             Value                                                                                   30
+   Topology size                                         2 to 101 nodes                                                                          20
+   Topology realizations                                 104 graph realizations per node-count point;
+                                                         105 realizations for the fixed-61-node nu-                                              10
+                                                         merology sweep
+   Traffic direction                                     Gateway-to-node downlink routing                                                         0
+   Node roles                                            Gateway in FT mode; relays in FT/PT; end                                                     0       20        40     60    80    100
+                                                         nodes in PT                                                                                                    node count
+   Topology generation                                   Connected clustered random graphs with ran-
+                                                         domized link conditions
+   Link attributes                                       Le from ETSI-compliant latency model; pe        Fig. 5: End-to-end latency (calculation time + path latency) of
+                                                         from measured SINR samples and linked           existing and proposed method vs. node count.
+                                                         PHY-level error curves
+   Packet size                                           32 bytes
+   Baselines                                             DECT-2020 NR flooding and latency-only
+                                                         Dijkstra routing [6]                            small increase in hop count when this leads to markedly better
+   Reported metrics                                      Calculation time, end-to-end latency, end-to-   end-to-end reliability, which explains the gap to the existing
+                                                         end P ER, and total MAC-layer transmis-
+                                                         sions
+                                                                                                         method in Fig. 6.
+   Software stack                                        Python, PyTorch, PyTorch Geometric, Net-
+                                                         workX, Pandas, NumPy, Optuna, Tensor-
+                                                         Board
+                                                                                                                                                                   DECT-2020 NR standard
+                                                                                                                                                 0.0004
+
+
+
+
+                                                                                                                  mean end-to-end PER
+                                                                                                                                                                   existing method
+    Fig. 4 shows that the route-computation time of the                                                                                                            proposed method
+ proposed framework scales better than the latency-only Di-                                                                                      0.0003
+ jkstra baseline once the topology becomes moderately large.
+ The crossover occurs at approximately 48 nodes. This                                                                                            0.0002
+ computation-time advantage directly contributes to the end-
+ to-end latency in Fig. 5, where the proposed method becomes                                                                                     0.0001
+ preferable on medium and large graphs. The same figure also
+ highlights the substantial latency penalty of flooding, whose                                                                                            0        25       50      75     100
+                                                                                                                                                                         node count
+ redundant transmissions increase contention, scheduling delay,
+ and queueing overhead as the topology grows.
+                                                                                                         Fig. 6: End-to-end PER of chosen path of existing and
+                                                                                                         proposed method vs. node count.
+                                                    existing method
+               mean calculation time (ms)
+
+
+
+
+                                            8                                                               As the node count rises, the end-to-end latency rises as well,
+                                                    proposed method                                      resulting in lower mean throughput. This change can be seen
+                                            6                                                            in Fig. 7. It visualizes mean throughput for 1000 packets of
+                                                                                                         size 32 bytes sent at each node count. After the turning point,
+                                            4                                                            the proposed method outperforms the existing one.
+                                                                                                            To quantify network load, we measure the total number
+                                            2
+                                                                                                         of MAC-layer transmissions triggered by delivering a single
+                                            0
+                                                                                                         source packet on each graph. For the existing method and
+                                                0   20      40     60        80      100                 the proposed solution, each hop corresponds to exactly one
+                                                            node count                                   packet transmission; hence, the total number of transmitted
+                                                                                                         packets equals the path length (i.e., hop count). In contrast,
+ Fig. 4: Calculation time of Dijkstra (existing method) and this                                         flooding replicates the packet at multiple relays: every node
+ works proposed approach (GNN+DRL) vs. node count.                                                       that forwards the packet contributes additional transmissions,
+                                                                                                         so the total number of transmitted packets is the sum of all
+    Fig. 6 highlights the reliability advantage of the proposed                                          broadcast/forwarding packets until the target is reached (or
+ framework. Unlike the latency-only baseline, the proposed                                               a hop/TTL limit expires). Fig. 8 therefore visualizes the
+ GNN+DRL agent explicitly includes link-level PER in the                                                 substantially higher transmission overhead of flooding, which
+ reward and therefore avoids routes with isolated unreliable                                             translates into higher channel occupancy, interference, and
+ hops. This matters because end-to-end success is multiplicative                                         congestion in dense mesh networks.
+ across hops, so one weak link can dominate the path failure                                                Fig. 9 zooms into the difference between the existing and
+ probability. As a result, the learned policy often accepts a                                            proposed methods only. The proposed policy uses slightly
+
+
+
+
+                                                                                145
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                 1) DECT-2020 NR Transmission configuration: Fig. 10
+                                      3.0
+                                                                           existing method    and 11 focus on a fixed node count of 61, i.e., well beyond
+
+             mean throughput [Mbps]
+                                      2.9                                  proposed method    the crossover region observed in Fig. 4. These experiments
+                                                                                              use 105 independently generated graphs. The parameter sweep
+                                      2.8                                                     over the numerology µ reveals how the DECT transmission
+                                      2.7                                                     configuration influences the routing trade-off: since µ deter-
+                                                                                              mines the subslot duration and therefore the transmission-time
+                                      2.6                                                     granularity, it directly affects the hop latency and consequently
+                                                                                              the end-to-end latency shown in Fig. 10. Moreover, end-to-end
+                                      2.5
+                                                                                              latency includes calculation time overhead; the proposed solu-
+                                                0        20         40     60     80    100
+                                                                    node count                tion scores by up to 19.9% better than the existing method. The
+                                                                                              performance gap is most pronounced at lower numerologies
+ Fig. 7: End-to-end throughput of chosen path of existing and                                 (µ ∈ {1, 2}), where the longer subslot duration amplifies the
+ proposed method for 1000 packets of size 32 bytes vs. node                                   relative benefit of faster topology-aware path computation.
+ count (smoothed by using mean window size 10).
+
+                                                                                                                                                           existing method
+
+
+
+
+                                                                                                        end-to-end latency (ms)
+                                                                                                                                  8                        proposed method
+                                      8000
+                                                             DECT-2020 NR standard
+                                                             existing method
+             mean total packets
+
+
+
+
+                                      6000                   proposed method                                                      6
+
+                                      4000
+                                                                                                                                  4
+
+                                      2000
+                                                                                                                                      1           2          4         8
+                                            0                                                                                             transmission configuration µ
+                                                    0         25       50        75     100
+                                                                    node count
+                                                                                              Fig. 10: End-to-end latency (calculation time + path latency)
+                                                                                              of existing and proposed method vs. subcarrier scaling factor
+ Fig. 8: Number of total packets sent of DECT-2020 NR                                         on a graph of 61 nodes.
+ standard (flooding), existing and proposed method vs. node
+ count (proposed method is overlaying the existing method).                                      In Fig. 11, the proposed solution lowers end-to-end PER
+                                                                                              by up to 10% compared with the existing method while also
+                                                                                              showing visibly tighter dispersion across the tested numerolo-
+ more hops on average, but this gap remains small and tightly                                 gies. The reliability gain stems directly from the URLLC-
+ bounded across topology sizes. In other words, the agent trades                              shaped reward: by penalizing unreliable hops through the
+ a modest increase in path length for lower route-computation                                 log(1 − pe ) term, the agent avoids weak links even when
+ time and markedly better reliability instead of reverting to                                 they would slightly shorten the path. This confirms that
+ flooding-like transmission overhead.                                                         explicitly accounting for reliability during path selection yields
+                                                                                              a practical benefit beyond the latency-only baseline.
+                                                                                              A. URLLC Trade-Off and Scalability
+                                      6                 existing method
+                                                        proposed method
+                                                                                                 Across the considered DECT-2020 NR mesh sizes, the pro-
+             mean total packets
+
+
+
+
+                                      5                                                       posed GNN+DRL agent achieves a more favourable reliability-
+                                                                                              latency trade-off than both baselines. For a given latency
+                                      4
+                                                                                              budget, it delivers higher end-to-end success probability; for a
+                                      3                                                       target reliability level, it reaches lower latency than flooding
+                                                                                              and lower failure probability than the latency-only routing
+                                      2
+                                                                                              baseline. Qualitatively, the policy tends to choose paths with
+                                      1                                                       slightly more hops but more reliable constituent links, which
+                                          0             20         40     60      80    100   is consistent with the reward design and the reliability im-
+                                                                   node count
+                                                                                              provements observed in Figs. 6 and 11.
+                                                                                                 From a computational perspective, the local decision cost
+ Fig. 9: Number of total packets sent of existing and proposed                                of the learned policy scales mainly with the current node
+ method vs. node count.                                                                       degree because only feasible neighbours are scored once node
+                                                                                              embeddings are available. This explains the improved scaling
+
+
+
+
+                                                                                146
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+                                                                                     [4] ——, “DECT-2020 New Radio (NR): Part 5: DLC and Convergence
+                                                                                         Layers; Release 1,” ETSI, Tech. Rep. ETSI TS 103 636-5 V1.6.1, 2025.
+                                          DECT-2020 NR standard
+                              0.0006                                                 [5] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. S”ae, J. Numminen,
+                                          existing method                                Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+             end-to-end PER               proposed method                                Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+                              0.0004                                                     munications Magazine, vol. 60, no. 6, pp. 58–64, Jun. 2022.
+                                                                                     [6] A. B. Asif, H. Ahmad, S. Preihs, and J. Peissig, “URLLC-Based Multi-
+                                                                                         Hop Communication Using DECT-2020 NR,” in Proc. 2025 IEEE
+                                                                                         Wireless Communications and Networking Conference (WCNC), 2025,
+                              0.0002
+                                                                                         pp. 1–7.
+                                                                                     [7] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+                                                                                         Massive Machine-Type Communications with DECT-2020 Standard: A
+                              0.0000
+                                                                                         System-Level Performance Study,” VTT Technical Research Centre of
+                                        1        2        4        8                     Finland, Tech. Rep. VTT-R-00367-21, 2021.
+                                        transmission configuration µ                 [8] European Telecommunications Standards Institute, “Final Evaluation
+                                                                                         Report on DECT-2020 NR,” ETSI, Tech. Rep. ETSI TS 103 810-1
+ Fig. 11: End-to-end PER of chosen path of DECT-2020 NR                                  V1.1.1, Nov. 2021.
+                                                                                     [9] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of DECT-
+ standard, existing and proposed method vs. subcarrier scaling                           2020 NR in an industrial environment for varying RF bands,” in 2024
+ factor on a graph of 61 nodes.                                                          Joint European Conference on Networks and Communications & 6G
+                                                                                         Summit (EuCNC/6G Summit), 2024, pp. 610–615.
+                                                                                    [10] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+                                                                                         of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021
+ trend in Fig. 4 and suggests that topology-aware learning is                            IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+ practical for larger DECT-2020 NR mesh networks.                                        1–7.
+                                                                                    [11] H. Ahmad, A. B. Asif, J. Peissig, and M. Penner, “MAC Protocol
+                                                                                         for Reducing Outage Probability in DECT-2020 New Radio,” in Proc.
+                   VI. C ONCLUSION AND F UTURE W ORK                                     2024 20th International Conference on Wireless and Mobile Computing,
+    This paper presented a GNN-enhanced DRL framework for                                Networking and Communications (WiMob), 2024, pp. 42–49.
+                                                                                    [12] D. T. Hoang, N.-N. Dao, D. Niyato, and E. Hossain, Deep Reinforce-
+ URLLC-oriented routing in DECT-2020 NR mesh networks.                                   ment Learning for Wireless Communications and Networking: Theory,
+ We formulated next-hop selection as an MDP aligned with                                 Applications and Implementation. John Wiley & Sons, 2023.
+ the DECT-2020 NR system model, introduced a URLLC-                                 [13] Q. He, Y. Wang, X. Wang, W. Xu, F. Li, K. Yang, and L. Ma, “Routing
+                                                                                         Optimization With Deep Reinforcement Learning in Knowledge Defined
+ shaped reward that captures the interplay between reliability                           Networking,” IEEE Transactions on Mobile Computing, vol. 23, no. 2,
+ and latency and proposed a routing agent that combines an                               pp. 1444–1455, 2024.
+ inductive GNN encoder with a local per-edge DQN head. Sim-                         [14] Y. Song, M. Ni, and J. Liu, “Deep Reinforcement Learning for Network
+                                                                                         Routing Optimization: A Systematic Survey,” Neurocomputing, vol. 666,
+ ulation results indicate that the proposed approach improves                            p. 132263, 2026.
+ the reliability-latency trade-off compared to classical routing                    [15] X. Zhang, H. Zhao, J. Xiong, X. Liu, H. Yin, X. Zhou, and J. Wei,
+ baselines and reduces network load related to flooding. The                             “Decentralized Routing and Radio Resource Allocation in Wireless Ad
+                                                                                         Hoc Networks via Graph Reinforcement Learning,” IEEE Transactions
+ analysis of scalability and generalization further suggests that                        on Cognitive Communications and Networking, vol. 10, no. 3, pp. 1146–
+ topology-aware learning is a viable building block for future                           1159, 2024.
+ URLLC-capable mesh systems. Future work includes coupling                          [16] Y. Dai, L. Lyu, N. Cheng, M. Sheng, J. Liu, X. Wang, S. Cui, L. Cai,
+                                                                                         and X. Shen, “A Survey of Graph-Based Resource Management in
+ routing with joint power/slot/channel allocation, integrating                           Wireless Networks—Part II: Learning Approaches,” IEEE Transactions
+ queue and scheduling information into the graph represen-                               on Cognitive Communications and Networking, vol. 11, no. 4, pp. 2101–
+ tation, and evaluating the approach on hardware platforms                               2121, 2025.
+                                                                                    [17] Z. Huang, Z. Wang, and Z. Han, “Graph Neural Network Empowered
+ representative of practical DECT-2020 NR deployments. An-                               Wireless Communications: Fundamentals, State-of-the-Art, Challenges,
+ other important direction is to explore tighter safety guarantees                       and Opportunities,” IEEE Wireless Communications, vol. 32, no. 5, pp.
+ and formal verification for learning-based routing policies in                          162–168, 2025.
+                                                                                    [18] Y. Lu, Y. Li, R. Zhang, W. Chen, B. Ai, and D. Niyato, “Graph Neural
+ safety-critical industrial environments.                                                Networks for Wireless Networks: Graph Representation, Architecture
+                                                                                         and Evaluation,” IEEE Wireless Communications, vol. 32, no. 1, pp.
+                                       ACKNOWLEDGMENT                                    150–156, 2024.
+                                                                                    [19] M. Ding, Y. Guo, Z. Huang, B. Lin, and H. Luo, “GROM: A Generalized
+    The work in this paper was part of the C ELTIC -N EXT                                Routing Optimization Method with Graph Neural Network and Deep Re-
+ project USWA and received funding from the Federal Ministry                             inforcement Learning,” Journal of Network and Computer Applications,
+                                                                                         vol. 229, p. 103927, 2024.
+ of Education and Research of Germany (BMBF, funding code:                          [20] B. Ghojogh and A. Ghodsi, “Reinforcement Learning: Tutorial and
+ 16KISK254). We would like to thank the funding organization                             Survey,” OSF Preprints, 2024.
+ for the financial support.
+
+                                         R EFERENCES
+   [1] European Telecommunications Standards Institute, “DECT-2020 New
+       Radio (NR): Part 1: Overview; Release 1,” ETSI, Tech. Rep. ETSI TS
+       103 636-1 V1.3.1, Dec. 2021.
+   [2] ——, “DECT-2020 New Radio (NR): Part 4: MAC Layer; Release 1,”
+       ETSI, Tech. Rep. ETSI TS 103 636-4 V1.4.1, 2023.
+   [3] ——, “DECT-2020 New Radio (NR): Part 3: Physical Layer; Release
+       1,” ETSI, Tech. Rep. ETSI TS 103 636-3 V1.1.1, Jan. 2024.
+
+
+
+
+                                                                                147
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore. Restrictions apply.
+

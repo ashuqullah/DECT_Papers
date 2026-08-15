@@ -1,0 +1,570 @@
+1 December 2025
+
+
+
+Bridging Light and Radio: Hybrid Network
+Architectures for IoT in the 6G Era
+                     1                1                                1                          1
+Mohammad Khalili , Amila Perera , Juha Häkkinen, Marcos Katz , Konstantin Mikhaylov
+
+
+1. Centre for Wireless Communications, University of Oulu
+
+
+Abstract
+
+The massive scale and dense deployments of future Internet of Things (IoT), particularly within the
+6G framework, expose the critical limitations of traditional Radio Frequency (RF) systems, namely
+spectral congestion, interference, and security vulnerabilities. Optical Wireless Communication
+(OWC) oﬀers a compelling complement, providing vast, unlicensed spectrum, immunity to RF
+interference, and enhanced physical-layer security. However, OWC's susceptibility to blockages
+and limited mobility hinders its standalone deployment, as it cannot, on its own, meet the
+stringent connectivity and mobility requirements of many IoT applications. This article explores
+the convergence of optical and radio networks and proposes a ﬂexible, adaptable, and resilient
+connectivity framework tailored for modern IoT ecosystems. We present a holistic system
+architecture that integrates single-mode RF, single-mode OWC, and uniﬁed hybrid Access Points
+(APs) to eﬃciently manage the diverse and often conﬂicting objectives of various IoT applications.
+While these hybrid RF/OWC APs oﬀer signiﬁcant advantages in cost, eﬃciency, and coordinated
+management, they also introduce a primary deployment challenge: the inherent coverage mismatch
+between the two technologies. To precisely address this critical issue, we demonstrate a practical
+solution supported by a coverage equivalence analysis to validate the proposed framework. This
+analysis quantiﬁes the required OWC transmitter density to match a given RF range, oﬀering
+tangible guidance for system planning.
+
+
+Keywords
+
+communication, networking and broadcast technologies, hybrid network architecture, internet of
+things, optical wireless communication
+
+
+
+
+Posted on 1 December 2025 — CC-BY 4.0 — This is a preprint and has not been peer reviewed. Data may be preliminary. — https://
+doi.org/10.36227/techrxiv.176462964.43051246/v1
+                                                                                                                                        1
+
+
+
+
+ Bridging Light and Radio: Hybrid Network Architectures for IoT in
+                                                         the 6G Era
+          Mohammad Khalili∗ , Amila Perera∗ , Juha Häkkinen† , Marcos Katz∗ , and Konstantin Mikhaylov∗
+                    ∗ Centre for Wireless Communications, University of Oulu, Oulu, Finland
+
+              {mohammad.khalili, malalgodage.perera, marcos.katz, konstantin.mikhaylov}@oulu.fi
+                † Circuits and Systems Research Unit (CAS), University of Oulu, Oulu, Finland
+
+                                              juha.hakkinen@oulu.fi
+
+
+
+   Abstract—The massive scale and dense deployments of future         quency reuse across neighboring zones or floors. In addition,
+Internet of Things (IoT), particularly within the 6G framework,       the optical spectrum remains largely unregulated—particularly
+expose the critical limitations of traditional Radio Frequency        indoors—allowing flexible network expansion, and lower in-
+(RF) systems, namely spectral congestion, interference, and
+security vulnerabilities. Optical Wireless Communication (OWC)        terference in dense IoT scenarios. Moreover, optical signals
+offers a compelling complement, providing vast, unlicensed spec-      are inherently immune to EMI, making them a safe and
+trum, immunity to RF interference, and enhanced physical-layer        reliable choice for deployment in sensitive environments such
+security. However, OWC’s susceptibility to blockages and limited      as hospitals, aircraft cabins, and industrial facilities [3]. OWC
+mobility hinders its standalone deployment, as it cannot, on its      encompasses technologies such as Visible Light Communi-
+own, meet the stringent connectivity and mobility requirements
+of many IoT applications. This article explores the convergence       cation (VLC), Infrared (IR), Optical Camera Communication
+of optical and radio networks and proposes a flexible, adapt-         (OCC), Light Fidelity (LiFi), and Free Space Optics (FSO).
+able, and resilient connectivity framework tailored for modern        However, OWC systems are highly vulnerable to physical
+IoT ecosystems. We present a holistic system architecture that        obstructions, severely restricted by spatial boundaries, and
+integrates single-mode RF, single-mode OWC, and unified hybrid        exhibit limited support for device mobility compared to RF-
+Access Points (APs) to efficiently manage the diverse and often
+conflicting objectives of various IoT applications. While these hy-   based solutions [4].
+brid RF/OWC APs offer significant advantages in cost, efficiency,        Clearly, both RF and OWC have their respective strengths
+and coordinated management, they also introduce a primary             and limitations, and no single communication technology
+deployment challenge: the inherent coverage mismatch between          excels across all performance metrics. However, RF and
+the two technologies. To precisely address this critical issue,       OWC can complement each other, with the strengths of one
+we demonstrate a practical solution supported by a coverage
+equivalence analysis to validate the proposed framework. This         effectively offsetting the fundamental limitations of the other.
+analysis quantifies the required OWC transmitter density to           As a result, integrating RF and OWC within a unified network
+match a given RF range, offering tangible guidance for system         presents a practical and effective solution for next-generation
+planning.                                                             wireless communication, paving the way for a more robust
+                                                                      and complete connectivity solution [2]–[4]. Driven by these
+                                                                      advantages, several hybrid communication strategies have been
+                       I. I NTRODUCTION                               proposed in recent years, such as LiFi/Wi-Fi, VLC/Zigbee, and
+   Radio Frequency (RF) communication is the foundational             VLC/Wi-Fi combinations [5]. However, most hybrid solutions
+and most widely used wireless technology globally, form-              are designed for general-purpose wireless networks, often
+ing the backbone of Internet of Things (IoT) connectivity             overlooking key IoT characteristics [5], [6].
+infrastructure. While RF systems offer reliable coverage and             This article demonstrates why hybrid RF/OWC networking
+mobility suitable for many applications, the increasing density       is well-suited for the IoT ecosystem and shows how dynamic
+and scale of IoT deployments, particularly within the 6G              reconfigurability between the two technologies can address
+framework, have revealed critical limitations. Spectral conges-       critical needs in energy efficiency, security, scalability, and
+tion and frequency interference significantly constrain capacity      resilience. To translate this potential into practice, this article
+and scalability in dense environments. Moreover, RF systems           presents four major contributions focused on the practical
+are susceptible to security vulnerabilities and Electromagnetic       deployment of hybrid RF/OWC networks in IoT ecosystems.
+Interference (EMI). While ongoing research continues to en-           First, we introduce a unified and hierarchical system archi-
+hance RF capabilities, alternative communication media are            tecture engineered to balance diverse and often competing
+rapidly emerging as promising complements to address these            performance demands in hybrid RF/OWC networks for IoT
+evolving demands [1]–[3].                                             applications. Second, we analyze five connectivity modalities
+   Optical Wireless Communication (OWC) is a strong candi-            for IoT ecosystems using hybrid RF/OWC networks, com-
+date to address RF’s limitations. In particular, the Line-of-         paring their relative performance across ten key technical
+Sight (LoS) nature of optical signals restricts transmission          and deployment metrics. Third, we propose the integrated
+to the immediate area of emission. This spatial confinement           hybrid RF/OWC Access Point (AP) as a deployment option for
+enables enhanced physical-layer security and efficient fre-           establishing a hybrid zone, demonstrating its clear advantages
+                                                                                                                                         2
+
+
+
+in cost, coordination, and manageability. Fourth, to address         mitigates the risk of eavesdropping and is inherently resistant
+the central challenge of coverage mismatch between RF and            to RF-specific vulnerabilities such as electromagnetic leakage
+OWC, we develop a coverage-equivalence analysis that pro-            and signal sniffing. Furthermore, OWC is more resistant to
+vides actionable, quantitative guidelines for hybrid RF/OWC          jamming because interference requires direct LoS and precise
+coverage. The article concludes by identifying key challenges        alignment, unlike RF, which is vulnerable to omnidirec-
+and outlining crucial future research directions necessary for       tional attacks. The spatial confinement of OWC also enables
+the widespread adoption of hybrid RF/OWC networks for                location-based access control, which facilitates an essential
+modern IoT applications.                                             form of micro-segmentation and enhances device authentica-
+                                                                     tion by limiting the attack surface to a defined physical area.
+   II. W HY H YBRID RF + L IGHT W ILL P OWER 6G I OT                 Moreover, multi-connectivity adds another layer of resilience
+                                                                     and security. A device can split sensitive data across both
+   The modern IoT environment is characterized by dense              RF and OWC links and encode each part separately before
+deployments of devices operating under strict energy, cost,          transmitting over the distinct channels. This data is then
+and processing constraints. Effective solutions for IoT ecosys-      reassembled only at the intended receiver, reducing the risk
+tems must balance multiple, often competing, design objec-           of interception on any single channel, thereby contributing to
+tives—such as optimal resource utilization, enhanced security,       trustworthiness across the network domains.
+high scalability, robust resilience, and energy efficiency—all          3) Scalability and Coverage: Scalability and coverage are
+while meeting the sustainability targets for 6G and beyond.          critical to support a large number of IoT devices and ensure
+This challenge is further compounded by the wide dispar-             widespread, reliable connectivity across diverse deployment
+ity in Quality-of-Service (QoS) demands from different IoT           environments. OWC enhances scalability in dense wireless en-
+applications, ranging from ultra-low-latency, high-reliability       vironments by utilizing small, confined cells and the extensive
+links in industrial automation to low-cost, energy-constrained       unlicensed optical spectrum, allowing multiple interference-
+connectivity in environmental sensing [7].                           free links to coexist in close proximity and support high IoT
+   Balancing these often-conflicting objectives poses a signif-      device density. RF complements OWC by extending network
+icant challenge for traditional RF-only systems [8]. Given           coverage, enabling Non-Line-of-Sight (NLoS) communica-
+that OWC can effectively address part of these demands               tion, and providing robust mobility support. It also benefits
+(e.g., spectral density, security) while RF satisfies others         from mature infrastructure, globally accepted standards, and
+(e.g., mobility, coverage), the integration of RF and OWC in         broad interoperability across devices and platforms. By com-
+hybrid RF/OWC networks introduces the necessary flexibility          bining OWC for localized, high-capacity communication and
+and diversity to comprehensively address the heterogeneous           RF for broad coverage and mobility, hybrid RF/OWC systems
+performance requirements of modern IoT ecosystems. This              achieve enhanced scalability and robust coverage.
+section examines the core communication requirements of IoT             4) Reliable and Resilient Communication: Maintaining ro-
+applications and details how hybrid RF/OWC networks can              bust communication is essential for IoT systems, particularly
+address them.                                                        for mission-critical or real-time tasks under dynamic condi-
+   1) Energy Efficiency: Energy is a vital resource in IoT           tions. This necessity moves beyond reliability (consistent per-
+systems and must be managed judiciously to extend device             formance under typical conditions) and robustness (withstand-
+lifespans, enhance network sustainability, and reduce costs.         ing predicted failures) to prioritize true resilience (the ability to
+Among OWC technologies, VLC and IR communication stand               maintain critical functionality and rapidly recover from unex-
+out for their potential to enhance energy efficiency in IoT          pected failures). OWC strengthens this capability by delivering
+ecosystems. VLC enables simultaneous illumination and data           low-latency, interference-free links within confined spaces.
+transmission to IoT devices, effectively eliminating the need        In contrast, RF technologies ensure ubiquitous coverage and
+for additional energy dedicated to communication. In addi-           mobility support necessary for continuous service. Moreover,
+tion, IR provides an energy-efficient option for transmissions,      hybrid RF/OWC systems support multi-connectivity, which
+particularly in scenarios where illumination is unnecessary          is a crucial form of redundancy and diversity. This enables
+and data payloads are minimal. In addition, emerging tech-           dynamic failover mechanisms, allowing devices to seamlessly
+niques such as Simultaneous Wireless Information and Power           switch between or simultaneously utilize both links based on
+Transfer (SWIPT) in RF systems and Simultaneous Lightwave            real-time network conditions and application requirements. For
+Information and Power Transfer (SLIPT) in VLC enable                 example, if an OWC link is suddenly blocked, a device can
+devices to harvest energy while receiving data, where SLIPT          maintain its critical session seamlessly over the RF link, or
+has demonstrated transmission power in the range of 0.1W to          vice-versa if the RF channel experiences spectral congestion or
+10W [3], [9].                                                        EMI. This dynamic adaptability enables the network to recover
+   2) Security and Privacy: The IoT ecosystem faces critical         from both known and unknown disruptions, thereby transform-
+security vulnerabilities, yet the inherent resource constraints of   ing link-level redundancy into system-level resilience [10].
+most IoT devices preclude the utilization of advanced security          5) Localization and Positioning: Accurate localization
+approaches, such as computationally intensive cryptographic          plays a critical role in enabling context-aware IoT applications
+algorithms, defining a critical security dilemma in IoT de-          such as asset tracking, environmental monitoring, and location-
+sign. Due to the spatial confinement of optical signals and          based automation. RF-based approaches often fail indoors
+their inability to penetrate opaque barriers, OWC substantially      due to severe signal attenuation and multipath propagation,
+                                                                                                                                                                            3
+
+
+
+while also imposing high energy costs. Because optical signals                                         Local
+                                                                                                      OWC/RF
+
+are confined to a specific area, the reception of an OWC                                   Router/
+                                                                                           Gateway
+                                                                                                      network I
+
+
+                                                                        Cloud                                             Local Switch
+signal inherently confirms the presence of a device within              server
+
+                                                                                                                                                  OWC-AP
+
+that space, thereby providing implicit and bounded loca-                                                          RF-AP      OWC-AP
+
+
+tion information [11]. In addition, Visible Light Positioning           Wide
+                                                                                                                                         RF-AP
+
+
+
+
+(VLP) enables high-precision indoor localization; for instance,         Area
+                                                                       Network
+                                                                                                                                                           Optical/Radio
+                                                                                                                                                            IoT devices
+
+
+a three-dimensional mobile online VLP prototype achieved                                               Local
+                                                                                                      OWC/RF
+
+centimeter-level accuracy with an average positioning error of                                       network II
+
+
+                                                                                                                          Local Switch
+
+1.77 cm [12].                                                                                                                               Hybrid-AP
+                                                                                                                                                        Access Points
+
+                                                                                 Router/
+   6) Seamless Integration into the Environment: VLC’s abil-                     Gateway                          RF-AP       OWC-AP
+
+
+
+ity to leverage existing lighting infrastructure enables cost-
+                                                                                                                                                            Optical/Radio
+effective deployment across a wide range of IoT applications,                                                                                                IoT devices
+
+
+
+often requiring minimal modifications to the physical environ-
+ment. This integration not only reduces installation complexity
+and lowers operational costs but also promotes sustainabil-        Figure 1. System architecture of a hybrid RF/OWC network for IoT
+                                                                   applications. The zones are distinguished by their coverage availability: RF-
+ity by reusing existing resources. Furthermore, the inherent       only, OWC-only, and hybrid (both RF and OWC). The figure also illustrates
+immunity of OWC systems to EMI makes them a safe and               two deployment models for the hybrid zone: one using separate single-mode
+reliable choice in electromagnetically sensitive environments      APs and another using an integrated hybrid RF/OWC AP.
+(e.g., hospitals, industrial facilities) or in scenarios where
+RF noise limits performance. This benefit also extends from
+                                                                   Internet or a Wide Area Network (WAN) through dedicated
+the spatial domain (using OWC in specific locations) to the
+                                                                   gateways. Multiple hybrid LANs can operate concurrently and
+temporal domain; OWC can be strategically employed when
+                                                                   interface with a shared cloud platform, facilitating large-scale
+the RF spectrum becomes congested, thus allowing the system
+                                                                   coordination, data analytics, and service orchestration.
+to offload traffic and reduce competition for the crowded radio
+                                                                      Similar to conventional Wireless LANs (WLANs), a local
+channel.
+                                                                   hybrid RF/OWC network comprises multiple APs that form
+                                                                   the communication backbone between IoT devices and the
+III. A T RIZONE -BASED PARTITIONING F RAMEWORK FOR                 broader infrastructure. These APs are typically interconnected
+                H YBRID I OT N ETWORKS                             through wired or wireless backhaul links, facilitating efficient
+   The modern IoT application—characterized by strict con-         data exchange and centralized network control.
+straints, competing design objectives, and widely disparate
+QoS demands—necessitates a flexible and adaptive deploy-           B. Communication Modalities
+ment strategy. A practical approach to address this diversity
+is to partition the deployment environment into three distinct        In hybrid RF/OWC networks, a diverse spectrum of short-
+functional zones based on communication requirements and           range communication technologies can be employed to es-
+environmental characteristics. The first is an OWC-dominated       tablish links between IoT devices and APs. On the RF side,
+zone, ideal for confined, static areas demanding high capac-       established standards such as Bluetooth Low Energy (BLE),
+ity, high density environment, low interference, and strong        Wi-Fi, and Zigbee—alongside emerging protocols like DECT
+physical-layer security. The second is an RF-dominated zone,       NR+ and Wi-Fi HaLow—offer distinct trade-offs in range,
+where NLoS connectivity, mobility support, or wide-area cov-       energy consumption, and throughput [13]. Conversely, the
+erage is paramount, particularly in areas with scarce device       OWC domain presents a different set of options, including
+density. Finally, a hybrid zone requires RF and OWC to coex-       VLC, IR, OCC, and LiFi. VLC exploits existing lighting
+ist, providing complementary coverage, enhancing reliability,      infrastructure to deliver simultaneous illumination and data
+and ensuring seamless communication across diverse condi-          transmission, providing an inherently energy-efficient solution.
+tions. The size and even the existence of these distinct zones,    IR, invisible to the human eye, supports secure, low-energy,
+however, ultimately depend on the specific IoT application and     point-to-point links. While LiFi could achieve 10+ Gbps data
+its requirements. In many scenarios, a larger hybrid zone—or       rates [14], its associated high throughput, complexity, and cost
+one that encompasses the entire environment—may be the             make it a mismatch for general IoT, positioning it for high-
+optimal solution, as it best utilizes the complementary benefits   performance networking instead [4], [14]. OCC leverages im-
+of both RF and OWC technologies.                                   age sensors for communication, but its dependence on cameras
+                                                                   and flashes—hardware rarely found in resource-constrained
+                                                                   IoT nodes—restricts its viability for many IoT applications.
+A. System Architecture                                                Among the OWC candidates for IoT ecosystems, VLC is
+   Figure 1 details a holistic system architecture, highlighting   the most promising. The illumination–communication duality
+the key components of a hybrid RF/OWC network designed             provides a significant advantage for the downlink, yet realizing
+for diverse IoT applications. The network follows a hierar-        a reliable VLC uplink channel (device-to-AP) is fundamentally
+chical structure, extending from cloud services down to IoT        problematic. The requirement for a bright, high-power light
+devices. Within this hierarchy, the hybrid RF/OWC network          source on the device to reach the ceiling-mounted AP directly
+functions as a Local Area Network (LAN) that connects to the       conflicts with the stringent IoT energy constraints. Beyond the
+                                                                                                                                                    4
+
+
+
+issues of increased hardware cost and energy consumption, the                                            Uplink
+                                                                                                        Energy Efficiency
+                                                                                                                            Downlink
+                                                                                                                            Data Rate
+resultant visual disturbance from modulated light emissions,
+alongside increased hardware cost and energy consumption,
+fundamentally renders the VLC uplink impractical for human-                            Downlink                                          Uplink
+                                                                                       Energy Efficiency                                Data Rate
+centric or low-power IoT deployments.
+   To overcome VLC’s limitations on the uplink, communica-
+tion from devices to the AP can instead be realized using IR
+or RF channels, depending on system design and application
+                                                                                 Interference                                                 Security
+requirements. IR-based uplinks, in particular, retain OWC’s                      Resistance
+intrinsic benefits while eliminating visible light emission and
+enabling ultra-low power operation ideal for IoT devices. In
+certain specialized configurations, designers can implement RF
+downlinks paired with IR uplinks to exploit the complementary                          Implementation                                   Density
+strengths of both technologies, thereby enhancing physical-                            Simplicity                                       Support
+
+layer confidentiality and ensuring robust, secure data trans-
+mission from IoT nodes.                                                                                 Mobility            Coverage
+   The apex of hybrid design is the multi-connectivity modal-
+                                                                               Single mode RF
+ity, which supports concurrent VLC/RF downlink and IR/RF                       VLC downlink + IR uplink
+                                                                               VLC downlink + RF uplink
+uplink. By employing both RF and OWC interfaces, the multi-                    RF downlink + IR uplink
+connectivity capable IoT devices can harness the distinct and                  Multi-connected mode
+complementary benefits of both wireless media in parallel.
+This capability enables advanced and dynamic modality se-              Figure 2. Performance comparison of different connectivity modes for hybrid
+                                                                       OWC/RF IoT networks. For all metrics, a higher score indicates a more
+lection, allowing the system to meet application-specific QoS          desirable outcome, with values increasing from the center (low/worst) to the
+requirements under varying operating conditions [15].                  perimeter (high/best).
+   Figure 2 presents a comparative assessment of the five
+communication modalities, highlighting their relative perfor-
+mance across ten key technical and deployment metrics. The             including an Infrared LED (for the uplink) and a photodetector
+multi-connected mode clearly stands out as the most capable            (for the downlink), alongside their existing RF interfaces.
+option, offering consistently high performance across various          Although many devices contain simple photodiodes, these
+criteria. In particular, this mode provides significant flexibility,   are typically for low-speed ambient-light sensing and lack
+allowing the system to dynamically adapt to the specific IoT           the necessary high-bandwidth electronics for high-speed VLC
+application requirements. This flexibility means that, at a            demodulation. A more attractive alternative is the use of
+minimum, the multi-connected mode is capable of matching               photovoltaic (PV) cells when device size permits, as they
+the performance of the most suitable single-mode link for              function as large-area photodiodes capable of simultaneously
+any given metric—for instance, it can provide mobility and             detecting data and harvesting energy. Since PV cells are often
+coverage equivalent to that of single-mode RF. Furthermore, it         present in energy-harvesting designs, integrating the VLC
+can surpass the performance of single-mode approaches by, for          downlink simply requires adding a low-power amplifier and
+example, using both links simultaneously to provide enhanced           processing circuitry, offering a low-cost path to incorporating
+security or support higher device density. This advanced flex-         OWC into resource-constrained IoT platforms.
+ibility, however, comes with trade-offs—primarily increased               In dedicated RF-only and OWC-only zones, the infras-
+implementation complexity, resulting in higher hardware cost.          tructure is straightforward, relying on separate, specific APs
+Overall, for mission-critical IoT scenarios where reliability,         designed for a single communication modality. However, the
+throughput, and security are paramount, the superior perfor-           establishment of a hybrid zone—where both technologies are
+mance and flexibility delivered by the multi-connected mode            active—presents a fundamental architectural choice for the AP
+justify the added system complexity and investment.                    design. Hybrid zone can be covered in two distinct ways: either
+                                                                       by utilizing separate APs for each modality (RF and OWC),
+                                                                       or by deploying a single, integrated hybrid AP.
+C. Design of APs and IoT devices                                          The first approach relies on two parallel infrastructures:
+   The prerequisite for supporting both RF and OWC is that             using separate single-mode RF and single-mode OWC APs to
+IoT devices and APs must be equipped with the appropriate              cover the whole zone. While technically straightforward, this
+communication interfaces. RF interfaces consist of a dedicated         method increases hardware, cabling, and power costs. More
+transceiver and antenna; the VLC transmitter is typically an           critically, coordinating between physically separate APs for
+Light-Emitting Diode (LED) (often repurposed from illumi-              load balancing or handovers requires backhaul communica-
+nation), and the receiver is a photodetector. In IR systems, a         tion, which introduces latency and limits the system’s ability
+dedicated Infrared LED serves as the transmitter, paired with          to adapt in real time.
+an IR-sensitive photodetector as the receiver.                            In contrast, integrated hybrid RF/OWC APs that house both
+   Supporting hybrid RF/OWC connectivity mandates the inte-            modules in a single physical unit use a shared controller to
+gration of specific physical-layer components on IoT devices,          manage both the RF and OWC interfaces through a unified
+                                                                                                                                                    5
+
+
+
+
+                      (a) Prototype RF/OWC-enabled AP.                              (b) Prototype zero-energy hybrid IoT node.
+Figure 3. Hardware components developed within the EU SUPERIOT project [2], demonstrating the practical realization of the hybrid RF/OWC concept.
+
+
+
+backhaul structure. This integration minimizes hardware re-                B. Strategies for Coverage Equivalence
+dundancy and simplifies deployment while enabling superior                    The disparate coverage profiles of RF and OWC complicate
+real-time coordination. It facilitates intelligent load balancing,         the creation of a uniform hybrid zone. Using separate, single-
+adaptive resource allocation, and energy-efficient operation               mode OWC and RF APs simplifies the deployment problem,
+that separate systems cannot easily match.                                 as it splits the challenge into two uncoupled optimization tasks
+   This framework is not merely conceptual; its practical fea-             and allows for independent placement. Conversely, integrated
+sibility has been demonstrated in the EU SUPERIOT project                  hybrid APs lack this inherent spatial flexibility because the
+[2]. Figure 3a illustrates the project’s prototype multi-modal             single unit generates two disparate coverage patterns. Con-
+RF/OWC-enabled AP, while Figure 3b shows the prototype                     sequently, placement optimization for one interface is rarely
+of a zero-energy hybrid IoT node, powering all its communi-                optimal for the other, demanding meticulous planning to
+cation functions entirely from harvested energy.                           ensure balanced RF/OWC coverage.
+                                                                              A hybrid RF/OWC AP architecture comprises a central
+                                                                           controller that manages both RF and OWC interfaces. Given
+         IV. H YBRID AP D EPLOYMENT S TRATEGIES                            that most indoor spaces already feature multiple LED deploy-
+                                                                           ments for illumination, the hybrid RF/VLC AP can leverage
+   To fully realize the benefits of hybrid RF/OWC systems,                 this existing infrastructure. This allows a single controller to
+particularly the advanced functionalities of multi-connectivity            manage multiple LEDs within a zone. By treating these LEDs
+and seamless failover, the IoT environment requires a properly             as controllable optical transmitters, the controller can expand
+dimensioned overlapping coverage area from both RF and                     the optical footprint to better align with the RF coverage
+OWC technologies, especially within the defined hybrid zone.               region.
+The physical deployment of APs is the practical enabler for                   The number of LEDs that must be coordinated to match
+this hybrid coverage. However, AP deployment for a hybrid                  the RF coverage area depends on several factors. In an ideal,
+zone is challenging, as it must meticulously account for the               blockage-free scenario, this quantity is primarily determined
+distinct and often asymmetric propagation properties of each               by the installation height and the RF interface’s coverage
+modality.                                                                  radius. Figure 4 quantifies this relationship, showing that while
+                                                                           higher LED mounting heights expand optical coverage and
+                                                                           reduce the number of LEDs needed, the required count grows
+A. The Distinct Propagation Profiles                                       sharply with an increasing RF range. At greater ceiling heights
+                                                                           or for shorter RF ranges, however, the LED count decreases
+   A central challenge in AP deployment for a hybrid zone                  substantially, making this coordinated hybrid coverage strategy
+stems from the intrinsic mismatch between RF and OWC                       highly feasible. Table I further demonstrates this relation-
+propagation properties and their resulting coverage geometries.            ship across common RF technologies. While Zigbee can be
+RF signals typically create a spherical or ellipsoidal coverage            matched with relatively few LEDs, achieving coverage com-
+footprint, although the real-world coverage is shaped by an-               parable to 2.4 GHz Wi-Fi demands dense LED deployments
+tenna characteristics and environmental obstacles. In practice,            for VLC. The results also show that this requirement can be
+this RF coverage—particularly in the sub-6 GHz frequencies                 mitigated, as wider LED beam angles and greater installation
+common for IoT—is decently robust to such obstructions,                    heights both reduce the required LED count.
+allowing devices without a direct LoS to the AP to maintain
+connectivity.
+   In contrast, OWC relies mostly on directional LoS transmis-             C. Hierarchical Control and Trade-offs
+sion, producing a confined conical beam that forms a circular                 Coordinating multiple LEDs under a unified controller
+footprint on the illumination plane. This radius depends di-               introduces a powerful architectural opportunity for hybrid
+rectly on the AP mounting height h and the half-power angle                RF/OWC networks. A shared control plane streamlines cabling
+θ, approximated by h × tan(θ). Any obstruction causes                      and synchronization, enables centralized optimization of radio
+complete link loss, making OWC coverage far more sensitive                 and optical resources, and allows lighting, connectivity, and
+to geometric placement and environmental conditions.                       energy management to be jointly orchestrated. As modern
+                                                                                                                                                                6
+
+
+
+                                                                                                 and times of day. Achieving consistent lighting quality and
+                                                                                                 seamless hybrid coverage within a single physical infras-
+                                                                                                 tructure, therefore, calls for a co-design effort spanning the
+                                                                                                 communication, lighting, and control domains. Furthermore,
+                                                                                                 OWC performance is intrinsically dependent on the environ-
+                                                                                                 ment’s physical layout and application demands; factors such
+                                                                               100
+
+
+
+
+                                                                                Number of LEDs
+                                                                                                 as furniture, partitions, user movement, and device orientation
+                                                                                                 critically affect optical link quality, creating highly variable
+                                                                               75                connectivity zones that behave fundamentally differently from
+                                                                                                 RF systems. Ensuring robust service requires strategically
+                                                                               50
+                                                                                                 overlapping optical cells, necessitating a higher degree of
+                                                                               25                redundancy and completely different planning principles than
+                                                                               10                those used for traditional RF cellular coverage. Thus, the
+                                                                               1                 simultaneous consideration of lighting quality, LoS geometry
+                                                                          20                     and blockage, distinct overlap requirements, mobility support,
+                                                                        18                       and energy budgets transforms deployment planning from a
+                                                                      16
+                                                                    14                           simple geometrical exercise into a complex, multi-objective
+                                                                       )
+          1.0                                                  12    (m
+                 1.5                                                                             optimization problem.
+                                                               ge
+                                                          10
+                 LED H 2.0
+                                                          ran
+
+
+                                                      8
+                      eight 2.5                   6
+                                                                                                    To overcome the challenges of integration and deployment,
+                                                      RF
+
+
+
+                           (m)          3.0   4                                                  the widespread adoption of hybrid RF/OWC networks must be
+                                                                                                 supported by advanced enabling technologies. These solutions
+Figure 4. Required LED count to match RF AP coverage, by LED installation                        require a unified, adaptive approach integrating Digital Twin
+height and RF coverage range.                                                                    (DT) modeling, Software-Defined Networking (SDN) control,
+                                                                                                 and Artificial Intelligence (AI)-driven autonomy. The use of
+                                                                                                 DTs creates high-fidelity virtual models of the environment to
+buildings increasingly adopt smart-lighting infrastructures —                                    accurately simulate and predict complex interactions between
+where LEDs are already networked for sensing, automation,                                        illumination, link availability, and user mobility. This enables
+and energy efficiency — the illumination system itself can                                       rigorous pre-deployment planning that minimizes coverage
+evolve into a spatially distributed communications layer. In                                     gaps and significantly enhances overall network observability.
+such environments, light becomes both a utility and a data                                       Concurrently, SDN control ensures essential programmability
+channel, improving infrastructure reuse and overall system                                       by dynamically allocating and steering traffic to the optimal
+sustainability. Yet this integrated approach also introduces                                     channel in real-time based on instantaneous quality and pri-
+meaningful trade-offs, leading to the emergence of two major                                     ority. This capability accelerates recovery actions and acts as
+engineering challenges.                                                                          an active resilience lever for the hybrid network. Finally, AI-
+   First, expanding the optical coverage footprint under a                                       driven approaches are crucial for learning and adapting to
+single controller simplifies deployment but introduces a fun-                                    the non-static hybrid environment, continuously optimizing
+damental trade-off: it dilutes the advantages of OWC. In prac-                                   network parameters—such as AP transmission power, cov-
+tice, wider cells weaken physical-layer security, localization                                   erage boundaries, and link aggregation strategies —in real-
+precision, and diminish scalability. Centralized control also                                    time to transition operations from reactive to proactive and
+creates a single point of failure. To resolve this trade-off, a                                  anticipatory management.
+hierarchical coordination architecture can be employed that
+operates analogously to a cellular network. In this model,
+                                                                                                  V. C ONCLUSION : H YBRID W IRELESS AS A P ILLAR FOR
+a global controller acts as the core orchestrator, managing
+                                                                                                                   R ESILIENT 6G I OT
+system-wide policies. The hybrid APs then function as dis-
+tributed ”edge controllers,” each managing its own local cluster                                    Hybrid RF/OWC networking represents a pivotal architec-
+of optical transmitters. This distributed structure allows each                                  tural evolution for meeting the 6G era’s simultaneous demands
+edge controller to maintain tightly confined light cells, thereby                                for massive capacity, intrinsic security, and high energy effi-
+preserving the fine-grained OWC benefits (like device-level                                      ciency across dense and diverse IoT ecosystems. This article
+localization and zone-specific access control). Simultaneously,                                  demonstrated how combining the ubiquity of RF with the spa-
+the global controller ensures coordinated system behavior                                        tial precision of OWC creates an adaptive wireless fabric that
+across all APs and provides graceful degradation—the failure                                     overcomes the inherent limitations of single-technology solu-
+of a single edge AP does not bring down the entire network,                                      tions for IoT ecosystems. We presented a holistic architecture
+solving the single-point-of-failure problem.                                                     for hybrid RF/OWC systems tailored to IoT environments and
+   Second, hybrid deployment is not simply a matter of align-                                    identified five distinct communication modalities. A compar-
+ing RF and optical footprints; it requires the simultaneous                                      ative evaluation across ten performance metrics demonstrated
+consideration of multiple, often-conflicting system require-                                     the superior flexibility and robustness of multi-connectivity
+ments. For instance, LEDs must primarily satisfy illumination                                    operation. We also argued that a unified hybrid AP architecture
+requirements, which vary dynamically across different spaces                                     is key to minimizing cost and implementation complexity
+                                                                                                                                                              7
+
+
+
+                                                                Table I
+                          E STIMATED LED COUNT TO ACHIEVE VLC COVERAGE PARITY WITH DIFFERENT RF TECHNOLOGIES .
+
+                                          Typical Range (m)             h = 2.5 m                 h = 3.0 m                h = 3.5 m
+                     RF Technology
+                                                                   θ = 60◦        θ = 80◦    θ = 60◦     θ = 80◦     θ = 60◦      θ = 80◦
+                     BLE                        10 - 40             6 - 86         1-8        4 - 60       1-6         3 - 44       1-5
+                     Zigbee                     10 - 30             6 - 48         1-5        4 - 34       1-4         3 - 25       1-3
+                     Wi-Fi (2.4 GHz)            45 - 50           108 - 134       11 - 13    75 - 93       7-9        56 - 69       6-7
+                     Wi-Fi (5 GHz)              15 - 30            12 - 48         2-5        9 - 34       1-4         7 - 25       1-3
+
+
+
+while enabling real-time cross-domain coordination in hybrid                       [15] M. Biagi et al., “Invisible light communications: Ultraviolet enabling
+RF/OWC networks. A central practical challenge—coverage                                 robust high-rate underwater communications,” IEEE Wirel. Commun.,
+                                                                                        vol. 32, no. 4, pp. 216–222, 2025.
+mismatch between RF and OWC—was examined through a
+quantitative coverage-equivalence analysis. The results provide
+actionable guidance on coordinated LED densities required to
+align optical footprints with typical RF coverage, reinforcing
+the technical and economic feasibility of integrated deploy-
+ments. Looking forward, the evolution of hybrid RF/OWC
+networks will benefit from coordinated design frameworks                           Mohammad Khalili is a doctoral researcher at the University of Oulu, focus-
+that jointly consider communication, illumination, and control                     ing on heterogeneous optical wireless and RF networks, AI, and sustainable
+requirements. Emerging tools—such as DT, SDN-enabled                               IoT.
+control mechanisms, and AI-driven approaches—can support
+this direction by enabling more transparent planning, real-time
+adaptation, and efficient resource orchestration. These capa-
+bilities will play an important role in simplifying deployment,
+ensuring consistent coverage, and strengthening the reliability
+needed for broad commercial adoption.
+                                                                                   Amila Perera is a doctoral researcher at the University of Oulu, focusing on
+                                                                                   Visible Light Communication, zero-energy, and sustainable IoT.
+                              R EFERENCES
+ [1] J. Ding et al., “IoT connectivity technologies and applications: A
+     survey,” IEEE Access, vol. 8, pp. 67646–67673, 2020.
+ [2] M. Katz et al., “Towards truly sustainable iot systems: the SUPERIOT
+     project,” Journal of Physics: Photonics, vol. 6, p. 011001, jan 2024.
+ [3] S. Abdeljabar et al., “Reconfigurable intelligent surfaces for outdoor
+     visible light communications,” IEEE Internet of Things Magazine, vol. 8,
+                                                                                   Juha Häkkinen is a Senior Research Fellow at the University of Oulu.
+     no. 1, pp. 58–64, 2025.
+                                                                                   His research focuses on circuits and systems for VLC and emerging circuit
+ [4] F. Wang et al., “Access frameworks and application scenarios for hybrid
+                                                                                   technologies utilizing novel flexible components in the IoT.
+     VLC and RF systems: State of the art, challenges, and trends,” IEEE
+     Commun. Mag., vol. 60, no. 3, pp. 55–61, 2022.
+ [5] I. Demirkol et al., “Powering the internet of things through light
+     communication,” IEEE Commun. Mag., vol. 57, no. 6, pp. 107–113,
+     2019.
+ [6] F. Delgado-Rajo et al., “Hybrid RF/VLC network architecture for the
+     Internet of Things,” Sensors, vol. 20, no. 2, 2020.
+ [7] F. Guo et al., “Enabling massive IoT toward 6G: A comprehensive
+     survey,” IEEE Internet of Things J., vol. 8, no. 15, pp. 11891–11915,         Marcos Katz is a Professor at the University of Oulu, specializing in
+     2021.                                                                         wireless communications. He has held roles at Nokia, Samsung, and VTT,
+ [8] C.-X. Wang et al., “6G wireless channel measurements and models:              the Technical Research Centre in Finland. The major focus of his research is
+     Trends and challenges,” IEEE Veh. Technol. Mag., vol. 15, no. 4, pp. 22–      on the Visible Light Communication and sustainable IoT systems.
+     32, 2020.
+ [9] V. K. Papanikolaou et al., “Simultaneous lightwave information and
+     power transfer in 6G networks,” IEEE Commun. Mag., vol. 62, no. 3,
+     pp. 16–22, 2024.
+[10] H. Alves et al., ed., 6G Resilience White Paper. 6G Research Visions,
+     No. 15, Oulu: University of Oulu, Oct. 2025. White paper.
+[11] H. Yang et al., “Integration of visible light communication and position-
+     ing within 5G networks for internet of things,” IEEE Network, vol. 34,
+     no. 5, pp. 134–140, 2020.                                                     Konstantin Mikhaylov is an Associate Professor (Tenure Track) with the
+[12] S. Ma et al., “Centimeter-level 3D mobile online visible light positioning    Centre for Wireless Communications at the University of Oulu. The major
+     system with single LED lamp,” IEEE Internet of Things J., vol. 11, no. 1,     focus of his research is on the radio access and beyond-access technologies
+     pp. 418–429, 2024.                                                            for massive and dependable IoT, and the matters related to the design and use
+[13] R. Kovalchukov et al., “DECT-2020 new radio: The next step toward 5G          of IoT systems.
+     massive machine-type communications,” IEEE Commun. Mag., vol. 60,
+     no. 6, pp. 58–64, 2022.
+[14] X. Wu et al., “Hybrid LiFi and WiFi networks: A survey,” IEEE
+     Commun. Surv. Tutor., vol. 23, no. 2, pp. 1398–1420, 2021.
+

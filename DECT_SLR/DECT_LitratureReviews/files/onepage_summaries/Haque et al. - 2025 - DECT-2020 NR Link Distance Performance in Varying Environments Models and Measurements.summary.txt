@@ -1,0 +1,306 @@
+Title: DECT-2020 NR Link Distance Performance in
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Digital Enhanced Cordless Telecommunications 2020 New Radio (DECT-2020 NR) has
+garnered recognition as an alternative for cellular 5G technology in the
+internet of things industry. This paper presents a study centered around the
+analysis of the link distance performance in varying environments for DECT-2020
+NR. The study extensively examines and analyzes received signal strength
+indicator and resulting path loss values in comparison with theoretical models,
+as well as packet success rates (SR) and signal-to-noise ratio against varying
+distances. The measurements show that with an SR of over 90 %, an antenna height
+of 1.5 m, indoor link distances with a single device-to-device connection with 0
+dBm transmission (TX) power can reach over 60 m in non-line-of-sight (NLOS)
+areas and up to 190 m in LOS areas with smaller −8 dBm TX power. Similarly, for
+outdoor use cases, link distances of over 600 m can be reached with +19 dBm TX
+power. Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on February 25,2026 at 12:29:47 UTC from IEEE Xplore.
+Restrictions apply. 1) Free Space Path Loss Model: The basic and most well-
+level (m), αhm is a city size dependent variable, and Cm is known model for the
+attenuation of the transmitted signal’s 0 dB for suburban or open environments
+and 3 dB for urban power between two antennas through free space with a direct
+environments. line of sight (LOS) between the transmitter and receiver is called
+the free space path loss (FSPL). The FSPL equation can B. Empirical Path Loss
+Empirical PLs were calculated using the formula below to be written as [6]:  
+compare with the theoretical PL values for the corresponding 4π FSPL (dB) = 20
+log10 (d) + 20 log10 (f ) + 20 log10 , scenarios. The empirical PL formula is
+defined as: c (1) PLemp (dB) = Ptx − Prx + Gtx − Ltx + Grx − Lrx , (7) where d
+is the distance between antennas (m), f is frequency where Ptx is the
+transmission power of TX (dBm), Prx is the of the signal (Hz), and c is speed of
+light (m/s). 2) 3GPP TR 38.901 Path Loss Model: 3GPP technical receiving power
+of RX (dBm), Gtx is the TX antenna gain report version 38.901 focuses on
+frequencies ranging from (dB), Ltx is the TX side connector losses (dB), Grx is
+the RX 0.5 GHz to 100 GHz. In this model, indoor office environments antenna
+gain (dB), and Lrx is the RX side connector losses and shopping malls are
+referred to as InH, indoor factories (dB). containing heavy machinery, assembly
+lines, and varying III. DATA ACQUISITION AND A SSESSMENT densities of clutter
+are referred to as InF. The two most relevant equations for this study from this
+model are the following [7]: A. Equipment Details PLInH-LOS (dB) = 32.4 + 17.3
+log(d) + 20 log(fc ), and (2) PLInF-LOS (dB) = 31.84 + 21.50 log(d) + 19 log(fc
+), (3) where d is defined as the distance between the antenna and the
+measurement point (m) and fc is the carrier frequency (GHz). 3) Two-Ray Ground
+Reflection Model: Two-ray groundreflection model accounts for both the direct
+signal path and the signal reflected off the ground. The equation stands as
+below [8]: PL (dB) = 40 log10 (d) − 10 log10 (Gh2t h2r ), For analyzing the
+propagation effects, pre-commercial devices have been utilized. These devices,
+model nRF9131 as shown in Fig. 1, were manufactured by Nordic Semiconductor and
+support the new DECT-2020 NR standard [11]. Nordic Semiconductor’s proprietary
+software was employed to command and control these devices. Once the devices
+were set up for a link distance measurement, data was collected and stored for
+post-processing. (4) where d is the distance between the transmitter (TX) and
+receiver (RX), ht is the height of the TX, hr is the height of the RX, and G is
+the combined TX-RX antenna gain. 4) Okumura-Hata Model: The Okumura-Hata model
+is particularly well-suited for urban environments with numerous buildings with
+relatively few tall obstructions. The model is formulated as follows[9]: LU (dB)
+= 69.55 + 26.16 log10 (f ) − 13.82 log10 (hB ) − CH +[44.9 − 6.55 log10 (hB )]
+log10 (d). (5) (a) (b) Fig. 1. a) The utilized nRF9131 board and b) Hallila
+power line measurement scenario. where LU is PL in urban areas (dB), f is the
+utilized frequency (MHz), hB is the height of the base station antenna (m), CH
+is antenna height correction factor, and d is the distance between B.
+Measurement Setup the base station and mobile station (km). 5) COST-231 Hata
+Model: The COST-231 Hata model is A point-to-point connection was employed for
+measuring applicable in the frequency range of 500 MHz to 2000 MHz. average
+received signal strength indicator (RSSI), path loss The basic equation for PL
+in dB is given by [10]: (PL), signal-to-noise ratio (SNR) and success rate (SR)
+by PL (dB) = 46.3 + 33.9 log10 (f ) − 13.82 log10 (hb ) − αhm + collecting 300
+measurement samples (one sample per second) at each location point. Both the TX
+and RX were mounted [44.9 − 6.55 log10 (hb )] log10 (d) + Cm , on separate
+tripods to achieve stationary positions and desired (6) heights. Moreover,
+antennas were connected to both of the dewhere f is the utilized frequency
+(MHz), d is the distance vices as shown in Fig. 1. These Pulselarsen W5095X
+antennas between access points (AP) and customer premises equipment are
+vertically polarized, omnidirectional blade antennas. (CPE) antennas (km), hb is
+the AP antenna height above For all indoor distance measurements, a laser
+distance meter ground level (m), hm is the CPE antenna height above ground was
+employed to precisely measure the distance between the Authorized licensed use
+limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 12:29:47 UTC from IEEE Xplore. Restrictions apply. TX and RX
+devices. In outdoor scenarios, online mapping tools were utilized to determine
+the distances between the devices by utilizing GPS coordinates measured at both
+ends with a common smart phone. RSSI data from the RX, along with cyclic
+redundancy check (CRC) success and failure counts, were independently recorded
+and stored. Lastly, MATLAB software was employed to process the data from these
+files. C. Data Assessment Procedure 1) Received Signal Strength Indicator and
+Signal to Noise Ratio Calculation: Following the acquisition of each dataset,
+the RSSI levels for both PCC and PDC were systematically organized. MATLAB
+script was subsequently employed to compute key statistical parameters,
+including the mean, standard deviation, maximum, and minimum values. The RSSI
+and SNR measurements, initially recorded in logarithmic scales, underwent a
+conversion process to linear scale to facilitate average value calculations,
+before being reconverted to logarithmic scale. This methodical approach was
+applied to the raw data (RSSI and SNR data sets) for each measured distance,
+ensuring a comprehensive representation of signal characteristics across varying
+spatial parameters. Furthermore, this average RSSI value in logarithmic form is
+subtracted from the transmitted power, while internal and connector losses along
+with TX-RX gains (total 1 dB per side) are added to compute the empirical PLs,
+according to (7). The measurements were conducted using omnidirectional
+antennas, which closely align with the assumptions made in the propagation
+models considered in this study. 2) Success Rate Analysis: In the measurement
+process, the device utilized a continuous reception method without implementing
+any re-transmission mechanism for packet error correction. Instead, CRC was
+employed as the primary means of error detection. The ‘CRC Okay Count’ served as
+central metric, enabling the quantification of successfully received packets
+that passed the error detection process. SRs were quantified as percentages,
+utilizing formulas below:   PCC CRC Okay Count × 100 (8) SR PCC = Request
+Count   PDC CRC Okay Count SR PDC = × 100 (9) Request Count Finally, RSSI
+values, both theoretical and empirical PL equations and SRs were visualized
+through distinct curves plotted against distance. This meticulous data
+collection and analysis approach provided in-depth insights into the performance
+characteristics and reliability of the studied devices, while also offering
+valuable information about their applicability in various indoor and outdoor
+scenarios. D. Data Collection from Measurement Scenarios Link distance
+measurements were carried out at various sites situated at Tampere, Finland, to
+collect the data. These sites can be categorized as indoor and outdoor
+locations. Indoor measurements were conducted at Tampere University Hervanta
+campus (buildings “Konetalo” and “Rakennustalo”) and Valmet Oy industry
+premises. Outdoor locations included various sites and areas around Tampere
+University, Ahvenisjärvi, Opiskelijankatu, Hallila, Kangasala, and Kaukajärvi,
+encompassing urban, sidewalk, forested, and lakeside environments. The general
+and DECT-2020 NR specific parameters considered for the measurements are shared
+in Table I. TABLE I C ONSIDERED PARAMETERS FOR DECT-2020 NR LINK - LEVEL
+MEASUREMENTS Parameter Payload length (in slots) Modulation and Coding Scheme
+(MCS) Successive Packet Transmission Interval DECT-2020 Channel TX Power Node
+Height above Ground Level Antenna Gain Carrier Frequency Channel Bandwidth Value
+4 1&4 1s 1677 & 1667 −20 dBm, 0 dBm, +19 dBm 1.5 m 1.07 dB ± 1 dB 1899 MHz 1.728
+MHz IV. R ESULTS AND A NALYSIS To ensure reliable communication and satisfactory
+performance of the devices under examination, the SR is required to exceed 90 %.
+This is considered a good threshold for a well-performing single-link connection
+when considering only one-hop and targeting maximum distance, without
+introducing an extensive amount of re-transmission in the link. In fact, 10 %
+packet error rate is the typical assumption in wireless data networks such as
+Long Term Evolution (LTE) [12]. Although a typical DECT-2020 NR mesh network is
+expected to consist of a large number of nodes enabling longer end-to-end
+distances with multiple hops, it can still guarantee up to 100 % SR by enabling
+link-specific re-transmission using HARQ for any packet error occurring in a
+link. In order to help to analyse and visualize the results, nonlinear least
+squares (NLS) curve fitting was also applied to the measurement data for
+logarithmic scale PL values versus distance graphs. This was utilized, when
+several distances were measured in one location. A. Minimum Transmission Power
+Requirements A crucial parameter for long-term device deployment is minimizing
+TX power while maximizing range, which optimizes battery life. Additionally,
+utilizing optimum TX power reduces interference in the spectrum, improving
+system capacity and co-existence with other systems [13]. To elucidate these
+powerdistance relationships across various propagation scenarios, Table II and
+Table III present a comprehensive summary of the minimum power requirements
+necessary to achieve maximum communication distances under the condition of
+reliable communication. Authorized licensed use limited to: Hochschule Aalen
+(FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:29:47 UTC
+from IEEE Xplore. Restrictions apply. TABLE II M INIMUM TRANSMISSION POWER
+REQUIREMENTS FOR RELIABLE 90 COMMUNICATION AT MAXIMUM DISTANCE IN INDOOR
+SCENARIOS Propagation Type LOS LOS LOS LOS NLOS NLOS NLOS NLOS Maximum Distance
+Measured (m) 40 120 137 190 10.71 61 61 111 Minimum TX Power Required (dBm) −20
+0 0 −8 0 0 0 +19 TABLE III 85 80 70 Location Kampusareena and Main Building
+Outdoors (5) Ahvenisjärvi Football Ground (6) Ahvenisjärvi Forest (7)
+Opiskelijankatu Sidewalk (8) Hallila Power Line (9) Kaukajärvi Lake Kangasala
+Observation Tower Devices Located at / Separated By Free-Space Free-Space Forest
+and Lake Walking Bridge Free-Space Lake Terrain Maximum Distance Measured (m) 40
+205 265 610 650 2294 2470 65 60 55 M INIMUM TRANSMISSION POWER REQUIREMENTS FOR
+RELIABLE COMMUNICATION AT MAXIMUM DISTANCE IN OUTDOOR SCENARIOS Propagation Type
+LOS LOS NLOS LOS LOS LOS LOS (1) (PCC) (1) (PDC) (1) (PCC) - NLS fit (1) (PDC) -
+NLS fit (2) (PCC) (2) (PDC) (2) (PCC) - NLS fit (2) (PDC) - NLS fit (3) (PCC)
+(3) (PDC) (3) (PCC) - NLS fit (3) (PDC) - NLS fit (4) (PCC) (4) (PDC) (4) (PCC)
+- NLS fit (4) (PDC) - NLS fit FSPL 3GPP TR 38.901 InH-LOS 3GPP TR 38.901 InF-LOS
+75 Path Loss (dB) Location Konetalo 2nd Floor (1) Rakennustalo 2nd Floor (2)
+Valmet Office (3) Valmet Factory (4) Konetalo Inter-floors Valmet Office Valmet
+Office Valmet Office Devices Located at / Separated By Straight Corridor
+Straight Main Corridor Straight Main Corridor Long Factory Area Concrete Floors
+(three floors) Brick Wall & Glass Brick Wall, Glass and Cubicles Circular Main
+Corridor 50 Minimum TX Power Required (dBm) −20 −8 +16 +19 +19 +19 +19 45 40 35
+0 20 40 60 80 100 120 Distance (m) Fig. 2. PL versus distance in indoor
+scenarios for TX = −20 dBm. Site labels correspond to Table II locations. RSSI
+standard deviation: 0.34–4.17 dB. B. PL versus Distance 140 120 (5) (PCC) (5)
+(PDC) (6) (PCC) (6) (PDC) (6) (PCC) - NLS fit (6) (PDC) - NLS fit (7) (PCC) (7)
+(PDC) (8) (PCC) (8) (PDC) (8) (PCC) - NLS fit (8) (PDC) - NLS fit (9) (PCC) (9)
+(PDC) (9) (PCC) - NLS fit (9) (PDC) - NLS fit FSPL 2-Ray Ground Reflection
+Okumura-Hata Cost-231 Hata (Urban) 100 Path Loss (dB) Fig. 2 illustrates
+empirical PL against distance for various indoor corridor LOS scenarios.
+Konetalo 2nd floor corridor consistently has the lowest PL, staying below 3GPP
+TR 38.901 InH-LOS threshold. Valmet factory corridor shows highest PL among all,
+but exhibits a moderate PL compared to InF-LOS model. Moreover, Fig. 3
+illustrates PL and distance relationship for various environments at outdoors
+LOS for 19 dBm TX power. The heights of the TX and RX have been designated as 10
+m and 1.5 m respectively for the theoretical models. Ahvenisjärvi football
+ground showed a very close performance with the FSPL curve, whereas
+Opiskelijankatu sidewalk exhibited one of the highest PLs indicating impact of
+multipath propagation due to pedestrians and live vehicular traffic as well as
+more vegetation along the road. Kampusareena-Mainbuilding outdoor scenario
+showed notable variation in PL values as the devices are located between two
+buildings and Kampusareena is metal coated. Therefore, the signal got reflected
+very well from the buildings and showed tunneling effect in guiding the signal
+well between the closely located buildings. Under Hallila power lines, the link
+distance is very similar to the Opiskelijankatu sidewalk case. Ahvenisjärvi
+forest PL remained highest in comparing with other scenarios of the same
+distance due to the presence of a thick forest. However, all measured scenarios
+consistently showed lower PL than the Okumura-Hata and COST-231 Hata models
+predict at all distances and higher PL than FSPL model predicts after 100 m
+distance. The outdoor LOS measurements were performed with 19 dBm TX power to
+assess device performance at maximum distances with different heights, as shown
+in Table IV. Kangasala observation tower outperformed other sites, but this is
+due to its considerable height advantage (TX-RX height difference is 52.6 m).
+Excluding height differences, Kaukajärvi lake showed favorable propagation
+conditions over water, as one might expect. All measured scenarios exhibited
+significantly lower PL than the two models Okumura-Hata and COST-231 Hata
+predicted, which is due to the more pessimistic nature of these models. 80 60 40
+20 100 200 300 400 500 600 Distance (m) Fig. 3. PL versus distance in outdoor
+scenarios for TX = +19 dBm. Site labels correspond to Table III locations. RSSI
+standard deviation: 0.59–2.75 dB. TABLE IV PL FOR DIFFERENT ( MAXIMUM ) LINK
+DISTANCES AT OUTDOORS . Scenario Hallila Power Line Kaukajarvi Lake Kangasala
+Tower Distance (m) 650 2294 2470 Height Difference (m) 11.58 1 52.6 Empirical PL
+PCC (dB) 110.56 120.38 113.70 Empirical PL PDC (dB) 110.84 120.61 113.96 FSPL
+(dB) 99.55 105.16 105.83 2-Ray Model PL (dB) 91.63 115.00 96.93 Okumura Hata
+Model PL (dB) 139.44 144.50 COST-231 Hata Model PL(dB) 145.60 149.67 C. SR & SNR
+versus RSSI In this section, SR and SNR are simultaneously analyzed as a
+function of RSSI. From Fig. 4 and Fig. 5, it can be summarised that across all
+indoor and outdoor environments, SR consistently exceeded 90 % when RSSI values
+remained above −90 dBm for indoors and above −95 dBm for outdoors, demonstrating
+the capability to perform well even with weaker signal power levels. The
+comparison of SNR to RSSI shows a more gradual increase compared to the sharp
+rise in the case of SR versus Authorized licensed use limited to: Hochschule
+Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:29:47
+UTC from IEEE Xplore. Restrictions apply. 30 90 27 80 24 70 21 60 18 50 15 40 12
+30 9 20 6 SR SNR 10 0 -110 -100 -90 -80 -70 RSSI (dBm) -60 SNR (dB) SR (%) 100 3
+0 -40 -50 100 30 90 27 80 24 70 21 60 18 50 15 40 12 30 9 20 6 SR SNR 10 0 -110
+-100 -90 -80 RSSI (dBm) -70 -60 SNR (dB) SR (%) Fig. 4. SR and SNR as a function
+of RSSI at all indoor scenarios. 3 0 -50 Fig. 5. SR and SNR as a function of
+RSSI at all outdoor scenarios. RSSI. Generally, SRs surpassed 90 % when SNR
+values reached around 11 dB to 12 dB for indoors and around 12 dB to 15 dB for
+outdoors. SR data points cluster heavily near 100 % for stronger RSSI values,
+indicating excellent performance, while SNR values spread more, especially at
+stronger RSSI levels. V. C ONCLUSIONS This paper presented a measurement-based
+study for practical DECT-2020 NR link distances in indoor and outdoor scenarios
+with pre-commercial equipment. The maximum one-hop link distance communication
+ranges were determined for diverse outdoor settings, including open fields,
+forests, urban areas, terrains and over water surfaces. The measurements show
+that with an SR of over 90 % and TX power ranging from −20 dBm to 0 dBm, the
+indoor LOS distances range from 40 m to 190 m and for NLOS use cases a distance
+of over 60 m can be reached with 0 dBm TX power. For outdoor use cases, with the
+maximum TX power of 19 dBm, link distances of around 600 m can be reached in LOS
+environment with low device heights. With deploying devices higher e.g. light
+poles, roofs or masts, significantly longer distances can be achieved as
+demonstrated by measurements done at Kangasala observation tower. The indoor
+scenarios PL characteristics predominantly aligned with the 3GPP TR 38.901 InH-
+LOS model, which can be stated as the most suitable model for the measurements.
+The predominant deployment of devices at similar heights in outdoors indicates
+the need for a more sophisticated theoretical model to be considered as the most
+suitable model. With the achieved link distance results, it can be concluded
+that indoor networks can be realized with small TX powers enabling, for example,
+battery operated networks to function for a long time. Furthermore, large
+outdoor areas can be covered with suitable link distances, that is, having up to
+several hundred meters between the nodes, when node installation height is only
+1.5 m, enabling reduction of network installation and maintenance cost compared
+to high mass deployments typically used in LPWAN or cellular technologies. The
+results of this study advance both device performance under DECT-2020 NR
+communication protocols while providing insights into IoT-enabled systems’
+propagation characteristics. The findings not only show the devices’ readiness
+for industrial deployment in smart metering, electricity network QoS monitoring
+and industrial facility condition monitoring, as well as smart building and
+smart city applications, but also establish benchmarks for evaluating
+performance across various environmental conditions.
+
+Approach and methods:
+namely physical control channel (PCC) I. I NTRODUCTION and physical data channel
+(PDC) [5]. The PCC provides a In the current era of the internet, humanity has
+witnessed control channel for MAC that can indicate short network ID, an
+unprecedented level of interconnections. The growth of transmitter and receiver
+IDs of the transmission and used limited-range networks and the expansion of
+devices connected transmission parameters of the PDC. Transmission parameters to
+these networks have led to a continuous interconnection include transmission
+power, modulation and coding scheme between devices. This interconnection
+enables devices to collect (MCS), transmission length, number of spatial
+streams, and and distribute information through a series of communication
+redundancy versions. Furthermore, PCC encompasses hybrid processes, often
+involving minimal or no human intervention automatic repeat request (HARQ)
+feedback channel quality [1]. These devices are embedded with intelligence and
+commu- indicator (CQI), and codebook index for MIMO transmissions. nication
+capabilities, including sensors, cellphones, vehicles, The PDC then contains the
+MAC PDU, containing the MAC household devices, and medical equipment. This
+transformation protocol data and control units as defined in [5]. has led to the
+emergence of the internet of things (IoT), marking In this paper, radio
+propagation models are first
+
+Key findings:
+terrestrial radio interfaces of International Mobile Telecommunications-2020
+(IMT-2020),” ITU, ITUR M.2150-2, December 2023. [5] ETSI, “DECT-2020 New Radio
+(NR); Part 3: Physical layer; Release 1,” ETSI, ETSI TS 103 636-3, March 2024.
+[6] S. Cerwin, Radio Propagation and Antennas: A Non-Mathematical Treatment of
+Radio and Antennas. AuthorHouse, 2019. [7] 3GPP, “Study on channel model for
+frequencies from 0.5 to 100 GHz,” 3GPP, 3GPP TR 38.901, November 2020. [8] T. S.
+Rappaport, Wireless Communications Principles and Practice, Second Edition.
+Pearson, 2001. [9] M. Hata, “Empirical formula for propagation loss in land
+mobile radio services,” IEEE transactions on Vehicular Technology, vol. 29, no.
+3, pp. 317–325, 1980. [10] E. Damosso, L. M. Correia et al., “Digital mobile
+radio towards future generation systems,” COST 231 final report, vol. 13, 1999.
+[11] nRF9131. [Online]. Available: www.nordicsemi.com/Products/nRF9131 [12]
+3GPP, “Evolved Universal Terrestrial Radio Access (E-UTRA),” 3GPP, 3GPP TR
+36.213, March 2024. [13] M. Lauridsen et al., “Coverage Comparison of GPRS, NB-
+IoT, LoRa, and SigFox in a 7800 km² Area,” in 2017 IEEE 85th Vehicular
+Technology Conference (VTC Spring), 2017, pp. 1–5. Authorized licensed use
+limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on
+February 25,2026 at 12:29:47 UTC from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

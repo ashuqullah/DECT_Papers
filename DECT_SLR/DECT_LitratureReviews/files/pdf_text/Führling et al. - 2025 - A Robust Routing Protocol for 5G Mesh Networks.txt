@@ -1,0 +1,403 @@
+2025 IEEE 26th International Workshop on Signal Processing and Artificial Intelligence for Wireless Communications (SPAWC) | 978-1-6654-7776-5/25/$31.00 ©2025 IEEE | DOI: 10.1109/SPAWC66079.2025.11143415
+
+
+
+
+                                                                                                                                                                                                                 A Robust Routing Protocol for 5G Mesh Networks
+                                                                                                                                                                                                                              Niclas Führling , Ivan Alexander Morales Sandoval and Giuseppe Thadeu Freitas de Abreu
+                                                                                                                                                                                                                                       School of Computer Science and Engineering, Constructor University, Bremen, Germany
+                                                                                                                                                                                                                                                   [nfuehrling, imorales, gabreu]@constructor.university
+
+
+                                                                                                                                                                                                                  Abstract—We consider a novel routing protocol suitable for                         The main challenges faced by state-of-the-art (SotA) routing
+                                                                                                                                                                                                               ad-hoc networks with dynamically changing topologies, such as                      protocols targeting modern communication systems are their
+                                                                                                                                                                                                               DECT 2020 NR (NR+) systems, which often lead to missing links                      reliability, resilience, and more recently privacy and security.
+                                                                                                                                                                                                               between the nodes and thus, incomplete or inefficient routes. A
+                                                                                                                                                                                                               key point of the proposed protocol is the combination of network                   In response to these challenges, the original AODV algorithm
+                                                                                                                                                                                                               discovery and matrix completion techniques, which allow the                        has been extended to better accommodate the requirements
+                                                                                                                                                                                                               nodes to establish communication paths efficiently and reliably.                   of wireless multi-hop mobile ad-hoc networks (MANETs) [4]
+                                                                                                                                                                                                               Additionally, multihop localization is performed to estimate the                   via static routers and router count metrics. In turn, network
+                                                                                                                                                                                                               location of the nodes without needing to broadcast each node’s                     resilience was improved in [5] through dynamic routing and
+                                                                                                                                                                                                               geographical position, thus preserving privacy during the routing
+                                                                                                                                                                                                               process and enabling nodes in the network to independently find                    the integration of disjoint paths, and an opportunistic method
+                                                                                                                                                                                                               potentially missing paths in a decentralized manner instead of                     for resilient routing in highly dynamic mesh networks using
+                                                                                                                                                                                                               flooding the whole network. Simulation results illustrate the good                 network coding was proposed in [6].
+                                                                                                                                                                                                               performance of the proposed technique in terms of the average                         A critical flaw of on-demand routing protocols is, however,
+                                                                                                                                                                                                               number of hops of the obtained routes in different scenarios,                      that they cannot dynamically adapt to new links which were
+                                                                                                                                                                                                               with different network densities and amounts of incompleteness.
+                                                                                                                                                                                                                                                                                                  originally missing, since routing tables are kept frozen for a
+                                                                                                                                                                                                                Index Terms—Network Routing, Matrix Completion, Privacy,                          certain period of time after discovery, potentially leading to
+                                                                                                                                                                                                               Multihop Localization, DECT-2020 NR.                                               suboptimal routes between the nodes. In view of the latter, we
+                                                                                                                                                                                                                                                                                                  propose that the issue of missing links in a network be solved
+                                                                                                                                                                                                                                           I. I NTRODUCTION                                       via a matrix completion approach.
+                                                                                                                                                                                                                                                                                                     Many matrix completion techniques have been proposed in
+                                                                                                                                                                                                                  Network routing is an important research topic in the                           the literature [14]–[17] as a way to estimate the missing entries
+                                                                                                                                                                                                               field of wireless communication systems [1]–[3], especially                        of a matrix based on the knowledge of the observed entries.
+                                                                                                                                                                                                               in the context of ad-hoc and mesh networks, where nodes                            However, SotA methods share a common assumption that the
+                                                                                                                                                                                                               might be mobile and the network topology dynamic. In such                          entries of the incomplete matrix can take on any number in
+                                                                                                                                                                                                               networks, routing protocols play a crucial role in establishing                    the real R or complex sets C, which is not suitable to the
+                                                                                                                                                                                                               communication paths between the nodes, ensuring that the data                      routing problem since the number of hops in a route must be
+                                                                                                                                                                                                               packets are delivered efficiently and reliably [4]–[6]. Recently,                  integer. A recent variation, suitable for the proposed scenario,
+                                                                                                                                                                                                               the DECT 2020 NR1 [9]–[11] standard was released by                                is the discrete-aware matrix completion scheme proposed in
+                                                                                                                                                                                                               the European Telecommunications Standards Institute (ETSI),                        [18], [19]. Additionally, multihop localization techniques have
+                                                                                                                                                                                                               making it the first non-cellular 5G technology with peer-to-                       been proposed to estimate the location of nodes in a network
+                                                                                                                                                                                                               peer mesh networking capabilities. While the parameters and                        based only on the number of hops connecting them, which can
+                                                                                                                                                                                                               protocols on the physical layer are well-defined within the                        be used to find the shortest path between any two nodes [20],
+                                                                                                                                                                                                               standard, the routing protocols are still an open research area,                   [21] without the need to share their position nor their distance
+                                                                                                                                                                                                               since it is up to the user to decide which routing protocol to                     with neighboring nodes, thus preserving privacy.
+                                                                                                                                                                                                               use. Thus, the need for advanced routing protocols that can                           Given all the above, we propose in this article a novel
+                                                                                                                                                                                                               handle the unique characteristics of these emerging systems                        robust routing protocol that is suitable for DECT 2020 NR
+                                                                                                                                                                                                               and the applications they enable is now apparent.                                  5G mesh networks [9]–[11], which can handle the dynamic
+                                                                                                                                                                                                                  Research on routing protocols has been conducted for a                          topologies and potential missing links between the nodes, by
+                                                                                                                                                                                                               long time, with one of the early examples for ad-hoc net-                          first performing discrete-aware matrix completion to estimate
+                                                                                                                                                                                                               works being the ad hoc on-demand distance vector (AODV)                            the missing hops between the nodes; followed by a multihop
+                                                                                                                                                                                                               routing protocol [12]. However, novel approaches are still                         localization to estimate the location of the nodes; and finally,
+                                                                                                                                                                                                               being developed to address the unique challenges of modern                         local route discovery performed to find the shortest path
+                                                                                                                                                                                                               wireless communication systems, in particular opportunistic                        between the nodes, which is based on the estimated location of
+                                                                                                                                                                                                               routing algorithms [13] which exploit the broadcast nature                         the nodes and the known radio range of the nodes. Overall, the
+                                                                                                                                                                                                               of the wireless medium to improve the reliability of the                           proposed routing protocol can establish communication paths
+                                                                                                                                                                                                               communication links.                                                               between pairs of nodes efficiently and reliably, by enabling
+                                                                                                                                                                                                                 1 Other dynamic ad-hoc mesh network technologies that currently gain
+                                                                                                                                                                                                                                                                                                  a decentralized routing process iteration that avoids flooding
+                                                                                                                                                                                                               momentum are, LoRaHop [7] and Bluetooth Low Energy (BLE) mesh                      the whole network with routing messages, in addition to
+                                                                                                                                                                                                               networks [8], which are also suitable for the proposed routing protocol.           estimating the locations of the nodes, while preserving privacy.
+
+
+
+
+                                                                                                                                                                                                              Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+    The structure of the remainder of the article is as follows.
+                                                                                                        Cluster 1
+ First, a description of the system and network model is offered
+ in Section II. Then, in Section III, after a short introduction to
+ the SotA routing approach for partially connected networks is                                                                          Internet Connectivity
+
+ given, the proposed method to find the missing entries of the
+ incomplete hop matrix is introduced, followed by the multihop
+ localization scheme, and the local route discovery. Finally,                                                                                              Cluster 3
+ a comparison of the proposed scheme with the conventional
+ breadth first search (BFS) algorithm performing network dis-
+ covery on the network with partially missing edges, is offered
+ in Section IV, followed by further performance evaluation in
+ terms of the average number of hops for various network
+ densities and incompleteness levels.                                                                     Cluster 2
+
+                          II. N ETWORK M ODEL                                       Fig. 1. Illustration of a conventional multihop DECT-2020 NR Network
+                                                                                    containing multiple relay nodes, many leaf nodes and one gateway node that
+ A. System Model                                                                    has internet connectivity multiple clusters.
+    Consider a two-dimensional (2D) DECT-2020 NR 5G
+ mesh network as depicted in Fig. 2, with a network density                                                                                       Missing Link
+ λ, containing N nodes located at the coordinates Θ =                                                                                             Connection Link
+ [θ1 , · · · , θN −1 ]. It is assumed that only a subset of nodes are                  Internet Connectivity
+
+ aware of their location, which are denoted as gateways and
+ have their coordinates denoted by A = [a1 , · · · , aNa ], with
+ A ⊆ Θ and Na > 2, where the nodes follow a tree structure
+ and only some nodes can receive (PT), relay (FT), or do both
+ (FT,PT)2 as illustrated in Figure 1.
+    It can be assumed that two nodes i and j are mutually
+ connected if and only if (iff) the distance between them is less
+ than a given threshold that we denote as the radio range, which
+ we set as the unit circle such that the distance between two
+ nodes i and j is given by Di,j = ||θi − θj ||2 ≤ 1. These type
+ of 2D networks are commonly referred to as unit disk planar                                                                              Radio Range
+ networks (UDPNs), where w.l.g. all Euclidean distances can
+ be assumed to be normalized to the corresponding communi-
+ cation threshold. While the true distance between two nodes is
+ defined as Di,j , the multihop distance between them is defined                    Fig. 2. Illustration of the system scenario of a mesh network with multiple
+                                                                                    relay nodes and three gateways, where a link between nodes are displayed
+ by the sum of the distances of the different hops, given by                        by solid lines and temporarily blocked links are illustrated by dashed lines,
+                                                                                    additionally displaying the radio range by the dashed circle.
+                                       NH
+                                       X
+                             D̃i,j =         Dl−1,l ,                       (1)                                III. P ROPOSED METHOD
+                                       l=1
+                                                                                    A. Network Discovery
+ where NH is the number of hops between the nodes i and j,
+ and Dl−1,l is the distance between the nodes l − 1 and l in                           1) Incomplete Network Discovery: There are many SotA
+ the l-th hop, with the total multihop distance D̃i,j ≫ Di,j .                      methods for network discovery which can be used to find the
+    For this article’s specific scenario, it is assumed that a                      routes between the nodes, such as the BFS algorithm [22],
+ certain number of edges between nodes are missing. These                           which is a conventional method used to find the shortest path
+ can be the result of obstacles, such as buildings, trees, or large                 between two nodes in a network, or the AODV routing scheme
+ vehicles which block messages between nodes; or other factors                      [12] that floods the network to find the routes between the
+ like the devices’ limited communications range or the presence                     nodes, not saving the whole route but only the next hop to
+ of noise in the communication channel. An example topology                         reach the destination. However, in the context of real-world
+ for the mesh network is depicted in Fig. 2, where the nodes                        scenarios, the network discovery process is often incomplete
+ (circles) are connected by the edges (lines), with the missing                     due to factors like obstacles, limited communications range
+ edges shown as dashed lines.                                                       and channel noise. Thus, again, as depicted in Fig. 2, network
+                                                                                    discovery can be considered as the process of finding end-to-
+   2 Without loss of generality (w.l.g.), it can be assumed that the nodes are
+                                                                                    end routes between nodes, where some of the edges linking
+ deployed as a mesh network, where all nodes are capable of the FT,PT NR+           nodes are missing, leading to inefficient route observations and
+ mode.                                                                              high number of hops between nodes.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+    To perform the network discovery process in the proposed                          In view of the latter, the corresponding standard regularized
+ scenario, we first perform a BFS algorithm to find the routes                      optimization problem based on rank minimization [23]–[25]
+ between the nodes, based on the observed incomplete graph                          can be rewritten as
+ with the missing edges. However, due to the temporarily                                       arg min      f (H) + λg(H) + ζr(H|p),             (2)
+ blocked links, the BFS algorithm will fail to report all the                                    H∈RNa ×N
+
+ potential routes between the nodes, leading to an incomplete                       where g(H) denotes a typical low-rank regularizer, which is
+ hop matrix H ∈ RNa ×N , where again, Na is the number of                           chosen to be the nuclear norm (NN) that relaxes the problem
+ gateways and N is the number of nodes in the network. Thus,                        and was shown to be a tight lower bound of the rank operator
+ the next step after the first iteration of network discovery is to                 [26], while the discrete-space regularizer r(H|p) defined as
+ recover the missing entries of the hop matrix, followed by the                                              |S|
+                                                                                                             X
+ discovery of the recovered and improved routes between the                                      r(H|p) ≜        ||vecΩ̄ (H) − ak 1||p ,      (3)
+ nodes in a second discovery process. In contrast to the SotA                                                       k=1
+ methods, the proposed method performs the network discovery                        where vecΩ̄ (H) represents a vectorization of the matrix H,
+ process in a decentralized manner by only employing a portion                      where the entries are chosen corresponding to the given index
+ of the total nodes, without flooding the whole network with                        set Ω̄, being the complementary set to the previously presented
+ routing messages, but rather by finding the routes between the                     set Ω and 0 ≤ p, which is chosen as p = 1 according to [18].
+ nodes more efficiently.                                                               Following [18], [19], we point out that a proximal gradient
+                                                                                    (PG) method can be used to solve the problem iteratively,
+    2) A Note on the State-of-the-Art: While the first iteration
+                                                                                    containing the following steps:
+ of the network discovery step discussed above yields an
+ incomplete hop matrix and route table, conventional SotA                                               Yt = (1 + γt )Ht−1 + γt Ht−2 ,                             (4)
+ methods, such as BFS, or AODV, can also be used to find the                                                     Zt = proxζr (Yt ),                                (5)
+ routes between the nodes based on the observed incomplete
+                                                                                                       Ht = SVTλ (PΩ̄ (Zt ) + PΩ (O)),                             (6)
+ graph with the missing edges. Thus, either a BFS algorithm
+ with a truncated adjacency matrix would be performed, or                           where the first step integrates a moment acceleration function,
+ network flooding methods, such as AODV Routing would                               the second corresponds to the proximal operation on the
+ be used to find the routes between the nodes, neglecting                           discrete space regularizer, and the last step contains the PG
+ the temporarily unavailable edges. In the proposed scenario,                       operation on the nuclear norm (NN) regularizer g(H), since
+ the SotA method is chosen to be a second iteration of BFS                          it is known that singular value thresholding (SVT) can be used
+ algorithm, which is performed on the incomplete network,                           as a proximal minimizer for the NN [27].
+ neglecting the temporarily unavailable edges, leading to a                             Additionally, PΩ (·) indicates
+                                                                                                                (      a mask operator, defined as
+ complete but suboptimal route table and hop matrix. Note,                                                        [H]i,j , if (i, j) ∈ Ω,
+ however, that in contrast to the decentralized efficient routing                               [PΩ (H)]i,j =                                    (7)
+                                                                                                                  0,       otherwise,
+ process proposed in this article, the SotA method would flood                      where [·]i,j denotes the (i, j)-th element of a given matrix,
+ the network with routing messages in a centralized manner,                         and Ω denotes the index set of the observed elements.
+ which can lead to a high overhead in the network, especially
+ in the presence of a large number of nodes.                                        C. Privacy-preserving Multihop Localization
+                                                                                       After the recovery of the incomplete hop matrix, the next
+ B. Hop Recovery via Matrix Completion                                              step is to obtain a complete routing table, which can be
+                                                                                    used to establish the final communication paths between the
+    With the incomplete hop matrix in hand, matrix completion
+                                                                                    nodes. To that end, we use the multihop localization technique
+ techniques such as OptSpace [16] or Soft-Impute [17] can be
+                                                                                    proposed in [20], which allows the nodes to estimate their
+ used to recover the missing entries corresponding to the hop
+                                                                                    positions based on the hop distances to a set of known
+ distances between the nodes. Instead of using standard matrix
+                                                                                    gateways, without sharing their positions or the distances
+ completion techniques, however, we propose to use a discrete-
+                                                                                    themselves with their neighbors, thus preserving privacy. The
+ aware matrix completion scheme [18], [19], which is specifi-
+                                                                                    following steps, revisited from [20] are performed to estimate
+ cally designed for the case where the missing entries belong to
+                                                                                    the position of the nodes:
+ a finite discrete alphabet set. In our scenario, the finite discrete
+                                                                                       1) Vicinity Discovery: The first step of the scheme is to
+ alphabet set is defined as S ≜ {1, 2, · · · , max(H) + 1}, since
+                                                                                    perform vicinity discovery, which implies that the nodes need
+ any missing targets can be at most one more hop away from an
+                                                                                    to find their neighbors in the network This information can
+ existing route. The alphabet set S is then used in the discrete-
+                                                                                    later be used to estimate the distances to the gateways. Thus,
+ aware matrix completion scheme first proposed in [18]3 , to
+                                                                                    the node can broadcast a discovery message to its neighbors
+ recover the missing hop distances by assuming that the missing
+                                                                                    within radio range, which can then respond with their own
+ entries of the matrix belong to the aforementioned set.
+                                                                                    discovery messages4 , containing their own identities.
+    3 Note that the discrete-aware matrix completion scheme from [18] is chosen        4 Note that to preserve privacy, since the nodes want to protect their positions
+ over the slightly better performing variation of [19], due to its advantages in    they can reply with a random delay to the discovery messages, such that the
+ terms of computational complexity.                                                 position cannot be inferred from the time of arrival of the messages.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+    As a result, each node can obtain a local estimate of the                        nodes according to the already measured hops required to
+ network density λ̃ by counting the number of neighbors that                         reach them from the perspective of the gateways, since every
+ respond to its discovery message. By obtaining an estimate                          node can only be at most one hop away from a connection
+ of the network density as shown in [20, Fig. 3], the average                        that the gateways already acquired. Thus, after defining the
+ hop length d¯BF S in a BFS discovery can be found, which is                         nodes that should perform the local discovery, these nodes
+ needed to estimate the distances to the gateways.                                   can perform a local network flooding discovery to obtain the
+    2) Gateway Discovery: In the SotA localization was an                            final hop matrix, and establish the final routes between the
+ addition to the routing, performed via a complete BFS dis-                          nodes, hence yielding a completed hop matrix, as well as
+ covery, while in our proposed scheme, the localization is an                        the final route table. This step does not only yield the final
+ active step using the completed hop matrix, in order to find all                    routes between the nodes, but also lowers the complexity and
+ missing routes. Thus, the first step for the gateway discovery                      messages required to establish the routes, since only a few
+ includes, after the actual selection of the gateways5 to perform                    nodes need to perform the local discovery in a decentralized,
+ a network discovery, as it has been done in Section III, to                         instead of flooding the whole network with routing messages,
+ obtain the number of hops NH between the gateways and                               which can be performed iteratively whenever necessary.
+ the target nodes. Finally, after all parameters are obtained,                                      IV. P ERFORMANCE E VALUATION
+ following [20, Theorem 2], first presented in [21], an upper                           In this section we provide simulation results illustrating the
+ bound on the target nodes and the gateways can be obtained                          performance of the proposed routing technique compared to
+ and used to estimate the position of the nodes in the next step.                    the SotA. The performance metric of choice is the average
+    3) Multihop Localization: For the process of localization,                       number of hops, which can be calculated by the average of
+ following the procedure in [20], the conventional constrained                       the corresponding hop matrix H that represents the length of
+ semidefinite programming (CSDP) algorithm, based on the                             the obtained routes, as a function of the network density λ,
+ well-known SDP algorithm presented in [28], augmented by                            as well as the amount of incompleteness, i.e., the percentage
+ an additional constraint is used to localize the target θ1 , i.e.,                  of missing edges. Each point in the figures is obtained by
+            maximize 0                                         (8a)                  averaging K = 103 Monte-Carlo realizations, using a network
+                θ1 ∈R2×1
+                                                                                     with N = 100 nodes, Na = 10 gateways, and a radio range
+              subject to Z1:2,1:2 = I2 ,                                   (8b)      of 1 meter, with the region of interest being [10m; 10m].
+                              0 < tr(CA Z) ≤ D̃1i , ∀i ∈ A                 (8c)         The results in Fig. 3 show that in terms of average hops,
+                              Z ⪰ 0,                                       (8d)      the proposed technique outperforms the SotA over all network
+                                                                                     densities, while maintaining a performance close to the optimal
+   where CA is defined as                                                          bound with fewer missing edges.
+                           ai  ⊺                  
+                   CA ≜        ai                −1 ,                       (9)         This bound can be found by performing the BFS algorithm
+                           −1
+                                                                                     without missing links. Our second set of results in Fig. 4 show
+ and Z1:2,1:2 is the 2 × 2 first upper left sub-matrix of the 3 × 3                  that the proposed technique is more robust to incompleteness
+ matrix Z, which contains the estimated node position θ̂1 and                        in the hop matrix than the SotA, as it maintains a lower average
+ is defined as                                                                     number of hops between nodes even as the number of missing
+                                  I   θ̂1
+                          Z ≜ 2⊺            ,                  (10)                  edges increases.
+                                 θ̂1 y
+                                                                                                                          Performance of Average Number of Hops vs Network Density
+                                                                                                                 5
+ where I2 denotes a 2 × 2 identity matrix and y = θ̂1⊺ θ̂1 .                                                                                                             SotA
+    Notice that since the nodes cannot have the same location,                                                                                                           Proposed
+                                                                                                                                                                         Lower Bound
+ the lower bound on the node-to-gateway distance in equation                                                    4.5
+ (8c) is 0, while the upper bound is the estimated distance D̃0i .
+                                                                                                           7H
+
+
+
+
+                                                                                                                                       50%
+                                                                                   Average Number of Hops: N
+
+
+
+
+ D. Local Discovery                                                                                              4
+
+    Finally, a local discovery step is performed to complete the
+ hop matrix with real information, finding the final route table.                                               3.5
+ We make use of the known radio range and the previously                                                                               25%
+ estimated positions, to define which node should perform the
+                                                                                                                 3
+ local discovery. Therefore, the gateways can first find all nodes                                                                     5%
+ that are within the radio range of the target by using the
+ knowledge of the positions of the nodes6 , and then sort the                                                   2.5
+
+    5 W.l.g. in the proposed scenario, the gateway nodes can serve as a
+ connection to the internet, those positions are commonly known and can thus                                     2
+ be chosen as known reference points for the localization.                                                            5            6              7           8          9             10
+    6 Note that if there are no nodes within the radio range of the target, it                                                                                       ~
+                                                                                                                                            Average Network Density: 6
+ is either unreachable, or the localization step yielded poor estimates, which       Fig. 3. Average number of hops over the network density for different levels
+ results in a local discovery with the nodes closest to the target.                  of missing edges.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+                                        Performance of Average Number of Hops vs Missing Edges                             ACKNOWLEDGMENTS
+                              4.2
+                                              SotA                                                        This work was conducted as part of the ”5G-HyprMesh”
+                               4
+                                              Proposed                                                project with code 01MO24001C, funded by the Bundesamt
+                                              Lower Bound
+                                                                                                      für Sicherheit in der Informationstechnik (BSI).
+                                                                                                                                R EFERENCES
+                         7H
+
+
+
+
+                              3.8
+ Average Number of Hops: N
+
+
+
+
+                                                                                                       [1] E. Alotaibi and B. Mukherjee, “A survey on routing algorithms for
+                              3.6                                                                          wireless ad-hoc and mesh networks,” Computer Networks, vol. 56,
+                                                                                                           no. 2, pp. 940–965, 2012.
+                                                                                                       [2] M. Altayeb and I. Mahgoub, “A survey of vehicular ad hoc networks
+                              3.4                                                                          routing protocols,” International Journal of Innovation and Applied
+                                                                                                           Studies, vol. 3, no. 3, pp. 829–846, 2013.
+                                                                                                       [3] R. Zagrouba et al., “Comparative study of energy efficient routing
+                              3.2                                                                          techniques in wireless sensor networks,” Information, vol. 12, 2021.
+                                                                                                       [4] A. B. Paul et al., “E-AODV for wireless mesh networks and its
+                                                                                                           performance evaluation,” in Int. Conference on Broadband and Wireless
+                               3                                                                           Computing, Commun. and Applications, 2011, pp. 26–33.
+                                                                                                       [5] A. I. Grohmann et al., “Sourceshift: Resilient routing in highly dynamic
+                                                                                                           wireless mesh networks,” in IEEE Wireless Communications and Net-
+                              2.8
+                                                                                                           working Conference (WCNC), 2020, pp. 1–8.
+                                                                                                       [6] K. Altenhofen et al., “Increasing network resilience through dynamic
+                              2.6                                                                          routing with disjoint paths,” in IFIP Networking Conf., pp. 23–31, 2024.
+                                    5    10       15        20    25     30     35   40   45     50    [7] P. Tian et al., “Lorahop: Multihop support for lorawan uplink and
+                                                            Ratio of Missing Edges                         downlink messaging,” IEEE Internet Things J., vol. 10, no. 17, 2023.
+                                                                                                       [8] M. R. Ghori et al., “Bluetooth low energy mesh networks: Survey of
+   Fig. 4. Average number of hops over the amount of incompleteness for λ̃ = 6.                            communication and security protocols,” Sensors, vol. 20, no. 12, 2020.
+                                                                                                       [9] ETSI, “Digital Enhanced Telecommunications (DECT); DECT-2020
+      In a follow-up work, different routing schemes, other than                                           New Radio (NR) interface; Study on Security Architecture,” Tech. Rep.
+   BFS can be tested, and more realistic models can be imple-                                              ETSI TR 103 637 V1.1.1, February 2020.
+                                                                                                      [10] R. Kovalchukov et al., “DECT-2020 new radio: The next step toward
+   mented, to measure data with real-life measurements and cost                                            5G massive machine-type communications,” IEEE Communications
+   of each path, e.g., in terms of transmission power or delay,                                            Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+                                                                                                      [11] M. M. Haque et al., “DECT-2020 NR link distance performance in
+   such that routes that consists of the same number of hops can                                           varying environments: Models and measurements,” 2024.
+   vary by their total length, delay, or power consumption, which                                     [12] C. Perkins and E. Royer, “Ad-hoc on-demand distance vector routing,”
+                                                                                                           in IEEE Workshop on Mobile Computing Systems and Applications
+   can be used to optimize the routing process further. Addition-                                          (WMCSA), 1999, pp. 90–100.
+   ally, it can be noted that by leveraging localization techniques                                   [13] A. F. M. Boukerche and A. Darehshoorzadeh, “Opportunistic routing
+                                                                                                           in wireless networks: Models, algorithms, and classifications,” ACM
+   with a higher accuracy, the proposed routing scheme can                                                 Computing Surveys (CSUR), vol. 47, pp. 1 – 36, 2014.
+   be further improved, however, it would come at the cost of                                         [14] Z. Chen and S. Wang, “A review on matrix completion for recommender
+                                                                                                           systems,” Knowledge and Info. Systems, vol. 64, no. 1, pp. 1–34, 2022.
+   a potentially higher computational complexity, and a larger                                        [15] L. T. Nguyen, J. Kim, and B. Shim, “Low-rank matrix completion: A
+   amount of position information being leaked.                                                            contemporary survey,” IEEE Access, vol. 7, pp. 94 215–94 237, 2019.
+                                                                                                      [16] R. H. Keshavan et al., “Matrix completion from a few entries,” IEEE
+                          V. C ONCLUSION                                                                   Trans. Info. Theory, vol. 56, no. 6, pp. 2980–2998, 2010.
+                                                                                                      [17] Q. Yao and J. T. Kwok, “Accelerated and inexact soft-impute for large-
+      We proposed a novel routing scheme suitable for 5G mesh                                              scale matrix and tensor completion,” IEEE Transactions on Knowledge
+   networks, which combines network discovery and route com-                                               and Data Engineering, vol. 31, no. 9, pp. 1665–1679, 2019.
+                                                                                                      [18] H. Iimori, G. T. F. de Abreu, O. Taghizadeh, and K. Ishibashi, “Discrete-
+   pletion techniques to establish communication paths efficiently                                         aware matrix completion via proximal gradient,” in 54th Asilomar
+   and reliably, where links can temporarily be unavailable. To                                            Conference on Signals, Systems, and Computers, 2020, pp. 1327–1332.
+                                                                                                      [19] N. Führling et al., “Discrete aware matrix completion via convexized ℓ0 -
+   that extend, a network discovery technique was first intro-                                             norm approximation,” in 58th Asilomar Conference on Signals, Systems,
+   duced, which uses an incomplete breadth-first search algorithm                                          and Computers, 2024.
+                                                                                                      [20] G. Rahmatollahi, G. Abreu, and S. Severi, “Cooperative multihop
+   to discover the network topology, due to missing edges. Then,                                           localization with privacy,” in 45th Asilomar Conference on Signals,
+   a discrete-aware matrix completion technique was used to                                                Systems and Computers, 2011, pp. 1524–1529.
+                                                                                                      [21] G. Rahmatollahi and G. Abreu, “Closed-form hop-count distributions
+   recover the missing hops, which were used to estimate the                                               in random networks with arbitrary routing,” IEEE Transactions on
+   positions of the nodes via a multihop localization technique,                                           Communications, vol. 60, no. 2, pp. 429–444, 2012.
+                                                                                                      [22] A. Bundy and L. Wallen, “Breadth-first search,” Catalogue of artificial
+   while preserving privacy. Finally, a local discovery technique                                          intelligence tools, pp. 13–13, 1984.
+   was used to obtain the final hop matrix and establish the final                                    [23] W. Glunt et al., “An alternating projection algorithm for computing the
+                                                                                                           nearest euclidean distance matrix,” SIAM Journal on Matrix Analysis
+   routes between the nodes by leveraging the known radio range                                            and Applications, vol. 11, no. 4, pp. 589–600, 1990.
+   and the estimated positions of the nodes. Simulation results                                       [24] P. Jain, R. Meka, and I. Dhillon, “Guaranteed rank minimization via
+                                                                                                           singular value projection,” in Advances in Neural Information Process-
+   illustrate the good performance of the proposed technique in                                            ing Systems, J. Lafferty, C. Williams, J. Shawe-Taylor, R. Zemel, and
+   terms of the average number of hops as a function of the                                                A. Culotta, Eds., vol. 23. Curran Associates, Inc., 2010.
+                                                                                                      [25] J. Tanner and K. Wei, “Low rank matrix completion by alternating steep-
+   network density and the amount of incompleteness in the                                                 est descent methods,” Applied and Computational Harmonic Analysis,
+   hop matrix, compared to the SotA, specifically, being more                                              vol. 40, no. 2, pp. 417–429, 2016.
+                                                                                                      [26] B. Recht, M. Fazel, and P. A. Parrilo, “Guaranteed minimum-rank
+   robust to incompleteness due to the matrix completion and                                               solutions of linear matrix equations via nuclear norm minimization,”
+   multihop localization techniques used in the proposed scheme.                                           SIAM Review, vol. 52, no. 3, pp. 471–501, 2010.
+                                                                                                      [27] J.-F. Cai et al., “A singular value thresholding algorithm for matrix
+   Additionally, in contrast to the SotA which always requires a                                           completion,” SIAM Journal on Optimization, vol. 20, no. 4, 2010.
+   complete network discovery to find the routes between the                                          [28] A. M.-C. So and Y. Ye, “Theory of semidefinite programming for sensor
+                                                                                                           network localization,” Math. Program., vol. 109, no. 2, 2007.
+   nodes, the proposed scheme allows the network to iteratively
+   run decentralized routing requests at any time.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:07:34 UTC from IEEE Xplore. Restrictions apply.
+

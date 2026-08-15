@@ -1,0 +1,68 @@
+Title: Improving Near-URLLC Services Performance over
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 NR is a radio access technology designed for 5G Internet of Things
+(IoT) applications. By leveraging multi-hop communications and listen-before-
+talk (LBT) mechanisms, DECT-2020 NR offers a flexible and cost-effective
+deployment solution for massive machine-type communications (mMTC). The ETSI
+standardization committee currently considers extending use-case options to
+ultra-reliable low-latency communications by enabling scheduled access along
+with LBT. However, this approach can increase the cost of the end systems. The
+aim of this study is to investigate whether standardized physical and medium
+access control (MAC) mechanisms, including power control, LBT, and priority
+queuing, can provide nearURLLC operation over multihop topologies. Our results
+show that to improve loss performance one needs to disable power control, use a
+shorter back-off window, and enable priority data transmission. For improving
+latency performance it is critical to use shorter acknowledgement (ACK) timeout
+and send ACKs immediately after data packet reception. Applying these techniques
+allows us to improve multi-hop URLLC latency performance by up to 30-80% and
+loss performance by up to 1020% depending on URLLC and mMTC traffic conditions
+with only negligible impact on mMTC traffic performance.
+
+Approach and methods:
+of scheduled transmissions over multi-hop topologies requires significant
+signaling overhead and more complex and thus more expensive end devices. It has
+already been demonstrated that such services can be supported over device-to-
+device (D2D) links in the DECT2020 topology with LBT access while coexisting
+with classic DECT systems and DECT-2020 NR operating in mMTC mode [9]. However,
+further improvements are needed to enable nearURLLC services in the multi-hop
+mode. Being aligned with 5G standards, DECT-2020 NR’s physical layer offers
+great flexibility in physical and link layer mechanisms, including modulation
+and coding schemes (MCS), per-link hybrid automatic repeat request (HARQ)
+procedures, power control, various numerologies, etc. [10], [11]. Along with
+systemlevel solutions, such as priority queuing, these mechanisms provide a
+great opportunity to prioritize the traffic of URLLC applications over the air
+interface. In this paper, we assess whether physical and MAC layer solutions
+already supported by the DECT-2020 NR standard are sufficient to enable near-
+URLLC services of multi-hop topologies in DECT-2020 NR systems supporting LBT
+access only. To this end, we first identify mechanisms that can improve the
+performance of near-URLLC traffic in the presence of competing mMTC traffic and
+then perform a detailed system-level simulation campaign that captures the
+specifics
+
+Key findings:
+July 2017. [8] ETSI, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+ETSI, TS 103 636-4 v1.3.1, December 2021. [9] A. Samuylov, D. Moltchanov, A.
+Gaydamaka, E. Lyczkowski, A. Frotzscher, F. von Schoettler, J. Pirskanen, J.
+Numminen, J. Salokannel, E. Llaguno, R. Pires, D. Bayar, and M. Valkama,
+“Empowering Near-URLLC IoT with 5G DECT-2020 NR: Current State and the Road
+Ahead,” IEEE Communications Magazine, vol. 1, no. 1, pp. 1–6, 2025. [10] ETSI,
+“DECT-2020 New Radio (NR); Part 2: Radio reception and transmission
+requirements; Release 1,” ETSI, TS 103 636-2 v1.3.1, December 2021. [11] ——,
+“DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,” ETSI, TS 103
+636-3 v1.3.1, December 2021. [12] A. Samuylov, D. Moltchanov, J. Pirskanen, J.
+Numminen, Y. Koucheryavy, and M. Valkama, “Performance assessment of dect-2020
+nr and classic dect coexistence mechanisms,” in 2023 IEEE 97th Vehicular
+Technology Conference (VTC2023-Spring). IEEE, 2023, pp. 1–7. [13] 3GPP, “Study
+on channel model for frequencies from 0.5 to 100 GHz (Release 14),” 3rd
+Generation Partnership Project (3GPP), 3GPP TR 38.901 V14.1.1, July 2017.
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on February 25,2026 at 09:24:12 UTC from IEEE Xplore.
+Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

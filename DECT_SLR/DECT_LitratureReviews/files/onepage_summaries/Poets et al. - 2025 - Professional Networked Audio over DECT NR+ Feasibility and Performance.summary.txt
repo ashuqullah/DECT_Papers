@@ -1,0 +1,67 @@
+Title: Professional Networked Audio over DECT NR+:
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT NR+, also known by its official designation DECT-2020 NR, is a new radio
+standard developed and maintained by the European Telecommunications Standards
+Institute (ETSI). It is the world’s first non-cellular 5G technology and fulfils
+the IMT-2020 requirements for both massive Machine Type Communications (mMTC)
+and Ultra-Reliable and Low Latency Communications (URLLC). The latter makes it a
+promising candidate for applications from the Programme Making and Special
+Events (PMSE) sector. In this paper, we investigate the feasibility of using
+DECT NR+ as a cable replacement solution for networked audio systems, with Dante
+serving as an example. Dante is an AV connectivity platform developed by
+Audinate that has become the de facto industry standard for digital audio
+networking. Using an open-source Software-Defined Radio (SDR) implementation of
+DECT NR+, we set up a wireless link between two Dante-enabled devices. Based on
+the metrics reported to Dante Controller, we assess the performance of Dante in
+the DECT NR+ wireless network and demonstrate that an average one-way latency of
+1.7 ms can be achieved.
+
+Approach and methods:
+to DECT NR+ and its role in wireless professional audio, followed by an overview
+of Audinate’s Dante to establish the application context. A. DECT-2020 NR
+DECT-2020 New Radio (NR) is a novel Radio Interface Technology (RIT)
+standardized by the European Telecommunications Standards Institute (ETSI)
+within its Technical Committee (TC) Digital Enhanced Cordless Telecommunications
+(DECT). It is also referred to as NR+, the brand name promoted by the DECT
+Forum—an industry association that advocates for DECT technologies and spectrum
+access [14]. The standard is concise, with the core Technical Specification (TS)
+comprising five documents published to date. Part 1 provides an overview of the
+technology [15], while Part 2 establishes the minimum radio reception and
+transmission requirements for DECT-2020 Radio Devices (RDs) [16]. Parts 3 and 4
+contain the physical and MAC layer specifications, respectively [17], [18]. Part
+5 describes the Data Link Control (DLC) and Convergence (CVG) layers. The DLC
+layer Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore.
+Restrictions apply. provides services to the MAC layer at each radio link,
+including segmentation and packet routing, while the CVG layer operates end-to-
+end, offering services such as
+
+Key findings:
+2024. [20] DECT-2020 New Radio (NR); Part 6: Security; Release 2, ETSI TS 103
+636-6, Rev. 2.0.1, June 2025, Early draft. [21] Detailed specifications of the
+terrestrial radio interfaces of International Mobile Telecommunications-2020
+(IMT-2020), ITU-R Recommendation M.2150-1, February 2022. [22] M. Waßmann, A.
+Poets, J. Peissig, and J. Pilz, “Performance of DECT2020 NR in an industrial
+environment for varying RF bands,” in 2024 Joint European Conference on Networks
+and Communications & 6G Summit (EuCNC/6G Summit), 2024, pp. 610–615. [23]
+Evolved Universal Terrestrial Radio Access (E-UTRA); Multiplexing and channel
+coding, 3GPP TS 36.212, Rev. 18.1.0, December 2024. [24] Digital Enhanced
+Cordless Telecommunications (DECT); Harmonised Standard for access to radio
+spectrum; Part 2: DECT-2020 NR, ETSI EN 301 406-2, Rev. 3.1.1, August 2023. [25]
+M. Penner. (2025, March) DECT-NR-Plus-SDR. License: AGPL-3.0. [Online].
+Available: https://github.com/maxpenner/DECT-NR-Plus-SDR [26] USRP N3xx Series.
+USRP Hardware Driver and USRP Manual. [Online]. Available:
+https://uhd.readthedocs.io/en/uhd-4.8/page usrp n3xx.html [27] N. Temple, A.
+Williams, W. Fife, M. Prost, and M. Dickens. Getting Started with DPDK and UHD.
+Ettus Knowledge Base. [Online]. Available: https://kb.ettus.com/Getting Started
+with DPDK and UHD Authorized licensed use limited to: Hochschule Aalen (FH) -
+Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE
+Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

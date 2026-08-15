@@ -1,0 +1,58 @@
+Title: Empowering Near-URLLC IoT with 5G DECT2020 NR: Current State and the Road Ahead
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+DECT-2020 is a standardized multi-hop technology for 5G massive machine-type
+communications (mMTC). By relying on multi-hop communications, DECT-2020 allows
+for cost-controlled flexible deployments that enable a plethora of new services,
+whose requirements in terms of latency, reliability, and throughput are
+difficult to satisfy by utilizing cellular Internet-ofThings technologies
+(CIoT). In this article, we outline new DECT-2020 use-cases ranging from mMTC to
+ultra-reliable low-latency communications (URLLC), showing that many modern
+services lie between these two extremes. We utilize system level simulations to
+demonstrate how these “near-URLLC” use-cases are satisfied by the DECT-2020. We
+show that the current evolution of DECT-2020 can provide near-URLLC operation
+when no multi-hop communications are required, even under interference from
+competing URLLC/ mMTC traffic. However, provisioning of nearURLLC services over
+multiple hops requires additional enhancements.
+
+Approach and methods:
+The main services specified by ITU-R and 3GPP for 5G systems are enhanced mobile
+broadband (eMBB), massive machine type communications (mMTC), and ultra-reliable
+low-latency communications (URLLC). The eMBB service has already been supported
+by the current evolution of 3GPP 5G New Radio (NR) systems. The mMTC is expected
+to be delivered via cellular Internet of Things (CIoT) solutions such as LTE-M
+enhancements for machine type communications (eMTC) and Narrowband Internet-of-
+Things (NB-IoT), as well as unlicensed band solutions, such as DECT2020.
+However, the support for URLLC IoT services lags behind. DECT-2020 NR is a 5G
+technology developed for mMTC and URLLC operating in the license-exempt and
+licensed bands below 6 GHz in local self-hosted deployments [1]. Recent studies
+[2, 3] demonstrated that it can support up to multiple millions of radio devices
+(RDs) per square kilometer while satisfying the performance guarantees ISSN:
+0163-6804 Digital Object Identifier: 10.1109/MCOM.00
+
+Key findings:
+s are provided. Andrey Samuylov, Dmitri Moltchanov, Anna Gaydamaka, and Mikko
+Valkama are with Tampere University, Finland; Juho Pirskanen, Jussi Numminen,
+and Juha Salokannel are with Wirepas Oy, Finland; Eike Lyczkowski and Frank von
+Schoettler are with SEW-EURODRIVE GmbH & Co. KG, Germany; Andreas Frotzscher is
+with Fraunhofer Institute for Integrated Circuits IIS, Germany; Rafael Pires is
+with VTT Technical Research Center of Finland, Finland; Endika Llaguno is with
+Agile Content Research & Innovation, Spain; Dilara Bayar is with ACD Bilgi
+Islem, Turkiye. This work is licensed under a Creative Commons Attribution 4.0
+License. For more information, see https://creativecommons.org/licenses/by/4.0/
+IEEE Communications Magazine • April 2025 5G DECT-2020 Technology The DECT-2020
+NR physical layer was designed to benefit from recent development in radio
+technologies and still allow for compatible lowcost implementation. To avoid
+reliance on local spectrum regulators, the utilized frequency bands are the DECT
+bands, 1880–1900 MHz band in Europe and Australia, and 1910–1920 MHz band in
+North America, supporting up to 11 or 5 channels, respectively, with a bandwidth
+of 1.728 MHz each. Other bands are also supported including those in the sub-GHz
+region [7]. Coupled with different emitted power allowed for devices, DECT2020
+can cover large territories. Similar
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

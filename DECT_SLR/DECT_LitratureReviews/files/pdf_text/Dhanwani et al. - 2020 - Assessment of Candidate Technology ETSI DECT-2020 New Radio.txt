@@ -1,0 +1,381 @@
+                Assessment of Candidate Technology ETSI:
+                        DECT-2020 New Radio
+                 Vishakha Dhanwani                                        Navin Kumar                              Akhil Kalpesh Bachkaniwala
+      Electronics and Communication Engg.                 Electronics and Communication Engg.                 Electronics and Communication Engg.
+                   The LNMIIT                                  Amrita Vishwa Vidyapeetham                                  The LNMIIT
+                   Jaipur, India                                     Bengaluru, India                                      Jaipur, India
+          vishakhadhanwani@gmail.com                             navin kum3@yahoo.com                             akhilbachkaniwala@gmail.com
+
+                                           Divyang Rawal                                                        Sendil Kumar
+                             Electronics and Communication Engg.                                                 Ericsson
+                                          The LNMIIT                                                    sendil.devar@ericsson.com
+                                          Jaipur, India
+                                   divyang.rawal@lnmiit.ac.in
+
+
+
+       Abstract—A number of IMT-2020 candidate technologies in-                       Institute (ETSI)-digital enhanced cordless telecommunications
+    cluding the 3GPP have been submitted to the ITU-R. All                            (DECT) Forum, enhanced ultra high throughput (EUHT) have
+    candidate technologies are expected to meet the minimum per-                      been submitted to ITU-R; claiming to have met the minimum
+    formance requirements set by ITU-R for getting recommended
+    as IMT-2020. In this paper, based on the submissions for Digital                  technology requirements.
+    Enhanced Cordless Telecommunication (DECT-2020 NR) tech-                             Candidate technologies submitted to ITU-R need to fulfil
+    nology, we have evaluated the performances of latency, reliability                a set of minimum technical requirements specified in ITU-
+    and connection density as per ITU-R evaluation methodology.                       R report M.2410 [2]. The report M.2412 [4] provides the
+    We found that the latency requirements can only be met using                      guideline for the evaluation process for self-evaluation as well
+    half-slot transmissions or HARQ-less full-slot transmission in
+    contrary to the results submitted in the self-evaluation report of                as independent evaluation. As per the ITU-R process, all the
+    the DECT-2020 NR. Due to lack of details in the submissions; like                 candidate technologies need to be independently evaluated by
+    the channel and interference modeling between device to device                    independent evaluation groups (IEG).
+    relaying, scheduling and control of relay propagation direction,                     In this work, 5G India forum (5GIF) independent evaluation
+    we could not conclude whether the DECT-2020 NR can meet                           group has evaluated ETSI-DECT Forum candidate technology
+    the minimum performance requirement of connection density of
+    IMT-2020.                                                                         DECT-2020 NR. We have carried out analytical approach in
+                                                                                      this process. In this work, we focused on latency and reliability
+       Index Terms—5G India Forum, DECT, NR, Latency, Reliabil-                       requirements necessary for mission critical applications and
+    ity, Connection Density, Beamformng
+                                                                                      connection density requirements for massive machine type
+                               I. I NTRODUCTION                                       communication applications (mMTC). Since, no detailed spec-
+                                                                                      ifications of the DECT-2020 NR was available at the time
+       The International Telecommunication Union Radiocommu-                          of evaluation and write up, our assessment is limited by the
+    nication sector (ITU-R) has set the requirements for Interna-                     description template and self evaluation report submitted to
+    tional Mobile Telecommunications-2020 (IMT-2020 5G Stan-                          ITU-R. We found, the ITU-R submission was not sufficient to
+    dard). The standard is about to complete in next few months                       even conclude on the connection density requirement. Addi-
+    that is, by 2020 [1]. However, some parts of it have been                         tionally, due to the dependency of DECT-2020 NR technology
+    finalized earlier. For example, the requirements for radio ac-                    on mesh based topology for delivering reliable machine type
+    cess technologies (RAT) were adopted in ITU-R report M.2410                       data packets in urban macro like test environment, the assess-
+    in November 2017 [2]. Following this publication, the devel-                      ment requires channel and interference modeling information
+    opers of radio access technologies such as third generation                       between device to device relaying, scheduling and propagation
+    partnership project (3GPP) started developing 5G technologies                     direction of relaying to guarantee packet delivery within 10s.
+    meeting these requirements. 3GPP has developed radio access                       We could not determine what is the minimum number of nodes
+    technologies new radio (NR), Long term evolution - machine                        needed in the mesh topology for the network to be fully con-
+    type communication (LTE-M) and narrow band - Internet of                          nected. This could be lower than the minimum requirements
+    things (NB-IoT) which together meet all the requirements [3].                     set for connection density which misleads the definition of
+    Additionally, many other candidate technologies developed                         minimum technical performance requirement of connection
+    by China, Korea, the European telecommunications standards                        density. Also, we found that the latency requirements can only
+                    978-1-7281-7299-6/20/$31.00 © 2020 IEEE                           be meet using half-slot transmissions or hybrid acknowledge
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 625
+    request (HARQ)-less full-slot transmission in contrary to what                    specifications that how DECT-2020 deploy beamforming in
+    was reported in self evaluation report of the DECT-2020 NR.                       active AAS systems.
+      Rest of the paper contents are arranged as follows. Section II
+                                                                                                   III. E VALUATION AND O BSERVATIONS
+    provides a brief of candidate technology DECT-2020 NR and
+    minimum requirements. Section III presents details evaluation                        This section provides the details of the evaluation and
+    and observation. Section IV, concludes the paper.                                 findings for mMTC and URLLC usage scenario. It is to
+                                                                                      be noted that all the test environments set by ITU-R are
+           II. DECT-2020 NR C ANDIDATE T ECHNOLOGY                                    only for evaluation purposes and may not exactly replicate
+                                                                                      the actual deployments including the carrier frequency and
+       This section provides information and data of self evaluation                  assumed bandwidth.
+    by technical committee (TC) DECT Forum. Before presenting
+    their reports, it is appropriate to briefly list the major require-               A. Latency
+    ments for IMT 2020 in respect of reliability and connection                          1) User Plane Latency: As stated, the minimum require-
+    density.                                                                          ment for user plane latency is 1ms for URLLC usage scenario.
+       One of the critical requirements of IMT 2020 is ultra-low                      The user plane latency only considers the latency of packets
+    latency. It is the one way time taken to successfully deliver an                  while the UE is already in a connected state and is aggrega-
+    application layer packet/message from the radio protocol layer                    tion of delay due to components like UE processing delay,
+    2/3 service data unit (SDU) ingress point to the radio protocol                   frame alignment time, transmission time interval (TTI) for
+    layer 2/3 SDU egress point of the radio interface in either                       data packet transmission, hybrid automatic repeat and request
+    uplink (UL) or downlink (DL). So, the latency of 1ms or less                      (HARQ) re-transmission and base station (BS) processing
+    is the requirement. In terms of reliability, block error rates                    delay. Fig. 1 shows the different segment of URLLC timings.
+    (BLERs) should be as low as 10−9 [6]. It is to be noted that
+    the URLLC is one of the enabling technologies in the fourth
+    industrial revolution [7]. For mMTC, the main performance
+    requirement for a such network service is to support a high
+    connection density of up to 1-million devices per km2 which
+    is 10-times the maximum amount currently possible with 4G
+    LTE.
+       DECT is the ETSI standard for short-range cordless com-
+    munications. DECT is suited to voice, data and networking                                                 Fig. 1: URLLC timings
+    applications with a range up to 500 meters. DECT-2020 NR
+    is a major new standardization activity with the intention                           In DECT-2020 NR, low latency is achieved by configuring
+    of meeting some of requirements of IMT-2020. DECT op-                             NR frame with alternating DL/UL slots. The low latency trans-
+    erates in the 1880–1900MHz band and defines ten frequency                         missions use a high-efficiency packet “full slot” (slot width is
+    channels from 1881.792MHz to 1897.344MHz with a band                              0.416ms). Also, the aforesaid delay analysis comprised of: i)
+    gap of 1728kHz. Specifically, legacy DECT system is known                         Transmitter processing delay of 1 OFDM symbol and receiver
+    to use 1880-1900MHz, 1900-1980MHz, 2010-2025MHz and                               processing delay of 2 OFDM symbols; ii) In the case of HARQ
+    2400-2483.5MHz. DECT is limited to these bands. For the                           transmission, maximum 6 slots for HARQ round-trip duration;
+    DECT-NR RIT component, the subcarrier spacing used in the                         iii) Frame alignment time (1 TTI) includes frame alignment
+    specification is based on 27KHz. The maximum bandwidth                            within same current DL slot or extra waiting time for next
+    that can be achieved with 27KHz sub-carrier spacing (SCS)                         available DL slot if the current slot is not DL slot. In the case
+    and 1024 fast Fourier transform (FFT) points is 27.648MHz.                        of DECT UP latency, the calculation is identical for uplink
+    The base station is referred as fixed point (FP) and mobile                       and downlink cases.
+    devices as portable points (PP).                                                    TABLE I: Downlink User Plane Latency for 27KHz SCS
+       In the DECT-2020 NR submission [8], the link budget                                 NR TDD No HARQ (Frame Structure: DUDU)
+    reports same coverage, same transmission bit rate and same
+    signal to noise ratio (SNR) for control&data for both uplink                                    Description                Half Slot(ms)     Full Slot(ms)
+                                                                                            Avg symbol alignment time          0.0208            0.0208
+    (UL) and downlink (DL). Parameters like Tx&Rx antenna
+                                                                                              BS pre-processing delay          0.0416            0.0416
+    ports, user equipment (UE) speed and information on outdoor                               Frame Alignment (max)            0.208             0.416
+    to indoor (O2I) could not be found in the current report. Per-                        TTI for data packet transmission     0.208             0.416
+    haps, they may submit in the revised document. DECT legacy                                UE pre-processing delay          0.0832            0.0832
+                                                                                             Total one way UP latency          0.5616            0.9776
+    use channel is scalable in multiples of 1.728MHz whereas,
+    3GPP supports multiple of 10MHz. Also, conventional legacy
+    DECT uses omni-directional antennas whereas IMT 2020                                TABLE I shows that DECT-2020 NR achieves latency less
+    3GPP heavily relies on active antenna system (AAS) and                            than 1ms when no HARQ is used. TABLE II shows that
+    beamforming. It could not be found in current available                           when HARQ is used, the user plane latency value exceeds
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 626
+        TABLE II: Downlink UP Latency for 27KHz SCS NR                                     TABLE III: Signalling delay from non-associated to
+             TDD-HARQ (Frame Structure: DUDU)                                                         associated for 27KHz SCS
+                  Description                 Half Slot(ms)      Full Slot(ms)             Step    Description                                     Delay(ms)
+         Avg symbol alignment time            0.0208             0.0208                     1      Delay due to RACH scheduling period             0
+           BS pre-processing delay            0.0416             0.0416                     2      Transmission of RACH preamble                   X
+            Frame Alignment(max)              0.208              0.416                      3      Preamble detection and processing in gNB        Y
+       TTI for data packet transmission       0.208              0.416                      4      Transmission of RA response                     0.4167
+           UE pre-processing delay            0.0832             0.0832                     5      UE processing delay                             5ms
+      Contribution by HARQ(10$ BLER)          0.1248             0.2496                     6      Transmission of RRC resume request              0.4167
+          Total one way UP latency            0.6864             1.2272                     7      Association request processing time             1 or 5
+                                                                                            8      Association response TX response                0.4167
+                                                                                            9      Association response processing time            1
+                                                                                                   Total                                           >(8/12)
+    1ms duration with full slot format. The technical study [7]
+    provides the latency of 0.917ms and the value reported in
+    the self evaluation report submission is 0.7904 ms. Also, in                      subject to possible inclusion of this information in updated
+    one of the of DECT Forum white paper, it is mentioned that                        version of their specifications. As shown in the TABLE-III,
+    the DECT-2020 NR technology achieves a latency between 2                          DECT-2020 NR meets the control plane latency requirements.
+    and 10ms [9].
+                                                                                      B. Reliability
+       2) Control Plane Latency: The control plane (CP) latency                          Reliability is the success probability of transmitting a layer
+    refers to the transition time from a most “battery efficient”                     2/3 packet within a required maximum time. The minimal
+    state (e.g. Idle state) to the start of continuous data transfer                  requirement defined in report ITU-R M.2410 [2] is 1-10−5
+    (e.g. Active state). This requirement is defined for the purpose                  success probability of transmitting a layer 2 PDU (protocol
+    of evaluation in the eMBB and URLLC usage scenarios. The                          data unit) of 32bytes within 1ms. Here, reliability is evaluated
+    minimum requirement for control plane latency is 20ms. The                        under urban macro – URLLC test environment. The reliability
+    CP latency delay analysis comprises: i) Latency due to random                     evaluation uses system-level simulation followed by link-level
+    access procedure; ii) UL synchronization; iii) Connection                         simulation. Especially, the evaluation configuration B (carrier
+    establishment and; iv) Data bearer establishment in addition to                   frequency = 700MHz) and channel model A are evaluated for
+    HARQ re-transmission. Fig. 2 shows CP procedure to support                        DL and UL. The detailed evaluation assumptions for system-
+    the above statements.                                                             level and link-level simulations are provided in TABLE-IV and
+                                                                                      TABLE-V respectively.
+                                                                                         Downlink Case
+                                                                                      In DECT-2020 NR evaluation, frequency reuse schemes are
+                                                                                      exploited to mitigate interference and improve the reliability.
+                                                                                      The following three configurations for frequency reuse factor
+                                                                                      1, 3, and 7 are evaluated [8].
+                                                                                         • Case 1: The frequency reuse factor is set to 1. A single
+                                                                                           DECT-2020 NR channel with 1.728MHz bandwidth is
+                                                                                           applied for URLLC service in each cell, i.e. the system
+                                                                                           can be considered as a single frequency network.
+                                                                                         • Case 2 & Case 3: The frequency reuse factor is set to
+                                                                                           3 in the case 2 and 7 in the case 3. Accordingly, DECT-
+                                                                                           2020 channels are applied for URLLC service and the
+                                                                                           neighboring BSs use different channels.
+
+
+
+
+                  Fig. 2: CP procedure (NR Release 15)
+       TABLE-III provides signaling delay from non-associated
+    to associated for 27KHz SCS. The mentions of ETSI about
+    separate use of random access channel for better protection of
+    critical traffic (e.g. URLLC) has been proposed as a working                              Fig. 3: Evaluated URLLC system configuration.
+    idea that would need to be confirmed in the MAC design
+    phase [10]. Also, reference to the physical random access                           The network layouts for different frequency reuse factors are
+    channel (PRACH) timings (Xms & Yms) could not be found                            provided in Fig. 3. In this, the interference cell from the warp-
+    in the current specification submitted by ETSI [10]. This might                   around layout are not marked. In the system-level simulation,
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 627
+      TABLE IV: DECT System Level Evaluation Assumptions                                TABLE V: DECT Link Level Evaluation Assumptions for
+                   for DL/UL Reliability                                                               DL/UL Reliability
+               Configuration Parameters     URLLC Configuration B                       Configuration Parameters      URLLC Configuration B
+                  Inter-site Distance       500 m                                       Evaluated Service Profiles    Full Buffer Best Effort lex¿lex
+                Base Station Antenna        25 m                                         Simulation Bandwidth         1.728 MHz
+                       Height                                                              Number of users in         1
+                 UE Antenna Height          1.5m                                              simulation
+                Antenna Elements per        60 Elements(15x4)                                 Packet Size             37 Bytes at Layer 2 PDU
+                       TxRP                                                               Link Level Channel          TDL-iii
+                UE Antenna Elements         4                                                    Model
+                 Device Deployment          80% Outdoor, 20% Indoor                       Delay Spread Scaling        363 ns
+                                                                                               Parameter
+                   BS Noise Figure          5dB                                            Carrier Frequency          700 MHz
+                   UE Noise Figure          7dB                                                Numerology             27 KHz SCS
+                 BS Antenna Element         8dBi                                           Number of Antenna          60 Elements(15x4)
+                        Gain                                                                Elements/TxRP
+                 UE Antenna Element         0dBi                                             UE Antennas              4
+                        Gain
+                 Thermal Noise Level        -174dBm/Hz                                        Packet Format           Long Preamble Packet
+
+                    Traffic Model           Full Buffer                                    Channel Estimation         Non Ideal
+
+                Simulation Bandwidth        20MHz                                        Number of Symbol for         2
+                                                                                          Control Information
+                      UE Density            10UEs per TxRP                               Number of Symbol for         4
+                     Numerology             27KHz SCS                                             data
+                                                                                          Control Information         TBCC with Code Rate=1/2, QPSK Repetition 2
+                      Scheduling            PF                                           Modulation and Coding
+                       Receiver             MMSE                                          Data Modulation and         Turbo with Code Rate=3/4, QPSK
+                                                                                                Coding
+                 Channel Estimation         Non-Ideal
+                  Carrier Frequency         700MHz
+                      TxRP/Site             3
+                   Wrapping Around          Geographical Distance
+                         Method
+               Criteria for Evaluation of   RSRP Based
+                     Serving TxRP
+                    Mechanical Tilt         90°
+                     Electrical Tilt        99°
+                         SLAV               30
+                     HBeamwidth             65
+                     VBeamwidth             65
+                   Horizontal Scan          0.0
+               Horizontal Spacing b/w       0.5
+                 Antenna Elements                                                       Fig. 4: Downlink SINR distribution obtained from system
+                Vertical Spacing b/w        0.8                                          level simulation (BS antenna array: 15x4, BS Tx power:
+                 Antenna Elements
+                                                                                                                 49dBm)
+
+
+    the signal-to-interference-noise-ratio (SINR) distributions for                      Uplink Case
+    different frequency reuse factors is shown in Fig. 4. and the                     For uplink reliability evaluation, the frequency reuse schemes
+    fifth percentile (5%-tile) SINR are illustrated in TABLE VI.                      are the same as that of downlink. In the system-level sim-
+    Pre-processing SINR is used for reliability evaluation which                      ulation, the SINR distributions for different frequency reuse
+    is defined on Rx antenna port with respect to a Tx antenna                        factors are provided in Fig. 6. and the fifth percentile (5%-
+    port.                                                                             tile) SINR is illustrated in TABLE VII.
+       The link-level simulation assumptions are available in TA-                        Here also, we have used the same setting. The SNR-BLER
+    BLE V. The SNR-BLER curve is illustrated in Fig. 5. Based                         curve is illustrated in Fig. 5. Based on the results from Fig.
+    on the results from Fig. 4 and Fig. 5, the DL reliability is                      5 and Fig. 6, the uplink reliability is obtained in TABLE VII.
+    obtained as provided in TABLE-VI. Results are evaluated for                       It is observed that the uplink reliability value is marginally
+    27KHz SCS, SU-MIMO (BS antenna array: 15x4) in Non                                lower than ITU-R requirement using the maximum antenna
+    Line of Sight (NLOS) channel condition. It is observed that                       array size of 15x4.
+    DECT-2020 NR reliability is marginally lower than the ITU                            We have also shown the antenna radiation pattern and gains
+    requirement in DL using the maximum antenna array 15x4.                           at different locations. Fig. 7 and Fig. 8 shows the antenna gains
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 628
+                                                                                          TABLE VII: 5%-tile SINR obtained from system-level
+                                                                                           simulation and evaluation results of uplink reliability
+                                                                                                 Configuration            Case1        Case2        Case3
+                                                                                                 5%-tile SINR
+                                                                                             (BS Tx power: 49 dBm          -0.4 dB      3.7 dB       4.1 dB
+                                                                                             BS antenna array: 15x4)
+                                                                                                    Reliability           48.5944%     96.3088%     97.4825%
+
+
+
+
+      Fig. 5: SNR-BLER curve for data channel evaluation (BS
+             antenna array: 15x4, BS Tx power: 49 dBm)
+
+        TABLE VI: 5%-tile SINR obtained from system-level
+       simulation and evaluation results of downlink reliability
+               Configuration            Case1        Case2        Case3
+               5%-tile SINR
+           (BS Tx power: 49 dBm          -2.8 dB      4.4 dB       6.9 dB
+           BS antenna array: 15x4)                                                    Fig. 6: Uplink SINR distribution obtained from system level
+                  Reliability           10.9213%     98.3007%     99.9215%            simulation (BS antenna array: 15x4, UE Tx power: 23dBm)
+
+
+                                                                                      greater than or equal to 1,000,000 devices per km2 . Following
+    available at different locations in the network layout when                       observation were made while evaluating DECT-2020 NR’s
+    one BS is active (considering 3-transmission reception points                     connection density:
+    (TRxP)) for DECT-2020 NR and 3GPP respectively. From the                             • DECT Forum assumes a MESH based topology and
+    Fig. 7, it is observed for DECT-2020 NR that good antenna                              relies on multi-hop communication to get the device
+    gains are obtained not only at locations near BS but the users                         from a MTC device to the network. The link budget for
+    at far location are also getting some gains which could add up                         mMTC though claims to have a coverage of data, control
+    to give high interference to that particular user from this active                     channel of 480m with 100% reliability, but in the self-
+    base station. In Fig. 8, the 3GPP shows good gains in the cell                         evaluation it is stated that DECT with star topology does
+    itself with good coverage for nearby users with negative gains                         not meet coverage requirement due to which multi-hop
+    in locations away from the base station.                                               mesh technology is implemented in mMTC scenario.
+       Fig. 9 shows 2D antenna radiation pattern for 15x4 antenna                        • Since the connection density evaluation of DECT depends
+    configuration with electric tilt 99°, mechanical tilt 90°, escan                       on “relaying”, assuming the technology could meet the
+    0°. The plot with labelling ’Azimuth’ shows antenna gains                              minimum requirement of connection density of 1,000,000
+    along azimuth angle with elevation fixed at 99° and the plot                           devices per km2 , it does not ensure that if the number of
+    labelled ’Elevation’ shows antenna gains along elevation angle                         devices deployed are very less then the packet data can
+    with azimuth angle fixed at 0°. It can be seen from figure                             be delivered from such devices in such macro cells due
+    that in case of both the plots, gain is maximum at point                               to lack of sufficient devices for relaying.
+    where azimuth angle is 0° and elevation angle is 99° in                              • The evaluation of relay-based simulation requires chan-
+    coordination with the electric tilt and horizontal scan provided                       nel model between device to device which is at the
+    for beamforming. Similar observation is noted from Fig. 10                             same height (1.5m), interference modeling information
+    which shows 3D antenna radiation pattern for the same. Also,                           between device to device relaying, scheduling and propa-
+    it can be observed that as number of elements are more in                              gation direction of relaying to guarantee packet delivery.
+    vertical direction, beam is narrow in vertical and wider in                            This is not supported in the current channel model in
+    horizontal direction.                                                                  M.2412. Details about it could not be found in the report.
+                                                                                         • Interference characteristics and modeling is also needed
+    C. Connection Density                                                                  to understand the quality of multi-hop relaying to ensure
+      Connection density is the total number of devices fulfilling a                       the small packets are delivered to the final network within
+    specific quality of service (QoS) per unit area (per km2 ). The                        the given time with 1% PER probability. The probability
+    requirement is fulfilled if the 99th percentile of the delay per                       of successful transmission (link reliability) reduces and
+    user is less than or equal to 10s and the connection density is                        probability of bit error increases as the density of inter-
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 629
+        Fig. 7: Maximum Antenna Gain Possible in a Network
+                Layout for DECT with one BS Active.
+
+                                                                                      Fig. 9: 2D Antenna Radiation Pattern along Elevation and
+                                                                                      Azimuth(15x4)
+
+
+
+
+        Fig. 8: Maximum Antenna Gain Possible in a Network
+                Layout for 3GPP with one BS Active.                                             Fig. 10: 3D Antenna Radiation Pattern(15x4)
+
+
+                                                                                      devices needed for reliable relaying of small packets. When
+         fering nodes in the interference region increases [11].                      DECT-2020 NR is deployed for smaller or indoor industrial
+       • It could not be found in the self-evaluation report that
+                                                                                      environment, the dependency on multi-hop to reliably deliver
+         how the “relay propagation” from one mMTC device is                          the small machine-type packet data might be less stringent.
+         restricted to flow to adjacent cells.                                        These aspects could be assessed when detailed specifications
+                               IV. C ONCLUSION                                        of DECT 2020 NR are available.
+       This paper provided the evaluation results and observa-                                         V. ACKNOWLEDGEMENT
+    tions on the candidate technology component DECT-2020                               This work is supported by 5G India Forum (5GIF)
+    NR which was submitted by the ETSI DECT Forum. This                               Independent Evaluation Group (IEG) for IMT-2020: 5G India
+    component technology needs to meet the performance re-                            Forum is associated with COAI, India.
+    quirements for URLLC and mMTC usage scenario. It is
+    observed that DECT-2020 NR meets the control plane latency                                                      R EFERENCES
+    requirement of 20ms and the user plane latency requirement                         [1] ITU-R M.2083-0 IMT Vision – Framework and overall objectives of
+    of 1ms by enabling HARQ-less transmission. But the user                                the future development of IMT for 2020 and beyond.Available:
+                                                                                           https://www.itu.int/dms pubrec/itu-r/rec/m/R-REC-M.2083-0-201509-
+    plane latency exceeds the 1ms requirement when full slot                               I!!PDF-E.pdf
+    transmission with HARQ is used. Based on parameters and                            [2] ITU-R: Minimum requirements related to technical performance for
+    limited details of specifications, we conclude that the assumed                        IMT-2020 radio interface(s). Report ITU-R M.2410-0, (11/2017).
+                                                                                       [3] ITU-R: Requirements, evaluation criteria and submission templates for
+    antenna parameters, inter-cell interference there are many UEs                         the development of IMT-2020. Report ITU-R M.2411-0, (11/2017).
+    with low SINR values in DL as well as UL. Due to poor                              [4] ITU-R: Guidelines for evaluation of radio interface technologies for
+    geometric SINR distribution, the performance requirement of                            IMT-2020.Report ITU-R M.2412-0, (10/2017).
+                                                                                       [5] 5GIF Self Evaluation Report.Available at:
+    reliability was found marginally lower than the minimum                                https://www.itu.int/md/R15-IMT.2020-C-0011/en
+    requirements for IMT-2020. The DECT 2020 NR has the worst                          [6] 5G      for    Mission     Critical    Communication-Achieve     ultra-
+    SINR distribution with a single frequency reuse deployment.                            reliability and virtual zero latency, White Paper.Available:
+                                                                                           http://www.hit.bme.hu/j̃akab/edu/litr/5G/Nokia 5G for Mission
+    The final submissions from ETSI DECT Forum to ITU-R lacks                              Critical Communication White Paper.pdf.
+    detailed specifications regarding the usage of mesh topology                       [7] M. Luvisotto, Z. Pang and D. Dzung, ”Ultra High Performance Wireless
+    which was necessary to evaluate the supported connection                               Control for Critical Applications:Challenges and Directions,” IEEE
+                                                                                           Transactions on Industrial Informatics, vol. 13, no. 3, pp. 1448-1459,
+    density; using the ITU-R evaluation framework. The DECT-                               June 2017.
+    2020 NR technology inherently depends on mesh topology                             [8] https://www.itu.int/md/R15-IMT.2020-C-0006/en
+    for delivering machine type data packets in the urban macro                        [9] https://www.dect.org/userfiles/file/Press%20releases/DECT%20Today
+                                                                                           /DECT%20Today%20May%202018.pdf
+    test environment, it is ambiguous what will happen when only                      [10] ETSI TR103.514-V1.1.1-DECT-2020 NR interface;Study on Physi-
+    few IoT devices are deployed in a macro like scenario. Further,                        cal(PHY) layer.
+    investigation is required to evaluate the minimum density of                      [11] https://doi.org/10.1016/j.mcm.2010.08.027
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:05 UTC from IEEE Xplore. Restrictions apply.
+                                                                                 630
+

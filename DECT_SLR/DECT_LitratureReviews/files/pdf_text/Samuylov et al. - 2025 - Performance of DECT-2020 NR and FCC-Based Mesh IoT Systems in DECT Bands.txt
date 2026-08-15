@@ -1,0 +1,436 @@
+                                                                                                                                                                      Performance of DECT-2020 NR and FCC-Based
+                                                                                                                                                                            Mesh IoT Systems in DECT Bands
+                                                                                                                                                                  Andrey Samuylov1 , Roman Glazkov1 , Dmitri Moltchanov1 , Juho Pirskanen2 , Jussi Numminen2 , Mikko Valkama1
+                                                                                                                                                                                                           1
+                                                                                                                                                                                                               Unit of Electrical Engineering, Tampere University, Finland
+                                                                                                                                                                                                                           2
+                                                                                                                                                                                                                              Wirepas Oy, Tampere, Finland
+                                                                                                                                                                                                                    Contact author’s e-mail: andrey.samuylov@tuni.fi
+2025 IEEE 101st Vehicular Technology Conference (VTC2025-Spring) | 979-8-3315-3147-8/25/$31.00 ©2025 IEEE | DOI: 10.1109/VTC2025-SPRING65109.2025.11174654
+
+
+
+
+                                                                                                                                                                    Abstract—DECT-2020 NR is a recently standardized radio                        operating. Specifically, in the USA, the FCC defines the
+                                                                                                                                                                 access technology (RAT) for massive machine-type 5G commu-                       operation in the Unlicensed Personal Communications Service
+                                                                                                                                                                 nications operating in the license-exempt and licensed bands.                    (UPCS) band between 1920-1930 MHz in the §15.323 clause
+                                                                                                                                                                 By relying on multi-hop communications and listen-before-talk
+                                                                                                                                                                 (LBT) medium access, DECT-2020 NR allows for cost-controlled                     [11], where existing DECT-based systems have been used.
+                                                                                                                                                                 flexible deployments. However, the medium access procedures                      The history of the UPCS band dates back to 1994 when
+                                                                                                                                                                 for some of the bands currently used by classic DECT systems                     asynchronous devices were allowed to operate in the 1910-
+                                                                                                                                                                 are strictly regulated by long-standing policies in the USA. The                 1920 MHz sub-band based on the rules specified in §15.321
+                                                                                                                                                                 goal of this study was to evaluate and compare the performance                   and isochronous devices – in the 1920-1930 MHz sub-band
+                                                                                                                                                                 of DECT-2020 NR and medium access specified by the Federal
+                                                                                                                                                                 Communications Commission (FCC) for the Unlicensed Personal                      based on §15.323. Both §15.321 and §15.323 defined sepa-
+                                                                                                                                                                 Communications Service (UPCS) band. Our results demonstrate                      rate spectrum access rules for asynchronous and isochronous
+                                                                                                                                                                 that in a mesh system, the use of FCC access rules leads to drastic              devices. For asynchronous devices, the spectrum access rules
+                                                                                                                                                                 performance degradation, resulting in less than 85% of delivered                 specified in §15.321 clauses were ensured by utilizing listen-
+                                                                                                                                                                 packets compared to 98-99% for DECT-2020 NR. This results in                     before-talk (LBT) functionality with an exponential back-off,
+                                                                                                                                                                 a slight 1-2% degradation for coexisting classic DECT devices.
+                                                                                                                                                                 For efficient use of the UPCS band, we recommend revisiting                      whereas for isochronous devices, access rules were very much
+                                                                                                                                                                 current FCC rules, allowing for LBT-based operations.                            aligned to current access rules in §15.323.
+                                                                                                                                                                    Index Terms—DECT-2020 NR; NR+; New Radio; multi-hop;                             After 1994, the regulation remained stable until 2004
+                                                                                                                                                                 IoT; topology; algorithms; mMTC.                                                 when the FCC introduced Advanced Wireless Services rules
+                                                                                                                                                                                                                                                  [12]. In this process, the 1910-1920 MHz sub-band and the
+                                                                                                                                                                                           I. I NTRODUCTION
+                                                                                                                                                                                                                                                  corresponding §15.321 were removed, and modifications to
+                                                                                                                                                                    Internet of Things (IoT) applications are already tightly                     §15.323 were introduced. According to them, asynchronous
+                                                                                                                                                                 integrated into our daily lives, enabling a wide range of remote                 devices are also allowed in the 1920-1930 MHz sub-band, in
+                                                                                                                                                                 functions from sensing to actuation [1]. Massive machine-type                    addition to isochronous devices. However, the spectrum access
+                                                                                                                                                                 communication (mMTC) technologies, as a core component of                        rules defined in §15.321 for asynchronous devices were not
+                                                                                                                                                                 5G IMT-2020 systems, provide essential support for IoT [2].                      introduced in §15.323; rather, only the spectrum access rules
+                                                                                                                                                                 NB-IoT [3] is a 3GPP-standardized solution for cellular IoT                      defined for isochronous devices were maintained.
+                                                                                                                                                                 (CIoT) [4], whereas DECT-2020 NR [5] leads the way for                              The above process demonstrates that spectrum regulation
+                                                                                                                                                                 non-cellular IoT standards.                                                      is dynamic, evolving in response to new needs driven by
+                                                                                                                                                                    DECT-2020 NR is the pioneering 5G mMTC enabler op-                            emerging use cases, technologies, and service demands. This
+                                                                                                                                                                 erating in the unlicensed frequency band: 1880-1900 MHz in                       adaptability aims to maximize spectrum utilization, benefiting
+                                                                                                                                                                 Europe and Australia, and 1900-1920 MHz in other regions.                        both commercial interests and the public. Along these lines,
+                                                                                                                                                                 Recent research [6], [7] has demonstrated its capacity to                        this study aims to evaluate and compare the performance of
+                                                                                                                                                                 support millions of radio devices (RDs) per square kilometer,                    mesh IoT technologies in the 1920-1930 MHz band operating
+                                                                                                                                                                 while meeting the performance requirements for 5G mMTC                           according to the DECT-2020 NR LBT access mechanism and
+                                                                                                                                                                 applications outlined in [8]. These requirements include a                       the one specified by the FCC in §15.323. We will perform a
+                                                                                                                                                                 packet loss rate (PLR) of less than 0.05% and an end-to-                         system-level simulation campaign that captures the specifics
+                                                                                                                                                                 end latency of no more than 10 seconds for 99% of packets.                       of medium access control and physical layer implementation.
+                                                                                                                                                                 Aligned with 5G standards, DECT-2020 NR’s physical layer
+                                                                                                                                                                                                                                                     The main contributions of this study are:
+                                                                                                                                                                 offers flexibility in modulation and coding schemes (MCS),
+                                                                                                                                                                 per-link hybrid automatic repeat request (HARQ) procedures,                         •   in large mesh deployments, the performance of FCC mesh
+                                                                                                                                                                 and various numerologies [9], [10].                                                     systems degrades drastically resulting in less than 85%
+                                                                                                                                                                    In different countries, there are specific restrictions on the                       of delivered packets as compared to DECT-2020 NR
+                                                                                                                                                                 use of unlicensed bands in which DECT systems are currently                             showing 98-99% of delivered packets;
+
+
+
+
+                                                                                                                                                                 979-8-3315-3147-8/25/$31.00
+                                                                                                                                                             Authorized                              ©2025Aalen
+                                                                                                                                                                        licensed use limited to: Hochschule IEEE(FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+       • non-aligned sensing across RDs constituting a mesh sys-                                                           Frame
+         tem is the major cause of packet losses in mesh system                        Classic DECT
+                                                                                                                     Transmission
+         operating with FCC-based access rules;                                                                       Random backoff
+       • revisiting FCC rules allowing for either controlled opera-                   DECT-2020 LBT
+         tion of LBT based or relaxing currently strict timings for                                                  Sensing               Transmission
+         packet transmission at the air interface is recommended.                                                                  Frame
+                                                                                      DECT-2020 FCC
+       The remainder of this paper is organized as follows. Section                                                    Sensing two slots                  Tx    Ack
+    II describes the essentials of the DECT-2020 NR LBT-based                                                           (Tx and Ack)
+    access method and the FCC requirements. In Section III,                                     Classic DECT transmission        DECT-2020 transmission
+    we introduce the comparison methodology, considering the                                    DECT-2020 sensing                DECT-2020 acknowledgment
+    deployment and scenarios. The numerical results are presented                      Fig. 1. Illustration of FCC and DECT-2020 NR channel access schemes.
+    in section IV. The conclusions are presented in the last section.
+
+                  II. DECT-2020 NR AND FCC RULES                                         If no access to the spectrum is available and the system
+      In this section, we first overview the requirements imposed                     utilizes at least 20 duplex access channels, a device may access
+    by the FCC on operation in the UPCS band at 1920-1930                             the time and spectrum windows with the lowest power level.
+    MHz. Then, we outline the basics of LBT-based access, as                          Therefore, it is expected that one device following FCC access
+    specified in the DECT-2020 NR.                                                    rules may occasionally initiate a connection on top of another
+                                                                                      when the load is sufficiently high. In this case, the collision
+    A. FCC Requirements for UPCS Band                                                 situation may remain long; either the connection remains on
+                                                                                      multiple frames or the initiating transmitter keeps trying to
+       The set of rules imposed by the FCC on the operation in
+                                                                                      set up the connection. Furthermore, different systems, even
+    the UPCS bands is summarized in [11]. Existing FCC rules
+                                                                                      synchronized with independent clock sources, will not have
+    state that both asynchronous and isochronous devices may
+                                                                                      frame synchronization, and different clock drifts will impose
+    operate in these bands. However, current spectrum access rules
+                                                                                      non-optimum interference conditions.
+    only define the old isochronous access method, as discussed
+    above. The isochronous access method is illustrated in Fig.                       B. DECT-2020 NR Topology and Channel Access
+    1. Specifically, according to Rule 1 in [11], before initiating
+    transmission, devices must monitor the combined time and                             The DECT-2020 NR system is assumed to operate according
+    spectrum windows in which they intend to transmit for a                           to the DECT-2020 NR specifications, see [5] and references
+    minimum of 10 ms in systems with 10-millisecond or shorter                        therein. DECT-2020 NR employs a cluster tree mesh topology
+    frames or 20 ms in systems with 20-millisecond frames. Thus,                      for large-scale IoT deployments. DECT-2020 NR enables
+    spectrum resources are considered free if the device intends to                   Radio Devices (RDs) to operate in fixed termination (FT)
+    use them full time. Peak measurements over each symbol were                       or portable termination (PT) modes or both simultaneously.
+    performed with the threshold set to -82 dBm, as according to                      During initialization, each Radio Device (RD) selects a Fixed
+    Rule 2 in [11], this threshold must not be more than 30 dB                        Termination (FT) node for association based on the received
+    above the thermal noise power for a bandwidth equivalent to                       link quality and announced cost, reflecting the quality of the
+    the emission bandwidth used by the device, which is 1.728                         path to external backend systems. RDs can initiate commu-
+    MHz for DECT-2020 NR.                                                             nication without first establishing and maintaining the entire
+       The initiating device may measure both downlink and uplink                     data path, and connecting only to the next device in the cluster
+    slots; that is, both packet transmission and acknowledgment                       tree structure is sufficient. In FT mode, an RD functions as a
+    (ACK) slots need to be simultaneously free. If both the                           router, coordinating local radio resources and allowing other
+    intended transmit and receive time and spectrum windows                           PT RDs to connect to it. FT RDs routes data from connected
+    meet the access criteria, then the initiating device can start                    PT RDs and their own data to the next FT RD in the network,
+    a transmission in the intended transmit time and spectrum                         finally reaching an FT RD as the sink of the system with
+    window 10 ms after the measurement. The responding device                         an interface to external networks, and thus having necessary
+    does not measure whether it detects the signal that it starts to                  gateway functionality.
+    use (Rule 10 in [11]).                                                               At the MAC layer, both FT and PT modes employ LBT with
+       Once the transmission is initiated for an uplink slot and                      exponential back-off for uplink transmission, as shown in Fig.
+    repeated with either 10 ms or 20 ms periodicity, the response                     1. The LBT sensing time for random access channel (RACH)
+    needs to be received within 1 s at the previously measured                        transmissions is designed to be as brief as two symbols,
+    downlink slot. Subsequently, both uplink and downlink slots                       facilitating rapid medium access [13].
+    are considered reserved, and bidirectional transmissions may
+                                                                                         III. M ETHODOLOGY, D EPLOYMENT, AND S CENARIOS
+    continue for up to 8 h without further channel assessment,
+    with the requirement that periodic responses are received at                        In this section, we first introduce the comparison methodol-
+    least every 30 s, [11], Rule 4.                                                   ogy and the simulation tool. Then, we specify the considered
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+                                 TABLE I                                              handlers, traffic generators, and physical layer interfaces. To
+              C ONSIDERED SYSTEM AND EVALUATION PARAMETERS                            accurately simulate high-density deployments, we implement
+                                                                                      a physical layer abstraction that stores all bidirectional path
+                    Parameter                                Value                    loss states between the RDs, considering only the reception
+      DECT-2020 NR FT sink/gateway               1, height 25 m, outdoors
+      Carrier frequency                          1900 MHz                             signal strengths that exceed the noise floor.
+      Number of RDs                              100/300                                 The simulation process commences with node placement
+      Number of channels                         1                                    and path loss calculations, adhering to the 3GPP guidelines
+      Channel bandwidth                          1.728 MHz
+      RD deployment                              Uniformly random
+                                                                                      outlined in TR 38.901. Whenever feasible, we utilized the
+      Building penetration loss                  20 dB (ITU-R)                        ITU-R simulation guidelines in ITU-R M.2412 [14]. To collect
+      Indoor/outdoor fraction                    80% / 20%                            the data, we use the method of replication. We conduct 25
+      Channel model, Sink- RD                    Urban macro                          simulation runs for each parameter set and gathered 105
+      Channel model, RD-RD                       Urban street canyon
+      Number of RD/sink antenna elements         1                                    observations in the steady state for each run. The steady-state
+      Sink/RD noise figure                       7 dB                                 period is identified using moving-average statistics. Owing to
+      Sink/RD antenna element gain               0 dBi                                the substantial size of the statistical samples, we present only
+      Thermal noise level                        –174 dBm/Hz
+                                                                                      point estimates.
+      Traffic model                              Bursts of 2 packets
+      Application data message size              32 bytes
+      Mean interpacket time                      10-50 s
+                                                                                      B. Deployment, Scenarios, and Metrics
+      Interpacket time distribution              Exponential                             To provide comparison between the FCC and DECT-2020
+      Channel access                             LBT + extensions
+      Contention window size                     min – 24, max – 768
+                                                                                      NR MAC access mechanisms, we consider three scenarios.
+      LBT threshold                              -75 dBm                              First, we begin with the simple star topology scenario, where
+      Minimum link quality                       15 dB                                all RDs are connected directly to the sink. To ensure that no
+      Error correction                           HARQ with 3 attempts                 RDs are in the outage condition, the coverage around the sink,
+      Sensitivity                                -99.7 dBm (TS 103.636-2)
+      DECT-2020 Tx power                         10 dBm                               where the RDs are uniformly distributed, is limited to 20 m.
+      Legacy DECT Tx power                       10 dBm                               In this deployment, the number of RDs was limited to 100,
+      Format                                     MSC 1,3,4 for 1,2,3 packets          representing a large-scale home automation scenario.
+                                                                                         In the second scenario, as illustrated in Fig. 2, we add the
+                                                                                      number of routers to the considered deployment and allow
+    deployment and scenarios under investigation, and define the                      RDs to use them as relays. Here, we consider 100 RDs and a
+    metrics of interest.                                                              deployment area of 20 m radius. The reason for considering
+                                                                                      this deployment is to directly evaluate the impact of routing
+    A. Methodology and Simulation Tool                                                devices on the performance metrics of interest.
+       In our analysis, we capture the operation of the system at                        Finally, we consider a larger deployment with a higher
+    the MAC layer, including topology construction, routing, and                      number of RDs and routing devices. Here, the deployment
+    forwarding capabilities. The physical layer implementation is                     radius is 40 m, while the number of RDs (leaf nodes) is
+    assumed to be the same for the FCC and DECT-2020 NR                               300, resulting in a three times higher system load with the
+    systems, and its performance is abstracted by utilizing the                       same mMTC interpacket time from each device than in other
+    set of common MCSs. To exclude potential side impacts,                            scenarios. In all the considered scenarios, only one sink is
+    we disable some of the features provided by the physical
+    layer, including energy conservation techniques and power
+    control. The same carrier and bandwidth are considered so that
+    the principal difference between the two systems is the way
+                                                                                                                          20
+    medium access is performed. Frame timings for the legacy
+    DECT and DECT-2020 NR are not synchronized and the
+    frame sift is random for a simulation run but does not drift                                                          10
+    during simulation. The remaining parameters common to both
+    systems are shown in Table I.
+       The DECT-2020 NR system is implemented using the                                                    20       10               10      20
+    system-level simulation tool WINTERsim, which was uti-
+    lized during the standardization process of DECT-2020 NR                                                              10
+    technology [6]. WINTERsim is a discrete event system-level
+    simulation tool. For DECT-2020 NR, we employed node ab-
+                                                                                                                          20
+    straction as the fundamental class representing RDs. This class
+    encapsulates all node parameters, including position, mobility
+    model, antenna characteristics, and power settings. Addition-                                 Sink       Relay         Leaf        Classic DECT
+    ally, it serves as a container for layer 2 interfaces, forward-
+    ing mechanisms, flow tables, signaling engines, application                                Fig. 2. Illustration of the considered multi-hop topology.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+                                1.00                                                                            1.00                                                                                        1.00
+
+
+
+
+                                                                                                                                                                        Legacy DECT packet delivery ratio
+        Packet delivery ratio
+
+
+
+
+                                                                                        Packet delivery ratio
+                                0.95                                                                            0.95                                                                                        0.95
+
+
+                                                                     Access mode                                                                     Access mode                                                                             Access mode
+                                0.90                                      LBT                                   0.90                                      LBT                                               0.90                                  LBT
+                                                                          FCC                                                                             FCC                                                                                     FCC
+
+
+
+                                0.85                                                                            0.85                                                                                        0.85
+
+
+
+                                0.80                                                                            0.80                                                                                        0.80
+                                       10     20       30       40      50         60                                  10        20     30      40      50         60                                              10    20     30      40      50         60
+                                             mMTC interpacket time, s                                                            mMTC interpacket time, s                                                                mMTC interpacket time, s
+                                            (a) No classic DECT                                                             (b) With classic DECT                                                                  (c) Classic DECT performance
+
+                                                               Fig. 3. Performance metrics for DECT-2020 NR and FCC mesh systems with star topology.
+
+
+
+    considered and is placed in the middle. The relay nodes are                                                                              ratio under all considered interpacket generation times, Fig.
+    assigned automatically according to a uniform distribution                                                                               3(a). The same case shows a slight decrease in the delivery
+    over the deployment area. Each leaf node generates a single                                                                              ratio for mMTC devices if random access is enabled according
+    packet with Poisson-distributed interpacket time.                                                                                        to the FCC rules. Some rare collisions causes packet losses
+       To assess the coexistence capabilities of DECT-2020 NR                                                                                because both the transmitter and interferer retransmit their
+    and FCC systems [15], for all scenarios we also consider                                                                                 packets at the same time but a frame later. The LBT scheme
+    classic DECT devices operating in the same frequency band.                                                                               retransmissions undergo an additional randomized backoff,
+    Accordingly, no classic DECT or two classic DECT-coupled                                                                                 making it less probable for packets to collide again.
+    device pairs are randomly and uniformly distributed around                                                                                  Adding two coupled classic DECT device pairs that interfere
+    the sink FT RD, ensuring that the devices are always in the                                                                              with the DECT-2020 NR devices lowers the delivery rate by
+    transmission range of each other.                                                                                                        approximately 1% in the worst case, see Fig. 3(b). At the
+       We consider the packet delivery ratio of the DECT-2020                                                                                same time, Fig. 3(c) shows an increasing degradation in packet
+    NR mesh, FCC mesh, and classic DECT systems as the major                                                                                 delivery ratio for classic DECT devices when the DECT-2020
+    performance metric of interest.                                                                                                          NR load increases. This behavior is expected because of the
+                                                                                                                                             constant and periodic nature of classic DECT transmissions
+                                                   IV. N UMERICAL R ESULTS                                                                   and the lack of retransmissions or channel coding. The FCC
+       In this section, we present our numerical results. We begin                                                                           scheme shows better performance for classic DECT devices
+    with the simplest star-based topology, where all RDs are                                                                                 as the FCC-enabled devices avoid some of the regular classic
+    directly connected to the sink. Then, we report the results for                                                                          DECT transmissions by preemptively sensing the channel.
+    the case, where routers are added to the topology. Finally, we                                                                           However, this comes at the expense of degraded performance
+    discuss the results of a large-scale scenario.                                                                                           of FCC-based mesh system resulting in higher performance
+                                                                                                                                             loss to DECT-2020 NR as compared to any potential perfor-
+    A. Scenario 1: Star Topology, Limited Coverage                                                                                           mance increase in legacy DECT.
+       We begin our assessment with a star topology, in which                                                                                   Fig. 4 illustrates the main reason for packet losses. First,
+    all leaf nodes are directly connected to the sink. Fig. 3                                                                                FCC devices sense the channel trying to find a possible classic
+    illustrates DECT-2020 NR LBT performance with and without                                                                                DECT transmission, which will reoccur exactly one frame
+    interfering classic DECT devices (Fig.3(a) and Fig. 3(b),                                                                                later. However, there are cases when the interfering signal
+    respectively), as well as classic DECT performance. By an-                                                                               starts late (or early) enough for the device not to detect it.
+    alyzing the presented data, we see that the star topology with                                                                           Once this happens, this FCC device starts its transmission
+    only DECT-2020 NR devices shows an almost 100% delivery                                                                                  a frame later, and this transmission is partially overlapped,
+                                                                                                                                             which may lead to incorrect frame reception. As the FCC
+                                                                                                                                             transmission slot was previously considered free, the device
+                                              Half-frame
+                                                       Frame                                                                                 retransmits the packet one more frame later, and experiences
+    Classic DECT                                                                                                                             interference again leading to consecutive packet losses.
+     DECT-2020
+                                                                                                                                             B. Scenario 2: Multi-Hop Operation, Limited Coverage
+                                                   1                          2                                              3
+                                                                     Classic DECT transmission (interference)                                   We now analyze the performance of the multi-hop system.
+                                                                     DECT-2020 sensing in FCC mode                                           The difference from the star topology is that a sink (or relay)
+                                                                     DECT-2020 sensing trigger time
+                                                                     DECT-2020 transmission with acknowledgment                              can be connected to only 20 other devices; thus, several
+                                                                                                                                             relay nodes are employed in the scenario to both increase
+                                       Fig. 4. Illustration of packet losses in FCC system.                                                  the coverage and allow a larger number of devices to be
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+                                1.00                                                                         1.00                                                                                     1.00
+
+
+
+
+                                                                                                                                                                  Legacy DECT packet delivery ratio
+        Packet delivery ratio
+
+
+
+
+                                                                                     Packet delivery ratio
+                                0.95                                                                         0.95                                                                                     0.95
+
+
+                                                                  Access mode                                                                  Access mode                                                                             Access mode
+                                0.90                                   LBT                                   0.90                                   LBT                                               0.90                                  LBT
+                                                                       FCC                                                                          FCC                                                                                     FCC
+
+
+
+                                0.85                                                                         0.85                                                                                     0.85
+
+
+
+                                0.80                                                                         0.80                                                                                     0.80
+                                       10     20    30       40      50         60                                  10     20     30      40      50         60                                              10    20     30      40      50         60
+                                             mMTC interpacket time, s                                                      mMTC interpacket time, s                                                                mMTC interpacket time, s
+                                            (a) No classic DECT                                                          (b) With classic DECT                                                               (c) Classic DECT performance
+
+                                                         Fig. 5. Performance metrics for DECT-2020 NR and FCC mesh systems with multi-hop topology.
+
+                                1.00                                                                         1.00                                                                                     1.00
+
+
+
+
+                                                                                                                                                                  Legacy DECT packet delivery ratio
+        Packet delivery ratio
+
+
+
+
+                                                                                     Packet delivery ratio
+
+                                0.95                                                                         0.95                                                                                     0.95
+
+
+                                                                  Access mode                                                                  Access mode                                                                             Access mode
+                                0.90                                   LBT                                   0.90                                   LBT                                               0.90                                  LBT
+                                                                       FCC                                                                          FCC                                                                                     FCC
+
+
+
+                                0.85                                                                         0.85                                                                                     0.85
+
+
+
+                                0.80                                                                         0.80                                                                                     0.80
+                                       10     20    30       40      50         60                                  10     20     30      40      50         60                                              10    20     30      40      50         60
+                                             mMTC interpacket time, s                                                      mMTC interpacket time, s                                                                mMTC interpacket time, s
+                                            (a) No classic DECT                                                          (b) With classic DECT                                                               (c) Classic DECT performance
+
+        Fig. 6. Performance metrics for DECT-2020 NR and FCC mesh systems for larger deployment (3 times higher load compared to Fig. 3 and Fig. 5).
+
+
+
+    connected. This change does not affect the packet delivery                                                                         C. Scenario 3: Larger Deployment with Multi-Hop Operation
+    ratio for the DECT-2020 NR devices in the LBT mode without
+    any additional interferers, as shown in Fig. 5(a). However,                                                                           Finally, we consider larger-scale scenario with a deployment
+    the system in the FCC mode suffers up to 4% degradation                                                                            radius of 40 m, 300 RDs, and multi-hop operation. Fig. 6
+    compared with the previously described star topology. The                                                                          shows DECT-2020 NR, FCC, and classic DECT delivery ratios
+    decrease in performance is caused by additional constraints                                                                        for varying interpacket generation times. The results shown in
+    imposed by the FCC access rules. Specifically, they lead to an                                                                     Fig. 6(a), highlight that in the case when all devices use DECT-
+    increase in the overall number of retransmissions performed by                                                                     2020 NR LBT random access, the delivery ratio comes close
+    a relay node, which is sometimes unable to send ACK packets                                                                        to 100% even under the highest loads. On the other hand, FCC
+    in a timely manner. The rationale is that there are strict timings                                                                 access rules show extremely poor performance even under
+    when the ACK packet needs to be sent, as compared to the                                                                           very low loads (50-60 s interpacket generation time). This
+    DECT-2020 NR LBT access, where it is not strictly regulated.                                                                       is primarily because relay nodes are unable to allocate time
+    This further deteriorates the performance as the relay nodes                                                                       to both data reception from multiple uplink sources and data
+    now have to align its sensing and transmissions together with                                                                      transmission to the next hop in the uplink direction. Indeed,
+    the receptions, which require a longer contiguous time window                                                                      according to the FCC rules, there is a need to allocate three
+    than a regular LBT procedure.                                                                                                      consecutive slots dedicated to a single exchange between two
+                                                                                                                                       nodes, which means that it is difficult to randomly distribute
+                                                                                                                                       the required timings within a single frame (as there is no
+                                                                                                                                       scheduling involved and some nodes might not even hear each
+       The same logic applies to the case with additional interfer-                                                                    other). This causes additional retransmissions, worsening the
+    ing classic DECT devices illustrated in Fig. 5(b). Specifically,                                                                   entire situation.
+    strict timings provide fewer opportunities to send an ACK                                                                             Similarly to the previously considered scenarios, the classic
+    when transmissions interfere in each frame. At the same                                                                            DECT performance is slightly better when the FCC system is
+    time, due to more failed transmissions, classic DECT devices                                                                       utilized (see Fig. 6(b)), e.g., by 2% at 10 s interpacket gener-
+    have slightly higher delivery ratios (by 1-2%) as compared to                                                                      ation time. However, this comes at the expense of completely
+    DECT-2020 NR LBT access (see Fig. 5(c)).                                                                                           malfunctioning mMTC service.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+                           V. C ONCLUSIONS                                             [3] H. Fattah, 5G LTE Narrowband Internet of Things (NB-IoT). CRC
+                                                                                           Press, 2018.
+       The aim of this paper was to compare DECT-2020 NR                               [4] L. Chettri and R. Bera, “A comprehensive survey on internet of things
+    and FCC medium access schemes operating in UPCS band                                   (IoT) toward 5G wireless systems,” IEEE Internet of Things Journal,
+    in multi-hop mode. We revealed that in a simple star topology                          vol. 7, no. 1, pp. 16–32, 2019.
+                                                                                       [5] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” ETSI, TS 103
+    with direct connections to the sink, performance of the FCC                            636-1 v1.3.1, December 2021.
+    access mechanism is slightly lower than that of DECT-2020                          [6] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+    NR. When the multi-hop capability is introduced, the perfor-                           Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+                                                                                           Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+    mance of the FCC system starts to degrade drastically. The                             munications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+    main reason is the strict timings for packet transmission at the                   [7] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+    radio interface, which leads to either an inability to gain access                     Massive Machine Type Communications with DECT-2020 Standard: A
+                                                                                           System-Level Performance Study,” VTT Technical Research Centre of
+    to the channel or overlapping of ACK transmissions. In large-                          Finland, 2021.
+    scale mesh deployments, the performance of FCC systems                             [8] ITU-R, “Minimum requirements related to technical performance for
+    degrades to unacceptable limits, resulting in less than 85%                            IMT-2020 radio interface,” ITU-R, M.2410-0, July 2017.
+                                                                                       [9] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+    of delivered packets compared to DECT-2020 NR, showing                                 transmission requirements; Release 1,” ETSI, TS 103 636-2 v1.3.1,
+    close to perfect performance with 98-99% of delivered packets                          December 2021.
+    without significant impact on classic DECT performance.                           [10] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,”
+                                                                                           ETSI, TS 103 636-3 v1.3.1, December 2021.
+       Based on our results, to improve the resource utilization of                   [11] F. C. Commission, “Specific requirements for devices operating in
+    the UPCS band when utilizing it for asynchronous mMTC                                  1920-1930 MHz,” FCC, https://www.ecfr.gov/current/title-47/chapter-
+    systems, we recommend revisiting FCC rules allowing for                                I/subchapter-A/part-15#15.323, August 2024.
+                                                                                      [12] F.      Register,     “Advanced      Wireless    Services,”     FCC,
+    controlled LBT-based operation.                                                        https://www.federalregister.gov/documents/2004/10/27/04-
+                       ACKNOWLEDGMENT                                                      23835/advanced-wireless-services, August 2024.
+                                                                                      [13] A. Samuylov, D. Moltchanov, M. Alam, J. Pirskanen, J. Numminen,
+      This work was supported by the CELTIC-NEXT “Ultra                                    M. Valkama, and Y. Koucheryavy, “Performance of mac layer mecha-
+    Scalable Wireless Access” (USWA) project.                                              nisms in dect-2020 nr mmtc technology,” in 2024 IEEE 99th Vehicular
+                                                                                           Technology Conference (VTC2024-Spring). IEEE, 2024, pp. 1–6.
+                                  R EFERENCES                                         [14] ITU-R, “Guidelines for evaluation of radio interface technologies for
+                                                                                           IMT-2020,” ITU-R, M.2412-0, July 2017.
+     [1] A. Khanna and S. Kaur, “Internet of things (iot), applications and chal-     [15] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Kouch-
+         lenges: a comprehensive review,” Wireless Personal Communications,                eryavy, and M. Valkama, “Performance assessment of dect-2020 nr and
+         vol. 114, no. 2, pp. 1687–1762, 2020.                                             classic dect coexistence mechanisms,” in 2023 IEEE 97th Vehicular
+     [2] M. R. Palattella, M. Dohler, A. Grieco, G. Rizzo, J. Torsner, T. Engel,           Technology Conference (VTC2023-Spring). IEEE, 2023, pp. 1–7.
+         and L. Ladid, “Internet of things in the 5G era: Enablers, architecture,
+         and business models,” IEEE Journal on Selected Areas in Communica-
+         tions, vol. 34, no. 3, pp. 510–527, 2016.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 09:23:44 UTC from IEEE Xplore. Restrictions apply.
+

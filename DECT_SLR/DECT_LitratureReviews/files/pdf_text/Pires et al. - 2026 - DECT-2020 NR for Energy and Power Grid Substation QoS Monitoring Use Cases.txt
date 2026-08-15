@@ -1,0 +1,381 @@
+                                                                                                                                                                                                       DECT-2020 NR for Energy and Power Grid
+2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit) | 979-8-3315-7019-4/26/$31.00 ©2026 IEEE | DOI: 10.1109/EUCNC/6GSUMMIT68295.2026.11577420
+
+
+
+
+                                                                                                                                                                                                         Substation QoS Monitoring Use Cases
+
+                                                                                                                                                                                                                   Rafael Pires∗ , Joonas Säe† , Ritayan Biswas† , Mika Lasanen∗ , Juho Pirskanen ‡
+                                                                                                                                                                                                                                                  Email: ∗ [firstname.lastname]@vtt.fi
+                                                                                                                                                                                                                                                  Email: † [firstname.lastname]@tau.fi
+                                                                                                                                                                                                                                                Email: ‡ [firstname.lastname]@wirepas.com
+
+
+                                                                                                                                                                                             Abstract—Modern power grids and industrial systems require                       demonstrations. Together, these efforts aim to advance DECT-
+                                                                                                                                                                                         scalable and reliable wireless connectivity to support real-time                     2020 NR as a robust and flexible solution for next-generation
+                                                                                                                                                                                         monitoring and control. DECT-2020 New Radio (NR), an ETSI-                           industrial wireless networks.
+                                                                                                                                                                                         standardized wireless technology operating in license-exempt
+                                                                                                                                                                                         spectrum, offers native mesh networking, low latency, and flexible                       Wireless private networks are well-suited for modern energy-
+                                                                                                                                                                                         deployment for industrial Internet-of-Things (IoT) applications.                     grid communications because they provide the near-real-time,
+                                                                                                                                                                                         This paper investigates the suitability of DECT-2020 NR mesh
+                                                                                                                                                                                                                                                                              reliable, and flexible connectivity that renewable and distributed
+                                                                                                                                                                                         networking for power grid monitoring within the Ultra Scalable
+                                                                                                                                                                                         Wireless Access (USWA) project. Two proof-of-concept (PoC)                           energy systems require. As power grids integrate more volatile
+                                                                                                                                                                                         deployments are evaluated, collecting data from multiple sensors                     sources, such as wind and solar, wireless communication
+                                                                                                                                                                                         under varying conditions, including packet fragmentation, multi-                     enables fast monitoring and control, helping to maintain grid
+                                                                                                                                                                                         hop communication, and different data rates to assess the end-                       stability. It also supports smart-grid functions, such as smart
+                                                                                                                                                                                         to-end performance of the system in terms of quality-of-service                      metering, automated control, and fault detection, by offering
+                                                                                                                                                                                         (QoS) metrics. From the results, we found that DECT-2020 NR                          low latency and wide-area coverage. Compared to wired
+                                                                                                                                                                                         shows potential for larger scale energy and substation monitoring                    communications, wireless networks are easier and cheaper
+                                                                                                                                                                                         deployments.                                                                         to deploy in diverse grid environments, making them more
+                                                                                                                                                                                            Keywords—DECT-2020 NR, Internet of Things (IoT), Proof of                         scalable as the grid expands [1]. Furthermore, as the power
+                                                                                                                                                                                         Concept (PoC), Mesh Networks                                                         grid is often targeted in military conflicts, wireless networks
+                                                                                                                                                                                                                                                                              can support observability if they are decoupled from the wired
+                                                                                                                                                                                                                                                                              infrastructure.
+                                                                                                                                                                                                                    I.   I NTRODUCTION
+                                                                                                                                                                                             Digitization of industries requires efficient, flexible, and                         The main contributions of this paper are threefold. First, it
+                                                                                                                                                                                         cost-effective wireless connectivity solutions. Many industrial                      explores the applicability of DECT-2020 NR mesh networking
+                                                                                                                                                                                         facilities still rely on cables for communication, which limits                      to energy grid monitoring, with a focus on meeting the stringent
+                                                                                                                                                                                         scalability and reconfiguration. DECT-2020 New Radio (NR) –                          requirements of modern smart grid communications. Second, it
+                                                                                                                                                                                         a modern wireless ETSI standard – has emerged as a promising                         presents a detailed system design and implementation of a proof-
+                                                                                                                                                                                         candidate to address this gap. DECT-2020 NR offers a state-                          of-concept testbed for Electrical Network QoS Monitoring
+                                                                                                                                                                                         of-the-art radio interface tailored for industrial Internet-of-                      (ENQM), integrating DECT-2020 NR with 5G backhaul and
+                                                                                                                                                                                         Things (IoT) applications, including native mesh networking                          a suite of environmental and electrical sensors, based on
+                                                                                                                                                                                         capabilities that enable large-scale local networks through multi-                   the system presented in [2]. Third, it provides experimental
+                                                                                                                                                                                         hop relaying between devices, as well as point-to-point and star                     results that evaluate the performance of the proposed system
+                                                                                                                                                                                         network topologies. Operating in a license-exempt band (the                          in terms of delay, jitter, and data rate across multiple use cases.
+                                                                                                                                                                                         frequency band previously used by Digital Enhanced Cordless                          These contributions study the potential of DECT-2020 NR for
+                                                                                                                                                                                         Telecommunication devices, i.e., legacy DECT), it allows                             scalability, reliability, and energy-efficiency in monitoring of
+                                                                                                                                                                                         industrial users to deploy and manage private networks without                       future energy grids. To our knowledge no other studies have
+                                                                                                                                                                                         licensing costs, opening opportunities for more autonomous                           been conducted in this topic.
+                                                                                                                                                                                         and scalable digitization efforts in factories, buildings, utility
+                                                                                                                                                                                         sites, and cities.                                                                       The remainder of this paper is structured as follows. Section
+                                                                                                                                                                                                                                                                              II reviews recent research and technical background relevant to
+                                                                                                                                                                                             This paper is conducted within the framework of the Ultra                        DECT-2020 NR and its applicability to energy monitoring
+                                                                                                                                                                                         Scalable Wireless Access (USWA) project (project running from                        and industrial IoT scenarios. Section III details the mesh
+                                                                                                                                                                                         12/2022 to 11/2025), which investigated how advanced DECT-                           operation principles of DECT-2020 NR, including routing and
+                                                                                                                                                                                         2020 NR features can support diverse industrial use cases. The                       forwarding mechanisms. Section IV presents specific use cases,
+                                                                                                                                                                                         project goals included defining system architectures and perfor-                     considerations for system design, and proof-of-concept imple-
+                                                                                                                                                                                         mance requirements, developing scalable and energy-efficient                         mentations within the context of energy quality monitoring.
+                                                                                                                                                                                         mesh networking for massive machine type communications                              Section V discusses the experimental results obtained from
+                                                                                                                                                                                         (mMTC) IoT deployments, enabling ultra-reliable low-latency                          these implementations and highlights key performance metrics.
+                                                                                                                                                                                         communications (URLLC) for time-critical applications, and                           Finally, Section VI concludes the paper by summarizing the
+                                                                                                                                                                                         validating the technology through real-world proof-of-concept                        findings and presenting opportunities for future work.
+
+
+                                                                                                                                                                                                                                                                        372
+                                                                                                                                                                                        Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+                            II.    BACKGROUND                                         a widely adopted international standard that defines node-based
+                                                                                      object-oriented data models. Through the Abstract Communica-
+     Recent research on DECT-2020 NR as a candidate tech-                             tion Service Interface (ACSI), the data models are mapped to
+ nology for massive machine-type communications (mMTC)                                relevant protocols such as Manufacturing Message Specification
+ has mainly focused on system-level and link-level simulations                        (MMS), Generic Object-Oriented Substation Event (GOOSE),
+ to assess its scalability, reliability, and compliance with ITU                      and Sampled Values (SV). These protocols serve different
+ requirements. Anttonen et al. [3] conducted comprehensive                            functions, while MMS supports client-server operations over
+ NS-3 simulations to evaluate the performance of DECT-2020                            TCP/IP and Ethernet, GOOSE and SV implement real-time
+ NR mesh networks in urban macro environments. Their results                          messaging for protection, interlocking, and transmitting digi-
+ demonstrate that the technology can support device densities                         tized current and voltage samples [6], [7]. The deterministic
+ well above one million devices per square kilometre, while                           behavior for time-critical IEC 61850 messages is ensured
+ maintaining packet outage rates below 1% and end-to-end                              through switched Ethernet with VLAN and priority tagging
+ delays under 10 seconds. The study highlights the flexibility of                     (IEEE 802.1Q/802.1p). According to Kokkoniemi-Tarkkanen et
+ mesh routing, where radio devices autonomously relay traffic,                        al. [8], fault location applications use the 9-2LE SV protocol in
+ and clusters may operate on different channels to mitigate                           a point-to-point setup with a 250 ns signal interval, 3 ms latency,
+ interference. The authors also note that DECT-2020 NR is able                        ∼5 ms jitter, whereas edge-to-edge intertrip protection relies on
+ to fulfil the ITU requirements for mMTC, making it a strong                          R-GOOSE in a broadcast configuration with 1 s to 1 min signal
+ candidate for IMT-2020-enabled digital services.                                     intervals, 3 ms latency, and 10 ms jitter, both scenarios requiring
+     Kovalchukov et al. [4] further support these findings                            ultra-high availability. MMS typically is reserved for log reports
+ through system-level simulations, comparing DECT-2020 NR                             sent in fixed time intervals or event driven notifications and
+ with traditional LPWAN solutions. Their work shows that                              alarms. In [9] Van Rensburg et al. discuss IEC 61850 transfer
+ DECT-2020 NR outperforms other technologies in terms of                              time classes where delay requirements are either greater than
+ supported node density and delay/loss guaranties, thanks to its                      1000 ms if the messages are periodical updates (TT0) and from
+ decentralized mesh topology and dynamic channel selection.                           500 ms to 1000 ms if they are event driven (TT1 and TT2). The
+ The authors emphasize the benefits of autonomous operation                           data link layer MTU is not defined in the standards for MMS
+ and multi-hop routing, which allow for flexible deployments                          communications. Due to the stringent requirements for SV and
+ without the need for centralized infrastructure or network                           GOOSE, the current commercial implementations of DECT-
+ planning.                                                                            2020 NR are not able to meet the specified performance targets.
+                                                                                      Therefore, we study in this paper whether this technology is
+     Samuylov et al. [5] focus on the impact of MAC and                               suitable for MMS type communications in monitoring use
+ physical layer mechanisms, such as energy conservation, relay                        cases.
+ selection, and power control, using system-level simulation
+ tools. Their results indicate that network density and energy                             III.   DECT-2020 M ESH O PERATION ROUTING AND
+ conservation parameters have the most significant effect on                                                F ORWARDING
+ packet delivery performance, while relay selection and power
+ control play a secondary role in dense networks. The study
+ also finds that the listen-before-talk protocol and dynamic
+ channel selection contribute to robust interference management,                          The DECT-2020 New Radio standard introduces a flexible
+ ensuring reliable operation even in challenging environments.                        architecture for local wireless access networks, supporting both
+                                                                                      ultra-reliable low-latency communication (URLLC) and massive
+      In the realm of power grid communications, IEC 61850 is                         machine-type communication (mMTC) use cases. Its mesh
+                                                                                      topology is a key feature, due to its self-healing capabilities
+                                                                                      and its decentralized topology. As shown in Figure 1 mesh
+                                                                                      operation is based on a clustered tree structure, where Radio
+                                                                                      Devices (RDs) dynamically select upstream nodes using beacon
+                                                                                      information and routing cost metrics. Devices can operate in
+                                                                                      Fixed Termination (FT) mode, with backend connectivity acting
+                                                                                      as Sinks, or in Portable Termination (PT) mode associating to
+                                                                                      FT mode devices, or in both FT and PT mode simultaneously,
+                                                                                      forming multi-hop paths to extend coverage. Cluster formation
+                                                                                      occurs hop-by-hop, with each RD, in PT mode, associating to
+                                                                                      the most suitable parent RD, operating as FT, based on link
+                                                                                      quality and cost. This decentralized approach supports high
+                                                                                      device densities and robust connectivity in interference-prone
+                                                                                      environments while extending the network coverage [10].
+                                                                                         Data routing and forwarding in DECT-2020 networks
+                                                                                      are implemented at the Data Link Control (DLC) layer,
+                                                                                      which provides packet routing services for uplink, downlink,
+                                                                                      and RD-to-RD communication. Uplink routing towards the
+                                                                                      backend uses hop-by-hop forwarding based on cluster tree
+                       Fig. 1: Cluster tree topology                                  topology formed and routing cost values, as discussed above,
+                                                                                      while downlink routing employs Selective Flooding, Selective
+
+
+                                                                                373
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+                                                           Fig. 2: ENQM PoC 1 implementation
+
+
+
+ Source Routing, or Cached Downlink Routing to optimize                               maintenance costs are significantly reduced due to the absence
+ delivery in cluster tree. RD-to-RD communication relies on                           of wires for its implementation and the low power consumption
+ hop-limited flooding to minimize latency locally. The DLC                            during operation (in the order of a hundred mA). Furthermore,
+ layer supports multiple service types, including transparent                         as DECT-2020 NR operates in an unlicensed band, therefore
+ mode, segmentation, and ARQ-based reliable transmission.                             deployments can be done without license or spectrum fees
+ Above DLC, the Convergence (CVG) layer offers end-to-end                             making it relatively inexpensive to deploy at scale. In light of
+ services such as segmentation/reassembly, flow control, lifetime                     DECT-2020’s capabilities, there are strong prospects for this
+ management, and optional security. Multiplexing at CVG uses                          technology to advance from the PoC’s presented here toward
+ Endpoint (EP) identifiers or Mux Tags to distinguish application                     production deployment, in real power grid substations.
+ flows, enabling adaptation of higher-layer protocols such as
+ IPv6 [11].                                                                                Two PoCs have been developed in this work. The first one,
+                                                                                      for simplicity named PoC 1, was developed in VTT’s facilities
+     In DECT-2020, routing recovery from broken links or RDs                          in an indoor environment, and the second, named PoC 2, was
+ going offline is handled through autonomous, local mechanisms                        developed in the Tampere University Campus in Hervanta. PoC
+ such as continuous link-quality monitoring, fast local rerouting,                    1 illustrated in Figure 2, presents a testbed that comprises three
+ and dynamic re-association to alternative neighbors. When                            use cases (UC). The aim of these use cases is to collect, using
+ a link or relay RD fails, affected nodes can independently                           various sensors, monitoring data from a power grid substation.
+ select new next hops based on updated routing cost metrics,                          UC 1 obtains environmental information using a temperature
+ without requiring centralized coordination or global routing                         and humidity sensor (Vaisala H110 in the PoC), while UC 2
+ tables, while downlink delivery remains robust through selective                     determines the person intrusion probability from a video sensor
+ flooding or source-assisted routing. This self-healing, QoS-                         (applying YoLov4 CNN algorithm to a video stream). UC 3
+ aware mechanism minimizes disruption and signaling overhead,                         consists on reading electricity consumption data via a three
+ which is a key reason why DECT-2020 NR is considered a                               phase Circuit Monitoring System (CMS), connected to a server
+ highly reliable solution for large-scale deployments with dense                      room’s power distribution system in the testbed. All sensor
+ device populations and dynamic network conditions [10].                              readings are then forwarded to a display at a remote monitoring
+                                                                                      center, that would typically be operated by a Transmission
+           IV.    ENQM U SE C ASES AND S YSTEM P O C S                                System Operator (TSO) or Distribution System Operator (DSO).
+                                                                                          The PoC 1 implementation integrates multiple technology
+                                                                                      platforms. From left to right of Figure 2, the sensors connect to
+     In the context of energy grids, DECT-2020 has been                               a Wirepas 5G mesh with six Nordic Semiconductor nrf9160-dk
+ identified as a technology with the potential to facilitate modular                  chipsets and a gateway that implements DECT NR using band 9
+ and low-maintenance deployment of monitoring components                              (1 910 to 1 930 MHz for both reception and transmission). The
+ such as Intelligent Electronic Devices (IEDs) and environmental                      gateway then forwards the monitoring data to an edge cloud
+ sensors. This paper builds upon the use cases introduced                             backend through a 5G SA network. The backend, through cloud
+ in [2] and presents two PoCs that aim to validate ENQM                               technologies (Telegraf, InfluxDB and Grafana), displays live
+ requirements namely latency and jitter values. As mentioned                          metrics in a dashboard. In this manner, PoC 1 is able to emulate
+ in Section II, DECT-2020 technology shows potential to                               these use cases in an indoor laboratory setup.
+ meet the expected network performance indicators (KPIs) for
+ electricity monitoring, while leveraging the benefits of mesh                           For evaluating the ENQM network requirements, two tools
+ routing capabilities presented in Section III. Deployment and                        have been used. Qosium network probes have been installed in
+
+
+                                                                                374
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+                                                                                            TABLE II: End-to-end network KPI values per UC
+                                                                                                        Mean Values       UC 1     UC 2     UC 3
+                                                                                                         Latency (ms)      26.6    29.71    39.62
+                                                                                                          Jitter (ms)     13.95    23.52    17.83
+                                                                                                        Datarate (kbps)    3.95    3.719    50.577
+
+
+
+                                                                                                                     V.   R ESULTS
+                                                                                         This section presents the results obtained from the two
+                                                                                      PoCs introduced in Section IV.
+
+
+
+
+ Fig. 3: PoC 2: Power Quality measurements over DECT-2020
+ NR mesh network at the Tampere University Campus.
+
+
+ the mesh gateway and in the edge cloud servers for measuring
+ IP-based traffic through the cellular 5G and Edge Cloud                                                            (a) 3 hop Delay
+ networks. For traffic routed through the mesh network the
+ Wirepas Gateway APIs provided relevant metrics such as uplink
+ latency, QoS and hop count.
+     In PoC 2, a set of five DECT-2020 NR capable nodes
+ (nRF9151/nRF9161) were configured as a 4-hop mesh network
+ as shown in Fig. 3. In this scenario, a Power Quality (PQ)
+ meter was used to monitor and record voltage dip/swell and
+ rapid voltage change events at the ”Edge”. These events were
+ then polled once a minute and sent through the mesh network
+ as JSON file. One Raspberry Pi 5 (RPi5) device was used
+ to convert and push the data from the PQ meter to the
+ nodes. The last node of the mesh network, the sink node,
+ was used to connect the mesh network devices into a gateway
+ (Raspberry Pi 3, RPi3) that then made a connection to backhaul
+ (internet/server) possible.
+                                                                                                                     (b) 3 hop Jitter
+     The second PoC sends event updates using a lightweight
+ publish-subscribe messaging protocol Message Queuing Teleme-
+ try Transport (MQTT) in order to communicate to a server. In                         Fig. 4: Timeseries mesh network measurement results for 3
+ order to get the messages through the mesh network, the JSON                         hops in PoC 1
+ files where segmented at DECT-2020 NR CVG layer in order
+ to fit them to the 180 byte limit defined by implementation
+ for the mesh network packets. In practice, the JSON file sizes
+                                                                                      A. PoC 1 Results
+ from the PQ meter were in the order of 1170 bytes, meaning
+ multiple packets had to be sent, resulting in increased total                            For the first PoC three use cases (UC) were presented for the
+ latency. The latency was also studied and compared by having                         purposes of power substation monitoring UC 1 for temperature
+ only a 1-hop device-to-device scenario to the larger 4-hops                          and humidity, UC 2 for video intrusion detection, and UC 3 for
+ mesh configuration. This consisted of sending one PQ meter                           electricity QoS monitoring. Two separate measurements had
+ JSON file per minute over a 48-hour time period.                                     to to be performed for each use case to obtain the end-to-end
+                                                                                      performance of the use case due to the differences in forwarding
+                                                                                      and transport layer technologies between the DECT 2020 NR
+   TABLE I: Mean mesh network KPI values per UC, 2 hops                               mesh and the 5G SA network. Two result tables are presented
+                    Mean Values       UC 1    UC 2     UC 3                           for comparing the use cases under the same conditions (2 hops):
+                     Latency (ms)     15.45   18.55    27.93                          Table I shows mesh network key performance metrics for each
+                      Jitter (ms)      11.0   20.55    14.84
+                    Datarate (kbps)   0.736   0.468    14.581
+                                                                                      UC, and Table II shows the end-to-end use case values covering
+                                                                                      both mesh and 5G cellular networks.
+
+
+                                                                                375
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+     In PoC 1 each UC has different traffic profiles in terms of
+ sampling and data rates. UC 1 and UC 2 have a sampling rate
+ of 1 message per second with payloads of 92 and 66 bytes
+ respectively (excluding the DECT-2020 NR protocol headers),
+ while UC 3 has an average payload size of 175 bytes and a
+ sampling rate of 10 Hz, meaning some messages can exceed
+ the maximum DECT NR MTU size (180 bytes) and therefore
+ can be fragmented at CVG layer of DECT-2020 NR protocol
+ stack. When evaluating the end-to-end metrics messages are
+ send over MQTT to the the edge servers. This process adds
+ data to the payload and new headers therefore increasing the
+ overall datarate of the application as shown in Table II. The
+ mean values for the mesh latency and jitter from Table I are
+ added to the mean values obtained from the cellular 5G RAN
+ and backhaul communications resulting in the latency and jitter
+ values obtained in Table II.
+     Additionally in the first PoC, mesh network performance
+ over multiple hops was evaluated. Figures 4a and 4b show a                           Fig. 5: PoC 2: Histogram of the 1-hop and 4-hop end-to-end
+ time series measurement of UC 1 traffic (sampling rate 1Hz,                          latency results (total time to deliver JSON files with multiple
+ 92 bytes payload) over three hops during 13 minutes. Mean                            packets over the mesh network).
+ latency values for one, two and three hops are 14.36, 15.45,
+ and 18.739 ms respectively. While mean jitter values are 9.8,
+ 11.0 and 14.854 ms for one, two and three hops respectively.
+ The standard deviation of UC 1 traffic over 3 hops reaches
+ 48.54 ms, indicating that messages can arrive at the gateway
+ with a delay well over the mean. Finally, during the numerous
+ measurement carried out for the PoC 1 use cases, no packets
+ were lost showing 100% service availability.
+
+ B. PoC 2 Results
+     The latency of PoC 2 was measured with synchronized
+ end devices (RPi3/RPi5) and 1-hop versus 4-hops results were
+ collected over the whole chain. The results presented in Fig. 5
+ and Fig. 6 show how the total application layer end-to-end
+ latency behaves. The statistics of the latency and jitter values
+ are presented in Table III. It should be noted that one packet of
+ the total of 2880 packets reached a maximum latency of 379.5
+ ms, however, this outlier is omitted from Fig. 5 to improve
+ graphical readability. This is also visible in Fig. 6 as the only
+ high jitter peak. No packets were lost resulting to a success                           Fig. 6: PoC 2: 1-hop and 4-hop end-to-end jitter results.
+ rate of 100 %.
+
+ TABLE III: PoC 2: 1-hop and 4-hop end-to-end latency and                             more hops is noticeable but minor compared to fragmentation.
+ jitter results (combined latency of a large JSON file splitted                       Additionally, an aspect that makes this technology apt for
+ into several packets).                                                               monitoring is the reliability in terms of packet loss. Both PoC
+           Configuration         Maximum    Minimum     Mean      STD                 1 and PoC 2 have shown no packet drops, even in experiments
+           Latency: 1-hop (ms)    207.28     127.50    153.71    11.02                lasting two days.
+           Jitter: 1-hop (ms)     49.62      0.0020     9.39     7.15
+           Latency: 4-hop (ms)    379.54     149.80    171.40    13.06                    According to the IEC 61850 transfer time requirements
+           Jitter: 4-hops (ms)    202.55     0.0010    12.48     11.12
+                                                                                      outlined in [9], for periodic message updates and non-protection
+                                                                                      event driven messages delay values ranging from 500 ms to
+                             VI.   C ONCLUSIONS                                       1000 ms are sufficient. Nevertheless, the results show that its
+                                                                                      important to determine which values are relevant for monitoring
+     The two PoCs developed in this work highlight how the                            purposes. For instance, in PoC 1 the CMS-700 device, used for
+ different use cases presented may have varying performance                           monitoring energy QoS, may use 96 sensors which have several
+ when using the DECT 2020 mesh network. The major factor for                          dozens of parameters [12]. Trying to monitor all the possible
+ the latency in message delivery, is the fragmentation of JSON                        parameters from a single IED will be of no use since link delays
+ packets. While in PoC 1 packets are not fragmented and delays                        will increase and may cause network congestion. Integration
+ remain under 50 ms, in PoC 2 fragmenting packets in seven                            engineers may consider decreasing the RD to gateway ratio
+ segments results in delays over 100 ms. The impact of adding                         to mitigate congestion delays in the mesh LAN and using
+
+
+                                                                                376
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+ additional links with higher capacity for the backend (for
+ example, cellular 5G as shown in Figure 2).
+     Additionally the PoCs have demonstrated the end-to-end
+ system by incorporating a database and a graphical user
+ interface (GUI) using InfluxDB and Grafana. Updates to
+ the Grafana monitoring dashboard come every one second,
+ therefore the DECT-2020 NR mesh network can deliver data
+ well within that time interval. DECT-2020 NR shows potential
+ for larger scale energy and substation monitoring deployments.
+ In future work, we plan to build upon these results by extending
+ the evaluation to wider deployments and more complex grid
+ environments for long-term operational performance.
+
+                           ACKNOWLEDGMENT
+    This work has been performed in the framework of European
+ Celtic-Next project Ultra Scalable Wireless Access (USWA).
+ Finnish partners acknowledge funding by the European Union
+ - NextGenerationEU - received through Business Finland.
+
+                                R EFERENCES
+  [1] Huawei Enterprise Wireless, “Power grid wireless private network,” https:
+      //e.huawei.com/en/blogs/enterprise-wireless/2024/power-grid-wireless-
+      private-network, 2024, accessed: 2025-11-25.
+  [2] J. Säe, R. Pires, M. Lasanen, J. Pirskanen, M. Alam, H. Ahmad, A. Bin,
+      E. Llaguno, I. Pretel, and M. Valkama, “State of play and results of the
+      uswa project,” 06 2025.
+  [3] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, Enabling
+      Massive Machine Type Communications with DECT-2020 Standard:
+      A System-Level Performance Study, ser. VTT Research Report.
+      Finland: VTT Technical Research Centre of Finland, 2021, no.
+      VTT-R-00367-21, vTT-R-00367-21 (lisätty tiedosto Antti Anttosen
+      pyynnöstä),128181/SySimD2020.
+  [4] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview; Release 1,” Eu-
+      ropean Telecommunications Standards Institute, Technical Specification
+      (TS), vol. 103, pp. 636–1, March, 2024.
+  [5] A. Samuylov, D. Moltchanov, M. Alam, J. Pirskanen, J. Numminen,
+      M. Valkama, Y. Koucheryavy, and M. Valkama, “Performance of mac
+      layer mechanisms in dect-2020 nr mmtc technology,” in 2024 IEEE 99th
+      Vehicular Technology Conference (VTC2024-Spring), 2024, pp. 1–6.
+  [6] C. Brunner, “Iec 61850 for power system communication,” IEEE
+      Transactions on Power Delivery, vol. 23, no. 1, pp. 618–624, 2008.
+  [7] A. Inc., “New standard lets data center devices change functions and
+      talk to all their neighbors,” ABB, Tech. Rep., 2015, white Paper.
+      [Online]. Available: https://www.abb.com/datacenters
+  [8] H. Kokkoniemi-Tarkkanen, P. Raussi, S. Horsmanheimo, P. Hovila,
+      A. Kulmala, and S. Borenius, “5g edge for power system applications,”
+      in 27th International Conference on Electricity Distribution (CIRED
+      2023), vol. 2023, 2023, pp. 1871–1875.
+  [9] M. van Rensburg, D. Dolezilek, and J. Dearien, “Case study: Using
+      IEC 61850 network engineering guideline test procedures to diagnose
+      and analyze ethernet network installations,” in Proceedings of the
+      PAC World Africa Conference, Johannesburg, South Africa, Nov. 2015.
+      [Online]. Available: https://selinc.com/api/download/112218/
+ [10] DECT-2020 New Radio (NR); Part 1: Overview; Release 2,
+      ETSI Std. TS 103 636-1 V2.1.1, October 2024, available:
+      https://www.etsi.org/standards-search.
+ [11] DECT-2020 New Radio (NR); Part 5: DLC and Convergence layers;
+      Release 2, ETSI Std. TS 103 636-5 V2.1.1, October 2024, available:
+      https://www.etsi.org/standards-search.
+ [12] ABB, CMS Manual, Online, ABB, Zurich, Switzerland, 2024,
+      manual for the ABB CMS-700 device. [Online]. Available: https://
+      library.e.abb.com/public/ae914775dba84d5ea4ed896c6c0378f9/CMS%
+      20Manual web.pdf
+
+
+
+
+                                                                                377
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore. Restrictions apply.
+

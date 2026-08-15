@@ -1,0 +1,72 @@
+Title: ISBN: 978-628-95207-8-1. ISSN: 2414-6390. Digital Object Identifier: 10.18687/LACCEI2024.1.1.695
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Energy efficiency and spectrum efficiency have been identified by “IMT for 2020
+and beyond” (International Mobile Telecommunications) as two of the current
+wireless network capabilities that need substantial enhancement to satisfy the
+exponential growth of IoT and high data rate applications. “Digital Enhanced
+Cordless Telecommunications” (DECT) is the leading standard around the world for
+cordless telecommunications and it has the great advantage to operate on a
+“designated” license-free RF band (1880/1900 MHz in Europe). However, the
+original DECT has very low energy efficiency and very low spectral efficiency,
+and therefore, DECT is neither suitable for ultra-low energy applications nor
+for high data rate multimedia streaming applications. The “European
+Telecommunications Standards Institute” Technical Committee DECT (ETSI TC DECT)
+is working on these two aspects, and it has proposed a new set of “Technical
+Specifications” that enables DECT to support both ultra-low energy (DECT-ULE)
+and high data rate (DECT-2020 New Radio) application domains. In this paper, we
+introduce an energy consumption model for the DECT “Portable Part” (PP) that
+lets us analyze in detail the operation of a PP in the “standby mode”. The model
+lets us show that the simple reduction on the requirement of how often the PP
+must monitor the “paging” beacon enables DECT for ultra-low energy applications.
+We then show that the use of the state-of-the-art multi-carrier “Orthogonal
+Frequency Division Multiplexing” (OFDM) modulation, and the spatial multiplexing
+“Multiple Input Multiple Output” (MIMO) antenna technique, enables DECT for high
+data rate multimedia streaming applications.
+
+Approach and methods:
+IMT-2020 [1] establishes the vision for mobile telecommunications for 2020 and
+beyond based on the forecast that traffic volume and number of devices will
+continue to grow exponentially. IMT-2020 points out eight current network
+capabilities that should be enhanced to satisfy such demands: peak data rate,
+user experienced data rate, latency, mobility, connection density, energy
+efficiency, spectrum efficiency, and area traffic capacity. Spectrum efficiency
+has a direct impact on data rate (peak and user experienced), connection
+density, and area traffic capacity; and therefore, it is one of the most
+important capabilities to enhance. Energy efficiency is crucial in the case of
+battery-operated Internet of Things (IoT) devices since it has a direct impact
+on battery lifetime. “Digital Enhanced Cordless Telecommunications” (DECT) [2]
+is the leading standard around the world for digital cordless telecommunications
+and it has the great advantage to Digital Object Identifier: (only for full
+papers, inserted by LACCEI). ISSN, ISBN: (to be inserted by LACCEI). DO NOT
+REMOVE operate on a “designated” license-free RF band (in Europe, from 1880 MHz
+to 1900 MHz). “Designated” meaning that no other technologies can be deployed in
+the DECT band, as it is the case, for the highly congested Industrial,
+Scientific and
+
+Key findings:
+s. II. IMT-2020 OVERVIEW The present section is mostly based on ITU Std. M.20830
+[1] and all figures are reproduced from there with some highlights from us.
+IMT-2020 [1] defines the framework and overall objectives of the International
+Mobile Telecommunications for 2020 and beyond. Anticipating that users should be
+able to access services anywhere, anytime, IMT-2020 recommends that IMT-2020
+interwork with other radio systems such as Radio Local Area Networks (RLANs).
+One of the worldwide well established RLANs is DECT [2]. A. Use Cases IMT-2020
+is envisaged to support diverse use cases and applications that include [1]: •
+Enhanced Mobile Broadband: This use case addresses human-centric scenarios for
+mobile access to multimedia content, services, and data. • Massive Machine Type
+Communications: This use case is characterized by a very large number of
+connected devices typically transmitting a relatively low volume of non-delay
+sensitive data. The devices are required to be low cost and have a very long
+battery life. • Ultra-Reliable and Low Latency Communications: This use case has
+stringent requirements for capabilities such as throughput, latency, and
+availability. Some examples include wireless control of industrial manufacturing
+or production processes, remote medical surgery, distribution automation in a
+smart grid, transportation
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

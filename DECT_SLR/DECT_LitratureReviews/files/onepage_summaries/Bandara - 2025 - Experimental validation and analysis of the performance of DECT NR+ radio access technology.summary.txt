@@ -1,0 +1,45 @@
+Title: FACULTY OF INFORMATION TECHNOLOGY AND ELECTRICAL ENGINEERING
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Digital Enhanced Cordless Telecommunications New Radio+ (DECT NR+) is a recently
+introduced non-cellular radio access technology operating in the global license-
+exempt 1.9 GHz band, specifically designed for dense Internet of Things (IoT)
+deployments. Targeting key Fifth Generation (5G) communications such as massive
+Machine-Type Communications (mMTC) and Ultra-Reliable Low-Latency Communications
+(URLLC), it promises high reliability, low latency, and extended range. However,
+limited empirical data exists on its practical performance. This thesis presents
+a comprehensive experimental evaluation of DECT NR+ at the physical layer (PHY)
+using Nordic Semiconductor’s nRF9161 development kits, DECT Shell (DeSh), and
+custom firmware. The testbed characterizes four key performance metrics:
+communication range, throughput, latency, and energy efficiency. Range tests
+conducted in both indoor and outdoor environments revealed a maximum Line-of-
+Sight (LoS) range of 730 meters outdoors with 80% Packet Delivery Ratio (PDR).
+Meanwhile at short range, maximum measured throughput was 2.498 Mbit/s at
+Modulation and Coding Scheme (MCS) 4 with 8 sub-slots, compared to the
+theoretical maximum of 3.36 Mbit/s. Latency measurements showed a minimum Round-
+Trip Time (RTT) of 2.255 ms for a 12-byte packet. Energy per bit ranged from
+0.26 to 2.6 𝜇𝐽 depending on the MCS level. Findings confirm that DECT NR+ offers
+significantly higher range and data rates than typical Bluetooth Low Energy
+(BLE) solutions but incurs higher energy costs, in both transmitter and receiver
+modes. These results highlight DECT NR+’s suitability for low duty-cycle, long-
+range, and latency-sensitive IoT applications, while identifying key areas for
+modem-level energy optimization.
+
+Approach and methods:
+................................................................................
+............. 9 1.1
+
+Key findings:
+AND FUTURE WORK ..............................................................
+52 6.1 Summary of key findings .................................................
+.................................... 52 6.2 Limitations ........................
+................................................................................
+... 53 6.3 Future work .........................................................
+................................................. 53
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

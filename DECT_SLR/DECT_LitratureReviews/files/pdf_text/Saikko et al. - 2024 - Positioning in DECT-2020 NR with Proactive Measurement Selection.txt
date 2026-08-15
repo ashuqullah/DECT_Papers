@@ -1,0 +1,538 @@
+                                                                                                                                                                                     Positioning in DECT-2020 NR with
+                                                                                                                                                                                      Proactive Measurement Selection
+                                                                                                                                                                                                         Antti Saikko, Jukka Talvitie, and Mikko Valkama
+                                                                                                                                                                                          Department of Electrical Engineering, Tampere University, Tampere, Finland
+
+
+
+                                                                                                                                                               Abstract—This paper addresses efficient positioning and user                       In this paper, we study positioning and user device tracking
+                                                                                                                                                            device tracking in Internet-of-Things (IoT) networks with par-                    in IoT and WSN like systems using angle-of-arrival (AoA)
+                                                                                                                                                            ticular focus on the new DECT-2020 New Radio standard – the                       and time-of-arrival (ToA)-based range measurements obtained
+                                                                                                                                                            first non-cellular 5G technology standard in the world. Stemming
+                                                                                                                                                            from fundamental performance requirements of IoT networks, for                    from known anchor devices, while specifically focusing on
+                                                                                                                                                            example, related to energy consumption, latency, and reliability, it              the capabilities and physical-layer of the new DECT-2020 NR
+                                                                                                                                                            is important to utilize available radio resources efficiently, while              standard. Furthermore, we provide and derive fundamental
+                                                                                                                                                            avoiding redundant transmissions and signaling. In this paper,                    performance bounds, and propose a novel Fisher information
+2024 International Conference on Localization and GNSS (ICL-GNSS) | 979-8-3503-8078-1/24/$31.00 ©2024 IEEE | DOI: 10.1109/ICL-GNSS60721.2024.10578492
+
+
+
+
+                                                                                                                                                            we propose a tracking-based positioning solution with a proactive                 based measurement selection method to choose the most
+                                                                                                                                                            measurement selection, in which positioning measurements are
+                                                                                                                                                            selected based on Fisher information. The proposed method,                        important anchor measurements for minimizing the positioning
+                                                                                                                                                            accompanied with computationally attractive processing solution,                  error. The proposed measurement selection approach has not
+                                                                                                                                                            is able to sort and select potential positioning measurements based               been earlier presented in the literature, but prior research
+                                                                                                                                                            on achievable minimum positioning error. The provided numerical                   regarding range and AoA based measurements have been earlier
+                                                                                                                                                            results, considering both range and angle measurements, show                      considered, e.g., in [7], [8]. Moreover, a signal-to-noise ratio
+                                                                                                                                                            that the proposed method outperforms the traditional signal-to-
+                                                                                                                                                            noise ratio based measurement selection approach, and enables                     (SNR)-based approach for measurement and reference anchor
+                                                                                                                                                            positioning with a smaller number of measurements.                                selection with time-difference-of-arrival (TDoA) measurements
+                                                                                                                                                               Index Terms—positioning, DECT-2020 NR, internet-of-things,                     is studied and described in [10], serving as a reference scheme.
+                                                                                                                                                            non-cellular 5G, Fisher information, extended Kalman filter                           Through the proposed proactive approach, it is possible
+                                                                                                                                                                                                                                              to reduce the number of required anchor measurements, and
+                                                                                                                                                                                       I. I NTRODUCTION                                       subsequently, potentially improve energy efficiency, decrease
+                                                                                                                                                               To accommodate growing demand on Internet-of-Things                            signaling overhead for increased spectral efficiency, reduce
+                                                                                                                                                            (IoT) based services, the new Digital Enhanced Cordless                           latency, and lower the computational load, which are all es-
+                                                                                                                                                            Telecommunications - 2020 New Radio (DECT-2020 NR) [1],                           sential performance criteria in IoT systems [11]. The proposed
+                                                                                                                                                            [2] was introduced as part of the official International Telecom-                 measurement selection method utilizes the prior information
+                                                                                                                                                            munication Union (ITU) fifth generation (5G) standards in                         of an underlying tracking method, such as extended Kalman
+                                                                                                                                                            2022 [3]. The DECT-2020 NR is the first non-cellular 5G                           filter (EKF), and the measurement-associated information from
+                                                                                                                                                            technology, designed especially for IoT use cases with support                    potential anchors to arrange the anchors in order of achievable
+                                                                                                                                                            for 5G performance requirements regarding ultra reliable low                      positioning error. This allows harnessing and utilizing all
+                                                                                                                                                            latency communications (URLLC) and massive machine type                           the information available in the measurements, including the
+                                                                                                                                                            communications (mMTC).                                                            measurement geometry, representing thus a more elaborate
+                                                                                                                                                               Positioning plays an important role in various IoT and wire-                   approach compared to the SNR-based reference scheme. The
+                                                                                                                                                            less sensor network (WSN) systems, as well as related applica-                    proposed method is described in both a generic form, enabling
+                                                                                                                                                            tions and location-based services (LBS) [4]. DECT-2020 NR-                        utilization of variable tracking configurations and optimization
+                                                                                                                                                            based positioning is not yet widely studied due to its techno-                    criteria, and in a simplified form, focusing on 2D positioning
+                                                                                                                                                            logical novelty, but research works focusing on positioning                       scenarios with low computational load. As shown through a vast
+                                                                                                                                                            with other IoT systems, or IoT-like scenarios, can be found,                      collection of numerical results, the proposed methods enable
+                                                                                                                                                            for example, in [4]–[9]. In [4], different IoT-based positioning                  considerably improved positioning performance, or alternatively
+                                                                                                                                                            approaches are compared, and classified in a IoT infrastructure                   utilizing less anchors to reach the same performance compared
+                                                                                                                                                            applicable framework, while also considering aspects of power                     to the existing SNR-based reference method.
+                                                                                                                                                            consumption and energy efficiency. Furthermore, possible
+                                                                                                                                                            positioning methods for IoT systems are comprehensively                                      II. DECT-2020 NR AND S YSTEM M ODEL
+                                                                                                                                                            discussed in [5], [9], including also comparison between                          A. Physical-Layer Numerology
+                                                                                                                                                            positioning capabilities of different IoT technologies.                             The DECT-2020 NR physical layer supports 17 different
+                                                                                                                                                                                                                                             frequency bands below 6 GHz frequencies [12, table 5.2-
+                                                                                                                                                              This work was partially supported by Business Finland under the project
+                                                                                                                                                            Ultra Scalable Wireless Access (USWA), within the CELTIC-NEXT Eureka             1] with a dedicated DECT band located around 1.9 GHz
+                                                                                                                                                            Cluster, and under the project 6G Test Network Finland (6GTNF).                  carrier frequency. The specified orthogonal frequency-division
+
+
+
+
+                                                                                                                                                            979-8-3503-8078-1/24/$31.00 ©2024 IEEE
+
+
+                                                                                                                                                        Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+    multiplexing (OFDM)-based waveform supports a variable between the subcarriers, the CRLB for ToA-based ranging can
+    subcarrier spacing (SCS), containing 27 kHz, 54 kHz, 108 kHz, be written as [14]
+    and 216 kHz options [13, Table 4.3-1]. Depending on the                                            3c2
+                                                                                 2
+    used SCS, the achievable nominal bandwidth varies from                     σrange ≥         2 M (M + 1)(2M + 1) ,           (5)
+                                                                                         8γπ 2 fSC
+    1.728 MHz (with 27 kHz SCS) to 221.184 MHz (with 216 kHz
+    SCS). Furthermore, multiple-input multiple-output (MIMO) where fSC is the subcarrier spacing. Moreover, M is the
+    transmissions are supported with 2, 4, and 8 spatial streams [13, number of subcarriers at one side of the spectrum, excluding
+    Table 6.3.2-1], which also correspond to a minimum number the subcarrier zero so that the overall number of subcarriers is
+    of required antennas and associated digital transmission chains. 2M + 1, thus resulting in bandwidth of BT = fSC (2M + 1).
+                                                                                      B. Fisher Information and Measurement-based PEB
+    B. Positioning Measurement Model
+                                                                                        Theoretically achievable positioning accuracies can also
+       In this paper, we consider positioning using AoA and ToA-                      be analyzed through the corresponding estimator CRLB. A
+    based range measurements obtained from a set of anchors                           theoretical lower-bound for the covariance matrix of an
+    within the signal coverage. For a given user position p[n] =                      unbiased estimator p̂[n] can be formally written as [15]
+                T
+      x[n] y[n] , where x[n] and y[n] are the x an y coordinates
+    of the user device at nth time instant, the measurement model                        CRLB(p[n]) = J−1 (p[n])
+                                                                                                                                                                (6)
+    is defined as                                                                                         ≤ Ep̂[n] {(p̂[n] − p[n])(p̂[n] − p[n])T },
+                            z[n] = h(p[n]) + r[n],                             (1)    where J(p[n]) ∈ R2×2 is the Fisher Information Matrix (FIM),
+                                                                                      and Ep̂[n] {·} denotes the expectation with respect to p̂[n].
+    where z[n] ∈ RN represents measurements from N anchors,                           Based on the FIM, the positioning error bound (PEB) can now
+    h : R2 → RN is a non-linear measurement model function,                           be written as [16]
+    and r[n] ∼ N (0, Σ[n]) is measurement noise with covariance                                             p
+    Σ[n] ∈ RN ×N . For a range measurement, the ith element of                                PEB(p[n]) = trace (J−1 (p[n]))
+                                                                                                            p                                  (7)
+    the measurement model h(p[n]) is defined as                                                           = CRLB(x[n]) + CRLB(y[n])
+                    hrange,i (p[n]) = ∥p[n] − pAN,i [n]∥,           where the PEB represents the lower bound of the positioning
+                                                                               (2)
+                                                                    root mean squared error (RMSE).
+    and for an AoA measurement, obtained at the anchor node, as        Fisher information that is obtained from a set of mea-
+                                     
+                                       y[n] − yAN,i [n]
+                                                                   surements    z[n], such as in (1), can be defined through a
+              hAoA,i (p[n]) = acrtan                      ,     (3) measurement-based FIM Jmeas (p[n]) ∈ R2×2 , whose element
+                                       x[n] − xAN,i [n]
+                                                                    at the ith row and j th column is written as
+                                            T                                                         2
+    where pAN,i [n] = xAN,i [n] yAN,i [n] is the known posi-
+                                                                                                                          
+                                                                                                         ∂ ℓ(z[n]|p[n])
+                                                                            [Jmeas (p[n])]i,j = −Ep[n]                      , (8)
+    tion of the ith measurement anchor, observed at the nth time                                           ∂pi [n]∂pj [n]
+    instant. In this paper, we study both range and AoA measure-
+                                                                    where ℓ(z[n]|p[n]) denotes the log-likelihood function of the
+    ments, but do not consider the measurements jointly. However,
+                                                                    measurements given the user position p[n], and pi [n] is the
+    the presented models enable straightforward implementation
+                                                                    ith element of p[n]. Furthermore, by considering the Gaussian
+    for joint measurements, as well as extensions to other types of
+                                                                    measurement model in (1), the measurement-based FIM can
+    measurements by modifying the measurement model.
+                                                                    be conveniently written as [15]
+                        III. P ERFORMANCE B OUNDS                                                  Jmeas (p[n]) = H(p[n])T Σ−1 [n]H(p[n])                       (9)
+    A. AoA and Range Estimation Bounds                           where H(p[n]) ∈ R                                 N ×2
+                                                                                               is the Jacobian matrix of the
+       For revealing the potential AoA and range estimation measurement function h(p[n]), defined with respect to p[n].
+    accuracy with the considered DECT-2020 NR system parame- Assuming uncorrelated measurements from separate anchors,
+    ters, we address and express the corresponding Cramér-Rao the measurement covariance matrix becomes diagonal, and
+    Lower Bounds (CRLBs). Regarding antenna array based AoA Σ = diag(σ12 , σ22 , . . . , σN
+                                                                                          2
+                                                                                            ). Accordingly, the measurement-
+    estimation, the CRLB for the estimator variance (in radians) based Fisher information can be presented as a sum of Fisher
+    can be expressed as [14]                                     information of individual measurements as
+                                                                                                                   N
+                    2                    6λ2                                                                       X
+                   σAoA ≥                                   ,                  (4)             Jmeas (p[n]) =            Jmeas,i (p[n])
+                              4γπ 2 L(L2 − 1)d2ant cos2 (θ)                                                        i=1
+                                                                                                                    N
+                                                                                                                          (10)
+    where L is number of antenna array elements, γ is the SNR,                                 1                   X
+                                                                                                            T
+    dant is the antenna spacing, and θ is the true AoA.                             =              Hi (p[n]) Hi (p[n]),
+                                                                                       i=1
+                                                                                           σi2 [n]
+       For obtaining range measurements, we consider estimation
+    of radio propagation delay through ToA measurements. Assum- where Jmeas,i (p[n]) and σi2 [n] denote the Fisher information
+    ing the OFDM waveform with uniformly distributed energy and variance of the ith measurement, respectively. Moreover,
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+    Hi (p[n]) ∈ R1×2 is the ith row of the Jacobian matrix H(p[n]),                   Algorithm 1 Generic FIM-based measurement selection
+    which can be presented for range and angle measurements,                          Input: Potential      measurement-wise      FIMs      J meas,i  =
+    given in (2) and (3), as                                                              blkdiag(Jmeas,i (s− [n]), 02×2 ) for i ∈ Ωpotential , a priori
+                                                                                          FIM J prior = (P̂− [n])−1 , and the number of measurements to
+                                                                                          be chosen Nchosen . a
+                      h                                      i
+                         x[n]−x      [n]    y[n]−yAN,i [n]
+     Hrange,i (p[n]) = ∥p[n]−pAN,i   [n]∥  ∥p[n]−p      [n]∥   and
+                                AN,i               AN,i
+                                                                i (11)                Output: Set of chosen measurement indices Ωchosen .
+                                                                                       1: Initialize with empty set: Ωchosen = ∅
+                      h
+                            y[n]−yAN,i [n]      x[n]−xAN,i [n]
+      HAoA,i (p[n]) = − ∥p[n]−pAN,i    [n]∥2 ∥p[n]−pAN,i [n]∥2 ,                       2: while |Ωchosen | ≤ Nchosen do
+                                                                                       3:     Compute Fisher   information  for i ∈
+                                                                                                                                  / Ωchosen :
+    in respective order.                                                               4:
+                                                                                                                    P
+                                                                                              J post,i ← J prior + k∈Ω J meas,k + J meas,i
+                                                                                                                                   b
+                                                                                       5:     Compute squared a posteriori PEB    :
+    C. User Mobility and Posterior PEB                                                           2
+                                                                                       6:     σPEB,i  ← trace [J post,i ]−1
+                                                                                                                         1:2,1:2
+       In case of measurement time series, where measurements are                      7:     Choose measurement with the minimum PEB:
+                                                                                                               2
+    obtained at certain time intervals, temporal correlation of user                   8:     î ← arg mini {σPEB,i }
+    position can be exploited to enhance positioning performance                       9:     Add î to the chosen measurement set:
+                                                                                      10:     Ωchosen ← Ωchosen ∪ {î}
+    through appropriate tracking algorithms. To this end, we define                   11: end while
+    a state-vector of the user device at a given time instant n as
+                                                                                         a Besides the state vector definition in (12), this formulation enables
+                   s[n] = [x[n], y[n], vx [n], vy [n]]T ∈ R4 ,               (12)     utilization of an arbitrarily chosen state vector.
+                                                                                         b In addition to, or instead of, the PEB, other tracked state parameters can
+
+    where x[n] and y[n] are the x-coordinate and the y-coordinate                     be considered in this metric, such as velocity, acceleration, and clock bias.
+    of the user device, and vx [n] and vy [n] are the velocities of
+    the device in the x and y directions, respectively.
+       For modeling the mobility, we consider a linear state-                         For practical evaluations, at the first time index the a priori
+    transition model between consecutive time-instants so that                        FIM can be defined as a diagonal matrix with close to zero
+                                                                                      diagonal elements, corresponding to very large uncertainty of
+                      s[n] = Fs[n − 1] + q[n], where                         (13)     the state estimate. The bounds will be numerically evaluated
+                                           
+                             I2×2 ∆t · I2×2                                           in Section V while also serve as inputs to the proposed
+                      F=                      ∈ R4×4                         (14)     measurement selection methods, described next.
+                             02×2   I2×2
+    is the state-transition matrix, q[n] ∼ N (0, Q[n]) denotes                                          IV. P ROPOSED M ETHODS
+    process noise, and ∆t defines the time interval between the                       A. EKF-based Tracking and Extraction of Prior Information
+    consecutive time instants. Furthermore, by assuming a constant                      Based on the measurement model in (1), and the mobility
+    white-noise acceleration (CWNA) based mobility model [17],                        model in (13), an EKF-based tracking, iterating between a
+    the process noise covariance matrix is defined as                                 prediction step and an update step, can be utilized for practical
+                                                                                      position estimation [19]. In the prediction step at time instant
+                             " 3                   #
+                              ∆t        ∆t2
+                           2      I 2×2      I 2×2
+                    Q = σa ∆t3 2          2          ,        (15)                    n, the mean and covariance of the a priori estimate of the state
+                               2 I2×2    ∆tI2×2
+                                                                                      s[n] are defined as
+    where σa2 is the power spectral density of device acceleration.                                ŝ− [n] = Fŝ+ [n − 1] ∈ R4
+       With a tracking-based estimator, such as the EKF presented                                   −              +                                           (19)
+    in IV-A, the mobility model in (13) is exploited to provide                                   P̂ [n] = FP̂ [n − 1]FT + Q[n] ∈ R4×4 ,
+    a priori information on top of measurement information as [18]                    respectively, where ŝ+ [n − 1] ∈ R4 and P̂+ [n − 1] ∈ R4×4
+                 J post (s[n]) = J prior (s[n]) + J meas (s[n]),             (16)     are the mean and covariance of the a posteriori estimate of
+                                                                                      the previous time instant. In this paper, the prediction step
+    where J post (s[n]) is the FIM of the a posteriori esti-                          is in an essential role in the proposed measurement selection
+    mate, J prior (s[n]) is the FIM of the a priori estimate, and                   approach, utilizing available prior information at each time
+    J meas (s[n]) = Jmeas (p[n]) 02×2 is the FIM obtained                             step. By observing the analogy between the definition of prior
+    from the measurements according to (9). Moreover, the prior                       information in (18) and the predicted state covariance in (19),
+    information of the state can be formally described as                             estimated prior information at time instant n can be obtained
+                                         2                                           through the inverse of the predicted state covariance as [18]
+                                         ∂ log P(s[n])
+                                                         
+              [J prior (s[n])]i,j = −Es                    ,    (17)                                                                −
+                                          ∂si [n]∂sj [n]                                                   Ĵ prior (ŝ− [n]) = (P̂ [n])−1 .                   (20)
+    where P(s[n]) denotes the prior probability distribution of                         After the prediction step, by utilizing a set of obtained
+    state s[n]. However, assuming the mobility model in (13), the                     measurements z[n] the a posteriori estimates of the mean and
+    a priori FIM can be derived from the a posteriori estimate of                     covariance can be acquired through the update step as
+    the previous time step as                                                                    ŝ+ [n] = ŝ− [n] + K[n](z[n] − h([ŝ− [n]]1:2 ))
+                                                     −1                                                                                                       (21)
+         J prior (s[n]) = FJ −1              T
+                             post (s[n − 1])F + Q[n]     .   (18)                               P̂+ [n] = (I4 − K[n]H[n])P̂− [n],
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+                                                                                      sƸ + n−1                      sƸ − n                                 sƸ + n
+    Algorithm 2 Simplified measurement selection with 2D PEB                          ෡ + n−1
+                                                                                      P                             ෡− n
+                                                                                                                    P                                      ෡+ n
+                                                                                                                                                           P
+                                                                                                        EKF                                     EKF
+    Input: Potential measurement-wise FIMs Jmeas,i = Jmeas,i (ŝ− [n])                            prediction step                            update step
+        for i ∈ Ωpotential , a priori FIM Jprior = [(P̂− [n])−1 ]1:2,1:2 , and
+        the number of chosen measurements Nchosen .                                                                                                [z[n]]i | i∈Ωchosen
+                                                                                                 Ωpotential    Proposed      Ωchosen    Obtain
+    Output: Set of chosen measurement indices Ωchosen                                                         measurement              measure-
+     1: Initialize with empty set: Ωchosen = ∅                                                                 selection                ments
+     2: while |Ωchosen | ≤ Nchosen do
+     3:     Compute for i ∈  / Ωchosen :                                              Fig. 1. Illustration of the tracking process including the prediction step, the
+                                                                                      update step, and the proposed FIM-based measurement selection.
+                                                   P
+     4:     S11,i ← [Jprior ]1,1 + [Jmeas,i ]1,1 + Pk∈Ω [Jmeas,k ]1,1
+     5:     S12,i ← [Jprior ]1,2 + [Jmeas,i ]1,2 + Pk∈Ω [Jmeas,k ]1,2
+     6:     S22,i ← [Jprior ]2,2 + [Jmeas,i ]2,2 + k∈Ω [Jmeas,k ]2,2
+     7:     Compute squared a posteriori PEB:                           wise a posteriori information according to minimum PEB.
+               2          S      +S22,i
+     8:     σPEB,i  ← S 11,i          2                                 Alternatively, it would be theoretically possible to evaluate the
+                         11,i S22,i −S12,i
+     9:     Choose measurement with the minimum bound:                  a posteriori FIM for all possible measurement combinations.
+                               2
+    10:     î ← arg mini {σPEB,i    }                                  However, in such approach the number of evaluated combina-
+    11:     Add î to the chosen measurement set:                       tions grows rapidly with the number of anchors, resulting in
+    12:     Ωchosen ← Ωchosen ∪ {î}
+    13: end while
+                                                                        poor scalability and unfeasible computational burden.
+                                                                           A generic form of the proposed measurement selection
+                                                                        method is presented in Algorithm 1. Besides minimizing
+    respectively, where K[n] = P̂− [n]H[n]T (H[n]P̂− [n]H[n]T + PEB, the presented algorithm can be modified to minimize
+    Σ[n])−1 ∈ R4×N is the Kalman gain.                                  errors of any state vector parameters with possible parameter-
+                                                                        wise error weighting. Nonetheless, when focusing on the 2D
+    B. Proposed FIM-based Measurement Selection                         positioning approach considered in this paper, it is possible
+                                                                        to simplify the processing steps by utilizing properties of
+       As shown in (10), each potential anchor measurement is
+                                                                        2 × 2 matrix inversion, while working only with position-
+    capable of accumulating different amount of Fisher information
+                                                                        related submatrices of FIMs. The description of the simplified
+    to the positioning task. Thus, when the number of utilized
+                                                                        measurement selection approach with 2D positioning focus is
+    anchors is restricted, for example, to save energy, it is essential
+                                                                        presented in Algorithm 2. For a 3D positioning scenario, it
+    to select the measurements which offer the highest information.
+                                                                        is possible to extend the Algorithm 2, or utilize Algorithm
+       To this end, the proposed measurement selection method
+                                                                        1 with a 3D-compatible state vector. Finally, an illustration
+    utilizes the prior information provided by an appropriate
+                                                                        of the tracking process utilizing the proposed measurement
+    tracking method, such as the EKF presented in Section
+                                                                        selection method is shown in Fig. 1, where the block of
+    IV-A. As visible in (10) and (11), evaluating the amount
+                                                                        proposed measurement selection involves processing described
+    information offered by each measurement requires knowledge
+                                                                        in Algorithm 1 or Algorithm 2.
+    on measurement variances, positions of potential anchors,
+    and the user position at the intended time of measurements.                    V. N UMERICAL R ESULTS AND A NALYSIS
+    From these, measurement variances are part of standard EKF
+    parameterization and can be estimated, for example, through A. Simulation Parameters and Assumptions
+    CRLB evaluations. In addition, anchor positions are assumed            For all simulations we consider transmission at the dedicated
+    to be known as part of the considered positioning framework, DECT-2020 NR carrier frequency of fc = 1.9 GHz and SCS
+    and the estimate of user position is directly available by the of fSC = 27 kHz [1], [20]. Except for ranging accuracy results
+    EKF prediction state, as given in (19).                             with variable bandwidth, we fix the number of active subcarriers
+       For any time instant n, the first step in the proposed to 225, corresponding to transmission bandwidth of BT =
+    measurement selection method is to utilize the above-discussed 6.075 MHz. For AoA estimation, each anchor is equipped
+    knowledge to evaluate the measurement-associated FIMs for with L = 4 antennas as the baseline, by using half wavelength
+    potential anchor measurements, as described in (10). The antenna spacing dant = c/(2fc ), while the cases of L = 2, 8
+    set of potential anchors, denoted as Ωpotential , include all are also considered. The above physical layer configurations
+    anchors within the signal coverage that are able to provide follow the DECT-2020 NR specifications in [13].
+    positioning measurements. However, minimizing the PEB                  We assume a circular operation area with 690 m radius,
+    solely based on the measurement-associated FIMs does not where 1000 anchors are randomly deployed based on uniform
+    minimize the a posteriori PEB which is also affected by the distribution. The resulted anchor average density of 669 km−2
+    a priori information, as shown in (16). To this end, the second follows roughly the routing device densities reported in
+    step in the proposed measurement selection method is to [20], [21]. The AoA and ToA-based range measurements are
+    estimate the a priori information by utilizing the predicted state simulated as zero-mean Gaussian random variables based on
+    covariance according to (20). Finally, considering a desired the variances given in (4) and (5), respectively. In addition,
+    number of chosen measurements Nchosen , the final set of we include a random Gaussian clock error with 3 ns standard
+    chosen anchors, denoted as Ωchosen with |Ωchosen | = Nchosen , deviation to consider synchronization limitations regarding
+    can be determined by iteratively accumulating measurement- the ToA measurements. In order to define the SNRs for
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+                                    2                                               L = 4, 3 = 85°                                                       SNR, 10s            SNR, 1s     SNR, 0.1s
+                               10
+    Standard deviation [deg]
+
+
+                                                                                    L = 2, 3 = 45°                                                       FIM, 10s            FIM, 1s     FIM, 0.1s
+                                                                                    L = 4, 3 = 45°
+                                                                                    L = 8, 3 = 45°
+
+
+
+
+                                                                                                          RMSE [m]
+                                                                                                                     10 0
+                                    0
+                               10
+
+
+
+
+                                    -2
+                               10                                                                                    10 -1
+                                     -5   0   5   10   15      20      25     30   35      40        45                      2                      3                          4                     5
+                                                            SNR [dB]                                                                            Number of chosen anchors
+
+    Fig. 2. CRLBs for AoA estimation as a function of SNR with the considered                             Fig. 4. RMSE as a function of number of chosen anchors for the proposed EKF
+    DECT-2020 NR antenna configurations.                                                                  using FIM and SNR based measurement selection with AoA measurements.
+
+
+                                                            B T = 1.539 MHz        B T = 12.123 MHz
+                               10 2                                                                                                                      SNR, 10s            SNR, 1s     SNR, 0.1s
+                                                            B T = 3.051 MHz        B T = 18.171 MHz                                                      FIM, 10s            FIM, 1s     FIM, 0.1s
+    Standard deviation [m]
+
+
+
+
+                                                            B T = 6.075 MHz        B T = 24.219 MHz
+
+
+
+
+                                                                                                          RMSE [m]
+                               10 0                                                                                  10 0
+
+
+
+
+                               10 -2
+
+
+                                                                                                                     10 -1
+                                     -5   0   5   10   15      20      25     30   35      40        45                      2                      3                          4                     5
+                                                            SNR [dB]                                                                            Number of chosen anchors
+
+    Fig. 3. CRLBs for ToA-based range estimation as a function of SNR with                                Fig. 5. RMSE as a function of number of chosen anchors for the proposed EKF
+    the considered DECT-2020 NR nominal bandwidths.                                                       using FIM and SNR based measurement selection with range measurements.
+
+
+                                                                                                                                     TABLE I
+    measurement error variances, we utilize the urban micro                                                P ERCENTAGE CHANGE OF POSITIONING ERROR RMSE S BETWEEN THE
+    path loss model [22, Table 7.4.1-1], while considering only                                           TWO ANCHOR SELECTION METHODS , FIM- BASED VS SNR- BASED METHOD .
+
+    measurements from line-of-sight (LoS) links according to                                                                                 AoA                                 Range
+    probabilities given in [22, Table 7.4.2-1]. In practice, multipath                                                             0.1 s      1s          10 s       0.1 s         1s      10 s
+    propagation and inaccuracies in LoS detection can induce                                                            2        -21.5%    -18.2%       -20.7%      -62.5%      -47.5%   -49.0%
+                                                                                                                        3        -10.7%     -9.1%       -11.7%      -29.8%      -20.1%   -31.4%
+    outliers in AoA and ToA estimation, in which case such                                                              4         -5.2%     -6.1%        -6.7%      -19.6%       -9.1%   -17.8%
+    outliers can be managed, for example, using the Bayesian                                                            5         -3.5%     -4.4%        -3.6%      -10.0%       -5.8%   -10.4%
+    information criterion [23]. Taking into account a possible need
+    for positioning related signaling between the user device and
+    anchors, SNR of γ > 5 dB is required for the potential anchors                                        tial ranging accuracies with the considered DECT-2020 NR
+    to provide measurements.                                                                              numerology are illustrated in Fig. 3 over different bandwidths
+       The results are evaluated over 100 separate user tracks,                                           BT according to (5).
+    each track including 10000 time steps, with 10 independent                                               The performance of the proposed measurement selection
+    realizations of measurements and anchor deployments. The user                                         method is compared with a conventional SNR-based selection
+    device moves with 1 m/s velocity in the operation area with the                                       method, where the anchors are selected according to the
+    average power spectral acceleration of σa2 = 12.2 · 10−6 m2 /s3 .                                     highest SNR. Although this approach enables utilization of
+    The results are evaluated for different measurement time                                              the highest accuracy measurements, it fails to consider the
+    intervals ∆t, including 0.1 s, 1 s and 10 s. The initial user                                         overall measurement geometry, thus neglecting the available
+    position is estimated using a non-linear least squares method.                                        information available in the measurements.
+                                                                                                             In Fig. 4, the RMSE as a function of the number of
+    B. Numerical Results                                                                                  chosen anchors with AoA-based positioning is shown for
+       In Fig. 2, based on (4), potential AoA estimation accuracies                                       the proposed FIM-based anchor selection and the SNR-based
+    for the fundamental DECT-2020 NR MIMO configurations,                                                 reference method, while considering different measurement
+    including 2, 4 and 8 antennas, are shown as a function of SNR,                                        time intervals. As expected, the accuracy can be considerably
+    while also illustrating the effect of true AoA on the accuracy                                        improved by reducing the measurement time interval, which
+    with L = 4. Regarding range estimation, corresponding poten-                                          especially helps in tracking the user in high-curvature tracks.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+                                                                                2
+    Furthermore, it can be seen that proposed FIM-based anchor
+                                                                                                                                 FIM, EKF
+    selection method enables better positioning accuracy than the             1.5                                                SNR, EKF
+    SNR-based selection. For example, utilizing 2 anchors with 1 s                                                               FIM, a posteriori PEB
+
+
+
+
+                                                                                       RMSE [m]
+                                                                                                                                 SNR, a posteriori PEB
+    tracking interval, positioning error RMSE is 18.2% smaller with             1
+    FIM-based (0.59 m) compared to SNR-based (0.72 m) anchor
+    selection. The difference in positioning accuracy between the
+    FIM and SNR based methods decreases when increasing the                   0.5
+    number of used anchors.
+       Corresponding results for positioning with ToA-based rang-                    10      20     30    40     50      60    70      80       90     100
+                                                                                                              Time instant
+    ing are presented in Fig. 5. It can be seen that the trend in results
+    is similar to the AoA case, but the differences between FIM and Fig. 6. RMSE as a function of time instants for FIM and SNR based
+    SNR based methods are more significant. For example, with measurement selection, considering EKF-based estimation and corresponding
+    2 selected anchors and 1 s tracking interval, RMSE is 47.5% a posteriori bounds.
+    smaller with FIM method (0.70 m) than with SNR method
+                                                                                                           TABLE II
+    (1.33 m). Again, the difference between the FIM and SNR                 99.9 TH PERCENTILES OF POSITIONING ERRORS IN METERS USING EKF
+    methods reduces with higher number of selected anchors. This                            TRACKING WITH 2 SELECTED ANCHORS
+    is intuitive, as by increasing the number of anchors there is
+                                                                                                        AoA                  Range
+    a diminishing probability for missing the highest information                                 FIM        SNR         FIM        SNR
+    measurements, whereas with small number of anchors the                            0.1 s      1.1266     1.6060      0.8422     6.1330
+    selection becomes more critical.                                                    1s       3.2499     4.4762      2.5995    16.9349
+                                                                                       10 s     10.3525 14.8658        12.0734 35.4046
+       In order to better compare the performance between the
+    two anchor selection methods, Table I presents the percent-
+    age change of positioning RMSEs for using the proposed model, is seen as decreasing RMSE trend in the beginning of
+    FIM-based selection method with respect to the SNR-based the process. It can be seen that the used EKF-based tracking
+    method. In the case of AoA measurements and 2 selected approach achieves close to PEB performance, especially
+    anchors, positioning RMSE is approximately 20% smaller with considering the proposed FIM-based selection method which
+    FIM-based selection compared to SNR-based selection, and clearly outperforms the SNR-based benchmark method.
+    approximately 10% smaller with 3 selected anchors. Moreover,
+    the advantage of FIM-based selection over the SNR-based is                                       VI. C ONCLUSION
+    further enhanced when using ToA-based range measurements,                In this work, considering the IoT framework with a specific
+    where with 2 selected anchors the positioning RMSE is from focus on the DECT-2020 NR standard, we proposed a method
+    47.5% to 62.5% smaller with FIM-based selection than SNR- for selecting the most important positioning measurements to
+    based selection. Moreover, when using 3 anchors, the RMSE avoid utilizing and processing negligible measurements, thus
+    is reduced from 20.1% to 31.4% with the FIM-based approach, reducing energy consumption, latency and computational load.
+    and even with 5 used anchors the difference is still from 5.8% Moreover, exploiting measurement-based Fisher information
+    to 10.4% in favor of the FIM-based approach.                          from potential anchor measurements, and the information
+       In some use cases it is important to avoid large errors and provided by the prediction step of a tracking algorithm
+    provide consistent positioning performance over time. For this according to the underlying mobility model, the proposed
+    purpose, in Table II, the 99.9th percentile of positioning errors measurement selection method were used to minimize the
+    by utilizing 2 anchors are shown for the FIM and SNR based a posteriori PEB. The proposed measurement selection method
+    anchor selection methods, while considering both AoA and was described in a generic form, enabling use of arbitrary
+    range measurements as well as different tracking intervals. The tracking state variables with variable performance criteria, as
+    results show that in terms of 99.9th percentile of positioning well as in a simplified form, considering 2D positioning with
+    errors the FIM-based anchor selection method clearly outper- reduced computational load.
+    forms the SNR-based method with both AoA and ToA based                   With the provided numerical results, first, positioning mea-
+    measurements. For example, with range measurements and 1 s surement accuracies for range and angle measurements were
+    tracking interval, the 99.9th percentile of positioning error for evaluated under DECT-2020 NR system parameters. After
+    the FIM-based and SNR-based selection method are 0.84 m this, the performance of the proposed measurement selection
+    and 6.13 m, respectively, indicating approximately 86% smaller approach was assessed and compared against the benchmark
+    error with the FIM-based method.                                      method with SNR-based measurement selection, while also
+       Finally, in Fig. 6, the RMSE as a function of time instant, addressing the corresponding theoretical bounds. The results
+    considering 1 s measurement interval and 2 selected anchors, show that the proposed method outperforms the SNR-based
+    is illustrated for the EKF-based tracking, as well as for the solution, especially with range measurements, and a small
+    a posteriori PEB, evaluated according to Fisher information number of used measurements. Furthermore, the proposed
+    defined in (16). In the figure, the filtering gain, achieved by method significantly reduces the largest positioning errors,
+    exploiting the prior information stemming from the mobility which can be a crucial asset for several IoT use cases.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+                                   R EFERENCES                                               key enablers in FR1 band,” IEEE Communications Magazine, vol. 59,
+                                                                                             no. 4, pp. 82–87, 2021.
+     [1] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,             [12] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+         Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The                           transmission requirements,” TS 103 636-2, January 2023.
+         next step toward 5G massive machine-type communications,” IEEE                 [13] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer,” TS 103
+         Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022.                           636-3, January 2023.
+     [2] K. Maliatsos, A. Gotsis, and A. Alexiou, “Evaluation of the IMT-2020           [14] S. Sand, A. Dammann, and C. Mensing, Positioning in Wireless
+         candidate radio interface technology DECT-2020 NR,” in Proc. 2022                   Communications Systems. Wiley, 2014.
+         14th International Conference on COMmunication Systems & NETworkS              [15] S. M. Kay, Fundamentals of Statistical Signal Processing, Volume I:
+         (COMSNETS), 2022, pp. 889–893.                                                      Estimation Theory, 1st ed. Prentice Hall, Apr. 1993.
+     [3] International Telecommunication Union Radiocommunication Sector                [16] Z. Abu-Shaban, X. Zhou, T. Abhayapala, G. Seco-Granados, and
+         (ITU-R), “Detailed specifications of the terrestrial radio interfaces of            H. Wymeersch, “Error bounds for uplink and downlink 3D localization
+         international mobile telecommunications-2020 (IMT-2020),” Recommen-                 in 5G millimeter wave systems,” IEEE Transactions on Wireless
+         dation ITU-R M.2150-1, Feb. 2022.                                                   Communications, vol. 17, no. 8, pp. 4939–4954, 2018.
+     [4] R. C. Shit, S. Sharma, D. Puthal, and A. Y. Zomaya, “Location of               [17] T. K. Y. Bar-Shalom, X. Rong Li, Estimation with Applications to
+         Things (LoT): A review and taxonomy of sensors localization in IoT                  Tracking and Navigation: Theory, Algorithms and Software. Wiley
+         infrastructure,” IEEE Communications Surveys & Tutorials, vol. 20, no. 3,           Interscience, 2001.
+         pp. 2028–2061, 2018.                                                           [18] P. Tichavsky, C. Muravchik, and A. Nehorai, “Posterior Cramer-Rao
+     [5] P. S. Farahsari, A. Farahzadi, J. Rezazadeh, and A. Bagheri, “A survey              bounds for discrete-time nonlinear filtering,” IEEE Transactions on Signal
+         on indoor positioning systems for IoT-based applications,” IEEE Internet            Processing, vol. 46, no. 5, pp. 1386–1396, 1998.
+         of Things Journal, vol. 9, no. 10, pp. 7680–7699, 2022.                        [19] M. Koivisto, M. Costa, J. Werner, K. Heiska, J. Talvitie, K. Leppänen,
+     [6] E. Svertoka, A. Rusu-Casandra, R. Burget, I. Marghescu, J. Hosek, and               V. Koivunen, and M. Valkama, “Joint device positioning and clock
+         A. Ometov, “LoRaWAN: Lost for localization?” IEEE Sensors Journal,                  synchronization in 5G ultra-dense networks,” IEEE Transactions on
+         vol. 22, no. 23, pp. 23 307–23 319, 2022.                                           Wireless Communications, vol. 16, no. 5, pp. 2866–2881, May 2017.
+     [7] S. Monfared, A. Delepaut, M. Van Eeckhaute, P. De Doncker, and                 [20] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+         F. Horlin, “Iterative localization method using AoA for IoT sensor                  massive machine type communications with DECT-2020 standard: A
+         networks,” in Proc. 2019 IEEE 89th Vehicular Technology Conference                  system-level performance study,” VTT Research Report VTT-R-00367-
+         (VTC2019-Spring), 2019, pp. 1–6.                                                    21, 2021. [Online]. Available: https://cris.vtt.fi/ws/files/45087959/VTT
+     [8] R. M. Buehrer, H. Wymeersch, and R. M. Vaghefi, “Collaborative sensor               R 00367 21.pdf
+         network localization: Algorithms and practical issues,” Proceedings of         [21] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Koucheryavy,
+         the IEEE, vol. 106, no. 6, pp. 1089–1114, 2018.                                     and M. Valkama, “Performance assessment of DECT-2020 NR and classic
+     [9] T. Janssen, A. Koppert, R. Berkvens, and M. Weyn, “A survey on IoT                  DECT coexistence mechanisms,” in Proc. 2023 IEEE 97th Vehicular
+         positioning leveraging LPWAN, GNSS, and LEO-PNT,” IEEE Internet                     Technology Conference (VTC2023-Spring), 2023, pp. 1–7.
+         of Things Journal, vol. 10, no. 13, pp. 11 135–11 159, 2023.                   [22] 3GPP, TR 38.901 V17.0.0, “Study on channel model for frequency
+    [10] J. E. René, D. Ortiz, P. Venegas, and J. Vidal, “Selection of the reference        spectrum from 0.5 to 100 GHz (Release 17),” Mar. 2022.
+         anchor node by using SNR in TDOA-based positioning,” in Proc. 2016             [23] J. Talvitie, T. Levanen, M. Koivisto, T. Ihalainen, K. Pajukoski, M. Ren-
+         IEEE Ecuador Technical Chapters Meeting (ETCM), 2016, pp. 1–4.                      fors, and M. Valkama, “Positioning and location-based beamforming for
+    [11] N. Varsier, L.-A. Dufrène, M. Dumay, Q. Lampin, and J. Schwoerer, “A               high speed trains in 5G NR networks,” in Proc. 2018 IEEE Globecom
+         5G New Radio for balanced and mixed IoT use cases: Challenges and                   Workshops (GC Wkshps), 2018, pp. 1–7.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:38:08 UTC from IEEE Xplore. Restrictions apply.
+

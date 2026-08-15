@@ -1,0 +1,61 @@
+Title: Optimizing Delays in Random Access Procedure of
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Massive Machine-Type Communication (mMTC) enables the seamless connectivity of
+billions energy-efficient devices, forming the intelligent infrastructure for
+smart cities, automated industries, and real-time data-driven decision making.
+In this paper we investigate the modern mMTC technology Digital Enhanced
+Cordless Telecommunication New Radio (DECT2020 NR), focusing on random access
+(RA) procedure. The study develops a mathematical model characterizing the RA
+phase and proposes a hidden Markov model (HMM)-based method for estimating the
+number of competing devices. The research introduces and evaluates a delay
+reduction strategy wherein the RA phase duration is adapted based on the HMM-
+based estimation of the device state. Numerical results demonstrate the
+effectiveness of the proposed approach in optimizing RA performance. The
+findings contribute to improving DECT-2020 network efficiency by balancing RA
+and data transmission phases while minimizing latency.
+
+Approach and methods:
+research introduces and evaluates a delay reduction strategy wherein the RA
+phase duration is adapted based on the HMM-based estimation of the device state.
+Numerical results demonstrate the effectiveness of the proposed approach in
+optimizing RA performance. The findings contribute to improving DECT-2020
+network efficiency by balancing RA and data transmission phases while minimizing
+latency. Index Terms—mMTC, DECT-2020, random access, delay, hidden Markov model
+I. I NTRODUCTION The Digital Enhanced Cordless Telecommunication New Radio
+(DECT-2020 NR) technology has emerged as a pivotal enabler for next-generation
+massive Machine-Type Communication (mMTC) networks [1], which are fundamental to
+the autonomous operation of smart cities and industrial systems [2]. Its
+relevance stems from its ability to support low-latency automated control and
+high-density device connectivity, owing to its energy-efficient and
+decentralized architecture. DECT-2020 facilitates a wide range of communication
+scenarios, operating with various devices. These devices can be sensors that
+transmit data sporadically, with stringent energy constraints, or end devices or
+relays that handle substantial data volumes, either intermittently or
+continuously. This diversity necessitates the coexistence of two phases: a
+random access (RA) phase, which caters to energy-limited devices, The reported
+study was funded by RSF, project number 2419-00804,
+”https://rscf.ru/en/project//” https://rscf.ru/en/project/24-19-00804/ (Yu.
+Gaidamaka, Sections I
+
+Key findings:
+, YN −1 ); Transition probabilities Ps (X̂, X), s = 2, . . . , N − 1;
+Observation probabilities M (s, X, o); Initial state distribution π = (π(X))X∈X
+. Return: The most likely final state X̃. Let ind(X) be the index for state X ∈
+X . Initialize matrices viterbi[|X |, N − 1] backpointer[|X |, N − 1]. 1.
+Initialization Step 3: for each state X ∈ X do 4: viterbi[ind(X), 1] ← π(X) · M
+(1, X, Y1 ) 5: backpointer[ind(X), 1] ← 0 6: end for 2. Recursion Step 7: for s
+= 2 to N − 1 do 8: for each state X ∈ X do 9: viterbi[ind(X), s] ←  1: 2: and
+max viterbi[ind(X̂), s − 1] · Ps (X̂, X) · M (s, X, Ys ) X̂∈X 10:
+backpointer[ind(X), s] ←   arg max viterbi[ind(X̂), s − 1] · Ps (X̂, X) X̂∈X
+11: end for 12: end for 3. Termination Step 13: X̃ ← arg max (viterbi[ind(X), N
+− 1]) X∈X 14: return X̃ Authorized licensed use limited to: Hochschule Aalen
+(FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC
+from IEEE Xplore. Restrictions apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

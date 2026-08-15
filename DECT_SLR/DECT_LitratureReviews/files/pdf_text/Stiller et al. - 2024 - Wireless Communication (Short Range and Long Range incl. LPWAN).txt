@@ -1,0 +1,1847 @@
+                                                                    Wireless Communication (Short Range and Long
+                                                                    Range incl. LPWAN)                                                                                                                     9
+                                                                    Burkhard Stiller, Eryk Schiller, and Corinna Schmitt
+
+
+
+
+Contents                                                                                                                                     Abstract
+9.1          Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .             165      This chapter classiﬁes communication technologies
+9.1.1        IoT Protocol Classiﬁcation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                           166      employed in the Internet of Things (IoT) as infrastructure,
+9.1.2        IoT Messaging Protocols . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                          167
+9.1.3        General Network Classiﬁcation . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                  167      data, transport, discovery, messaging, and management
+9.1.4        Chapter Organization . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                     167      protocol families and semantics and frameworks. More-
+9.2          Ethernet and IP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 167
+                                                                                                                                             over, IoT networks are divided into IP and constrained
+                                                                                                                                             networks with the latter not directly supporting the Trans-
+9.3          Wireless PANs and LANs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                 168      mission Control Protocol (TCP) and Internet Protocol
+9.3.1        IEEE 802.11 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .            169
+9.3.2        IEEE 802.15.4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .              170      (IP) stack on IoT devices. Furthermore, another distinction
+9.3.3        IoT Network Layer Protocols . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                170      is considered dividing networks into personal (PAN), local
+9.3.4        LoRa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   172      (LAN), and wide (WAN) area Networks. Finally, here
+9.3.5        DASH7 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        175      selected communication technologies are characterized
+9.3.6        Radio Frequency Identiﬁcation . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                  175
+9.3.7        Near-Field Communication . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                               176      according to the aforementioned classiﬁers and important
+9.3.8        Bluetooth (IEEE 802.15.1) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                            176      aspects of select technologies are discussed in the remain-
+9.4   Cellular Networks (WAN) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 177
+                                                                                                                                             der of this chapter.
+9.4.1 General Architecture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 177
+9.4.2 System Generations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 177                                 Keywords
+9.5          Cellular for IoT . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                 179      PAN · LAN · MAN · WAN · IEEE 802.11 · IEEE
+9.5.1        Interfaces and Protocols . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                       179
+9.5.2        LTE (3GPP Release 8) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                         182
+                                                                                                                                             802.15.4 · ZigBee · 6LoWPAN · BLIP · Sigfox · LoRa ·
+9.5.3        LTE Advanced (3GPP Rel. 10) . . . . . . . . . . . . . . . . . . . . . . . . . . . .                                    183      DASH7 · RFID · NFC · Bluetooth · 1G · 2G · 3G · 4G ·
+9.5.4        LTE Advanced Pro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                     183      5G · LTE Cat. 0 · LTE Cat. M · LTE Cat. M1 · LTE Cat.
+9.5.5        DECT-2020 NR . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .                   188      N · DECT-2020 NR · NB-IoT
+9.6   Summary and Conclusions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 189
+9.6.1 Chapter Digest . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 189
+9.6.2 Concluding Observations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 189                                     9.1      Introduction
+References . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 190
+                                                                                                                                          The Internet consists of a network of networks connecting
+                                                                                                                                          differently sized networks, larger ones from full-ﬂedged com-
+                                                                                                                                          mercially operated autonomous systems (AS) to smaller ones
+                                                                                                                                          of private or public organizations, via many thousands of
+                                                                                                                                          different gateways and routers [1]. Each AS itself handles
+B. Stiller (*) · E. Schiller                                                                                                              the communication within this AS autonomously. Typically,
+Communication Systems Group CSG, Department of Informatics IfI,
+University of Zürich UZH, Zürich, Switzerland
+                                                                                                                                          each constrained network, e.g., a dedicated wireless sensor or
+e-mail: stiller@iﬁ.uzh.ch; schiller@iﬁ.uzh.ch                                                                                             an ad hoc network, deﬁnes a single AS-like network
+C. Schmitt                                                                                                                                connected via a gateway or router to the Internet. Thus,
+Research Institute CODE, Universität der Bundeswehr München,                                                                              such a constrained network can establish connections to
+Neubiberg, Germany                                                                                                                        other ASes, e.g., a home or an ofﬁce network.
+e-mail: corinna.schmitt@unibw.de
+
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2024                                                                                                                     165
+S. Ziegler et al. (eds.), Springer Handbook of Internet of Things, Springer Handbooks,
+https://doi.org/10.1007/978-3-031-39650-2_9
+166                                                                                                                                                                                             B. Stiller et al.
+
+   The umbrella of constrained networks and their devices –                                                             be assumed to be operated in an Internet Protocol (IP)-based
+including their interconnections – is often termed as “Internet                                                         style. However, IoT communication standards can be classi-
+of Things” (IoT), once especially these devices and their data                                                          ﬁed more precisely by addressing the major task provided
+and services move into the center of observation                                                                        [4]. Out of this perspective, the focus here will be on (a) the
+(cf. Fig. 9.1). In such cases, the IoT gateway or router                                                                infrastructure perspective with protocols and (b) IoT data
+typically has to hold sufﬁcient resources to support the trans-                                                         communications and transport protocols, however, differ-
+mission of the trafﬁc received in one constrained network to                                                            ently structured according to the physical range of the net-
+send it to any other one. Therefore, and in contrast to many                                                            work. (c) Discovery-related protocols, such as Multicast
+devices, such a gateway within the IoT context is categorized                                                           Domain Name System (mDNS) or DNS-Service Discovery
+as a “resource-rich” device. Furthermore, device-centric                                                                (DNS-SD); (d) messaging data protocols, such as Message
+security features, provided by communication protocols in                                                               Queuing Telemetry Transport (MQTT), Advanced Message
+use, determine the basis for secure IoT communications.                                                                 Queuing Protocol (AMQP), or Constrained Application Pro-
+                                                                                                                        tocol (CoAP); (e) device management protocols, such as
+                                                                                                                        Broadband Forum Technical Report 069 (TR-069) or Open
+9.1.1        IoT Protocol Classification                                                                                Mobile Alliance (OMA)-Device Management (DM); and
+                                                                                                                        (f) semantic and framework perspectives, such as JavaScript
+In case of constrained networks, the working infrastructure                                                             Object Notation for Linked Data (JSON-LD), AllJoyn, or
+operates a resource-rich device to interconnect (the “gate-                                                             IoTivity, are all only omitted due to space restrictions.
+way”) and coordinate (the “coordinator”) that network.                                                                      Thus, e.g., data collected by constrained devices can be
+Thus, the establishing and managing of the network, the                                                                 transmitted to the outside world by applying the infrastructure
+deﬁnition of communication technologies to be used inter-                                                               perspective and its protocols. To become accessible outside
+nally, and the support of devices selected to connect the                                                               such a constrained network, the IoT gateway can use intercon-
+network to the outer world can be coordinated. Depending                                                                nections (1) via a private local area network (LAN)
+on the purpose of this constrained network and on the avail-                                                            (cf. Sect. 9.1.3) or (2) via public wireless access communication
+ability of resources of those devices participating, the net-                                                           standards to the public Internet. Since many communication
+work can offer different functionality, such as the                                                                     alternatives for IoT devices are wireless in nature, the IoT
+communication standard supported, the maximum transmis-                                                                 gateway’s major function is to bridge the wireless to the wired
+sion unit, the maximum number of participants being coor-                                                               environment. Thus, Ethernet-based communications often oper-
+dinated, or the services offered.                                                                                       ate as and toward a backbone for interconnected constrained
+    Since this chapter focuses on network communication                                                                 networks, since this LAN technology in combination with IP
+technologies for IoT, a classiﬁcation is required. Although                                                             provides a reasonably well-dimensioned transmission speed for
+all communications require a physical (PHY) and medium                                                                  communications, device addressing, respective packet
+access control (MAC) layer protocols, the network layer will                                                            forwarding, and routing mechanisms.
+
+
+
+                                                                                                      Internet of Things (IoT)
+                Constrained network                                                                                        IP network
+      IEEE 802.15.4   WiFi      LoRa                         Dash7   Bluetooth   Satellite networks     LTE     WiFi      5G      3G     4G        2G        GSM           Ethernet    Edge      Bluetooth
+
+
+
+
+                                                                                                 Services
+                                                                                         offered by third-parties
+              Data collection                                                                                                                 Applications for
+                                                                                                                                                                                Wide area network (WAN)
+        Body-area-networks (BAN)                                                                                                               Transport/logistics
+                                       Network coordinator
+
+
+
+
+                                                                                                                                                                                IEEE 802.20
+      Wireless sensor networks (WSN)                                                                                                              E-healthcare                  Metropolitan area network
+       Cyber-physical-systems (CPS)                                                                                                       Environmental monitoring              (MAN) IEEE 802.16
+                                                                                        Service provider      Data management
+                                                                                                                                                                                Local area network (LAN)
+             Vehical networks                                                                                                                      Tracking
+                                                                 Gateway                                                                                                        IEEE 802.11
+        Mobile-to-mobile terminals                                                                                                                Automation                    Personal area network (PAN)
+                                                                                                                                          Smart home environment                IEEE 802.15
+          NFC/RFID readers/tags
+                                                                                                      Cloud computing
+                                                                                                                                                                     End-user
+              Data flow           Selected access technologies
+
+
+
+
+Fig. 9.1 Data ﬂows within IoT, based on [2] and [3]
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                          167
+
+   More speciﬁcally, IoT data communications and transport        • Metropolitan Area Network (MAN): regional network
+protocols interact between (a) IoT devices or (b) those and the     interconnecting devices across medium-sized geographi-
+IoT gateway. In the personal area network (PAN) and LAN             cal areas, such as cities or regions.
+domain, they include Institute of Electrical and Electronics      • Wide Area Network (WAN): networks extending typically
+Engineers (IEEE) 802.11, IEEE 802.15.4, ZigBee, 6LoWPAN             global geographical distances.
+(IPv6 over Low-Power Wireless Personal Area Networks),
+Berkeley Low-Power IP Stack (BLIP), Long-Range (LoRa)                Based on this categorization, many IoT communication
+protocol, Radio Frequency Identiﬁcation (RFID), Near-Field        technologies fall into the category PAN, which are
+Communication (NFC), and Bluetooth. In the wide area net-         interconnected by LAN communications to the outside
+work (WAN) domain, they cover cellular networks (1st to 5th       world. However, modern IoT devices can interact with wire-
+generation), such as Universal Mobile Telecommunications          less WAN standards, such as 5G already, directly.
+Service (UMTS) or 5G, and especially, Long Term Evolution
+(LTE) for IoT.                                                                                                                      9
+                                                                  9.1.4    Chapter Organization
+9.1.2    IoT Messaging Protocols
+                                                                  This chapter provides an overview on network communica-
+Although messaging data protocols will be excluded from an        tion technologies for IoT, which are used to interconnect
+in-depth discussion, their major representatives within the       constrained networks in various settings. Firstly, the Ethernet
+IoT domain include the following ones.                            in combination with IP is brieﬂy presented in Sect. 9.2 as the
+   MQTT speciﬁes a messaging protocol to enable monitor-          major wired network and inter-networking protocol. Sec-
+ing IoT from a remote location [5]. Thus, the major task of       ondly, wireless communication technology alternatives for
+MQTT is to collect data from IoT devices. In the same line,       IoT devices are discussed in Sect. 9.3, which include IEEE
+the Data Distribution Service (DDS) standard by the Object        802.11, IEEE 802.15.4 (embracing ZigBee, 6LoWPAN, and
+Management Group (OMG) offers a high-performance,                 BLIP), LoRa, DASH7, RFID, NFC, and Bluetooth. Thirdly,
+expandable, and real-time machine-to-machine message              this view is complemented by cellular communication tech-
+communication, which interconnects constrained devices            nology alternatives for IoT devices as discussed in Sect. 9.4
+with the outside, e.g., management or Cloud platforms.            including the overview on 1G to 5G as standards for public
+   Additionally, AMQP operates message-oriented, too, and         wireless access networks. Fourthly, more speciﬁcally the
+was originally designed for middleware environments [6].          discussion of LTE for IoT is embedded in Sect. 9.5, which
+Speciﬁcally, the AMQP IoT messaging protocol processes            includes details on the 3GPP Release 8, LTE Advanced as
+IoT data within three necessary components, Exchange, Mes-        3GPP Release 10, LTE Advanced Pro with its LTE Catego-
+sage Queue, and Binding.                                          ries M and N (3GPP Release 13), and DECT-2020
+   CoAP enables restricted access to IoT devices, which are       NR. Finally, Sect. 9.6 summarizes this overview on network
+part of restricted networks, which may include gateways to        communication technologies for IoT and draws key
+the Internet and IoT devices [7].                                 conclusions.
+
+
+9.1.3    General Network Classification
+                                                                  9.2      Ethernet and IP
+Due to the fact that the wider umbrella of IoT itself includes
+many networks, devices in support of different communica-         Today’s IoT solutions deployed involve communications
+tion standards, and services depending on the deployment          using Ethernet, especially to interconnect constrained net-
+area (cf. Fig. 9.1), the distinction of major network types       works to the outside world via an IoT gateway’s ﬁxed net-
+should be recalled. [1] distinguishes between:                    work interface, and IP, to provide a standardized inter-
+                                                                  networking approach for resource-constrained devices and
+• Personal Area Network (PAN): small networks used to             very simple communication end points, such as sensors.
+  transmit data between a few devices, typically sensors. A           Ethernet was standardized within IEEE 802.3 [8] initially.
+  subgroup of PANs is deﬁned by wireless personal area            It developed further over time supporting higher bit rates and
+  networks (WPAN), which deploy speciﬁc short-range               longer distances by moving from twisted pair to ﬁber optics.
+  radio communication.                                            While each participant is assigned an individual Medium
+• Local Area Network (LAN): networks interconnecting              Access Control (MAC) layer address, the direct addressing
+  devices within a limited geographical area, e.g., company       of devices for sending and receiving Ethernet frames is pos-
+  or university.                                                  sible. These frames may have to be split into fragments,
+168                                                                                                                                   B. Stiller et al.
+
+which are error-checked, too. At the intended destination, the                    Inter-Domain Routing (CIDR) was introduced [13] allowing
+frame is analyzed to detect damaged frames, and in case of                        to assign IP addresses in those amounts needed for individual
+need, they are discarded. During the starting phase of the                        networks. Therefore, the resulting network size was very ﬂex-
+early Internet, the number of participating devices was man-                      ible and could be adapted to basically any number of devices –
+ageable via MAC addresses.                                                        well suited for IoT-based constrained networks. Thus, this
+    However, as the number of devices grew, the addressing                        IP-based addressing forms the basis for all IoT communica-
+of devices across a larger geographical range could not be                        tions, which are exploited with different protocols, as the
+handled by Ethernet’s MAC addresses anymore. Thus, the                            following sections show.
+address space offering as many as 28 addresses in 1974 [10]
+was exhausted within less than 10 years, thus, new IP version
+4 (IPv4) – now focusing on the network layer above the MAC                        9.3           Wireless PANs and LANs
+layer – supported an address range of 232 addresses [9]. IPv4
+addresses are 32 bit long and follow regularly the dotted-                        Wireless accessibility is important for end users and is needed
+decimal notation consisting of four octets (cf. Fig. 9.2). Even                   for many devices (cf. Fig. 9.4), as backed by [14, 15]. In
+this address space became too small, thus, in 1998, IP version                    general, wireless networks use radio communications on
+6 (IPv6) was released supporting 2128 addresses [11]. These                       different frequencies depending on their availability and on
+IPv6 addresses are 128 bit long, consisting of a 64 bit preﬁx                     the distance to communicate through. To connect to the
+and a 64-bit interface ID (IID). The preﬁx part identiﬁes the                     world, networks operate a “base station” – the gateway to a
+network a device belongs to. The IID identiﬁes the network                        backbone network. Wireless communication technology
+interface and must be unique for the network.                                     examples include (a) cellular networks, e.g., Global System
+    Addressing is the key for devices to be uniquely identiﬁable                  for Mobile Communications (GSM), UMTS, or LTE
+and trafﬁc to and from these to be routable. Thus, while the                      (cf. Sect. 9.4), (b) wireless LANs and PANs, e.g., IEEE
+IPv4 address was divided into two parts initially (the network                    802.11 and IEEE 802.15.4 (cf. Sects. 9.3.1 and 9.3.2
+identiﬁer and the host identiﬁer), this separation supported                      below), (c) various dedicated wireless sensor networks
+only 256 network identiﬁers and turned inadequate over time                       (WSNs) for monitoring, logistics, or agriculture, (d) satellite
+due to many more devices added to the Internet. Therefore, the                    communication networks for navigation and broadcast ser-
+network identiﬁer was redeﬁned into network classes, where                        vices, or (e) terrestrial microwave networks.
+each class became determined by the bit length of the network                         Today, resource-rich devices in the IoT context vary with
+identiﬁer. This setup resulted in classes (cf. Fig. 9.3), but ﬁxed                respect to the wireless communication technology applied,
+classes caused a waste of addresses. As a result, the Classless                   covering communications for rice grain-sized devices to sat-
+                                                                                  ellite or aircraft-sized objects. These devices themselves sup-
+                                                                                  port various functionality, such as data collection,
+                                                                                  localization, or data exchange. Since industrial solutions as
+   Dotted-decimal notation      172    .   16       .   254     .   1             of today need to interoperate with more than a handful of
+   Dotted-binary notation 10101100 . 00010000 . 11111110 . 00000001               different wireless technologies, many wireless technologies
+                             1 Byte = 8 bit                                       have turned into a standard describing the PHY and MAC
+                                                                                  layers. However, these standards differ with respect to their
+                                                32 bit
+                                                                                  signaling methods, geographic ranges, and frequency use
+                                                                                  speciﬁed. Therefore, certain technologies are better suited to
+Fig. 9.2 IPv4 address format [9]                                                  PANs, while others are better suited for larger deployments in
+
+Fig. 9.3 Class-based splitting of
+IP addresses [12]                             Class                                                                  Host address range
+
+                                                A        0     Network                          Host                 1.0.0.0 to 127.255.255.255
+
+                                                B        10             Network                        Host          128.0.0.0 to 191.255.255.255
+
+                                                C        110                 Network                          Host   192.0.0.0 to 223.255.255.255
+
+                                                D        1110                     Multicast address                  224.0.0.0 to 239.255.255.255
+
+
+                                                                                       32 bit
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                                           169
+
+
+
+                           100%
+
+                                                                                                                                June 2015
+
+                                                                                     82%
+                           80%
+
+                                                                                           69%
+
+                                                                                                             59%
+    Share of respondents
+
+
+
+
+                           60%
+
+                                  49%                                                                  48%                     48%   49%
+
+
+                           40%                    37%
+                                                                                                 35%                                                    36%         9
+                                                                                                                                            26%
+
+                                        18% 17%                                                                                                   19%
+                           20%                             15%                                                     15%
+                                                                                                                         12%
+                                                                 8%        8%
+                                                                      6%
+
+                            0%
+                                  Free public Wi-Fi         Paid public Wi-Fi         Wi-Fi access point     3G/4G (LTE) mobile       Wi-Fi access point
+                                                                                          at home              network access         at trusted location
+
+                                                      On any device             Laptops          Tablet      Smartphone
+
+
+
+Fig. 9.4 Wireless internet access by device according to internet users worldwide [16]
+
+
+MANs or WANs. The following subsections focus on PAN                                       (b) an ad hoc architecture deployed within mash networks
+and LAN standards used for constrained networks.                                           (MANET) or vehicular Ad hoc networks (VANET). In both
+Depending on the resources available in a constrained net-                                 cases, communication is supported by IEEE 802.11. Any
+work, additional components and a connection to cellular                                   application on an IEEE 802.11-compatible device communi-
+networks may be required.                                                                  cates with other devices with differences in terms of band-
+                                                                                           width and access times. While the detailed description of the
+                                                                                           PHY layer and MAC layer can be found in the standard [17],
+9.3.1                       IEEE 802.11                                                    the following characteristics are to be highlighted with
+                                                                                           respect to IoT devices. The PHY layer consists of two parts,
+For a straightforward and simple interconnection of IoT                                    while being responsible for the channel tuning:
+devices in a local network’s range, the WLAN-based
+approach can be deployed. This offers a quite simple and                                   • Physical Layer Convergence Protocol (PLCP): provides
+robust solution for time-bounded and asynchronous services                                   the carrier sense signal, termed Clear Channel Assessment
+in which a MAC layer interfaces with multiple PHY layers                                     (CCA) and a common PHY layer service access point
+using different medium senses and transmission characteris-                                  independent of the transmission technology used.
+tics. The IEEE 802.11 standard [17] speciﬁes the PHY layer                                 • Physical Medium-Dependent (PMD) sublayer: being
+and the MAC layer, while supporting interoperability to                                      responsible for modulation and encoding/decoding of
+higher layers. Further requirements important for the IoT                                    signals.
+context include energy efﬁciency and a worldwide operabil-
+ity, which was achieved by agreeing on using the license-free                                 The MAC layer is responsible for the medium access, the
+2.4 GHz ISM (Industrial, Scientiﬁc, and Medical) band. Data                                fragmentation of data, and the encryption used. This includes
+rates up to multiple hundreds of Mbit/s per access point have                              the access control management for the association and
+been reached up today.                                                                     re-association of devices to an access point and roaming
+    Theoretically, IEEE 802.11 offers (a) an infrastructure-                               between several access points, including the authentication
+based architecture as used for IP networks and WSNs or                                     mechanism, the encryption, a synchronization of devices in
+170                                                                                                                B. Stiller et al.
+
+the network, and a power management to enable an energy-          an acknowledgment mechanism may be supported. The
+efﬁcient device operation. Thus, due to the more heavy-           unslotted mode does not request any coordination of the
+weight layer speciﬁcation and its implementation, only            network coordinator at all.
+resource-rich devices from an IoT context can beneﬁt from             IEEE 802.15.4 offers access control, conﬁdentiality, frame
+IEEE 802.11 communication services.                               integrity, and sequential freshness. Security functionality on
+                                                                  the MAC layer is reached via message integrity checks and
+                                                                  encryption. While keys used are distributed and adminis-
+9.3.2    IEEE 802.15.4                                            trated by the MAC layer, the explicit encryption is performed
+                                                                  by each communication partner and applied by the MAC
+For IoT devices in a personal network’s range, the IEEE           layer. However, optional features can actually reduce the
+802.15.4 standard was especially developed for WPANs              security level IEEE 802.15.4 offers.
+[18]. Since it does respect the standard header sizes of IP and
+Transmission Control Protocol (TCP), it had become a com-
+mon standard for IoT devices. This is especially important,
+                                                                  9.3.3    IoT Network Layer Protocols
+since normally a maximum transmission unit (MTU) of 1280
+Byte for IPv6 is too large for low-powered devices providing
+                                                                  Under the assumption that constrained networks should
+MTU sizes of 127 Byte only. Therefore, IEEE 802.15.4 sup-
+                                                                  interoperate with IEEE 802.15.4-based systems, major IP
+ports two different device types, distinguished by resources
+                                                                  functionality needs to be supported, especially IP addressing.
+available: (a) “Reduced Functional Device” (RFD) and
+                                                                  However, constrained resources do not allow for a direct
+(b) “Full Functional Device” (FFD). RFDs typically show
+                                                                  implementation of the TCP/IP stack on an IoT device. There-
+lesser resources, when the IoT setup needs to operate sensor
+                                                                  fore, resource-efﬁcient solutions and protocols for
+nodes, Radio Frequency Identiﬁer (RFID) tags, or actor, which
+                                                                  constrained networks include protocols for WSNs, especially
+typically collect data periodically, establish connections to
+                                                                  ZigBee, 6LoWPAN, and BLIP.
+FFDs, transmit data, and receive data from time to time. In
+order to save resources, especially energy, those devices sup-
+                                                                  ZigBee
+port “sleep modes.” In contrast, FFDs as a resource-rich device
+                                                                  The ZigBee Alliance based on IEEE 802.15.4 developed the
+coordinate a network, synchronize network participants,
+                                                                  ZigBee stack (cf. Fig. 9.5a) supporting IP communication for
+(pre-)process data, and communicate with RFDs and other
+                                                                  resource-constrained hardware [21]. The ZigBee stack
+FFDs.
+                                                                  requires 8 kByte RAM, produces 8 to 16 byte of network
+    IEEE 802.15.4 deﬁnes the PHY and MAC layer only, and
+                                                                  overhead, and can support a mesh functionality. The maxi-
+no functionality for the classic network layer is supported.
+                                                                  mum network size counts 1024 nodes participating within a
+Thus, all network layer services must be provided by higher
+                                                                  communication range of up to 200 m. While the full protocol
+layers or special protocols. Work in the IoT domain resulted in
+                                                                  stack includes the PHY layer (at 868 MHz, 933 MHz, and
+the development of different approaches for constrained
+                                                                  2.4 GHz with a data rate of 250 kBit/s) and MAC layer from
+devices in support of routing, e.g., ZigBee, 6LoWPAN, BLIP,
+                                                                  IEEE 802.15.4, the overall energy efﬁciency is reached by
+RPL [7], or Hydro [19] (cf. Sect. 9.3.3), which include stan-
+                                                                  placing functions within the MAC layer. On top of the
+dardized interfaces. This principle followed by IEEE 802.15.4
+                                                                  ZigBee part, the following function set was added [22]:
+ensures interoperability between different implementations.
+    The PHY layer supports radio communications on differ-
+                                                                  • The network supports network scan, network creation or
+ent frequency bands, e.g., 868/915 MHz in Europe and the
+                                                                    joining, device and service discovery, binding, addressing,
+USA, 2.4 GHz worldwide. Interference resistance is achieved
+                                                                    and routing. It offers security essentials, such as the
+by supporting the direct sequence spread spectrum (DSSS),
+                                                                    128-bit AES (Advanced Encryption Standard).
+which spreads each outgoing signal with one predeﬁned bit
+                                                                  • The application layer comprises:
+sequence [20]. Alternative transmission modes have been
+                                                                    – ZigBee Device Objects (ZDO): responsible for discov-
+added to the PHY layer to provide modern insights in
+                                                                       ering new devices and their provided services,
+advanced modulation techniques, too.
+                                                                       assigning individual ZigBee proﬁles to each device,
+    The MAC layer offers two transmission modes:
+                                                                       initiating or responding binding requests, and support
+(a) unslotted mode and (b) slotted mode. Within the unslotted
+                                                                       security-related tasks.
+mode, each participant checks whether the communication
+                                                                    – ZigBee Application Support Sublayer (APS): creating
+channel is free before sending by applying carrier sense
+                                                                       binding relation tables including information of ser-
+multiple access/collision avoidance (CSMA/CA) algorithms.
+                                                                       vices offered, managing group addresses, mapping
+If the medium is free, the transmission starts, otherwise the
+                                                                       64-bit addresses to 16-bit networking addresses, and
+device waits for a random time slot and tests the channel
+                                                                       supporting reliable data transport.
+again. In order to ensure that a transmission was successful,
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                        171
+
+Fig. 9.5 Stack comparison: (a)
+ZigBee stack, (b) 6LoWPAN             a)
+nano stack, (c) BLIP stack [23]
+                                                       Applications
+                                                                                                  b)
+                                                    Application profiles
+                                                                                                              Applications
+                                                     Application layer
+
+                                                  Application framework                                        UDP/TCP
+
+
+
+
+                                                                                                                              Socket API
+                                                  ZDO                 APS
+                                                                                                            IPv6 6LoWPAN
+                                                      Network layer
+                                                                                                              MAC layer
+                                                        MAC layer                                                                                9
+                                                                                                               PHY layer
+                                                        PHY layer
+
+
+
+                                                              c)
+                                                                                      Applications
+
+                                                                                                          Transport
+                                                                   UDP             TCP           ICMPv6
+                                                                                                          interfaces
+
+                                                                                                          IP
+                                                                                 Dispatcher
+                                                                                                          interfaces
+                                                                      Routing:                Routing:
+                                                                       Hydro                  Multicast
+                                                                      Neighbor
+                                                                                          Forwarding
+                                                                      discovery
+
+                                                                                                          IP lower
+                                                                                 6LoWPAN
+                                                                                                          interfaces
+
+                                                                                   Link
+
+
+
+
+  – Application Framework: in support of interoperability             the 6LoWPAN Nano Stack only requires 4 kByte RAM. As
+     between devices requiring different application proﬁles.         a result, RFC 4919 [25] presents an overview, assumptions,
+• The application proﬁles layer is responsible for specify-           the problem statement, and goals of 6LoWPANs, RFC 6282
+  ing unique device descriptions including functionality              [26] speciﬁes the transmission of IPv6 packets over IEEE
+  required, attributes demanded, and identiﬁers. These                802.15.4 networks, RFC 6606 speciﬁes routing [27], RFC
+  proﬁles conform to any of the two groups: Private pro-              6775 addresses neighbor discovery [28], and RFCs 8055
+  ﬁles are deﬁned by the device’s manufacturer and public             and 8025 deﬁne header handling strategies [29, 30]. Thus,
+  proﬁles are deﬁned, developed, and maintained by the                interoperability with IP networks was reached.
+  ZigBee Alliance.                                                        Especially, the 6LoWPAN Nano Stack developed
+                                                                      (cf. Fig. 9.5b) consists of a Socket Application Programming
+   Finally, applications are located on top of the ZigBee stack       Interface (API) and applications, which are addressed via socket
+part and contain user-speciﬁc protocols [21].                         interfaces. The socket API is built by the following components
+                                                                      [31]:
+6LoWPAN
+The Internet Engineering Task Force (IETF) established                • PHY: based on IEEE 802.15.4, supports basic radio com-
+working group 6LoWPAN (IPv6 over Low-power Wireless                     munication capabilities.
+PAN) [24]. A 6LoWPAN implementation offers IPv6 fea-                  • MAC: based on IEEE 802.15.4, supports contention-
+tures on top of User Datagram Protocol (UDP)/TCP to                     based channel access method of unslotted CSMA/CA for
+sensor nodes regardless of the underlying PHY layer, and                data transmissions.
+172                                                                                                                  B. Stiller et al.
+
+• Network Layer: replaced by an adaptation layer                   modulation scheme to work on the ISM band. The wide-
+  6LoWPAN supporting compression of TCP/UDP and IP                 reaching signal ultra-narrow band (UNB) in use passes freely
+  headers with 2 to 11 byte overhead only, packet fragmen-         through solid objects and requires little energy; thus, Sigfox
+  tation, reassembling, routing, neighbor discovery, and           belongs to the low-power wide area network (LPWAN) class.
+  multicast support.                                               Since the network follows a one-hop star topology, it requires
+• Transport Layer: supporting UDP and TCP.                         a cellular network access via a gateway to carry the generated
+                                                                   trafﬁc to the outside world. Sigfox reaches data rates up to
+   6LoWPAN supports a 16-bit and 64-bit address space,             1000 bit/s for which only 50 mW of power is needed. Inter-
+different bandwidths, and network topologies with a maxi-          esting to note is the fact that the UNB signal easily covers
+mum number of 264 devices and offers an AES 128 encryp-            large areas and can reach underground IoT devices. Similarly
+tion and authentication on the link layer.                         to the LoRa approach and the Things Network (cf. Sect. 9.3.4
+   Finally, applications located on top of that stack are linked   below), the Sigfox IoT network is commercially operational
+with speciﬁc interfaces to support user-speciﬁc functionality.     in a number of countries.
+Thus, ZigBee makes IP communication feasible for
+constrained devices, especially for those with a limited
+MTU site of 102 byte on the MAC layer.                             9.3.4    LoRa
+
+Berkeley Low-Power IP Stack (BLIP)                                 The long-range (LoRa) communication is a closed proprie-
+Efﬁciency advantages of 6LoWPAN compared to ZigBee                 tary product belonging to Semtech, which offers an energy-
+drove the development to shrink even further the required          efﬁcient, secure, and affordable radio technology used in
+space for a full stack. A 6LoWPAN version compatible with          so-called long-range wide area networks (LoRaWAN). Due
+TinyOS was called Berkeley Low-Power IP stack (BLIP)               to the closed protocol situation, no paper completely summa-
+[32] and support different constrained device platforms with       rizes the current details of LoRa.
+the RF transceiver CC2420 from Texas Instrument, e.g., IRIS            LoRaWAN was speciﬁed by the non-proﬁt organization
+and TelosB, which is an IEEE 802.15.4-compliant radio              LoRa Alliance with more than 428 members, e.g., Swisscom,
+transceiver supporting the MTU of 127 byte [33]. The               Orange, Semtech, Bosch, Cisco, IBM, and Libelium, all over
+streamlined BLIP stack consists of the parts as illustrated in     the world [36]. LoRa uses frequencies within the license-free
+Fig. 9.5c [34]:                                                    ISM band (Europe 433/868 MHz, USA 915 MHz, and Asia
+                                                                   430 MHz). The communication is nearly free of interference,
+• IP Lower Interface: Link layer support is included with a        since frequency spreading is applied. The communication
+  6LoWPAN layer on top, and 6LoWPAN component com-                 range varies between 2 and 15 km depending on the environ-
+  presses headers and breaks large packets into multiple link      ment; however, LoRa proves even a successful signal recep-
+  layer fragments to compile with the MTU used.                    tion from a low orbit satellite [37]. The main advantage of
+• IP Interface: offering network functionality, such as IPv6       LoRa is its sensibility of 137 dBm, allowing for a deep
+  neighbor discovery, forwarding, routing (default selection,      penetration into buildings, thus increasing network availabil-
+  point-to-point), and dispatching.                                ity. LoRa devices and gateways communicate with each other
+• Transport Interface: supporting standard UDP and TCP             using different channels with data rates ranging from 0.290 to
+  protocols.                                                       50 kbit/s. To allow for an energy-efﬁcient operation, the adap-
+• Applications: including all relevant user protocols and          tive data rate (ADR) shall be provided on every end device.
+  algorithms.
+                                                                   LoRa Device Classes
+   BLIP always provides a tunnel for connecting the gateway        Communications in a LoRaWAN are always separated into
+to the outside world. Thus, since BLIP offers addressing,          uplink (UL) and downlink (DL) communications. While the
+stateless auto-conﬁguration, different header compression          UL relates to the communication from an end device to the
+features, and similar security features as 6LoWPAN, BLIP           gateway, the UL reached an end device. LoRa speciﬁes three
+enables IP communications for constrained devices.                 classes of devices [38]:
+
+Sigfox                                                             • Class A (“All”) are devices usually charged with batteries.
+The Sigfox Protocol [35] was developed and designed for              Normally, they reside in a sleep mode and are only acti-
+machine-to-machine (M2M) applications. As a proprietary              vated upon sending. UL messages can be originated at any
+protocol, backed by a number of hardware developers, it              time; i.e., the protocol follows the pure ALOHA design
+employs the differential binary phase-shift keying (DBPSK)           [39]). DL is only allowed during two consecutive recep-
+and the Gaussian frequency shift keying (GFSK) as the                tion windows opened directly after an UL transmission.
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                             173
+
+• Class B (“Beacon”) devices are similar to their counter-       Modulation
+  parts in class A, but include additional reception windows     Since the ISM band is located in Europe and the USA in the
+  synchronized to beacons originated by gateways.                902–928 MHz and 863–870 MHz bands, LoRa signals in the
+• Class C (“Continuous”) devices may almost always               ISM band are composed of so-called chirps modulated using
+  receive UL messages, except for an ongoing UL transmis-        the Chirp Spread Spectrum (CSS) technique [41]. Addition-
+  sion on the end device. Hence, such an operation is power      ally, the typical LoRa bandwidth (BW) is 500 kHz and
+  hungry.                                                        125 kHz in North America and Europe, respectively.
+                                                                     Thus, Fig. 9.7 displays an example UL LoRa transmission
+LoRaWAN Network Architecture                                     sent from an Arduino-based node equipped with a LoRa
+All LoRa-enabled devices use the LoRa MAC protocol,              shield based on regular SX1276/SX1278 transceivers. The
+which supports distinct applications running on top. “The        signal presented consists of up-chirps and down-chirps
+Things Network” (TTN) uses LoRaWAN to provide its                spread among the available channel. Up-chirps start with a
+services, e.g., device management, application manage-           signal of low frequency and increase the frequency over time,         9
+ment, duplicate ﬁltering, or payload reception and presen-       while down-chirps (or conjugated chirps) start with the signal
+tation [40]. LoRa end devices collect data, e.g., location       of a high frequency and decrease the frequency over time
+information or environmental data, and transmit them as a        (cf. Fig. 9.7). For example, in Europe, assuming the center
+LoRa transmission to a gateway (cf. Fig. 9.6. The transmis-      frequency of 868.5 MHz and 125 kHz BW, an unmodulated
+sion may be received through multiple gateways at the same       up-chirp (respectively, down-chirp) would linearly change its
+time, since end nodes are not attached to any particular         frequency between 868.4375 MHz and 868.5625 MHz in
+gateway. When a gateway receives a LoRa packet, it for-          time. The UL signal begins with a so-called preamble
+wards the packet over the Internet to the network server.        consisting of 10 unmodulated up-chirps. Those are then
+The TTN receives the data and releases it toward the end         followed by two and “a quarter” unmodulated down-chirps
+user using an API. These data become available for autho-        that point out the end of the preamble and indicate the
+rized users only. The TTN stores these data received only        subsequent payload. The payload consists of symbols coding
+for a limited amount of time, allowing end users to store the    the header, the message, and a cyclic redundancy check
+data on a third-party storage service in the network, e.g., a    (CRC) used for ﬁnal error detection. The unmodulated
+stand-alone server) [3]. Users can run multiple applications     up-chirp is deﬁned in the time-domain using the following
+receiving and processing the data for their own purposes         formula [41]:
+such as tracking, monitoring, or data analysis.
+                                                                                                       k 2
+                                                                      ϕup ðtÞ ¼ A exp i ϕ0 þ 2π f 0 t þ t              ,      ð9:1Þ
+                                                                                                       2
+
+                                                                 where A is the signal amplitude, i is the imaginary unit, ϕ0 is the
+                                                                 initial phase of the signal, f0 is the lower frequency bound
+                                                                          BW            2SF
+                                                                 f0 ¼         , TS ¼         is the chirp duration [46], SF is a
+                                                                          2             BW
+                                                                 so-called spreading factor (SF), and k is the frequency change
+                                                                                 BW
+                                                                 coefﬁcient k ¼     : The unmodulated down-chirp is produced
+                                                                                   TS
+                                                                 using the complex conjugate (c.c.) of the unmodulated up-chirp:
+                                             Network server      ϕdown ðtÞ ¼ ϕ⁎up ðtÞ: A varying SF (i.e., SF ∈ {7...12}) inﬂuences
+                                                                 the air time, when keeping the packet size and BW constant. The
+                                                                 higher the SFs, the longer the time on the air; higher SF typically
+                                                                 mean longer range; i.e., SF7 and SF12 have the shortest and the
+                                                                 longest range, respectively. It is also worth noting that increas-
+                                                                 ing SF by 1 doubles the symbol duration, while the spreading
+                                                                 factors are orthogonal to each other, meaning that signals with
+                                                                 different spreading factors do not interfere with one another.
+                                                                 This is a so-called code division multiple access (CDMA)
+                                                                 property, in which a shared medium is adapted for multiple
+                                                                 access from concurrent terminals.
+    End devices         Gateways
+                                                                     To produce a DL LoRa signal, the modulator ﬂips all
+                                                                 down-chirps up and vice versa, i.e., using the c.c. of the
+Fig. 9.6 LoRaWAN network diagram                                 regular LoRa UL signal. Please notice the effective preamble
+174                                                                                                                                                 B. Stiller et al.
+
+
+
+                       100 kHz
+
+
+                      –100 kHz
+
+
+
+Fig. 9.7 Authors’ recording [42] of an UL transmission by an Arduino (Atmel AVR) node [43] Equipped with a LoRa shield [44] presented in
+Inspectrum [45]
+
+
+Fig. 9.8 Authors’ recording [42]
+of a DL transmission by a LoRa             100 kHz
+gateway node toward Arduino
+(Atmel AVR) node [43] Equipped
+with a LoRa shield [44] presented
+in Inspectrum [45]                     –100 kHz
+
+
+
+
+consisting of 10 down-chirps, followed by 2.25 up-chirps,
+which precedes the message only encoded with down-chirps                     a)           3
+                                                                                        2.5          Symbol#1           Symbol#2                         R{}
+(cf. Fig. 9.8).                                                                           2                                                              T{}
+    As an example (cf. Fig. 9.9), three symbols are modulated                           1.5                                   T
+                                                                                                                        32 × 2SFS
+                                                                                                                                                   T
+                                                                                                                                             64 × 2SFS
+                                                                             Signal
+
+in the BW ¼ 125 kHz and SF ¼ 7 LoRa setup. The ﬁrst                                       1
+                                                                                        0.5
+symbol is an unmodulated chirp, while the second and third                                0
+symbols are modulated with a value 32 and 64, respectively.                            –0.5
+                                                                                         –1
+A modulated chirp is based upon a quantized time-shifting                                        0              0.001                0.002                0.003
+(max 2SF states) of the unmodulated chirp. It, therefore,                                                                   t (s)
+encodes SF bits and is modulated by playing the
+unmodulated chirp in advance, where the time shift
+(i.e., advance) for the SF-long bit stream b ∈ {0. . .2SF  1}               b)         60
+                                       T                                                40
+is quantized and deﬁned as t ¼ b  SFS (cf. Fig. 9.9a). When
+                                       2                                                20
+                                                                             f (kHz)
+
+
+
+
+the upper bound frequency is reached after T S  t, the mod-                             0
+ulator restarts with the beginning of the unmodulated chirp to                         –20                                                    BW × 264
+                                                                                                                                                     SF
+
+
+ﬁll out the remaining part of the symbol, i.e., T S  t, T S : As                      –40
+                                                                                                                         BW × 232
+                                                                                                                                SF
+
+a consequence, cf. Fig. 9.9b, the modulated chirp starts with a                        –60
+                                                                                             0                  0.001                0.002                0.003
+signal of a little higher than f0 initial frequency, i.e., f 0 þ                                                            t (s)
+         b
+BW  2SF , continues until the upper frequency bound f0 þ
+BW is reached and restarts with f0 until the initial frequency            Fig. 9.9 LoRa modulation: (a) an example modulated signal in time
+            b
+f 0 þ BW  SF : Effectively, there are 2SF frequency bins                 and (b) frequency change of the modulation in time
+             2
+                                                          b
+called chips, i.e., ∀b∈f0...2SF 1g : f 0 þ BW  SF ,           coding    (https://blog.semtech.com/title-10-things-about-lorawan-
+                                                      2
+SF-long bit streams.                                                      nb-iot).
+                                                       4
+                                                     4þCx
+   The bit rate Rb is evaluated by Rb ¼ SF                   , with Cx   Coding, Whitening, and Interleaving
+                                                     2SF
+                                                     BW                   LoRa signals are encoded to channel with a modiﬁed Ham-
+being the coding rate for the error correction scheme [47].               ming coding [41] of a given coding rate (CR), where CR
+Therefore, an elevated coding rate lowers the bit rate, as with           denotes the fraction of data carrying the actual information.
+the higher Cx, more redundancy is added by the error cor-                 The channel code provides reliability to noise by introducing
+rection scheme. In the case of BW ¼ 125 kHz, the highest                  redundancy, which results in a longer binary sequence. There
+data rate of 5.5 kbit/s and the lowest data rate of 0.290 kbit/s          are four different coding schemes, Cx ∈ {1, 2, 3, 4},
+is achieved with Cx ¼ 1 and SF7 and Cx ¼ 4 and SF12,                      resulting in different CR ¼ 4/(4 þ Cx). Coding acts on data
+respectively. The link budget is estimated at 155 to 170 dB               nibbles (i.e., 4 bits) producing longer sequences of 4 þ Cx
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                          175
+
+bits. For example, for Cx ¼ 1, 4/5 of the data are the actual    9.3.6    Radio Frequency Identification
+information, while the remaining bits are used for error
+correction [46]. The higher the Cx (i.e., 1–4), the largest      Radio Frequency Identiﬁcation (RFID) is standardized within
+amount of corrupted information can get successfully             the ISO/IEC 18000 series [51]. The original idea was to tag
+corrected by forward error correction (FEC); however, more       objects, allowing to register and track them when passing a
+redundant bits need to be transmitted as well. It is worth       special reading device. Therefore, electromagnetic ﬁelds are
+noting that the header is always encoded with the highest        used. These tags are passive devices containing electronic
+coding rate, Cx ¼ 4, because the header contains crucial         information about the object (e.g., name or product number).
+transmission information such as the message coding rate or      Normally, those tags are passive devices requiring energy
+packet length. However, a channel coder also introduces bit      from nearby readers to interrogate with them, but not being
+correlations in the resulting binary sequences.                  directly under them unlike barcodes. For successful readings,
+    To remove the correlation, the whitening procedure is        a distance of a few centimeters is assumed. In case they need
+used, which calculates the binary eXclusive OR (XOR) func-       to be read from a further distance, e.g., some hundred meters,     9
+tion over the binary data encoded and known sequences            the tags require a local power source and are called active
+possessing good statistical properties [48] to improve the       tags in turn. RFID tags usually operate on different ISM
+randomness of the data stream. Subsequently, the inter-leaver    bands depending on national regulations. The most common
+scatters the coded and whitened sequence in time to improve      ones used for passive tags include [52, 53]:
+burst error-correcting capacity of the signal impacted by the
+impulsive noise. LoRa uses a diagonal inter-leaver that          • 13.56 MHz for communication distance between 10 cm to
+makes sure that an entirely corrupted chirp only affects one       1m
+bit per code word, which can be easily recovered by the FEC      • 865–868 MHz in Europe and 902–928 MHz in North
+mechanism. To this end, an SF  (Cx þ 4) matrix is delivered       America for a distance of 1–12 m
+ﬁlled by SF code words row by row. The resulting matrix is       • 433 MHz for a distance of 1–100 m
+then rotated upside-down, circularly shifted downward using
+the column index, and transposed, resulting in a (Cx þ 4)           For active tags, usually 2450–5800 MHz is used
+SF matrix.                                                       supporting distances between 1 and 2 m, and it is envisioned
+    Finally, chirps are modulated using the gray transforma-     to use also the ultra-wide band 3.1–10 GHz for communica-
+tion of the resulting SF-long bit words received from the        tion up to 200 m. Over the decades, properties of RFIDs
+received matrix row by row. The reason for gray coding is        developed further and signaling developed depends on the
+that adjacent symbols encoding binary values differ in only      frequency used (cf. ISO/IEC 18000 series [51]). RFID tags
+one bit. Therefore, small chip detection errors (e.g., 1) can   can respond to radio signals, store additional information,
+be efﬁciently corrected by FEC.                                  and can comprise smart card capabilities with simple pro-
+                                                                 cessing power.
+                                                                     The original idea of tracking items still holds today, but
+9.3.5    DASH7                                                   the application area became broader together with the emer-
+                                                                 gence of IoT together with the cheap development possibil-
+The DASH7 Alliance (D7A) protocol [49] is an active RFID         ities of active tags [54, 55]. Today, RFID tags can be attached
+alliance standard for 433, 868, and 916 MHz wireless sensor      to clothing or personal items, e.g., bikes, drawings, and
+communications based on the ISO/IEC 18000-7 standard.            inventory, or can be implanted in bodies. Especially, the latter
+ISO/IEC 18000-7 deﬁnes parameters of the active air inter-       usage raised privacy concerns [56], and thus, standardization
+face communication.                                              happened addressing this issue. For example, the standards
+    D7A [50] builds upon an asynchronous WSN MAC.                ISO/IEC 18000 and ISO/IEC 29167 specify methods to make
+DASH7 provides multi-year battery life, range of up to           devices untraceable by using on-chip cryptography and to
+1–2 km, low latency for connecting with moving things, a         support tag and reader authentication [51]. In order to support
+very small open-source protocol stack, and the AES 128 bit       authenticity, the ISO/IEC 20248 standard speciﬁes digital
+shared key encryption support. The standard depends on the       signatures for RFIDs.
+Gaussian frequency shift keying (GFSK) modulation and
+supports the communication capacity of 13–200 kbit/s             Z-Wave
+using 4–16 channels. The architecture of DASH7 resembles         In the context of low-power RFID communications, a typi-
+LoRa, in which the end devices (ED) connect to gateways          cally used protocol is termed Z-Wave, which supports home
+(GW) to report data toward a network server (NS); how-           automation applications [57]. Thus, sensors, lamp, shutter,
+ever, DASH7 uses CSMA/CA as the medium access                    and blind controllers determine in a smaller geographical
+technique.                                                       distance the setup, which offers low-latency communications
+176                                                                                                                   B. Stiller et al.
+
+and is shielding from other wireless technologies. Z-Wave          and radio frequency speciﬁcations. The NFC Forum and
+IoT protocols are implemented as a proprietary system on a         vendor-speciﬁc organizations are only involved, if speciﬁc
+chip (now standardized and maintained by the Z-Wave Alli-          hardware and software are in place, which is highly
+ance) and use the sub-1 GHz band, especially between               inﬂuenced by applications.
+856 and 926 MHz, are easily conﬁgured and setup as a
+source-routed mesh network architecture, and the physical
+range covers up to 100 m. They provide cloud access via a          9.3.8    Bluetooth (IEEE 802.15.1)
+gateway, the Z-Wave bridge. Data rates achieved so far are
+between 40 and 100 kbit/s. The interoperability of Z-Wave is       Bluetooth is a wireless communication standard for commu-
+reached at the application layer only, since IoT devices can       nications over short distances,, e.g., wireless headsets, which
+share information and allow all Z-Wave hardware and soft-          resulted in the standard IEEE 802.15.1 for PANs. It operates
+ware to interoperate.                                              in the ISM band from 2.4 to 2.485 GHz, allowing for a data
+                                                                   exchange between ﬁxed and mobile devices and between two
+                                                                   mobile devices within a maximum range of 100 m. The radio
+9.3.7    Near-Field Communication                                  technology deploys a frequency hopping spread spectrum to
+                                                                   enable sending of data in a robust manner. Bluetooth is a
+Near-ﬁeld communication (NFC) embraces a set of commu-             packet-based protocol, where a master and slaves form a
+nication protocols enabling devices to exchange data within a      piconet, which utilizes the same hopping sequence. While
+short distance of a few meters or even far below. It is based on   in general more than 200 devices can be part of a piconet,
+RFIDs. Today, NFC is commonly used for contactless pay-            only eight in total can be active due to the address space
+ment systems, electronic keycard systems, and electronic           assigned. Parked devices can become active, if another
+identity documents, but may be also found in social network-       device moves to park.
+ing for sharing small pieces of data, e.g., contact information,       The hopping pattern within each piconet is determined by
+photographs, or ﬁles.                                              the master and the 1 MHz channel shared. In case a device
+   The technology is based on the ISO/IEC 18092:2004               wants to join the piconet and a slave position is free, it needs
+standard revised by ISO/IEC 18092:2013 [58]. Devices are           to synchronize with the hopping frequency used. The master
+coupled and communicated over 13.56 MHz. The data rates            coordinates the packet exchange with his clock ticking in
+supported range from 106 to 424 kbit/s. To exchange data           312.5 μs intervals. A slot is deﬁned by two clock ticks,
+between coupled devices, three main requirements must be           resulting in 625 μs. The master always transmits in evenly
+fulﬁlled: (a) The two devices need to be in range, (b) one         numbered slots and receives in odd numbered slots, vice
+device needs an Internet connectivity, and (c) the other device    versa for all slaves. Depending on the number of devices
+requires a corresponding application installed. Therefore, an      participating in the communication, the throughput per
+NFC device can work in three modes [59]:                           device drops quickly due to the 1 MHz/s data rate. Thus,
+                                                                   forming groups of piconets leads to scatternets, where over-
+1. The “NFC card emulation”: Mode enables devices to act           lapping communication ranges allow devices to participate in
+   like smart cards; the user can perform transactions, such as    both piconets.
+   a public transport ticket’s payment.                                The Bluetooth protocol stack consists of a proﬁle and core
+2. The “NFC reader/writer”: Mode allows reading informa-           speciﬁcation. The proﬁle speciﬁcation manages functions
+   tion stored at speciﬁc tags; used in logistics or shops to      required to adapt the technology to legacy and new applica-
+   collect detailed information on a product.                      tions. The core speciﬁcation includes all protocols required
+3. The “NFC peer-to-peer”: Mode is similar to an ad hoc            and supported by the PHY and MAC layer, including man-
+   scenario allowing devices to exchange information with          agement functions. Those protocols include the following
+   each other directly, such as via contactless chip cards.        ones [20]:
+
+    NFC transmitters can be active or passive [60]; thus, the      • The radio element is responsible for the speciﬁcation of
+device can establish a connection on its own. Alternatively,         the air interface: managing frequencies, modulation, and
+the device has no power supply and cannot start a connection         transmission power.
+on its own. Thus, data may only ﬂow in one direction, e.g.,        • The baseband element is responsible for the basic connec-
+from the tag to the smartphone.                                      tion establishment, packet formats used, timing, and basic
+    Different organizations are responsible for different parts      quality-of-service (QoS) parameters.
+of the protocol stack depending on the signaling type used,        • The link management protocol is responsible for setting
+i.e., NFC-A, NFC-B, NFC-F, or P2P [61, 62]. Standardiza-             up the link and the management, (e.g., including security
+tion organizations are responsible for physical characteristics      or parameter negotiation) between participating devices.
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                          177
+
+• The logical link control and adaptation protocol, the Log-       generations 1G to 5G and less used privately operated net-
+  ical Link Control and Adaptation Protocol (L2CAP), han-          works, such as WiMAX [20].
+  dles the adaptation of higher layers to the baseband.                Cellular networks’ architectures show a strong hierarchi-
+• The service discovery protocol checks the neighborhood           cal approach, including within the BS a base transceiver
+  of devices in close proximity and queries service charac-        station (BTS) and a base station controller (BSC), one or
+  teristics of these.                                              multiple mobile switching centers (MSC), different location
+                                                                   registers (home and visiting), and gateways to the public
+   On top of L2CAP, other protocols are located dealing with       switched telephone network (PSTN). Those components
+the communication support, such as the cable replacement           interoperate as follows [20]: Mobile devices call other
+protocol and the telephony control protocol. The host con-         devices by using E.164-based phone numbers, which are
+troller interface (HCI) is located between the baseband and        routed for remote receivers by the BS and the respective
+the L2CAP and acts as a broker between hardware and                MSC to the serving MSC within the same cellular network
+software.                                                          or via the gateway to the PSTN. In case that phone number        9
+   The Bluetooth Low Energy (BTLE) provides an energy-             had been registered within the visiting register, a local MSC
+saving version of Bluetooth [63]. It follows the master/slave      and its serving BS can route the call to the respective cell.
+architecture of piconets with a small modiﬁcation: The slave           In order to communicate, all mobile devices have to hold a
+sends advertising frames to discover the neighborhood on           subscription to a public cellular network provided, who
+dedicated advertising channels. Thus, available masters scan       maintains user identiﬁcation and relevant contractual data.
+those advertising channels, whether it has not yet reached the     In case this mobile device communicates within its home
+limit of the number of allowed slaves. If that has not been        provider appropriate communication, the local contract,
+reached, the master was successful and the advertised slave        including respective accounting and payment services,
+becomes connected. In order to save slave’s energy resources,      applies. Within a visiting cellular network, communication-
+the master deﬁnes individual cycles and scheduling                 only works are roaming agreements between the participating
+sequences, which leads to the situation in which the slave is      network providers exist and the mobile device’s subscription
+only awake if needed [3].                                          allows for roaming services to be used.
+                                                                       While roaming support is required due to the mobility of
+                                                                   devices, handovers between cells are based on signal moni-
+                                                                   toring. If the distance between a mobile device and the “old”
+9.4      Cellular Networks (WAN)
+                                                                   BS grows beyond a certain threshold and if a “new” BS is in
+                                                                   reach, four different handover scenarios can be distinguished:
+Besides communication standards in use within the IoT con-
+                                                                   (a) intra-cell handover within a single BTS’ range, thus, onto
+text in the PAN and LAN area, WAN-related technical solu-
+                                                                   a different frequency, (b) an inter-cell/intra-BSC handover
+tions exist, too. Since typically only resource-rich devices can
+                                                                   between two different BTS, but one MSC, (c) an inter-BSC/
+make use of general public wireless access networks, such as
+                                                                   intra-MSC handover between two different BSCs, but one
+cellular networks from the 1st to the 5th generation, with a
+                                                                   MSC, and (d) an inter-MSC handover between different
+clear exception to LTE in 4G and within 5G, only the major
+                                                                   MSCs, which potentially can support inter-technology hand-
+characteristics of cellular networks are discussed here. LTE for
+                                                                   overs. In case of a typically seamless handover, the new
+IoT will be reﬁned in Sect. 9.5, since many IoT applications
+                                                                   connection to the new BS is established before the one to
+call for an operation over longer distances at a higher cost.
+                                                                   the old BS is canceled; thus, the mobile device does not
+                                                                   recognize the cell change at all.
+                                                                       The term “horizontal handover” had been introduced for
+9.4.1    General Architecture                                      similar technology in use, while a “vertical handover” hap-
+                                                                   pens between different communication technologies. The
+Om general, a cellular network operates on the WAN basis           latter rise in importance for communications in an IoT con-
+and offers within “cells,” each of which is equipped with a        text, since data or data ﬂows from sensor networks
+base station (BS) acting as a transceiver. Although the cell       interconnected via a cellular network-enabled gateway pro-
+size varies between a few hundred meters up to 25 km, cells        vide long-distance access to these locally deployed networks.
+will overlap and, thus, communications for mobile devices,
+typically smartphones and tablets, need handovers between
+cells. Appropriate mobility support is embedded within the         9.4.2    System Generations
+respective standards. As outlined in Fig. 9.1, manifold com-
+munication standards for interconnecting IoT devices are in        The set of standards for cellular networks has seen an almost
+place, such as public wireless access networks in the              four decades lasting development, including the generations
+178                                                                                                                     B. Stiller et al.
+
+Table 9.1 Comparison of cellular network generations 1G to 5G based on [64]
+                 1G               2G/2.5G                     3G                         4G                     5G
+Development      Since 1970       Since 1980                  Since 1990                 Since 2000             Since 2010
+Operations       Since 1982       Since 1992/2000             Since 2001                 Since 2004/2006/2009   Since 2020
+Standards        NMT, AMPS,       2G: GSM, 2.5G: GPRS,        GPRS, EDGE,                UMTS, HSDPA, LTE       5G (MIMO)
+                 TACS             HSCDS, EDGE                 W-CDMA, CDMA-2000          and LTE-A
+Technology       Analog           Digital IP Access           Digital IP Access          Digital All IP         Digital Broadband All
+                                                                                                                IP
+Switching        Circuit          2G: Circuit 2.5G: Packet    Packet                     All Packet             All Packet
+Medium           FDMA             FDMA, TDMA, CDMA            FDMA, TDMA, CDMA           FDMA, TDMA,            FDMA, TDMA,
+Access                                                                                   CDMA, OFDMA            CDMA, OFDMA
+Bandwidth        2 kbit/s         14.4 ... 64 kbit/s          <2 Mbit/s                  <200 Mbit/s            >1 Gbit/s
+Core             PSTN             2G: PSTN 2.5G: Packet       Packet Network, Internet   Packet Network,        All Internet
+Network                           Network                     Access                     Integrated Internet
+Handovers        Horizontal       Horizontal                  Horizontal                 Horizontal, Vertical   Horizontal, Vertical
+Services         Voice            2G: Voice Short             Integrated 2.5G: Data      Integrated Voice and   All Data Voice and
+                                  Messaging                                              Data                   Data
+
+
+
+
+1G to 5G. Thus, Table 9.1 compares these cellular standards          method “packet switching” required technical changes in the
+[64]. The development of the ﬁrst generation 1G cellular             underlying cellular network architecture, except for the air
+networks supported approximately 2 kbit/s bandwidth based            interface. Thus, 3G packets consist of a header (used to route
+on purely analog communications. PSTNs had been                      the packet) and a payload, including data extracted from the
+interconnected with horizontal handovers only, while a ded-          application or IoT devices interconnected. 3G technology
+icated communication channel (circuit) had to be established.        still supports horizontal handovers only.
+This communication supports phone communications                         At the turn of the century, all IP networks, fully packet-
+(voice); thus, circuit switching is based originally on              switched, broadband, and with a high speed (larger band-
+FDMA (frequency division multiple access).                           width up to 200 Mbit/s per cell), the convergence of WLAN/
+    Improvements in hardware capabilities, a full digitization       cellular and packet-based networks had been reached in a
+of communications, and the rising number of mobile devices           fully digital approach. The 4G standards include IMT2000
+leads to the second-generation 2G standard, including GSM,           (International Mobile Telecommunications), UMTS (Univer-
+which delivered bandwidth between 14 and 64 kbit/s. Since            sal Mobile Telecommunication System), HSDPA (High-
+the underlying core network remained unchanged as for 1G,            Speed Downlink Packet Access), LTE (Long Term Evolu-
+horizontal handovers were supported only. All communica-             tion), and LTE-A (Long Term Evolution Advanced). As a
+tions are based on FDMA, TDMA (time division multiple                consequence, the support of horizontal and vertical hand-
+access), or CDMA (code division multiple access). While for          overs became a reality and combined with the use of uniﬁed
+TDMA the same frequency of a channel is subdivided into              IP addresses the seamless convergence of PAN, LAN, MAN,
+time slots, each mobile device uses a negotiated time slot, and      and WAN networks was achieved. All switching is packet-
+CDMA allows for several transmitters to send data simulta-           based, and the orthogonal frequency division multiple access
+neously over a single communication channel (frequency) by           (OFDMA) had been deployed to provide robust and stable,
+applying orthogonal codes to each sender individually                high data rates. The service variety offered now access to any
+according to the spread spectrum model. Besides voice,               type of local network at the data level; thus, IoT-based com-
+2.5G extended 2G by packet switching on top of existing              munications can be integrated in 4G as long as an IoT
+circuits. Such software-only extensions into General Packet          gateway in service offers a 4G interface and interconnection.
+Radio Service (GPRS), High-speed Circuit-Switched Data               Since especially the LTE Category M (LTE Cat. M) and LTE
+Service (HSCDS), and Enhanced Data Rates for GSM Evo-                Category N (LTE Cat. N) – also called narrow band (NB)-IoT –
+lution (EDGE) in their basic forms.                                  have been speciﬁed in 3rd Generation Partnership Project
+    Further technology developments resulted in the 3G stan-         (3GPP)’s Release 13, they are discussed in special detail
+dard, including extended GPRS and EDGE, which supports               within Sect. 9.5.
+up to 2 Mbit/s per cell by applying wideband-CDMA                        Very recently, the 5th generation of cellular networks
+(W-CDMA) and interfacing for the ﬁrst time directly to               termed 5G has started operations, which means that up
+packet-based networks, such as an IP network. Besides                20 Gbit/s bandwidth per cell is expected. Thus, massive
+high-quality voice and video services, also data transmission        capacity and massive connectivity, an increasingly diverse
+was integrated. Thus, for data communications, the switching         set of services and applications, and highly ﬂexible and
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                            179
+
+efﬁcient use of available non-continuous frequency bands are     frequency (RF)-enabled terminals, referred to as user equip-
+at the doorstep. 5G is often nominated as the IoT enabler,       ment (UE). UEs are mobile, so the mobility plays the key role
+since those billions of IoT devices already deployed and         in the design of cellular networks. A UE attached to an eNB
+others to come can communicate now directly with the 5G          can migrate to other cells via the handover mechanism, which
+network and, theoretically, do not necessarily need an IoT       in LTE is initiated by the serving eNB. The eNB uses the
+gateway anymore. However, this is only achieved, if power        knowledge of signal strength measurements of neighboring
+supply and device sizes are considered at right scales. There-   cells reported by the UE to initiate a UE handover. LTE only
+fore, OFDMA-based communications via MIMO (multiple-             supports a so-called hard handover, in which a channel in the
+input and multiple-output) antennas will still require for       source cell is released and then the channel in the target cell is
+practical reasons a resource-rich IoT gateway device inter-      re-established [65].
+facing with locally deployed IoT devices. Thus, the hierar-
+chical structure of IoT-based networks, gateways, and public
+wireless access networks will remain, although the services      9.5.1    Interfaces and Protocols                                    9
+being used directly and the bandwidth being available will
+enhance IoT-based use cases dramatically.                        LTE speciﬁes the radio interface (the so-called LTE-Uu inter-
+                                                                 face) to allow for a communication between an eNB and a UE
+                                                                 using a vertical protocol stack with horizontally separated
+                                                                 control and data planes (cf. Fig. 9.11). The layers between the
+9.5        Cellular for IoT
+                                                                 PHY layer at the bottom and the Radio Resource Control
+                                                                 (RRC) on the control plane (cf. Fig. 9.11a) or the Packet Data
+As already introduced above, the 3GPP LTE standard offers
+                                                                 Convergence Protocol (PDCP) on the data plane
+two ﬂagship techniques to transport data for IoT applications,
+                                                                 (cf. Fig. 9.11b) at the top are referred to as the Access Stratum
+namely LTE Category M (LTE Cat. M) and LTE Category N
+                                                                 (AS). When a UE establishes an RRC connection to an eNB
+(LTE Cat. N), which are also called narrow band (NB)-IoT
+                                                                 (on the control plane), the UE may communicate with the
+and speciﬁed in 3GPP’s Release13. Two further approaches,
+                                                                 non-access stratum (NAS) functionality exposed by the core
+the LTE Category 0 (LTE Cat. 0) and the Extended Coverage
+                                                                 network (CN). As an example, the LTE network attachment
+(EC)-GSM-IoT reduce the complexity of mobile devices,
+                                                                 procedure, which activates radio and Evolved Packet System
+increase the sensitivity of the receiver allowing for lower
+                                                                 (EPS) bearers that, in turn, carry the Internet Protocol
+signal-to-noise (SNR) regimes, decrease manufacturing
+                                                                 (IP) between the UE and the CN on the data plane [66], is
+costs of devices, and increase energy efﬁciency of network
+                                                                 exposed through the CN NAS.
+operations.
+   The main characteristics of LTE are that it is a cellular
+                                                                 Radio Resource Control
+network (cf. Fig. 9.10) working in the licensed radio spec-
+                                                                 The RRC protocol terminates the AS control plane on the eNB
+trum range and is operated by the mobile network operator
+                                                                 and provides the following functions: broadcast of AS/NAS
+(MNO). The radio access network (RAN) in LTE relies on an
+                                                                 system information, establishment, maintenance, and release
+evolved Node B (eNB), which is the central coordinator of
+                                                                 of RRC connections between a UE and the eNB, radio and
+the cell. The cell provides network coverage to radio
+                                                                 EPS bearer management, security handling, UE measurement
+                                                                 reporting and conﬁguration, handover, forwarding of NAS
+                                                                 messages between the UE and the CN, and paging (initiate
+           RAN                                                   services for UEs being currently in the idle mode) [67]. Typ-
+                                LTE Uu
+                                    S1
+                                                                 ically, protocols involved in the network operation operate in
+                                   SGi
+                                                                 terms of Service Data Units (SDU) on the northbound and
+                                                                 Protocol Data Units (PDU) on the southbound interface. The
+                                                                 PDCP (Packet Data Convergence Protocol) [68] protocol,
+                                                                 which is provided directly below the IP layer on the user
+                                               Internet          plane (i.e., the IP packet is the PDCP SDU) and the RRC
+                                                                 layer on the control plane (i.e., the RRC packet is also a PDCP
+                                 CN                              SDU), is responsible for the compression of upper protocol
+                                                                 layers and integrity protection and encryption [69].
+      UE         eNB
+                                                                 Radio Link Control
+                                                                 The radio link control (RLC) layer resides directly below the
+Fig. 9.10 LTE network diagram                                    PDCP layer [68]. RLC operates in three modes, i.e.,
+180                                                                                                                 B. Stiller et al.
+
+Fig. 9.11 LTE protocol stack: (a)
+control plane and (b) user plane    a)                                                                        CN
+
+                                               NAS                                                            NAS
+
+                                               RRC                      RRC         S1-C                     S1-C
+
+                                              PDCP                     PDCP         SCTP                     SCTP
+
+                                               RLC                      RLC          IP                        IP
+
+                                              MAC                      MAC           L2                       L2
+
+                                               PHY                      PHY          L1                       L1
+
+                                               UE             LTE Uu          eNB             S1            MME
+
+
+                                    b)                                                                        CN
+
+                                                IP                                                             IP
+
+                                              PDCP                     PDCP         S1-U                     S1-U
+
+                                               RLC                      RLC          IP                        IP
+
+                                              MAC                      MAC           L2                       L2
+
+                                               PHY                      PHY          L1                       L1
+
+                                               UE             LTE Uu          eNB             S1           S/P GW
+
+
+
+
+acknowledged mode (AM), unacknowledged mode (UM),              type of information basis (i.e., control or data) are sent over a
+and transparent mode (TM). In AM, the SDU provided is          single transport channel; therefore, MAC multiplexing and
+segmented and acknowledged allowing for error correction       demultiplexing, respectively, are required in the downlink
+through the Automatic Repeat reQuest (ARQ) mechanism           (DL) and uplink (UL) direction, respectively. The MAC
+and segmentation and reassembly, reordering, and duplicate     layer also prioritizes logical channels among many UEs in
+detection. The UM only allows for segmentation with            the transport blocks. Moreover, the MAC is responsible for
+reordering and duplicate detection, while TM transparently     an Hybrid Automatic Repeat reQuest (HARQ), which is
+passes PDCP SDUs (i.e., no segmentation in this case)          deﬁned as a combination of forward error correction (FEC)
+toward the MAC layer below, allowing for error detection       and ARQ mechanisms allowing for a very fast retransmission
+with recovery.                                                 of transport blocks within a time frame of smaller than 10 ms.
+   The RLC deﬁnes logical channels, focusing on the type of        Typically, the information in the transport block is
+information transported through the underlying MAC layer.      encoded using FEC, allowing the receiver to correct certain
+More speciﬁcally, different control channels are speciﬁed      errors in the data stream received. Upon a successful recep-
+(e.g., Broadcast Control Channel (BCCH), Common Control        tion of the information, the receiver issues an acknowledg-
+Channel (CCCH), Paging Control Channel (PCCH), and             ment (ACK) that notiﬁes the transmitter about the successful
+Dedicated Trafﬁc Channel (DTCH) to transmit data               reception, allowing the transmitter to continue with the sub-
+(cf. Fig. 9.12).                                               sequent transport blocks. However, when the information is
+                                                               received incorrectly, the receiver issues a negative acknowl-
+Medium Access Control                                          edgment (NACK), which triggers a retransmission of lost
+The MAC layer [69] receives RLC SDUs using logical chan-       data at the transmitter. Normally, the majority of transmission
+nels and decides on how the SDU shall be transported to PHY    (TX) errors are corrected by the HARQ mechanism.
+through transport channels. There are only a few transport         Finally, the MAC layer is also involved in control opera-
+channels established between the MAC and PHY, e.g., broad-     tions, such as (a) Discontinuous Reception (DRX), in which
+cast channel (BCH), downlink shared channel (DL-SCH),          the UE changes its status from RRC_CONNECTED
+random access channel (RACH), or uplink shared channel         (i.e., with connected signaling (SRB) and data (DRB) radio
+(UL-SCH). Typically, many logical channels working on the      bearers) to RRC_IDLE, in which radio bearers are
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                    181
+
+
+
+    a)                                                                                                              Logical channels
+             PCCH            BCCH           CCCH            DCCH            DTCH         MCCH           MTCH
+
+
+
+
+                                                                                                                  Transport channels
+              PCH             BCH                                          DL-SCH                        MCH
+
+
+              DCI                                                            CFI           HI
+
+                                                                                                                   Physical channels
+             PDCCH           PBCH           PDSCH                          PCFICH        PHICH          PMCH
+                                                                                                                                             9
+
+
+
+                                b)                                                        Logical channels
+                                            CCCH            DCCH             DTCH
+
+
+
+
+                                                                                        Transport channels
+                                            RACH           UL-SCH
+
+
+
+                                                                              UCI
+
+
+                                                                                         Physical channels
+                                           PRACH            PUSCH           PUCCH
+
+
+
+
+Fig. 9.12 LTE channel structure: (a) DL channel structure, (b) UL channel structure
+
+disconnected, and the node should only monitor the PCCH                 to be a good solution for end terminals for mitigating the
+for upcoming mobile terminated (MT) requests to save                    problem of power peaks.
+power, (b) alignment of the UL timing advance (TA) on the                   The LTE PHY features a high spectrum ﬂexibility, while
+connected UE, (c) power head-room reporting, in which UEs               the frequency spectrum is scheduled dynamically to UEs
+notify the eNB about the remaining power room on the UL to              through physical resource blocks (PRBs). Every PRB con-
+inﬂuence on scheduling, (d) scheduling of UE UL transmis-               sists of 180 kHz blocks (cf. Fig. 9.13), i.e., 12 subcarriers,
+sions, and (e) random access (RA) providing resources to                and lasts 1 ms, while every subcarrier spans a 15 kHz spec-
+UEs without allocated resources.                                        trum range (i.e., 15 kHz subcarrier spacing) [71]. LTE sup-
+                                                                        ports two fundamental modes of operations of PHY, i.e., LTE
+Physical                                                                frequency division duplex (LTE-FDD) and LTE time division
+The LTE PHY [70] uses a hybrid access scheme consisting of              duplex (LTE-TDD). LTE-FDD operates in paired frequency
+orthogonal frequency division multiple access (OFDMA) on                ranges, meaning two disjoint spectrum ranges for UL and
+the DL and single-carrier frequency division multiple access            DL, while LTE-TDD uses an unpaired channel. Therefore,
+(SC-FDMA) on the UL. Such an asymmetric access tech-                    UL and DL are carried out in a single channel, where UL is
+nique solves the peak-to-average power ratio problem of                 separated from DL in time. LTE-FDD is by nature full-
+OFDMA. In orthogonal frequency division multiplexing                    duplex; however, when a UE cannot transmit and receive at
+OFDM, the fast Fourier transform (FFT) may produce a                    the same time, the LTE-FDD-half duplex can be used.
+high peak power to average power value. OFDM has to be,                 LTE-TDD is, in turn, by nature a half-duplex mode of oper-
+therefore, avoided in transmitters on client terminals, as it           ation. Full-duplex LTE-FDD requires a duplexer to separate
+may only be used on grid-powered eNBs. SC-FDMA seems                    UL and DL frequencies on the UE to avoid the reception port
+182                                                                                                                                                                        B. Stiller et al.
+
+                                                                                                                       through a Special SubFrame (SSF) of 1 ms to give UEs time
+                                           Frame = 10 subframes = 20 slots = 10 ms                                     to change from the DL (RX) to the UL (TX) operation. The
+                            Subframe = TTI = 2 slots = 1 ms                                                            GP can be considered a waste of spectrum, since no trans-
+                                                                                                                       mission on an eNB or UE is carried out during this time
+                                Slot #0       Slot #1       ...                    Slot #19 Slot #20
+                                                                                                                       interval anyway.
+
+                             Slot = 0.5 ms                                                                             LTE Transmission Intervals
+   Subcarrier (frequency)
+
+
+
+
+                                                                                                                       All the transmission intervals in the time domain are
+
+
+
+
+                                                                                  ...
+                                                                              7 resources                              expressed in terms of the basic time unit TS equaling to
+                                                                               elements                                1/30720000 s (i.e., the sample time). The useful symbol
+                                                                                                                       duration, which carries out the transmitted information, is
+                                                                                                                       equal to 2048  TS, which is roughly 67 μs. The regular CP
+                                                             Resource block
+
+
+
+
+                                                                                            12 subcarriers
+
+
+
+                                                                                                             #N PRBs
+                                             1 OFDM
+
+
+
+
+                                                                                               180 kHz
+                                              symbol                                                                   is equal to 160  TS (i.e., 5.2 [uni03BC]s) for the ﬁrst symbol
+                                                                                                                       and 144  TS (i.e., 4.7 [uni03BC]s) for the remaining six
+                                                                                                                       symbols in the time slot, which sums up to a total time slot
+                                  15 kHz
+
+
+
+
+                                            Resource
+                                            element                                                                    duration of 15360  TS (i.e., 0.5 ms). The SF duration is
+                                                                                                                       established at 30720  TS (i.e., 1 ms) as every SF is com-
+                                                                                  ...
+
+
+
+
+                                                                                                                       posed of two time slots lasting 15360  TS each. Finally, the
+                                                                                                                       frame duration is equal to 307200  TS (i.e., 10 ms), while
+                               Cyclic   Useful
+                               prefix symbol time                                                                      every frame is composed of 10 SFs [70].
+
+
+                                                                                 OFDM symbol (time)                    9.5.2    LTE (3GPP Release 8)
+
+Fig. 9.13 LTE frame diagram
+                                                                                                                       3GPP Release 8 standardizes LTE with ﬁve UE categories
+                                                                                                                       (i.e., Cat. 1, . . . , Cat. 5). Release 8 uses varying modulation
+                                                                                                                       and coding rates and spatial multiplexing provided through
+(RX) saturation through the TX port working in parallel.                                                               multiple-input multiple-output (MIMO). The data rate expe-
+Half-duplex LTE-FDD and LTE-TDD do not, in turn, require                                                               rienced by upper protocol layers on an end terminal
+duplexers in the radio chain, since LTE TX and RX do not                                                               (i.e., termed goodput) depends on a so-called Modulation
+operate at the same time.                                                                                              and Coding Scheme (MCS). MCS varies between 0 and
+   Two logical frame structures are speciﬁed in PHY. Type                                                              27 and indicates the modulation and coding rate. Three
+1 speciﬁes the communication in LTE-FDD, while type 2 is                                                               modulation techniques were initially introduced, i.e., quad-
+used in LTE-TDD. The frame deﬁnes a resource grid of                                                                   rature phase-shift keying (QPSK), which is mathematically
+PRBs, responsible for carrying the control and data plane                                                              equivalent to 4-quadrature amplitude modulation (QAM),
+data stream, as well as providing synchronization and random                                                           16-QAM, and 64-QAM of efﬁciency Qm ¼ 2, 4, and 6 bits
+access for end terminals. The frame, lasting 10 ms, consists of                                                        per symbol, respectively, where the modulation efﬁciency is
+10 subframes (SFs) of 1 ms each, which contain two time                                                                understood as the number of bits encoded in one symbol.
+slots of 0.5 ms. Every slot is composed of seven OFDM                                                                  While the modulation inﬂuences the number of bits sent in
+symbols, where each symbol begins with the cyclic preﬁx                                                                one symbol, the code rate deﬁnes the amount of redundant
+(CP) that protects symbols against Inter Symbol Interference                                                           information inserted into the data stream for the FEC. Finally,
+(ISI) through a guard period between symbols in the time                                                               the spatial multiplexing conﬁgures the number of so-called
+domain. At the smallest scale, the PHY consists of one                                                                 MIMO layers, i.e., independent data streams sent from mul-
+OFDM subcarrier during one OFDM symbol interval.                                                                       tiple antennas on the transmitter toward multiple antennas on
+   The available channel bandwidths are 1.4, 3, 5, 10, 15, and                                                         the receiver. 1  1 MIMO materialized by one antenna on the
+20 MHz, which allocate a parallel set of 6, 15, 25, 50, 75, and                                                        transmitter and one antenna on the receiver is called single-
+100 PRBs, respectively [72]. There are two levels of guard                                                             input single-output (SISO) and allows for one MIMO layer.
+band overheads protecting channels, i.e., 23% for the                                                                      In the SISO mode, the available UL throughput of LTE in
+1.4 MHz channels and 10% for other bandwidths (3, 5,                                                                   Release 8 using the EU of Cat. 5 is established at 100 Mbit/s,
+10, and 20 MHz). These guard bands are used to protect the                                                             when the maximal channel width, modulation efﬁciency, and
+channel against unwanted emissions in neighboring fre-                                                                 FEC code rate (i.e., the fraction of useful or non-redundant
+quency ranges. Furthermore, in LTE-TDD, a gap period                                                                   information in the data stream) are equal to 20 MHz,
+(GP) between the DL and UL transmissions is introduced                                                                 64-QAM, and 1, respectively. Conceptually explained within
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                             183
+
+the frequency domain, a 20 MHz channel carries 100 parallel          does not support highly efﬁcient modulation techniques,
+PRBs and every PRB consists of 12 independent subcarriers,           such as 256-QAM, on the DL and 64-QAM UL, leaving
+resulting in 1200 parallel subcarriers. In the time domain, a        the device with QPSK, 16-QAM, 64-QAM (DL), QPSK,
+PRB lasts 1 ms and consists of two time slots. Every time slot       and 16-QAM (UL). Furthermore, LTE Cat. 0 supports 1.4,
+holds seven OFDM symbols, thus resulting in 14 OFDM                  . . . , 20 MHz channels; however, limits the number of bits per
+symbols. When the 64-QAM modulation is used, Qm ¼ 6                  TTI of the UE to 1000 bit, which ultimately ﬁxes the UE
+bit might be carried out by one OFDM symbol. Thus,                   DL/UL upper transmission capacity at 1 Mbit/s. The device
+100,800 bit (i.e., 1200  14  6 bit) may be transported             may operate in the full-duplex mode and two half-duplex
+using all 100 parallel PRBs in the frequency domain within           modes of types A and B.
+1 ms in the time domain, thus resulting in 100.8 Mbit/s. LTE              Typically, in the regular LTE-FDD half-duplex mode A,
+speciﬁcations (i.e., different releases) often present the sys-      when a UE is scheduled to transmit in UL SF n, no transmis-
+tem capacity using the number of bits that may be inserted           sion is scheduled toward this UE in the DL SF n either.
+into the LTE frame within a transmission time interval (TTI)         Furthermore, a special guard period (GP) spanning a fraction      9
+of 1 ms.                                                             of the previous DL SF n  1 is introduced to allow for safe
+    MIMO systems achieve a much better performance in                switching from RX to TX on the UE without losing any data
+comparison to SISO systems, since the increased throughput           on the DL. In the newly introduced LTE-FDD half-duplex
+in the SISO mode requires modulations of higher efﬁciencies          mode B, the GP period was enlarged. When a UE is sched-
+and high code rate, which typically imposes a higher SNR             uled to transmit in UL SF n, no DL transmission toward this
+and a lower link budget. MIMO comes, however, at the price           UE is allowed in SFs n  1, n, and n þ 1 to further relax the
+of independent RX/TX radio chains implemented on the                 speed of RX/TX switching.
+communicating device. Release 8 supports up to 300 Mbit/s                 Typically, when a device connects to an eNB, it has to
+DL and 75 Mbit/s UL using its highest UE category through            comply with DRX by monitoring the paging channel for
+the introduction of up to 4 parallel data streams using 4  4        incoming mobile terminated (MT) transmissions. A regular
+MIMO.                                                                UE paging cycle is 128 frames, meaning 1.28 s (i.e., 1280 ms
+                                                                     as the frame duration is 10 ms), in which the device has to
+                                                                     wake up and listen to the PCCH for MT transmissions. This
+9.5.3    LTE Advanced (3GPP Rel. 10)                                 might be too power hungry in the case of battery-powered
+                                                                     IoT devices. Therefore, a power saving mode (PSM) was
+3GPP Release 10 standardizes LTE Advanced (LTE-A)                    introduced (cf. Fig. 9.14), which allows the network node
+exploring MIMO and carrier aggregation (both continuous              to negotiate an extensive tracking area update (TAU)/routing
+and non-continuous channel aggregation techniques are                area update (RAU) timer (T3412) and active mode timer
+taken into account, combining up to ﬁve independent chan-            (T3324). The Mobile Originated TAU message is used to
+nels) to increase throughout. Three new UE categories were           notify the network, about the current UE location in the idle
+introduced (i.e., Cat. 6, . . . , Cat. 8). LTE Cat. 8 equipment is   mode (e.g., for MT transmissions). Typically, the TAU mes-
+theoretically able to reach the momentary DL of 3 Gbit/s and         sage is sent upon the location change or timer expiration
+UL of 1.5 Gbit/s, respectively, by using 64-QAM, 8 parallel          (i.e., T3412). Additionally, the active mode timer
+data streams achieved through 8  8 MIMO, and continuous             (i.e., T3324) deﬁnes for how long the timer is set since the
+channel aggregation of ﬁve 20 MHz bandwidth in LTE-TDD.              RRC_CONNECT or last TAU was received. The UE shall
+   3GPP Release 11 extends LTE-A with the speciﬁcation of            monitor PCCH with a regular paging cycle speciﬁed by the
+three UE classes (i.e., Cat. 9, . . . , Cat. 12) using 256-QAM,      network. When T3324 expires, the UE may go to an exten-
+2 and 4-layered MIMO (i.e., 2 or 4 independent data streams),        sive sleep mode, not issuing or accepting, respectively, any
+while Release 12 improves the throughput of LTE-A in new             MO or MT message, respectively. Therefore, the time period
+equipment classes (i.e., Cat. 13, . . . , Cat. 16) due to the        of T3412T3324 is referred to as a “hibernation period,”
+combination of 8 MIMO layers with the 256-QAM modula-                after which the UE wakes up, sends a MO TAU message, and
+tion, providing 3.9 Gbit/s in an LTE UE of Cat. 14.                  repeats the PSM cycle again (e.g., being in the RRC_IDLE
+   LTE Cat. 0 is the ﬁrst UE category targeting IoT devices          mode) [73].
+explicitly as described in 3GPP release 12 [65] standardizing
+LTE-A Pro. It is based on the previously speciﬁed hybrid
+PHY with OFDMA-based DL and SCFDMA-based UL with                     9.5.4    LTE Advanced Pro
+certain modiﬁcations. The maximum output power remains at
+the power ampliﬁer level of class 3, i.e., 23 dBm. The number        LTE Advanced Pro offers two equipment categories espe-
+of antennas is ﬁxed to one (SISO); therefore, the spatial            cially for IoT purposes, i.e., LTE Cat. M and LTE Cat. N,
+multiplexing (i.e., MIMO) is not supported. LTE Cat. 0               which are speciﬁed as 3GPP Release 13.
+184                                                                                                                        B. Stiller et al.
+
+Fig. 9.14 LTE power saving
+mode (PSM)
+                                                                                                              Mobile terminated (MT)
+                                                                   T3412
+                                                                                                              Mobile originated (MO)
+                                                    T3324       Extensive sleep time
+
+                                         RRC    DRX
+                                                                                       TAU/RAU
+                                        connect cycle
+
+                                                        D   D                                      D      D
+                                                        R   R                                      R      R
+                                                        X   X                                      X      X
+                                                                                                                    Time
+
+
+
+
+LTE Category M                                                       number of HARQ processes (i.e., the number of outstanding,
+LTE Cat. M1 [74] speciﬁed in Release 13 is based on the              but not yet conﬁrmed blocks) is 8 and 1 in CE mode A and
+work performed in Release 12. The UE peak data rate is again         CE mode B, respectively [75].
+limited, as in the case of LTE Cat. 0, through the number of             Furthermore, the MPDSCH is the DL-shared channel to
+bits per TTI and per UE to 1000 bit, which ﬁxes the UE               send unicast data toward the UE. On the UL, MTC Physical
+DL/UL upper transmission capacity at 1 Mbit/s. It provides           Random Access Channel (MPRACH), MTC Physical Uplink
+mobility through a handover operation, i.e., UE measurement          Shared Channel (MPUSCH), and MTC Physical Uplink
+reporting,     RRC       connection   release,   and      RRC        Control Channel (MPUCCH) exist. The MPRACH is used
+re-establishment. Furthermore, voice communication is                to request a connection with an eNB or request UL resources,
+supported. Many simpliﬁcations of the physical layer were            if the MPUCCH channel is not yet provided with the
+performed. The bandwidth is reduced to 1.4 MHz                       UE. MPUCCH is of ﬁxed 1 PRB size. It is used to transport
+(i.e., 6 PRBs) and two power ampliﬁer (PA) classes were              scheduling requests, provide HARQ feedback, i.e., Uplink
+introduced, i.e., class 5 with 20 dBm and class 3 with               Control Information (UCI), or to send the Channel Quality
+23 dBm. Two coverage enhancement (CE) modes were                     Information (CQI). Finally, MPUSCH is used to send unicast
+added, in which the mandatory CE mode A and optional                 trafﬁc of 1-6 PRBs in CE mode A and 1-2 PRBs in CE mode
+CE mode B (i.e., deep coverage) support up to 32 and 2048            B. LTE Cat. M only supports QPSK and 16-QAM modula-
+repetitions, respectively. Physical channel repetition means         tions on the MPUSCH/MPDSCH channels, while MCS
+that the same message is sent many times without waiting for         varies between 1 and 15. The maximum coupling loss
+the HARQ conﬁrmation at the distinct TTI level.                      (MCL) shall be signiﬁcantly improved through repetitions
+    In the PHY layer, the primary synchronization signal             reaching 155.7 dB, i.e., 15 dB higher in comparison to
+(PSS), the secondary synchronization signal (SSS), and the           Release 12 systems [74].
+reference signal (RS) known from the regular LTE standard                Figure 9.16 displays example DL transmissions in
+provide the means to synchronize a UE with the cell; thus,           LTE-M. In Fig. 9.16a, six blocks (of four PRBs) are sent
+they are fully re-used (cf. Fig. 9.15). The DL speciﬁes the          over the MPDSCH channel. Every distinct MPDSCH block
+following PHY channels: Machine Type Communication                   is scheduled ﬁrst using a corresponding MPDCCH channel
+(MTC) Physical Downlink Control Channel (MPDCCH),                    (of 2 PRBs) and later acknowledged (i.e., ACK) through the
+MTC Physical Broadcast Channel (MPBCH), and Physical                 MPUCCH channel (of 1 PRB). The eNB uses three HARQ
+Downlink Shared Channel (MPDSCH). Please note that there             processes of IDs #0,. . . ,#3. There are 1 ms distances between
+is no Physical Control Format Indicator Channel (PCFICH)             (a) the corresponding MPDCCH and MPDSCH messages,
+or Physical Hybrid ARQ Indicator Channel (PHICH) as                  (b) DL and UL, and (c) UL and DL. The spacing between
+known from regular LTE. The reasoning behind this concept            corresponding MPDSCH and MPUCCH (i.e., UCI) channels
+is the following. First, the MPDCCH is of ﬁxed size, i.e., 2, 4,     remains equal to 3 ms as in regular LTE; however, the HARQ
+or 6 PRBs, which also carry HARQ feedback, i.e., Downlink            delay grows to 10 ms (i.e., +2 ms in comparison with the
+Control Information (DCI). Therefore, the PDCCH size                 regular LTE) due to the MPDCCH/MPDSCH and DL/UL
+adjustment is not needed. Second, the HARQ process on                separation of 1 ms (i.e., relaxed DL/UL switching on the UE).
+the UL is asynchronous, i.e., scheduled; therefore, the              Additionally, Fig. 9.16b displays an example transmission of
+PHICH channel is not necessary. In regular LTE, however,             1 MPDSCH channel (of 6 PRBs) repeated eight times. The
+HARQ is a synchronous operation always completing within             block is scheduled through 1 MPDCCH channel (of 6 PRBs)
+8 ms through its special-purpose PHICH channel. The                  repeated four times and acknowledged by 1 MPUCCH
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                     185
+
+
+
+    a)                                                                                                              Logical channels
+                PCCH            BCCH             CCCH              DCCH             DTCH
+
+
+
+
+                                                                                                                   Transport channels
+                PCH                BCH           DL-SCH
+
+
+
+                 DCI
+
+
+
+              MPDCCH            MPBCH           MPDSCH              PSS                 SSS               RS
+                                                                                                                    Physical channels         9
+
+
+
+
+                              b)                                                               Logical channels
+                                          CCCH             DCCH             DTCH
+
+
+
+
+                                                                                              Transport channels
+                                          RACH            UL-SCH
+
+
+
+                                                                             UCI
+
+
+                                                                                               Physical channels
+                                         MPRACH           MPUSCH           MPUCCH
+
+
+
+
+Fig. 9.15 LTE-M channel structure: (a) DL channel structure, (b) UL channel structure
+
+
+
+channel (of 1 PRB) repeated four times using a frequency               LTE Category N
+hopping technique [75].                                                The LTE Cat. N (also referred to as NB-IoT) [73] is a new
+    The battery power is extended by the PSM mechanism as              PHY layer established in 3GPP Release 13 using 200 kHz
+speciﬁed already in Release 12 or by a newly speciﬁed                  channels (i.e., one PRB of 180 kHz with 10 kHz guard bands
+Extended DRX (eDRX) mechanism (cf. Fig. 9.17). The                     on both channel edges). The peak data rate of NB-IoT is
+eDRX mechanism does not work on the TAU expiration                     16 kbit/s on the UL and 26 kbit/s on the DL, while the
+basis, meaning that the TAU MO does not have to be sent.               bandwidth is only 200 kHz. The link budget is at 164 dB,
+Instead, the UE just notiﬁes the eNB on the number of DRX              while only binary phase-shift keying (BPSK) and QPSK
+cycles to be skipped on a periodic basis. First, the UE listens        modulations with up to 2048 repetitions on the DL and
+to the paging channel (e.g., using the regular paging cycle of         128 repetitions on the UL are used. In contrast to LTE Cat.
+1280 ms) during the Paging Time Window (PTW) and,                      M, LTE Cat. N does not support mobility (i.e., handovers) or
+second, enters an extended sleep for a speciﬁc period of               voice.
+time deﬁned in the number of hyperframes (HFN) to be                      Three different deployment modes are speciﬁed: (1) stand-
+skipped. A hyperframe consists of 1024 frames, i.e., 0,. . . ,         alone operation used within the currently used GSM fre-
+1023, and lasts for 10.24 s. When the extended sleep expires,          quency plan, while the GSM channel bandwidth is at
+the device wakes up again and repeats the eDRX procedure               200 kHz, (2) guard band operation utilizing unused resource
+all over again [73].                                                   blocks of other channels within an LTE carrier guard band,
+186                                                                                                                                        B. Stiller et al.
+
+
+
+   a)                                                                                                                           MPDCCH (schedule)
+
+                                                                                                                                MPDSCH (data)
+
+                                                      3 ms                                                  3 ms                MPUCCH (UCI)
+
+
+                      UL
+
+        HARQ process ID        #0   #1     #2                                             #0    #1    #2
+
+
+
+                      DL
+
+                                    1 ms                     1 ms                              1 ms                1 ms
+
+
+
+
+                b)
+                                                                                                                                MPDCCH (schedule)
+
+
+                                                                                                                                MPDSCH (data)
+
+                                                                                                              3 ms              MPUCCH (UCI)
+
+
+                          UL
+
+
+
+
+                          DL
+
+                                                          1 ms
+
+
+
+Fig. 9.16 Example LTE-M transmissions: (a) regular DL transmission and (b) DL transmission with repetition and frequency hopping
+
+
+Fig. 9.17 LTE extended
+discontinuous reception
+                                                                                                                              Mobile terminated (MT)
+
+
+                                                                      PTW                Extended sleep
+
+                                                 RRC      DRX
+                                                connect   cycle
+
+                                                                  D         D   D                              D          D        D
+                                                                  R         R   R                              R          R        R
+                                                                  X         X   X                              X          X        X
+                                                                                                                                    Time
+
+
+
+
+and (3) in-band operation utilizing already allocated resource                  each radio frame, the SFs are labeled from 0 to 9 and the slots
+blocks within a given LTE carrier.                                              from 0 to 19. The frames in a hyperframe are numbered with
+   The PHY operation in the NB spectrum resembles the                           a system frame number (SFN), which ranges from 0 to 1023.
+regular LTE operation. In LTE Cat. N DL PHY, OFDMA is                           These hyperframes are also numbered with values between
+used as an access technique. In time domain, a radio frame                      0 and 1023; therefore, the numbering reﬂects the regular LTE
+consists of 10 SFs. Each SF spans 1 ms and contains two                         system. In the UL, SC-FDMA is applied with 3.75 kHz or
+slots, and each slot contains seven OFDM symbols. Within                        15 kHz subcarrier spacing in the frequency domain. In the
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                  187
+
+time domain, with the subcarrier spacing of 15 kHz (regular            deployment, NPDCCH, NPDSCH, or NRS cannot be
+LTE), each slot has a duration of 0.5 ms, and the number of            mapped to resource elements taken by LTE Cell-Speciﬁc
+subcarriers is 12. With the subcarrier spacing of 3.75 kHz,            Reference Symbols (CRS) and LTE Physical Downlink Con-
+each slot has a duration of 2 ms, while the number of sub-             trol Channel (PDCCH) to comply with the regular LTE PHY
+carriers is 48.                                                        format. On the UL, Narrowband Physical Random Access
+   LTE Cat. N deﬁned new channels at the PHY layer on the              Channel (NPRACH), Narrowband Physical Uplink Shared
+DL meaning Narrowband Primary Synchronization Signal                   Channel (NPUSCH), and Demodulation Reference Signal
+(NPSS), Narrowband Secondary Synchronization Signal                    (DMRS) are speciﬁed. It is worth noting at this point that
+(NSSS), Narrowband Physical Broadcast Channel                          the LTE Cat. N physical N-channels, e.g., NPRACH, roughly
+(NPBCH), Narrowband Reference Signal (NRS), Narrow-                    correspond to LTE Cat. M M-physical channel functions,
+band Physical Downlink Control Channel (NPDCCH), and                   e.g., MPRACH; however, they are speciﬁed on a much
+Narrowband Physical Downlink Shared Channel (NPDSCH)                   lower spectrum range allocated at the RE basis [76].
+(cf. Fig. 9.18).                                                          The DL frame shows the following organization: NPBCH             9
+   For the stand-alone and guard band deployments, no LTE              commences the frame in SF 0, SF 1-4 carry NPDSCH or
+resource needs to be protected; therefore, DL NPDCCH,                  NPDCCH, the Primary Cell Reference Signal is located in
+NPDSCH, or NRS may utilize all resource elements in one                SF 5, cells 6-8 may again hold the NPDSCH or NPDCCH,
+PRB pair (deﬁned as 12 subcarriers over one SF). For in-band           and SF 9 may possess the Secondary Reference Signal,
+
+
+
+    a)                                                                                                           Logical channels
+              PCCH             BCCH             CCCH              DCCH             DTCH
+
+
+
+
+                                                                                                                Transport channels
+              PCH               BCH             DL-SCH
+
+
+
+               DCI
+
+
+                                                                                                                 Physical channels
+            NPDCCH            NPBCH             NPDSCH             NPSS             NSSS              NRS
+
+
+
+
+                             b)                                                             Logical channels
+                                         CCCH             DCCH             DTCH
+
+
+
+
+                                                                                           Transport channels
+                                         RACH            UL-SCH
+
+
+
+                                                                            UCI
+
+
+                                                                                            Physical channels
+                                       NPRACH            NPUSCH
+
+
+
+
+Fig. 9.18 LTE-N channel structure: (a) DL channel structure, (b) UL channel structure
+188                                                                                                                    B. Stiller et al.
+
+
+
+   a)                                             LTE-N frame = 10 subframes = 10 ms
+
+   LTE-N subframe = TTI = 1 ms
+
+
+                                                                                                         NSSS/
+                       NPDCCH/ NPDCCH/ NPDCCH/ NPDCCH/                          NPDCCH/ NPDCCH/ NPDCCH/
+             NPBCH                                                    NPSS                              NPDCCH/
+                       NPDSCH NPDSCH NPDSCH NPDSCH                              NPDSCH NPDSCH NPDSCH
+                                                                                                        NPDSCH
+
+
+
+                                                                                                                         Time
+
+
+   b)                                             LTE-N frame = 10 subframes = 10 ms
+
+   LTE-N subframe = TTI = 1 ms
+
+
+
+            NPUSCH     NPUSCH     NPUSCH      NPUSCH     NPUSCH     NPUSCH      NPUSCH NPRACH     NPRACH NPRACH
+
+
+
+
+                                                                                                                         Time
+
+
+Fig. 9.19 LTE-N frame structure: (a) DL frame structure and (b) UL frame structure
+
+NPDSCH, or NPDCCH. The UL frame is composed of                         and LTE Cat. N, DECT-2020 NR will bring non-cellular,
+NPUSCH in SF 0-6 and NPRACH frames in SF 7-9 [77],                     license-free, highly reliable, and low delay communication.
+respectively (cf. Fig. 9.19). The UL access is requested               DECT-2020 NR is based on a robust physical radio layer with
+through the NPRACH channel, which is implemented through               modulating and coding schemes from cellular networks
+the six-tone frequency hopping scheme on the RE basis.                 (in principle applicable to frequency bands below 6 GHz),
+                                                                       such as 5G, and offers automatic interference management to
+                                                                       allow for deployments without extensive frequency planning.
+9.5.5     DECT-2020 NR                                                 It follows the cyclic preﬁx orthogonal frequency division
+                                                                       multiplexing (CP-OFDM) combined with TDMA and
+The Digital Enhanced Cordless Telecommunications                       FDMA in a TDD communication manner. DECT-2020 NR
+(DECT)-2020 New Radio (NR) is a Radio Interface Technol-               uses a base Subcarrier Spacing (SCS) of 27 kHz and allows
+ogy (RIT) to offer a slim, but powerful technology founda-             for 2, 4, and 8 scaling. Furthermore, the minimum channel
+tion for wireless applications deployed in various use cases           bandwidth is 1.728 MHz and scales to the maximum of
+and markets [78–80].                                                   221.184 MHz. Moreover, it offers a very reliable point-to-
+    This approach follows a non-cellular, license-free radio           point and point-to-multipoint wireless link provisioning, a
+standard at the 1.9 GHz band, which had become part of the             local area wireless access network star or self-organizing
+3GPP 5G standard. This NR standard does address the appli-             mesh network topology, combined with link adaptation,
+cation area of wireless IoT for massive Machine Type Com-              transmitter and receiver diversity, and MIMO operations of
+munication (mMTC).                                                     up to eight streams.
+    Speciﬁc requirements include Ultra-Reliable Low-Latency                The key advantages of this approach include the
+Communication (URLLC), low delay communications, and                   unrestricted use of the 1.9 GHz spectrum, no need to pay
+self-organizations. DECT-2020 NR is not limited to cordless            for any communications band, its worldwide availability with
+telephony, audio streaming, consumer and industrial applica-           precisely deﬁned radio access, and a single hardware version
+tions of IoT but can cover industry and building automation            at hand. In that sense, any DECT-2020 NR node – called
+and monitoring, robots working alongside human operators in            “sink node” – can operate as a wireless network with any
+the same space, critical infrastructures for societies, or self-       node performing access point operations, which can offer
+driving vehicles.                                                      Internet access. Due to the autonomous characteristics of
+    In contrast to the long-range WAN communications at low            nodes, self-organized networking principles are usable, and
+power with reduced latency, for instance, by 5G, LTE Cat. M            mesh network-like resilience and operations become possible
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                           189
+
+for IoT devices speaking DECT-2020 NR. Rerouting is pos-         Ethernet and IPv4 details, for the latter wireless PAN and
+sible without any specialized mechanisms, since a new path       LAN protocols include IEEE 802.11 (Wi-Fi), IEEE 802.15.4
+for communication will become available in the mesh auto-        with the ZigBee, 6LoWPAN, BLIP, and Sigfox protocol
+matically. Additionally, every DECT-2020 NR node can             stacks, LoRa, DASH7, RFID including Z-Wave, NFC, and
+become a “relay node.” Any trafﬁc from source nodes will         Bluetooth as IEEE 802.15.4.
+be forwarded through relay nodes to reach the sink node,             Additionally, WAN protocols surveyed include the general
+which is autonomously provided by the mesh network               architecture of public wireless access networks in their gener-
+capabilities.                                                    ations 1G to 5G and more speciﬁcally the 4G cellular LTE
+   Example DECT-2020 NR solutions are planned to scale           technology for IoT concentrating on LTE Cat. 0 (3GPP Release
+up to megabit bandwidths and offer a 1 ms latency. This will     8), LTE Cat. 8 (3GPP Release 10) as of LTE Advanced, and
+offer reduce airtime for messaging and high reliability and      LTE Cat. M, LTE Cat. N, and LTE Cat. M1 (3GPP Release 13)
+security without latency penalties.                              as of LTE Advanced Pro and DECT-2020 NR.
+                                                                                                                                     9
+9.6      Summary and Conclusions                                 9.6.2    Concluding Observations
+
+As of today, a wide range of Internet of Things (IoT) devices    The major dimensions to consider upon selecting one of these
+– “the things” – is capable of collecting, processing, and       network communication technologies for a given IoT system
+transmitting data to servers and applications. While in the      include a larger list: (a) device type(s) to be supported, and
+meantime the number of these devices reached the billions,       constrained network topology required, (b) licensed or free
+their heterogeneity is very large, too, ranging from dust-like   spectrum to be used, (c) geographical distance or range to be
+devices – belonging to the constrained devices’ category – to    covered, (d) bandwidth offered (point-to-point versus
+resource-rich devices. In the same dimension, the various        shared), (e) energy demands, (f) open or proprietary speciﬁ-
+types of protocols available enable communications, either       cation or standard, (g) security measures available on the IoT
+between IoT devices or via an IoT gateway, to the outside        device level, the protocol level, or the application level, while
+world.                                                           the role of the IoT gateway has to be determined ﬁrst, and
+   IoT involves a huge range of players from industry, gov-      (h) the costs involved in regular, frequent, infrequent com-
+ernment, application developers, and private activities. Thus,   munications and related ﬂat charges for subscriptions.
+use cases scale from a single constrained device up to mas-         Overall, data transfer within the IoT domain will success-
+sive cross-country and cross-platform deployments of hetero-     fully be accepted by the public only, if communications
+geneous, embedded IoT devices connecting to the outside          between interconnected IoT devices in use and the outside
+world in terms of dedicated control centers or just the Cloud.   world is secured, which is especially highly important in case
+While the speciﬁc communication demands range from               of privacy-related applications of the health domain or home
+low-level data rates to real-time requirements, many legacy      automation. A much wider security analysis of those stan-
+and newly emerging IoT communication protocols allow IoT         dards as selected above can reveal in the future further
+devices and servers to interact in tightly, loosely              in-depth information about where and at which level to ﬁnd
+interconnected, and secured ways. This did lead to dozens        security provisioning in IoT (such as performed exemplarily
+of competing alliances and coalitions of stakeholders to pave    within [81]) and for which protocols further security demands
+a path of unifying the highly fractured IoT domain.              may have to be integrated.
+                                                                    It must be emphasized that especially cellular networks as
+                                                                 IoT communication technologies in the 4th and 5th genera-
+9.6.1    Chapter Digest                                          tion will play a key role to build an active part in IoT
+                                                                 scenarios. Besides classic devices for cellular networks,
+This chapter provided an overview speciﬁcally on network         such as smartphone, tablets, and navigation devices, the set
+communication technologies and their related protocols used      of constrained devices in the range of sensors, small actua-
+in the IoT environment, while the focus was laid brieﬂy in a     tors, and controllers will help to integrate locally distributed
+basic introduction on the infrastructure perspective with        information in such a way that regional or more global data
+Ethernet and IP and in-depth on IoT data communications          collections (hopefully being fully compliant with privacy
+and transport protocols.                                         protection guidelines and regulations) can optimize the oper-
+    Several technologies were presented for the PAN, LAN,        ation of, e.g., manufacturing processes, energy harvesting or
+and WAN coverage, while the focus was laid on the infra-         production systems, or elderly living homes. The path to
+structure perspective and IoT data communications and trans-     travel further is still long, and network communication tech-
+port protocols. While the former had been recalled brieﬂy by     nologies provide the underlying basis for all of these.
+190                                                                                                                                   B. Stiller et al.
+
+Acknowledgements                                                                (2015). [Online]. http://standards.ieee.org/getieee802/download/
+This paper was supported partially by (a) the University of Zürich UZH,         802.15.4-2015.pdf
+Switzerland, and (b) the European Union’s Horizon 2020 Research and         19. Dawson-Haggerty, S., Tavakoli, A., Culler, D.: Hydro: a hybrid
+Innovation Program under Grant Agreement No. 830927, the                        routing protocol for low-power and Lossy networks. In: 1st IEEE
+CONCORDIA project.                                                              International Conference on Smart Grid Communications, ser.
+                                                                                SmartGridComm, pp. 268–273. IEEE, New York (2010)
+                                                                            20. Schiller, J.: Mobile Communications. Addison Wesley, New York
+                                                                                (2003)
+References                                                                  21. ZigBee Alliance: ZigBee Speciﬁcation. ZigBee Standards Organi-
+                                                                                zation, Tech. Rep. 53474r20, September 2012
+ 1. Kurose, J., Ross, K.: Computer Networks – A Top-Down Approach,          22. DIGI: XBee ®/XBee-PRO S2C ZigBee – RF Module User Guide
+    vol. 7. Prentice Hall, Upper Saddle River (2016)                            Tech. Rep. Digi International Inc., Minnetonka (2017)
+ 2. Postscapes: IoT technology guidebook. https://www.postscapes.           23. Schmitt, C.: Secure Data Transmission in Wireless Sensor Networks.
+    com/internet-of-things-technologies/ (November 3, 2017). Last               Ph.D. Dissertation, Chair for Network Architectures and Services,
+    access 20 Apr 2020                                                          Technische Universität München, Munich, Germany, July 2013
+ 3. Schmitt, C.: Trust & Security in IoT: Monitoring with Constrained       24. Shelby, Z., Bormann, C.: 6LoWPAN – The Wireless Embedded
+    Devices. Habilitation. Universität Zürich, Zürich (2019)                    Internet. Wiley-Blackwell, West Sussex (2009)
+ 4. Postscapes: IoT Standards and Protocols. https://www.postscapes.        25. Kushalnagar, N., Montenegro, G., Schumacher, C.: IPv6 over
+    com/internet-of-things-protocols/ (February 1, 2020). Last access           low-power wireless personal area networks (6LoWPANs): over-
+    20 Apr 2020                                                                 view, assumptions, problem statement, and goals. In: RFC 4919
+ 5. ISO/IEC: Information Technology – MQ Telemetry Transport                    (Informational), RFC Editor, Fremont, CA, USA, pp. 1–12 (2007).
+    (MQTT) v3.1.1. ISO/IEC 20922 (Standard) Technical Committee,                [Online]. https://www.rfc-editor.org/rfc/rfc4919.txt
+    ISO/IEC JTC 1 Information Technology. International Organization        26. Hui, J., Thubert, P.: Compression format for IPv6 datagrams over
+    for Standardization (2014). [Online]. https://www.iso.org/standard/         IEEE 802.15.4-based networks. In: RFC 6282 (Proposed Standard),
+    69466.html                                                                  RFC Editor, Fremont, CA, USA, pp. 1–24 (2011). Updated by RFC
+ 6. ISO/IEC: Information Technology – Advanced Message Queuing                  8066. [Online]. https://www.rfc-editor.org/rfc/rfc6282.txt
+    Protocol (AMQP) v1.0 Speciﬁcation. ISO/IEC 19464 (Standard)             27. Kim, E., Kaspar, D., Gomez, C., Bormann, C.: Problem statement
+    Technical Committee, ISO/IEC JTC 1 Information Technology.                  and requirements for IPv6 over low-power wireless personal area
+    International Organization for Standardization (2014). [Online].            network (6LoWPAN) routing. In: RFC 6606 (Informational), RFC
+    https://www.iso.org/standard/64955.html                                     Editor, Fremont, CA, USA, pp. 1–32 (2012). [Online]. https://www.
+ 7. Winter, T., Thubert, P., Brandt, A., Hui, J., Kelsey, R., Levis, P.,        rfc-editor.org/rfc/rfc6606.txt
+    Pister, K., Struik, R., Vasseur, J., Alexander, R.: RPL: IPv6 Routing   28. Shelby, Z., Chakrabarti, S., Nordmark, E., Bormann, C.: Neighbor
+    Protocol for Low-Power and Lossy Networks. RFC 6550 (Proposed               Discovery Optimization for IPv6 over Low-Power Wireless Per-
+    Standard), RFC Editor, Fremont, CA, USA, pp. 1–157 (2012).                  sonal Area Networks (6LoWPANs). RFC 6775 (Proposed Stan-
+    [Online]. https://www.rfc-editor.org/rfc/rfc6550.txt                        dard), RFC Editor, Fremont, CA, USA, pp. 1–55 (2012). [Online].
+ 8. IEEE 802.3 Ethernet Working Group: http://www.ieee802.org/3/                https://www.rfc-editor.org/rfc/rfc6775.txt
+    (2017). Last access 20 Apr 2020                                         29. Chakrabarti, S., Montenegro, G., Droms, R., Woodyatt, J.: IPv6 over
+ 9. Postel, J.: Internet Protocol. RFC 791 (Internet Standard), RFC             low-power wireless personal area network (6LoWPAN) ESC dis-
+    Editor, Fremont, CA, USA, pp. 1–51 (1981). Updated by RFCs                  patch code points and guidelines. In: RFC 8066 (Proposed Stan-
+    1349, 2474, 6864. [Online]. https://www.rfc-editor.org/rfc/                 dard), RFC Editor, Fremont, CA, USA, pp. 1–9 (2017). [Online].
+    rfc791.txt                                                                  https://www.rfc-editor.org/rfc/rfc8066.txt
+10. Cerf, V., Dalal, Y., Sunshine, C.: Speciﬁcation of Internet transmis-   30. Thubert, P., Cragie, R.: IPv6 over Low-Power Wireless Personal
+    sion control program. In: RFC 675 (Historic), RFC Editor, Fremont,          Area Network (6LoWPAN) Paging Dispatch. RFC 8025 (Proposed
+    CA, USA, pp. 1–70 (1974). Obsoleted by RFC 7805. [Online].                  Standard), RFC Editor, Fremont, CA, USA, pp. 1–8 (2016).
+    https://www.rfc-editor.org/rfc/rfc675.txt                                   [Online]. https://www.rfc-editor.org/rfc/rfc8025.txt
+11. Deering, R.H.S.: Internet Protocol, Version 6 (IPv6). RFC 2460          31. Harvan, M.: Connecting Wireless Sensor Networks to the Internet-A
+    (Internet Standard), RFC Editor (1988). [Online]. https://www.rfc-          6lowpan Implementation for TinyOS 2.0. Master’s Thesis, Jacobs
+    editor.org/rfc/rfc2460.txt                                                  University Bremen, School of Engineering and Science, May 2007.
+12. Baker, F.: Requirements for IP Version 4 Routers. In: RFC 2460          32. Berkeley WEBS: Project Page for blip, the Berkeley IP implemen-
+    (Internet Standard), RFC Editor (1995). [Online]. https://www.rfc-          tation for low-power networks. http://tinyurl.com/bliptutorial
+    editor.org/rfc/rfc1812.txt                                                  (2011). Last access 20 Apr 2020. [Online]. http://tinyurl.com/
+13. Fuller, V., Li, T.: Classless Inter-domain Routing (CIDR): the Inter-       bliptutorial
+    net address assignment and aggregation plan. In: RFC 4632 (Best         33. Chipcon, A.S., Smart, R.F.: CC2420 Preliminary Datasheet (rev
+    Current Practice), RFC Editor, Fremont, CA, USA, pp. 1–27 (2006).           1.2). [Online]. http://inst.eecs.berkeley.edu/~cs150/Documents/
+    [Online]. https://www.rfc-editor.org/rfc/rfc4632.txt                        CC2420.pdf (2004). Last access 20 Apr 2020
+14. CISCO: Cisco Visual Networking Index: Global Mobile Data Traf-          34. Silva, R., Silva, J., Boavida, F.: Evaluating 6lowPAN
+    ﬁc Forecast Update, 2017–2022 Tech. Rep. C11-738429-01.                     implementations in WSNs. In: 9th Conferencia sobre Redes de
+    CISCO, San Jose (2019)                                                      Computadores Oeiras, Oeiras, Portugal, September 2009, pp. 1–5
+15. Hootsuite: The Global State of Digital in 2019 Report (2019) (Zugri:    35. Sigfox: Sigfox. https://www.sigfox.com/en (2020). Last access
+    29.08.2019). [Online]. https://hootsuite.com/pages/digital-in-2019          20 Apr 2020
+16. Statistica Inc.: The Statistics Portal, November 2017. https://www.     36. LoRa Alliance: LoRa Alliance Homepage. https://www.lora-
+    statista.com. Last access 20 Apr 2020                                       alliance.org/. Last access 20 Apr 2020
+17. IEEE 802.11 Wireless Local Area Networks: http://www.ieee802.           37. LoRa signals from a low orbit satellite: https://twitter.com/telkamp/
+    org/11/ (2017). Last access 20 Apr 2020                                     status/956900631985475586?lang¼en. Last access 20 Apr 2020
+18. IEEE Standards Association: IEEE Standard for Low-Rate Wireless         38. Sornin, N., Luis, M., Eirich, T., Kramp, T., Hersent, O.: LoRaWAN
+    Networks IEEE Std 802.15.4. IEEE Computer Society, New York                 Speciﬁcation. LoRa Alliance, Tech. Rep. V1.0.2, July 2016
+9   Wireless Communication (Short Range and Long Range incl. LPWAN)                                                                             191
+
+39. Abramson, N.: THE ALOHA SYSTEM: another alternative for com-               Terminology/NFC-A-vs-NFC-B-vs-NFC-F.html (2012). Last access
+    puter communications. In: Proceedings of the November 17-19, 1970,         20 Apr 2020
+    Fall Joint Computer Conference, ser. AFIPS ’70 (Fall), pp. 281–285.    62. Miller, C.: Exploring the NFC Attack Surface. http://media.blackhat.
+    Association for Computing Machinery, New York (1970). https://doi.         com/bh-us-12/Brieﬁngs/C_Miller/BH_US_12_Miller_NFC_
+    org/10.1145/1478462.1478502. [Online]                                      attack_surface_WP.pdf (2012). Last access 20 Apr 2020
+40. The Things Network: https://www.thethingsnetwork.org/. Last            63. Gomez, C., Oller, J., Paradells, J.: Overview and evaluation of
+    access 20 Apr 2020                                                         Bluetooth low energy: an emerging low-power wireless technology.
+41. Robyns, P., Quax, P., Lamotte, W., Thenaers, W.: A Multi-Channel           IEEE Commun. Surv. Tutorials. 12(9), 11734–11753 (2012)
+    Software Decoder for the LoRa Modulation Scheme. 01 2018,              64. Akhtar, S., Pagani, M.: 2G-5G networks: evolution of technologies,
+    pp. 41–51                                                                  standards, and deployment. In: Encyclopedia of Multimedia Tech-
+42. Schiller, E., Weber, S., Stiller, B.: Design and evaluation of an          nology and Networking, vol. 2, pp. 522–532. IGI Global, Hershey
+    SDR-based LoRa cloud radio access network. In: 16th International          (2009)
+    Conference on Wireless and Mobile Computing, Networking and            65. 3GPP: TS 36.306: Evolved Universal Terrestrial Radio Access
+    Communications (WiMob2020), October 2020, p. Session S4                    (E-UTRA); User Equipment (UE) radio access capabilities (Release 12)
+43. Arduino Products: https://www.arduino.cc/en/Main/Products. Last        66. Schiller, E., Nikaein, N., Kalogeiton, E., Gasparyan, M., Braun, T.:
+    access 20 Apr 2020                                                         CDS-MEC: NFV/SDN-based application management for MEC in                 9
+44. Arduino-based Library for Dragino Lora Shield v1.4: https://github.        5G systems. Comput. Netw. 135, 96–107 (2018)
+    com/arduinoorg/arduinolibrary-lora-node-shield.       Last    access   67. Ahmadi, S.: Chapter 5 – Radio resource control functions. In:
+    20 Apr 2020                                                                Ahmadi, S. (ed.) LTE-Advanced, pp. 227–287. Academic (2014).
+45. Walters, M.: Inspectrum: A New Tool for Analysing Captured                 [Online]. http://www.sciencedirect.com/science/article/pii/
+    Signals.     https://github.com/miek/inspectrum.      Last    access       B9780124051621000058
+    20 Apr 2020                                                            68. 3GPP: Evolved Universal Terrestrial Radio Access (E-UTRA);
+46. SX1272/3/6/7/8: LoRa Modem, Designer’s Guide: https://www.rs-              Packet Data Convergence Protocol (PDCP) speciﬁcation (Release
+    online.com/designspark/rel-assets/ds-assets/uploads/knowledge-             13), June 2017
+    items/application-notes-for-the-internet-of-things/LoRa%20Design       69. Yi, S., Chun, S., Lee, Y., Park, S., Jung, S.: Radio Protocols for LTE
+    %20Guide.pdf. Last access 20 Apr 2020                                      and LTE-Advanced. Wiley, Singapore (2012)
+47. AN1200.22 LoRa Modulation Basics. http://wiki.lahoud.fr/lib/exe/       70. Rayal, F.: LTE in a nutshell: the physical layer. Telesystem Innova-
+    fetch.php?media¼an1200.22.pdf. Last access 20 Apr 2020                     tions. https://home.zhaw.ch/kunr/NTM1/literatur/LTE%20in%20a%
+48. Marquet, A., Montavont, N., Papadopoulos, G.Z.: Investigating              20Nutshell%20-%20Physical%20Layer.pdf (2010). Last access
+    theoretical performance and demodulation techniques for LoRa.              2 Apr 2020
+    In: 2019 IEEE 20th International Symposium on “A World of              71. Elsaadany, M., Ali, A., Hamouda, W.: Cellular LTE-A technologies
+    Wireless, Mobile and Multimedia Networks” (WoWMoM),                        for the future Internet-of-Things: physical layer features and chal-
+    pp. 1–6 (2019)                                                             lenges. IEEE Commun. Surv. Tutorials. 19(4), 2544–2572 (2017)
+49. Raza, U., Kulkarni, P., Sooriyabandara, M.: Low power wide area        72. Alyafawi, I., Schiller, E., Braun, T., Dimitrova, D., Gomes, A.,
+    networks: an overview. IEEE Commun. Surv. Tutorials. 19(2),                Nikaein, N.: Critical issues of centralized and cloudiﬁed LTE-FDD
+    855–873 (2017)                                                             radio access networks. In: 2015 IEEE International Conference on
+50. Weyn, M., Ergeerts, G., Wante, L., Vercauteren, C., Hellinckx, P.:         Communications (ICC), pp. 5523–5528 (2015)
+    Survey of the DASH7 alliance protocol for 433 MHz wireless sensor      73. Popli, S., Jha, R.K., Jain, S.: A survey on energy efﬁcient narrow-
+    communication. Int. J. Distrib. Sens. Netw. 9(12) (2013)                   band internet of things (NBIoT): architecture, application and chal-
+51. International Organization for Standardization. https://www.iso.org/       lenges. IEEE Access. 7, 16739–16776 (2018)
+    standards.html (2017). Last access 20 Apr 2020                         74. Oliveira, L., Rodrigues, J.J., Kozlov, S.A., Rabêlo, R.A., Albuquer-
+52. Sen, D., Sen, P., Das, A.: RFID For Energy and Utility Industries.         que, V.H.C.d.: MAC layer protocols for internet of things: a survey.
+    PennWell Corp, Tusla (2009)                                                Future Internet. 11(1), 16 (2019)
+53. Weis, S.: RFID (Radio Frequency Identiﬁcation): Principles and         75. Liberg, O., Sundberg, M., Wang, E., Bergman, J., Sachs, J.: Cellular
+    Applications. MIT Computer Science and Artiﬁcial Intelligence              Internet of Things: Technologies, Standards, and Performance. Aca-
+    Laboratory (2007)                                                          demic (2017)
+54. Roberti, M.: Internet of Things: promise and peril for the RFID        76. Schlienz, J., Raddino, D.: Narrow-band internet of things
+    industry. RFID Journal, December 1, 2014                                   whitepaper. White Paper, Rohde&Schwarz, pp. 1–42. https://cdn.
+55. Donaldson, J.: RFID Started The Internet of Things Movement. . .           rohde-schwarz.com/pws/dl_downloads/dl_application/application_
+    Now It’s Set to Lead It. https://www.mojix.com/rﬁd-internet-of-            notes/1ma266/1MA266_0e_NB_IoT.pdf (2016). Last access
+    things-movement/ (2016). Last access 20 Apr 2020                           2 Apr 2020
+56. Jules, A.: RFID security and privacy: a research survey. IEEE          77. Malik, H., Pervaiz, H., Mahtab Alam, M., Le Moullec, Y., Kuusik,
+    J. Selected Areas Commun. 24(2), 381–394 (2006)                            A., Ali Imran, M.: Radio resource management scheme in nb-iot
+57. Z-Wave: Z-Wave. https://www.z-wave.com/ (2020). Last access                systems. IEEE Access. 6, 15051–15064 (2018)
+    20 Apr 2020                                                            78. E. DECT: New Radio (NR); Part 1: Overview; Release 1. Eur. Tele-
+58. I. S. Organization: Information Technology Telecommunications              commun. Standards Inst. Techn. Specif (TS). 103, 636–631 (2020)
+    and Information Exchange Between Systems – Near Field Com-             79. Kovalchukov, R., Moltchanov, D., Pirskanen, J., Säe, J., Numminen,
+    munication – Interface and Protocol (NFCIP-1) Tech. Rep. ISO/-             J., Koucheryavy, Y., Valkama, M.: DECT-2020 new radio: the next
+    IEC 18092:2013(E). International Standard Organization, Geneva             step toward 5G massive machine-type communications. IEEE
+    (2013)                                                                     Commun. Mag. 60(6), 58–64 (2022)
+59. Langer, J., Roland, M.: Anwendungen und Technik von Near Field         80. Penner, M., Nabeel, M., Peissig, J.: URLLC performance evaluation
+    Communication (NFC). Springer, Berlin/Heidelberg (2010)                    of IMT-2020 candidate technology: DECT-2020 new radio. In: 2021
+60. Macias, E., Wyatt, J.: NFC Active and Passive Peer-to-Peer Com-            IEEE 94th Vehicular Technology Conference (VTC2021-Fall),
+    munication Using the TRF7970A Tech. Rep.SLOA1291A. Texas                   pp. 1–7 (2021)
+    Instruments (2016)                                                     81. Schmitt, C., Noack, M., Stiller, B.: TinyTO: Two-way Authentica-
+61. RF Wireless World: NFC A vs NFC B vs NFC F-Difference between              tion for Constrained Devices in the Internet-of-Things, pp. 239–258.
+    NFC-A, NFC-B, NFC-F. http://www.rfwireless-world.com/                      Morgen Kaufmann, Cambridge, MA (2016)
+192                                                                                                                                  B. Stiller et al.
+
+
+
+
+Burkhard Stiller received the Informatik-Diplom (M.Sc.) degree in
+                                                                            Corinna Schmitt received a degree of a DiplomInformatikerin
+computer science and the Dr. rer.-nat. (Ph.D.) degree from the University
+                                                                            (Bioinformatikerin) from the Eberhard-Karls University of Tübingen,
+of Karlsruhe, Germany, in 1990 and 1994, respectively. In his research
+                                                                            Germany, and her Ph.D. degree (Dr. rer.-nat.) from the Technical Uni-
+career, he was with the Computer Lab, University of Cambridge, UK,
+                                                                            versity of Munich (TUM), Germany. Currently, she ﬁnishes her Habil-
+from 1994 to 1995, ETH Zürich, Switzerland, from 1995 to 2004, and
+                                                                            itation at the University of Zurich UZH, Switzerland, where she worked
+the University of Federal Armed Forces Munich, Germany, from 2002
+                                                                            as a senior researcher for “Mobile and Trusted Communications” at the
+to 2004. Since 2004, he has chaired the Communication Systems Group
+                                                                            Communication Systems Group CSG between 2013 and 2018. Since
+CSG, Department of Informatics IfI, University of Zürich UZH, Swit-
+                                                                            2018, she is a researcher and the laboratory manager for “IoT and
+zerland.
+                                                                            Mobile Communications” at the Research Institute CODE, Universität
+    His main research interests are published in well over 350 research
+                                                                            der Bundeswehr München, Germany.
+papers and include systems with a fully decentralized control
+                                                                                 Her research focuses on mobile and trusted communications in IoT
+(blockchains, clouds, peer-to-peer), network and service management
+                                                                            and is documented in more than 30 publications, including several book
+(economic management), Internet of Things (security of constrained
+                                                                            chapters, journal articles, and papers as well as standards, such as RFC
+devices, LoRa), and telecommunication economics (charging and
+                                                                            8272 and ITU-T recommendation Y.3013. She contributed to several EU
+accounting). Besides being a member of the editorial board of the
+                                                                            projects, such as CONCORDIA, symbIoTe, SmartenIT, FLAMINGO,
+IEEE Transactions on Network and Service Management, Journal of
+                                                                            and AutHoNe, and different standardization organizations, including,
+Network and Systems Management (Springer), and the Journal of Com-
+                                                                            ITU, and ASUT. She is active within ACM and IEEE, as a TPC member,
+munications and Networks (KICS), he is a Past Editor-in-Chief of
+                                                                            as a reviewer for several journals and funding schemes, and as an
+Computer Networks (Elsevier) and the current chair of IFIP’s Technical
+                                                                            organizer of conferences.
+Committee TC6 on Communications Systems.
+
+
+
+
+Eryk Schiller received two diplomas: one M.Sc. in Electronics &
+Telecommunications from the University of Science and Technology
+(UST) and one M.Sc. in Theoretical Physics from the Jagiellonian
+University (JU), Cracow, Poland, in 2006 and 2007, respectively. He
+received a Ph.D. in Computer Science from the University of Grenoble,
+France, in 2010. Between 2010 and 2014, he was appointed as a
+postdoctoral research assistant at the University of Neuchâtel, Switzer-
+land. Between 2014 and 2019, he was with the University of Bern,
+Switzerland. Since 2018, he is with the Communication Systems Group
+CSG, at the Department of Informatics IfI, University of Zurich UZH,
+Switzerland, and holds an appointment of a senior researcher.
+    Eryk is an author of various book chapter, journal, conference, and
+workshop publications in the domain of communication networks, dis-
+tributed systems, and cloud computing. Eryk was appointed on a few
+European projects including IST-WIP, MCN, FLEX, and CONCORDIA
+and national projects of France and Switzerland. His interests center
+around cloud computing and communication networks.
+

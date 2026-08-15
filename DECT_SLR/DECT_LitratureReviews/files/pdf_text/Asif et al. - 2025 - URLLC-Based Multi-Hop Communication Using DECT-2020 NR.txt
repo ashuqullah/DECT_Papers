@@ -1,0 +1,529 @@
+                                                                                                                                                                                           2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+                                                                                                                                                              URLLC-Based Multi-Hop Communication Using
+                                                                                                                                                                          DECT-2020 NR
+                                                                                                                                                                                         Awais Bin Asif, Hassan Ahmad, Stephan Preihs, and Jürgen Peissig
+                                                                                                                                                                                    Institute of Communications Technology, Leibniz Universität Hannover, Germany
+                                                                                                                                                                                            {asif,ahmad,preihs,peissig}@ikt.uni-hannover.de
+
+                                                                                                                                                                                                                                                              TABLE I: Transmission configuration
+                                                                                                                                                            Abstract—DECT-2020 New Radio (NR) is a Radio Interface
+                                                                                                                                                         Technology (RIT) introduced by ETSI for massive Machine                                    Properties            Config1     Config2      Config3     Config4
+                                                                                                                                                         Type Communications (mMTC) and Ultra-Reliable Low Latency                                    (µ, β)               (1,1)       (2,1)        (4,1)       (8,1)
+                                                                                                                                                         Communications (URLLC) use cases. A single DECT-2020 NR                                Bandwidth (MHz)            1.728       3.456        6.912      13.824
+                                                                                                                                                         Radio Device (RD) in Fixed Termination (FT) mode announces                            Symbol Length (µs)         41.667      20.833       10.417       5.208
+                                                                                                                                                         radio resources for the connected RDs in Portable Termination                       Subcarrier Spacing (kHz)       27          54           108         216
+                                                                                                                                                                                                                                               Subslot Length (ms)         0.208       0.104        0.052      0.0260
+2025 IEEE Wireless Communications and Networking Conference (WCNC) | 979-8-3503-6836-9/25/$31.00 ©2025 IEEE | DOI: 10.1109/WCNC61545.2025.10978532
+
+
+
+
+                                                                                                                                                         (PT) mode. An RD can also operate in both modes simultane-
+                                                                                                                                                         ously as an FT/PT. An RD in FT mode is responsible for packet                        Transmit Power (dBm)          23          23           23           23
+                                                                                                                                                         routing for the connected radio devices. However, for multi-hop
+                                                                                                                                                         communication, RDs in FT mode flood the packet, which utilizes
+                                                                                                                                                         more network resources and introduces additional latency. In this
+                                                                                                                                                         paper, we propose a routing procedure for URLLC-based multi-                      its intended destination. In this paper, we propose a multi-
+                                                                                                                                                         hop communication using the MAC layer and convergence layer                       hop routing procedure for DECT-2020 NR that ensures com-
+                                                                                                                                                         functionalities of DECT-2020 NR. Moreover, we formulate the
+                                                                                                                                                                                                                                           pliance with URLLC constraints, thereby mitigating the need
+                                                                                                                                                         optimization problem for optimal path selection based on user-
+                                                                                                                                                         plane latency, which is our previous contribution to the ETSI                     for the flooding approach.
+                                                                                                                                                         self-evaluation technical report of DECT-2020 NR and propose a                     The existing literature review on DECT-2020 NR is mainly
+                                                                                                                                                         graph theory-based solution. The investigations demonstrate that                  related to technology evaluation. For example, [3] conducted
+                                                                                                                                                         an improvement of up to 15% in throughput and a reduction                         a link-level performance evaluation of a multi-hop assisted
+                                                                                                                                                         of up to 15% in end-to-end latency is observed in comparison
+                                                                                                                                                                                                                                           mMTC scenario for DECT-2020 NR. The performance was
+                                                                                                                                                         with the standard flooding procedure.
+                                                                                                                                                            Index Terms—DECT-2020 NR, URLLC, Multi-Hop Commu-                              evaluated against the transmission configurations of DECT-
+                                                                                                                                                         nication, End-to-End Latency, Routing                                             2020 NR in terms of outage probability and bit error rate.
+                                                                                                                                                                                                                                           [4] is another link-level performance evaluation of NOMA-
+                                                                                                                                                                               I. I NTRODUCTION                                            aided multi-hop DECT-2020 NR for mMTC applications. The
+                                                                                                                                                            DECT-2020 NR standard is one of the RITs released by                           simulation results suggested that the NOMA-aided DECT-
+                                                                                                                                                         the European Telecommunications Standards Institute (ETSI)                        2020 NR multi-hop communication improves the outage prob-
+                                                                                                                                                         in 2020, which supports use cases of mMTC and URLLC                               ability and BER. [5] presented a link-level and system-level
+                                                                                                                                                         following the IMT-2020 guidelines [1]. In DECT-2020 NR,                           evaluation of DECT-2020 NR for the use case of URLLC
+                                                                                                                                                         the Radio Device (RD) is capable of operating in three distinct                   and mMTC using the guidelines of IMT-2020. Authors in [6]
+                                                                                                                                                         modes: Fixed Termination (FT) mode, Portable Termination                          evaluated the energy consumption of DECT-2020 NR network
+                                                                                                                                                         (PT) mode, and a combined FT/PT mode. The RDs operating                           for battery-operated IoT devices and investigated the latencies
+                                                                                                                                                         in these modes are denoted as RDFT , RDPT and RDFT/PT                             with energy constraints. [7] presented an introduction to
+                                                                                                                                                         respectively. DECT-2020 NR introduces a downlink routing                          DECT-2020 NR and its applications in a 5G mMTC use case.
+                                                                                                                                                         protocol for unicast, multicast, and broadcast communica-                         The author presented a system-level evaluation and compared
+                                                                                                                                                         tions, particularly in single-hop packet transmission scenar-                     the investigations with existing LPWAN solutions in terms
+                                                                                                                                                         ios. The gateway (i.e., connected with the external network)                      of the supported density of nodes. Author in [8] performed
+                                                                                                                                                         operating in FT mode manages the list of connected RDs                            a performance evaluation of DECT-2020 NR in a real-life
+                                                                                                                                                         and is responsible for packet routing. In single-hop transmis-                    industrial environment for various RF bands. The investigation
+                                                                                                                                                         sions, the destination RDs operating in PT mode are directly                      includes the evaluation of PER, BER, and RMS delay spread
+                                                                                                                                                         connected to the gateway, enabling direct packet forwarding.                      for a bandwidth of 13.824 MHz. [9] also presented a link-level
+                                                                                                                                                         However, DECT-2020 NR lacks a routing mechanism for                               simulation for the use case of URLLC and evaluated PER
+                                                                                                                                                         multi-hop communication. In such cases, the gateway attempts                      for various modulation schemes with HARQ implementation.
+                                                                                                                                                         to locate the destination node; if unsuccessful, the gateway                      The simulation results verified the requirements of URLLC,
+                                                                                                                                                         disseminates the packet to all connected RDs operating in                         achieving link latency below 1ms and reliability of 99.99%.
+                                                                                                                                                         RDFT/PT modes. Each receiving node reiterates the search                          In this paper, we propose a multi-hop routing procedure
+                                                                                                                                                         for the destination node, and if the node remains undiscovered,                   leveraging the MAC and convergence layers of the DECT-
+                                                                                                                                                         the flooding process [2] is repeated until the packet reaches                     2020 NR network to meet URLLC requirements. The gateway
+
+
+
+
+                                                                                                                                                       979-8-3503-6836-9/25/$31.00 ©2025 IEEE
+
+
+
+                                                                                                                                                     Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                      2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+    maintains the network topology, with link costs defined by                        power from node i to node j including the effect of path loss
+    user plane latency to fulfill the DECT-2020 NR URLLC                              and Rayleigh fading is expressed as:
+    specifications as outlined in the standard [10] and ETSI
+    evaluation report [11].We formulate an optimization problem                                            Prij = Pti + E(x2ij ) − P Lij                        (3)
+    aimed at determining the optimal path selection to minimize                       where Pti is the transmit power of a node i. To calculate the
+    end-to-end latency in multi-hop communication. Indepen-                           SNR from a node i to a node j, the following expression is
+    dently, the MAC and Convergence layers are employed to                            used:
+    disseminate link costs to the gateway, which utilizes this                                                       P ij
+    information to construct a network graph. Leveraging the                                                  γij = r ≥ γth                        (4)
+                                                                                                                     N
+    graph and the formulated optimization model, the gateway                          where N is the noise power and γth is the SNR threshold
+    computes the optimal communication path using Dijkstra’s                          value which is calculated using our previous work [9]. The
+    algorithm. For downlink transmission, routing information is                      SNR threshold value corresponds to the packet error rate to
+    multiplexed in the MAC Service Data Unit (SDU) to guide                           achieve the reliability requirement of URLLC. The maximum
+    packet forwarding, avoiding standard flooding. Simulation                         achievable data rate for the link (i, j) is calculated using the
+    results show that our approach reduces end-to-end latency and                     Shannon formula given in equation (5).
+    improves throughput compared to the standard DECT-2020
+    NR flooding method. The rest of the paper is organized as                                                Rij = Bij log2 (1 + γij )                          (5)
+    follows: in section II the problem is formulated, in section
+    III the proposed solution is presented, in section IV the                         where Bij is the bandwidth for the link (i, j). Based on the
+    performance is evaluated using simulation, and in section V                       maximum achievable data rate and the data rate requirement
+    concluding remarks are offered.                                                   of the application, a suitable Modulation and Coding Scheme
+                                                                                      (MCS) [10] is selected for the link (i, j). DECT-2020 NR [10]
+                                                                                      supports various transmission configurations (µ, β) as shown
+                        II. P ROBLEM F ORMULATION
+                                                                                      in Table I.
+       We consider an indoor scenario of a DECT-2020 NR                               The number of sub-slots required to transmit a packet is
+    wireless network for the use case of URLLC communication.                         calculated by the following expression:
+    The network topology contains a gateway and radio devices                                                         & S·8 '
+    operating in FT, FT/PT, and PT modes. Each radio device in                                                                 Rij
+                                                                                                                   Nsub =        ij
+                                                                                                                                                                (6)
+    FT or FT/PT mode shares the link cost (i.e., latency) with the                                                             Tsub
+    gateway through uplink whenever there is a new association or
+                                                                                      where S is the size of the packet in bytes, Rij is the
+    re-association with other RDs as explained in section III. The
+                                                                                      throughput of the link (i, j) with unit bits per second (bps)
+    gateway utilizes the shared information from the radio devices                                                           ij
+                                                                                      calculated by the selected MCS, and Tsub  is the subslot length
+    and creates a connectivity graph denoted as G = (V, E).
+                                                                                      in seconds given by the supported transmission configuration
+    Where V = {v1 , v2 , v3 , ...vn } is the set of vertices (i.e.,
+                                                                                      (µ, β) of the DECT-2020 NR standard [10]. Thus, the data
+    DECT-2020 NR nodes) and E = {e1 , e2 , e3 , ...en } is the set
+                                                                                      packet transmission duration is given by:
+    of edges (links between the nodes).
+    The transmission model considers both the path loss model                                                                     ij
+                                                                                                                  tdur = Nsub · Tsub                            (7)
+    and the fading model to define received power at the nodes.
+    The path loss model is chosen from the IMT-2020 guidelines                        The total user-plane latency [11] of a link (i, j) for the frame-
+    [1] which is expressed as:                                                        based system operation without Hybrid Automatic Repeat
+                                                                                      request (HARQ) is expressed in equation (8).
+              P Lij = 16.9 log10 (dij ) + 32.8 + 20 log10 (fc )               (1)
+                                                                                                 TijN = tsym + trd tx + tFA switch + tdur + trd rx              (8)
+    where dij is the distance between the node i and node j, and                      where tsym is the symbol alignment time, trd tx is the transmit-
+    fc is the operating frequency. To consider a realistic channel                    ter (TX) side processing delay, tFA switch is the TX alignment
+    feature, we used the Rayleigh fading channel model [12]. The                      and TDD switching time, and trd rx is the receiver (RX) side
+    probability density function of the Rayleigh fading channel                       processing delay. The total user-plane latency with HARQ is
+    model denoted as fX (xij ) is given by:                                           calculated using the equation (9):
+                                               x2
+                                  xij − ij2                                                                 TijH = TijN + n · [T1 + T2 ]                        (9)
+                       fX (xij ) = 2 e 2σij , xij > 0                         (2)
+                                  σij                                                 where n is the total number of re-transmissions. T1 and T2
+    where xij is the envelope of the received signal from node                        are calculated by the following expressions.
+                       2
+    i to node j, and σij is the power of multi-path component.                                        T1 = ttx + tFA switch + tHARQ + trd-rx                  (10)
+    The expected value of the received power influenced by the
+    fading channel is denoted as E(x2ij ). Thus, the total received                                   T2 = trd tx + tFA switch + tdur + trd rx                (11)
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                           2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+    where T1 represents HARQ feedback transmission delay and
+    T2 represents data re-transmission delay. In equation (10),                                                                                  Radio Devices
+
+    ttx is the TX side processing delay for HARQ feedback
+    transmission, tHARQ is the HARQ ACK/NACK transmission                                                                                    Association Procedure
+    delay, tFA switch is the TX alignment and TDD switching
+    time for HARQ ACK/NACK, and trd-rx is the receiver side                                                                                                            Network Intialization
+                                                                                                                                               Calculate link cost
+    processing delay for ACK/NACK. The symbols in equation
+    (11) are explained in equation (8). The user plane latency
+    expressed in equation (8) and (9) ensures the link-level latency                                                                         Cost sharing procedure
+
+    requirement of URLLC communication, i.e., less than 1ms.
+    The objective is to find a path from the gateway to a                                                                                        Create Graph
+
+    destination node such that the end-to-end latency for multi-
+    hop communication is minimized. The optimization problem                                                       Update Graph              Find Optimal path for a
+                                                                                                                                                 destination RD
+    is thus formulated as:
+                                                                                                                  Share link cost
+                                                                                          Mobility Procedure
+                      X X f f f
+          minimize             Xij Tij (Ni + 1), ∀f ϵF                                                            with Gateway
+
+
+                           (i,j)ϵE f ϵF                                                                                                Yes
+                                                                                                                                                     IF
+                                                                                                                 Calculate link cost
+                                                                                                                                                Re-Association
+        s.t.
+                X         f                                                                                                                                 No
+                         Xij = 1, iϵS, ∀f ϵF
+               (i,j)ϵE                                                                                                                         Routing Procedure
+                X         f
+                         Xij = 1,    jϵD, ∀f ϵF                              (12)
+                                                                                                                                               Evaluation Report
+               (i,j)ϵE
+                X         f
+                                  X         f
+                         Xij =             Xju   ∀jϵV − {S, D}, ∀f ϵF
+               (i,j)ϵE           (j,u)ϵE                                                                       Fig. 1: Flow chart of proposed solution
+            cfij ≥ Xij
+                    f
+                       ∀(i, j)ϵE, ∀f ϵF
+             f
+            Xij ϵ{0, 1} ∀(i, j)ϵE, ∀f ϵF
+                                                                                      we deployed one RD in FT mode on a static position as a
+    where E is the set of edges in the network, f is a data flow                      gateway, some RDs in FT/PT mode are deployed on a fixed
+    which is defined as a set of packets required to transmit from                    position to provide coverage for the region of interest, and the
+    the gateway/source node to a destination node, and F is the set                   rest of the RDs in PT mode are mobile following a pre-defined
+                          f
+    of all data flows. Xij  is the binary variable of the optimization                path, e.g., AGVs in factory hall. The RDPT can associate with
+    problem which represents whether a link (i, j) is selected for                    more than one RDFT /RDFT/PT based on the minimum SNR
+    a flow f or not. If the link (i, j) is selected for transmission of               requirement of URLLC communication. Moreover, if RDPT
+                             f                                        f
+    flow f , the value of Xij   is set to 1; otherwise, the value of Xij              is closer to the gateway it connects directly with the gateway.
+                   f
+    is set to 0. Tij is the total latency of packet transmission on a                 During the network initialization, the gateway initiates the
+    link (i, j) for a flow f which is calculated using the equation                   association procedure using the network beacon transmission.
+    (9). If the network does not require HARQ, the value of n in                      With every association between the radio devices, the radio
+    equation (9) is set to 0. Nif is the number of queueing data                      device in FT or FT/PT mode, calculates the cost (i.e., latency)
+    packets in a data flow f waiting to be transmitted at node                        of the link using the equations as explained in the section
+    i for the destination node. The constraints in equation (12)                      II and the radio device in FT/PT mode sends the calculated
+    ensure that there should be one neighbour node connected to                       latency with the RDIDs of the link to the gateway. Using
+    the source node S (i.e., gateway) to transmit data packets for                    the information shared by the RDs, the gateway creates a
+    a flow f . Similarly, for the destination node D, there should                    graph of the network topology and finds an optimal path
+    be one node connected to receive the data packets for the                         for a destination node using Dijkstra’s algorithm. Due to
+    flow f . The other constraints ensure the loop-free intermediate                  mobility or poor channel condition, if any RDPT changes
+    links to deliver the packets successfully to the destination. The                 its association, the respective RDFT/PT sends the updated
+    existence of links in the network is ensured by the binary                        information to the gateway. For downlink communication, i.e.,
+    constant cfij ϵ{0, 1}. The proposed solution is presented in the                  gateway to RDPT , the gateway adds the routing information
+    section III in detail.                                                            inside the packet and the gateway forwards the packet to
+                                                                                      the next hop. Using the embedded routing information, each
+                            III. P ROPOSED S OLUTION                                  intermediate hop forwards the packet to the next hop only, and
+       In this research work, we propose a routing procedure for                      eventually, the packet reaches the destination RDPT following
+    multi-hop communication using DECT-2020 NR while main-                            the optimal path. The flow chart of the proposed solution
+    taining the URLLC constraints. In our considered scenario,                        is shown in Fig. 1. Moreover, detailed descriptions of the
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                      2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+                          TABLE II: DECT-2020 NR Edges
+                                                                                      II and saves the link cost with RDIDs of the connected RDs
+                        Sr. No         Link             Cost                          in the form of a table. Subsequently, RDFT/PT shares the
+                           1        (RDG ,RDID1 )       cost1
+                           2        (RDG ,RDID2 )       cost2
+                                                                                      link cost with the gateway (i.e., RDFT ) whenever there is an
+                           3       (RDID2 ,RDID3 )      cost3                         association established with other RDs. To share the link cost
+                           4       (RDID2 ,RDID4 )      cost4                         with the gateway, the RDFT/PT adds the cost of the link with
+                                                                                      RDID of the two associated devices in MAC SDU. Moreover,
+                                                                                      we used MAC Ext and IE type, indicating the length of the
+    association procedure, cost-sharing procedure, and routing                        IE payload and indicating the presence of the link cost in
+    procedure are explained in the following subsections.                             MAC SDU, respectively. In addition to MAC multiplexing
+                                                                                      header, the RDFT/PT adds the convergence layer unicast
+    A. Association Procedure                                                          header by adding its RDID as source address and the RDID
+       The RDFT or RDFT/PT transmits the network beacon                               of the gateway is set as a destination address. The packet is
+    messages periodically to associate with RDPT . The receiving                      then forwarded in uplink transmission. In uplink transmission,
+    RDPT sends the association request message if the RSSI level                      each intermediate node forwards the packet to the link with
+    of the detected network beacon is above the required RSSI                         minimum cost until the packet reaches the gateway. During
+    level to achieve the desired packet error rate (PER) for the                      the network initialization phase, the gateway receives the
+    URLLC communication. The required RSSI level depends                              packets from the RDs and maintains a table named ”DECT-
+    on the receiver sensitivity and the quality margin, i.e., the                     2020 NR edges”, which contains RDIDs and the cost (i.e.,
+    minimum RSSI value above the receiver sensitivity set by the                      latency) of the links. For example consider a small network
+    URLLC requirement. The Association Request Message is                             which contains a gateway, one RDFT , and three RDPTs with
+    sent following the Random Access Procedure on the random                          RDIDs denoted as RDG , RDID1 , RDID2 , RDID3 , and RDID4
+    access time resources announced by the RDFT using uplink                          respectively. The stored information at the gateway is shown
+    transmission. Whereas, the RDPT receives the association                          in Table II.
+    response message from the RDFT on the announced downlink
+                                                                                                                                   MAC-Protocol Data Unit (PDU)
+    time resources as mentioned in [13]. RDFT responds using
+                                                                                                                                  MAC: DCCH      Higher Layer Data 1 Higher Layer Data 2
+    the Association Response Message IE with a unicast header.                          Physical Header MAC header   MAC Common MAC Mux-         MAC Mux-            MAC Mux-
+                                                                                                                                         MAC SDU          MAC SDU             MAC SDU
+                                                                                                          type
+    The association is completed when the RDPT receives the                                  Field                     Header    Header           Header              Header
+
+
+    Association Response Message IE from the RDFT with the                            Fig. 2: Physical Header Field and Protocol Data Unit (PDU) of MAC layer.
+    positive acknowledgement (ACK). Furthermore, in the associ-
+    ation response along with the Association Response Message
+    IE, we propose to multiplex the Cluster Beacon Message                            C. Optimal path selection
+    and Resource Allocation IE. The Cluster Beacon Message                               The objective of the problem formulation in the section II
+    informs the associated RDs about the frame and slot timing,                       is to find the optimal path from the gateway to the destination
+    whereas, the Resource Allocation IE informs the associated                        node such that end-to-end latency is minimized. To find the
+    RDs about their respective scheduled time resources for DL                        optimal path, the gateway first reads the table ”DECT-2020
+    and UL transmissions.                                                             NR edges” and creates a graph denoted as G = (V, E) where
+                                                                                      V is the set of vertices i.e., set of DECT-2020 NR radio
+    B. Cost Sharing Procedure                                                         devices and E is the set of edges i.e., set of links between
+       In our proposed model, we used uplink transmission ex-                         the radio devices. The cost of the edges is defined using
+    ploiting the MAC layer functionality of DECT-2020 NR to                           the cost mentioned in the table ”DECT-2020 NR edges” i.e.,
+    share the link information (i.e., latency) of radio devices with                  the latency of the links. The gateway then applies Dijkstra’s
+    the gateway. The MAC layer supports MAC multiplexing                              algorithm on graph G to find the optimal path for a specified
+    header to multiplex multiple MAC SDUs into a single MAC                           destination RD. The Dijkstra’s algorithm is a well-known
+    Protocol Data Unit (PDU) as shown in Fig. 2. The MAC                              algorithm to find the shortest path. The algorithm starts from
+    multiplexing header includes fields such as MAC Extension                         the source node and it traverses each node of the network
+    (MAC Ext), IE Type, and Length. The MAC Ext is a two-                             once. The algorithm follows the edges with minimum cost and
+    bit field which indicates the presence of the Length field and                    at each traversal, it aggregates the link cost until it reaches the
+    the size of the Length field. The IE type indicates the type                      required destination node. The algorithm converges with the
+    of information included in the MAC SDU, e.g., IE type =                           optimal path and provides aggregated link cost (i.e., end-to-
+    001000 indicates the network beacon message and IE type                           end Latency). In case of handover, the respective RDF T /P T
+    = 001010 indicates the association request message. Lastly,                       sends the cost of the newly established link to the gateway.
+    the Length field in the header indicates the length of the                        The gateway runs the algorithms again to find the optimal
+    MAC SDU (i.e., short SDU, medium SDU, and large SDU).                             path. However, because of the slow speed of RDP T , the fre-
+    The gateway first calculates the link cost of RDs directly                        quency of handovers are not very high. The routing procedure
+    connected with it using the equations mentioned in section                        is explained in the following section.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                      2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+    D. Routing Procedure
+       For downlink transmission (i.e., gateway to RDPT ), the
+    gateway first finds the optimal path (i.e., list of nodes) as
+    explained in the section III-C. Let Ω = {G, n1 , n2 , ..., nd } be
+    the optimal path where G is the gateway node, nd is the
+    destination node, and {n1 , n2 , ...} is the set of intermediate
+    nodes. The gateway adds the list of RDIDs of the nodes
+    {n1 , n2 , ..., nd } in the MAC SDU and adds the MAC mul-
+    tiplexing header to the packet by setting the fields MAC Ext                                (a) Flooding method                    (b) Proposed approach
+    and IE type indicating the length of MAC SDU and the
+                                                                                          Fig. 4: Path selection using flooding method vs proposed approach
+    presence of RDIDs of the optimal path inside the MAC SDU.
+    Finally, the gateway adds the unicast header by setting the                       We used four transmission configurations of DECT-2020 NR
+    RDID of the first intermediate node as the destination address,                   as shown in Table I to evaluate the proposed solution. Fig.
+    and the RDID of the gateway is set as the source address. The                     4 presents the path obtained from gateway to RDPT7 using
+    gateway forwards the packet to the first intermediate node                        the flooding approach and the proposed solution. The path
+    using the unicast header. At each intermediate node, the node                     followed by the flooding method is represented in magenta
+    removes the RDID of itself and forwards the packet to the next                    colour as shown in Fig. 4a. Due to the flooding method, all
+    intermediate node until the packet reaches the final destination                  RDFT,PTs in the network receive the packet at least once and
+    node. For uplink transmission (i.e., RDPT to gateway), RDPT                       the receiver RDPT7 receives multiple copies of the packet,
+    adds a convergence layer unicast header [2] to the packet with                    which are discarded using the sequence number embedded
+    RDID of the gateway as destination address and RDID of the                        in the packet header. Whereas, using the proposed approach,
+    node itself as source address. The node forwards the packet                       the packet follows the optimal path from the gateway to
+    to the link with minimum cost in uplink transmission and the                      RDPT7 as shown in Fig. 4b
+    packet follows the path with minimum cost at each hop until                       The end-to-end latency of a path denoted as Tend is calculated
+    it reaches the gateway.                                                           as follows:
+                     IV. P ERFORMANCE E VALUATION                                                                    X
+                                                                                                             Tpath =     Te                     (13)
+       Performance evaluation of the proposed approach is
+                                                                                                                               eϵΩ
+    conducted by considering a topology with six RDFT,PTs ,                                                                 Pm      i
+    eight RDPTs , and one RDFT for an indoor environment of                                                                    i=1 TΩ
+                                                                                                                  Tend =                          (14)
+    area 100x140 meters, e.g., a factory hall as shown in Fig. 3.                                                       m
+    The RDFT and RDFT,PTs are deployed at a static position to                        where Ω in equation (13) is the path selected by the flooding
+    provide coverage in the region of interest. Moreover, RDFT                        method or proposed approach, Te is the latency of each link of
+    is a gateway having a connection to the external network and                      the path calculated using equation (8) or equation (9), and m is
+    manages the RDFT,PTs . The RDPTs are moving at the speed                          number of successful packets received by the destination node.
+    of up to 2m/s in a pre-defined mobility path represented as                       The throughput (in Mbps) of the obtained path is calculated
+    dotted lines in Fig. 3. Using the network beacon messages,                        using the equation (15).
+    the association between the RDs is established as explained                                                            m · Sp · 8
+    in the section III-A and represented by solid lines in Fig. 3.                                           R=                                                (15)
+                                                                                                                      (Tend − Tstart ) · 106
+                                                                                      where m is the total number of packets received successfully,
+                                                                                      Sp is the size of the packet in bytes, Tstart is the starting time
+                                                                                      when the first data packet is sent by the gateway, and Tend
+                                                                                      is the time when last packet is successfully received at the
+                                                                                      destination node.
+                                                                                      We calculated the end-to-end Bit Error Rate (BER) [14]
+                                                                                      for each packet transmission to implement HARQ. If the
+                                                                                      BER of a received packet is above a threshold [9], the
+                                                                                      packet is considered corrupt and requires retransmission. Let
+                                                                                      vϵ{v1 , v2 , v3 , ..., V} be the set of nodes/vertices in a path, the
+                                                                                      end-to-end BER is calculated using the following expression.
+                                                                                                PV = (1 − PV −1 )P (V ) + PV −1 (1 − P (V ))                   (16)
+                                                                                      where PV is the end-to-end BER, P (V ) is the BER of a
+            Fig. 3: Network topology of the reference evaluation scenario             link/single hop, (1 − PV −1 ) is the probability of correct
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                      2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+    bit transmission from the source node to node V − 1, and
+    (1 − P (V )) is the probability of correct bit transmission from
+    node V − 1 to node V . Moreover, the BER is a function of
+    energy spectral density, modulation type, modulation order,
+    and diversity order.
+
+
+
+
+                                                                                               (a) End-to-End latency                    (b) Throughput
+
+                                                                                      Fig. 6: End-to-End latency and throughput as a function of transmission
+                                                                                      configuration with mobile RDPT averaged over 1000 iterations.
+
+
+
+                                                                                      meters, which means the topology will not change with every
+             (a) End-to-End latency                      (b) Throughput
+                                                                                      second. We evaluated the proposed solution over 1000 itera-
+    Fig. 5: End-to-End latency and throughput as a function of transmission           tions, and in each iteration, we considered the location where
+    configuration for RD at static position.
+                                                                                      the handover takes place which changes the topology. For
+    In the next set of experiments, we evaluated our proposed                         each iteration, we sent 1000 packets and calculated end-to-end
+    solution with four different transmission configurations (µ, β)                   latency and throughput for the proposed solution and flooding
+    as shown in Table I. We used scheduled access for packet                          procedure. It can be observed from the Fig. 6, the proposed
+    transmission, and transport block size for respective trans-                      solution performed better as compared to the flooding ap-
+    mission configuration (µ, β) for single slot transmission is                      proach. The improved performance of the proposed solution
+    selected as mentioned in DECT-2020 NR standard [10], [13].                        is due to the optimal path selection in comparison to the
+    To evaluate the proposed solution, we sent 1000 packets                           flooding approach. For the flooding approach, we considered
+    of size 32 bytes for each transmission configuration from                         the path through which the first copy of the packet is received
+    gateway to RDPT7 (mobile in an area when there are no                             successfully while neglecting other paths. However, there are
+    handovers) and calculated the end-to-end latency and through-                     few cases where the proposed solution and flooding approach
+    put using the equations (14) and (15). From Fig. 5a and Fig.                      calculate same end-to-end latency and throughput, e.g., if
+    5b, the effect of transmission configuration (µ, β) on end-                       RDPT is directly connected with the gateway, the latency
+    to-end latency and throughput is evident due to change in                         and throughput are same for both approaches. Including the
+    bandwidth, symbol length, subcarrier spacing, and subslot                         worst-case scenarios, the improvement of 10% to 15% is
+    length. It can be observed that the proposed solution out-                        observed in end-to-end latency and throughput for various
+    performs the flooding procedure. The reduction in end-to-end                      transmission configurations. The percentage of improvement
+    latency and improvement in throughput is observed due to the                      will further increase if there are more intermediate nodes
+    optimal path selection procedure in comparison to the flooding                    between the gateway and destination node. Since we propose
+    procedure. The packet routing in flooding is dependent on                         the solution of the use case of URLLC, it can be extended to
+    the time slot scheduling, e.g., in Fig. 3, if RDFT,PT2 is                         small to medium-scale networks depending upon the use case.
+    scheduled first, the gateway will transmit the packet first                       Moreover, due to slow speed of RDPT , the handovers are not
+    to the RDFT,PT2 and then in second slot the packet will                           very frequent (i.e., every instance), and the overhead of cost
+    be transmitted for RDFT,PT1 . The time slots are allocated                        sharing is one packet for each handover. Due to handovers, the
+    using the first come first serve method, i.e., whenever there                     gateway recalculates the optimal path with time complexity
+    is an association between RDFT and RDPT the RDFT                                  of (V + E) log(V) which is affordable for small network.
+    allocates time slot for the respective RD. Thereby, the flooding
+    routing procedure is random and unpredictable. Moreover,                                                       V. C ONCLUSION
+    the flooding approach uses more network resources, increases                         In this paper, we propose a multi-hop routing mechanism
+    network congestion, increases latency, is less energy efficient,                  utilizing DECT-2020 New Radio (NR) to support Ultra-
+    and uses more bandwidth in comparison with optimal path                           Reliable Low Latency Communications (URLLC). The pro-
+    selection. However, the proposed approach ensures that the                        posed approach involves constructing a network graph at
+    packet follows an optimal path and hence utilizes less network                    the gateway, where link costs are defined by link-level user
+    resources with minimum end-to-end latency.                                        plane latency. We introduce a cost-sharing procedure that
+    In the following experiment, we evaluated the proposed                            distributes these link costs to the gateway. The gateway then
+    approach with mobile RDPT as a function of transmission                           employs a shortest path optimization algorithm (i.e., Dijkstra’s
+    configuration. As shown in Fig. 3, RDPT can move on a                             algorithm) to determine the optimal route to the destination
+    dotted line with a speed of up to 2m/s in an area of 100x140                      node. For downlink multi-hop packet forwarding, the routing
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+                                      2025 IEEE Wireless Communications and Networking Conference (WCNC)
+
+
+
+
+    information, represented as a list of RDIDs corresponding
+    to the optimal path, is multiplexed in the MAC Service
+    Data Unit (SDU). This enables intermediate nodes to forward
+    packets to the next hop without relying on traditional flooding
+    techniques. Our solution exhibits a notable improvement in
+    both end-to-end latency and throughput. Future work will
+    focus on implementing and evaluating the proposed method
+    using software-defined radio (SDR) platforms.
+                              ACKNOWLEDGMENT
+       The work in this paper was part of the C ELTIC -N EXT
+    project USWA and received funding from the Federal Ministry
+    of Education and Research of Germany (BMBF, funding code:
+    16KISK254). We would like to thank the funding organization
+    for the financial support.
+                                   R EFERENCES
+     [1] ITU-R, “Detailed specifications of the terrestrial radio interfaces of
+         Inter-national Mobile Telecommunications-2020 (IMT-2020),” Interna-
+         tional Telecommunication Union, Report ITU-R, vol. M., pp. 2150–0,
+         February 2021.
+     [2] ETSI, “DECT-2020 New Radio (NR); Part 5: DLC and Convergence
+         layers; Release 1,” European Telecommunications Standards Institute,
+         Technical Specification (TS), vol. 103, pp. 636–5, March, 2024.
+     [3] S. Soni, R. Makkar, T. Singhwi, D. Rawal, N. Sharma, and L. Minz,
+         “On Performance of multi-hop assisted mMTC for DECT-2020 New
+         Radio System,” in 2021 International Conference on Information and
+         Communication Technology Convergence (ICTC), 2021, pp. 984–988.
+     [4] S. Soni, R. Makkar, D. Rawal, and N. Sharma, “Link-Level Assessment
+         of NOMA Aided Multi-hop DECT-2020 New Radio for mMTC Appli-
+         cations,” in 2023 International Conference on Information Networking
+         (ICOIN), 2023, pp. 478–482.
+     [5] O. B. Smida, S. B. Amor, and S. Affes, “ETSI/DECT-2020 Compo-
+         nent RIT Technology Implementation and Evaluation Contributions in
+         mMTC and URLLC Use Cases,” in ICC 2023 - IEEE International
+         Conference on Communications, 2023, pp. 1462–1467.
+     [6] T. Nihtilä and H. Berg, “Energy Consumption of DECT-2020 NR
+         Mesh Networks,” in 2022 Joint European Conference on Networks and
+         Communications & 6G Summit (EuCNC/6G Summit), 2022, pp. 196–
+         201.
+     [7] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+         Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The
+         Next Step toward 5G Massive Machine-Type Communications,” IEEE
+         Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+     [8] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of dect-
+         2020 nr in an industrial environment for varying rf bands,” in 2024 Joint
+         European Conference on Networks and Communications 6G Summit
+         (EuCNC/6G Summit), 2024, pp. 610–615.
+     [9] M. Penner, M. Nabeel, and J. Peissig, “URLLC Performance Evaluation
+         of IMT-2020 Candidate Technology: DECT-2020 New Radio,” in 2021
+         IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+         1–7.
+    [10] ETSI, “DECT-2020 New Radio (NR); Part 3: Overview; Release 1,” Eu-
+         ropean Telecommunications Standards Institute, Technical Specification
+         (TS), vol. 103, pp. 636–3, March, 2024.
+    [11] ——, “ETSI Evaluation Group; Final Evaluation Report on DECT-
+         2020 NR,” European Telecommunications Standards Institute, Technical
+         Report (TR), vol. 103, p. 810, Nov, 2021.
+    [12] Y. Chai and X.-J. Zeng, “Delay- and Interference-Aware Routing for
+         Wireless Mesh Network,” IEEE Systems Journal, vol. 14, no. 3, pp.
+         4119–4130, 2020.
+    [13] ETSI, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+         European Telecommunications Standards Institute, Technical Specifica-
+         tion (TS), vol. 103, pp. 636–4, March, 2024.
+    [14] E. Morgado, I. Mora-Jimenez, J. J. Vinagre, J. Ramos, and A. J. Caa-
+         mano, “End-to-End Average BER in Multihop Wireless Networks over
+         Fading Channels,” IEEE Transactions on Wireless Communications,
+         vol. 9, no. 8, pp. 2478–2487, 2010.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:18 UTC from IEEE Xplore. Restrictions apply.
+

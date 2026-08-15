@@ -1,0 +1,464 @@
+2025 XIX International Symposium on Problems of Redundancy in Information and Control Systems (Redundancy) | 979-8-3315-4992-3/25/$31.00 ©2025 IEEE | DOI: 10.1109/Redundancy68069.2025.11301564
+
+
+
+
+                                                                                                                                                                                                        Optimizing Delays in Random Access Procedure of
+                                                                                                                                                                                                            DECT-2020 by Estimation of Device States
+                                                                                                                                                                                                                                    Anna Zhivtsova                                                                Dmitry Nikolaev
+                                                                                                                                                                                                                  Telecommunications R&D Institute, MIEM                                         Telecommunications R&D Institute, MIEM
+                                                                                                                                                                                                                 Higher School of Economics (HSE University)                                    Higher School of Economics (HSE University)
+                                                                                                                                                                                                                         Moscow, Russian Federation                                                     Moscow, Russian Federation
+                                                                                                                                                                                                                           Email: azhivtsova@hse.ru                                                       Email: dinikolaev@hse.ru
+
+                                                                                                                                                                                                                                Yuliya Gaidamaka                                                             Yevgeni Koucheryavy
+                                                                                                                                                                                                               Probability Theory and Cybersecurity dept.                                       Telecommunications R&D Institute, MIEM
+                                                                                                                                                                                                       Peoples’ Friendship University of Russia (RUDN University)                              Higher School of Economics (HSE University)
+                                                                                                                                                                                                                      Moscow, Russian Federation                                                       Moscow, Russian Federation
+                                                                                                                                                                                                                     Email: gaydamaka yuv@pfur.ru                                                      Email: ykoucheryavy@hse.ru
+
+
+
+                                                                                                                                                                                                          Abstract—Massive Machine-Type Communication (mMTC)                              and a scheduled data transmission (DT) phase, serving devices
+                                                                                                                                                                                                       enables the seamless connectivity of billions energy-efficient                     with higher throughput demands.
+                                                                                                                                                                                                       devices, forming the intelligent infrastructure for smart cities,                     On the one hand, the dual-phase structure of DECT-2020
+                                                                                                                                                                                                       automated industries, and real-time data-driven decision making.
+                                                                                                                                                                                                       In this paper we investigate the modern mMTC technology Dig-                       is similar to that of Cellular IoT (CIoT) standards such as
+                                                                                                                                                                                                       ital Enhanced Cordless Telecommunication New Radio (DECT-                          NB-IoT and LTE-M [3], [4]. However, the RA procedure
+                                                                                                                                                                                                       2020 NR), focusing on random access (RA) procedure. The study                      used in cellular networks, which includes a set of orthogonal
+                                                                                                                                                                                                       develops a mathematical model characterizing the RA phase                          preambles, is significantly different from the DECT-2020 RA
+                                                                                                                                                                                                       and proposes a hidden Markov model (HMM)-based method                              procedure, which is based on traditional binary exponential
+                                                                                                                                                                                                       for estimating the number of competing devices. The research
+                                                                                                                                                                                                       introduces and evaluates a delay reduction strategy wherein                        backoff [5]. On the other hand, well-studied systems that
+                                                                                                                                                                                                       the RA phase duration is adapted based on the HMM-based                            rely solely on binary exponential backoff [6] are not suitable
+                                                                                                                                                                                                       estimation of the device state. Numerical results demonstrate                      for analyzing the DECT-2020 RA, which coexists with DT.
+                                                                                                                                                                                                       the effectiveness of the proposed approach in optimizing RA                        Specifically, devices in DECT-2020 do not immediately initiate
+                                                                                                                                                                                                       performance. The findings contribute to improving DECT-2020                        backoff intervals after data generation or channel sensing,
+                                                                                                                                                                                                       network efficiency by balancing RA and data transmission phases
+                                                                                                                                                                                                       while minimizing latency.                                                          but instead synchronize at the beginning of the RA phase
+                                                                                                                                                                                                          Index Terms—mMTC, DECT-2020, random access, delay,                              and execute backoff procedures simultaneously based on the
+                                                                                                                                                                                                       hidden Markov model                                                                number of collisions they experience.
+                                                                                                                                                                                                                                                                                             The latest IEEE 802.11 networks that implement RA Win-
+                                                                                                                                                                                                                                  I. I NTRODUCTION                                        dow (RAW) and Traffic Indication Map (TIM) mechanisms
+                                                                                                                                                                                                          The Digital Enhanced Cordless Telecommunication New                             appear to be the most similar to DECT-2020 technology,
+                                                                                                                                                                                                       Radio (DECT-2020 NR) technology has emerged as a pivotal                           as they use a predefined portion of resources for RA for a
+                                                                                                                                                                                                       enabler for next-generation massive Machine-Type Communi-                          group of stations, which start RA synchronously at the same
+                                                                                                                                                                                                       cation (mMTC) networks [1], which are fundamental to the                           time. However, no completely relevant model has been found,
+                                                                                                                                                                                                       autonomous operation of smart cities and industrial systems                        as some studies suggest that traffic essentially passes RA
+                                                                                                                                                                                                       [2]. Its relevance stems from its ability to support low-latency                   during its first RAW, or is dropped [7]. Additionally, most
+                                                                                                                                                                                                       automated control and high-density device connectivity, owing                      studies focus on energy consumption and throughput, rather
+                                                                                                                                                                                                       to its energy-efficient and decentralized architecture.                            than delays [7]–[9]. Furthermore, even when considering RAW
+                                                                                                                                                                                                          DECT-2020 facilitates a wide range of communication sce-                        slots, which are similar to the RA phase in DECT-2020, the
+                                                                                                                                                                                                       narios, operating with various devices. These devices can be                       authors use approximations for transmission probability [8],
+                                                                                                                                                                                                       sensors that transmit data sporadically, with stringent energy                     [9], which can be avoided. Therefore, building models for
+                                                                                                                                                                                                       constraints, or end devices or relays that handle substantial                      DECT-2020 networks remains an ongoing challenge.
+                                                                                                                                                                                                       data volumes, either intermittently or continuously. This di-                         Previous studies have demonstrated that there is an optimal
+                                                                                                                                                                                                       versity necessitates the coexistence of two phases: a random                       allocation of time resources for the RA phase providing mini-
+                                                                                                                                                                                                       access (RA) phase, which caters to energy-limited devices,                         mum latency and throughput [3], [8]. However, this optimum
+                                                                                                                                                                                                                                                                                          can only be found with a known number of devices competing
+                                                                                                                                                                                                         The reported study was funded by RSF, project number 24-
+                                                                                                                                                                                                       19-00804, ”https://rscf.ru/en/project//” https://rscf.ru/en/project/24-19-00804/   for the medium in the RA, the arrival intensity, and the
+                                                                                                                                                                                                       (Yu. Gaidamaka, Sections I V, and IV).                                             probability of transmission attempts. For networks operating
+
+
+
+
+                                                                                                                                                                                                   Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC from IEEE Xplore. Restrictions apply.
+    solely under RA, several estimation techniques, including
+    Kalman filtering [10] and hidden Markov models (HMMs)
+    [11], have been proposed to optimize backoff parameters.
+    However, in hybrid systems that combine both RA and DT,
+    estimating the number of devices in the RA phase remains
+    an open research problem. Addressing this gap is crucial for
+    optimizing the duration of RA phase and reducing packet
+    delays.
+       In this work, we:
+       • Introduce a mathematical model characterizing the RA
+          phase in DECT-2020 network.
+       • Propose a HMM-based method for estimating the number
+          of competing devices in the RA.                                             Fig. 1: An illustration of the DECT-2020 cluster that will be
+       • Develop a delay reduction strategy for the RA phase                          considered.
+          based on observation of device states, and evaluate
+          method’s effectiveness.
+                                                                                      B. Deployment Scenario
+       The remainder of this paper is organized as follows. Sec-
+    tion II details the system model, including the specifics of
+    the DECT-2020 RA procedure and the formalization of our                              We consider a single cluster of a multi-hop DECT-2020
+    Markovian model. Section III introduces the HMM-based                             network that consists of a single FT device and several PTs that
+    estimation framework. Section IV presents and discusses the                       wish to transmit their data to the backend via FT. We assume
+    numerical results, and Section V concludes the paper.                             that the number of devices within the cluster is fixed, with
+                                                                                      D energy-efficient devices among the PTs and the remaining
+                         II. S YSTEM M ODEL                                           PTs being FT/PT devices for other clusters. The energy-
+    A. DECT-2020 Specifications                                                       efficient devices go to sleep when they are not transmitting
+       The DECT-2020 NR network architecture operates on a                            data and therefore must pass RA before each transmission,
+    cluster mesh topology, with each end device, called a Portable                    while the FT/PTs that carry data from previous hops are always
+    Termination Point (PT), attached to one of Fixed Termination                      synchronized with the network and do not use the RA phase to
+    Points (FTs) devices that coordinate local radio resources.                       send data through DT. An illustration of the considered DECT-
+    These devices forward acquired data to the backend either                         2020 network part is given in Fig. 1. We assume that each PT
+    directly or through another FT. Every FT with associated PTs                      that is currently idle (i.e., has no packet to send) generates
+    forms a network cluster. Additionally, each PT may become a                       a new packet in the interval between two RA phases with a
+    FT and create its own network cluster, forming a decentralized                    fixed probability λ. The PTs do not generate new data until
+    mesh network. Once a PT becomes a FT, it begins periodically                      they transmit the current one. All PDUs have the same size
+    transmitting a Cluster Beacon Message (CBM), identifying the                      and are transmitted within a single time slot.
+    managed local radio resource parameters [12]. We refer to the
+    time between two CBMs as the beacon interval.
+       A key feature of the Medium Access Control (MAC) layer                         C. Mathematical Model of Random Access Phase
+    in DECT-2020 NR is the coexistence of random and scheduled
+    access [13], which can be implemented as two separate phases:                        We denote the number of unsuccessful RA attempts for
+    RA and DT. The RA mechanism is based on binary expo-                              the d-th PT as bd , d = 1, . . . , D, and identify the system
+    nential backoff, enabled by Listen Before Talk (LBT), with                        state at the beginning of the i-th RA as a vector Z(i) =
+    parameters CWmin , defining the minimum contention window                         (Z0 (i), Z1 (i), . . . , Zbmax (i)), where Z0 (i) is the number of
+    size, and N , defining the duration of RA in time slots. The                      PTs with no data to transmit; Z1 (i) is the number of PTs
+    last RA slot is reserved for PT to send a response message to                     trying to transmit data at the RA for the first time; Z2 (i)
+    the cluster’s FT. Upon Protocol Data Unit (PDU) generation,                       denotes the number of devices that trying to transmit data
+    the PT listens to the CBM transmitted by the cluster’s FTs to                     at the RA for the second time and have bd = 1. The similar
+    find the beginning of the RA phase and its duration N . At                        applies for Zb (i), b = 3, . . . , bmax −1. The number of devices
+    the beginning of RA, the PT that has attempted to transmit                        experiencing bmax or greater RA transmission attempts is
+    the current packet b times, randomly selects a backoff period                     denoted by Zbmax (i). Since every PT is counted in a single
+    between 1 and min(N − 1, 2b CWmin ). We define bmax as                                                                bP
+                                                                                                                           max
+                                                                                      component Zb (i), we have                Zb (i) = D. We are also
+              bmax = min(b : 2b CWmin ≥ N − 1, b ∈ N).                        (1)                                           b=0
+                                                                                      interested in tracking the system state within a given RA
+    Upon expiring backoff, the PT senses the channel and, if the                      phase. So, considering some i-th RA we let vector X(s) =
+    channel is free, it attempts transmission. Otherwise, it stays                    (X0 (s), X1 (s), X2 (s), . . . , Xbmax (s)) define the system state
+    still and waits for the channel to become free.                                   at each slot s = 1, . . . , N and let X(1) = Z(i). The state space
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC from IEEE Xplore. Restrictions apply.
+    X is given by                                                                     backoff stage counter, i.e., bd ← bd + 1. Then, the system
+                                                                                      state at slot N is defined by
+                   X = {(X0 , X1 , . . . , Xbmax ) : Xb ≥ 0,                  (2)
+                                              bX
+                                               max
+                                                                                           X0 (N ) = X0 (N − 1),                                                              (7)
+                      b = 1, . . . , bmax ;          Zb (i) = D}              (3)          X1 (N ) = 0,                                                                       (8)
+                                              b=0                                          Xb+1 (N ) = Xb (N − 1), b = 1, . . . , bmax − 1,                                   (9)
+       Next, we show that X(s) is the inhomogeneous finite                                 Xbmax (N ) = Xbmax −1 (N − 1) + Xbmax (N − 1).                                    (10)
+    Markov chain, and define its evolution over s = 1, . . . , N .                    Here, X1 (N ) = 0 as all devices with a PDU have failed at
+    Then, we show that Z(i) is the infinite homogeneous Markov                        least once and there has been no new data generated yet. After
+    chain, and define its transition probabilities.                                   this step, until the next RA, each PT with no PDU generates
+       Assume that d-th PT having bd = b while passing RA                             data independently with fixed probability λ, so we can derive
+    transmits PDU at slot s with probability qb (s)                                   the probability A(X, X̂) of the system changing its state from
+                                                                                      X at N -th slot to the X̂ at the first slot of the next RA
+          qb (s) =                                                            (4)
+           
+                                       b −1
+                                                                                          A(X, X̂) =                                                                        (11)
+          2 min(N − 1, CWmin 2 )
+                                            ,                                              X0  k           (X0 −k)
+                   s = 1, . . . , min(N − 1, CWmin 2b );                                   
+                                                                                           
+                                                                                              k (λ )(1 − λ)            , k = 0, . . . , X0 ,
+                                                                                                  X̂ = (X0 − k, k, X2 , . . . , Xbmax −1 , Xbmax ),
+          
+                   s = min(N − 1, CWmin 2b ) + 1, . . . , N,
+                                                                                           
+              0,
+          
+                                                                                           
+                                                                                                 X  = (X0 , 0, X2 , . . . , Xbmax −1 , Xbmax );
+    This formulation ensures that: (i) a PT does not attempt                               
+                                                                                           
+                                                                                             0, otherwise.
+    transmission beyond its contention window; (ii) the average
+    backoff is approximately half of the contention window size;                      Ordering all feasible states X we compose |X | × |X | matrixes
+    (iii) a PT may re-attempt transmission within the same RA                         Ps with elements Ps (X, X̂) for all s = 1, . . . , N − 2, and
+    phase if the channel is busy (due to collision occurrence);                       matrix A with elements A(X, X̂). Also, compose matrix R,
+    and (iv) a PT may also defer its transmission if it senses                        where element R(X, X̂) is equal to 1 if system being in state
+    the channel is busy (due to LBT). We assume successful                            X at (N − 1)-th slot changes its state to X̂ according to (7)-
+    transmission occurs only when a single PT attempts to transmit                    (10). Define matrix P by
+    in one slot. Therefore, for d-th PT having bd = b at slot s                                                    N
+                                                                                                                   Y −2
+                                                                                                                          !
+    define the successful transmission probability pb (s) as                                               P=           Ps RA.                  (12)
+                                                                                                                                                s=1
+                 pb (s) = Xb (s)qb (s)(1 − qb (s))Xb (s)−1 ·                  (5)
+                               Y                                                      As all RA phases are performed in the same way, P is the tran-
+                        ·                (1 − qb̂ (s))Xb̂ (s) ,                       sition probability matrix for Markov chain Z(i), i = 1, 2, . . . .
+                          b̂={1,...,bmax }\{b}
+                                                                                                                                 III. H IDDEN M ARKOV M ODEL
+                        b = 1, . . . , bmax , s = 1, . . . , N.
+                                                                                         We have specified the Markov chain X(s), describing RA
+       It follows that system state X(s) at slot s = 2, . . . , N − 1                 operation. However, the FT that is responsible for radio
+    depends only on system state X(s − 1) at slot s − 1 and the                       resource management can not capture the complete system
+    slot number s. For slot s = 1, . . . , N − 2 the probability of                   state in RA slots, as it does not know which PT has a PDU
+    transition from state X to state X̂ at slot s + 1 is defined by                   for transmission or which PTs are attempting to transmit.
+                                                                                      Instead, at each RA slot, it is possible for the FT to measure
+     Ps (X, X̂) =                                                             (6)     whether the slot contains any transmission, whether it causes a
+                                                                                      collision, or whether a successful transmission occurs within
+     
+     p1 (s),
+                             X = (X0 , X1 , . . . , Xbmax ),
+                                                                                     that slot. If a successful transmission is made from the d-
+                              X̂ = (X0 + 1, X1 − 1, . . . , Xbmax );
+     
+     
+                                                                                      th PT, the FT can identify the PT’s attempt number from
+     
+     
+     
+     p2 (s),
+     
+                             X = (X0 , X1 , X2 , . . . , Xbmax ),
+     
+                              X̂ = (X0 + 1, X1 , X2 − 1, . . . , Xbmax );
+     
+     
+     
+     
+     
+        ...                                                                                                                 80
+     
+                                                                                                   PDU delay at RA, slots
+
+
+
+
+     pbmax (s),
+     
+                             X = (X0 , X1 , . . . , Xbmax ),                                                               70
+     
+                              X̂ = (X0 + 1, X1 , . . . , Xbmax − 1);
+     
+     
+     
+     
+     
+           bP
+             max                                                                                                            60
+        1−
+     
+     
+     
+                pb (s),      X = X̂;
+            b=1                                                                                                             50
+     
+     
+     
+        0,                     otherwise.
+     
+                                                                                                                            40
+       At the end of the RA phase (after slot N − 1), any PT                                                                      8   10   12    14    16     18   20   22
+                                                                                                                                           RA duration, N, slots
+    that has not successfully transmitted its PDU increments its
+                                                                                                                        Fig. 2: Mean delay at the RA phase
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                 1.3                                                                                                                        1
+                           3.5              Real average PT number                                                                                                                                       Real average PT number                                                               1.0                                    Real average PT number
+                                            Estimated by 10 beacon intervals                                                                                1.2                                          Estimated by 10 beacon intervals                                                                                            Estimated by 10 beacon intervals
+                           3.0              Estimated by 50 beacon intervals                                            2.8                                                                              Estimated by 50 beacon intervals                                                                        0.76                Estimated by 50 beacon intervals
+                                                                                                                                                                                                                                                                                              0.8
+                                            Estimated by 100 beacon intervals                                                                               1.0                                          Estimated by 100 beacon intervals                                                          0.70
+                                                                                                                                                                                                                                                                                                        6
+                                                                                                                                                                                                                                                                                                                                     Estimated by 100 beacon intervals
+                           2.5              Estimated
+                                            2
+                                                      by 200 beacon intervals                                                   2.11                                                                     Estimated by 200 beacon intervals                                                                          0.63             Estimated by 200 beacon intervals
+                                              .2
+           Number of PTs
+
+
+
+
+                                                                                                                                                                                                                                                                              Number of PTs
+                                                                                                         2.1 2.12
+
+
+
+
+                                                                                                                                            Number of PTs
+                                                                                                                                        5                   0.8    0.71                                                                                                                                                 0.53
+                                                                                                                                                                             6          0.68                                                   0.7                                            0.6
+                           2.0                                                                                                                                                                                                                                                                                                5
+                                                                                                  1.66                                                                                           0.62 0.625
+                                                                                                                                                            0.6
+                           1.5                                                                                                                                                                                                                                                                0.4
+                                                    1.08                                                                                                                                                                               0.35
+                           1.0                                0.85 0                                                                                        0.4                                                                            5                                                                                         0.22
+                                  0.70                              .745                                                                                                                                                                                0.3                                                                              20.2 0.
+                                        5                                                                                                                                                                                                                     0.23 0.24                                                                          180.160.1
+                                                                                                                                                                                                                                                                                              0.2                                                          5              0.1
+                           0.5                                                                                                                              0.2                                                                                                                                                                                                   0.07 0.1 40.090
+                                                                                                                                                                                                                                                                                                                                                                      7           .055
+
+                           0.0                                                                                                                              0.0                                                                                                                               0.0
+                                  0.00             0.25           0.50            0.75            1.00       1.25               1.50                               0.00                 0.25         0.50           0.75                1.00           1.25         1.50                             0.0                0.5           1.0               1.5        2.0               2.5
+                                                                 Number of RA attempt                                                                                                               Number of RA attempt                                                                                                          Number of RA attempt
+                                                                  (a) N = 7                                                                                                                          (b) N = 9                                                                                                                    (c) N = 11
+                                        1.1                                                                                                                              1.2                                                                                                                               0.8
+                                                                       Real average PT number                                                               1.2                                          Real average PT number                                                               0.8
+                           1.0                                         Estimated by 10 beacon intervals                                                                                                  Estimated by 10 beacon intervals                                                     0.7
+                                                                                                                                                                                                                                                                                                    0.68
+                                                                                                                                                                                                                                                                                                        4
+                                                                       Estimated by 50 beacon intervals                                                     1.0                                          Estimated by 50 beacon intervals
+                                                                       Estimated by 100 beacon intervals                                                                         0.82
+                                                                                                                                                                                                         Estimated by 100 beacon intervals                                                    0.6
+                                                                                                                                                                                                                                                                                                                       0
+                                                                                                                                                                                                                                                                                                                    0.56 .575
+                           0.8   0.69
+                                     7 0.68
+                                                                       Estimated
+                                                                          0.7    by 200 beacon intervals                                                    0.8
+                                                                                                                                                                                                         Estimated by 200 beacon intervals                                                                                           Real average PT number
+           Number of PTs
+
+
+
+
+                                                                                                                                            Number of PTs
+
+
+
+
+                                                                                                                                                                                                                                                                              Number of PTs
+                                                                                                                                                                  0.68                 0.71                                                                                                                      0.48
+                                                                                                                                                                                                                                                                                              0.5
+                                                   0.6 0.59                                                                                                              5                                                                                                                                                           Estimated by 10 beacon intervals
+                           0.6
+                                                                                                                                                            0.6
+                                                                                                                                                                                          0.58
+                                                                                                                                                                                                                                                                                              0.4                                    Estimated by 50 beacon intervals
+                                                                                                                                                                                                                                                                                                                                     Estimated by 100 beacon intervals
+                           0.4                                                                                                                                                                                    0.4                                                                         0.3                                    Estimated by 200 beacon intervals
+                                                                                  0.3 0                           0.3                                       0.4
+                                                                       0.22              .260                                                                                                                           0.28                                                                                                          0.2 0.2 0.2 0.1                    0.2
+                                                                                             .215                                                                                                                                                                                             0.2                                                     90.1
+                                                                              2                                                                                                                          0.20                  0.20.                                                                                                                       5  5
+                                                                                                                                                                                                              1                                                                                                                                                                       0
+                           0.2                                                                                          0.12                                0.2                                                                     155                                                                                                                                            0 .105
+                                                                                                           0.06                0.1 0.
+                                                                                                                                     07                                                                                                              0.04 0.1 0.1 0.090.0                     0.1                                                                 0.04         0.06 .09
+                                                                                                                  6                                                                                                                                      5                5                                                                                           6
+                           0.0                                                                                                                              0.0                                                                                                                               0.0
+                                  0.0                 0.5                1.0                1.5             2.0                   2.5                              0.0                    0.5               1.0                   1.5                 2.0             2.5                            0.0                0.5           1.0               1.5        2.0               2.5
+                                                                 Number of RA attempt                                                                                                               Number of RA attempt                                                                                                          Number of RA attempt
+                                                                 (d) N = 13                                                                                                                         (e) N = 15                                                                                                                    (f) N = 17
+
+                                              Fig. 3: Estimation of the mean number of PTs finishing different RA attempts at the end of RA
+    the received PDU. Let the set of possible FT observations                                                                                                                                                            In case when λ is unknown, one may set π(X) to the equal
+    be O = {0, 1, . . . , bmax + 1}, where 0 denotes empty slot,                                                                                                                                                         values that are summing up to one over all possible X. Further
+    b ∈ {1, . . . , bmax } denotes attempts number for device that                                                                                                                                                       we assume λ is known. For finding X̃ we utilize the Viterbi
+    successfully transmits PDU, and bmax + 1 denotes collision                                                                                                                                                           algorithm [14], which can also be found in [15, Appendix A]
+    slot. Let Y (s), s = 1, . . . , N be the FT’s observation obtained                                                                                                                                                   and in Appendix.
+    at slot s. Define M (s, X, o) as the probability of measuring                                                                                                                                                           Obtaining the value of X̃ for K beacon intervals, we can
+    observation o at RA slot s = 1, . . . , N − 1 when the system                                                                                                                                                        average them to find the average number of PTs that have
+    state is given by X(s) = X = (X0 , X1 , . . . , Xbmax ).                                                                                                                                                             finished their b-th RA transmission attempt by the end of the
+                                                                                                                                                                                                                         RA. In the next section we show how this helps optimize
+                                                               bY
+                                                                max
+                                                                                                                                                                                                                         network performance.
+           M (s, X, 0) =                                                   (1 − qb̂ (s))Xb̂ ,                                                                                                     (13)
+                                                                b̂=1
+                                                                                                                                                                                                                                                                               IV. N UMERICAL R ESULTS
+           M (s, X, b) = pb (s), b = 1, . . . , bmax ,                                                                                                                                            (14)
+           M (s, X, bmax + 1) = Ps (X, X) − M (s, X, 0),                                                                                                                                          (15)                      Let the duration between RA phases be equal to 48, number
+                                                                                                                                                                                                                         of PTs D be D = 12, probability of packet generation λ
+    and                                                                                                                                                                                                                  be λ = 0.15, minimum backoff interval be CWmin = 4.
+                                                                       M (N, X, 0) = 1.                                                                                                           (16)                   By varying RA duration N and running a simulation of the
+                                                                                                                                                                                                                         mathematical model Z(i) over 5000 beacon intervals, we show
+    The problem is in identifying X̃, which denotes the most                                                                                                                                                             the average delay for PTs in the RA phase at the Fig.2 and
+    probable system state at N − 1 RA slot. This should be                                                                                                                                                               the mean number of devices finishing their b = 1, . . . , bmax -
+    determined with respect to a given sequence of observations                                                                                                                                                          th RA attempt at the end of the RA in Fig. 3. Note that a
+    {Y (s)}Ns=1 = Y1 , Y2 , Y3 , . . . , YN −1 that were collected by                                                                                                                                                    PT attempting transmission remains in the RA phase for its
+    the FT during every RA slot from s = 1 to N − 1, given                                                                                                                                                               entire duration of N slots. For each unsuccessful attempt, it
+    Ps (X, X̂), M (s, X, o), and probabilities π(X) for the system                                                                                                                                                       must additionally wait for the subsequent RA phase to begin,
+    to be in state X at the first slot. In case, when new PDU                                                                                                                                                            accumulating further delay.
+    generation rate λ is known for advance, one can use stationary                                                                                                                                                          We can see from Fig. 2 that, in case N = 8, PTs experience
+    probabilities of chain Z(i) for determining π(X). Specifically,                                                                                                                                                      large delays during RA passing.This is due to collisions. As
+    this probabilities can be combined in vector π and founded                                                                                                                                                           we can see in Fig. 3a, more than half of the PTs pass the RA
+    by solving the following system                                                                                                                                                                                      on their second or later attempts. On the other hand, when the
+                             (                                                                                                                                                                                           number of PTs passing the RA in the b-th attempt exceeds the
+                                π = πP                                                                                                                                                                                   number passing in the (b + 1)-th attempt, the average delay is
+                                                                  (17)
+                                π1 = 1.                                                                                                                                                                                  greatly reduced. Under these conditions, slight delays increase
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC from IEEE Xplore. Restrictions apply.
+    with increasing N due to the increased delays of PTs that                          [8] E. Khorov, A. Krotov, and A. Lyakhov, “Modelling machine type
+    successfully passed the RA on the first attempt.                                       communication in ieee 802.11ah networks,” in 2015 IEEE International
+                                                                                           Conference on Communication Workshop (ICCW), pp. 1149–1154, 2015.
+       In Fig. 3, along with the mean number of PT obtained                            [9] D. Bankov, E. Khorov, A. Kureev, and A. Lyakhov, “Improving effi-
+    by simulation, estimates of these values are presented. These                          ciency of heterogeneous wi-fi networks with energy-limited devices,” in
+    were computed by running a simulation of Markov chain                                  Internet of Things, Smart Spaces, and Next Generation Networks and
+                                                                                           Systems (O. Galinina, S. Balandin, and Y. Koucheryavy, eds.), (Cham),
+    Z(i) for K ∈ {10, 50, 100, 200} beacon intervals, collecting                           pp. 181–192, Springer International Publishing, 2016.
+    K observations sequences Y1 , Y, . . . , YN −1 (one sequence per                  [10] G. Bianchi and I. Tinnirello, “Kalman filter estimation of the number
+                                   ˜                                                       of competing terminals in an ieee 802.11 network,” in IEEE INFOCOM
+    RA), calculating estimates X̂ for K times and averaging                                2003. Twenty-second Annual Joint Conference of the IEEE Computer
+    them. As expected, increasing the number of observed beacon                            and Communications Societies (IEEE Cat. No.03CH37428), vol. 2,
+    intervals K leads to more accurate estimates. For instance,                            pp. 844–852 vol.2, 2003.
+                                                                                      [11] H. Ahmadi, Y. H. Chew, P. K. Tang, and Y. A. Nijsure, “Predictive
+    with K = 200 and K = 100, the an average estimation error                              opportunistic spectrum access using learning based hidden markov
+    over all cases is less then 25%. Meanwhile a mean error among                          models,” in 2011 IEEE 22nd International Symposium on Personal,
+    PT’s groups with fixed N is less then 38%.                                             Indoor and Mobile Radio Communications, pp. 401–405, 2011.
+                                                                                      [12] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” TS 103 636-1
+                                V. C ONCLUSION                                             v1.5.1, ETSI, March 2024.
+                                                                                      [13] ETSI, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+       The research has addressed the problem of optimizing RA                             TS 103 636-4 v1.3.1, ETSI, March 2024.
+    performance in DECT-2020 NR networks. A comprehensive                             [14] L. Rabiner, “A tutorial on hidden markov models and selected applica-
+                                                                                           tions in speech recognition,” Proceedings of the IEEE, vol. 77, no. 2,
+    mathematical model describing the RA phase operation was                               pp. 257–286, 1989.
+    presented and HMM method for estimating PTs waiting                               [15] D. Jurafsky and J. H. Martin, Speech and Language Processing: An
+    times by experienced RA attempts was presented. The re-                                Introduction to Natural Language Processing, Computational Linguis-
+                                                                                           tics, and Speech Recognition, with Language Models. Harlow : Pearson
+    sults demonstrate that the proposed HMM-based estimation                               Education, 3rd ed., 2025. Online manuscript released August 24, 2025.
+    method provides quite accurate predictions of device behavior
+    during the RA phase even by observing 100-200 RA phases.                                                        A PPENDIX
+    The delay reduction strategy shows significant potential for                                               V ITERBI ALGORITHM
+    improving network performance by optimizing resource allo-
+    cation. The findings presented in this work contribute to the                     Algorithm 1 Viterbi Algorithm for State Estimation
+    advancement of DECT-2020 technology and provide valuable                           Require:
+    insights for optimizing mMTC networks.                                                Observation sequence Y = (Y1 , . . . , YN −1 );
+                                                                                          Transition probabilities Ps (X̂, X), s = 2, . . . , N − 1;
+                             ACKNOWLEDGMENT
+                                                                                          Observation probabilities M (s, X, o);
+       Support from the Basic Research Program of HSE Univer-                             Initial state distribution π = (π(X))X∈X .
+    sity is gratefully acknowledged by Anna Zhivtsiva, Dmitry                          Return: The most likely final state X̃.
+    Nikolaev, and Yevgeni Koucheryavy, who prepared Sections
+    II, and III.                                                                      1:   Let ind(X) be the index for state X ∈ X .
+                                  R EFERENCES                                         2:   Initialize   matrices     viterbi[|X |, N − 1]                     and
+     [1] ITU-R, “Detailed specifications of the terrestrial radio interfaces of
+                                                                                           backpointer[|X |, N − 1].
+         International Mobile Telecommunications-2020 (IMT-2020),” M.2150-             1. Initialization Step
+         2, M Series: Mobile, radiodetermination, amateur and related satellite       3: for each state X ∈ X do
+         services, ITU-R, 12 2023.
+     [2] A. Samuylov, D. Moltchanov, A. Gaydamaka, E. Lyczkowski,
+                                                                                      4:       viterbi[ind(X), 1] ← π(X) · M (1, X, Y1 )
+         A. Frotzscher, F. von Schoettler, J. Pirskanen, J. Numminen, J. Salokan-     5:       backpointer[ind(X), 1] ← 0
+         nel, E. Llaguno, R. Pires, D. Bayar, and M. Valkama, “Empowering             6: end for
+         near-urllc iot with 5g dect-2020 nr: Current state and the road ahead,”
+         IEEE Communications Magazine, vol. 63, no. 4, pp. 130–136, 2025.
+                                                                                       2. Recursion Step
+     [3] N. Stepanov, A. Turlikov, and V. Begishev, “Balancing the data transmis-     7: for s = 2 to N − 1 do
+         sion and random access phases in 6g mmtc radio technologies,” IEEE           8:       for each state X ∈ X do
+         Communications Letters, vol. 27, no. 12, pp. 3419–3423, 2023.
+     [4] A. Daraseliya, E. Sopin, V. Begishev, Y. Koucheryavy, and K. Samoylov,
+                                                                                      9:         viterbi[ind(X), s] ←              
+         “A model for 5g cellular iot systems with early transmissions at the               max viterbi[ind(X̂), s − 1] · Ps (X̂, X) · M (s, X, Ys )
+         random access phase,” in 2024 International Scientific and Technical               X̂∈X
+         Conference Modern Computer Network Technologies (MoNeTeC), pp. 1–            10:        backpointer[ind(X), s] ←
+         6, 2024.                                                                                                                      
+     [5] B.-J. Kwak, N.-O. Song, and L. Miller, “Performance analysis of                    arg max viterbi[ind(X̂), s − 1] · Ps (X̂, X)
+         exponential backoff,” IEEE/ACM Transactions on Networking, vol. 13,                  X̂∈X
+         no. 2, pp. 343–355, 2005.                                                    11:    end for
+     [6] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coor-       12: end for
+         dination function,” IEEE Journal on Selected Areas in Communications,
+         vol. 18, no. 3, pp. 535–547, 2000.                                            3. Termination Step
+     [7] E. Khorov, A. Krotov, A. Lyakhov, R. Yusupov, M. Condoluci,                  13: X̃ ← arg max (viterbi[ind(X), N − 1])
+         M. Dohler, and I. Akyildiz, “Enabling the internet of things with wi-fi                      X∈X
+         halow—performance evaluation of the restricted access window,” IEEE          14: return X̃
+         Access, vol. 7, pp. 127402–127415, 2019.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:25:16 UTC from IEEE Xplore. Restrictions apply.
+

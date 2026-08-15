@@ -1,0 +1,865 @@
+IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025                                                                             31783
+
+
+
+
+      EWDC: Integrating DECT-2020 With Wi-Fi for
+        Enhanced Wireless Direct Connectivity
+    Yongchao Dang , Ngo Quang , Fagerholm Roni , Rantanen Veli-Matti , Ruttik Kalle , Member, IEEE,
+                               and Riku Jäntti , Senior Member, IEEE
+
+
+
+   Abstract—The rapid growth of smartphones, laptops, and                       apple wireless direct link (AWDL),1 which supports over
+Internet of Things (IoT) devices has created an increasing                      two billion devices across multiple operating systems via
+demand for seamless, secure, and energy-efficient wireless direct               AirDrop, and Intel Unison, which enables direct file transfers,
+communication. Current popular solutions, such as AirDrop
+and Intel Unison, rely on bluetooth low energy (BLE) for                        calls, messaging, and notifications between Windows PCs
+device discovery and pairing, alongside IEEE 802.11 (Wi-Fi) for                 and Android/iOS devices.2 These solutions typically rely
+high-speed data transmission. However, research has identified                  on bluetooth low energy (BLE) for device discovery and
+significant vulnerabilities in BLE, including information leakage               pairing, followed by IEEE 802.11 (Wi-Fi) for high-speed data
+and profile manipulation. To address these challenges, we propose               transmission.
+an enhanced wireless direct connectivity (EWDC) framework
+that integrates digital enhanced cordless telecommunications                       While vendor-specific solutions like AWDL and Intel
+(DECT)-2020 new radio (NR) with Wi-Fi. In this framework,                       Unison provide convenience and cohesive user experiences,
+DECT replaces BLE to enable secure and efficient device dis-                    they fail to address critical challenges related to security,
+covery, while Wi-Fi supports high-bandwidth data transmission.                  privacy, and interoperability in the expanding IoT land-
+Specifically, DECT utilizes its licensed spectrum to establish a                scape [1], [2], [3], [4], [5], [6], [7]. For instance, AWDL
+secure communication channel for sharing Wi-Fi configuration
+information, enabling a secure and reliable setup of high-speed                 is vulnerable to man-in-the-middle (MitM) attacks, allowing
+Wi-Fi data transmission links between devices. To validate this                 attackers to intercept sensitive information, such as phone
+approach, we implemented the DECT medium access control                         numbers and email addresses, during Apple AirDrop transmis-
+layer on the Nordic nRF9161-DK platform and evaluated the                       sions [2]. Although methods, such as private set intersection,
+end-to-end delay between two devices. Our results demonstrate                   proposed in [3], enhance mutual authentication with subsec-
+an impressive transmission delay of less than 1 µs for EWDC
+communication, enabling rapid device discovery and highly effi-                 ond delays, they are limited to vendor-specific ecosystems
+cient operation. Furthermore, to enhance the security of wireless               and do not extend to broader IoT applications that require
+direct connections, the WireGuard, a VPN tunnel, is employed to                 secure and efficient device discovery. Similarly, Intel Unison,
+encrypt data transmission over Wi-Fi providing robust protection                despite its broader device and platform support, relies on
+for data shared on public frequency bandwidths. The proposed                    BLE-based advertisements for device discovery, which operate
+hybrid DECT-2020 NR and Wi-Fi solution significantly improves
+reliability, security, and communication efficiency, positioning it             on public frequencies and open protocols, exposing them
+as a robust candidate for next-generation IoT communication                     to vulnerabilities like MitM attacks, session hijacking, and
+systems.                                                                        data leakage [4], [5]. Persistent weaknesses in BLE, including
+  Index Terms—DECT-2020, digital enhanced cordless telecom-                     those identified in [6], span its physical, firmware, and host
+munications (DECT), enhanced wireless direct connectivity                       layers, with 76 documented attacks and 33 countermeasures
+(EWDC), wireless direct communication.                                          highlighting its limitations. Nevertheless, solutions, such as
+                                                                                Bluetooth 5.4’s advertising encryption and the lightweight
+                                                                                security frameworks proposed in [7] aim to enhance device
+                                                                                discovery and reduce interception risks, but they have yet
+                          I. I NTRODUCTION
+                                                                                to be standardized or widely implemented in practical IoT
+        ITH the rapid development of Internet of Things (IoT)
+W       technologies and applications, the demand for wireless
+direct communication has grown significantly to enable seam-
+                                                                                environments. Therefore, there is a need for alternative tech-
+                                                                                nologies that combine communication efficiency, security, and
+                                                                                scalability for wireless direct connectivity in IoT scenarios.
+less information exchange between devices over noncellular                         The digital enhanced cordless telecommunications
+networks. To meet this need, wireless direct communication in                   (DECT)-2020 new radio (NR), developed by the european
+the IoT context must provide both efficient device discovery                    telecommunications standards institute (ETSI), is specifically
+and high-speed data transfer. Prominent examples include                        designed to meet the increasing demands of massive machine-
+  Received 7 January 2025; revised 7 April 2025; accepted 23 May 2025.          type communication (mMTC) and ultrareliable low-latency
+Date of publication 28 May 2025; date of current version 25 July 2025. This     communication (URLLC), which are essential for Industry
+work was supported by the Business Finland Project Cloudify-6G under Grant      4.0 and IoT applications.3 Recognized by the ITU as part
+8822/31/2022. (Corresponding author: Yongchao Dang.)
+  The authors are with the Department of Information and Communications          1 https://support.apple.com/en-us/119857
+Engineering, School of Electrical Engineering, Aalto University, 02150 Espoo,
+                                                                                 2 https://www.intel.com/content/.../unison/overview.html
+Finland (e-mail: yongchao.dang@aalto.fi).
+  Digital Object Identifier 10.1109/JIOT.2025.3574407                            3 https://www.etsi.org/technologies/dect
+
+              
+              c 2025 The Authors. This work is licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 License.
+                                    For more information, see https://creativecommons.org/licenses/by-nc-nd/4.0/
+31784                                                                  IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+
+of the IMT-2020 technology family, DECT-2020 operates                     device authentication and encrypted communication.
+in both licensed and unlicensed spectrum below 6 GHz,                     This design enables Wi-Fi to focus on transmitting large
+providing flexibility for diverse deployment scenarios. It                volumes of data efficiently.
+also incorporates support for ultra low energy (ULE) in its           2) Second, the DECT-2020 medium access control (MAC)
+future evolution [8]. With over 20 years of development                   layer is implemented on the Nordic nRF9161-DK
+since its origins alongside the global system for mobile                  platform to enable practical validation and real-world
+communications (GSM), DECT has evolved into a robust                      application of the framework. Specifically, the developed
+standard offering advanced security features like SIM                     MAC layer adheres to DECT-2020 standards and sup-
+authentication, making it highly secure for IoT environments.             ports beacon, association, and user data messages.
+The combination of licensed spectrum options, ULE support,                These messages facilitate device discovery, pairing, and
+and strong security mechanisms establishes DECT-2020 as                   synchronization, operating on DECT-specific licensed
+a compelling choice for scalable and reliable wireless direct             frequencies to minimize interference and ensure reliable
+communication in demanding IoT scenarios.                                 communication.
+   Despite the advancements proposed by the DECT-                     3) Third, a DECT-2020 sniffer and corresponding
+2020 standard, its development on chipsets has not fully kept             Wireshark dissectors are developed to analyze DECT-
+pace with its specified capabilities. For instance, the DECT-             2020-specific packets, thereby facilitating MAC protocol
+2020 standard defines a new physical interface based on                   verification and debugging. These tools enhance both
+cyclic prefix orthogonal frequency-division multiplexing (CP-             development efficiency and reliability, and they are
+OFDM), capable of achieving data rates up to 1.2 Gb/s with                publicly available as open-source on GitHub, along with
+1024-QAM modulation [9]. However, the actual data rates                   introductory documentation and DECT-2020 packet
+achievable with chipsets like the nRF9161 depend on various               captures.5
+factors, including specific implementations, configurations,          4) Fourth, leveraging the developed MAC layer and
+and application requirements, and often fall short of the                 Wireshark dissectors, the EWDC framework is evalu-
+theoretical maximum. In comparison, Wi-Fi standards like                  ated through a real-world implementation by integrating
+IEEE 802.11be (Wi-Fi 7) achieve significantly higher data                 DECT-2020 with Wi-Fi. Because Wi-Fi operates over
+rates of up to 40 Gb/s [10] and are supported by well-designed            public channels and is susceptible to MitM attacks,
+chipsets from major firms, such as Qualcomm.4 Therefore,                  WireGuard is incorporated to protect the EWDC system.
+integrating DECT-2020 with Wi-Fi offers the potential to                  This integration enables automatic configuration and
+leverage the strengths of both technologies, enabling more                establishes a VPN tunnel, thereby preventing data leak-
+robust and efficient wireless direct connectivity solutions for           age during Wi-Fi data transmissions.
+large-scale IoT scenarios.                                            The remainder of this article is organized as follows.
+   To this end, we propose an enhanced wireless direct con-        Section II reviews the DECT-2020 standard, highlighting its
+nectivity (EWDC) framework that integrates DECT-2020 with          new features in the PHY and MAC layers, and provides a
+Wi-Fi, replacing BLE with DECT-2020 for secure and efficient       comparative study of DECT-2020, BLE, and Wi-Fi. Section III
+device discovery, while Wi-Fi continues to support high-           introduces the EWDC framework, detailing its design and the
+bandwidth data transmission. By operating IoT devices on           integration of DECT-2020 with Wi-Fi. Section IV demon-
+DECT’s licensed spectrum, the framework avoids interference        strates the implementation of DECT-2020, including the
+in public channels, enabling faster and secure device discovery.   developed MAC layer, DECT-2020 sniffe, and Wireshark
+Furthermore, the DECT standard cipher enhances device              dissectors. Section V evaluates the performance of the EWDC
+authentication and encrypts wireless connections between           framework in terms of latency, jitter, and bandwidth, as well
+DECT devices, ensuring the protection of sensitive Wi-Fi           as the impact of WireGuard on ping and data transmission
+configuration information. To address potential data leak-         speed. Finally, Section VI concludes this article and outlines
+age during Wi-Fi transmission on public frequencies, the           directions for future work.
+framework incorporates WireGuard, which provides a secure
+Layer 3 VPN tunnel for fast and secure data sharing [11].                II. BACKGROUND ON DECT-2020 S TANDARDS
+Together, these DECT-2020 design and integrations deliver a
+more secure and robust wireless direct connectivity solution          This section examines the DECT-2020 PHY and MAC
+for IoT scenarios. The main contributions of this article are      layers and presents a comparative analysis of DECT-2020
+summarized as follows.                                             against BLE and Wi-Fi.
+   1) First, we propose the EWDC framework, which inte-
+       grates DECT-2020 with Wi-Fi in a manner similar to          A. DECT-2020 Specifications
+       AWDL. However, unlike AWDL, DECT-2020 replaces                 The DECT-2020 NR specifications comprise a series of
+       BLE to provide secure and efficient device discovery,       key technical standards that collectively define the system’s
+       while Wi-Fi handles high-bandwidth data transmission.       capabilities and architecture. An overview of DECT-2020 NR
+       The framework utilizes DECT’s licensed spectrum to          is proposed by the ETSI in [12], introducing fundamental con-
+       reduce interference in public channels, ensuring robust     cepts and system features. The details of radio reception and
+  4 https://www.qualcomm.com/products/technology/wi-fi/wi-fi-7       5 https://github.com/Aalto5G/DECT-NR-Wireshark-dissector
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                     31785
+
+
+
+transmission are specified in [13], while the physical (PHY)         paging channel (PCH) for control signaling and device discov-
+layer specifications are elaborated in [14], providing the tech-     ery, facilitating reliable point-to-point and point-to-multipoint
+nical requirements for signal processing and modulation. The         wireless links. In point-to-multipoint scenarios, FT-mode RDs
+document in [15] outlines the medium access control (MAC)            specify slots and subslots for RACH access, assign MCS, and
+layer requirements, defining how devices access the shared           manage packet durations to optimize resource utilization. To
+communication medium. Finally, the data link control (DLC)           facilitate DECT-2020 applications, the MAC layer provides
+and convergence layers are described [16], which manage              a dedicated traffic channel (DTCH) and a multicast traffic
+data transmission reliability and integration with higher-layer      channel (MTCH) for upper layer, enabling efficient resource
+protocols. Unlike traditional 3GPP 5G standards, DECT-2020           allocation and making it ideal for mMTC requiring low latency
+introduces dynamic device roles, enabling devices to operate         and high reliability.
+as fixed termination points (FT), Portable Termination points
+(PT), or in dual roles, simplifying network setup and allow-         D. DECT-2020 Standards Evaluation
+ing decentralized, self-healing networks. This combination              Several studies have examined the DECT-2020 standard to
+of adaptability, scalability, and robust performance positions       assess the performance and applicability of its PHY and MAC
+DECT-2020 as a secure and efficient communication solution           layers for mMTC.
+for the 5G era [9], [17].                                               The work-in-progress evaluation of DECT-2020 presented
+                                                                     in [19] tested its performance at 450, 1350, and 3700 MHz
+B. PHY Layer                                                         with bandwidths ranging from 1.728 to 13.824 MHz. packet
+   The DECT-2020 PHY layer employs advanced technolo-                error rates (PERs) were reported as less than 5% at 450 MHz,
+gies, such as CP-OFDM, time division duplex (TDD),                   15% at 1350 MHz, and 10% at 3700 MHz, with higher
+turbo coding, hybrid automatic repeat request (HARQ), and            errors attributed to hardware losses. Additionally, in [20],
+multiple-input–multiple-output (MIMO) with up to eight               a measurement-based study assessed DECT-2020 link dis-
+streams. Operating primarily in the 1880–1900 MHz range              tances in indoor and outdoor scenarios using precommercial
+in Europe and equivalent license-exempt bands globally, it           equipment, and the results showed indoor LOS ranges of
+supports subcarrier spacing from 27 kHz to 221.184 kHz, a            40–190 m and NLOS distances over 60 m with TX power
+link budget of 124 dB, and adjustable transmit power from            up to 0 dBm, while outdoor LOS distances reached up to
+−40 to 23 dBm, ensuring robust and low-latency communica-            600 m at 19 dBm. Further insights are provided in [21],
+tion. With bandwidth options of 1.728 MHz, 3.456 MHz, and            where the DECT-2020 NR PHY layer was studied in industrial
+6.912 MHz, the PHY layer accommodates 12 modulation and              environments under various channel conditions; despite its
+coding schemes (MCS), ranging from the highly robust BPSK            promising design, simulations revealed that production line
+(code rate 1/2) to the high-capacity 1024-QAM (code rate 5/6).       communications did not meet the required PER threshold, and
+It also offers flexible numerologies for adjusting subcarrier        security camera applications also exhibited higher error rates
+spacing and Fourier transform scaling. PHY layer packets are         than expected. Collectively, these findings underscore the need
+structured into four parts: 1) synchronization training field        for a robust MAC layer integrating link control techniques and
+(STF); 2) demodulation reference signal (DRS); 3) control            enhanced access mechanisms to ensure reliable performance
+channel; and 4) data channel. Each frame spans 10 ms and             in industrial applications.
+is divided into 24 slots, which can be further subdivided into          For MAC-layer enhancements, [22] introduced an NS-36
+subslots based on the selected numerology.                           simulator featuring DectMac and DectPhy layers, enabling RD
+                                                                     node creation, association, and evaluated packet outage rates
+C. MAC Layer                                                         in mMTC scenarios. Performance requirements for URLLC
+                                                                     and mMTC were further investigated in [23], while [24]
+   The DECT-2020 MAC layer supports both deterministic               proposed positioning methods leveraging DECT-2020 with
+scheduled transmissions and random access, providing flexi-          time difference of arrival, and [25] explored a direction of
+bility to handle diverse traffic types. Scheduled transmissions      arrival-based indoor localization approach. Energy efficiency
+are managed via the dedicated channel (DCH), where FT-mode           considerations in wide-range battery-operated mesh networks
+radio devices (RDs) allocate radio resources for PT-mode             were highlighted in [26] and [27], underscoring the demand
+RDs requiring predictable latency, such as URLLC traffic.            for DECT-ULE. To enhance MAC performance, [28] presented
+For unscheduled and asynchronous traffic, the random access          a protocol aiming to reduce outage probability below 1% by
+channel (RACH) employs listen-before-talk (LBT) with a               employing beacon messages for efficient data routing within
+minimum sensing time of two symbols, enabling rapid medium           a region of interest. Additionally, [29] investigated relay and
+access while minimizing collisions. Additionally, RSSI-based         next-hop selection algorithms to boost packet delivery success
+interference assessments further ensure coexistence with             in DECT-2020 multihop networks. Despite the promising
+legacy systems, maintaining deterministic connectivity [18].         results from simulation studies demonstrating the advanced
+Furthermore, both deterministic and random access traffic can        features of DECT-2020, they lack real-world implementations,
+utilize a common PHY layer packet format with HARQ for               where dynamic and variable conditions pose greater challenges
+reliable transmission, while alternative formats cater to specific   than controlled environments. To address this gap, this article
+service needs. In addition to DCH and RACH, DECT-2020
+MAC layer also provide the broadcast channel (BCH) and                 6 https://www.nsnam.org/
+31786                                                                  IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+                             TABLE I
+             C OMPARISON OF DECT W ITH BLE AND W I -F I
+
+
+
+
+presents the development of the DECT-2020 MAC layer and
+a DECT-2020 sniffer to validate its performance in practical
+scenarios.
+
+E. Comparative Study of DECT-2020, BLE, and Wi-Fi.
+   Table I provides a comparison of DECT-2020 with BLE
+and Wi-Fi 6, emphasizing their characteristics and origins.
+BLE, originally developed by Nokia, is widely recognized for
+its energy efficiency and cost-effectiveness. Standardized by
+the Bluetooth special interest group (SIG), BLE operates in
+the 2.4 GHz ISM band, employing frequency hopping spread
+spectrum (FHSS) at the PHY layer and polling at the MAC
+layer, making it suitable for low-throughput and direct connec-
+tions [30]. Wi-Fi, defined under the IEEE 802.11 standards,
+operates across the 2.4/5/6 GHz ISM bands. Wi-Fi 6 employs
+orthogonal frequency-division multiple access (OFDMA) at
+the PHY layer to achieve high-bandwidth data rates of up to
+9.6 Gb/s [31]. However, its use of CSMA/CA at the MAC             Fig. 1.   Proactive EWDC Data Transmission.
+layer introduces contention and random delays, limiting its
+deterministic performance.
+   In contrast, DECT-2020 NR can operate in both the licensed
+band and unlicensed ISM bands below 6 GHz. It uses CP-            A. DECT-2020 Device Discovery
+OFDM at the PHY layer and time division multiple access              Fig. 1 illustrates the proactive EWDC data transmission
+(TDMA) at the MAC layer, achieving a maximum data rate            framework, in which DECT-2020 replaces BLE to enhance
+of 1.2 Gb/s while ensuring deterministic performance. DECT-       synchronization, extend communication range, and improve
+2020 also offers enhanced mesh support through dual FT            device discovery reliability. In this configuration, the sender
+and PT modes, making it professional for industrial IoT           operates in the FT-mode, periodically broadcasting beacons
+scenarios. For security, DECT-2020 relies on its Standard         containing target device information, while the receiver func-
+Cipher, while BLE employs AES-128 and Wi-Fi 6 implements          tions in the PT-mode, scanning for these beacons to establish
+WPA3. In terms of point-to-multipoint communication, BLE          a secure and reliable DECT link over a licensed frequency and
+supports up to seven active connections, Wi-Fi 6 scales to 256    channel.
+users, and DECT-2020 accommodates up to 24 active slaves             During the discovery phase of the proactive EWDC data
+through its time-slot-based allocation. Overall, DECT-2020’s      transmission, the FT-mode sender broadcasts beacons on the
+deterministic communication, low latency, and robust mesh         BCH. These beacons carry network parameters, including
+networking enabled by its dual FT and PT modes make it            network IDs, available frequencies, time-slot configurations,
+superior to BLE and Wi-Fi for time-critical applications like     and security details. The PT-mode receiver scans the beacons,
+industrial automation and robotics in IoT scenarios.              identifies a suitable network, and verifies whether the beacon
+                                                                  indicates its own device ID as the intended target. If the
+                                                                  receiver opts to connect, it transmits an association request
+        III. E HANCED W IRELESS D IRECT C ONNECTIVITY             to the FT node, which validates the request and allocates
+  This section introduces the EWDC framework, which lever-        initial resources. Upon confirming the association, the PT
+ages DECT-2020 for device discovery and Wi-Fi settings            node synchronizes its internal clock with the FT node’s
+exchange, followed by secure data transfer over Wi-Fi with        timing signals embedded in the beacon transmissions. This
+VPN encryption.                                                   synchronization relies on the STF, ensuring data transmissions
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                  31787
+
+
+
+occur within designated time slots, thereby minimizing col-       encryption with DECT DCH’s secure transmission, protecting
+lisions and maximizing spectral efficiency. Subsequently, the     data over public Wi-Fi from vulnerabilities.
+PT node provides its device information and capabilities for
+final verification by the FT node. After successful validation,   C. Data Transfer
+the FT node dynamically assigns channels and time slots
+                                                                     During data transfer, EWDC combines the DECT DCH
+based on network conditions, interference levels, and device
+                                                                  and a WireGuard-secured Wi-Fi link for robust and efficient
+capabilities. During registration, the FT node refines these
+                                                                  communication. The DECT DCH serves as a reliable control
+assignments by dividing each TDMA frame into intervals
+                                                                  channel, allowing the sender to share metadata, such as file
+for messaging, acknowledgments, and security procedures,
+                                                                  size and estimated transmission time, before the data transfer
+such as key exchange. This association leverages the RACH
+                                                                  begins. This preparatory step ensures the receiver can allocate
+mechanism in DECT-2020 to reduce interference and ensure
+                                                                  resources effectively, supporting a more deterministic and
+reliable connectivity.
+                                                                  efficient process. The actual data is transmitted through the
+   In the reactive EWDC data transmission mode, the sender
+                                                                  encrypted WireGuard tunnel, where each device’s IP address
+operates in PT mode while the receiver functions in FT
+                                                                  is authenticated using previously exchanged public keys while
+mode. During the DECT discovery phase, the PT-mode sender
+                                                                  unverified packets are rejected to prevent unauthorized access
+detects beacons broadcast by the FT-mode receiver, verifies
+                                                                  and malicious data injection. By using the DECT DCH as a
+that its target device ID is included, and directly sends an
+                                                                  control channel for transmission scheduling and status updates,
+association request. The subsequent steps, including associ-
+                                                                  the EWDC minimizes exposure of the Wi-Fi channel on public
+ation, synchronization, channel assignment, and registration,
+                                                                  bands, significantly reducing the risk of eavesdropping or
+proceed similarly to the proactive mode. By employing a
+                                                                  sniffing attempts. Once the data transfer concludes or exceeds
+systematic process of beacon broadcasting, association, syn-
+                                                                  the predefined time limit, the system immediately shuts down
+chronization, channel assignment, and dynamic frequency
+                                                                  the WireGuard tunnel, minimizing opportunities for attackers
+and time-slot allocation, DECT-2020 ensures reliable and
+                                                                  to analyze or decrypt intercepted packets. Following this, all
+deterministic communication. These well-defined procedures
+                                                                  Wi-Fi credentials are invalidated, any remaining information
+enable efficient spectrum utilization, low-latency performance,
+                                                                  unusable to potential adversaries. Finally, the DECT link is
+and deterministic operation, making DECT-2020 ideally suited
+                                                                  terminated to free resources for other devices and improve
+for industrial environments requiring robust connectivity.
+                                                                  spectral efficiency.
+                                                                     Overall, the proposed EWDC framework combines DECT-
+B. Wi-Fi Secure Connection                                        2020 for efficient device discovery with a WireGuard-secured
+                                                                  Wi-Fi link for secure data transfer. DECT-2020 establishes
+   Once the DECT link is established, EWDC initiates a
+                                                                  reliable connections through beaconing, synchronization, and
+secure Wi-Fi connection. During the Wi-Fi setup phase,
+                                                                  channel assignment, minimizing interference and ensuring
+the sender shares network credentials, including the SSID,
+                                                                  predictable performance. The WireGuard-secured Wi-Fi link
+password, and channel information, over the DECT DCH
+                                                                  leverages the DECT DCH for exchanging credentials and
+and instructs the receiver to connect. At the same time,
+                                                                  keys, protecting data traffic via the encrypted tunnel. This
+the sender sets up or activates a Wi-Fi hotspot using these
+                                                                  integration ensures data confidentiality and integrity while
+credentials. On the receiver side, the shared Wi-Fi information
+                                                                  minimizing security vulnerabilities, making it a robust solution
+is used to either join the hotspot or establish a direct Wi-
+                                                                  for industrial and IoT scenarios that require secure and reliable
+Fi link. Alternatively, a Wi-Fi P2P network can be formed
+                                                                  communication.
+using Wi-Fi Direct, requiring both the sender and receiver to
+exchange key connection details, such as the device name,
+capabilities, network SSID, security credentials (such as a                        IV. EWDC I MPLEMENTATION
+passphrase or WPS configuration), role designation (Group            To support testing, we implemented the basic DECT-
+Owner for the sender or Client for the receiver), and channel     2020 MAC layer functionality on Nordic development tools,
+information.                                                      enabling the setup and evaluation of the proposed EWDC
+   Wi-Fi operates on public frequency bands, making it vul-       framework. Additionally, a DECT-2020 packet sniffer and
+nerable to attacks; to enhance security, EWDC integrates          custom Wireshark dissectors were developed to analyze
+WireGuard after establishing the Wi-Fi connection. Each           DECT-2020-specific packets, facilitating protocol verification
+device (sender and receiver) generates a private and public       and debugging. A WireGuard-secured Wi-Fi link was imple-
+key pair, securely exchanging their public keys along with IP     mented to ensure secure data transmission within the EWDC
+addresses and port information over the DECT DCH. With            system. The overall efforts are summarized as follows.
+features like scheduling, acknowledgments, and retransmission
+requests, DECT DCH ensures that the key exchange is               A. DECT-2020 Implementation
+accurate and remains protected from exposure on the public          The DECT nRF9161 development kit, provided by Nordic
+network. Using the exchanged public keys and connection           Semiconductor,7 was used to verify the proposed EWDC
+details, both devices update their WireGuard configuration        system. Specifically, its 1.9 GHz band support and optimized
+files to include the other as a peer, enabling the creation of
+an encrypted tunnel. This approach combines WireGuard’s             7 https://www.nordicsemi.com
+31788                                                                    IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+
+
+Fig. 2.   DECT-2020 nRF9161 development kit.
+
+
+
+modem features make it a scalable and efficient solution
+for DECT-2020 evaluation. Additionally, the nRF9161 SiP
+integrates LTE-M/NB-IoT and GNSS, enhancing its suitability
+for commercial deployment with global IoT connectivity.
+As shown in Fig. 2, the kit integrates the Zephyr real-time
+operating system (RTOS), which interfaces with the board’s
+chipsets, drivers, and libraries to support a variety of embedded
+                                                                    Fig. 3.   FT MAC layer state machine.
+applications and the DECT-2020 radio protocol stack. The kit
+also includes MCUBoot, a secure bootloader that ensures a
+trusted environment during DECT communication setup, fur-
+ther enhanced by middleware, libraries, and hardware drivers.       the DataTX state to transmit downlink data or keep-alive
+By leveraging the nRF toolchain and nRF Util tools,8 we can         messages. After completing data transfers, the FT evaluates
+easily interact with the chipsets, enabling robust and efficient    whether additional PT resources are pending, transitioning
+implementation of the DECT-2020 FT and PT MAC layer.                back to DataRX if required or returning to the Beaconing state
+   1) FT MAC Layer Implementation: The FT MAC layer                 to restart the cycle. This modular state machine efficiently
+manages radio resources, handles association procedures, and        manages beaconing, association handling, and data transfers,
+coordinates data exchange with PTs. It begins with channel          ensuring reliable and structured operation of all DECT MAC
+scanning to identify an optimal cluster channel based on            functionalities on the FT side. The transitions between states
+RSSI metrics, ensuring reliable communication with minimal          are dynamically determined by resource availability, pending
+interference. The FT then periodically transmits cluster bea-       events, and operational conditions, maintaining robust and
+cons to announce its presence and provide RACH parameters           synchronized communication.
+for potential PT associations. Upon receiving an associa-              In addition to the state machine, the FT MAC layer
+tion request, the FT allocates dedicated subslots, constructs       introduces a flexible memory pool architecture that supports
+an association response with resource allocation IEs, and           dynamic storage, queuing, and processing of both inbound
+schedules subsequent transmissions to support user data and         and outbound frames without relying on hardware-specific
+keep-alive exchanges, maintaining active connections effec-         constraints. For example, a resource table is implemented on
+tively.                                                             the FT side, using the short RD IDs of each PT as keys to map
+   Fig. 3 illustrates the FT MAC layer operating through a          specific communication resources, such as allocated time slots,
+state machine that systematically organizes and sequences its       repetition patterns, and channel assignments. Additionally, the
+MAC functionalities. The process starts in the Beaconing state,     FT maintains an association table to track essential information
+where the FT transmits cluster beacons to advertise RACH            for each PT, including status, expiration times, and allocated
+parameters and establish synchronization. After completing          flows. This architecture enables the FT to efficiently manage
+the beacon transmission, the FT transitions to the RachRX           multiple associations, reallocate resources when necessary, and
+state, where it monitors the shared channel for association         release them as needed. By leveraging the memory pool,
+requests from PTs or checks for existing data resources. If a       resource table, and association table, the FT achieves fine-
+valid association request is detected, the state machine moves      grained control over the scheduling of uplink and downlink
+to the RachRes state, where the FT constructs and trans-            transmissions, ensuring seamless and efficient operation of
+mits an association response, including resource allocation.        PTs.
+The FT processes multiple association requests in a loop,              2) PT MAC Layer Implementation: The PT MAC layer is
+returning to RachRX or Beaconing if no additional requests          responsible for discovering and associating with an available
+are pending or all responses are sent. If no association is         FT and exchanging data through scheduled subslot allocations
+required, the FT directly transitions to the DataRX state           provided by the FT. Initially, the PT listens for periodic
+to handle uplink data. Once in the DataRX state, the FT             cluster beacons from the FT to acquire channel parameters
+receives uplink data from associated PTs, transitioning to          and determine the timing and method for initiating random
+                                                                    access. Upon receiving a target beacon, the PT sends an
+  8 https://www.nordicsemi.com/Products/Development-tools/          association request. If the request is acknowledged, the FT
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                   31789
+
+
+
+                                                                    dedicated static buffer for keep-alive messages. This separation
+                                                                    eliminates contention between regular uplink packets and
+                                                                    critical keep-alive frames. Additionally, the PT maintains a
+                                                                    designated receive buffer to store incoming data payloads
+                                                                    from the FT, preserving the buffer until higher layer processes
+                                                                    retrieve and acknowledge the data. To facilitate traffic manage-
+                                                                    ment, the PT employs simple flags, such as is_data_sending
+                                                                    and is_data_received, to indicate the readiness to send user
+                                                                    data or keep-alive protocol data units (PDUs). By leveraging
+                                                                    these buffers and flags, the PT ensures efficient handling of
+                                                                    diverse traffic types, sufficient buffering capacity, and timely
+                                                                    packet delivery.
+                                                                       The DECT MAC layer, including both FT and PT, interfaces
+                                                                    with the dedicated PHY layer via well-defined transmit/receive
+                                                                    APIs provided by the nRF9161. Instead of embedding
+                                                                    hardware-specific details within the MAC code, the MAC
+                                                                    layer utilizes function calls, such as dect_nr_phy_transmit()
+                                                                    and dect_nr_phy_receive(), to execute low-level transmis-
+                                                                    sion and reception operations. These APIs encapsulate the
+Fig. 4.   PT MAC layer state machine.                               complexities of modulation, timing synchronization, and phys-
+                                                                    ical channel access, enabling the MAC layer to focus on
+                                                                    higher-level responsibilities, such as scheduling beacons, allo-
+allocates dedicated resources, enabling the PT to perform           cating resources, and handling association requests. PHY
+seamless uplink and downlink communication.                         callbacks, in turn, provide feedback to the MAC layer
+   Fig. 4 illustrates the PT MAC layer operating through a          with critical events (e.g., “transmission complete,” “recep-
+structured state machine that systematically manages beacon         tion complete,” or “beacon detected”), allowing the state
+discovery, association requests, and data exchange with the         machine to update internal structures and plan subsequent
+FT. During beacon discovery, the PT starts in the BeaconRx          actions. The API-driven design of the nRF9161 ensures a
+state, which can transition to one of three outcomes: 1) the        modular, platform-independent MAC layer, enabling easy
+NoBeaconRx state if no beacon is detected within the timeout        adaptation and reuse across hardware platforms with minimal
+period; 2) a loop back to the BeaconRx state to continue            changes.
+searching for a valid beacon; or 3) progression to the ReqTx
+state to initiate an association request upon receiving a valid
+                                                                    B. DECT-2020 Sniffer and Wireshark Dissectors
+beacon. Once the association starts, the the ReqTx state trans-
+mit an association request to the FT and then transitions to the       To facilitate protocol verification and debugging of DECT-
+ResRx state to await an association response. If the response is    2020 specific packets, a dedicated DECT-2020 sniffer
+acknowledged (ACK), the PT receive enters the Finish state.         was developed based on the nRF9161 PHY layer API.
+In case of a negative ACK (NACK) or timeout, the PT returns         Additionally, a Wireshark dissector was created to further
+to the BeaconRx state to retry the association process. After       support and streamline DECT-2020 development and analysis.
+association, the PT transitions to the KeepListen state, where it      The DECT-2020 sniffer utilizes the PHY layer API provided
+listens for the next beacon or waits for scheduled transmission     by the nRF9161 to monitor specific DECT-2020 channels
+slots from the FT. Upon receiving an uplink opportunity, the        and capture raw PHY layer packets for subsequent MAC
+PT moves to the DataTX state to transmit data or keep-alive         layer analysis. On the nRF9161 board side, the process starts
+messages, followed by transitioning to the DataRX state to          with initializing the PHY layer parameters, including the start
+receive downlink data from the FT. Alternatively, the PT may        time, scanning duration, and callback functions. Operating in
+enter the Skip state to idle for energy saving, temporarily         an infinite loop, the sniffer captures PHY packets, processes
+ignoring the transmission schedule from the FT. Once data           them through the on_packet_received callback function to skip
+reception or the idle period is complete, the PT returns            PHY headers, and outputs the raw payloads in hexadecimal
+to the KeepListen state, repeating the communication cycle.         format. After each packet is processed, the on_rx_complete
+Throughout these states, the PT aligning its subslot timing with    callback function reschedules the next receive request, ensur-
+the FT’s beacon reference, ensuring that both sides operate on      ing continuous monitoring. On the sniffer’s computer side, a
+a shared timeline, thereby reducing the risk of collisions and      UDP server-client setup connects the nRF9161 board via USB
+synchronization errors.                                             serial. The client reads the hexadecimal packets, encapsulates
+   In addition to the state machine, the PT MAC layer               them into UDP packets, and forwards them to the server, where
+employs a streamlined buffering system and simple flags to          Wireshark9 monitors the communication port for package
+efficiently manage uplink/downlink data and keep-alive traffic      analysis.
+with its associated FT. Specifically, the PT uses a global buffer
+for user-plane data intended for socket transmissions and a           9 https://www.wireshark.org/
+31790                                                                   IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+
+
+                                                                   Listing 1.   Client WireGuard Configuration.
+
+
+
+
+Fig. 5.   Wireshark capture of Keep-Alive IE from PT.
+
+
+
+   Fig. 5 showcases a DECT-2020 NR PDU in Wireshark,
+revealing its layered structure. The PHY Control Field con-
+tains low-level physical parameters, while the MAC Common
+Header indicates that no security is applied and identifies this   Listing 2.   Server WireGuard Configuration.
+as a Data MAC PDU. The subsequent header layer shows a
+sequence number of 1 and no reset flag. Within the service
+data unit (SDU), a Keep-Alive IE is present to confirm that
+                                                                   credentials, ensuring a reliable setup. To further secure data
+the link between the FT and PT remains active even in the
+                                                                   transmission over Wi-Fi, WireGuard is introduced to establish
+absence of traffic. Additionally, two custom Timestamp IEs
+                                                                   secure tunnels at Layer 3 of the network stack, thereby enhace
+are included: one records the clock tick on the FT when the
+                                                                   the security data transmission.
+last packet was sent to the PT, which the PT sends back to the
+                                                                      WireGuard is used to establish a secure Layer 3 network
+FT in the current packet, and the other records the clock tick
+                                                                   tunnel, encrypting data traffic between peers, with the sender
+on the PT when the current packet is sent to the FT. These
+                                                                   and receiver functioning as FT or PT. At its core, WireGuard
+custom Timestamp IEs are utilized in the subsequent testing
+                                                                   associates a peer’s public key with a tunnel source IP
+phase measure DECT-2020 communication latency and jitter.
+                                                                   address. It uses a single round-trip key exchange based on
+   In addition to showcasing the Keep-Alive IE package,
+                                                                   the NoiseIK protocol and transparently manages session cre-
+the developed sniffer and Wireshark dissector can capture
+                                                                   ation through a streamlined timer state machine [11]. Mutual
+the entire communication process between the FT and PT.
+                                                                   authentication is achieved using short preshared static keys
+This includes the initial beacon broadcasting on the BCH,
+                                                                   based on Curve25519 points, ensuring strong perfect forward
+association packets on the RACH, and various types of data
+                                                                   secrecy and robust identity protection. For data encapsulation,
+transmitted on the DCH. These captured packets are recorded
+                                                                   WireGuard utilizes ChaCha20-Poly1305 authenticated encryp-
+and published as a pcapng file on the Aalto 5G GitHub
+                                                                   tion over UDP, delivering high transport speed and efficiency.
+repository. Although the sniffer provides minimal decoding,
+                                                                      As shown in Listing 1 and Listing 2, the communication
+its ability to dump raw payloads in hexadecimal allows
+                                                                   peers exchange public keys and tunnel source IP addresses
+seamless integration with tools like Wireshark. Additionally,
+                                                                   via a dedicated DECT channel. These preshared keys and IP
+its flexibility to monitor various DECT channels by modifying
+                                                                   addresses are then used by WireGuard for mutual authentica-
+the carrier parameter makes it a powerful and versatile tool
+                                                                   tion and data encryption. Additionally, IP table configurations
+for DECT-2020 traffic analysis.
+                                                                   enable NAT and forwarding rules for outbound internet
+                                                                   access over Wi-Fi. By incorporating these advanced security
+C. WireGuard-Secured Wi-Fi                                         measures, EWDC ensures a secure, efficient, and reliable
+   In the EWDC framework, Wi-Fi is configured for data             environment for wireless file transfers. This approach signif-
+transmission after establishing a DECT-2020 connection.            icantly enhances security compared to traditional BLE-based
+Since Wi-Fi operates on public spectrum and is susceptible         advertisement mechanisms, safeguarding user data throughout
+to challenges, such as congestion and interference, DECT-          the entire communication process. The next section presents
+2020 leverages its licensed spectrum to securely share Wi-Fi       the EWDC testing results.
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                     31791
+
+
+                                                                                               TABLE II
+                                                                                    EWDC C ONFIGURATION PARAMETERS
+
+
+
+
+Fig. 6.   EWDC setup.
+
+
+
+
+                        V. EWDC T ESTING
+  To evaluate the EWDC framework, a testing setup was
+designed using raspberry pi devices (RPis) and Nordic
+                                                                     B. Testing 1 (Connection Delay)
+nRF9161 development kits. The testing focused on measuring
+DECT FT-PT delay and jitter, end-to-end delay and jitter                To measure the EWDC system’s delay between the FT and
+on RPis, and the impact of WireGuard on ping latency and             PT, as well as the end-to-end delay between RPi-FT and RPi-
+bandwidth in the EWDC system. Furthermore, a comparison              PT, a beacon message is utilized. When the FT transmits a
+between EWDC and the baseline AWDL method is presented,              beacon (FT_send), it serves as the reference for the cluster
+emphasizing aspects of latency, jitter, security, reliability, and   beacon period and is embedded in the message sent to both
+energy efficiency.                                                   the RPi connected to the FT (RPi_PT_received) and the PT
+                                                                     (PT_received_FT). Upon receiving the beacon, the PT records
+                                                                     its local time for the beacon reception and extracts the FT’s
+A. Testing Setup                                                     beacon transmission time from the message. The PT then
+                                                                     transmits a response back to the FT, including its recorded time
+   Fig. 6 presents the setup of the proposed EWDC system,
+                                                                     (PT_send) and the FT’s transmission time. The RPi connected
+which includes two RPis, three Nordic nRF9161 development
+                                                                     to the PT also reads the buffer via the serial interface to
+kits, and a high-performance computer. Each RPi is connected
+                                                                     retrieve the beacon message, recording its local time when the
+to a DECT development kit operating in either FT or PT
+                                                                     beacon is received (RPi_PT_received). Finally, the FT logs
+mode via USB serial. A sniffer is connected to one of the
+                                                                     the timestamps for the responses it receives from both the
+DECT development kits to capture packets transmitted over
+                                                                     PT (FT_received) and the RPi (RPi_PT_received), creating a
+the DECT channel. Additionally, the RPis establish a Wi-Fi
+                                                                     comprehensive timeline for analyzing system delays. These
+network and perform the WireGuard procedure, exchanging
+                                                                     time recording are raw presented in Table III.
+Wi-Fi credentials and WireGuard peers’ keys and IPs over the
+                                                                        In Table III, The DECT clock ticks are first converted into
+DECT channel.
+                                                                     seconds using the modem’s tick rate (69 120 000 Hz) with the
+   Table II provides an overview of the EWDC configuration
+                                                                     formula:
+parameters for the key devices in the system: DECT, RPi,
+                                                                                                       DECT ticks
+and the computer. The DECT settings include the operating                   time in seconds =                                .     (1)
+frequency of 1665 MHz, a channel bandwidth of 1.728 MHz,                                       MODEM_TICK_RATE_HZ
+subcarrier spacing of 1728 kHz, a frame interval of 10 ms, and       This conversion is applied to columns, such as FT_send,
+a power control level of 23 dBm, utilizing GFSK modulation.          PT_received_FT, PT_send and FT_received, while for
+Communication with the DECT module is managed via UART               columns already in Unix time (e.g., RPi_FT_received and
+with a baud rate of 115200 and a buffer size of 200 bytes.           RPi_PT_received) no further transformation is required. To
+The RPi 5 serves as the central hardware platform for Wi-            align all timestamps on a common reference, the minimum
+Fi communication and system integration, running the Debian          timestamp across all columns is subtracted from each times-
+operating system and utilizing the IEEE 802.11ac protocol on         tamp, effectively normalizing the data.
+the 5.0 GHz band. The computer used in the configuration                Fig. 7 illustrates the beacon transmission time difference
+operates on Ubuntu 22.04, supporting system control and data         between the FT and PT, measured in microseconds (µs).
+processing. Together, these setup allowed for comprehensive          Specifically, the beacon transmission interval is set to 50 ms
+testing of the EWDC performance and functionality in real-           for this testing. The plot shows that the beacon transmission
+world scenarios.                                                     delay ranges between 0.6 and 0.9 µs, exhibiting periodicity.
+31792                                                                         IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+                                                                    TABLE III
+                                                            EWDC S YSTEM T IMING L OGS
+
+
+
+
+                                                                          the non real-time Linux operating system running on the RPis,
+                                                                          which dynamically adjusts system interrupts to manage various
+                                                                          system and user threads, leading to fluctuations and occasional
+                                                                          large errors. Additionally, the RPis’ hardware clocks exhibit
+                                                                          lower precision, causing time discrepancies to accumulate over
+                                                                          time. As all timestamps in the dataset are aligned to a common
+                                                                          reference based on the minimum value across all columns, the
+                                                                          y-axis reflects the biases in the RPis’ time recordings.
+                                                                             Compared to RPis, DECT boards demonstrate superior
+                                                                          timing precision, with transmission delays blow 1 µs. These
+                                                                          delays exhibit minor periodic adjustments due to clock drift
+Fig. 7.   Data transmission time between PT and FT.                       and synchronization at the Nordic nRF9161 development kit
+                                                                          and the RTOS. In contrast, RPis show larger, accumulating
+                                                                          time delays with periodic fluctuations around 1 ms, primarily
+                                                                          caused by the non real-time Linux operating system and lower-
+                                                                          precision hardware clocks. To further assess their impact on
+                                                                          EWDC system performance, connection jitter was measured
+                                                                          separately across all system components.
+
+
+                                                                          C. Testing 2 (Connection Jitter)
+                                                                             Fig. 9 shows the jitter measurements and the corresponding
+                                                                          histogram at FT and PT. The results in Fig. 9(a) and (b)
+                                                                          indicate that jitter at both FT and PT remains below 0.3
+                                                                          µs. Additionally, the jitter at FT exhibits greater variability
+                                                                          compared to PT, primarily due to the FT’s need to schedule
+Fig. 8.   Data transmission time difference between RPis.                 transmission times for the PT and dynamically invoke pro-
+                                                                          cessor for computation tasks. The histogram in Fig. 9(c) and
+                                                                          (d) further confirm that most jitter values are below 0.1 µs,
+The base delay of 0.6 µs arises from information processing               with occasional errors causing values to exceed 0.3 µs. These
+at both the PT and FT, combined with signal transmission                  results highlight the superior timing precision of the DECT
+over the air. Although the PT synchronizes with the FT using              system.
+the STF, the PT’s onboard clock experiences drift, causing                   Fig. 10 presents the jitter measurements and correspond-
+cumulative clock errors that require periodic adjustments                 ing histograms for RPi_FT and RPi_PT. As shown in Fig.
+to align with the FT’s clock and maintain synchronization.                10(a), the jitter at RPi_FT is mostly below 1 ms, while
+Additionally, the Nordic nRF9161 development kit contains                 Fig. 10(b) indicates that RPi_PT initially experiences jitter
+two separate chips: one for the DECT radio front-end and                  exceeding 2 ms before stabilizing to levels similar to RPi_FT,
+another as an embedded MCU running the Zephyr RTOS                        generally below 1 ms. Both RPi_FT and RPi_PT exhibit
+to process radio and MAC layer protocol stacks. These                     periodic variations in jitter, peaking around 1 ms and returning
+independent systems on the same board can introduce timing                to approximately 0.2 ms. This periodic behavior is likely
+errors, impacting overall system performance.                             due to system interrupts or periodic checks performed by
+   Fig. 8 illustrates the data transmission time difference               the RPis to manage connected devices, leading to temporary
+between RPis, measured in milliseconds (ms). The RPis are                 processing delays. The histograms further illustrate that the
+connected to the DECT boards via USB serial interfaces.                   majority of jitter events for RPis are concentrated below
+The plot reveals that the time difference between the two                 0.2 ms, with occasional outliers indicating infrequent errors.
+RPis accumulates over time, with periodic fluctuations of                 This behavior is primarily due to the non real-time nature
+approximately 1 ms. This behavior is primarily attributed to              of the Linux OS on the RPis, which dynamically manages
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                                        31793
+
+
+
+
+Fig. 9. Jitter FT and PT on DECT-2020. (a) Jitter at FT. (b) Jitter at PT.   Fig. 10. Jitter at RPi-FT and RPi-PT. (a) Jitter at RPi_FT. (b) Jitter at
+(c) Histogram of jitter at FT. (d) Histogram of jitter at PT.                RPi_PT. (c) Histogram of jitter at RPi-FT. (d) Histogram of jitter at RPi-PT.
+
+
+interrupts, schedules tasks, and performs periodic system
+checks. Additionally, the inherent limitations of the RPis’                  10.10.0.11 and the client-side IP address 10.10.0.22.
+hardware clock contribute to occasional timing delays.                       These IPs are configured using NAT and IP table rules to
+   Both Figs. 9 and 10 confirm that DECT has a significantly                 forward traffic to the WLAN interfaces utilizing Wi-Fi IPs
+superior clock compared to the RPis. The histograms indicate                 10.42.0.1 (server) and 10.42.0.197 (client). Fig. 11(e)
+that DECT achieves jitter levels mostly around 0.1 µs (10−6 s),              demonstrates the negative impact with WireGuard VPN on
+whereas RPis exhibit jitter primarily around 0.1 ms (10−3 s),                ping latency and jitter. Specifically, with WireGuard VPN, the
+demonstrating that the DECT clock is 1000 times more                         average ping time increases slightly by approximately 0.5 ms,
+precise than that of the RPis. These findings further highlight              from 7.07 to 7.52 ms, while jitter becomes more pronounced,
+DECT’s capability to support URLLC services for industrial                   rising from 0.51 to 1.33 ms. Interestingly, some individual
+IoT scenarios. Furthermore, the combination of DECT and                      ping latencies are lower with the VPN than without the VPN,
+Wi-Fi offers a solution that combines DECT’s low-latency                     likely due to Wi-Fi’s contention-based transmission, which
+performance with Wi-Fi’s high transmission speeds, providin                  introduces randomness in packet transfers. However, the max-
+enhanced wireless connectivity for IoT devices.                              imum ping latency exhibits a significant difference, increasing
+                                                                             by around 3 ms with VPN compared to it without VPN. This
+D. Testing 3: Bandwidth                                                      behavior highlights the computational overhead introduced by
+   To evaluate the proposed EWDC framework, the Wi-Fi                        WireGuard’s encryption and decryption processes, particularly
+performance was tested with and without WireGuard VPN                        in high-demand or dynamic network environments.
+enabled, using the RPi’s embedded 802.11ac Wi-Fi on the                         Fig. 12 illustrates the iPerf 3 testing results, showcas-
+5.0 GHz band. First, ping latency was measured under both                    ing both transmission speed and transmission time for data
+conditions. Next, the iPerf310 was used to simulate data                     increments of 10, 50, 100, 150, and 200 MB. Regarding
+transfers by generating UDP traffic.                                         transmission speed, enabling the VPN reduces the data transfer
+   As shown in Fig. 11, the RPi system effectively detects the               rate due to the additional computational overhead introduced
+WireGuard VPN setup and teardown, as WireGuard operates                      by encryption. The transmission speed reaches approximately
+as a Linux kernel-level interface. In this configuration, the                60 Mb/s when the VPN is disabled, whereas it drops to
+WireGuard VPN is applied to the server-side IP address                       around 50 Mb/s with the VPN enabled. The trend lines in
+                                                                             the figure suggest that larger data sizes slightly impact trans-
+  10 https://iperf.fr/                                                       mission speed negatively, likely because encryption requires
+31794                                                                       IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+
+
+                                                                       Fig. 12. iPerf3 tranmission speed and time results. (a) Transmission speed.
+                                                                       (b) Transmission time.
+Fig. 11. Ping results with VPN down and VPN up. (a) Server with VPN.
+(b) Server without VPN. (c) Client with VPN. (d) Client without VPN.
+(e) Ping results.
+                                                                       wake, exchange data, and return to sleep. Similarly, Wi-
+                                                                       Fi employs the CSMA/CA mechanism, requiring collision
+additional computation, leading to system delays. In terms             avoidance before packet transmission, introducing additional
+of transmission time, as expected, larger data sizes result in         latency and jitter. DECT-2020, however, utilizes determin-
+longer transmission durations. The VPN-enabled configuration           istic transmissions and stabilized associations, significantly
+shows a significantly higher transmission time compared to             reducing latency and jitter compared to BLE and Wi-Fi.
+the VPN-disabled setup, attributed to the encryption processes         These results clearly demonstrate that DECT-2020 provides
+consuming more time and computational resources. Although              substantially higher timing precision, outperforming both BLE
+WireGuard introduces additional latency and reduces through-           and Wi-Fi, whose performance remains in the millisec-
+put, it provides robust data security over Wi-Fi.                      ond range. Consequently, the proposed EWDC framework
+                                                                       achieves notably lower latency and jitter for device association
+E. Comparison Between EWDC and AWDL                                    compared to AWDL.
+   To further evaluate EWDC, we compare it with AWDL                      2) Security and Reliability: In the AWDL authentica-
+in terms of latency, jitter, security, reliability, and energy         tion process, several sensitive data fields, including altDsID
+efficiency.                                                            and encDsID that are linked to the user’s Apple email
+   1) Latency and Jitter: To evaluate the performance of the           addresses and phone numbers, are exchanged over the air
+EWDC system, we compared latency and jitter measurements               along with validity durations and timestamps [2]. Although
+of DECT-2020 with publicly available BLE measurements11                these data arrays are hashed using SHA-256 to represent
+and Wi-Fi data reported in [32]. The BLE evaluation, using             validated contact information, the standard validity duration
+the Nordic nRF52832 SoC for low-latency MIDI applications,             of 30 days raises concerns about privacy exposure [33].
+reported approximately 6 ms latency with around 1 ms jitter.           Additionally, SHA-256 hashing has been shown to be
+For Wi-Fi (IEEE 802.11ac), the 99th-percentile latency indi-           insufficient for privacy protection, as hash values can be
+cated that 99% of packets experienced latencies below 8 ms             reversed using brute-force attacks or database lookups, thereby
+in single-user scenarios, also with approximately 1 ms jitter.         compromising user anonymity and confidentiality [34], [35].
+In contrast, DECT-2020 achieved significantly lower latency,           Furthermore, since AWDL utilizes BLE for exchanging this
+ranging between 0.6 and 0.9 µs, with jitter around 0.1 µs.             information, it inherits BLE’s inherent vulnerabilities, which
+The higher latency and jitter in BLE result primarily from its         could threaten data security and potentially lead to information
+use of connection intervals, during which devices periodically         leakage [6].
+                                                                          In contrast, EWDC employs DECT-2020 instead of BLE
+  11 https://github.com/BLE-MIDI/NCS-MIDI                              for device discovery and information exchange, significantly
+DANG et al.: EWDC: INTEGRATING DECT-2020 WITH WI-FI FOR EWDC                                                                               31795
+
+
+
+enhancing security. Rather than exchanging user-related iden-                 VI. C ONCLUSION AND F UTURE W ORKS
+tifiers via hashes, EWDC transmits only temporary, single-use        This article proposed the EWDC framework, which inte-
+Wi-Fi credentials that change with each new connection            grates DECT-2020 NR with Wi-Fi to enable secure, efficient
+setup, minimizing the risk of information leakage. For secur-     device discovery and high-throughput data transmission.
+ing data transmissions, EWDC implements authenticated             Real-world implementation using Nordic nRF9161 hardware
+encryption using the ChaCha20-Poly1305 cipher alongside a         demonstrated that DECT-2020 achieves microsecond-level
+WireGuard-based handshake. ChaCha20-Poly1305, a stream            precision, while Wi-Fi provides higher data throughput.
+cipher combined with an authenticator, is specifically designed   Additionally, WireGuard is employed to encrypt Wi-Fi data,
+for high-speed, embedded IoT applications, providing effi-        enhancing security significantly despite the added latency
+cient, lightweight, and robust encryption [36]. Unlike hash       and reduced throughput caused by encryption overhead. The
+functions that provide only irreversible data integrity checks,   observed ping delay highlights the potential to further optimize
+stream ciphers encrypt data bit-by-bit in real-time, ensuring     the EWDC system by combining DECT’s deterministic trans-
+confidentiality and adaptability for resource-constrained IoT     mission with Wi-Fi’s high-data throughput at the MAC layer.
+devices [37]. These design enhancements make EWDC a                  Future work could focus on optimizing the integration of
+more secure and reliable alternative to AWDL for IoT data         DECT’s deterministic transmission with Wi-Fi’s high-speed
+transmission.                                                     capabilities at the MAC layer to minimize contention and jitter.
+    3) Energy Efficiency: Energy efficiency is essential for      Additionally, DECT’s robust support for mMTC and mesh
+extending device lifetimes in battery-powered IoT applica-        networking could further extend DECT–Wi-Fi mesh networks
+tions. In the EWDC framework, DECT-2020 replaces BLE              by acting as a reliable control plane that reduces contention,
+for device discovery and authentication, while Wi-Fi con-         enhances bandwidth utilization, and improves overall trans-
+tinues to handle data transmission. Wi-Fi, though offering        mission efficiency. Moreover, DECT Release 2, introduced in
+high throughput, consumes roughly 800 mW during trans-            October 2024, introduces AES-128 encryption for ciphering
+mission, 300–400 mW in idle mode, and about 20–40 mW              and CMAC for integrity checking, which provides robust secu-
+in low-power sleep mode [38]. BLE is optimized for low            rity measures that can further enhance the protection of large,
+power, drawing only a few milliamps during active states          decentralized IoT deployments [12]. Incorporating lightweight
+and approximately 1 µA in sleep mode [39]. However, BLE           cryptographic techniques and robust key management systems
+has limitations regarding coverage and data rate. DECT-2020       will ensure secure communication with minimal computational
+addresses these limitations by providing a balanced energy        overhead, especially in dynamic and rapidly evolving time-
+profile, consuming around 45 mA in active (Rx/LBT) mode           sensitive mesh networks.
+and only 8 µA in sleep mode, along with flexible transmit
+power configurations [26], [27]. Compared to BLE, DECT-                                         R EFERENCES
+2020 exhibits higher energy consumption in active mode but
+                                                                   [1] M. Stute et al., “A billion open interfaces for eve and mallory: MitM,
+significantly surpasses BLE in data transmission rates, achiev-        DoS, and tracking attacks on iOS and macOS through apple wireless
+ing approximately 1.2 Gb/s as defined by ETSI DECT-2020,               direct link,” in Proc. 28th USENIX Security Symp. (USENIX Security),
+compared to BLE’s maximum rate of 2 Mb/s as specified by               2019, pp. 37–54.
+                                                                   [2] A. Heinrich, M. Hollick, T. Schneider, M. Stute, and C. Weinert,
+Bluetooth SIG (see Table I). Moreover, DECT-2020 operates              “AirCollect: Efficiently recovering hashed phone numbers leaked via
+in a licensed frequency band (1.8 GHz), which is lower than            apple AirDrop,” in Proc. 14th ACM Conf. Security Privacy Wireless
+BLE’s and Wi-Fi’s 2.4 and 5.0 GHz bands. Operating at                  Mobile Netw., 2021, pp. 371–373.
+                                                                   [3] A. Heinrich, M. Hollick, T. Schneider, M. Stute, and C. Weinert,
+lower frequencies reduces signal attenuation and path loss,            “PrivateDrop: Practical privacy-preserving authentication for apple
+enabling lower transmit power and fewer retransmissions,               AirDrop,” in Proc. 30th USENIX Security Symp. (USENIX Security),
+which improves energy efficiency [40]. Additionally, the use           2021, pp. 3577–3594.
+                                                                   [4] F. Xu, W. Diao, Z. Li, J. Chen, and K. Zhang, “BadBluetooth: Breaking
+of a licensed band reduces interference, minimizes MAC-                android security mechanisms via malicious bluetooth peripherals,” in
+layer retransmissions, and further enhances the overall energy         Proc. NDSS, 2019, pp. 1–15.
+efficiency of the EWDC system.                                     [5] H. Givehchian, N. Bhaskar, A. Redding, H. Zhao, A. Schulman, and
+                                                                       D. Bharadia, “Practical obfuscation of BLE physical-layer fingerprints
+    Overall, replacing BLE with DECT-2020 in the proposed              on mobile devices,” in Proc. IEEE Symp. Security Privacy (SP), 2024,
+EWDC framework significantly improves latency and jit-                 pp. 2867–2885.
+ter performance, enhances security and reliability, and            [6] J. Wu, R. Wu, D. Xu, D. J. Tian, and A. Bianchi, “SoK: The long journey
+                                                                       of exploiting and defending the legacy of King Harald Bluetooth,” in
+increases energy efficiency compared to AWDL. By utiliz-               Proc. IEEE Symp. Security Privacy (SP), 2024, pp. 2847–228066.
+ing DECT-2020, EWDC achieves deterministic low-latency             [7] X. Che, Y. He, X. Feng, K. Sun, K. Xu, and Q. Li, “BluesWAT: A
+communication, making it particularly suited for URLLC                 lightweight state-aware security framework for Bluetooth low energy,”
+                                                                       in Proc. ACM SIGSAC Conf. Comput. Commun. Security, 2024,
+applications. Additionally, DECT-2020 operates in a licensed           pp. 2087–2101.
+frequency band, substantially reducing interference and            [8] “Digital enhanced cordless telecommunications (DECT); DECT evo-
+enhancing communication reliability compared to BLE-                   lution technical study; requirements and technical analysis for
+                                                                       the further evolution of DECT and DECT ULE, V1.1.1,” ETSI,
+based AWDL. Moreover, EWDC adopts ChaCha20-Poly1305                    Sophia Antipolis, France, Rep. TR 103 422, Jun. 2017. [Online].
+encryption instead of SHA-256 hashing, ensuring stronger and           Available: https://www.etsi.org/deliver/etsi_tr/103400_103499/103422/
+more efficient data protection. These combined advantages              01.01.01_60/tr_103422v010101p.pdf
+                                                                   [9] M. D. Perez-Guirao, T. Weisshaupt, and A. Wilzeck, “DECT NR+:
+position EWDC as a robust, secure, and energy-efficient                Unveiling the essentials of a new non-cellular 5G standard for verticals,”
+solution for next-generation IoT communication systems.                in Proc. 26th ITG-Symp. Mobile Commun. Technol. Appl., 2022, pp. 1–6.
+31796                                                                                IEEE INTERNET OF THINGS JOURNAL, VOL. 12, NO. 15, 1 AUGUST 2025
+
+
+
+[10] L. Zhang, H. Yin, S. Roy, L. Cao, X. Gao, and V. Sathya, “IEEE             [24] A. Saikko, J. Talvitie, and M. Valkama, “Positioning in DECT-2020 NR
+     802.11be network throughput optimization with multi-link opera-                 with proactive measurement selection,” in Proc. Int. Conf. Localization
+     tion and AP controller,” IEEE Internet Things J., vol. 11, no. 13,              GNSS (ICL-GNSS), 2024, pp. 1–7.
+     pp. 23850–23861, Jul. 2024.                                                [25] T. Troccoli et al., “Novel direction-of-arrival-based Localization in
+[11] J. A. Donenfeld, “WireGuard: Next generation kernel network tunnel,”            massive DECT-2020 5G NR networks,” IEEE Internet Things J., vol.
+     in Proc. NDSS, 2017, pp. 1–12.                                                  12, no. 3, pp. 2690–2712, Feb. 2025.
+[12] “DECT-2020 new radio (NR); part 1: Overview,” Eur. Telecommun.             [26] T. Nihtilä and H. Berg, “Energy consumption of DECT-2020 NR
+     Stand. Inst., Sophia Antipolis, France, Rep. ETSI TS 103 636-1, 2024.           mesh networks,” in 2022 Joint Eur. Conf. Netw. Commun. 6G Summit
+     [Online]. Available: https://www.etsi.org/deliver/etsi_ts/103600_103699/        (EuCNC/6G Summit), 2022, pp. 196–201.
+     10363601/02.01.01_60/ts_10363601v020101p.pdf                               [27] T. Nihtilä and T. Taipale, “Energy saving router rotation protocol for
+[13] “DECT-2020 new radio (NR); part 2: Physical layer,” Eur. Telecommun.            DECT-2020 NR,” in Proc. 18th Int. Conf. Wireless Mobile Comput.,
+     Stand. Inst., Sophia Antipolis, France, Rep. ETSI TS 103 636-2, 2024.           Netw. Commun. (WiMob), 2022, pp. 69–74.
+     [Online]. Available: https://www.etsi.org/deliver/etsi_ts/103600_103699/   [28] H. Ahmad, A. B. Asif, J. Peissig, and M. Penner, “MAC protocol for
+     10363602/02.01.01_60/ts_10363602v020101p.pdf                                    reducing outage probability in DECT-2020 new radio,” in Proc. 20th
+[14] “DECT-2020 new radio (NR); part 3: Medium access control                        Int. Conf. Wireless Mobile Comput., Netw. Commun. (WiMob), 2024,
+     (MAC) layer,” Eur. Telecommun. Stand. Inst., Sophia Antipolis,                  pp. 42–49.
+     France, Rep. ETSI TS 103 636-3, 2024. [Online]. Available: https://        [29] A. Samuylov et al., “Performance of MAC layer mechanisms in DECT-
+     www.etsi.org/deliver/etsi_ts/103600_103699/10363603/02.01.01_60/                2020 NR mMTC technology,” in Proc. IEEE 99th Veh. Technol. Conf.
+     ts_10363603v020101p.pdf                                                         (VTC-Spring), 2024, pp. 1–6.
+[15] “DECT-2020 new radio (NR); part 4: Data link control (DLC) layer,”         [30] A. Barua, M. A. Al Alamin, M. S. Hossain, and E. Hossain, “Security
+     Eur. Telecommun. Stand. Inst., Sophia Antipolis, France, Rep. ETSI              and privacy threats for Bluetooth low energy in iot and wearable
+     TS 103 636-4, 2024. [Online]. Available: https://www.etsi.org/deliver/          devices: A comprehensive survey,” IEEE Open J. Commun. Soc., vol. 3,
+     etsi_ts/103600_103699/10363604/02.01.01_60/ts_10363604v020101p.                 pp. 251–281, 2022.
+     pdf                                                                        [31] S. Tan, Y. Ren, J. Yang, and Y. Chen, “Commodity WiFi sensing in ten
+[16] “DECT-2020 new radio (NR); part 5: Convergence layer,” Eur.                     years: Status, challenges, and opportunities,” IEEE Internet Things J.,
+     Telecommun. Stand. Inst., Sophia Antipolis, France, Rep. ETSI TS 103            vol. 9, no. 18, pp. 17832–17843, Sep. 2022.
+     636-5, 2024. [Online]. Available: https://www.etsi.org/deliver/etsi_ts/    [32] T. Suer, P. Jose, and H. Tchouankem, “Experimental evaluation of IEEE
+     103600_103699/10363605/02.01.01_60/ts_10363605v020101p.pdf                      802.11 ax low latency and high reliability with Wi-Fi 6?” in Proc. IEEE
+[17] R. Kovalchukov et al., “DECT-2020 new radio: The next step toward 5G            Global Commun. Conf., 2022, pp. 377–382.
+     massive machine-type communications,” IEEE Commun. Mag., vol. 60,          [33] M. Stute, A. Heinrich, J. Lorenz, and M. Hollick, “Disrupting continuity
+     no. 6, pp. 58–64, Jun. 2022.                                                    of apple’s wireless ecosystem security: New tracking, DoS, and MitM
+[18] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen,                          attacks on iOS and macOS through Bluetooth low energy, AWDL, and
+     Y. Koucheryavy, and M. Valkama, “Performance assessment of DECT-                Wi-Fi,” in Proc. 30th USENIX Security Symp. (USENIX Security), 2021,
+     2020 NR and classic DECT coexistence mechanisms,” in Proc. IEEE                 pp. 3917–3934.
+     97th Veh. Technol. Conf. (VTC-Spring), 2023, pp. 1–7.                      [34] C. Hagen, C. Weinert, C. Sendner, A. Dmitrienko, and T. Schneider, “All
+[19] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of DECT-            the numbers are U.S.: Large-scale abuse of contact discovery in mobile
+     2020 NR in an industrial environment for varying RF bands,” in Proc.            messengers,” Cryptology ePrint Arch., IACR, Bellevue, WA, USA, Rep.
+     Joint Eur. Conf. Netw. Commun. 6G Summit (EuCNC/6G Summit), 2024,               2020/1119, 2020.
+     pp. 610–615.                                                               [35] M. Stute, D. Kreitschmann, and M. Hollick, “One billion apples’ secret
+[20] M. M. Haque, J. Sae, J. Pirskanen, and M. Valkama, “DECT-2020                   sauce: Recipe for the apple wireless direct link ad hoc protocol,” in
+     NR link distance performance in varying environments: Models and                Proc. 24th Annu. Int. Conf. Mobile Comput. Netw., 2018, pp. 529–543.
+     measurements,” 2024, arXiv:2410.24112.                                     [36] F. De Santis, A. Schauer, and G. Sigl, “ChaCha20-Poly1305 authenti-
+[21] E. Llaguno, I. Pretel, P. Angueira, and J. Montalban, “Physical layer           cated encryption for high-speed embedded IoT applications,” in Proc.
+     performance of DECT-2020 new radio for factory automation,” in                  Design, Autom. Test Europe Conf. Exhibit. (DATE), 2017, pp. 692–697.
+     Proc. IEEE 20th Int. Conf. Factory Commun. Syst. (WFCS), 2024,             [37] J. Katz and Y. Lindell, Introduction to Modern Cryptography: Principles
+     pp. 1–4.                                                                        and Protocols. Boca Raton, FL, USA: Chapman and Hall/CRC, 2007.
+[22] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen,                       [38] Y. Xiao et al., “Modeling energy consumption of data transmission over
+     “Enabling massive machine type communications with DECT-                        Wi-Fi,” IEEE Trans. Mobile Comput., vol. 13, no. 8, pp. 1760–1773,
+     2020 standard: A system-level performance study,” VTT Technical                 Aug. 2014.
+     Research Centre Finland, Espoo, Finland, Rep. VTT-R-00367-21,              [39] P. H. Kindt, D. Yunge, R. Diemer, and S. Chakraborty, “Energy modeling
+     2021.                                                                           for the Bluetooth low energy protocol,” ACM Trans. Embedded Comput.
+[23] K. Maliatsos, A. Gotsis, and A. Alexiou, “Evaluation of the IMT-                Syst., vol. 19, no. 2, pp. 1–32, 2020.
+     2020 candidate radio interface technology DECT-2020 NR,” in                [40] D. Feng, C. Jiang, G. Lim, L. J. Cimini, G. Feng, and G. Y. Li, “A survey
+     Proc. 14th Int. Conf. Commun. Syst. Netw. (COMSNETS), 2022,                     of energy-efficient wireless communications,” IEEE Commun. Surveys
+     pp. 889–893.                                                                    Tuts., vol. 15, no. 1, pp. 167–178, 1st Quart., 2012.
+

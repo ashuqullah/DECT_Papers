@@ -1,0 +1,594 @@
+% !TeX root = ../main.tex
+\begin{figure}[htbp]
+\centering
+
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\small,
+    >=Latex,
+    panel/.style={
+        draw=black!35,
+        rounded corners=5pt,
+        line width=0.7pt,
+        fill=white
+    },
+    stackbox/.style={
+        draw=blue!55!black,
+        fill=blue!5,
+        minimum width=2.9cm,
+        minimum height=0.65cm,
+        align=center,
+        line width=0.7pt,
+        inner sep=4pt
+    },
+    macbox/.style={
+        draw=green!50!black,
+        fill=green!6,
+        minimum width=2.9cm,
+        minimum height=1.05cm,
+        align=center,
+        line width=0.7pt,
+        inner sep=4pt
+    },
+    ftbox/.style={
+        draw=blue!60!black,
+        fill=blue!6,
+        rounded corners=4pt,
+        minimum width=4.1cm,
+        minimum height=1.65cm,
+        align=left,
+        line width=0.8pt,
+        inner sep=6pt
+    },
+    ptbox/.style={
+        draw=green!55!black,
+        fill=green!6,
+        rounded corners=4pt,
+        minimum width=2.65cm,
+        minimum height=1.65cm,
+        align=left,
+        line width=0.8pt,
+        inner sep=5pt
+    },
+    characteristicbox/.style={
+        draw=orange!70!black,
+        fill=orange!6,
+        rounded corners=4pt,
+        minimum width=3.15cm,
+        minimum height=1.65cm,
+        align=left,
+        line width=0.8pt,
+        inner sep=6pt
+    },
+    processbox/.style={
+        rounded corners=4pt,
+        minimum width=2.0cm,
+        minimum height=3.0cm,
+        align=center,
+        line width=0.75pt,
+        inner sep=5pt
+    },
+    downlink/.style={
+        draw=blue!65!black,
+        dashed,
+        line width=0.9pt,
+        -{Latex[length=2.2mm]}
+    },
+    uplink/.style={
+        draw=green!55!black,
+        dashed,
+        line width=0.9pt,
+        -{Latex[length=2.2mm]}
+    },
+    processarrow/.style={
+        draw=black!75,
+        line width=0.9pt,
+        -{Latex[length=2.2mm]}
+    }
+]
+
+% =================================================
+% PANEL (a): ARCHITECTURE
+% =================================================
+
+\node[
+    panel,
+    minimum width=10.1cm,
+    minimum height=8.2cm,
+    anchor=north west
+] (panelA) at (0,8.2) {};
+
+\node[
+    anchor=north,
+    font=\large\bfseries
+] at ([yshift=-0.18cm]panelA.north)
+{(a) DECT-2020 NR Architecture};
+
+% Protocol stack
+\node[
+    stackbox
+] (app) at (1.9,6.75) {
+    \textbf{Application /}\\
+    \textbf{Industrial Services}
+};
+
+\node[
+    macbox,
+    anchor=north
+] (mac) at ([yshift=-0.01cm]app.south) {
+    \textbf{MAC Layer}\\[-0.5mm]
+    \scriptsize
+    Scheduling, association,\\
+    random access, feedback
+};
+
+\node[
+    stackbox,
+    minimum height=0.95cm,
+    anchor=north
+] (phy) at ([yshift=-0.01cm]mac.south) {
+    \textbf{PHY Layer}\\[-0.5mm]
+    \scriptsize
+    Modulation, coding,\\
+    numerology, transmission
+};
+
+\node[
+    stackbox,
+    minimum height=0.48cm,
+    anchor=north
+] (rf) at ([yshift=-0.01cm]phy.south) {
+    \textbf{RF Front-End}
+};
+
+\node[
+    draw=blue!60!black,
+    dashed,
+    rounded corners=4pt,
+    fit=(app)(mac)(phy)(rf),
+    inner sep=0.12cm,
+    line width=0.75pt,
+    label={
+        [font=\bfseries]
+        above:Protocol Stack
+    }
+] (stackframe) {};
+
+% Fixed terminal
+\node[
+    ftbox,
+    anchor=north west
+] (ft) at (4.05,7.1) {
+    \hspace{0.75cm}
+    \begin{minipage}{3.0cm}
+        \textbf{Fixed Terminal (FT)}\\[0.6mm]
+        \scriptsize
+        $\bullet$ Network coordination\\
+        $\bullet$ Beacon transmission\\
+        $\bullet$ Resource management\\
+        $\bullet$ Scheduling and control
+    \end{minipage}
+};
+
+% FT antenna
+\draw[
+    blue!65!black,
+    line width=1pt
+]
+($(ft.west)+(0.40,0.28)$)
+--
+++(0,-0.65);
+
+\draw[
+    blue!65!black,
+    line width=1pt
+]
+($(ft.west)+(0.40,-0.37)$)
+--
+++(-0.22,-0.30);
+
+\draw[
+    blue!65!black,
+    line width=1pt
+]
+($(ft.west)+(0.40,-0.37)$)
+--
+++(0.22,-0.30);
+
+\fill[
+    blue!65!black
+]
+($(ft.west)+(0.40,0.12)$)
+circle (0.045);
+
+\draw[
+    blue!65!black,
+    line width=0.7pt
+]
+($(ft.west)+(0.40,0.12)$)
+arc[
+    start angle=145,
+    end angle=395,
+    radius=0.18
+];
+
+\draw[
+    blue!65!black,
+    line width=0.7pt
+]
+($(ft.west)+(0.40,0.12)$)
+arc[
+    start angle=145,
+    end angle=395,
+    radius=0.30
+];
+
+% Characteristics
+\node[
+    characteristicbox,
+    anchor=north west
+] (characteristics) at (7.15,7.1) {
+    \textbf{Key Characteristics}\\[0.6mm]
+    \scriptsize
+    $\bullet$ Decentralized operation\\
+    $\bullet$ No core network required\\
+    $\bullet$ Local and private networks\\
+    $\bullet$ Star, tree, and mesh-like\\
+    \hspace{0.20cm}topologies
+};
+
+% PT boxes
+\node[
+    ptbox,
+    anchor=north west
+] (pt1) at (3.45,3.95) {
+    \hspace{0.48cm}
+    \begin{minipage}{1.9cm}
+        \textbf{PT 1}\\[0.6mm]
+        \scriptsize
+        $\bullet$ Data transmission\\
+        $\bullet$ Receives scheduling\\
+        $\bullet$ Uplink feedback
+    \end{minipage}
+};
+
+\node[
+    ptbox,
+    anchor=north west
+] (pt2) at (6.25,3.95) {
+    \hspace{0.48cm}
+    \begin{minipage}{1.9cm}
+        \textbf{PT 2}\\[0.6mm]
+        \scriptsize
+        $\bullet$ Data transmission\\
+        $\bullet$ Receives scheduling\\
+        $\bullet$ Uplink feedback
+    \end{minipage}
+};
+
+\node[
+    font=\Large\bfseries
+] at (8.98,3.10)
+{$\cdots$};
+
+\node[
+    ptbox,
+    anchor=north west
+] (ptn) at (9.35,3.95) {
+    \hspace{0.48cm}
+    \begin{minipage}{1.9cm}
+        \textbf{PT N}\\[0.6mm]
+        \scriptsize
+        $\bullet$ Data transmission\\
+        $\bullet$ Receives scheduling\\
+        $\bullet$ Uplink feedback
+    \end{minipage}
+};
+
+% Stack connection
+\draw[
+    black!60,
+    line width=0.8pt,
+    <->,
+    >=Latex
+]
+(stackframe.east)
+--
+(pt1.west);
+
+% Downlink arrows
+\draw[
+    downlink
+]
+(ft.south west)
+--
+++(-0.75,-0.48)
+--
+(pt1.north);
+
+\draw[
+    downlink
+]
+(ft.south)
+--
+(pt2.north);
+
+\draw[
+    downlink
+]
+(ft.south east)
+--
+++(0.85,-0.48)
+--
+(ptn.north);
+
+\node[
+    text=blue!65!black,
+    font=\scriptsize\bfseries
+] at (7.1,4.55)
+{Downlink: Beacon, Control, Scheduling};
+
+% Uplink path
+\draw[
+    green!55!black,
+    dashed,
+    line width=0.9pt
+]
+(4.75,1.42)
+--
+(10.65,1.42);
+
+\draw[
+    uplink
+]
+(4.75,1.42)
+--
+(pt1.south);
+
+\draw[
+    uplink
+]
+(7.55,1.42)
+--
+(pt2.south);
+
+\draw[
+    uplink
+]
+(10.65,1.42)
+--
+(ptn.south);
+
+\node[
+    text=green!50!black,
+    font=\scriptsize\bfseries
+] at (7.7,1.05)
+{Uplink: Data, Feedback, Random Access};
+
+% =================================================
+% PANEL (b): MAC OPERATION
+% =================================================
+
+\node[
+    panel,
+    minimum width=12.8cm,
+    minimum height=8.2cm,
+    anchor=north west
+] (panelB) at (10.5,8.2) {};
+
+\node[
+    anchor=north,
+    font=\large\bfseries
+] at ([yshift=-0.18cm]panelB.north)
+{(b) Principal MAC Operation Cycle};
+
+% Process boxes
+\node[
+    processbox,
+    draw=blue!60!black,
+    fill=blue!5
+] (p1) at (11.75,5.45) {
+    \textbf{1}\\[1mm]
+    \textbf{Beacon}\\
+    \textbf{Transmission}\\[2mm]
+    \scriptsize
+    FT transmits network,\\
+    synchronization, and\\
+    scheduling information
+};
+
+\node[
+    processbox,
+    draw=orange!75!black,
+    fill=orange!5
+] (p2) at (13.95,5.45) {
+    \textbf{2}\\[1mm]
+    \textbf{Network}\\
+    \textbf{Discovery}\\[2mm]
+    \scriptsize
+    PTs scan beacons\\
+    and identify\\
+    available networks
+};
+
+\node[
+    processbox,
+    draw=green!60!black,
+    fill=green!5
+] (p3) at (16.15,5.45) {
+    \textbf{3}\\[1mm]
+    \textbf{Association}\\[2mm]
+    \scriptsize
+    PT requests access\\
+    and receives address\\
+    and configuration
+};
+
+\node[
+    processbox,
+    draw=purple!60!black,
+    fill=purple!5
+] (p4) at (18.35,5.45) {
+    \textbf{4}\\[1mm]
+    \textbf{Resource}\\
+    \textbf{Scheduling}\\[2mm]
+    \scriptsize
+    FT allocates\\
+    time-frequency\\
+    resources
+};
+
+\node[
+    processbox,
+    draw=orange!75!black,
+    fill=orange!5
+] (p5) at (20.55,5.45) {
+    \textbf{5}\\[1mm]
+    \textbf{Data}\\
+    \textbf{Transmission}\\[2mm]
+    \scriptsize
+    PTs transmit using\\
+    allocated resources
+};
+
+\node[
+    processbox,
+    draw=blue!60!black,
+    fill=blue!5
+] (p6) at (22.75,5.45) {
+    \textbf{6}\\[1mm]
+    \textbf{Feedback /}\\
+    \textbf{ACK}\\[2mm]
+    \scriptsize
+    Reception status\\
+    and link feedback\\
+    are reported
+};
+
+\node[
+    processbox,
+    draw=gray!65,
+    fill=gray!5
+] (p7) at (24.95,5.45) {
+    \textbf{7}\\[1mm]
+    \textbf{Next}\\
+    \textbf{Beacon}\\[2mm]
+    \scriptsize
+    FT updates schedule\\
+    and begins the\\
+    next cycle
+};
+
+% Process arrows
+\draw[processarrow] (p1.east) -- (p2.west);
+\draw[processarrow] (p2.east) -- (p3.west);
+\draw[processarrow] (p3.east) -- (p4.west);
+\draw[processarrow] (p4.east) -- (p5.west);
+\draw[processarrow] (p5.east) -- (p6.west);
+\draw[processarrow] (p6.east) -- (p7.west);
+
+% Timeline
+\draw[
+    black!75,
+    line width=0.9pt,
+    -{Latex[length=2.4mm]}
+]
+(10.9,2.20)
+--
+(26.1,2.20);
+
+% Phase markers
+\foreach \x/\txt in {
+    11.75/Synchronization,
+    13.95/Discovery,
+    16.15/Access,
+    18.35/Allocation,
+    20.55/Communication,
+    22.75/Reliability,
+    24.95/Adaptation
+}{
+    \draw[
+        black!45,
+        dashed,
+        line width=0.6pt
+    ]
+    (\x,3.90)
+    --
+    (\x,2.20);
+
+    \node[
+        anchor=north,
+        font=\scriptsize\bfseries
+    ] at (\x,2.10)
+    {\txt};
+}
+
+\node[
+    anchor=west,
+    font=\scriptsize\bfseries
+] at (26.05,2.20)
+{Time};
+
+% =================================================
+% SHARED LEGEND
+% =================================================
+
+\node[
+    draw=black!40,
+    fill=gray!3,
+    rounded corners=4pt,
+    minimum width=9.4cm,
+    minimum height=0.85cm,
+    anchor=south
+] (legend) at (13.25,0.05) {};
+
+\draw[
+    downlink
+]
+([xshift=0.40cm]legend.west)
+--
+++(0.70,0);
+
+\node[
+    anchor=west,
+    font=\scriptsize
+] at ([xshift=1.25cm]legend.west)
+{Downlink (FT $\rightarrow$ PT)};
+
+\draw[
+    uplink
+]
+([xshift=3.65cm]legend.west)
+--
+++(0.70,0);
+
+\node[
+    anchor=west,
+    font=\scriptsize
+] at ([xshift=4.50cm]legend.west)
+{Uplink (PT $\rightarrow$ FT)};
+
+\draw[
+    processarrow
+]
+([xshift=6.95cm]legend.west)
+--
+++(0.70,0);
+
+\node[
+    anchor=west,
+    font=\scriptsize
+] at ([xshift=7.80cm]legend.west)
+{Process flow};
+
+\end{tikzpicture}%
+}
+
+\caption{DECT-2020 NR architecture and MAC operation:
+(a) protocol architecture, device roles, and principal uplink and downlink
+communication functions; and
+(b) sequence of the main MAC-layer procedures from beacon transmission to
+schedule adaptation.}
+\label{fig:dectnr_architecture_mac}
+
+\end{figure}

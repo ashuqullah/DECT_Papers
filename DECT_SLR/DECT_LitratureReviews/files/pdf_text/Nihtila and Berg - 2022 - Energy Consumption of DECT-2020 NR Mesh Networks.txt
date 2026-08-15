@@ -1,0 +1,411 @@
+                                                                                                                                                                                             2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                                                                                                                                                                                                           Satellite Networks (WOS)
+
+
+
+                                                                                                                                                                                                                             Energy Consumption of
+2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit) | 978-1-6654-9871-5/22/$31.00 ©2022 IEEE | DOI: 10.1109/EuCNC/6GSummit54941.2022.9815770
+
+
+
+
+                                                                                                                                                                                                                          DECT-2020 NR Mesh Networks
+                                                                                                                                                                                                                         Timo Nihtilä                                                                        Heikki Berg
+                                                                                                                                                                                                                    Magister Solutions Ltd                                                             Nordic Semiconductor
+                                                                                                                                                                                                                      Jyväskylä, Finland                                                                    Oulu, Finland
+                                                                                                                                                                                                                   timo.nihtila@magister.fi                                                          heikki.berg@nordicsemi.no
+
+
+                                                                                                                                                                                                Abstract—ETSI DECT-2020 New Radio (NR) is a new                                 Being a new technology, DECT-2020 NR has not been
+                                                                                                                                                                                            flexible radio interface targeted to support a broad range of                    extensively studied yet. In [1] the authors introduced the
+                                                                                                                                                                                            wireless Internet of Things (IoT) applications. Recent reports                   DECT-2020 NR standard and evaluated its performance by
+                                                                                                                                                                                            have shown that DECT-2020 NR achieves good delay
+                                                                                                                                                                                                                                                                             comparing it to the existing low-power wide-area network
+                                                                                                                                                                                            performance and it has been shown to fulfill both massive
+                                                                                                                                                                                            machine-type communications (mMTC) and ultra-reliable low                        (LPWAN) solutions. The paper demonstrated delay
+                                                                                                                                                                                            latency communications (URLLC) requirements for 5th                              performance similar to existing solutions but with much
+                                                                                                                                                                                            generation (5G) networks. A unique aspect of DECT-2020 as a                      higher node densities. In [2] the standard was shown to
+                                                                                                                                                                                            5G technology is that it is an autonomous wireless mesh                          fulfill the International Telecommunication Union
+                                                                                                                                                                                            network (WMN) protocol where the devices construct and                           Radiocommunication Sector (ITU-R) requirements for 5G
+                                                                                                                                                                                            uphold the network independently without the need for base                       networks, but in [3] only a partial fulfillment of these
+                                                                                                                                                                                            stations or core network architecture. Instead, DECT-2020 NR
+                                                                                                                                                                                                                                                                             requirements was confirmed. These studies paid only little
+                                                                                                                                                                                            relies on part of the network devices taking the role of a router
+                                                                                                                                                                                            to relay data through the network. This makes deployment of a                    consideration to the energy required to reach the presented
+                                                                                                                                                                                            DECT-2020 NR network affordable and extremely easy, but                          level of performance. Only in [1] the issue was touched by
+                                                                                                                                                                                            due to the nature of the medium access protocol, the routing                     stating that a multi-hop network was more energy efficient
+                                                                                                                                                                                            responsibility adds an additional energy consumption burden                      than a single-hop network when considering the amount of
+                                                                                                                                                                                            to the nodes, who in the IoT domain are likely to be equipped                    energy needed for transmissions. We will demonstrate in
+                                                                                                                                                                                            with a limited battery capacity. In this paper, we analyze by                    this paper that this viewpoint is one-sided since the energy
+                                                                                                                                                                                            system level simulations the energy consumption of
+                                                                                                                                                                                                                                                                             consumption of a multi-hop mesh network is not limited to
+                                                                                                                                                                                            DECT-2020 NR networks with different network sizes and
+                                                                                                                                                                                            topologies and how the reported low latencies can be upheld                      the transmissions.
+                                                                                                                                                                                            given the energy constraints of IoT devices.                                        Energy consumption of WMNs is a well-known problem
+                                                                                                                                                                                                                                                                             covered by multiple studies in recent years [5], [6]. Like [1],
+                                                                                                                                                                                               Keywords— IoT, DECT-2020, 5G, NR, mesh network, energy                        most of them consider the energy consumption primarily as
+                                                                                                                                                                                            consumption                                                                      a routing problem, indicating that the energy is mostly
+                                                                                                                                                                                                                                                                             consumed by the device transmissions. However, unlike
+                                                                                                                                                                                                                   I.          INTRODUCTION
+                                                                                                                                                                                                                                                                             many earlier WMN technologies, DECT-2020 NR uses
+                                                                                                                                                                                               The DECT-2020 NR standard was released by the                                 state-of-the-art physical layer techniques, such as Cyclic
+                                                                                                                                                                                            European Telecommunications Standards Institute (ETSI) in                        Prefix Orthogonal Frequency Division Multiplexing
+                                                                                                                                                                                            2020. It is intended for industrial Internet of Things (IoT)                     (CP-OFDM), turbo coding and Hybrid ARQ (HARQ) with
+                                                                                                                                                                                            applications requiring either massive machine-type (mMTC)                        incremental redundancy which decrease the duration and
+                                                                                                                                                                                            and/or ultra-reliable low latency (URLLC) communications.                        increase the energy efficiency of the transmissions, making
+                                                                                                                                                                                               DECT-2020 NR introduces a device-based wireless                               the comparison to old studies difficult and thus justifying
+                                                                                                                                                                                            cluster-tree mesh network, capable of forming an                                 the need for separate investigation on DECT-2020 NR.
+                                                                                                                                                                                            autonomous network without the need for separate base                               This paper extends the WMN energy problem field of
+                                                                                                                                                                                            stations or core network. Nodes can act as routers between                       study by exploring how the advanced features of
+                                                                                                                                                                                            their neighbors, forwarding data between them in case direct                     DECT-2020 NR affect the WMN energy consumption,
+                                                                                                                                                                                            connection is not possible.                                                      whether different network topologies have an impact on this
+                                                                                                                                                                                               With wireless mesh networking (WMN) the coverage can                          and also whether the recently reported low latency
+                                                                                                                                                                                            theoretically reach extreme distances with minimal costs                         capabilities of the new standard can be upheld in typical IoT
+                                                                                                                                                                                            and effortless deployment. However, forwarding data                              scenarios given the energy constraints of IoT devices.
+                                                                                                                                                                                            through the network with a reasonable delay requires that
+                                                                                                                                                                                            each node passing the data onwards has an adequately active                                      II.          RESEARCH METHODOLOGY
+                                                                                                                                                                                            duty cycle, meaning the node can receive and transmit                               Computer simulations are a valuable tool to study the
+                                                                                                                                                                                            reasonably often so that the delay requirements are met, and                     behavior of complex networks or systems when the
+                                                                                                                                                                                            the data does not accumulate in relaying nodes. However,                         alternatives, analytical evaluation or building a real-life test
+                                                                                                                                                                                            maintaining an active duty cycle requires energy resources                       environment, are difficult or impossible to use. This is the
+                                                                                                                                                                                            which may be scarce if the network consists of                                   case for a newly released technology standard such as
+                                                                                                                                                                                            battery-operated nodes, as is common in the IoT domain.
+
+
+
+
+                                                                                                                                                                                         978-1-6654-9871-5/22/$31.00
+                                                                                                                                                                                       Authorized                                ©2022
+                                                                                                                                                                                                  licensed use limited to: Hochschule       (FH) - Technik und Wirtschaft. 196
+                                                                                                                                                                                                                                      AalenIEEE                            Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+      2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                    Satellite Networks (WOS)
+
+     DECT-2020 NR for which no devices nor networks yet                               2)       Mesh topology: Nodes out of sink coverage
+     exist.                                                                           associate to other nodes in FT mode, who become routers.
+       For this study, we used an open-source Network                                 In addition to acting as a child PT to its own parent FT, a
+     Simulator 3 platform [7] into which we implemented a                             router acts as a parent to its own child node(s). A router
+     module for DECT-2020 NR. The module consists of the                              node provides a route to the sink for the data of its PTs.
+     MAC and PHY layers implemented according to ETSI TS                              Fig. 2 shows a simple example of a multi-tier mesh network.
+     103 636 series specifications [8]. In the following, the
+     system simulator modeling details are explained.
+     A.         Network organization
+        The DECT-2020 NR standard explains how the network
+     organizes itself. For a single network, there is always one
+     sink, i.e. a gateway node to the Internet. There can be
+     multiple sinks in a group of nodes, but from the system
+     point of view, the sinks form their own networks (cluster
+     trees), which can co-exist, but operate independently from                       Fig. 1 Simple example of a star topology with a sink and 6 leaf nodes.
+     each other. In this study, we concentrate on the operation of
+     a single network entity under one sink.
+        Organization starts by the sink selecting FT (Fixed
+     Termination point) mode. In FT mode, a node first performs
+     background scanning, searching for the least busy channel,
+     out of the available DECT channels, for operation. After
+     finding a channel, the FT starts beaconing on it.
+        All other nodes are in PT (Portable Termination point)
+     mode, where they initially scan channels for beacons and
+     after detecting one or more of them, select from them the
+     sender FT for association. A node having multiple FT
+     candidates makes the choice based on the route cost. Exact
+     route cost calculation is left to implementation, but
+     essentially the node is free to use any information available.
+     In this study, the nodes select the strongest beaconing FT
+     for association.
+        After a PT has successfully associated with an FT, the PT
+     switches to FT mode and performs operations as explained                         Fig. 2 Simple example of a 4-tier mesh topology consisting of a sink, 5
+     for the FT mode above, in order to invite potential children                     routers and 8 leaf nodes.
+     and by that, extend the coverage area of the network.
+                                                                                      C.          Data transmission
+        Naturally, not all nodes end up associated with child
+     nodes. These nodes are left as pure PT nodes, i.e. leaf nodes.                      After network organization, data transmission starts.
+     After the network organization is finished, these nodes stop                     Fig. 3 shows a simple example diagram of data being
+     beaconing and go to sleep, only to wake up listening to their                    transmitted from a leaf to the sink via a router. The
+     parent’s beacon or to transmit data.                                             operation of leaf nodes is very efficient: they are only awake
+        The organization cycle continues until all nodes within a                     to listen to their parent’s beacon and to transmit data. Other
+     coverage area are associated with another node and the                           times they can sleep. In most IoT use cases, nodes generate
+     network is complete.                                                             a small amount of data relatively infrequently. Thus, it is
+                                                                                      expected that leaf nodes can be asleep for most of the time.
+     B.         Network topology
+         The finished network can be thought of as nested node
+     tiers, each tier adding a node-to-node hop for the traffic
+     traveling towards the sink.
+         Depending on the network characteristics, such as node
+     density, scenario size, beacon transmission power and
+     required beacon quality for association, there can be only
+     one or multiple tiers in the network, forming either a star or
+     a mesh topology.
+     1)        Star topology: A single-tier network where all
+     nodes are within sink coverage and associate directly with
+     it. All nodes apart from the sink are leaf nodes and do not
+     have any other role. A simple example of a star topology is                      Fig. 3 Simple example of data forwarding from a leaf to the sink via a
+     shown in Fig. 1.                                                                 router.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 197
+                                                                                    Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+      2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                    Satellite Networks (WOS)
+
+        A router on the other hand, needs to keep its receiver on                        In the simulations, we measured the end-to-end packet
+     periodically for the duration of its random access channel                       delay, battery life expectation and the service rate, i.e. the
+     (RACH) period in order to be able to receive data from its                       percentage of the data that is successfully received by the
+     children. This increases the activity of the router and                          target node. The end-to-end delay was measured from the
+     decreases its energy efficiency.                                                 time a packet was generated to the time when it was
+        Sink is the gateway node to the Internet, so it is assumed                    successfully received at the target node.
+     to be powered by a wall outlet or a Power over Ethernet                                                TABLE II. SIMULATION USE CASES
+     (PoE) connection and thus its energy usage is practically
+     irrelevant. Without power limitations, it can offer tier 1                                                   High traffic               Low traffic
+     nodes continuous RACH.                                                                                         intensity                  intensity
+         Data traffic from each node is targeted to the sink and                          Real-life use           Smart home                Smart energy
+                                                                                         case examples              condition             demand response
+     the nodes transmit data to their parent's RACH. The PHY
+                                                                                                                   monitoring,               management
+     transmission is preceded by a Listen-Before-Talk (LBT) and                                                  Smart transport                (DRM),
+     is subject to HARQ until it is decoded successfully or                                                     quality conditions       Smart transport road
+     dropped due to reaching the maximum number of                                                                 monitoring,                 condition
+     retransmissions. If data is dropped, it is lost as there is no                                            Smart environment             monitoring,
+     upper layer ARQ.                                                                                         tsunami / avalanche /       Smart agriculture
+                                                                                                                  earthquake /                irrigation /
+                            III.         SIMULATIONS                                                           landslide detection        fertilization / pest
+        We simulated a DECT-2020 NR network in a reasonably                                                             [9]                   control [9]
+     large IoT scenario consisting of 1000 nodes. The most                              Tolerable delay           Few seconds                Few minutes
+     central node was selected as the sink. Scenario radius was                         Beacon interval                32 s                       32 s
+                                                                                        Router RACH                    64 x                        1x
+     varied in order to capture the effects of both star and mesh
+                                                                                          period per           [100, 200, 400] ms           [5, 10, 20] ms
+     topologies with different amounts of node tiers. Table I                           beacon period
+     shows general simulation parameters and assumptions.                                   Traffic            100 B data packet        100 B data packet
+                          TABLE I. SIMULATION PARAMETERS                                                       per 60 s per node        per 24 h per node
+                                                                                             Traffic          Unidirectional, from sensing node to the sink
+               Parameter                                Value                               direction
+            Scenario radius                         400 m - 5 km
+               Frequency                              1.89 GHz                           The router duty cycle is determined by the RACH period,
+           Available DECT                                10
+                                                                                      and is a key factor in determining the achievable delay and
+                channels
+                                                                                      also the battery life. Strict delay requirements require an
+          Propagation model                    ITU Urban Macro
+               Shadowing                             Disabled                         active duty cycle, whereas looser requirements allow a less
+            Channel model                 5G spatial channel model [10]               active one. For both use cases, we simulated a range of
+           Number of nodes                             1000                           RACH periods in order to find the best option.
+           Number of sinks                               1                               For high traffic intensity, we set multiple short RACH
+            Antenna model                     1x1 omni, 0 dBi gain                    periods per beacon period. This minimizes the data waiting
+              Noise figure                             7 dB                           time while allowing the router to sleep intermittently and
+           Beacon Tx power                           23 dBm                           save energy.
+         Min acceptable beacon                         3 dB                              Node battery life expectation was based on experienced
+         quality for association                                                      modem energy consumption during the simulation as the
+             Power control               Pathloss based: TxP = min (23                radio is assumed to be the main energy consumer in the IoT
+                                        dBm, -68 dBm - 0.7 * PG), where
+                                                                                      device. Energy is consumed during the simulation according
+                                                PG is path gain
+                                                                                      to the electric current used in the states the nodes are in.
+          Max no of HARQ                               9
+           retransmissions                                                            State transitions did not consume any additional energy.
+         Max HARQ processes                               2                              Table III shows the used energy parameters. The used
+               per node                                                               currents in different states were based on actual values of an
+          SCS scaling factor                               1                          existing Nordic Semiconductor nRF9160 LTE-M/NB-IoT
+          FFT scaling factor                               1                          modem [12] and it is expected that the values reflect a
+            LBT min CW                                     8                          realistic range of an upcoming DECT-2020 NR modem also.
+            LBT max CW                                    64
+                                                                                                            TABLE III. ENERGY PARAMETERS
+        We considered two different IoT use cases: high and low                                 Parameter                                Value
+     traffic intensity, with tight and loose delay requirements,                             Battery capacity                        18 kJ (5 Wh)
+     respectively. Table II shows the simulated use cases and                                     Voltage                                3.7 V
+     their parametrization. A data packet payload of 100 B was                             “Sleep” state current                       8 𝜇A [12]
+     an approximation of an average amount required for typical                         “Rx” or ”LBT” state current                   45 mA [12]
+     one-time IoT remote sensing [9].                                                       “Tx” state current               Linear Tx current model [11],
+                                                                                                                             where current (A) = TxP (W) /
+                                                                                                                               (3.7 V * 0.37) + 0.045 A
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 198
+                                                                                    Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+      2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                    Satellite Networks (WOS)
+
+        We analyzed the energy consumption of all nodes, apart                        A.          High traffic intensity results
+     from the sink, during the stable network state. Thus, the                           From end-to-end packet delays, shown in Fig. 6, we
+     consumption during the network organization phase was not                        notice that each simulated case seems to be able to serve the
+     accounted for in the battery life estimation.                                    traffic within an acceptable delay. Delay increases as the
+                                                                                      mesh radius is increased and at 5 km the delay is at the
+                        IV.          SIMULATION RESULTS
+                                                                                      limits of delay tolerance with the lowest duty cycle.
+        Fig. 4 shows the percentage of nodes per tier with                            Increasing duty cycle activity has a decreasing impact on
+     different scenario radiuses. The number of network tiers                         delay.
+     increases with scenario radius. A network has star topology
+     only if the nodes are within 400 m from the sink with the
+     used assumptions. Wider coverage area can only be
+     achieved via mesh. The larger the scenario size, the more
+     tiers the network needs in order to cover all nodes in the
+     scenario.
+
+
+
+
+                                                                                      Fig. 6 Box plots showing 5th, 25th, 50th, 75th and 95th percentile of
+                                                                                      end-to-end delay for the high intensity traffic use case with different RACH
+                                                                                      settings and scenario radiuses.
+
+                                                                                         However, even though we are within delay tolerance,
+                                                                                      there are data throughput issues with low duty cycles. Fig. 7
+                                                                                      shows the service rate of simulated cases. It can be seen that
+     Fig. 4 Percentage of nodes in different network tiers with different scenario
+     radiuses.
+                                                                                      with lower duty cycles, a significant amount of data is not
+                                                                                      served, i.e. data is dropped at some point en route to the
+        Fig. 5 shows examples of simulated network topologies                         sink.
+     with selected scenario radiuses. The figure demonstrates                            With higher duty cycles, the service rate is near 100% so
+     how the network is a star topology when nodes are within a                       an active duty cycle is clearly needed in order to ensure
+     small radius, but as the nodes are dispersed over a larger                       service reliability.
+     area, a multi-tier cluster tree network starts to form.
+
+
+
+
+                                                                                      Fig. 7 Network service rate for the high intensity traffic use case with
+                                                                                      different RACH settings and with different scenario radiuses.
+
+                                                                                         The reason for the service rate decrease with lower duty
+     Fig. 5 Examples of simulated network topologies with 400 m (top left),           cycles is the fact that data builds up in the routers. Thus, the
+     1200 m (top right), 2000 m (bottom left) and 5000 m (bottom right)               routers have more data to transmit during RACH occasions,
+     scenario radiuses.
+                                                                                      which decreases the success rate of those transmissions due
+                                                                                      to longer packets having a higher probability of collisions.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 199
+                                                                                    Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+      2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                    Satellite Networks (WOS)
+
+     This is visible in Fig. 8 from which we can also see that the                    and thus leaf node lifetimes are shorter in average. Still, in
+     longer the scenario radius, the lower is the collision                           the total network lifetime, a star topology totally surpasses a
+     probability. This is because the number of children per                          mesh network, and with a moderate number of nodes, it is
+     router decreases as the number of routers increase.                              clearly a better option. However, increasing the number of
+                                                                                      children of a single parent quickly increases competition of
+                                                                                      the medium, leading to an increased number of collisions
+                                                                                      and thus worse service.
+                                                                                         If the network has to cover a large area, it needs to form a
+                                                                                      mesh topology. If the latency requirements are also tight,
+                                                                                      routers need an active duty cycle. This combination limits
+                                                                                      the lifetime of a battery-operated network.
+
+
+
+
+     Fig. 8 Collision probability for the high intensity traffic use case with
+     different RACH settings and scenario radiuses.
+
+        Average battery life of router nodes is shown in Fig. 9
+     with different RACH settings and scenario radiuses. Router
+     lifetimes are measured in days with the given assumptions.
+     The 400 m radius case is omitted since the scenario is a star
+     topology without routers.                                                        Fig. 10 Average battery life of leaf nodes for the high intensity traffic use
+        The figure demonstrates the significance of the duty cycle                    case with different RACH settings and scenario radiuses.
+     to the router battery life. Lower duty cycles seem to offer
+                                                                                      B.          Low traffic intensity results
+     reasonable delays, but as we saw earlier, this comes from
+     the somewhat compromised reliability of the service. On the                         With the low traffic intensity use case, the requirements
+     other hand, using higher duty cycles offers a low delay and a                    for delay are looser and thus it is possible to parametrize the
+     reliable service but leads to a very limited router battery life.                network to minimize the energy consumption. Thus, the
+                                                                                      router duty cycle is decreased, but should still be set high
+                                                                                      enough so that the data does not accumulate in the
+                                                                                      transmitter buffers.
+                                                                                         For the selected traffic intensity of one 100 B packet per
+                                                                                      24 hours, we used a 5, 10, and 20 ms RACH period
+                                                                                      occurring once per beacon interval.
+
+
+
+
+     Fig. 9 Average battery life of router nodes for the high intensity traffic use
+     case with different RACH settings and scenario radiuses.
+
+        Correspondingly, Fig. 10 shows the lifetimes of leaf
+     nodes, which are measured in years as opposed to days in
+     the routers. In leaf nodes, the differences come mainly from
+     the transmission distances, which increase as the radius                         Fig. 11 Box plots showing 5th, 25th, 50th, 75th and 95th percentile of
+     increases and nodes are more sparsely located in the                             end-to-end delay for the low intensity traffic use case with different RACH
+     scenario.                                                                        settings and scenario radiuses.
+        With the 400 m radius star topology, the transmission                           Fig. 11 shows the end-to-end delays. With the lowest duty
+     distances are longer than in the 800 m radius mesh topology                      cycle, the delays can reach tens of minutes. For this
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 200
+                                                                                    Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+      2022 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit): Wireless, Optical and
+                                                    Satellite Networks (WOS)
+
+     particular use case, long delays are not necessarily a                                                  V.           CONCLUSIONS
+     problem as long as the traffic is reliably delivered to the                         A system level simulation analysis of DECT-2020 NR
+     target.                                                                          confirms its good delay performance with some notable
+        However, from the service rates in Fig. 12, it can be seen                    constraints. A wide-range battery-operated mesh network
+     that the lowest duty cycle cannot fully serve the offered                        cannot maintain both long uptime and low latency. It was
+     traffic. Only with 10 and 20 ms RACH period occurring                            noticed that rather than the actual transmissions,
+     once per 32 s does the service rate reach above 90 % in all                      maintaining an active duty cycle to ensure low latencies is
+     network radiuses.                                                                the most important consumer of energy in a DECT-2020 NR
+                                                                                      mesh network. In order to guarantee a reasonable network
+                                                                                      uptime, the duty cycle of battery-operated mesh routers and,
+                                                                                      consequently, the requirements for traffic delay should be
+                                                                                      low. For delay sensitive data, the alternative is to either use
+                                                                                      mains powered routers or to use multiple sinks, covering the
+                                                                                      area solely with star topologies, without the need for the
+                                                                                      network to resort to mesh mode at all.
+
+                                                                                                                     REFERENCES
+                                                                                      [1]  R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+                                                                                           Y. Koucheryavy, M. Valkama, “DECT-2020 New Radio: the next step
+                                                                                           towards      5G      massive       machine-type      communications”,
+                                                                                           arXiv:2101.07158, 2021.
+                                                                                      [2] A. Anttonen, P. Karhula, M. Lasanen, M. Majanen, “Enabling
+                                                                                           massive machine type communications with DECT-2020 standard: a
+                                                                                           system-level performance study”, VTT Technical Research Centre of
+     Fig. 12 Network service rate for the low intensity traffic use case with              Finland Research Report No. VTT-R-00367-21, 2021.
+     different RACH settings and scenario radiuses.                                   [3] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal, S. Kumar,
+                                                                                           “Assessment of candidate technology ETSI: DECT-2020 New Radio”
+                                                                                           in Proc. 5GWF’20, 2020, DOI:10.1109/5GWF49715.2020.9221186
+                                                                                      [4] M. Penner, M. Nabeel, J. Peissig, "URLLC performance
+                                                                                      [5] evaluation of IMT-2020 candidate technology: DECT-2020 New
+                                                                                           Radio," 2021 IEEE 94th Vehicular Technology Conference
+                                                                                           (VTC2021-Fall),                 2021,              pp.              1-7,
+                                                                                           DOI:10.1109/VTC2021-Fall52928.2021.9625340
+                                                                                      [6] N. A. Pantazis, S. A. Nikolidakis, D. D. Vergados, "Energy-efficient
+                                                                                           routing protocols in wireless sensor networks: a survey", IEEE
+                                                                                           Communications Surveys & Tutorials, Vol. 15, No. 2, 2013
+                                                                                      [7] S. Mamechaoui, F. Didi, G. Pujolle, “A survey on energy efficiency
+                                                                                           for wireless mesh network”, Intl. Journal of Computer Networks and
+                                                                                           Communications, vol 5, 2013, DOI:10.5121/ijcnc.2013.5209
+                                                                                      [8] G. F. Riley, T. R. Henderson, “The ns-3 network simulator” in Wehrle
+                                                                                           K., Günes M., Gross J. (ed.), Modeling and tools for network
+                                                                                           simulation, pp. 15-34, Springer 2010. ISBN: 978-3-642-12330-6
+                                                                                      [9] DECT-2020 New Radio (NR) Specifications, Release 1, 2021.
+                                                                                           [Online]. Available: https://www.etsi.org/committee/1394-dect
+                                                                                      [10] A. Pekar, J. Mocne, W. K. G. Seah, I. Zolotova, “Application
+        Fig. 13 Average battery life of router nodes for the low intensity traffic         domain-based overview of IoT network traffic characteristics”, ACM
+     use case with different RACH settings and scenario radiuses.                          Computing Surveys, Vol. 53, Issue 4, pp. 1-33, July 2021,
+                                                                                           DOI:https://doi.org/10.1145/3399669
+                                                                                      [11] T. Zugno, M. Polese, N. Patriciello, B. Bojović, S. Lagen, and M.
+        Fig. 13 shows the expected battery life of mesh routers                            Zorzi. “Implementation of a spatial channel model for ns-3” in Proc.
+     with different scenario radiuses. With the low intensity                              WNS3’20, 2020, DOI:10.1145/3389400.3389401
+     traffic use case, the duty cycle again has a significant                         [12] F. I. Di Piazza, S. Mangione, I. Tinnirello, “On the effects of transmit
+     impact. Small changes to duty cycles have tremendous                                  power control on the energy consumption of WiFi network cards”, in
+                                                                                           Proc. QSHINE, 2009, DOI:10.1007/978-3-642-10625-5_29
+     effects on router battery lives. With the given assumptions,                     [13] Nordic Semiconductor nRF9160 modem current consumption.
+     an average router lasts for years, which is an adequate                               [Online]. Available: https://infocenter.nordicsemi.com
+     lifetime for the underlying real-life IoT use cases [9].
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. 201
+                                                                                    Downloaded on February 25,2026 at 12:28:34 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,42 @@
+Title: Master’s Programme in Electronics and Electrical Engineering
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+The rapid expansion of the Internet of Things and Industrial IoT has accelerated
+the adoption of distributed sensing, automation, and data-driven decision-making
+across critical sectors such as manufacturing, energy, healthcare, and
+logistics. IoT devices typically possess limited computational resources,
+heterogeneous hardware architectures, and diverse communication protocols,
+making secure and scalable integration into modern communication infrastructures
+a persistent challenge. Although 5G provides high reliability, ultra-low
+latency, and massive connectivity—factors which makes it a promising foundation
+for IoT systems—current integration approaches often rely on complex
+architectures, proprietary gateways, and heavyweight security frameworks that
+limit their practicality in resource-constrained and industrial environments. To
+address these limitations, this thesis presents a lightweight and interoperable
+IoTto-5G integration framework featuring a minimal User Equipment and gNB
+gateway stack implemented in C. The system can operate directly on embedded IoT
+devices such as Raspberry Pi and non-cellular IIoT platforms like DECT-2020 NR,
+e.g. Nordic Semiconductor nRF91 family. Moreover, the UE and gNB gateways are
+designed to connect seamlessly with the private 5G Core Networks for device
+authentication, enabling secure, scalable, and standards-compliant integration
+across heterogeneous IoT environments. Experimental validation demonstrates that
+the designed UE and gNB gateway interoperate seamlessly with both commercial and
+open-source 5G systems, including Cumucore, OpenAirInterface, and free5GC.
+Unlike traditional IoT gateways that locally handle protocol translation and
+security overhead, the proposed design offloads authentication, session
+management, and traffic control directly to the 5GC, thereby reducing the
+computational burden on edge IoT and IIoT devices while ensuring full compliance
+with 3GPP standards.
+
+Approach and methods:
+7 2 Literature Review 9
+
+Key findings:
+and Future Work 48
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

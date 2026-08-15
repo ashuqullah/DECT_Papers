@@ -1,0 +1,380 @@
+                                                                                                                                                                  URLLC Performance Evaluation of IMT-2020
+                                                                                                                                                                  Candidate Technology: DECT-2020 New Radio
+                                                                                                                                                                                                    Maxim Penner, Muhammad Nabeel, and Jürgen Peissig
+                                                                                                                                                                                       Institute of Communications Technology, Leibniz Universität Hannover, Germany
+                                                                                                                                                                                                  {penner,nabeel,peissig}@ikt.uni-hannover.de
+
+
+                                                                                                                                                              Abstract—The European Telecommunications Standards Insti-                      Institute (ETSI) Technical Committee (TC) Digital Enhanced
+                                                                                                                                                           tute (ETSI) Technical Committee (TC) Digital Enhanced Cordless                    Cordless Telecommunications (DECT) and DECT Forum to
+                                                                                                                                                           Telecommunications (DECT) and DECT forum have recently                            ITU-R, is DECT-2020 NR [5]. DECT-2020 NR is a Radio
+2021 IEEE 94th Vehicular Technology Conference (VTC2021-Fall) | 978-1-6654-1368-8/21/$31.00 ©2021 IEEE | DOI: 10.1109/VTC2021-FALL52928.2021.9625340
+
+
+
+
+                                                                                                                                                           introduced DECT-2020 New Radio (NR) as an International Mo-
+                                                                                                                                                           bile Telecommunications 2020 (IMT-2020) candidate technology                      Interface Technology (RIT) that mainly focuses on applica-
+                                                                                                                                                           for the massive Machine Type Communications (mMTC) and                            tions that fall between the URLLC and mMTC extremes, e.g.,
+                                                                                                                                                           Ultra Reliable Low Latency Communications (URLLC) use cases.                      presence monitoring. DECT-2020 NR offers local deployment
+                                                                                                                                                           To consider DECT-2020 NR as an IMT-2020 technology, the                           options without the need of a separate network infrastructure
+                                                                                                                                                           International Telecommunication Union, Radiocommunication                         or network planning, and supports autonomous and automatic
+                                                                                                                                                           Sector (ITU-R) has determined different independent evalua-
+                                                                                                                                                           tion groups to assess its performance against the IMT-2020                        operation once deployed. Hence, minimal deployment or main-
+                                                                                                                                                           requirements. These independent evaluation groups are now                         tenance effort is required making it an attractive technology.
+                                                                                                                                                           in the process of investigating DECT-2020 NR. In order to                         The legacy DECT standard was originally designed to support
+                                                                                                                                                           successfully assess a technology, one important aspect is to fully                cordless telephone systems in early 1990s, but is continually
+                                                                                                                                                           understand the underlying physical layer and its performance in                   updated in response to the developments in the technology.
+                                                                                                                                                           different environments. Therefore, in this paper, we first focus
+                                                                                                                                                           on the physical layer of DECT-2020 NR and investigate its link-                   Its latest development, DECT-2020 NR, targets local area
+                                                                                                                                                           level performance with standard channel models provided by                        wireless applications, and offers star and mesh network topol-
+                                                                                                                                                           the ITU-R for evaluation. We then use these link-level results                    ogy to support URLLC and mMTC use cases, respectively.
+                                                                                                                                                           to perform system-level evaluation of DECT-2020 NR for its                        The DECT-2020 NR is operated in frequency bands below
+                                                                                                                                                           suitability for the URLLC use case of Fifth Generation (5G).                      6 GHz, and despite its advanced physical layer numerology
+                                                                                                                                                           By performing extensive simulations, we show that DECT-2020
+                                                                                                                                                           NR is well suited for URLLC. The results presented in this                        and medium access control algorithms, it can coexist with
+                                                                                                                                                           work will be beneficial for the independent evaluation groups and                 legacy DECT in current frequency bands allocated to legacy
+                                                                                                                                                           researchers as these results can help calibrating their physical                  DECT.
+                                                                                                                                                           layer performance curves and in comparing the system-level                           The ETSI TC DECT has already provided detailed technical
+                                                                                                                                                           performance of DECT-2020 NR.                                                      specifications of DECT-2020 NR [6]. However, to include
+                                                                                                                                                                                                                                             DECT-2020 NR as an IMT-2020 technology, ITU-R has
+                                                                                                                                                                                      I. I NTRODUCTION
+                                                                                                                                                                                                                                             determined different independent evaluation groups to assess
+                                                                                                                                                              Due to growing number of new applications day by day and                       its performance against the IMT-2020 requirements. These
+                                                                                                                                                           their advanced requirements, the mobile communication indus-                      independent evaluation groups are now in process of inves-
+                                                                                                                                                           try witnesses a generation transition almost after every decade.                  tigating DECT-2020 NR.
+                                                                                                                                                           To process this transition smoothly, different organizations reg-                    In order to successfully assess a technology, one important
+                                                                                                                                                           ularly work together to create new standards, technical spec-                     aspect is to fully understand the underlying physical layer and
+                                                                                                                                                           ifications, and regulations [1]. In the last years, the Interna-                  its performance in different environments. Therefore, in this
+                                                                                                                                                           tional Telecommunication Union, Radiocommunication Sector                         paper, we first explain DECT-2020 NR in detail and then
+                                                                                                                                                           (ITU-R) Working Party 5D (WP5D) has set requirements for                          analyze the link-level performance under standard channel
+                                                                                                                                                           International Mobile Telecommunications 2020 (IMT-2020)                           models. By using the presented link-level results, we then
+                                                                                                                                                           to support Fifth Generation (5G) use cases involving Ultra                        perform system-level simulations and evaluate the suitabil-
+                                                                                                                                                           Reliable Low Latency Communications (URLLC), massive                              ity of DECT-2020 NR for URLLC. We have been already
+                                                                                                                                                           Machine Type Communications (mMTC), and enhanced Mo-                              collaborating with the proponents for the self-evaluation of
+                                                                                                                                                           bile Broadband (eMBB) [2]. By targeting one or more of                            DECT-2020 NR, and we believe that the results presented
+                                                                                                                                                           these 5G use cases, Third Generation Partnership Project                          in this paper will be beneficial to independent evaluation
+                                                                                                                                                           (3GPP) has developed technologies such as New Radio (NR),                         groups as well as other researchers. These results will help
+                                                                                                                                                           Narrowband Internet of Things (NB-IoT), and Long Term                             understanding the physical layer of DECT-2020 NR better, in
+                                                                                                                                                           Evolution for Machines (LTE-M) that meet the requirements                         calibrating performance curves, and in analyzing system-level
+                                                                                                                                                           set by ITU-R [3], [4].                                                            performance of DECT-2020 NR by either directly considering
+                                                                                                                                                              One of the candidate technologies currently being evalu-                       our physical layer results in new evaluations or comparing
+                                                                                                                                                           ated, submitted by European Telecommunications Standards                          system-level results.
+
+
+
+                                                                                                                                                           978-1-6654-1368-8/21/$31.00 ©2021 IEEE
+                                                                                                                                                       Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+       Our main contributions can be summarized as follows:
+       • We present a comprehensive overview of the newly
+         introduced DECT-2020 NR standard (Section III).
+       • We implement its complete physical layer and develop the
+         standard channel models provided by ITU-R (Section IV).
+       • Finally, we perform extensive simulations to evaluate the
+         link- and system-level performance of DECT-2020 NR
+         for the URLLC use case.
+                II. BACKGROUND AND R ELATED W ORK
+       DECT-2020 NR is a relatively new technology and, hence,
+                                                                                                  Figure 1: Formation of the mesh network topology.
+    does not have a vast literature. Details of DECT-2020 NR
+    are provided by ETSI TC DECT in [5], whereas an overview
+    is presented in [7]. The main focus of [7] is a system-                                              III. DECT-2020 N EW R ADIO
+    level evaluation of DECT-2020 NR for the mMTC use case.                              According to DECT-2020 NR technical specifications [5],
+    Recently, an independent evaluation group has also assessed                       any Radio Device (RD) in the network that has the capability
+    this technology and provided the insights briefly in [8]. Due to                  of transmission and reception can be operated in either Fixed
+    lack of some details, authors were unable to conclude whether                     Termination (FT) mode or Portable Termination (PT) mode or
+    DECT-2020 NR meets the requirement specified to become an                         both simultaneously. The RDs are free to choose any operation
+    IMT-2020 technology.                                                              mode depending upon the local requirement. A RD operating
+       To be considered as an IMT-2020 technology, DECT-2020                          in FT mode coordinates local resources, and provides infor-
+    NR must, amongst others, fulfil the requirement of 99.999 %                       mation to other RDs on how to initiate a connection and
+    reliability, user plane latency of less than 1 ms, and capability                 communicate with it. The RD in FT mode is also responsible
+    of supporting more than one million devices per km2 [2].                          for routing the data either directly from the connected RDs to
+    These requirements are set by ITU-R WP5D to support                               an external internet connection or through another RD in FT
+    different 5G use cases. The ITU-R is a regulatory body and                        mode that has the access to the external internet connection.
+    its responsibility is to ensure efficient and interference free                   The RD in PT mode simply connects to the RD in FT mode
+    operations of different radio communication systems, whereas                      for an indirect association to the external internet connection.
+    WP5D works within the ITU-R and oversees IMT systems                                 A star topology network supports URLLC use cases and
+    (i.e., 3G onwards) in particular [1]. Both 3GPP and ETSI                          is formed by one RD in FT mode while other RDs directly
+    are standards developing organizations and are part of ITU-R                      connect to it in PT mode. Whereas, a mesh network topology
+    WP5D. The 3GPP has been actively involved in developing                           is realized by adding more RDs that connect themselves to any
+    technical specifications for mobile communication for more                        of the network nodes, hence, offering a scalable solution for
+    than two decades and it has developed technologies such as                        mMTC use case as shown in Figure 1. In the mesh network
+    NR, NB-IoT, and LTE-M to be the part of IMT-2020 [3],                             topology, all RDs are capable of routing data though they
+    [4]. Each of these technologies usually targets applications                      autonomously choose or change their role between routing
+    that are bounded to a particular use case. However, there are                     and non-routing depending upon the local decisions. Also,
+    some applications that fall between the URLLC and mMTC                            no central coordinator is needed and routing is based on a
+    extremes, e.g., remote light control and presence monitoring.                     cost value rather than maintaining a routing table in each
+    The reliability and delay requirements in these applications                      RD resulting in autonomous routing. Moreover, there can
+    are much stricter than the ones described by mMTC but                             be unrestricted number of RDs connected to any type or
+    are more relaxed in comparison to URLLC. Addressing such                          number of external internet connections in a single network
+    applications, ETSI TC DECT has recently introduced DECT-                          offering more than one route for other RDs to choose, hence,
+    2020 NR as a candidate technology for IMT-2020.                                   minimizing the probability of outage.
+       DECT-2020 NR offers a completely new physical layer                               In general, DECT-2020 NR is targeted for frequency
+    numerology, advanced medium access control algorithms, and                        bands below 6 GHz. The physical layer utilizes Cyclic Prefix
+    supports star as well as mesh network topology [5], [6]. To be                    (CP) Orthogonal Frequency-Division Multiplexing (OFDM) in
+    considered as an IMT-2020 technology, its performance needs                       combination with Time Division Multiple Access (TDMA) as
+    to be evaluated against the requirements defined in IMT-2020.                     well as Frequency Division Multiple Access (FDMA) in a
+    In the literature, link-level performance of new technologies                     Time Division Duplex (TDD) mode for communication [6].
+    is usually evaluated by using standard channel models [9].                        The OFDM subcarrier spacing is chosen between 27 kHz,
+    The ITU-R has already provided different channel models                           54 kHz, 108 kHz or 216 kHz depending on the subcarrier
+    to evaluate the IMT-2020 candidate technologies in [10].                          scaling factor µ = 1, 2, 4 or 8, respectively. The size of
+    Therefore, in this work, we use these channel models to                           of the fourier transform depends on the scaling factor β =
+    evaluate the performance of DECT-2020 NR. The next section                        1, 2, 4, 8, 12 or 16 which corresponds to Fast Fourier Trans-
+    provides an overview of the DECT-2020 NR technology.                              form (FFT) sizes of 64, 128, 256, 512, 768 or 1024 subcarriers.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                TABLE I: DECT-2020 NR Packet Formats for URLLC
+    The configuration (µ, β) = (1, 1) has the minimum nominal
+    Radio Frequency (RF) bandwidth of 1.728 MHz while con-                                            Packet Property           Format 1      Format 2
+    figuration (µ, β) = (8, 16) has the maximum nominal RF                                                  (µ, β)                (4,1)        (4,2)
+    bandwidth of 221.184 MHz. After the FFT, 12.5% of the                                              OFDM symbols                 10           10
+    symbol are prepended as CP.                                                                   Transport Block Size (bit)       368          288
+       A single radio frame in DECT-2020 NR has a total duration                                         Modulation               QPSK        BPSK
+    of 10 ms and consists of 24 slots resulting in a slot duration                                        Code rate                3/4          1/2
+    of 416.67 µs. This time segmentation was adopted from legacy                                      Bandwidth (MHz)             6.912       13.824
+    DECT. A single uplink or downlink transmission must be                                               Subcarriers               64           128
+    a multiple of one slot, but not more than 16 slots in total.                                    HARQ retransmission             1            1
+    To allow even shorter transmissions, the slots are further                                        Transmit antennas          1 or 2 (TX diversity)
+    divided into subslots. Each slot can accommodate 2, 4, 8 or
+    16 subslots depending upon the value of µ. Accordingly, a
+    single transmission can also be a multiple of a subslot, but                      A. Link-Level Details
+    again may not exceed 16 subslots in total. It is noted that due                      Our goal on the link-level is to simulate Packet Error
+    to this partitioning, a subslot is always five OFDM symbols                       Rates (PERs) over Signal-to-Noise Ratio (SNR) to determine
+    long, which is also the smallest possible transmission length.                    what the minimum SNR for 99.999 % reliability is. The
+       Furthermore, on physical layer, the packet structure involves                  first step towards this is to select suitable DECT-2020 NR
+    Synchronization Training Field (STF) and Data Field (DF),                         packet configurations that contain at least 32 bytes and allow
+    and is transmitted followed by a Guard Interval (GI) to avoid                     data transmissions within 1 ms. In this work, we focus on
+    overlapping of transmissions in consecutive time slots. The                       the two packet formats listed in Table I. We chose these
+    STF is composed of training data for time and frequency                           formats because, on the one hand, they each allow one
+    synchronization at the receiving side, whereas the DF incorpo-                    HARQ retransmission within 1 ms and, on the other hand,
+    rates Physical Control Channel (PCC), Physical Data Channel                       they utilize the two most secure modulations, i.e., BPSK and
+    (PDC), and Demodulation Reference Signal (DRS).                                   QPSK, respectively. The scaling factor µ = 4 results from
+       The physical layer in DECT-2020 NR is mainly respon-                           the requirement to have at least one HARQ retransmission,
+    sible for modulation and demodulation, error detection and                        since for µ = {1, 2} the subslots in the time domain are too
+    correction, Hybrid Automatic Repeat Request (HARQ) soft                           long. For Format 2 and BPSK, we utilize the factor β = 2
+    combining, signal synchronization, and for providing data                         to increase the amount of data while maintaining the duration
+    to upper layers. Moreover, the physical layer also performs                       of a subslot. We assume a slotted data transmission based on
+    Multiple Input Multiple Output (MIMO) antenna processing                          subslots having a length of 52.08 µs (µ = 4). Two subslots
+    and offers a possibility of realizing transmit diversity and                      (10 OFDM symbols) for data transmission are followed by
+    beamforming. Error detection is performed by using a 16 or 24                     one subslot for (negative) acknowledgement. Within the 1 ms
+    bit Cyclic Redundancy Check (CRC), whereas for error correc-                      user plane latency, a transmit and receive processing time of
+    tion, Turbo Coding is employed. Finally, the supported modu-                      one subslot is implied.
+    lations include Binary Phase-Shift Keying (BPSK), Quadrature                         After selecting the packet formats, the channel models
+    Phase-Shift Keying (QPSK), as well as different Quadrature                        for the link-level simulations must be selected. The ITU-R
+    Amplitude Modulation (QAM), i.e., 16-QAM, 64-QAM, 256-                            provides various channel models for Line-of-Sight (LOS) and
+    QAM, and 1024-QAM.                                                                Non Line-of-Sight (NLOS) scenarios [10], each consisting of
+                                                                                      path delays and corresponding average path gains, also known
+                             IV. S YSTEM M ODEL                                       as Power Delay Profiles (PDPs). The channel parameters
+                                                                                      used in our simulations are summarized in Table II. The
+       Given that DECT-2020 NR is an IMT-2020 candidate tech-                         maximum Doppler spread of each channel can be inferred
+    nology for 5G, we focus our evaluation on the requirements                        from a given carrier frequency and the maximum velocity
+    of the URLLC use case of 5G. These requirements are defined                       of the User Equipments (UEs). The Doppler frequencies are
+    by the ITU-R in [2]. The most important requirements are a                        then distributed according to the Jake’s spectrum. Thus, the
+    user plane latency below 1 ms and transmission reliability of                     combination of a PDP and a Doppler Spread (DS) results
+    at least 99.999 %. Both applies to layer 2 Protocol Data Unit                     in a doubly selective channel. Because the time distances
+    (PDU) transmissions with a Transport Block Size (TBS) of                          between individual taps of the provided PDPs in [10] are partly
+    at least 32 bytes. Furthermore, the ITU-R also specifies how                      shorter than one sample, all OFDM signals are oversampled to
+    the suitability of candidate technologies shall be evaluated                      27.648 MHz regardless of the net bandwidth. To generate the
+    to determine whether the requirements are met [10]. The                           channel coefficients, we utilize the M ATLAB MIMOchannel
+    evaluation procedure is divided into link-level and system-                       object, which we feed with the values from Table II.
+    level simulations, which we will describe individually below.                        Furthermore, we have to define the DECT-2020 NR receiver
+    Furthermore, we describe in Section IV-B how the results are                      design whose most important parameters are listed in Table III.
+    combined.                                                                         According to [10], the allowed maximum number or receive
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+                           TABLE II: Channel Parameters                                                   TABLE IV: System-Level Parameters
+
+             Channel Property             Non Line-of-Sight      Line-of-Sight             Property                                 Value
+      Power Delay Profile Label [10]            TDL-iii            TDL-v                                                            Configuration A | B
+           RMS Delay Spread                     363 ns              93 ns                  Carrier frequency for evaluation         4 GHz | 700 MHz
+                 K factor                          -                9 dB                   BS antenna height                        25 m
+            Carrier Frequency                    4 GHz and 700 MHz                         Total transmit power per BS              36 dBm/MHz
+               UE Velocity                        3 km/h and 30 km/h                       UE power class                           23 dBm
+             Doppler Spread                       1.9 Hz to 111.2 Hz                       Percentage of high/low loss building     100% low loss
+         Simulation Bandwidth                         27.648 MHz                           Inter-site distance                      500 m
+             Simulation Tool                    M ATLAB MIMOchannel                        BS antennas                              Sector Antenna (3 dB
+                                                                                                                                    beamwidth of 65◦ )
+                         TABLE III: Receiver Configuration                                 Number of UE antenna elements            Up to 8 | 4 TX/RX
+                 Receiver Property            Receiver configuration                       Device Deployment                        80% outdoor, 20% indoor
+               Nunmber of Antennas          8 (4 GHz) or 4 (700 MHz)                       UE mobility model                        Fixed and idential speed
+                Diversity Combining         Maximum Ratio Combining                                                                 |v| of all UEs, randomly
+               Time Synchronization             on first channel tap                                                                and uniformly distributed
+             Frequency Synchronization                  ideal                                                                       direction
+                Channel Estimation                 Wiener filter                           UE speeds of interest                    3 km/h indoor
+             Channel Encoder/Decoder          M ATLAB LTE Toolbox                                                                   30 km/h outdoor
+                                                                                           UE noise figure                          7 dB
+                                                                                           UE antenna element gain                  0 dBi
+    antennas depends on the carrier frequency used. For 4 GHz,                             Thermal Noise Level                      −174 dBm/Hz
+                                                                                           Traffic Model                            Full Buffer
+    each UE can have up to 8 antennas, whereas for 700 MHz
+                                                                                           UE density                               10 UEs per sector
+    the number is limited to 4. For our link-level simulations, we
+                                                                                           UE antenna height                        1.5 m
+    consider only the maximum number of receive antennas, i.e.,
+    either 4 or 8, which are used for diversity combining by means
+    of Maximum Ratio Combining (MRC).
+        For packet synchronization, we assume that packets are re-                    materialize at enough UEs in a realistic network scenario
+    ceived at the first channel tap. This is a reasonable assumption                  as the corresponding Signal-to-Interference-plus-Noise Ratio
+    as DECT-2020 NR exploits a slot-based system, therefore,                          (SINR). More precisely, we need to determine the Cumulative
+    time synchronization has a minor impact on the performance.                       Distribution Function (CDF) of all downlink or uplink SINRs
+    For channel estimation, we utilize a two-dimensional Wiener                       and assess whether the SINR at the 5% percentile is above
+    filter. The channel coefficients are initially calculated by using                the SNRs required for a PER of 1e−5. If this is the case, the
+    an exponential PDP with the largest conceivable delay spread                      technology also meets the requirement for reliability and thus
+    (i.e., 500 ns) and Jake’s spectrum with the largest conceivable                   for URLLC overall. This corresponds the URLLC evaluation
+    Doppler spread (i.e., 200 Hz). It is important to note that                       procedure from [10].
+    during operation, the Wiener filter coefficients remain the                          The network scenario for our system-level simulation is
+    same, even if the instantaneous channel statistics deviate from                   described in [10]. It consists of base stations arranged in
+    the aforementioned assumptions [11]. Thus, our Wiener filter                      a hexagonal grid with an inter-site distance of 500 m. Each
+    is a realistic design capable of being implemented in hardware.                   base station covers three sectors with an angular separation
+        For channel decoding we use a Turbo Decoder. Due to the                       of 120°. Around the base stations, moving UEs are evenly
+    close affinity of the channel coding of Long Term Evolution                       distributed, each communicating to one base station through
+    (LTE) and DECT-2020 NR, existing solutions can be used.                           one of the sector antennas. All simulation parameters are listed
+    The main differences concern the size of the transport blocks,                    in Table IV.
+    the memory size of the soft buffer for HARQ processing, and                          According to [10], we can simulate either downlink or
+    the scrambling sequences. For our receiver, we use the channel                    uplink. In our case we consider downlink, i.e., the base stations
+    coding from the LTE toolbox in M ATLAB and incorporate                            transmit DECT-2020 NR signals to the UEs. Each UE is
+    it into our model in compliance with the DECT-2020 NR                             associated to the base station with maximum receive power.
+    standard.                                                                         Due to UE movement, cell associations can change during
+                                                                                      simulation, however, we assume a seamless handover without
+    B. System-Level Details                                                           additional delay. The UE movement is also incorporated at the
+       For the link-level evaluation, we exploit formats that meet                    link-level as an impairment due to Doppler shift. Neighbouring
+    the low latency requirement. Furthermore, we can observe                          base stations can use different carrier frequencies. We consider
+    from the link-level results at what minimum SNR the de-                           three frequency reuse factors. For reuse factor 1, each base
+    sired PER of 1e−5 will be achieved. However, a system-                            station uses the same frequency which results in the most
+    level evaluation is required to determine if that SNR will                        interference from neighbouring base stations. For reuse factor
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+    3 and 7, interference is reduced accordingly. Each UE can be
+    indoor or outdoor. In case it is indoor, additional attenuation
+    due to the walls of the building is included. Whether a UE
+    has a LOS or NLOS channel is randomly assigned depending
+    on the distance. Furthermore, correlated shadow fading is
+    calculated for the entire network, which is incorporated in the
+    path loss. All equations and parameters can also be found
+    in [10].
+       All SINRs at the system level are single-port SINRs, the
+    gains due to multi-antenna configurations are included at the
+    link level. In addition to the SINR, we also measure the SNR,
+    which represents interference-free reception and can be used
+    as a comparative reference.
+
+                       V. R ESULTS AND D ISCUSSION                                    Figure 2: Packet error rate over different signal-to-noise ratio values in the
+                                                                                      AWGN channel under the assumption of perfect channel knowledge.
+       To evaluate the URLLC performance of our system with the
+    configurations presented in Section IV, we conducted Monte
+    Carlo experiments on the link level to measure the PER at
+    the receiver and on the system level to measure the CDF of                        differences between the LOS and NLOS channels become
+    the downlink SINR. Each link-level experiment ran until a                         marginal, accordingly the curves are very close.
+    convergence at a PER of 10e−5 or less was obtained.
+       We first evaluate the link-level performance of the first ten                     The remaining four results in Figure 3 refer to Configuration
+    Modulation and Coding Schemes (MCSs) from [6] over an                             B (i.e., 700 MHz according to Table IV). Since for this carrier
+    Additive White Gaussian Noise (AWGN) channel, and plot the                        frequency only four antennas are allowed at the receiver,
+    results in Figure 2. We provide these results as a comparative                    we reduce the number of receive antennas accordingly. In
+    benchmark so that the performance of the channel decoder as                       Figure 3c and Figure 3d we consider two transmit antennas
+    a fundamental part of the receiver can be compared within the                     with transmit diversity and four receive antennas exploiting
+    scope of DECT-2020 NR. The MCS 0 corresponds to BPSK                              MRC, whereas in Figure 3e and Figure 3f we consider one
+    with code rate 1/2, whereas MCS 1 and MCS 2 represent                             transmit antenna and four receive antennas with MRC. The
+    QPSK with code rate 1/2 and 2/3, respectively. Similarly,                         last two results have the lowest antenna diversity. Overall, we
+    MCS 7 corresponds to 64-QAM with code rate 5/6 and so                             notice that except for Figure 3e, a PER = 10e−5 is achieved
+    on. The size of the packet is fixed to (µ, β) = (1, 1) and                        for SNR ≤ 1dB for all the considered configurations if HARQ
+    a single slot is considered, which implies that the increasing                    is used. In the worst case, i.e., Figure 3e, we require an SNR
+    modulation order also increases the TBS. As expected, for                         of about 3 dB with one HARQ retransmission for the NLOS
+    higher modulation order, high SNR value is required to achieve                    channel. These thresholds can now be used to compare to the
+    the same PER performance. These results are inline with the                       5% percentile of the system-level evaluation.
+    theory and the trend is similar to what we observe for LTE.                          Figure 4 shows the system-level results. In Figure 4a, the
+    However, these results cannot be directly compared with LTE                       CDF of the SINR across all UEs is shown for Configuration
+    due to marginally different TBSs here.                                            A. Similarly, the results for Configuration B are depicted in
+       Next we consider link-level evaluation for URLLC. We                           Figure 4b. With Configuration A and frequency reuse factor
+    consider in total six cases, which are depicted in Figure 3.                      7, a SNR of 2.95 dB is required at the 5% percentile. In other
+    Each of the six results shows four curves: the PER for the                        words, 95% of all UEs experience an SINR of at least 2.95 dB.
+    LOS channel with and without HARQ retransmission, and the                         As discussed above, however, for all results in Figure 3 (except
+    NLOS channel, also with and without HARQ. By considering                          Figure 3e), SNR = 1 dB is already sufficient to achieve
+    Configuration A (i.e., 4 GHz according to Table IV), the first                    PER = 10e−5. This means that these cases satisfy the
+    two figures, Figure 3a and Figure 3b, show the PER for                            conditions for URLLC. For configuration B in Figure 4b, on
+    packet format 0 and packet format 1, respectively. We consider                    the other hand, the SINR at 5% percentile is 1.95 dB for reuse
+    the maximum antenna diversity, i.e., two transmit antennas                        factor 7. This implies that the result from Figure 3e fails to
+    with transmit diversity and eight receiver antennas exploiting                    meet the URLLC conditions as we achieve PER = 10e−5
+    MRC. Due to the maximum antenna diversity, low PERs are                           only at SNR = 3dB. However, it is not mandatory that all
+    observed for relatively low values of the SNR. For instance,                      configurations satisfy the URLLC conditions. Moreover, many
+    in Figure 3b, the minimum SNR required for a PER of 10e−5                         configurations with frequency reuse factor 3 are also satisfied,
+    is only −4 dB without HARQ retransmission and −7 dB with                          especially for the maximum antenna diversity, i.e., 2×8 MIMO
+    one HARQ retransmission. Moreover, it can be observed that                        with HARQ. Thus, our experiments show that DECT-2020 NR
+    with the considered antenna configuration, the performance                        supports URLLC according to the ITU-R requirements.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+                         (a) Configuration A, packet format 1, 2 × 8 MIMO                       (b) Configuration A, packet format 2, 2 × 8 MIMO
+
+
+
+
+                         (c) Configuration B, packet format 1, 2 × 4 MIMO                       (d) Configuration B, packet format 2, 2 × 4 MIMO
+
+
+
+
+                         (e) Configuration B, packet format 1, 1 × 4 MIMO                       (f) Configuration B, packet format 2, 1 × 4 MIMO
+
+    Figure 3: Packet error rate for Configuration A (i.e., 4 GHz) and Configuration B (i.e., 700 MHz) according to Table IV. Both packet format 0 and packet
+    format 1 are considered for different MIMO configurations.
+
+
+
+                               VI. C ONCLUSION                                        results show that DECT-2020 NR satisfies the conditions
+                                                                                      for URLLC according to ITU-R, i.e., the considered packet
+       This work evaluated the link- and system-level performance                     formats allow latencies below 1 ms with sufficient reliability
+    of the novel IMT-2020 candidate technology, DECT-2020                             of 99.999 % in realistic network scenarios with multiple base
+    NR. We first provided an overview of DECT-2020 NR and                             stations and UEs. These result were primarily obtained by
+    presented possible packet configurations that meet latency and                    using antenna diversity and HARQ. In the future, we plan
+    packet size requirements for the URLLC use case. We then                          to evaluate the DECT-2020 NR for the mMTC use case
+    considered the ITU-R evaluation procedures and parameters                         as well. Contrary to URLLC, the requirements of mMTC
+    to evaluate the DECT-2020 NR performance and determine                            are lenient in terms of latency, instead the target is a large
+    whether it meets the requirements set for the URLLC. Our                          number of devices per unit area which make system-level
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+                                      (a) Configuration A                                                          (b) Configuration B
+
+                     Figure 4: System-level results for Configuration A (i.e., 4 GHz) and Configuration B (i.e., 700 MHz) according to Table IV.
+
+
+
+    simulations more challenging. Furthermore, our goal is to                             [6] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,”
+    develop a transceiver prototype, since there is no available                              European Telecommunications Standards Institute, Technical Specifica-
+                                                                                              tion (TS) 103 636-3, July 2020.
+    solution yet.                                                                         [7] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Sae, J. Numminen,
+                                                                                              Y. Koucharyavy, and M. Valkama, “DECT-2020 New Radio: The
+                                   R EFERENCES                                                Next Step Towards 5G Massive Machine-Type Communications,” arXiv
+     [1] E. Dahlman, S. Parkvall, and J. Skold, 5G NR: The Next Generation                    preprint arXiv:2101.07158, 2021.
+         Wireless Access Technology. Academic Press, 2020.                                [8] V. Dhanwani, N. Kumar, A. K. Bachkaniwala, D. Rawal, and S. Kumar,
+     [2] ITU-R, “Minimum requirements related to technical performance for                    “Assessment of Candidate Technology ETSI: DECT-2020 New Radio,”
+         IMT-2020 radio interface(s),” International Telecommunication Union,                 in 2020 IEEE 3rd 5G World Forum (5GWF). IEEE, 2020, pp. 625–630.
+         Report ITU-R M.2410-0, November 2017.                                            [9] R. Sattiraju, D. Wang, A. Weinand, and H. D. Schotten, “Link Level
+     [3] 3GPP, “5G; Study on self evaluation towards IMT-2020 submission,”                    Performance Comparison of C-V2X and ITS-G5 for Vehicular Chan-
+         Third Generation Partnership Project, TR 37.910 version 16.1.0 Release               nel Models,” in 2020 IEEE 91st Vehicular Technology Conference
+         16, November 2020.                                                                   (VTC2020-Spring). IEEE, 2020, pp. 1–7.
+     [4] ITU-R, “Detailed specifications of the terrestrial radio interfaces of Inter-   [10] ITU-R, “Guidelines for evaluation of radio interface technologies for
+         national Mobile Telecommunications-2020 (IMT-2020),” International                   IMT-2020,” International Telecommunication Union, Report ITU-R
+         Telecommunication Union, Report ITU-R M.2150-0, February 2021.                       M.2412-0, October 2017.
+     [5] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview; Release 1,” Eu-              [11] F. Hlawatsch and G. Matz, “Chapter 1 - Fundamentals of Time-Varying
+         ropean Telecommunications Standards Institute, Technical Specification               Communication Channels,” in Wireless communications over rapidly
+         (TS) 103 636-1, July 2020.                                                           time-varying channels. Academic Press, 2011, pp. 1–63.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:39:33 UTC from IEEE Xplore. Restrictions apply.
+

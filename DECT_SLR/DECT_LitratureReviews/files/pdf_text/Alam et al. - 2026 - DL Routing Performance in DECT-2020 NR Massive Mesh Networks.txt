@@ -1,0 +1,495 @@
+                                                                                                                                                                                                     DL Routing Performance in DECT-2020 NR
+2026 Joint European Conference on Networks and Communications & 6G Summit (EuCNC/6G Summit) | 979-8-3315-7019-4/26/$31.00 ©2026 IEEE | DOI: 10.1109/EUCNC/6GSUMMIT68295.2026.11577505
+
+
+
+
+                                                                                                                                                                                                              Massive Mesh Networks
+                                                                                                                                                                                                                                       Mirza Alam∗ , Juho Pirskanen∗ , Juha Salokannel∗
+                                                                                                                                                                                                              ∗ Wirepas Oy, Tampere, Finland, {mirza.alam, juho.pirskanen, juha.salokannel}@wirepas.com
+
+
+
+
+                                                                                                                                                                                            Abstract—DECT-2020 NR, a global radio communication
+                                                                                                                                                                                         standard developed by ETSI, is designed to support industrial
+                                                                                                                                                                                         Internet of Things (IoT) applications. It complies with the                                                                      RDPT                Cluster 1:
+                                                                                                                                                                                                                                                                                                                                             At channel x
+                                                                                                                                                                                         requirements set by the ITU IMT-2020 framework. This study
+                                                                                                                                                                                                                                                                                   Cluster 2:
+                                                                                                                                                                                         presents comprehensive simulations to evaluate downlink (DL)                             At channel y
+                                                                                                                                                                                                                                                                                                                                 RDFT                                Cluster 3:
+                                                                                                                                                                                         packet-forwarding performance in dense mesh networks using                                                                                          RDPT
+                                                                                                                                                                                                                                                                                                                                                                    At channel z
+
+                                                                                                                                                                                         the DECT-2020 NR standard. Several studies address uplink                                          RDPT
+                                                                                                                                                                                                                                                                                                                RDFT,PT
+                                                                                                                                                                                         performance; consequently, this specific downlink-focused research                                                                                                         RDPT
+                                                                                                                                                                                                                                                                                     RDPT                                          RDFT,PT      RDFT,PT
+                                                                                                                                                                                         question has received limited attention in prior academic work.
+                                                                                                                                                                                         The study focuses on two routing mechanisms specified in                                                             RDFT,PT
+                                                                                                                                                                                                                                                                                  RDFT,PT                                                                                  RDFT,PT      Cluster 4:
+                                                                                                                                                                                         the standard: Selective Flooding and Selective Source Routing,                                                                                                                                At channel y
+                                                                                                                                                                                                                                                                                                                                                RDFT,PT
+                                                                                                                                                                                                                                                                                                                                                             RDPT
+                                                                                                                                                                                         evaluated in a 1,200-node, 10-hop, large-scale deep mesh network.                                       RDPT
+
+                                                                                                                                                                                         The simulation results indicate that the downlink (DL) capacity for                                                                                                                RDPT         RDFT,PT
+                                                                                                                                                                                                                                                                                                                         RDPT       RDPT
+                                                                                                                                                                                         Selective Flooding—where no routing information is required—is                                            RDFT.PT                                                     RDFT,PT
+                                                                                                                                                                                         approximately 6 packets per second. For Selective Source Routing,
+                                                                                                                                                                                                                                                                                                                                                                                         RDFT,PT
+                                                                                                                                                                                         the downlink (DL) throughput increases with the number of                                                                                             RDPT
+                                                                                                                                                                                                                                                                                                                                 RDFT,PT
+                                                                                                                                                                                         deterministic routing hops, reaching close to 145 packets per                                                         RDFT,PT
+                                                                                                                                                                                                                                                                                                                                                               RDFT,PT
+                                                                                                                                                                                         second when the system uses only a single 1.728 MHz channel.                                                                                                                                RDPT
+
+                                                                                                                                                                                         Both capacities are achieved while keeping the packet outage rate                                               Cluster 6:
+                                                                                                                                                                                                                                                                                                                                  RDFT,PT             RDFT
+                                                                                                                                                                                                                                                                                                        At channel y
+                                                                                                                                                                                         below 1% to comply with the IMT-2020 requirements.
+                                                                                                                                                                                            Index Terms—DECT-2020 NR, selective flooding, selective
+                                                                                                                                                                                         source routing, IoT, massive mesh networks                                                                                                                            RDFT,PT
+                                                                                                                                                                                                                                                                                                                                                                                Cluster 5:
+                                                                                                                                                                                                                                                                                                                                                                               At channel x
+
+
+
+
+                                                                                                                                                                                                        I. I NTRODUCTION AND MOTIVATION
+                                                                                                                                                                                                                                                                                Fig. 1. Illustration of DECT-2020 NR Mesh network structure [10]
+                                                                                                                                                                                            The design objective of DECT-2020 NR was to create a
+                                                                                                                                                                                         wireless communication technology that can be deployed and
+                                                                                                                                                                                         operated by individuals or companies anywhere and combine downlink traffic (i.e., from cloud to device) also plays an
+                                                                                                                                                                                         mesh communication support with modern OFDM-based radio important role.
+                                                                                                                                                                                         access [1]. The main target applications during the design phase    Therefore, we focus on how DECT-2020 NR supports down-
+                                                                                                                                                                                         were massive machine-type communication (mMTC) and ultra-        link traffic in massive IoT deployments, using technologies
+                                                                                                                                                                                         reliable low-latency communication (URLLC), as defined by        available  in DECT-2020 Release 1 and Release 2.
+                                                                                                                                                                                         ITU-R for IMT-2020 (i.e., 5G) [2]. IMT-2020 technologies            The rest of this paper is structured as follows. Section II
+                                                                                                                                                                                         supporting the mMTC service type are required to support reviews related work and discusses challenges in downlink
+                                                                                                                                                                                         high IoT device density (1 million devices per km2 ), where routing. Section III describes the physical and MAC layers
+                                                                                                                                                                                         each device generates a 32-byte data packet periodically every of DECT-2020 NR and explains how routing is designed in
+                                                                                                                                                                                         2 hours [3], [4].                                                DECT-2020 NR. Section IV presents the simulation scenario
+                                                                                                                                                                                            After significant evaluation efforts (e.g., [5]), DECT-2020 and the strategy used to assess the downlink performance of
+                                                                                                                                                                                         NR was accepted as part of the ITU-R recommendation for DECT-2020 NR. Section V discusses the simulation results
+                                                                                                                                                                                         radio interfaces of International Mobile Telecommunications- and highlights key findings. Finally, Section VI concludes the
+                                                                                                                                                                                         2020 (IMT-2020), i.e., 5G [6].                                   paper by summarizing the findings.
+                                                                                                                                                                                            Several publications, such as [7], [8], provide extensive
+                                                                                                                                                                                                                                                                    II. S TATE OF THE A RT AND C HALLENGES
+                                                                                                                                                                                         analyses of uplink performance for mMTC services. In [9],
+                                                                                                                                                                                         the authors analyse and present a large number of potential         Several IoT technologies operating in the unlicensed
+                                                                                                                                                                                         future use cases that would benefit from DECT-2020 NR spectrum—such as BLE [11], LoRa [12], ZigBee [13], and
+                                                                                                                                                                                         wireless communication. When considering these use cases, Wi-SUN [14]—are commonly available in the market. Among
+                                                                                                                                                                                         it is apparent that, in many modern Internet of Things (IoT) these technologies, BLE mesh communication uses a managed-
+                                                                                                                                                                                         applications, the data traffic is not only uplink-oriented, but flooding approach, where a time-to-live (TTL) field limits the
+
+
+
+
+                                                                                                                                                                                                                                                                       1224
+                                                                                                                                                                                        Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+ number of hops a packet can traverse. Although managed                 On top of the physical layer is the Medium Access Control
+ flooding can be inefficient in many scenarios, it remains (MAC) protocol, which forms cluster-tree topologies (see
+ a practical choice for small networks with low throughput Fig. 1). This is possible because radio devices (RDs) can operate
+ requirements. LoRa employs a proprietary physical layer, but no in both Fixed Termination (FT) and Portable Termination (PT)
+ standardized multi-hop mesh routing protocol has been defined modes simultaneously (i.e., as RDF T,P T ). An RD that operates
+ for it so far. Wi-SUN primarily adopts source routing [15], [16] only in FT mode (RDF T ) provides Internet access to the
+ for downlink traffic and relies on RPL (Routing Protocol for DECT-2020 NR network, whereas an RDF T,P T operates as
+ Low-Power and Lossy Networks) as its IPv6 packet-forwarding a router and an RDP T operates as a simple leaf device. The
+ mechanism. The ZigBee Alliance [13] defines standards for main FT functionality of both RDF T and RDF T,P T is to
+ both the network and application layers, and ZigBee uses a control local radio resources and provide connectivity for their
+ hybrid approach for downlink routing, combining many-to-one associated RDs, whereas the main PT functionality of both
+ routing with source routing.                                        RDF T,P T and RDP T is to select an FT for association and
+    The research community has examined a wide range of operate based on instructions received from the FT device.
+ IoT technologies—including BLE [17], [18], LoRa [19]–[21],             DECT-2020 NR MAC supports two types of access methods:
+ Wi-SUN [22]–[24], DECT-2020 NR mesh [25], ZigBee [26], Scheduled Access and Random Access, the are under control
+ [27], and IEEE 802.11s [28], [29]—covering various aspects of FT functionality RDF T and RDF T,P T . The latter access
+ of system performance. In this context, downlink routing in method used in this study. Before transmitting on the Random
+ multi-hop IoT mesh networks involves numerous challenges, Access Channel (RACH), an RD in mode (RDP T ) must
+ including route discovery [30], [31], reliability [24], [32], obtain RACH resources from an FT functionality of (RDF T )
+ energy efficiency [28], [33], and—critically—network capacity or (RDF T,P T ). The RD PT mode then performs a channel
+ and scalability [32]. This is further intensified by the fact that, assessment to determine whether the channel is busy. If the
+ unlike traditional computer networks, IoT nodes operate with channel is not busy, the RD initiates transmission. Conversely,
+ limited energy, memory, and computational power.                    if the channel is busy—as indicated by the detection of energy
+    These challenges also grow significantly with increasing from other transmissions—the RD waits for a random backoff
+ network size, higher node densities, and deeper hop counts. The time before re-assessing the channel to attempt transmission;
+ research on existing technologies has largely been limited to that is, the RD uses the Listen Before Talk (LBT) protocol.
+ small-scale networks, typically around a hundred nodes or fewer.       In DECT-2020 NR, the same principles can also be used for
+ However, the need for IoT deployments to operate at a much downlink transmission, i.e., from RDF T towards RDF T,P T
+ larger scale is becoming unavoidable. Even today’s systems are and RDP T . In this case, the RDF T,P T , or RDP T com-
+ expected to support massive node densities, deeper multi-hop municates its random-access resources (operating frequency,
+ paths, and larger coverage areas than existing technologies have time, and other RACH parameters) to its parent RDF T or
+ demonstrated. The DECT-2020 NR standard [10] has already RDF T,P T . Then, an RDF T or RDF T,P T performs random-
+ committed to addressing these large-scale requirements, as access transmission towards the RD to enable downlink
+ mentioned in Section I. In this context, this paper investigates transmission. This configuration is the main method used in
+ the downlink capacity of a DECT-2020 NR mesh network the ETSI DECT-2020 NR Smart Metering, City and Buildings
+ in terms of delay and throughput, evaluating two routing Access Profile [36] for downlink transmissions.
+ strategies—Selective Flooding and Selective Source Routing—
+ across a large-scale mesh comprising 1,200 nodes and more B. DLC and Routing
+ than 10 hops.                                                          The DLC (Data Link Control) protocol layer provides several
+                                                                     operating modes: transparent mode, segmentation mode, ARQ
+             III. DECT-2020 NR AND DL ROUTING                        (Automatic Repeat Request) mode, and a combined mode
+                                                                     that incorporates both segmentation and ARQ functionalities
+ A. PHY and MAC                                                      [37]. Above these, the routing service (see Fig. 2) supports
+    The DECT core band of interest in this study in Europe packet routing for uplink, downlink, and device-to-device
+ ranges from 1880 MHz to 1900 MHz and supports 11 channels, communications. Routing uses long RD addresses as the source
+ each with a bandwidth of 1.728 MHz, for DECT-2020 NR. and destination identifiers, providing unique addressing within
+ The DECT-2020 NR physical layer (PHY) uses a 10ms frame a single network. Uplink routing is based on a clustered-
+ structure that is divided into 48 subslots when operating with a tree topology formed during the association process. Each PT
+ 1.728 MHz channel bandwidth [34], [35]. OFDM was selected functionality of the RD periodically searches for and assesses
+ for DECT-2020 NR because it provides robust state-of-the-art neighboring FT devices, i.e., RDF T and RDF T,P T , and their
+ modulation and can be combined with modern channel coding, route-cost values towards the backend to select an optimal
+ Turbo coding, HARQ, and MIMO technologies. Furthermore, parent. The route cost is obtained from the Route Info IE,
+ standard CP-OFDM provides efficient channel estimation and which all RDF T and RDF T,P T nodes include in Network
+ equalization at the receiver. The physical-layer packet structure and Cluster Beacon messages.
+ is identical for all transmissions, enabling a single PHY              In Release 1, downlink routing is based on Selective Flood-
+ processing chain at the transmitter and receiver [35].              ing within the clustered-tree topology. The RDF T forwards
+
+
+
+
+                                                                               1225
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+ a routing data PDU to all associated RDF T,P T and the
+ distribution tree is pruned whenever possible until the final                                                                                                            Application
+                                                                                                                                                                         Application             IPv6
+
+ destination is reached. Because routing decisions do not rely on                             Application
+                                                                                                                                                                                                            Backend
+
+                                                                                             Application               IPv6                                               Security                          CVG
+ routing tables, there is no routing-maintenance signaling and                                                                                                            service
+
+
+                                                                                       CVG                                                                              Transmission         Transmission
+ no memory requirement for storing routes; consequently, the                                   Security
+                                                                                               service
+                                                                                                                                                                           service              service
+
+                                                                                             Transmission         Transmission
+ network size is not restricted by the number of devices under                                  service              service
+
+                                                                                                   Multiplexing service                                                      Multiplexing service
+ a single RDF T [37]. Furthermore, the solution is robust: since
+ packets are flooded, topology changes (e.g., re-association to                        DLC
+                                                                                                     Routing service
+                                                                                                                                  DLC
+                                                                                                                                               Routing service                 Routing service
+                                                                                                                                                                                                              DLC
+
+
+ another RDF T ) do not necessarily cause downlink packet loss                                        DLC entity set
+                                                                                                                                        DLC entity
+                                                                                                                                           set
+                                                                                                                                                           DLC entity
+                                                                                                                                                              set
+                                                                                                                                                                                DLC entity set
+
+
+ while routes converge. However, selective flooding introduces
+ unnecessary transmissions, which limits the downlink capacity.                                             MAC                                      MAC                               MAC
+
+                                                                                                                                                                                       PHY                         RD3
+                                                                                                            PHY                  RD2                 PHY
+                                                                                      RD1                                                                                                                         (sink)
+    Separating routing methods for each traffic direction ensures
+ that each direction can be independently developed and
+ optimized. This was realized in DECT-2020 NR Release 2,
+                                                                               Fig. 2. DECT-2020 NR Protocol Architecture [37]
+ where downlink routing was enhanced with Selective Source
+ Routing and Cached Routing to improve downlink capacity.
+ [37]
+                                                                   decreases toward the leaves of the tree. If source-routing
+    In generic source routing, each device sends a registration
+                                                                   information is missing from a received PDU, or if an RDF T,P T
+ message (including the device’s parent-router address) to
+                                                                   does not have valid cached-routing information, it falls back
+ the RDF T with Internet access. The RDF T then constructs
+                                                                   to the Release 1 Selective-Flooding procedure.
+ downlink paths for all devices using the received registration
+ messages. When a downlink data packet is transmitted, the                           IV. P ERFORMANCE A NALYSIS
+ RDF T includes the sequence of addresses along the path to
+ the destination device. As a result, association changes must be     In this study, two downlink routing approaches are explored
+ reported to the RDF T , and the downlink data PDU overhead        for dense multi-hop DECT-2020 NR mesh networks: Selective
+ increases due to the embedded path addresses. Because these       Flooding    and Selective Source Routing. To assess overall
+ factors limit scalability in large-scale deployments, DECT-2020   system    performance,     DECT-2020 NR protocol features are
+ NR introduces a mechanism that allows the system to control       incorporated     into the  ns-3 simulator, an open-source, high-
+ how many hops from the RDF T use source routing; if re-           speed,   event-driven    framework  written in C++ and widely
+ associations do not affect the portion of the path where source   adopted   in network    research.
+ routing is used, no re-registration is needed. For example, if
+                                                                   A. Experimental setup
+ source routing is used only for the first hop (from the RDF T
+ to its member RDF T,P T ), route changes deeper in the tree do       Deployment scenario. The RDs are deployed randomly
+ not require re-registration, significantly reducing registration in a circular region with a radius of 700 m, representing a
+ signaling.                                                        mixed indoor–outdoor environment of roughly 1.5 km2 . A
+    From the above discussion, the basic difference between single sink node (i.e., RDF T ) is placed at the centre. The
+ these two routing strategies can be explained with reference network includes 1,200 RDs, with 80% located indoors—20%
+ to Fig. 1. Let us assume that some RDP T of cluster 2 is in high-loss buildings and 60% in low-loss buildings—while
+ the ultimate destination of a DL packet. In source routing, the remaining 20% are deployed outdoors. The remaining
+ as the next routing hop is embedded in the DL packet, the simulation parameters are presented in Table I. The simulation
+ RDF T of cluster 1 will forward the packet directly to the router experiments employ the NIST Device-to-Device (D2D) channel
+ RDF T,P T of cluster 2. However, in selective flooding, no next model [38].
+ hop information is known beforehand for a router; hence, if          The simulation outcomes are based on 50 independent
+ none of its cluster members is the ultimate destination, the random deployments. Of the 1,200 RDs, roughly 360 nodes
+ router unicasts the packet to all routing members within the (on average) act as routers, i.e., RDF T,P T , and are responsible
+ cluster for further route exploration. Under this strategy, the for forwarding tasks. The highest hop count is, on average, 10
+ RDF T of cluster 1 will unicast the packet to the RDF T,P T of hops. All communication uses a single channel with a transmit
+ cluster 2 and cluster 3, even though cluster 3 is not the correct power of 19 dBm.
+ direction to explore. As a result, if the depth of the network       Network Formation. The deployed RDs autonomously form
+ tree is large, such flooding will generate a high volume of a tree-based topology according to the association rules. To join
+ redundant packets.                                                a router, each RD evaluates a cost function that incorporates
+    With Cached Routing (also introduced in Release 2), any factors such as hop distance to the sink, minimum received
+ routing device (RDF T,P T ) may learn and store the correct signal quality from the router, and other relevant metrics. Sink
+ downlink path from observed uplink packets. This requires and every router periodically broadcasts a beacon that includes
+ each RDF T,P T to store learned RD addresses for its mem- association-related parameters. In this simulation setup, each
+ ber RDP T , RDF T,P T nodes, but the storage requirement cluster can include up to 14 member RDs.
+
+
+
+
+                                                                               1226
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+       Fig. 3. Mean DL Packet outage percentage (Selective Flooding)                       Fig. 4. Mean DL Packet delay in seconds (Selective flooding)
+
+
+
+    In a single random realization, the resulting tree structure respectively. In Fig. 3, the mean packet outage stays at 0%
+ after the association remains the same for the entire simulation until the application packet rate reaches 6 packets/s (pps). After
+ because no re-association is assumed once all RD have that, it increases quickly: at 7 packets/s it is 0.72%, and at
+ associated with the parent RD, RDF T or RDF T,P T . However, 8 packets/s it rises to 6.66%.
+ for the set of 50 random scenarios, the network topology is             Similarly, Fig. 4 shows that the mean delay starts increasing
+ generated independently for each run, producing a random once the application packet rate goes above 6 packets/s. The
+ topology every time.                                                mean delay become 0.42 s, 4.77 s, and 37.17 s for 6, 7, and
+    Traffic Model. The sink, RDF T , creates DL packets for 8 packets/s, respectively. From Fig. 3 and Fig. 4, it is clear that
+ each node at an equal rate, following a Poisson arrival pattern. for this DL flooding scheme, the system remains stable until
+ The transmission of Each MAC PDU (Protocol Data Unit) the application packet rate reaches around 6 packets/s. Beyond
+ occupies 3 slots, corresponding to 6 sub-slots, and carries a this rate, both the mean packet outage and the end-to-end delay
+ payload of roughly 1,352 bits (approximately 169 bytes). QPSK grow rapidly.
+ modulation with a 1/2 coding rate is used for transmission,             2) Selective Source Routing: In this experiment, each uplink
+ matching Modulation and Coding Scheme 1 (MCS 1).                    (UL) data packet – or a small dedicated route-information
+    PHY and MAC Parameters. The PHY and MAC layer packet – first carries the RD’s registration information, as
+ parameters used in this experiments are summarized in Table I. discussed in section III-B to the RDF T . The RDF T constructs
+ The MAC utilized the Random Access transmission method the routing information for downlink path. During downlink
+ as discussed in Section III-A.                                      transmission, the stored route of the destination node is inserted
+                                                                     into the corresponding DL packet. This embedded information
+ B. Numerical results                                                allows intermediate routers to forward the DL packet correctly
+    1) Selective Flooding: In this experiments, when a router along the intended path to its final destination. [37]
+ (RDF T , or RDF T,P T ,) receives a packet, it first checks             The mean delay and packet-outage percentage are evaluated
+ whether the destination matches any of its associated nodes. If it  for   this scheme. Unlike selective flooding, source routing
+ does, the packet is delivered solely to that specific node. If not, paths   are predetermined; the route of each downlink packet
+ the router sends the packet individually to each of its routing     is  fully  defined in advance, eliminating any uncertainty in
+ member RD RDF T,P T using separate unicast transmissions.           its  delivery  path. The number of hops that forward a packet
+ For instance, in this latter situation, if the router has 8 routing deterministically—without       flooding—is determined by the
+ members, it will send the same packet 8 times—once to each          information    element  (IE) included    in the packet header. The
+ member router.                                                      delay–capacity     performance     for  1-hop   source routing and
+    To evaluate performance, the downlink (DL) application           end-to-end    source routing is  illustrated in  subsections (a) and
+ packet rate at the sink RDF T is gradually increased, and the       (b),  respectively.
+ resulting packet outage and delay are measured. The mean                   a) Only First-hop Selective Source Routing: In this
+ packet outage and mean delay are shown in Fig. 3 and Fig. 4, method, selective source routing is applied only at the first
+
+
+
+
+                                                                               1227
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+ Fig. 5. Mean DL packet outage percentage (first-hop Selective Source Routing)       Fig. 7. Mean DL Packet outage percentage (end-to-end Source Routing)
+
+
+
+                                                                              Both figures show that outage and delay grow quickly after
+                                                                              18 packets/s indicating that the system remains stable up to
+                                                                              18 packets/s.
+                                                                                   b) End-to-End Source Routing: In contrast to first-hop
+                                                                              deterministic routing, end-to-end source routing forwards the
+                                                                              packet deterministically all the way to the final hop of the
+                                                                              network, with no flooding occurring anywhere in the network.
+                                                                              In Fig. 7 the packet outage percentage begins to increase
+                                                                              rapidly at around 145 packets/s. The mean packet outage
+                                                                              percentages are 4.77 × 10−5 , 3.4 × 10−2 , 3.72 × 10−1 , and
+                                                                              2.68, corresponding to application packet rates of 140, 145,
+                                                                              155, and 165 packets/s, respectively.
+                                                                                 The same tendency is observed in Fig. 8. The mean delays at
+                                                                              140, 145, 155, and 165 packets/s are 0.04 s, 0.42 s, 3.98 s, and
+                                                                              22.15 s, respectively. As the application-packet rate approaches
+                                                                              145, the mean delay begins to grow without bound. Figures 7
+                                                                              and 8 clearly indicate that the network DL capacity reaches
+                                                                              close to 145 packets/s at steady state. It is worth noting that
+                                                                              in our experiments, a dense multihop network of similar size
+ Fig. 6. Mean DL packet delay in seconds (first-hop Selective Source Routing) reached an uplink (UL) capacity of around 145 packets per
+                                                                              second also in a single channel.
+                                                                                 In addition to DL first-hop source and end-to-end source
+ hop after the sink RDF T . When the sink sends a downlink routing, extensive simulations were carried out to examine how
+ packet, it forwards the packet along the correct branch, as performance changed as the deterministic hop count from sink
+ described earlier. After that first hop, the intermediate routers was gradually increased. The summary in Table II shows how
+ use Selective Flooding until the packet reaches its destination. the network’s overall downlink (DL) capacity changes as it
+ The benefit of this method is that actual DL PDU does not moves from selective flooding to source routing for a growing
+ need to include any additional address information and thus number of selective source routing hops.
+ protocol overhead is not affected.                                              Figures 3–8 and Table II show that increasing the selec-
+    In Fig. 5, the outage stays at zero up to 15 packets/s. It then tive source routing hops improves both capacity and delay
+ increases to 0.043 at 18 packets/s and rises to 0.26 and 0.48 at performance. This happens because predefined routes reduce
+ 20 and 22 packets/s. In Fig. 6, the mean delay is 0.067 s, 0.54 redundant flooding packets in the network. These excess
+ s, 1.9 s, and 2.83 s at 15, 18, 20, and 22 packets/s respectively. flooding packets would otherwise create heavy queueing delay
+
+
+
+
+                                                                               1228
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                  TABLE II
+                                                                                                    ROUTING STRATEGY, C APACITY, AND D ELAY
+
+                                                                                      Routing method                    Capacity          Mean Delay
+                                                                                      Selective Flooding, Full          ≈ 6 pps           ≈ 0.42 Sec
+                                                                                      Flooding
+                                                                                      1st-hop only source routing,      ≈ 18 pps          ≈ 0.53 Sec
+                                                                                      after 1st-hop selective flood-
+                                                                                      ing.
+                                                                                      Up to 2-hop source routing        ≈ 40 pps          ≈ 0.5 Sec
+                                                                                      Up to 3-hop source routing        ≈ 70 pps          ≈ 0.31 Sec
+                                                                                      Up to 5-hop source routing        ≈ 135 pps         ≈ 0.06 Sec
+                                                                                      Up to 8-hop source routing        ≈ 140 pps         ≈ 0.043 Sec
+                                                                                      End-to-End deterministic          ≈ 140/145 pps     ≈ 0.040/0.42 Sec
+                                                                                    Note: In this stable operating region the packet outage is below 1%
+                                                                                                   for each random individual realization.
+
+
+                                                                                    impact on mesh-network downlink capacity in dense multi-hop
+                                                                                    deployments. Selective Flooding is robust to topology changes,
+                                                                                    but it creates substantial forwarding redundancy. This limits
+                                                                                    the downlink throughput in our setup to about 6 pps before
+                                                                                    delay and outages rise sharply. In contrast, Selective Source
+    Fig. 8. Mean DL Packet delay in seconds (end-to-end Source Routing)             Routing uses deterministic forwarding: the capacity increases
+                                                                                    to 18 pps when source routing is introduced for the first hop.
+                                TABLE I                                             When the number of hops using source routing is increased to
+               C ONSIDERED SYSTEM SIMULATION PARAMETERS                             five, the capacity reaches about 135 pps, and adding additional
+                                                                                    source-routing hops provides only limited gains; end-to-end
+                 Parameter                                  Value                   source routing achieves about 145 pps. In all presented results,
+   DECT-2020 NR FT                             1, height 5 m, outdoors              the packet-outage percentage stays below 1%, meeting the
+   Carrier frequency                           1900 MHz
+   Number of channels                          1                                    reliability requirement defined for IMT-2020, while the DECT-
+   Channel bandwidth                           1.728 MHz                            2020 NR system uses only a single DECT-2020 NR channel.
+   Simulation area                             radius of 700 m, 1.5 km2                In our simulation, each random deployment produces an
+   Number of DECT-2020 NR RD                   1200
+   RD deployment                               Uniformly random
+                                                                                    independent network topology, while the topology remains
+   Building penetration loss                   20 dB (ITU-R)                        fixed within a single realization. Furthermore, system op-
+   Indoor/outdoor fraction                     80% / 20%                            eration was limited to a single channel with a fixed MCS
+   Channel model, Sink-Node                    Urban macro                          (MCS 1), which limits single-link performance in terms of
+   Channel model, Node-Node                    NIST D2D model
+   Number of node/sink antenna elements        1                                    both experienced interference and achievable link data rate.
+   RD noise figure                             7 dB                                 Future work should address performance under dynamic route
+   RD antenna element gain                     0 dBi                                changes, multichannel operation, dynamic MCS selection,
+   Thermal noise level                         –174 dBm/Hz                          combined uplink–downlink traffic, and a fair cross-technology
+   Link performance                            Based on [5]
+   Traffic model                               Poisson arrival                      comparison.
+   Application data message size               169 bytes including MAC, DLC
+                                               and CVG headers                                                 ACKNOWLEDGMENT
+   Channel access                              RACH with LBT
+   LBT period                                  25 symbols                             This work has been performed in the frame work of European
+   Contention window size                      min – 15, max – 1024                Celtic-Next project Ultra Scalable Wireless Access (USWA).
+   LBT threshold                               -97 dBm
+   Minimum link quality above Sensitivity      15 dB                               Finnish partners acknowledge funding by the European Union
+   level                                                                           - NextGenerationEU - received through Business Finland.
+   Error correction                            HARQ with 7 attempts                German partners acknowledge funding by the Federal Ministry
+   Sensitivity                                 -99.7 dBm (TS 103.636-2)
+   Tx power                                    19 dBm
+                                                                                   of Education and Research of Germany (BMBF, funding code:
+   TX Format                                   MCS 1                               16KISK254).
+
+                                                                                                                       R EFERENCES
+ and increase contention within the radio range, since each of
+                                                                                     [1] J. Pirskanen, J. Numminen, H. Berg, and Z. Marco, “Design Principles
+ those packets also needs to be served by the queue.                                     of DECT NR+,” in Proc. 2025 EUCNC & 6G Summit - special session:
+                                                                                         DECT NR+, Poznan, Poland, June 2025.
+                              V. C ONCLUSION                                         [2] ITU-R, “IMT Vision – Framework and overall objectives of the future
+                                                                                         development of IMT for 2020 and beyond,” ITU-R, Recommendation
+   The performance evaluation of DECT-2020 NR downlink                                   M.2083-0, September 2015. [Online]. Available: https://www.itu.int/dm
+ routing indicates that the routing strategy has a noticeable                            s pubrec/itu-r/rec/m/r-rec-m.2083-0-201509-i!!pdf-e.pdf
+
+
+
+
+                                                                               1229
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+  [3] ——, “Minimum requirements related to technical performance for                [23] R. Okumura, “Efficient bi-directional communications for low-power
+      IMT-2020 radio interface(s),” ITU-R, Recommendation M.2410-0,                      wireless mesh network,” Graduate School of Informatics, Kyoto
+      November 2017. [Online]. Available: https://www.itu.int/dms pub/itu-r/o            University, 2021. [Online]. Available: https://repository.kulib.kyoto-u.ac.
+      pb/rep/R-REP-M.2410-2017-PDF-E.pdf                                                 jp/server/api/core/bitstreams/a4b27e78-560e-455d-a09c-bab3c735f283/
+  [4] ——, “Guidelines for evaluation of radio interface technologies for                 content
+      IMT-2020,” ITU-R, Recommendation M.2412-0, October 2017. [Online].            [24] R. Nagao, D. Hotta, H. Masaki, K. Mizutani, and H. Harada, “Stabilized
+      Available: https://www.itu.int/dms pub/itu-r/opb/rep/R-REP-M.2412-201              multi-hop route construction using a modified link metric for wi-sun fan
+      7-PDF-E.pdf                                                                        systems,” IEEE Open Journal of Vehicular Technology, 2025.
+  [5] ETSI, “ETSI Evaluation Group; Final Evaluation Report on DECT-2020            [25] N. Führling, I. A. M. Sandoval, and G. T. F. de Abreu, “A robust
+      NR,” ETSI, TR 103 801 v1.1.1, November 2021. [Online]. Available:                  routing protocol for 5g mesh networks,” in 2025 IEEE 26th International
+      https://www.etsi.org/deliver/etsi tr/103800 103899/103810/01.01.01 6               Workshop on Signal Processing and Artificial Intelligence for Wireless
+      0/tr 103810v010101p.pdf                                                            Communications (SPAWC), 2025, pp. 1–5.
+  [6] ITU-R, “Detailed specifications of the terrestrial radio interfaces of        [26] N.-C. Liang, P.-C. Chen, T. Sun, G. Yang, L.-J. Chen, and M. Gerla,
+      International Mobile Telecommunications-2020 (IMT-2020),” ITU-R,                   “Impact of node heterogeneity in zigbee mesh network routing,” in 2006
+      Recommendation M.2150-2, December 2023. [Online]. Available:                       IEEE International Conference on Systems, Man and Cybernetics, vol. 1.
+      https://www.itu.int/dms pubrec/itu-r/rec/m/R-REC-M.2150-2-202312-I                 IEEE, 2006, pp. 187–191.
+      !!PDF-E.pdf                                                                   [27] P. D. P. Adi, V. Sihombing, V. M. M. Siregar, G. J. Yanris, F. A. Sianturi,
+  [7] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,                 W. Purba, S. P. Tamba, J. Simatupang, R. Arifuddin, D. A. Prasetya
+      Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The                          et al., “A performance evaluation of zigbee mesh communication on
+      Next Step toward 5G Massive Machine-Type Communications,” IEEE                     the internet of things (iot),” in 2021 3rd East Indonesia Conference on
+      Communications Magazine, vol. 60, no. 6, pp. 58–64, 2022.                          Computer and Information Technology (EIConCIT). IEEE, 2021, pp.
+  [8] T. Nihtilä and H. Berg, “Energy consumption of dect-2020 nr mesh                  7–13.
+      networks,” in 2022 Joint European Conference on Networks and                  [28] M. N. Alam, R. Jäntti, J. Kneckt, and J. Nieminen, “Performance study
+      Communications 6G Summit (EuCNC/6G Summit), 2022, pp. 196–201.                     of ieee 802.11s psm in ftp-tcp,” in 2012 IEEE Vehicular Technology
+  [9] A. Samuylov, D. Moltchanov, A. Gaydamaka, E. Lyczkowski,                           Conference (VTC Fall), 2012, pp. 1–5.
+      A. Frotzscher, F. von Schoettler, J. Pirskanen, J. Numminen, J. Salokannel,   [29] M. Alam, R. Jantti, J. Kneckt, and J. Nieminen, “Performance analysis
+      E. Llaguno, R. Pires, D. Bayar, and M. Valkama, “Empowering Near-                  of the ieee 802.11s psm,” Journal of Computer Networks and Communi-
+      URLLC IoT with 5G DECT-2020 NR: Current State and the Road                         cations. 01/2012; 2012., vol. 01, 12 2012.
+      Ahead,” IEEE Communications Magazine, vol. 63, no. 4, pp. 130–136,            [30] R. Pueyo Centelles, R. Meseguer, F. Freitag, R. Baig Viñas, and
+      2025.                                                                              L. Navarro, “A minimalistic distance-vector routing protocol for lora
+ [10] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” ETSI,                          mesh networks,” IEEE Access, vol. 12, pp. 128 941–128 962, 2024.
+      TS 103 636-1 v2.1.1, October 2024. [Online]. Available: https:                [31] C. Zhu, M. Lee, and T. Saadawi, “On the route discovery latency of
+      //www.etsi.org/deliver/etsi ts/103600 103699/10363601/02.01.01 60/ts               wireless mesh networks,” in Second IEEE Consumer Communications
+        10363601v020101p.pdf                                                             and Networking Conference, 2005. CCNC. 2005, 2005, pp. 19–23.
+ [11] Bluetooth Special Interest Group, Bluetooth Core Specification, Bluetooth     [32] R. Rondón, A. Mahmood, S. Grimaldi, and M. Gidlund, “Understanding
+      SIG, 2023, includes Bluetooth Low Energy (BLE). [Online]. Available:               the performance of bluetooth mesh: Reliability, delay, and scalability
+      https://www.bluetooth.com/specifications/                                          analysis,” IEEE Internet of things journal, vol. 7, no. 3, pp. 2089–2101,
+ [12] LoRa Alliance, “Lorawan link layer specification,” LoRa Alliance,                  2019.
+      Technical Specification TS001-1.0.4, 2021. [Online]. Available:               [33] K. Shivaprakasha and M. Kulkarni, “Energy efficient shortest path routing
+      https://resources.lora-alliance.org/document/lorawan-link-layer-specific           protocol for wireless sensor networks,” in 2011 International Conference
+      ation-v1-0-4                                                                       on Computational Intelligence and Communication Networks, 2011, pp.
+ [13] Connectivity Standards Alliance, “Connectivity standards alliance                  333–337.
+      (formerly zigbee alliance),” 2024, industry consortium maintaining the        [34] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+      Zigbee and Matter standards. [Online]. Available: https://csa-iot.org/             transmission requirements,” ETSI, TS 103 636-2 v2.1.1, October 2024.
+ [14] Wi-SUN Alliance, “Wi-sun alliance,” 2024, industry alliance promoting              [Online]. Available: https://www.etsi.org/deliver/etsi ts/103600 103699/
+      interoperable wireless solutions for smart utility and IoT networks.               10363602/02.01.01 60/ts 10363602v020101p.pdf
+      [Online]. Available: https://www.wi-sun.org/                                  [35] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer,”
+ [15] D. Johnson and D. Maltz, “Dynamic source routing in ad hoc wireless                ETSI, TS 103 636-3 v2.1.1, October 2024. [Online]. Available:
+      networks,” Mobile Comput., vol. 353, 05 1999.                                      https://www.etsi.org/deliver/etsi ts/103600 103699/10363603/02.01.0
+ [16] R. Baumann, S. Heimlicher, V. Lenders, and M. May, “Routing packets                1 60/ts 10363603v020101p.pdf
+      into wireless mesh networks,” in Third IEEE International Conference          [36] ——, “DECT-2020 New Radio (NR); Access Profile Part 2; Smart
+      on Wireless and Mobile Computing, Networking and Communications                    Metering, City and Buildings,” ETSI, TS 103 874-2 v1.1.1, September
+      (WiMob 2007), 2007, pp. 38–38.                                                     2024. [Online]. Available: https://www.etsi.org/deliver/etsi ts/103800 1
+ [17] H.-S. Kim, J. Lee, and J. W. Jang, “Blemesh: A wireless mesh network               03899/10387402/01.01.01 60/ts 10387402v010101p.pdf
+      protocol for bluetooth low energy devices,” in 2015 3rd International         [37] ——, “DECT-2020 New Radio (NR); Part 5: DLC and Convergence
+      Conference on Future Internet of Things and Cloud. IEEE, 2015, pp.                 layers,” ETSI, TS 103 636-5 v2.1.1, October 2024. [Online]. Available:
+      558–563.                                                                           https://www.etsi.org/deliver/etsi ts/103600 103699/10363605/02.01.0
+ [18] D. Pérez-Dı́az-De-Cerio, M. Garcı́a-Lozano, A. V. Bardajı́, J.-L. Valen-          1 60/ts 10363605v020101p.pdf
+      zuela et al., “Bluetooth mesh analysis, issues, and challenges,” IEEE         [38] NIST Public Safety Communications Research, “Nist d2d simulation
+      Access, vol. 8, pp. 53 784–53 800, 2020.                                           framework for ns-3,” https://www.nist.gov, 2023, accessed: 2024-05-22.
+ [19] H.-C. Lee and K.-H. Ke, “Monitoring of large-area iot sensors using
+      a lora wireless mesh network system: Design and evaluation,” IEEE
+      Transactions on Instrumentation and Measurement, vol. 67, no. 9, pp.
+      2177–2187, 2018.
+ [20] D. L. Mai and M. K. Kim, “Multi-hop lora network protocol with
+      minimized latency,” Energies, vol. 13, no. 6, 2020. [Online]. Available:
+      https://www.mdpi.com/1996-1073/13/6/1368
+ [21] A. Osorio Jiménez, M. Calle, J. Soto Ortiz, and J. Candelo-Becerra,
+      “Routing in lorawan: Overview and challenges,” IEEE Communications
+      Magazine, vol. 58, pp. 72–76, 06 2020.
+ [22] H. Harada, K. Mizutani, J. Fujiwara, K. Mochizuki, K. Obata, and
+      R. Okumura, “Ieee 802.15. 4g based wi-sun communication systems,”
+      IEICE Transactions on Communications, vol. 100, no. 7, pp. 1032–1043,
+      2017.
+
+
+
+
+                                                                               1230
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore. Restrictions apply.
+

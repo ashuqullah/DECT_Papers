@@ -1,0 +1,71 @@
+Title: Reliable and Low-Latency Communications
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—The purpose of this paper is to evaluate the applicability of wireless mesh
+networks as a suitable alternative to traditional mobile networks for the
+monitoring and protection of critical infrastructures. Present-day mobile
+networks have to handle a large amount of data due to the increase in the need
+for mobile broadband and the number of users. Therefore, monitoring critical
+infrastructures exerts an additional load on the existing networks. Thus, the
+applicability of wireless mesh networks (operating at independent frequency
+bands) is investigated to determine if they are capable of protecting and
+monitoring critical infrastructures such as smart grids. The reliability and
+latency of optimally tuned wireless mesh networks free of other network traffic
+are studied with the help of simulations based on the DECT-2020 NR standard. It
+is observed that reliable communications can be realized, however, the end-to-
+end latency of the network increases with the number of hops and re-
+transmissions. The user plane latency varies between 10.55 ms to 25.07 ms over
+five hops and between 15.55 ms to 38.78 ms over eight hops based on the size of
+the packet. Furthermore, there is a 1.2 to 2 times increment in the latency with
+each re-transmission. Therefore, a trade-off is necessary to achieve ultra-
+reliable low-latency communications utilizing wireless mesh networks for
+monitoring and protection of critical infrastructures.
+
+Approach and methods:
+of a reasonable back-off time leads to an increase in data transmission
+duration. This occurs because the system must delay data transmission to ensure
+synchronization between transmitting and receiving RDs. However, the
+incorporation of a back-off time in such systems is justifiable, and subsequent
+calculations account for this back-off duration. In real-world scenarios,
+multiple RDs play a role in transmitting data to the destination RD or gateway.
+Table IV provides a summary of the user plane latency for a system with five
+hops. It’s noteworthy that, akin to the single-hop scenario, the packet size has
+a direct impact on the duration of data transmission. Additionally, it’s evident
+that for a given 120 100 Latency (ms) 80 n=0 n=1 n=2 n=3 n=4 n=5 60 40 20 0 32
+296 552 824 1096 1352 Packet size (in bits) 1608 1864 Fig. 3. User plane latency
+over eight hops as a function of the packet size and the number of re-
+transmissions (n). packet size, the transmission duration increases
+approximately by a factor of around 3.5–4 times when data is transmitted over
+five hops. Table V provides a summary of the user plane latency for a system
+with eight hops, categorized by packet size.
+
+Key findings:
+103 810 V1.1.1 (2021-11), ETSI Evaluation Group; Final Evaluation Report on
+DECT-2020 NR, 11 2021. [Online]. Available:
+https://www.etsi.org/deliver/etsi_tr/103800_103899/103810/
+01.01.01_60/tr_103810v010101p.pdf [8] CEN/CENELEC/ETSI Joint Working Group on
+Standards for Smart Grids, Final report of the CEN/CENELEC/ETSI Joint Working
+Group on Standards for Smart Grids, May 2011. [Online]. Available: https://www.
+etsi.org/images/files/Report_CENCLCETSI_Standards_Smart_Grids.pdf [9] D. P.
+Bernardon, V. J. Garcia, M. Sperandio, J. L. Russi, E. F. B. Daza, and L.
+Comassetto, “Automatic re-establishment of power supply in distribution systems
+using smart grid concepts,” in 2010 IEEE/PES Transmission and Distribution
+Conference and Exposition: Latin America (T & D-LA), 2010, pp. 44–49. [10] F.
+Edström and L. Söder, “Impact of remote control failure on power system
+restoration time,” in 2010 IEEE 11th International Conference on Probabilistic
+Methods Applied to Power Systems, 2010, pp. 343–347. [11] S. Horsmanheimo, N.
+Maskey, L. Tuomimäki, H. KokkoniemiTarkkanen, and P. Savolainen, “Evaluation of
+interdependencies between mobile communication and electricity distribution
+networks in fault scenarios,” in 2013 IEEE Innovative Smart Grid Technologies-
+Asia (ISGT Asia), 2013, pp. 1–6. [12] European Telecommunications Standards
+Institute (ETSI), ETSI TR 138 913 V14.3.0 (2017-10), 5G; Study on scenarios and
+requirements for next-generation access technologies (3GPP TR 38.913 version
+14.3.0 Release 14), 01 2023. [Online]. Available: https://www.etsi.org/deliver/
+etsi_tr/138900_138999/138913/14.03.00_60/tr_138913v140300p.pdf
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

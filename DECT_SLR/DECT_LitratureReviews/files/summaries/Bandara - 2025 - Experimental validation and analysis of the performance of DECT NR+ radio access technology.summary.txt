@@ -1,0 +1,16 @@
+Title: Bandara - 2025 - Experimental validation and analysis of the performance of DECT NR+ radio access technology
+
+Summary:
+
+This paper addresses the key challenges and contributions of the work through a link-level summary of its objectives, methods, results, and practical implications.
+
+Core focus:
+Digital Enhanced Cordless Telecommunications New Radio+ (DECT NR+) is a recently introduced non-cellular radio access technology operating in the global license-exempt 1.9 GHz band, specifically designed for dense Internet of Things (IoT) deployments. Target- ing key Fifth Generation (5G) communications such as massive Machine-Type Communi- cations (mMTC) and Ultra-Reliable Low-Latency Communications (URLLC), it promises high reliability, low latency, and extended range. However, limited empirical data exists on its practical performance. This thesis presents a comprehensive experimental evaluation of DECT NR+ at the physical layer (PHY) using Nordic Semiconductor’s nRF9161 development kits, DECT Shell (DeSh), and custom firmware. The testbed characterizes four key performance metrics: communication range, throughput, latency, and energy efficiency. Range tests conducted in both indoor and outdoor environments revealed a maximum Line-of-Sight (LoS) range of 730 meters outdoors with 80% Packet Delivery Ratio (PDR). Meanwhile at short range, maximum measured throughput was 2.498 Mbit/s at Modulation and Coding Scheme (MCS) 4 with 8 sub-slots, compared to the theoretical maximum of 3.36 Mbit/s. Latency measurements showed a minimum Round-Trip Time (RTT) of 2.255 ms for a 12-byte packet. Energy per bit ranged from 0.26 to 2.6 𝜇𝐽 depending on the MCS level. Findings confirm that DECT NR+ offers significantly higher range and data rates than typical Bluetooth Low Energy (BLE) solutions but incurs higher energy costs, in both transmitter and receiver modes. These results highlight DECT NR+’s suitability for low duty-cycle, long-range, and latency-sensitive IoT applications, while identifying key areas for modem-level energy optimization. Keywords: DECT NR+, IoT, latency, energy efficiency, communication range, throughput, nRF9161 . Bandara
+
+Additional context and findings:
+............................................................................................. 9 1.1
+
+Key takeaways:
+- The paper presents a new or improved technical approach in the DECT-2020 NR / 5G / wireless communication domain.
+- It evaluates performance using simulation or experimental analysis to support claims and compare with relevant baselines.
+- The work contributes to understanding, optimizing, or validating DECT-2020 NR, URLLC, mMTC, mesh networking, or related 5G-enabled radio technologies.

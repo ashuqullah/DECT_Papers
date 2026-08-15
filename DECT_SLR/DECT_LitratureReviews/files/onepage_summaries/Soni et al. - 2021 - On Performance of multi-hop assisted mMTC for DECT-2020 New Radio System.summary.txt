@@ -1,0 +1,63 @@
+Title: On Performance of multi-hop assisted mMTC
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Digital enhanced cordless telecommunication new radio (DECT-2020 NR) is one of
+the candidate technology which fulfils the minimum requirements to serve as
+fifth-generation (5G) standardization. It accomplishes one of the performance
+requirements for massive machine-type communications (mMTC) by enabling a high
+connection density, i.e. up to 1-million devices/km2 . Reliable communication
+over such massive connections is achieved through a multi-hop relay system. This
+paper analyzes the link-level performance of DECT-2020 NR standards for mMTC
+using a multi-hop decode-and-forward (DF) relaying system for the outage
+probability and bit error rate (BER) performance metrics. Simulation results
+show the performance improvement in outage probability over various transmission
+rates, hops and signal-to-interference-plus-noise ratio (SINR). The numerical
+results corroborate with Monte-Carlo simulation results. Also, the link
+performance in terms of BER is compared for Turbo codes with puncturing.
+
+Approach and methods:
+MHz with a bandgap of 1728kHz [6]. Similar to NR, DECT2020 NR also provides a
+subcarrier scaling factor (µ) ranges {1, 2, 4, 8} results in subcarrier spacing
+{27, 54, 108, 216} kHz, respectively. Also, it provides the mesh network
+topology to connect multiple radio devices via fixed terminating (FT) point [7].
+For reliable communication over a densely populated devices, the cooperative
+relaying technique results in the enhancement of quality of service (QoS) [8].
+Outage probability (OP) is also one of the performance metrics to investigate
+the QoS. Literature shows that the analytical expression of outage probability
+has been derived over various fading environments [9], [10]. Authors in [11],
+[12] analyzed the performance in terms of outage probability for the decode-and-
+forward (DF) system over the Nakagami-m fading channel. Authors in [13], [14]
+investigated the performance of the multi-hop system over the generalized-K and
+fluctuating two-ray fading channels, respectively and showed the asymptotic
+outage probability. Also, authors in [14] showed the ASER performance of
+aforesaid multi-hop system. Bit error rate (BER) performance over NR
+specifications is investigated in [15] over multiple interfering devices. Based
+on the above-described research of multi-hop DF system, we used the inherent
+merits of relaying communication for
+
+Key findings:
+“The outage probability of mobile wireless networks over η − µ fading channel,”
+2018 IEEE Middle East and North Africa Commun. Conf. (MENACOMM), pp. 1-5, 2018.
+[11] H. Yu, I. Lee and G. L. Stuber, “Outage Probability of Decode-andForward
+Cooperative Relaying Systems with Co-Channel Interference,” in IEEE Trans.
+Wireless Commun., vol. 11, no. 1, pp. 266-274, 2012. [12] N. Suraweera and N. C.
+Beaulieu, “Outage Probability of Decodeand-Forward Relaying with Optimum
+Combining in the Presence of Co-Channel Interference and Nakagami Fading,” in
+IEEE Wireless Commun. Lett., vol. 2, no. 5, pp. 495-498, 2013. [13] J. Cao, L.
+Yang and Z. Zhong, ”Performance of Multihop Wireless Links over Generalized-K
+Fading Channels,” IEEE 72nd Veh. Technol. Conf. - Fall, pp. 1-5, 2010. [14] D.
+Dixit, PR. Sahu, “Performance of multihop detect-and-forward relaying system
+over fluctuating two-ray fading channels,” Trans. Emerging Telecommunications
+Techno., 2018. [15] R. Makkar, V. Kotha, M. Sheeba Kumari, D. Rawal, V. K.
+Chakka and N. Kumar, “Performance of Downlink SISO NR System using MMSEIRC
+Receiver,” IEEE 3rd 5G World Forum (5GWF), pp. 619-624, 2020. 988 Authorized
+licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft.
+Downloaded on February 25,2026 at 12:48:40 UTC from IEEE Xplore. Restrictions
+apply.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

@@ -1,0 +1,64 @@
+Title: ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Low Power Wide Area Networks (LPWAN) enable energy-efﬁcient communication over
+long distances, making them interesting for Internet of Things (IoT)
+applications. Some applications require a higher data rate than standard LPWAN
+while keeping a moderate range for keeping infrastructure requirements low. This
+paper provides a comparative evaluation of two LPWAN technologies, LoRa
+operating at 2.4 GHz and DECT NR+ for these kind of applications. We conducted
+modeling and experimental evaluations to assess their performance in terms of
+range and data rate across indoor, indoor-outdoor, and outdoor scenarios. For
+modeling we applied the log-distance path loss model, accounting for
+environmental conditions. Results show that LoRa achieves signiﬁcantly greater
+range, with up to 259 meters in indoor-outdoor scenarios, compared to DECT NR+
+with a maximum of 16 meters. Outdoor evaluations revealed LoRa’s capability to
+maintain connectivity at distances exceeding 1 kilometer in non-line-of-sight
+conditions. However, DECT NR+ offers higher data rates, reaching up to 3744
+kBit/s, making it advantageous for applications demanding robust data rates in
+limited-range scenarios. The ﬁndings highlight the trade-offs between range and
+data rate.
+
+Approach and methods:
+kilometer in non-line-of-sight conditions. However, DECT NR+ offers higher data
+rates, reaching up to 3744 kBit/s, making it advantageous for applications
+demanding robust data rates in limited-range scenarios. The ﬁndings highlight
+the trade-offs between range and data rate. Index Terms—IoT, LPWAN, LoRa, DECT
+NR+, ISM, RF Modeling I. I NTRODUCTION The Internet of Things (IoT) is rapidly
+evolving, transforming the way we live and work. Modern devices are increasingly
+equipped with wireless radio interfaces, enabling seamless communication. In the
+context of smart city projects and industrial applications, the number of
+wireless sensors operating within the 868 MHz band has signiﬁcantly grown in the
+last years. This trend demonstrates the importance of Low Power Wide Area
+Networks (LPWANs) for IoT solutions, with LoRaWAN being a prime solution for
+energy efﬁciency and extended range. LoRaWAN in the 868 MHz band offers key
+advantages, including excellent building penetration, long battery life, and
+extended range [1] [2]. These characteristics are particularly crucial for IoT
+applications like water meter readings [3]. However, its low data rate and
+regulatory restrictions, such as the 1% duty cycle limitation in Europe, pose
+challenges to dynamic control of connected actuators [4]. Such constraints limit
+its potential for real-time applications
+
+Key findings:
+s and suggest directions for future work in Section V. II. R ELATED W ORK In
+this section, we will present related work on LoRa in the 2.4 GHz frequency band
+and DECT NR+. We will start with DECT NR+ ﬁrst. Various terms are often used for
+DECT NR+ in the literature. It is sometimes called DECT-2020 NR, DECT NR or
+similar. We will continue to use the term DECT NR+ for this paper, but it is
+mentioned for the sake of completeness. In [5], Samuylov et al. investigate
+coexistence mechanisms and the performance of DECT NR+ compared to classic DECT.
+They use a simulation at system level and 109 @ VDE VERLAG GMBH Â Berlin Â
+Offenbach Authorized licensed use limited to: Hochschule Aalen (FH) - Technik
+und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore.
+Restrictions apply. ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in
+Osnabrück come to the conclusion that DECT NR+ is coexistent with classic DECT.
+In [6] Maliatsos et al. brieﬂy introduce DECT NR+, they show that DECT NR+ uses
+a cluster tree topology to build a mesh network and emphasize this feature in
+DECT NR+. In [7], Troccoli et al. present a
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

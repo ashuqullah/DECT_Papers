@@ -1,0 +1,69 @@
+Title: DL Routing Performance in DECT-2020 NR
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 NR, a global radio communication standard developed by ETSI, is
+designed to support industrial Internet of Things (IoT) applications. It
+complies with the requirements set by the ITU IMT-2020 framework. This study
+presents comprehensive simulations to evaluate downlink (DL) packet-forwarding
+performance in dense mesh networks using the DECT-2020 NR standard. Several
+studies address uplink performance; consequently, this specific downlink-focused
+research question has received limited attention in prior academic work. The
+study focuses on two routing mechanisms specified in the standard: Selective
+Flooding and Selective Source Routing, evaluated in a 1,200-node, 10-hop, large-
+scale deep mesh network. The simulation results indicate that the downlink (DL)
+capacity for Selective Flooding—where no routing information is required—is
+approximately 6 packets per second. For Selective Source Routing, the downlink
+(DL) throughput increases with the number of deterministic routing hops,
+reaching close to 145 packets per second when the system uses only a single
+1.728 MHz channel. Both capacities are achieved while keeping the packet outage
+rate below 1% to comply with the IMT-2020 requirements.
+
+Approach and methods:
+close to 145 packets per second when the system uses only a single 1.728 MHz
+channel. Both capacities are achieved while keeping the packet outage rate below
+1% to comply with the IMT-2020 requirements. Index Terms—DECT-2020 NR, selective
+flooding, selective source routing, IoT, massive mesh networks I. I NTRODUCTION
+AND MOTIVATION Cluster 1: At channel x RDPT Cluster 2: At channel y RDFT RDPT
+Cluster 3: At channel z RDPT RDFT,PT RDPT RDFT,PT RDPT RDFT,PT RDFT,PT RDFT,PT
+RDFT,PT RDPT RDPT RDFT,PT Cluster 4: At channel y RDPT RDFT,PT RDPT RDPT RDFT.PT
+RDFT,PT RDFT,PT RDFT,PT RDPT RDFT,PT RDFT,PT RDPT Cluster 6: At channel y
+RDFT,PT RDFT RDFT,PT Cluster 5: At channel x Fig. 1. Illustration of DECT-2020
+NR Mesh network structure [10] The design objective of DECT-2020 NR was to
+create a wireless communication technology that can be deployed and operated by
+individuals or companies anywhere and combine downlink traffic (i.e., from cloud
+to device) also plays an mesh communication support with modern OFDM-based radio
+important role. Therefore, we focus on how DECT-2020 NR supports downaccess [1].
+The main target applications during the design phase link traffic in massive IoT
+deployments, using technologies were massive machine-type communication (mMTC)
+and ultraavailable in
+
+Key findings:
+of bluetooth mesh: Reliability, delay, and scalability analysis,” IEEE Internet
+of things journal, vol. 7, no. 3, pp. 2089–2101, 2019. [33] K. Shivaprakasha and
+M. Kulkarni, “Energy efficient shortest path routing protocol for wireless
+sensor networks,” in 2011 International Conference on Computational Intelligence
+and Communication Networks, 2011, pp. 333–337. [34] ETSI, “DECT-2020 New Radio
+(NR); Part 2: Radio reception and transmission requirements,” ETSI, TS 103 636-2
+v2.1.1, October 2024. [Online]. Available: https://www.etsi.org/deliver/etsi
+ts/103600 103699/ 10363602/02.01.01 60/ts 10363602v020101p.pdf [35] ——,
+“DECT-2020 New Radio (NR); Part 3: Physical layer,” ETSI, TS 103 636-3 v2.1.1,
+October 2024. [Online]. Available: https://www.etsi.org/deliver/etsi ts/103600
+103699/10363603/02.01.0 1 60/ts 10363603v020101p.pdf [36] ——, “DECT-2020 New
+Radio (NR); Access Profile Part 2; Smart Metering, City and Buildings,” ETSI, TS
+103 874-2 v1.1.1, September 2024. [Online]. Available:
+https://www.etsi.org/deliver/etsi ts/103800 1 03899/10387402/01.01.01 60/ts
+10387402v010101p.pdf [37] ——, “DECT-2020 New Radio (NR); Part 5: DLC and
+Convergence layers,” ETSI, TS 103 636-5 v2.1.1, October 2024. [Online].
+Available: https://www.etsi.org/deliver/etsi ts/103600 103699/10363605/02.01.0 1
+60/ts 10363605v020101p.pdf [38] NIST Public Safety Communications Research,
+“Nist d2d simulation framework for ns-3,” https://www.nist.gov, 2023, accessed:
+2024-05-22. Authorized licensed use limited to: Hochschule Aalen (FH) - Technik
+und Wirtschaft. Downloaded on July 09,2026 at 09:06:07 UTC from IEEE Xplore.
+Restrictions apply. 1230
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

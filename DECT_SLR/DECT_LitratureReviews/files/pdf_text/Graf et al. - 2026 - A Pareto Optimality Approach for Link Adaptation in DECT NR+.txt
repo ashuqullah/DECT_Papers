@@ -1,0 +1,606 @@
+                                                                                                                                                     2026 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applications
+
+
+
+
+                                                                                                                                                                                       A Pareto Optimality Approach
+                                                                                                                                                                                    for Link Adaptation in DECT NR+
+                                                                                                                                                                                Fabian Graf                                    Michael Villnow                                    Thomas Watteyne
+                                                                                                                                                                               Siemens AG                                       Siemens AG                                       twatteyne@gmail.com
+                                                                                                                                                                            Erlangen, Germany                               Erlangen, Germany
+                                                                                                                                                                        fabian.graf@siemens.com                        michael.villnow@siemens.com
+2026 IEEE Wireless Communications and Networking Conference (WCNC) | 979-8-3315-7729-2/26/$31.00 ©2026 IEEE | DOI: 10.1109/WCNC65185.2026.11555760
+
+
+
+
+                                                                                                                                                             Abstract—DECT NR+ is a novel wireless IoT standard op-                          LPWAN standards such as IEEE 802.15.4g. While recent
+                                                                                                                                                          erating in the 1.9 GHz band, a band originally reserved for                        studies primarily concentrate on theoretical investigations con-
+                                                                                                                                                          Digital Enhanced Cordless Telecommunications (DECT). This                          cerning device density and latency [4], [2], the practical
+                                                                                                                                                          technology is also announced as the first non-cellular 5G standard
+                                                                                                                                                          and theoretically offers wide flexibility in its application, ranging              performance aspects of DECT NR+ remain barely explored in
+                                                                                                                                                          from Wireless Personal Area Network (WPAN) to Wide Area                            real-world deployments [5]. Particularly, the strategic selection
+                                                                                                                                                          Network (WAN) scenarios. While this versatility is enabled by a                    of transmission parameters represents an open research area
+                                                                                                                                                          wide range of configurable parameters, the practical application                   that significantly impacts overall network performance.
+                                                                                                                                                          range is determined by the vendor’s specific implementation.                          In this work, we propose the first approach to link adap-
+                                                                                                                                                          In this article, we investigate the impact of adjusting Modu-
+                                                                                                                                                          lation and Coding Scheme (MCS), transmit power and packet                          tation in DECT NR+. Link adaptation defines the process
+                                                                                                                                                          length. We formulate objective functions for data rate, energy                     of dynamically optimizing transmission parameters based on
+                                                                                                                                                          consumption, and Packet Delivery Ratio (PDR), and analyze their                    instantaneous channel conditions and specific user require-
+                                                                                                                                                          dependence on the aforementioned parameters. To model specific                     ments. Indeed, DECT NR+ explicitly incorporates this capa-
+                                                                                                                                                          relationships, we conduct practical experiments in two real-world                  bility through dedicated fields in its Physical Layer Control
+                                                                                                                                                          testbeds using hardware from the Nordic nRF91 series. Finally,
+                                                                                                                                                          we present an approach for parameter selection based on the                        Field, including Channel Quality Indicator (CQI) reporting
+                                                                                                                                                          principle of Pareto optimality.                                                    mechanisms that facilitate informed transmission parameter
+                                                                                                                                                                                                                                             adjustments. We focus on three critical performance metrics
+                                                                                                                                                                                      I. I NTRODUCTION                                       in DECT NR+: energy consumption, data rate, and Packet
+                                                                                                                                                             As 5G networks continue to expand, the International                            Delivery Ratio (PDR). Energy consumption remains crucial
+                                                                                                                                                          Mobile Telecommunications (IMT-2020) requirements define                           for battery-powered devices; data rate determines the system’s
+                                                                                                                                                          ambitious targets for a wide range of application scenarios,                       capacity to handle information flow; PDR directly impacts
+                                                                                                                                                          with increasing influence extending also into the Internet of                      the reliability, latency and number of retransmissions. By
+                                                                                                                                                          Things (IoT) domain [1]. While enhanced mobile broadband                           characterizing the three-dimensional trade-off space formed by
+                                                                                                                                                          (eMBB) services have been successfully implemented in 3GPP                         these metrics, we provide an approach for link adaptation that
+                                                                                                                                                          5G New Radio (NR) systems, and massive machine-type                                can dynamically adjust to meet diverse requirements.
+                                                                                                                                                          communication (mMTC) is being addressed through cellular                              Our methodology is based on the concept of Pareto opti-
+                                                                                                                                                          IoT solutions like LTE-M or NB-IoT. ultra-reliable low-latency                     mality, and combines theoretical analysis with experimental
+                                                                                                                                                          communication (URLLC) IoT services still remains a signifi-                        evaluation using commercial DECT NR+ hardware (Nordic
+                                                                                                                                                          cant challenge [2].                                                                Semiconductor’s nRF91 series) in indoor and outdoor deploy-
+                                                                                                                                                             DECT-2020 NR has emerged as a standardized 5G tech-                             ments. We characterize the achievable performance region and
+                                                                                                                                                          nology specifically designed for mMTC and URLLC ap-                                identify the Pareto-optimal configurations. This Pareto front
+                                                                                                                                                          plications, operating in the license-exempt 1.9 GHz band                           comprises a set of optimal configurations where no single
+                                                                                                                                                          utilized by legacy Digital Enhanced Cordless Telecommuni-                          objective can be improved without simultaneously degrading at
+                                                                                                                                                          cations (DECT) phones. This DECT-2020 NR standard, also                            least one other. Conversely, any point not on the Pareto front
+                                                                                                                                                          referred to as DECT NR+, is announced as the first non-                            is considered “dominated”: there exists at least one Pareto-
+                                                                                                                                                          cellular 5G standard [3]. DECT NR+ positions itself in the                         optimal configuration that is superior in at least one objective
+                                                                                                                                                          IoT landscape in a gap between traditional Wireless Personal                       and not inferior in any other. Based on experiments in our
+                                                                                                                                                          Area Network (WPAN), Wi-Fi and Low Power Wide Area                                 two testbeds, we demonstrate how systems can navigate the
+                                                                                                                                                          Network (LPWAN). DECT NR+ offers significantly higher                              resulting frontier to achieve superior performance compared
+                                                                                                                                                          data rates and extended range compared to typical low-rate                         to a fixed parameter selection.
+                                                                                                                                                          WPAN such as Bluetooth Low Energy (BLE) or Zigbee.                                    The remainder of this paper is organized as follows. Sec-
+                                                                                                                                                          Its datarate is lower than Wi-Fi or cellular services such as                      tion II provides an overview of the DECT NR+ physical
+                                                                                                                                                          5G NR. For certain parameter configurations, DECT NR+                              layer. Section III describes the link adaptation mechanism
+                                                                                                                                                          can achieve considerable coverage and also compete with                            in DECT NR+. Section IV details our experimental setup.
+
+
+
+                                                                                                                                                         979-8-3315-7729-2/26/$31.00 ©2026 IEEE
+                                                                                                                                                         Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+6 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applicat
+
+
+                              MCS      Modulation      Nbps     Rcode                         C. Packet Structure
+                               0         BPSK           1        0.50
+                               1         QPSK           2        0.50                            In DECT NR+, packet lengths are defined in “slots”. Slots
+                               2         QPSK           2        0.75                         consist of subslots. Subslots consist of OFDM symbols. And
+                               3        16-QAM          4        0.50
+                               4        16-QAM          4        0.75
+                                                                                              OFDM symbols consist of subcarriers carrying resource el-
+                                                                                              ements (REs). The structure is illustrated in Fig. 1. We are
+           Table I: DECT NR+ Modulation and Coding Scheme 0-4.
+                                                                                              particularly interested in how many information bits fit into
+                                                                                              a packet of length Lslot . This conversion is explained in the
+           Section V presents the objective functions for parameter                           following.
+           selection. Section VI introduces a Pareto optimality approach                         The maximum number of slots in a radio frame is
+                                                                                                 F RAM E
+           and evaluates beneficial operating points. Finally, Section VII                    Nslot        = 24 with a duration of T F RAM E = 10 ms,
+                                                                                                                                                      slot,µ
+           concludes the paper and discusses future work.                                     i.e. Tslot = 0.41667 ms. Each slot is divided into Nsubslot
+                                                                                              subslots depending on µ. For µ = 1, one slot consists
+                                                                                                    slot,µ
+                    II. DECT NR+ PHY L AYER F UNDAMENTALS                                     of Nsubslot   = 2 subslots. Each subslot always consists of
+                                                                                                 subslot
+                                                                                              Nsymb = 5 OFDM symbols. Consequently, we can compute
+              DECT-2020 NR is specified in the ETSI TS 103 636
+                                                                                              the number of OFDM symbols in a packet by
+           standard [6]. This section offers a concise overview based on
+           Release 2 dated October 2024, covering key aspects of the                                        P ACKET            slot,µ     subslot
+                                                                                                           Nsymb    = Lslot · Nsubslot · Nsymb    .
+           physical layer, including modulation, frequency allocations,
+           and packet structure.                                                              However, not all OFDM symbols belong to the actual data
+                                                                                              frame (DF). For µ = 1 the number of symbols used for
+           A. Modulation                                                                      Synchronization Training Field (STF) and Guard Interval (GI)
+                                                                                                  GI+ST F
+              The DECT NR+ physical layer employs Cyclic Prefix (CP)                          is Nsymb     = 2. The length of the data frame in symbols is
+           Orthogonal Frequency Division Multiplexing (OFDM) as its                                            DF
+                                                                                                              Nsymb    P ACKET
+                                                                                                                    = Nsymb       GI+ST F
+                                                                                                                               − Nsymb    .
+           core modulation scheme. Three key modulation parameters
+                                                                                                         P ACKET                           β
+           determine the required bandwidth and data rate.                                       The Nsymb       OFDM symbols and the NDF     T subcarriers
+              The subcarrier spacing factor µ ∈ {1, 2, 4, 8} defines the                      span up a matrix-like structure, with cells that are called
+                                                                                                                          β                       β
+           spacing between adjacent subcarriers. Higher values of µ                           REs. However, from these NDF   T subcarriers, just NOCC are
+                                                                                                                            β
+           shorten the OFDM symbol duration, enabling lower latency                           occupied and the remaining NCP act as CP. For β = 1, we
+           at the cost of less multipath protection due to a shorter CP.                               β                β
+                                                                                              have NDF     T = 64 and NOCC = 56. The REs are shared
+              The Fourier transform scaling factor β ∈ {1, 2, 4, 8, 12, 16}                   among the Demodulation Reference Signal (DRS), Physical
+           determines the number of subcarriers used. Larger β values                         Control Channel (PCC), and Physical Data Channel (PDC).
+           increase the channel bandwidth and potential data throughput,                      The number of PDC REs carrying the actual information bits
+           but also require more complex Fast Fourier Transform (FFT)                         is defined as
+           operations, raising computational demands on the transceiver.                                 P DC    DF      β      DRS    P CC
+              The Modulation and Coding Scheme (MCS) defines both                                       Nre   = Nsymb · NOCC − Nre  − Nre   .
+           the modulation format and the Forward Error Correction                             The number of REs reserved for the PCC is Nre       P CC
+                                                                                                                                                       = 98.
+           (FEC) code rate. Lower-order MCSs use simpler modula-                              The number of REs reserved for the DRS is determined by
+           tion schemes, such as Binary Phase-Shift Keying (BPSK)                             the number of effective antennas NTefXf . If NTefXf ≤ 2 we have
+           or Quadrature Phase-Shift Keying (QPSK) and lower code                             Nstep = 5.
+           rates for robustness, while higher-order MCSs are based on                                                             &                '
+                                                                                                                           β            P ACKET
+           Quadrature Amplitude Modulation (QAM) and offer increased                                     DRS        ef f NOCC        Nsymb
+                                                                                                       Nre = NT X ·             ·
+           payload capacity at the expense of error resilience. The                                                         4            Nstep
+           standard includes 12 MCS levels, with the first five listed in
+                                                                                                                  P DC                     P DC
+           Table I.                                                                           In the next step, Nre    is converted into Nbits    by
+                                                                                                           P DC              P DC
+                                                                                                                                                
+           B. Frequency Band                                                                             Nbits   = NSS · Nre      · Nbps · Rcode
+              DECT was originally developed for cordless telephony,                           In a Single Input Single Output (SISO) scenario, the number of
+           with dedicated frequency bands reserved for that purpose.                          spatial streams is NSS = 1. The number of bits per modulation
+           DECT NR+ is intended to operate in these bands, which                              symbol Nbps and the code rate Rcode of the turbo code are
+           remain license-free, allowing operation without regulatory                         dependent on the employed MCS in Table I. The turbo encoder
+           fees. The frequency allocations for DECT NR+ vary by region.                       granularity M is defined as
+           In Europe, Band 1 (1880–1900 MHz) is mandated, offering                                                             P DC
+                                                                                                                      8, if Nbits    ≤ 512
+           21 channels spaced at 0.864 MHz. In North America, Band 9                                                
+                                                                                                                    
+                                                                                                                    16, if N P DC ≤ 1024
+                                                                                                                    
+           (1920–1930 MHz) is used, comprised of 9 channels with the                                          M=                bits
+                                                                                                                                P DC
+           same spacing. The transmission power in this band is limited                                               32,  if N bits ≤ 2048
+                                                                                                                    
+                                                                                                                    
+                                                                                                                    
+           to +23 dBm.                                                                                              
+                                                                                                                      64, otherwise.
+
+
+
+
+          Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+6 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applicat
+
+
+                                                                                                           0          1          2           3               4          5            6     7
+                                                                                                                                        Length Type
+                                                                                                                Header Format          (Slot/ Subslot)
+                                                                                                                                                                        Packet Length
+
+                                                                                                                                          Short Network ID
+                  Channel                                                                                                                                                                                                    Feedback Info
+                                                                                                                                        Transmitter Identity
+                                                                                             Slots                                                                                                      Field           #bits                Explanation
+                                                                                                                                        Transmitter Identity                                                                     Indicates the process of the HARQ
+                                                                                                                                                                                                HARQ Process Number      3
+                                                                                                                     Transmit Power                                         DF MCS                                                              feedback.
+                                                                                                                                                                                                                                               0 = NACK
+                                                                                                                                                                                                Transmission Feedback    1
+                                                                                                                                          Receiver Identity                                                                                     1 = ACK
+                                                                                                                                                                                                                                Bit field indicating the current Buffer
+                                                                                                                                                                                                    Buffer Status        4
+                                                                                             Subslots                                     Receiver Identity                                                                                   Size Region
+                                                                                                                                                                                                   Channel Quality              Bit field indicating the MCS proposed
+                                                                                                                                                                                                                         4
+                                                                                                          Spatial Streams   DF Redundancy Version        DF New Data
+                                                                                                                                                                       DF HARQ Process Number         Indicator                             for the next TX
+                                                                                                                                                          Indication
+
+                                                                                                                     Feedback Format                                    Feedback Info
+                                                                                              OFDM
+                                  STF   PCC   PCC   PDC   PDC   PDC   PDC   PDC   PDC   GI
+                                                                                             Symbols                                         Feedback Info
+
+                                   0     1     2     3     4     5     6     7     8    9
+                            31
+
+
+
+
+                                                                                                        Figure 2: Physical Layer Control Field Type 2 (Header
+                            30
+                            29
+                            28
+                            27                                         0
+                            26
+                            25           0
+                            24
+                            23
+                            22
+                            21
+                            20
+                            19
+                            18
+                                         0
+                                                                       0
+
+
+
+
+                                                                       0
+                                                                                                        Format 0) and the Feedback Info Field (Header Format 1)
+                            17           0
+                            16
+                            15                                         0
+                            14
+                            13           0
+                            12
+                            11                                         0
+                            10
+                             9           0
+                            8
+                            7                                          0
+
+
+
+
+                                                                                                        devices with varying receiver capabilities, as performance
+                            6
+                            5            0
+                            4
+                            3                                          0
+                            2
+                             1
+                             0
+                                         0
+                                                                                             Resource
+                            -1
+                            -2
+                            -3
+                            -4
+                             -5
+                             -6
+                                         0
+                                                                       0
+
+
+
+
+                                                                       0
+                                                                                             Elements
+                                                                                                        reporting is independent of receiver architecture. However, the
+                                                                                                        standard suggests that receiver shall select the index in such
+                             -7
+                             -8          0
+                             -9
+                            -10                                        0
+                            -11
+                            -12          0
+                            -13
+                            -14
+                            -15
+                            -16
+                            -17
+                            -18
+                            -19
+                                         0
+                                                                       0
+
+
+
+
+                                                                       0
+                                                                                                        a manner that the Block Error Rate (BLER) does not exceed
+                                                                                                        10 % with the indicated MCS in the given channel conditions.
+                            -20          0
+                            -21
+                            -22
+                            -23
+                            -24          0
+                            -25
+                            -26
+                            -27
+                            -28
+                            -29
+                            -30
+                            -31
+                                         0
+                                                                                                        Furthermore, the RD Capability Information Element (IE),
+                            -32
+
+
+
+
+                                                                                                        exchanged during association, communicates the maximum
+           Figure 1: Packet Structure of a DECT NR+ frame (µ = 1,                                       MCS a device can support, ensuring the transmitter does not
+           β = 1) with packet length Lslot = 1.                                                         exceed the receiver’s capabilities.
+                                                                                                                                                                       IV. T EST S ETUP
+                                                             P DC
+           NM is the largest multiple of M not greater than Nbits .                                     A. Hardware
+                                      P DC                                                               For the practical evaluation of link adaptation in
+                                       Nbits
+                              NM =             ·M                                                       DECT NR+, we use the nRF91 series from Nordic
+                                         M                                                              Semiconductor with the RF modem firmware version
+           The maximum turbo encoder block size is Z = 2048 and                                         mfw-nr+_nrf91x1_1.1.0. For energy estimation, the
+           therefore segmentation of the transport block might be neces-                                nRF9151 DK is used due to its dedicated measurement pins.
+                                                                 CRC                                    For range testing, the nRF9131 EK is used due to its external
+           sary. Finally, the Cyclic Redundancy Check (CRC) Nbits     =
+                                                             TB                                         antenna connector.
+           24 is appended and the transport block size Nbits can be
+           calculated as                                                                                   Several parameters specified in the standard are fixed on
+                    (           CRC                                                                     the nRF91 chips, including µ = 1, β = 1, NTefXf = 1 and
+                      NM − l Nbits  ,                      if NM ≤ Z
+             TB
+           Nbits =                       CRC
+                                             m                                                         NSS = 1. Additionally, only MCS levels 0 through 4 are cur-
+                                 NM −Nbits            CRC
+                      NM −             Z       + 1 · Nbits  otherwise.                                  rently implemented. The transmit power on the nRF9131 can
+                                                                                                        be configured from -40 dBm to +19 dBm, while the nRF9151
+                                              III. L INK A DAPTATION                                    additionally features up to 21 dBm. Packet lengths between
+              In DECT NR+, link adaptation, i.e. the adjustment of                                      1 and 16 subslots are supported by the chips. However, not
+           transmit power MCS and PT X , is based on a dual-channel                                     all combinations of packet length and MCS are possible.
+           transmission structure consisting of the PCC and PDC. The                                    In particular, configurations where the transport block size
+           PCC always uses a fixed MCS, ensuring it can always be                                       exceeds 700 Bytes are not supported.
+           decoded by the receiver, while the PDC’s MCS is dynamically                                  B. Testbeds
+           selected by the transmitter. Both channels are transmitted                                      We test our link adaptation in two testbed environments.
+           with the same power per transmission, but PT X itself can                                    The indoors testbed is an office area with no line-of-sight
+           vary between transmissions to meet the required quality with                                 (LOS), where the signal needs to travel through different
+           minimal energy. The PCC includes the Physical Layer Control                                  rooms and is reflected by many objects. The Link adaptation
+           Field, which is shown in Fig. 2. It informs the receiver about                               testbed is an urban environment with LOS. The distance
+           the transmission parameters used for the PDC, including the                                  between transmitter and receiver is ≈ 15 m in the indoor
+           selected MCS and transmit power. This allows the receiver to                                 testbed, ≈ 200 m in the outdoor testbed. As carrier frequency,
+           estimate the current path loss. Additionally, the Physical Layer                             DECT NR+ channel number 1657 (1881.792 MHz) is used.
+           Control Field contains Feedback Info, where the receiver can                                 This is the first channel in the European DECT band. However,
+           report a CQI, indicating the highest MCS it can decode under                                 due to no interfering applications in this band in our testbed,
+           current conditions. The transmitter uses this CQI, along with                                the specific channel selection has only minor impact.
+           calculated PDR and service quality targets, to adapt the MCS.
+           The specific adaptation algorithm is not standardized and is                                  V. O BJECTIVE F UNCTIONS FOR PARAMETER S ELECTION
+           left to vendor implementation, allowing differentiation and                                    Identifying the most efficient parameter configuration can
+           optimization. This design also supports interoperability across                              be formulated as a multi-objective optimization problem.
+
+
+
+
+          Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+6 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applicat
+
+
+                     300                                                                                    400
+                                                                                                                        3.3 V
+                     250                                                                                                3.7 V
+                                 t0                                          t1                             300
+                     200                                                                                                5.0 V
+            I [mA]
+
+
+
+
+                                                                                                I [mA]
+                     150                                                                                    200
+                     100
+                                                                                                            100
+                     50
+                      0                                                                                       0
+                           0 0.2 0.4 0.6 0.8 1 1.2 1.4 1.6 1.8 2 2.2 2.4                                      -40       -30      -20    -10     0    10             20
+                                              t [ms]                                                                          Transmit Power PT X [dBm]
+           Figure 3: Power profile of a TX operation (19 dBm, 3 slots,                        Figure 4: Average current draw of the nRF9151 during
+           MCS 0) on a nRF9151 with 3.7 V supply voltage.                                     transmit operation for different supply voltages.
+
+                                                                                                            3.5
+           A. Energy Consumption                                                                                                                              MCS 0
+              The first objective is to minimize the energy per per                                          3                                                MCS 1
+           transmitted frame.                                                                                                                                 MCS 2
+                                                                                                            2.5                                               MCS 3
+                                     min ET X
+
+                                                                                               R [Mbit/s]
+                                                                                                             2                                                MCS 4
+                                      ET X = f (PT X , L)
+                                                                                                            1.5
+           The objective function depends on the transmission power
+           PT X and the packet length L. PT X influences the current draw                                    1
+           during the transmit operation and L determines the duration.                                     0.5
+           The energy per transmission is calculated by
+                                             Z t1                                                            0
+                                                                                                                    2     4       6     8     10    12         14        16
+                        ET X = QT X · U =         I(t)dt · U.
+                                                        t0                                                                    Packet Length L [Subslots]
+           For approximately constant current draw, we can estimate                           Figure 5: Data Rates of DECT NR+ for different MCS
+           the charge drawn as QT X ≈ I · ∆t, where ∆t = t1 − t0 .                            (µ = 1, β = 1) and transport block sizes smaller than 700 B.
+           Fig. 3 shows the power profile of a transmit operation on the
+           nRF9151, at 3.7 V. We set transmit power PT X = 19 dBm
+           and packet length Lslot = 3 slots. We measure a transmission                       The objective function depends on MCS and packet length L.
+           duration of ∆t = 1.25 ms. This duration can also be derived                        Fig. 5 plots the data rate per packet length for different MCS.
+           analytically using                                                                 The values of R can be computed based on the formulas for
+                                                                                                                          TB
+                                                                                              the transport block size Nbits  from Section II-C.
+                                  T P ACKET = Lslot · Tslot .
+                                                                                                                                          TB
+                                                                                                                                        Nbits
+           With slot duration Tslot = 0.41667 ms, the calculated trans-                                                         R=     P ACKET
+                                                                                                                                     T
+           mission time precisely matches ∆t shown in Fig. 3.
+                                                                                              For all MCS levels, we observe a steep increase in data
+              Fig. 4 illustrates the relationship between transmit power
+                                                                                              rate when moving from 1 to 2 subslots. This is due to the
+           and average current consumption, measured across different
+                                                                                              significant overhead introduced by the PCC compared to the
+           supply voltages. At higher supply voltages, the current draw
+                                                                                              PDC. For MCS 0 to MCS 3, the data rate improves by
+           is reduced. However, from an energy efficiency standpoint, the
+                                                                                              approximately 0.5 Mbit/s, while MCS 4 achieves an additional
+           impact of the chosen supply voltage remains relatively minor.
+                                                                                              gain of 1 Mbit/s over MCS 3. Finally, it is evident that the
+           For transmit powers up to PT X ≤ 8 dBm, the current remains
+                                                                                              curves for MCS 2 to MCS 4 do not span the entire range of L,
+           stable between 60 mA and 70 mA. Beyond PT X ≥ 10 dBm,
+                                                                                              as these combinations would exceed the 700 B limit imposed
+           we observe a a sharp increase in current consumption.
+                                                                                              by the nRF.
+           B. Data Rate                                                                       C. Packet Delivery Ratio
+                The second objective is to maximize the data rate.                                   The third objective is to maximize the PDR.
+                                              max R                                                                                max PDR
+                                        R = f (MCS, L)                                                                        PDR = f (PT X , MCS)
+
+
+
+
+          Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+6 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applicat
+
+
+           The objective function depends on transmission power PT X                          where the inequality is component-wise. In other words, no
+           and the MCS. There is no analytical expression for the objec-                      other configuration achieves better or equal performance in
+           tive function, as it depends on the current channel conditions.                    all objectives and strictly better in at least one.
+              Therefore, an iterative approach to channel quality esti-                          A point is called “weak” Pareto optimal if no other point is
+           mation is essential. The system must continuously refine its                       strictly better in all objectives:
+           understanding of channel conditions through both active traffic
+           measurements and dedicated pilot sequences. The estimation
+           process involves multiple iterations where transmissions are                                              ̸ ∃v ∈ U such that v > u
+           made at various power levels and MCS configurations. Ini-
+           tially, measurements show significant variance, but as itera-                         The set of all Pareto optimal points forms the Pareto frontier
+           tions increase, the PDR curves stabilize. This convergence                         of U, which represents the boundary of efficient trade-offs
+           typically requires 5 to 10 iterations with 100 packets per (PT X ,                 between the objectives.
+           MCS) configuration.                                                                   To compute the Pareto frontier in practice, we proceed as
+              As illustrated in Fig. 6, the PDR versus transmit power                         follows:
+           curves exhibit distinctly different characteristics between dif-
+                                                                                                1) Enumerate all valid configurations pk from the parameter
+           ferent environments. The indoor scenario, characterized by
+                                                                                                   space P.
+           non-LOS conditions, produces a steep “waterfall” shape with
+                                                                                                2) For each configuration, compute the corresponding utility
+           a sharp transition between low and high PDR regions. This
+                                                                                                   vector uk .
+           abrupt transition occurs due to multipath effects, signal reflec-
+                                                                                                3) Compare all utility vectors pairwise to identify non-
+           tions, and obstructions typical in indoor settings. In contrast,
+                                                                                                   dominated points:
+           the outdoor testbed curves display a more gradual slope
+                                                                                                   • A point uk is dominated if there exists another point
+           because of LOS conditions where primarily free space path
+           loss affects signal propagation, resulting in a more gradual                              uj such that uj ≥ uk and uj ̸= uk .
+                                                                                                   • All non-dominated points form the Pareto frontier.
+           degradation of signal quality with distance. Not only is the
+           shape of the curves different among the testbeds, the gap                             This brute-force approach is feasible due to the discrete
+           between distinct MCS levels also is.                                               nature of the DECT NR+ parameter space. For larger spaces,
+              This paper focuses on on static networks, it is therefore                       more efficient algorithms such as Pareto sorting or evolution-
+           important to acknowledge that channel conditions inevitably                        ary multi-objective optimization are usually employed.
+           change over time. Iterative recreation of the PDR curves is
+           crucial for channel quality estimation, and serves as the funda-                   B. Practical Evaluation
+           mental building block of parameter optimization frameworks.
+                                                                                                 Fig. 7 presents a visualization of the three-dimensional
+                      VI. A PARETO O PTIMALITY A PPROACH
+                                                                                              trade-off space for the outdoor LOS testbed. The plot shows
+           A. Algorithm                                                                       the performance vector u for all possible operating points p
+              For this multi-objective optimization problem, we apply the                     in the parameter space P. The white triangle points repre-
+           principle of Pareto optimality [7]. This widely recognized                         sent the Pareto front, consisting of those configurations for
+           concept has also found significant application in areas such                       which improving one objective necessarily degrades another.
+           as multi-user communications engineering [8]. We define                            These Pareto-optimal points offer the most efficient operating
+           the parameter space P as the set of all valid transmission                         conditions for different application requirements. Any point
+           configurations:                                                                    not on the Pareto front is “dominated”: there exists at least
+                                                                                              one configuration on the front that is superior in at least one
+                                   p = (PTX , L, MCS) ∈ P
+                                                                                              objective and no worse in any other.
+           Each configuration p yields a performance vector:                                     The color scheme in Fig. 7 corresponds to the one in Fig. 6,
+                       u(p) = (R(p), −ETX (p), PDR(p)) ∈ R3                                   and reveals how operating points corresponding to different
+                                                                                              MCS appear to be “stacked” along the data rate axis. For
+           The minus sign in the energy dimension ensures that all ob-                        PDR values below 80%, the Pareto front is mostly formed
+           jectives are formulated as maximization problems. We define                        by operating points using MCS 4. This is due to the higher
+           the multi-objective utility region as the union over all feasible                  number of bytes that can be transmitted per slot: shorter packet
+           configurations:                                                                    lengths compared to lower-order MCS can be used, resulting
+                                        K
+                                U≜
+                                       [
+                                           {uk } ⊆ R3                                         in a smaller energy per transmission. However, for a target
+                                            k=1
+                                                                                              PDR greater than 80%, lower MCS form the Pareto front.
+                                                                                              Also visible in Fig. 6, the performance in terms of PDR is
+           where K is the total number of valid combinations in P. A
+                                                                                              very similar in the domain greater than -10 dBm for MCS 2-
+           point u ∈ U is Pareto optimal if there exists no other point
+                                                                                              3 and MCS 0-1, respectively. This means that, due to the
+           v ∈ U such that:
+                                                                                              higher transport block size for the packet slot length, it is more
+                                     v ≥ u and          v ̸= u                                efficient to choose MCS 1 instead of MCS 0 for instance.
+
+
+
+
+          Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+6 IEEE Wireless Communications and Networking Conference (WCNC): WCNC 2026 Track 4: Emerging Technologies, Network Architectures, and Applicat
+
+
+                                1                                                                1
+                                          MCS 0
+                       0.8                                                                     0.8
+                                          MCS 1
+                       0.6                                                                     0.6
+             PDR
+
+
+                                          MCS 2
+                       0.4                MCS 3                                                0.4
+                                          MCS 4
+                       0.2                                                                     0.2
+                                0                                                                0
+                                -40       -30         -20       -10    0        10       20      -40        -30        -20       -10    0               10         20
+                                                            PT X [dBm]                                                       PT X [dBm]
+           Figure 6: PDR per TX Power for non-LOS indoor testbed scenario (left) and LOS outdoor testbed (right).
+
+
+                                                                                              parameters is analyzed through both theoretical considera-
+                                                                                              tions and experimental validation. By analyzing the trade-off
+                                                                                              between data rate, energy consumption and PDR, efficient
+                   R [Mbit/s]
+
+
+
+
+                                                                                              operating points are identified. Our current research focuses
+                                 2
+                                                                                              on integrating dynamic environmental factors into the opti-
+                                                                                              mization model and developing advanced adaptive algorithms
+                                                                                     2
+                                    0   0.2                                1                  for real-time parameter adjustment, leveraging the provided
+                                                0.4    0.6    0.8                             feedback information field. As part of future work, we roll
+                                                                    1
+                                              PDR                              ET X [mJ]      this analytical work into a practical Application Performance
+                                                                                              Management (APM) framework.
+           Figure 7: Pareto front (triangles) of operating points for the
+           LOS outdoor testbed.                                                                                        ACKNOWLEDGMENT
+                                                                                                The authors would like to thank Nordic Semiconductor for
+              The choice of the operating point on the Pareto front                           their support and for providing the latest modem firmware.
+           depends on user requirements. We define the subset F ⊆ U                           This work is funded in part by the German Federal Ministry
+           as                                                                                 of Education and Research (BMBF) as part of the project
+                                                                                              6G-ANNA under Grant No. 16KISK098, and in part by the
+             F = {u ∈ F | PDR ≥ PDRreq , ET X ≤ ET X,req , R ≥ Rreq }.                        European Union’s Horizon Europe Framework as part of the
+           In a Low-Power and Lossy Network (LLN), typical require-                           OpenSwarm project under Grant No. 101093046.
+           ments may be PDRreq = 90% and ET X,req = 0.5 mJ. When                                                             R EFERENCES
+           additionally requiring a data rate of at least Rreq = 1.5 Mbit/s,
+           the Pareto front for the outdoor testbed reduces to 4 values.                      [1] D. Wang, D. Chen, B. Song, N. Guizani, X. Yu, and X. Du, “From IoT
+                                                                                                  to 5G I-IoT: The Next Generation IoT-Based Intelligent Algorithms and
+           A Pareto optimal operating point may therefore be                                      5G Technologies,” IEEE Communications Magazine, vol. 56, no. 10, pp.
+                                                                                                  114–120, 2018.
+                                poutdoor = (PTX = 16 dBm, Lslot = 2, MCS = 3).                [2] A. Samuylov, D. Moltchanov, A. Gaydamaka, E. Lyczkowski,
+                                                                                                  A. Frotzscher, F. von Schoettler, J. Pirskanen, J. Numminen, J. Salokan-
+           When setting the same requirements for the indoor testbed, the                         nel, E. Llaguno, R. Pires, D. Bayar, and M. Valkama, “Empowering
+           Pareto optimal operating points mainly belong to even MCS 4.                           Near-URLLC IoT with 5G DECT-2020 NR: Current State and the Road
+           A beneficial operating point according to this Pareto optimality                       Ahead,” IEEE Comm. Magazine, vol. 63, no. 4, pp. 130–136, 2025.
+                                                                                              [3] M. D. Perez-Guirao, T. Weisshaupt, and A. Wilzeck, “DECT
+           approach is therefore                                                                  NR+:Unveiling the Essentials of a new non-cellular 5G Standard for
+                                                                                                  Verticals,” in Mobile Communication - Technologies and Applications;
+                                pindoor = (PTX = 10 dBm, Lslot = 3, MCS = 4).                     26th ITG-Symposium, 2022.
+                                                                                              [4] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+              To this end, we remark that we set the user requirements                            Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+           for the needs of LLNs. For high throughput applications,                               Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+           the optimal operating points may be different. DECT NR+                                munications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+                                                                                              [5] M. M. Haque, J. Säe, J. Pirskanen, and M. Valkama, “DECT-2020
+           can also be employed as LPWAN, covering distances going                                NR Link Distance Performance in Varying Environments: Models and
+           beyond the investigated 200 m LOS. For those scenarios,                                Measurements,” in 2025 19th European Conference on Antennas and
+           higher order MCS struggle to establish reliable communication                          Propagation (EuCAP), 2025.
+                                                                                              [6] DECT-2020 New Radio (NR) Part 1-5 Release 2, European Telecom-
+           and therefore the optimal configuration will necessarily tend                          munications Standards Institute (ETSI) Std. ETSI TS 103 636-1/2/3/4/5
+           to MCS 0.                                                                              V2.1.1, October 2024.
+                                                                                              [7] Y. Censor, Pareto optimality in multiobjective problems. Springer, 1977,
+                                                 VII. C ONCLUSION                                 pp. 41–59.
+                                                                                              [8] E. Jorswieck and H. Boche, “Energy-Aware Utility Regions: Multiple
+              This work applies Pareto optimality for link adaptation in                          Access Pareto Boundary,” in 2009 IEEE International Conference on
+           the DECT NR+ standard. The relationship between transmit                               Communications, 2009.
+
+
+
+
+          Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:09:35 UTC from IEEE Xplore. Restrictions apply.
+

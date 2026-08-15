@@ -1,0 +1,556 @@
+                                                                                                                                                                Professional Networked Audio over DECT NR+:
+                                                                                                                                                                          Feasibility and Performance
+                                                                                                                                                                    1st Alexander Poets                       2nd Iwo Mergler                   3rd Maxim Penner                   4th Mattes Waßmann
+                                                                                                                                                                Leibniz University Hannover                  Audinate Pty Ltd                    RFmondial GmbH                Leibniz University Hannover
+2025 IEEE 6th International Symposium on the Internet of Sounds (IS2) | 979-8-3315-7294-5/25/$31.00 ©2025 IEEE | DOI: 10.1109/IS264627.2025.11284656
+
+
+
+
+                                                                                                                                                                    Hannover, Germany                     Surry Hills, Australia                Hannover, Germany                  Hannover, Germany
+                                                                                                                                                                 poets@ikt.uni-hannover.de              iwo.mergler@audinate.com               penner@rfmondial.de            wassmann@ikt.uni-hannover.de
+
+                                                                                                                                                                                             5th Stephan Preihs                                                6th Jürgen Peissig
+                                                                                                                                                                                        Leibniz University Hannover                                       Leibniz University Hannover
+                                                                                                                                                                                            Hannover, Germany                                                 Hannover, Germany
+                                                                                                                                                                                        preihs@ikt.uni-hannover.de                                        peissig@ikt.uni-hannover.de
+
+
+
+                                                                                                                                                              Abstract—DECT NR+, also known by its official designation                      input (microphone, instrument) and analog output (IEM)—
+                                                                                                                                                           DECT-2020 NR, is a new radio standard developed and main-                         must not exceed 4 ms. Considering the input signals are sent to
+                                                                                                                                                           tained by the European Telecommunications Standards Institute                     a mixing desk for audio processing, which can take up to 2 ms,
+                                                                                                                                                           (ETSI). It is the world’s first non-cellular 5G technology and
+                                                                                                                                                           fulfils the IMT-2020 requirements for both massive Machine Type                   professional live productions typically have a latency budget
+                                                                                                                                                           Communications (mMTC) and Ultra-Reliable and Low Latency                          of no more than 1 ms per audio link [3], [4].
+                                                                                                                                                           Communications (URLLC). The latter makes it a promising                               In addition to the requirement of low latency, digital audio
+                                                                                                                                                           candidate for applications from the Programme Making and                          networks demand a precise synchronization of the media
+                                                                                                                                                           Special Events (PMSE) sector. In this paper, we investigate the                   clocks to allow a sample-aligned audio reproduction across
+                                                                                                                                                           feasibility of using DECT NR+ as a cable replacement solution
+                                                                                                                                                           for networked audio systems, with Dante serving as an example.                    networked devices. Modern IP-based systems usually employ
+                                                                                                                                                           Dante is an AV connectivity platform developed by Audinate                        the IEEE 1588 Precision Time Protocol (PTP) or the IEEE
+                                                                                                                                                           that has become the de facto industry standard for digital audio                  802.1AS generalized PTP (gPTP) profile for this purpose [2].
+                                                                                                                                                           networking. Using an open-source Software-Defined Radio (SDR)                     PTP-based clocking mechanisms are susceptible to network
+                                                                                                                                                           implementation of DECT NR+, we set up a wireless link between                     jitter, which becomes apparent when time-synchronizing de-
+                                                                                                                                                           two Dante-enabled devices. Based on the metrics reported to
+                                                                                                                                                           Dante Controller, we assess the performance of Dante in the                       vices over a Wide Area Network (WAN) [5]. In large networks,
+                                                                                                                                                           DECT NR+ wireless network and demonstrate that an average                         the PTP messages pass through multiple hops, including
+                                                                                                                                                           one-way latency of 1.7 ms can be achieved.                                        non-PTP-aware switches, and experience variations in packet
+                                                                                                                                                              Index Terms—DECT-2020, NR+, 5G, URLLC, PMSE, Dante.                            delay. Such dynamic network conditions impair the receiving
+                                                                                                                                                                                                                                             device’s ability to adjust its clock to that of the transmitter,
+                                                                                                                                                                       I. I NTRODUCTION AND R ELATED W ORK                                   ultimately causing the receiver’s Phase-Locked Loop (PLL)
+                                                                                                                                                              Digital audio networks are an essential part of professional                   to unlock. Therefore, spatially distributed production sce-
+                                                                                                                                                           sound systems and have become indispensable for a wide                            narios such as in [6], where performance, production, and
+                                                                                                                                                           range of Programme Making and Special Events (PMSE)                               audience are spread across different geographical locations,
+                                                                                                                                                           activities. By enabling the real-time transport of high-fidelity                  demand a different solution. Synchronizing devices between
+                                                                                                                                                           audio over ubiquitous Ethernet networks, they are prevalent in                    geographically separated areas is typically achieved by having
+                                                                                                                                                           environments such as concert halls, theme parks, stadiums, and                    one device in each local network derive its clock from the
+                                                                                                                                                           conference venues [1]. Audio over IP (AoIP) protocols such as                     Global Positioning System (GPS) and serve as time master
+                                                                                                                                                           Dante [2], developed by Sydney-based Audinate and widely                          for the other devices on that network. This way, Dante was
+                                                                                                                                                           adopted across the industry, rely on a deterministic commu-                       successfully deployed for a long-distance audio transmission
+                                                                                                                                                           nication behavior to meet the strict Quality of Service (QoS)                     between Berlin and Edinburgh [7], and for a Networked Music
+                                                                                                                                                           requirements of professional audio applications. For example,                     Performance (NMP), spanning New York City, Washington,
+                                                                                                                                                           in live stage performances, where artists are equipped with In-                   D.C., and Nashville, in collaboration with the Blue Note
+                                                                                                                                                           Ear Monitoring (IEM) systems, the Round-Trip Time (RTT) or                        Entertainment Group [8]. In both cases, rather than running
+                                                                                                                                                           so-called “mouth-to-ear latency”—measured between analog                          PTP across the WAN, PTP domains were synchronized using
+                                                                                                                                                                                                                                             GPS.
+                                                                                                                                                              The authors from Leibniz University Hannover and RFmondial GmbH                    AoIP solutions, such as AES67 and Dante, are designed
+                                                                                                                                                           would like to thank the German Federal Ministry for Economic Affairs and          for use in locally confined, Ethernet-based IP networks. Pro-
+                                                                                                                                                           Climate Action (BMWK) for the funds received as part of the Franco–German
+                                                                                                                                                           joint research project MERCI—Media and Event production via Resilient             fessional applications require reliable, low-latency operation,
+                                                                                                                                                           Communication on IoT Infrastructure (grant number 01MJ22016D).                    making a deployment in wireless networks challenging—
+
+
+
+
+                                                                                                                                                       Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    primarily due to the often non-deterministic behavior of                          requires centralized infrastructure, which is difficult to align
+    wireless links. In [9], the authors evaluated AES67 over                          with the nomadic, ad hoc nature of typical PMSE deployments.
+    IEEE 802.11 (i.e., Wi-Fi) and observed significantly reduced                      Moreover, the involvement of a Mobile Network Operator
+    performance compared to an Ethernet connection. To ensure                         (MNO) can reduce flexibility, increase operational complexity,
+    reliable operation, they identified two options: Either send                      and raise costs.
+    only the audio data over Wi-Fi while maintaining PTP and                             As of today, the shortcomings of standard technologies
+    discovery messaging via Ethernet, or employ SMPTE 2022-7                          such as Wi-Fi and 5G NR necessitate the use of highly opti-
+    to redundantly transmit over two Wi-Fi networks on separate                       mized proprietary RF solutions in professional wireless audio
+    frequency bands (2.4 GHz and 5 GHz). Whereas the former                           equipment. DECT NR+, an open, non-cellular 5G standard
+    approach does not constitute a fully wireless solution, the latter                developed in Europe, has emerged as a notable alternative
+    requires twice the radio hardware and results in inefficient                      to traditional 3GPP cellular networks and is considered a
+    spectrum utilization.                                                             strong candidate for PMSE applications [12]. First measure-
+       The limited suitability of Wi-Fi for professional live sound                   ments evaluating the DECT NR+ physical layer performance
+    and studio applications is largely attributable to the way                        for professional live audio—using the only commercially
+    it manages access to the wireless medium. IEEE 802.11                             available modem to date (i.e., the nRF91 series by Nordic
+    implements Carrier Sense Multiple Access with Collision                           Semiconductor)—show promising results [13].
+    Avoidance (CSMA/CA), a contention-based Medium Access                                In this paper, we assess the feasibility of DECT NR+ as
+    Control (MAC) mechanism which uses a random backoff                               a cable replacement solution for professional audio networks.
+    process to prevent collisions [10]. The contention window                         Using an open-source Software-Defined Radio (SDR) imple-
+    (i.e., backoff interval) increases exponentially with each re-                    mentation of DECT NR+, we set up an experimental wireless
+    transmission attempt until either the packet is successfully                      link between two Dante-enabled devices and conduct measure-
+    transmitted or the window reaches its maximum size. Sub-                          ments of latency and clock synchronization performance.
+    sequent retransmissions use random backoff values within                             The remaining part of the paper is organized as follows:
+    this maximum window until the packet is delivered or the                          Section II gives an overview of DECT NR+ and Dante
+    retry limit is exceeded, at which point the packet is dropped.                    technologies, and explains why DECT NR+ suits the needs
+    Consequently, CSMA/CA inherently introduces random access                         of wireless professional audio. In Section III, we describe the
+    delays, resulting in jitter and non-deterministic packet delivery.                architecture of the experimental setup and its implementation.
+    Compounding this issue is the fact that Wi-Fi operates in the                     First technical measurement results are then presented in Sec-
+    unlicensed Industrial, Scientific, and Medical (ISM) frequency                    tion IV for different DECT NR+ transmission configurations.
+    bands (2.4 GHz, 5 GHz, and increasingly 6 GHz), which are                         The results are discussed and compared to the performance
+    shared with other technologies (e.g., Bluetooth) and often                        of a typical wired link. Section V concludes the paper,
+    subject to significant congestion. A shared radio environment                     summarizes the findings, and gives ideas on how to extend
+    increases the likelihood of interference and collisions, further                  and continue the work in future research endeavors.
+    exacerbating the limitations of the CSMA/CA mechanism.
+       Similarly, 3rd Generation Partnership Project (3GPP) 5th                                          II. T ECHNICAL BACKGROUND
+    Generation (5G) New Radio (NR) cellular mobile communi-                             In this section, we begin with an introduction to DECT
+    cation networks have been explored for professional live audio                    NR+ and its role in wireless professional audio, followed by
+    productions. However, like Wi-Fi, they fall short of meeting                      an overview of Audinate’s Dante to establish the application
+    the stringent technical requirements of audio PMSE use cases                      context.
+    and remain some distance from being fully viable for such
+    applications [3]. A 3GPP Release 15-compliant 5G NR testbed                       A. DECT-2020 NR
+    operating in Standalone (SA) mode, implemented using a                               DECT-2020 New Radio (NR) is a novel Radio Interface
+    combination of open-source and Commercial Off-The-Shelf                           Technology (RIT) standardized by the European Telecom-
+    (COTS) components, was presented in [4] and evaluated in the                      munications Standards Institute (ETSI) within its Technical
+    context of a professional live audio production scenario. With                    Committee (TC) Digital Enhanced Cordless Telecommunica-
+    an audio packet periodicity of 2.5 ms, the system achieved an                     tions (DECT). It is also referred to as NR+, the brand name
+    overall transmission latency of approximately 25.5 ms at the                      promoted by the DECT Forum—an industry association that
+    99.9999th percentile, exceeding the latency requirements of the                   advocates for DECT technologies and spectrum access [14].
+    application and highlighting a key limitation of current 3GPP                     The standard is concise, with the core Technical Specification
+    technology for such use cases. In the context of NMPs, the                        (TS) comprising five documents published to date. Part 1
+    authors of [11] analyzed the behavior of a pre-commercial                         provides an overview of the technology [15], while Part 2
+    public 5G Non-Standalone (NSA) network and a private                              establishes the minimum radio reception and transmission
+    5G SA network with Multi-access Edge Computing (MEC)                              requirements for DECT-2020 Radio Devices (RDs) [16]. Parts
+    infrastructure. Neither setup achieved an end-to-end latency                      3 and 4 contain the physical and MAC layer specifications,
+    below 21 ms. On top of these technical constraints, there are                     respectively [17], [18]. Part 5 describes the Data Link Con-
+    also architectural and operational aspects to consider. 5G NR                     trol (DLC) and Convergence (CVG) layers. The DLC layer
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    provides services to the MAC layer at each radio link, includ-                    outside the DECT band for higher bandwidths [24]. DECT-
+    ing segmentation and packet routing, while the CVG layer                          2020 inherits the frame structure from classic DECT (i.e.,
+    operates end-to-end, offering services such as multiplexing of                    24 slots per 10 ms radio frame), but subdivides each slot
+    higher-layer data [19]. A sixth part, detailing the DECT-2020                     into µ · 2 subslots, each containing five OFDM symbols—
+    security architecture and defining an authentication procedure                    resulting in µ · 10 OFDM symbols per slot. Subslot durations
+    based on pre-shared keys, is currently in preparation [20].                       between approximately 26 µs and 208 µs enable DECT-2020 to
+       In the fall of 2021, the International Telecommunication                       support short transmission intervals, emphasizing its suitability
+    Union Radiocommunication Sector (ITU-R) approved DECT-                            for low-latency applications. To meet the reliability demands
+    2020 to be included in Recommendation M.2150, making it                           of URLLC scenarios, DECT-2020 supports scheduled access
+    the world’s first non-cellular 5G technology [21]. Fulfilling the                 for deterministic and periodic transmissions. Although random
+    International Mobile Telecommunications-2020 (IMT-2020)                           access via Listen Before Talk (LBT) is also available, its
+    requirements for massive Machine Type Communications                              contention-based nature introduces uncertainty, making it less
+    (mMTC) as well as Ultra-Reliable and Low Latency Commu-                           appropriate for use cases sensitive to latency and reliability.
+    nications (URLLC), DECT-2020 allows large-scale network                              Unlike 3GPP cellular communication networks, DECT-
+    deployments with high device density and qualifies as a cable-                    2020 does not impose fixed roles on RDs. Instead, RDs can
+    replacement technology.                                                           dynamically adapt their operational mode based on contextual
+       Although standardized by the same ETSI committee and                           factors. When operating in Fixed Termination point (FT)
+    related by name, DECT-2020 and “classic” DECT—which                               mode, an RD coordinates local radio resources and advertises
+    dates back to the early 1990s and became widely associated                        connectivity information that other RDs can use to estab-
+    with cordless landline telephony—have little in common. That                      lish communication. RDs in Portable Termination point (PT)
+    said, both technologies employ Frequency-Division Multiple                        mode can then act on this information and associate with a
+    Access (FDMA) and Time-Division Multiple Access (TDMA)                            suitable FT-mode RD on the network. In DECT-2020 mesh
+    in a Time Division Duplex (TDD) configuration, which                              networks, which follow a clustered tree topology, RDs may
+    helps facilitate coexistence within the technology-exclusive,                     simultaneously operate in both FT and PT modes—acting as
+    license-exempt frequency spectrum ranging from 1880 MHz                           cluster heads while also participating in a parent cluster. The
+    to 1930 MHz (depending on the region). Radio frames have a                        absence of centralized infrastructure enables nomadic ad hoc
+    length of 10 ms and are divided into 24 slots, resulting in a                     deployments, aligning with the vision of wireless systems that
+    duration of 416.67 µs per slot. The frequency grid is organized                   can be deployed anywhere, by anyone, at any time.
+    into channels, each occupying a basic width of 1.728 MHz.
+       Aside from these shared characteristics, the technologies                      B. Audinate Dante
+    differ substantially, with DECT-2020 being a complete re-                            Dante is a system for digital media transport and manage-
+    design aimed at addressing the demands of modern local-                           ment over computer networks. It replaces hundreds of point-
+    area wireless applications. At the physical layer, DECT-2020                      to-point audio and video connections with a single, reliable
+    uses Orthogonal Frequency Division Multiplexing (OFDM)                            network link. Beyond enhanced reliability, Dante simplifies
+    with a Cyclic Prefix (CP), which is more robust against                           cabling, patching, and routing of media signals, and enables
+    multipath distortion and frequency-selective fading than the                      monitoring and control of connected devices.
+    single-carrier modulation employed in classic DECT [22]. For                         Dante uses the Precision Time Protocol (PTP, IEEE 1588)
+    Forward Error Correction (FEC), DECT-2020 adopts turbo                            to synchronize time between all nodes in a local network,
+    coding with Hybrid Automatic Repeat reQuest (HARQ), uti-                          ensuring sample-accurate media transport and presentation.
+    lizing an encoder similar to that of Long Term Evolution                          Within the local network, the time synchronization and media
+    (LTE) [23]. It also features an adaptive Modulation and Coding                    transport are both over IEEE 802.3 (wired or optical) Ethernet,
+    Scheme (MCS), with variable code rates and modulation                             which leads Dante to make certain design assumptions. That
+    formats spanning BPSK to 1024-QAM, enabling efficient                             is, data packet delivery is very reliable, and timing—while
+    operation under diverse channel conditions. Additionally, it                      affected by network topology and traffic—is predictable and
+    supports antenna diversity and up to 8×8 Multiple Input                           fairly stable.
+    Multiple Output (MIMO) configurations.                                               Officially, Dante does not support wireless networks. While
+       The transmission numerology is defined by two parame-                          it often just “works” in a controlled setting, Dante depends
+    ters, namely the subcarrier scaling factor µ and the Fourier                      heavily on predictable timing. Wireless networks tend to
+    transform scaling factor β. For a given pair of parameters µ                      have failure recovery mechanisms that prioritize bandwidth
+    and β, the OFDM signal comprises β · 64 subcarriers spaced                        over (worst-case) latency. Dante also makes extensive use
+    µ · 27 kHz apart, resulting in a nominal bandwidth of µ · β ·                     of multicast transmissions, both for time synchronization and
+    1.728 MHz. With µ ∈ {1, 2, 4, 8} and β ∈ {1, 2, 4, 8, 12, 16},                    media transport, a communication mode that can also conflict
+    the bandwidth can be scaled up to 221.184 MHz. However,                           with wireless error recovery.
+    EU regulations restrict the nominal channel bandwidth of                             While the Dante media transport itself is less sensitive to
+    RDs operating in the 1880 MHz to 1900 MHz band to a                               this typical behavior of wireless networks, PTP time synchro-
+    maximum of 6.912 MHz, thus requiring the use of spectrum                          nization is likely the first to fail in the face of unpredictable
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+       Audio source            Host computer (Linux x64)                                                           Host computer (Linux x64)           Audio sink
+
+                         Network bridge                                                                                            Network bridge
+
+                           Virtual TAP         NR+ SDR (PT)        Ettus USRP              Ettus USRP          NR+ SDR (FT)          Virtual TAP
+
+
+     RPi5 running DEP      Physical NIC                                                                                             Physical NIC      Digiface Dante
+
+
+
+
+    Fig. 1. Block diagram of the experimental setup connecting two Dante-enabled devices over a DECT NR+ wireless link. At both ends of the link, an
+    open-source SDR implementation of DECT NR+ is used in conjunction with Ettus USRPs as radio hardware. The SDR receives application data from a
+    virtual TAP device, which is bridged to the physical network interface connected via Ethernet to the Dante-enabled device. In this configuration, DECT NR+
+    acts as a transparent Layer 2 wireless bridge.
+
+
+
+    and unexpected network latencies. The media transport itself is                   too, although for modern Ethernet this is mostly reduced to
+    vulnerable to packet loss and excessive delays but will merely                    packet egress contention at individual switch ports. Larger
+    fill in the missing data with “mute” samples.                                     irregularities are prevented by traffic prioritization for the PTP
+        Unmodified, off-the-shelf Dante products were used in this                    packets. If a wireless network has a similar quality-of-service
+    study. It is therefore important to note that some wireless                       mechanism, it will likely benefit Dante to prioritize PTP event
+    network behavior can be “out of spec” for Dante devices, and                      traffic (UDP port 319) over other packet types.
+    experiments along these lines are likely to reveal behavioral
+    differences between different Dante products. In particular, the                                       III. E XPERIMENTAL S ETUP
+    PTP servo on DEP (Dante Embedded Platform) was designed                              A high-level block diagram of the experimental setup
+    to be more forgiving of timing uncertainty than older hardware                    is shown in Fig. 1. For the wireless link, an open-source
+    Dante devices.                                                                    Software-Defined Radio (SDR) transceiver implementation
+        With that in mind, here are the factors that are likely                       of DECT NR+, published on GitHub under the AGPL-
+    affecting Dante operation and performance with radio net-                         3.0 license, was used [25]. Compared to the only commer-
+    works. As the radio channel is often noisy and unreliable,                        cially available integrated modem from Nordic Semiconductor,
+    wireless networks employ various mitigation strategies to                         which is limited to a transmission bandwidth of 1.728 MHz
+    improve reliability. There are two main strategies that deal with                 and restricts operation to the DECT frequency band, the SDR
+    data loss—either acknowledge/re-send mechanisms or forward                        offers increased flexibility by supporting the full feature set of
+    error correction. The former avoids upfront redundancy and                        the DECT NR+ physical layer. In addition to the 1880 MHz to
+    prioritizes reliability at the cost of latency; the latter has                    1930 MHz range of frequencies, the standard generally allows
+    bounded correction capacity and sacrifices some bandwidth                         for operation below 6 GHz—subject to regional regulatory
+    to achieve predictable timing.                                                    approval—including license-exempt ISM bands as well as
+        Whereas Wi-Fi mandates acknowledge/re-send at the MAC                         licensed IMT-TDD spectrum.
+    layer, DECT NR+ can refrain from using retransmissions                               The SDR is used on two identical general-purpose com-
+    by not requesting HARQ feedback. This makes it a more                             puters running Ubuntu 24.04 LTS with the 6.8.0 Linux low-
+    promising candidate for Dante, as the Dante system is most                        latency kernel, one operating as an FT-mode RD and the other
+    sensitive to timing unpredictability.                                             as an PT-mode RD. Each machine is equipped with an Intel
+        Further, in acknowledge/re-send networks, multicast trans-                    Core Ultra 9 285K CPU, 64 GB of RAM, and an Intel X710
+    mission poses extra challenges. As the transmission is intended                   Network Interface Card (NIC), which provides a high-speed
+    to be received by multiple receivers, it is not easy to determine                 connection to an Ettus USRP via dual 10 Gbit Ethernet links.
+    who shall perform the acknowledge, as it is unpredictable                         In the experiment, two USRP N310 were used with version
+    which receivers would fail due to noise. Conventional Wi-                         4.8.0 of the USRP Hardware Driver (UHD), and each device’s
+    Fi networks either run multicast without retransmits at the                       FPGA was loaded with the XG image flavor [26]. To enhance
+    lowest, most robust bit rate, or convert it into individual unicast               the performance of IQ sample streaming between the USRP
+    packets over the air. Forward error correction in multicast is                    and the host system, UHD was configured to utilize the Data
+    not inherently more complex than in unicast, as it does not                       Plane Development Kit (DPDK) for network transport. DPDK
+    rely on receiver feedback or retransmissions.                                     facilitates direct control over packet I/O by allowing network
+        A second important aspect of network-induced latency                          drivers to bypass the kernel and operate in user space. With
+    variability is the scheduling of transmissions in radio networks.                 I/O threads pinned to dedicated CPU cores, DPDK helps avoid
+    Traditional radio networks do not entirely own the channel and                    context switches and scheduler-induced latency spikes in the
+    will often hold back the next transmission in the face of other                   transport layer of UHD [27].
+    channel activity. Here too, DECT NR+ is expected to have                             The USRP N310 supports only certain master clock rates,
+    better control over the channel and thus act more predictably.                    which are not integer multiples of the DECT NR+ sample
+        Dante expects some latency irregularities from Ethernet                       rate. This incompatibility presents two options: either apply
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    computationally intensive digital resampling, or operate with a                                               TABLE I
+    mismatched sample rate, resulting in a subcarrier spacing that                                  DECT NR+ T RANSMISSION C ONFIGURATIONS
+    deviates from the normative value of µ · 27 kHz. To avoid the                                                         PACKET         TB
+                                                                                              µ    β    Nbps      R      Nsubslot       Nbyte      Tpacket
+    computational overhead associated with digital resampling, it
+    was disabled for the experiment. With the USRP master clock                        (A)    1    8    6         3/4    2              1805       416.667 × 10−6
+    rate set to 122.88 MHz and a subcarrier spacing of µ · 30 kHz,                     (B)    2    8    4         3/4    3              1821       312.500 × 10−6
+    the nominal bandwidth increases to µ · β · 1.92 MHz.                               (C)    2    8    6         3/4    2              1552       208.333 × 10−6
+       To receive application data, we configured the SDR to create
+    a virtual TAP network device that operates at Layer 2 of the
+    Open Systems Interconnection (OSI) model and handles raw
+    Ethernet frames. The TAP interface is bridged to the host’s                       uplink transmissions alternating thereafter in a fixed, repeating
+    physical network interface, which directly connects to the                        sequence.
+    Dante-enabled device. In this configuration, the SDR transmits                       As Ethernet frames become available in the TAP device’s
+    and receives raw Ethernet frames over the air, functioning as                     receive buffer, their transmission is scheduled for the next
+    a transparent Layer 2 wireless bridge. As a result, the Dante                     available opportunity according to assigned time resources.
+    device can communicate with remote wireless nodes as if                           Rather than aggregating multiple Ethernet frames into a single
+    they were on the same Layer 2 broadcast domain or Ethernet                        transmission packet, each packet carries only one Ethernet
+    segment.                                                                          frame to minimize delay variation caused by variable queuing
+       For each interface on the bridge (both the virtual TAP and                     delays. For the downlink transmission at the beginning of each
+    the physical NIC), we configured a priority queueing discipline                   radio frame, the FT multiplexes the beacon message and an
+    (prio qdisc) to prioritize packets based on their Differentiated                  Ethernet frame into a single packet.
+    Services Code Point (DSCP) values. Giving time-sensitive                             Since each transmission packet carries no more than one
+    PTP events higher priority over audio and other traffic types                     Ethernet frame, the number of transmission opportunities must
+    helps ensure QoS for Dante.                                                       be sufficient to accommodate the rate of Ethernet frames
+       For the experiment, we used two Dante nodes: an RME                            received by the TAP interface. The rate of Ethernet frames
+    Digiface Dante and a Raspberry Pi 5 with Dante Embed-                             carrying audio IP packets is determined by the audio sam-
+    ded Platform (DEP). The Raspberry Pi 5 supports hardware                          pling rate, the number of channels, and the number of audio
+    timestamping, which enhances the accuracy of packet times-                        samples per channel contained in each packet. Additional
+    tamps and improves synchronization performance. The Dante-                        network traffic includes PTP messages, as well as control and
+    enabled Raspberry Pi 5 was connected to the computer running                      monitoring data. In the experiment’s configuration, the Dante
+    the SDR in PT mode, serving as the audio source and PTP                           nodes exchange in the order of 1500 packets per second.
+    follower clock. Using the dplay example application provided                      To carry a full-sized Ethernet frame, including its header, a
+    with DEP, we played back audio decoded from an MP3                                transport block—that is, the payload of a DECT NR+ physical
+    file (2 channels, 48 kHz). DEP provides the option to log                         layer packet—must accommodate at least 1514 bytes, not
+    comprehensive PTP diagnostic information, which help in                           accounting for MAC headers or other Service Data Units
+    analyzing synchronization performance and network behavior.                       (SDUs) also present in the MAC Protocol Data Unit (PDU).
+       On the receiving end, an RME Digiface Dante was con-                              Table I contains the DECT NR+ transmission configurations
+    nected to the computer running the SDR in FT mode, serving                        that were used in the experiment. As detailed in Section II-A,
+    as the audio sink and PTP leader clock. It was configured to                      the subcarrier width scaling factor µ and the Fourier transform
+    output the received audio to headphones. To monitor clock                         scaling factor β define the transmission numerology. The
+    status and packet latency in real time, a Laptop running Dante                    Modulation and Coding Scheme (MCS) is specified by the
+    Controller was connected to the Digiface via Ethernet.                            parameters Nbps and R, where Nbps denotes the number of
+       In this setup, the PT-mode SDR transmits audio data in                         bits per QAM symbol and R denotes the coding rate. For
+    the uplink direction to the FT-mode SDR. Since PTP packets                        example, if Nbps is equal to 6, then the modulation scheme
+                                                                                                                    PACKET
+    are sent over the wireless link, it is critical that the link                     is 64-QAM. Tpacket and Nsubslot          indicate the length of
+    behavior aligns with the assumptions inherent in the PTP                          a transmission packet in seconds and subslots, respectively.
+    protocol. Specifically, packet delay variation (jitter) must be                   With five OFDM symbols per subslot, a transmission packet
+                                                                                                  PACKET
+    minimized, and the path delay should be as symmetric as                           contains Nsubslot    ·5 OFDM symbols. The resulting transport
+                                                                                                                         TB
+    possible between uplink and downlink directions to facili-                        block size in bytes is given by Nbyte  .
+    tate accurate time synchronization. With that in mind, we                            In all configurations, turbo code blocks are segmented to
+    employed a transmission scheme with a fixed scheduling                            a maximum size of 2048 bits. The system operates in Single
+    pattern and evenly allocated time resources between uplink                        Input Single Output (SISO) mode, with both transmitter and
+    and downlink. Each 10 ms radio frame begins with a downlink                       receiver using a single antenna supporting one spatial stream.
+    transmission from the FT, which serves as a beacon to provide                     Each of the three configurations allows the transport block to
+    frame and slot timing information to the PT. This is followed                     carry a full-sized Ethernet frame plus additional DECT NR+
+    by an uplink transmission from the PT, with downlink and                          MAC layer overhead. The key difference between configura-
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    tions lies in the packet duration, which directly affects packet
+                                                                                                                 1.0
+    throughput.
+                                                                                                                 0.9
+       In configuration A, each transmission packet spans a full
+                                                                                                                 0.8
+
+
+
+
+                                                                                        Cumulative probability
+    slot, which corresponds to two subslots (µ = 1). With 24                                                                                               Config.
+                                                                                                                 0.7
+    slots per 10 ms radio frame, this results in 1200 transmission
+                                                                                                                 0.6
+    opportunities per second per radio device, assuming time                                                                                                     (A)
+                                                                                                                 0.5
+    resources are evenly allocated between uplink and downlink.                                                                                                  (B)
+                                                                                                                 0.4
+       In configuration B, the packet length is three-quarters of a
+                                                                                                                 0.3                                             (C)
+    slot, giving each radio device 16 transmission opportunities
+                                                                                                                 0.2
+    per radio frame, or equivalently, 1600 per second.                                                           0.1                                             (W)
+       A packet duration of half a slot in configuration C yields a                                              0.0
+    total of 48 transmission opportunities per radio frame, which
+                                                                                                                       0   2   4   6     8    10      12   14   16     18
+    allows each radio device to transmit up to 2400 packets per
+                                                                                                                                       Latency (ms)
+    second, or one packet every 416.67 µs. Shorter transmission
+    intervals, which increase packet throughput, provide a safety
+    margin for accommodating the rate of user-plane data and are                      Fig. 2. Empirical CDFs of the latencies measured across the different
+                                                                                      configurations. The x-axis indicates latency in milliseconds, while the y-
+    likewise expected to reduce latency.                                              axis represents the proportion of packets with latency less than or equal to
+                                                                                      the corresponding x-axis value. A steep, left-shifted curve indicates better
+                      IV. R ESULTS AND D ISCUSSION                                    performance.
+       To obtain results independent of the wireless channel,
+    measurements were conducted under ideal conditions by con-
+    necting the USRP antenna ports using coaxial cables and a                         were recorded to get insight into the network behavior and
+    30 dB attenuator. This setup not only avoids multipath and                        clock synchronization performance. A laptop was connected
+    fading effects but also eliminates the risk of interference with                  to the Digiface to capture the Dante Control and Monitoring
+    other DECT equipment, such as cordless telephones, when                           (ConMon) status events also reported to Dante Controller.
+    operating within the DECT frequency band. Moreover, with                          This includes latency values and clock status, as well as
+    a nominal bandwidth of up to 30.72 MHz, the transmission                          counts of late, early, and out-of-order packets. Packets arriving
+    would occupy more spectrum than is available in the DECT                          after the Dante latency cut-off are considered “late”, while
+    band. Accordingly, the results presented in this section reflect                  packets that appear to arrive before they were sent—typically
+    a best-case scenario and may be considered an upper bound                         due to improper device time synchronization—are considered
+    on the performance of an SDR-based system. In practical                           “early”.
+    deployments, a true wireless setup would be subject to chan-                         No early or out-of-order packets were observed for any of
+    nel impairments, interference, and regulatory constraints on                      the configurations. However, late packets were reported for
+    spectrum availability.                                                            configurations A and B. Over the 30-minute measurement
+       In addition to the configurations listed in Table I, we per-                   period, 20 073 packets exceeded the 10 ms cut-off value in
+    formed a reference measurement over Ethernet, subsequently                        configuration A, while 20 packets exceeded the 5 ms threshold
+    referred to as configuration W (for “wired”). For compa-                          in configuration B. No late packets were reported for the other
+    rability, the Dante nodes were not connected directly, but                        configurations.
+    rather through two intermediary computers acting as switches.                        Fig. 2 shows the empirical Cumulative Distribution Func-
+    Each Dante node was connected to one computer, and the                            tions (CDFs) of the latencies measured across the different
+    two computers were linked via Ethernet. On each computer,                         configurations. The x-axis indicates latency in milliseconds,
+    the network interfaces connecting to the Dante node and to                        while the y-axis represents the proportion of packets with
+    the other computer were bridged. Similar to the SDR setup,                        latency less than or equal to the corresponding x-axis value.
+    priority queueing disciplines were configured on the interfaces                   A steep, left-shifted curve indicates better performance. Sum-
+    to prioritize time-critical traffic and ensure QoS.                               mary statistics, including the mean, maximum, and selected
+       Each configuration used a different Dante latency setting,                     quantiles of the measured latencies for each configuration, are
+    which controls the amount of time received audio data is                          provided in Table II.
+    buffered before playback, balancing between low delay and                            As expected, the reference measurement over Ethernet (i.e.,
+    reliable audio streaming to accommodate different network                         configuration W) performs best and exhibits the lowest laten-
+    conditions. For configuration A, the latency was set to 10 ms,                    cies, with a mean value of 980 µs. Also, the variability of the
+    while configurations B and C utilized a 5 ms latency setting.                     latency values is lower compared to the other configurations,
+    A lower value of 2 ms was used for configuration W.                               considering the difference between the mean and the maxi-
+       During the measurements, the Dante-enabled Raspberry Pi                        mum value of 1021 µs is less than 50 µs. Among the DECT
+    repeatedly played back audio decoded from an MP3 file                             NR+ transmission configurations, configuration C achieves the
+    for a duration of 30 minutes. Dante Embedded Platform                             lowest latency, with a mean value of 1.7 ms, followed by B
+    (DEP) logs comprehensive PTP diagnostic information, which                        (2.2 ms) and A (9.5 ms). This was also to be expected, since
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    shorter transmission intervals help reduce queueing delays in
+                                                                                                             100
+    the transmit buffer. The notably higher latency in configuration
+                                                                                                              80
+    A is due to the fact that each RD has only 1200 transmission
+                                                                                                              60
+    opportunities per second, which is less than the rate at which
+
+
+
+
+                                                                                        Offset adj. (ppm)
+                                                                                                              40
+    packets arrive at the TAP interface. This also explains the high
+                                                                                                              20
+    number of late packets (20 073) in that configuration.
+                                                                                                               0
+       To evaluate and compare clock synchronization performance                                             -20
+    across configurations, we utilized the PTP diagnostic infor-                                             -40
+    mation provided by DEP. As follower clock, DEP employs a                                                 -60
+    dual-loop PTP servo structure to align the local clock to that of                                        -80
+    the PTP leader. A narrow-bandwidth rate control loop compen-                                            -100
+    sates for frequency (rate) differences between the clocks, while
+                                                                                                                          (A)          (B)             (C)           (W)
+    a wide-bandwidth phase control loop adjusts the phase offset.
+                                                                                                                                           Configuration
+    The wide bandwidth enables the phase loop to respond rapidly
+    to transient changes, making it more sensitive to network
+    asymmetry, delay variation, and measurement noise. As a                           Fig. 3. Violin plots of the phase offset adjustment values for the different
+                                                                                      configurations in parts per million (ppm). A wide and short violin plot
+    result, the adjustments made to correct phase offsets can serve                   indicates a more stable synchronization performance, whereas a narrow and
+    as a useful indicator of network-induced timing variability                       tall violin plot suggests a higher amount of network-induced timing variability
+    affecting the PTP packets.                                                        affecting the PTP packets.
+
+       Fig. 3 shows violin plots of the phase offset adjustment
+    values, which help compare clock synchronization perfor-
+    mance across configurations. The values are given in parts                        observed in configuration C (see also Table III). As expected,
+    per million (ppm). A wide and short violin plot indicates a                       the Dante-over-Ethernet link yields a significantly more stable
+    more stable synchronization performance, whereas a narrow                         performance; however, the scale of the vertical axis conceals
+    and tall violin plot suggests higher variability in the phase                     any minor variability that may be present.
+    offset adjustment values, likely caused by network-induced                           The better performance of configuration C, relative to A
+    delay variations affecting the PTP packet timing. To exclude                      and B, can be attributed to its more frequent scheduling of
+    the initial phase offset and early adjustments immediately after                  transmission opportunities. Since slot timing is not aligned
+    synchronization begins, the first 30 seconds of measurement                       with PTP packet generation, denser scheduling effectively
+    data were discarded prior to plotting. Packets that were not                      results in a finer sampling of PTP packet transmission times,
+    used to adjust the clock phase offset, such as those subject to                   thereby reducing latency jitter.
+    PTP outlier filtering, were also removed from the measurement                        Aligning transmission opportunities with PTP packet gen-
+    data.                                                                             eration times is not feasible in a scheduled channel access
+       The box plots indicate that all configurations have a median                   system, since delay request messages are deliberately random-
+    at or near zero, suggesting no prominent systematic bias or                       ized to avoid introducing measurement bias. A more viable
+    directional skew due to asymmetrical network delay charac-                        approach is to exploit the inherent synchronization mechanism
+    teristics. While configurations A and B exhibit similar distri-                   of DECT NR+. This could be achieved by implementing a PTP
+    butions of phase offset adjustments, configuration C shows                        boundary clock that uses the radio’s synchronized timing to
+    lower variability and values more tightly clustered around                        re-time PTP packets across the link, effectively hiding radio-
+    the median, reflecting improved synchronization performance.                      induced delay variation. Alternatively, a word clock could be
+    This is further supported by the narrower interquartile range                     derived from the radio synchronization—such as DECT NR+
+                                                                                      frame or slot timing—to synchronize Dante media clocks and
+                                                                                      eliminate the need for PTP over the radio link entirely.
+                                    TABLE II                                             An alternative synchronization mechanism, that does not
+                            L ATENCY IN M ILLISECONDS                                 require dense transmission opportunities to allow the transport
+                                                                                      of PTP packets over the air, could also improve channel uti-
+                       Quantile        (A)       (B)      (C)    Wired (W)
+
+         Median        0.5           9.479    2.188     1.708         0.979
+         Mean          N/A           9.526    2.192     1.730         0.980                                                         TABLE III
+                                                                                                                P HASE O FFSET A DJUSTMENT IN PARTS PER M ILLION
+                       0.99         11.271    2.771     2.052         1.000
+                       0.999        16.943    4.484     2.807         1.000
+                                                                                                                                    (A)         (B)        (C)   Wired (W)
+                       0.9999       17.508    5.544     2.996         1.017
+                       0.99999      17.613    5.636     3.000         1.020                                 Median                -0.945     -1.842   -0.066         0.027
+                       0.999999     17.624    5.645     3.000         1.021                                 Interquartile range   31.524     36.817   16.159         0.045
+         Maximum       1            17.625    5.646     3.000         1.021                                 Standard deviation    22.352     24.337   12.124         0.053
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+    lization. For example, in configuration C, the uplink capacity                     [5] H. Bruckmeyer, J. Bühlmeyer, T. Ackermann, and G. Fischer, “Time
+    is 29.798 Mbit/s, yet on average, less than 10 % was utilized                          Synchronization of Spatial Separated Areas for AV-Production,” in 2021
+                                                                                           Joint Conference of the European Frequency and Time Forum and IEEE
+    during the experiment. Since the audio packets can tolerate                            International Frequency Control Symposium (EFTF/IFCS), 2021, pp. 1–
+    packet delay variation to some degree, they can be aggregated                          6.
+    into DECT NR+ transmission packets and sent at a lower rate,                       [6] S. Giacomelli, C. Centofanti, J. Santos, M. Galbiati, T. Salvi, F. Graziosi,
+                                                                                           and C. Rinaldi, “Remote Immersive Audio Production: State of the
+    provided the delay stays below the configured Dante latency.                           Art Implementation, Challenges, and Improvements,” in 2024 IEEE 5th
+                                                                                           International Symposium on the Internet of Sounds (IS2), 2024, pp. 1–
+                                                                                           10.
+                  V. C ONCLUSION AND F UTURE W ORK                                     [7] P. Ferguson, C. Chafe, and S. Gapp, “Trans-Europe Express Audio:
+                                                                                           Testing 1000 mile low-latency uncompressed audio between Edinburgh
+       In this paper, we investigated the feasibility using DECT                           and Berlin using GPS-derived word clock, first with jacktrip then with
+    NR+ as cable replacement solution for professional networked                           Dante,” in AES 148th Convention, May 2020, paper 605, pp. 1–5.
+                                                                                       [8] Dante      Over     Distance:    Technical      Dive.    Audinate.      [On-
+    audio systems such as Dante. To set up an experimental                                 line]. Available: https://www.getdante.com/wp-content/uploads/2025/
+    Dante wireless link, we utilized an open-source Software-                              02/DanteOverDistance-TechnicalDive-20241129.pdf
+    Defined Radio (SDR) implementation of DECT NR+ as a                                [9] M. Henry and W. Aubry, “Setup and First Experimentation Over an
+                                                                                           AES67 Over 802.11 Network,” in AES 146th Convention, March 2019,
+    transparent Layer 2 wireless bridge. Based on PTP diagnostic                           paper 510, pp. 1–5.
+    information provided by Dante Embedded Platform (DEP) and                         [10] C. Chousidis, R. Nilavalan, and A. Floros, “Enhancement of IEEE
+    metrics reported to Dante Controller, we assessed latency and                          802.11 in Handling Multiple Broadcasting Audio Data in Wireless Ad-
+                                                                                           Hoc Networks,” J. Audio Eng. Soc., vol. 61, no. 4, pp. 165–173, April
+    clock synchronization performance for different DECT NR+                               2013.
+    transmission configurations.                                                      [11] L. Turchet and P. Casari, “Assessing a Private 5G SA and a Public
+                                                                                           5G NSA Architecture for Networked Music Performances,” in 2023 4th
+       With transmission opportunities scheduled every 416.67 µs,                          International Symposium on the Internet of Sounds, 2023, pp. 1–6.
+    an average network latency of 1.73 ms was achieved. While                         [12] A. Poets, M. Waßmann, M. Penner, S. Preihs, and J. Peissig, “DECT
+    clocks remained synchronized over the DECT NR+ wireless                                NR+: A new radio standard to benefit professional audio applications,”
+                                                                                           in Fortschritte der Akustik - DAGA 2024, 50. Jahrestagung für Akustik,
+    link, the phase offset adjustment values of the PTP follower                           March 2024, pp. 52–55.
+    clock indicated that the performance does not yet match that                      [13] J. Dürre and N. Werner, “DECT-2020 NR for Professional Live Audio:
+    of a conventional Dante-over-Ethernet connection.                                      Design Space Exploration and Practical Evaluation,” in 2024 IEEE 5th
+                                                                                           International Symposium on the Internet of Sounds (IS2), 2024, pp. 1–7.
+       Future work should focus on leveraging the radio synchro-                      [14] DECT Forum. [Online]. Available: https://www.dect.org/
+    nization mechanism inherent to DECT NR+ to implement                              [15] DECT-2020 New Radio (NR); Part 1: Overview; Release 2, ETSI TS
+    a PTP boundary clock that bridges the radio link. Since                                103 636-1, Rev. 2.1.1, October 2024.
+                                                                                      [16] DECT-2020 New Radio (NR); Part 2: Radio reception and transmission
+    the measurements in this study were conducted under ideal                              requirements; Release 2, ETSI TS 103 636-2, Rev. 2.1.1, October 2024.
+    channel conditions and for a limited duration (30 minutes),                       [17] DECT-2020 New Radio (NR); Part 3: Physical layer; Release 2, ETSI
+    further measurements should be performed over longer periods                           TS 103 636-3, Rev. 2.1.1, October 2024.
+                                                                                      [18] DECT-2020 New Radio (NR); Part 4: MAC layer; Release 2, ETSI TS
+    and in representative environments such as stadiums, arenas,                           103 636-4, Rev. 2.1.1, October 2024.
+    and concert halls. Additionally, it would be valuable to in-                      [19] DECT-2020 New Radio (NR); Part 5: DLC and Convergence layers;
+    vestigate whether Hybrid Automatic Repeat reQuest (HARQ)                               Release 2, ETSI TS 103 636-5, Rev. 2.1.1, October 2024.
+                                                                                      [20] DECT-2020 New Radio (NR); Part 6: Security; Release 2, ETSI TS 103
+    can be used to mitigate packet loss while still maintain-                              636-6, Rev. 2.0.1, June 2025, Early draft.
+    ing operation within the configured latency budget. Beyond                        [21] Detailed specifications of the terrestrial radio interfaces of International
+    HARQ, redundancy-based error mitigation techniques such as                             Mobile Telecommunications-2020 (IMT-2020), ITU-R Recommendation
+                                                                                           M.2150-1, February 2022.
+    application-layer Forward Error Correction (FEC) might be                         [22] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of DECT-
+    worth exploring.                                                                       2020 NR in an industrial environment for varying RF bands,” in 2024
+       Overall, as the world’s first non-cellular 5G technology,                           Joint European Conference on Networks and Communications & 6G
+                                                                                           Summit (EuCNC/6G Summit), 2024, pp. 610–615.
+    DECT NR+ remains a promising candidate for professional                           [23] Evolved Universal Terrestrial Radio Access (E-UTRA); Multiplexing and
+    networked audio applications, thanks to its scheduled chan-                            channel coding, 3GPP TS 36.212, Rev. 18.1.0, December 2024.
+    nel access, support for ultra-short transmission intervals, and                   [24] Digital Enhanced Cordless Telecommunications (DECT); Harmonised
+                                                                                           Standard for access to radio spectrum; Part 2: DECT-2020 NR, ETSI
+    technology-exclusive frequency spectrum.                                               EN 301 406-2, Rev. 3.1.1, August 2023.
+                                                                                      [25] M. Penner. (2025, March) DECT-NR-Plus-SDR. License: AGPL-3.0.
+                                                                                           [Online]. Available: https://github.com/maxpenner/DECT-NR-Plus-SDR
+                                  R EFERENCES                                         [26] USRP N3xx Series. USRP Hardware Driver and USRP Manual.
+                                                                                           [Online]. Available: https://uhd.readthedocs.io/en/uhd-4.8/page usrp
+     [1] N. Bouillot et al., “AES White Paper: Best Practices in Network Audio,”           n3xx.html
+         J. Audio Eng. Soc., vol. 57, no. 9, pp. 729–741, September 2009.             [27] N. Temple, A. Williams, W. Fife, M. Prost, and M. Dickens. Getting
+     [2] K. Walsh, “Dante and AVB Networking,” in AES UK 24th Conference:                  Started with DPDK and UHD. Ettus Knowledge Base. [Online].
+         The Ins & Outs of Audio, June 2011, paper 9, pp. 1–7.                             Available: https://kb.ettus.com/Getting Started with DPDK and UHD
+     [3] J. Pilz, B. Holfeld, A. Schmidt, and K. Septinus, “Professional Live
+         Audio Production: A Highly Synchronized Use Case for 5G URLLC
+         Systems,” IEEE Netw., vol. 32, no. 2, pp. 85–91, 2018.
+     [4] J. Dürre, N. Werner, P. Matzakos, R. Knopp, A. Garcia, and C. Avellan,
+         “A Disaggregated 5G Testbed for Professional Live Audio Production,”
+         in 2022 IEEE International Symposium on Broadband Multimedia
+         Systems and Broadcasting (BMSB), 2022, pp. 1–6.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:47:50 UTC from IEEE Xplore. Restrictions apply.
+

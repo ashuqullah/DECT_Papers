@@ -1,0 +1,549 @@
+                                                                                     INTERNET OF THINGS
+
+               DECT-2020 New Radio: The Next Step toward
+                5G Massive Machine-Type Communications
+                       Roman Kovalchukov, Dmitri Moltchanov, Juho Pirskanen, Joonas Säe, Jussi Numminen, Yevgeni Koucheryavy, and
+                                                                     Mikko Valkama
+
+
+               The authors first describe the
+                                                                            Abstract                                  technology proposal shall meet all the require-
+               Digital Enhanced Cordless              Massive machine type communications                             ments of usage scenarios to be recognized as
+               Telecommunications (DECT)           (mMTC) is one of the cornerstone services that                     5G technology by ITU-R [5].
+               DECT-2020 standard recently         must be supported by 5G systems. 3GPP has                              Addressing these requirements, 3rd Genera-
+                                                   already introduced LTE-M and NB-IoT, referred                      tion Partnership Project (3GPP) has specified two
+               published by ETSI for mMTC com-     to as cellular IoT (CIoT), in 3GPP Releases 13,                    services and associated enablers — Narrowband
+               munications. They then evaluate     14, and 15, and submitted these technologies                       IoT (NB-IoT), Long-Term Evolution MTC (LTE-M),
+                                                   as part of 3GPP’s IMT-2020 technology submis-                      and the upcoming New Radio (NR)-based ultra-re-
+               its performance and compare it      sion to ITU-R. Even though NB-IoT and LTE-M                        liable low-latency communications (URLLC) [6].
+               to the existing low power wide      have been shown to satisfy 5G mMTC require-                        Nevertheless, numerous upcoming applications
+               area network (LPWAN) solutions,     ments, it is expected that these CIoT solutions                    fall between these two extremes [7] (e.g., pres-
+                                                   will not address all aspects of IoT and ongoing                    ence monitoring and remote light control). These
+               showing that it outperforms those   digitalization, including the support for direct                   applications pose much stricter requirements on
+               in terms of supported density of    communication between ”things” with flexi-                         delay and loss performance compared to massive
+                                                   ble deployments, different business models, as                     machine type communications (mMTC). How-
+               nodes while keeping delay and       well as support for even higher node densities                     ever, they are still more relaxed than those of
+               loss guarantees at the required     and enhanced coverage. In this article, we first                   URLLC. Furthermore, reliability and availability for
+               level.                              describe the Digital Enhanced Cordless Tele-                       these applications are becoming much more criti-
+                                                   communications (DECT) DECT-2020 standard                           cal compared to power consumption.
+                                                   recently published by ETSI for mMTC communi-                           Perceiving these needs, the European Tele-
+                                                   cations. We then evaluate its performance and                      communications Standards Institute Digital
+                                                   compare it to the existing low-power wide area                     Enhanced Cordless Telecommunications (ETSI
+                                                   network solutions, showing that it outperforms                     DECT) working group initiated new efforts in
+                                                   those in terms of supported density of nodes                       early 2018 aiming to standardize a technology
+                                                   while keeping delay and loss guarantees at the                     that would fulfill both the mMTC and URLLC
+                                                   required level.                                                    requirements of 5G and support local deploy-
+                                                                                                                      ments without separate network infrastructure,
+                                                                         Introduction                                 network planning, and spectrum licensing agree-
+                                                   For many years, the Internet of Things (IoT)                       ments. Most of the ongoing efforts are con-
+                                                   has been predicted to have almost exponential                      centrated on enabling advanced networking
+                                                   growth [1]. However, this progress has taken                       capabilities, enhancing the conventional central-
+                                                   much longer than expected. With the rise of big                    ized operation and star-based topology by intro-
+                                                   data and artificial intelligence, IoT has become a                 ducing multihop operation and random access
+                                                   new megatrend foreseen to impact many industry                     schemes for capacity and coverage extension.
+                                                   areas [2]. This progress depends on the availabili-                These efforts commenced in July 2020, provid-
+                                                   ty of off-the-shelf enabling radio technologies.                   ing a cost-efficient industry-wide mMTC enabler
+                                                       Conventionally, applications act as a driving                  by ETSI DECT-2020.
+                                                   factor toward developing enabling technologies.                        The goal of this article is to describe the tech-
+                                                   The Industry 4.0 concept dictates small delays                     nical solutions of the DECT-2020 standard and
+                                                   in the air interface, enabling real-time synchro-                  to evaluate its performance. To this aim, we start
+                                                   nization and reconfiguration capabilities [3]. On                  by reviewing the requirements of the new appli-
+                                                   the other hand, condition monitoring and logis-                    cations of mMTC technologies as well as design
+                                                   tics applications are characterized by high node                   approaches to low-power wide area network
+                                                   density, and do not pose strict requirements on                    (LPWAN) technologies. We then provide the
+                                                   delay and single packet loss performance [4].                      details of the recently standardized DECT-2020
+                                                   These new service requirements are taken into                      mMTC solution. Following that, we study the
+                                                   account in the International Telecommunica-                        proposed solution using standardized ETSI/ITU-R
+                                                   tion Union Radiocommunication Sector (ITU-R)                       methodology [8] and compare it with modern
+               This work was supported by the      International Mobile Telecommunications-2020                       LPWAN technologies. Conclusions are drawn in
+               Business Finland 5G-FORCE           (IMT-2020) process such that any IMT-2020                          the last section.
+               project.
+
+               Digital Object Identifier:            Roman Kovalchukov, Dmitri Moltchanov, Joonas Säe, Yevgeni Koucheryavy, and Mikko Valkama are with Tampere University, Finland;
+               10.1109/MCOM.001.2100375                                        Juho Pirskanen and Jussi Numminen are with Wirepas Oy, Tampere, Finland.
+
+
+
+
+               58                                            0163-6804/22/$25.00 © 2022 IEEE                                           IEEE Communications Magazine • June 2022
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+                                               Cloud                                            Cloud                                     Cloud                                   Cloud
+
+
+
+
+                                                                                                                    2                                          2
+
+
+                            Radio Device operating in FT mode                                                           External network connection to      Radio link operating at channel 2
+                                                                           Radio Device operating in FT and PT          Internet, Cloud or data server
+                                                                           modes simultaneously
+                            Radio Device operating in PT mode                                                           Radio link operating at channel 1   Radio link operating at channel 3
+
+
+
+
+               FIGURE 1. Illustration of topology formation and RDs’ operating modes in DECT-2020 technology.
+
+
+                   5G mMTC State of the Art and Requirements                                    other nodes’ data to an access point or a sink with
+                                                                                                connectivity to the outside world. The second
+                                5G mMTC Service Requirements                                    approach is utilizing a star topology network in
+               The requirements for 5G mMTC vary and depend                                     either unlicensed or licensed spectrum, which is
+               on the application. For conventional monitor-                                    referred to as cellular IoT (CIoT). All nodes in these
+               ing applications, ITU-R mandates the network to                                  networks connect directly to the infrastructure.
+               achieve node density of at least one million devices                                 The mesh-based sensor networks are typical-
+               per square kilometer with the minimum message                                    ly based on Institute of Electrical and Electronics
+               intensity of one packet per two hours [5]. At this                               Engineers (IEEE) 802.15 solutions, such as Blue-
+               traffic intensity, the packet loss ratio (PLR) must                              tooth, Thread, ZigBee, and Wirepas Mesh [9]. The
+               be at most one percent, while the maximum delay                                  utilized radio technologies are often simple and
+               should be upper bounded by ten seconds.                                          have limited capabilities regarding the data rate,
+                    The evolving IoT market is accompanied by                                   modulation schemes, and channel coding. The
+               several trends affecting the abovementioned val-                                 most significant benefit is that there is no need for
+               ues. First, as the number of sensors in a single                                 network infrastructure, implying that anyone can
+               device increases, the amount of traffic generated                                deploy nodes without contract or subscription
+               by the device grows. In this multipurpose equip-                                 with a commercial or private network operator.
+               ment, low power consumption becomes essential                                        The star topology networks operating in unli-
+               to support long operating times with coin-sized                                  censed bands include Sigfox, LoRA, and Wi-Fi
+               cell batteries. The market is further expanded by                                HaLow [10]. Sigfox is a proprietary solution, where-
+               novel services requiring much tighter delay guar-                                as LoRA is partly open for the alliance members. The
+               antees closer to real-time requirements, such as                                 CIoT approach and Wi-Fi Halow are based on open
+               a lighting control use case, where indoor or out-                                standards defined by 3GPP and IEEE. Within 3GPP,
+               door lights are controlled by radio communica-                                   there are a few different technologies [10]. The
+               tion. Additionally, in many IoT applications such                                first one is Extended Coverage Global System for
+               as warehouse inventory or factory automation,                                    Mobile Communications IoT (EC-GSM-IoT), which
+               the data communication is local, calling for a local                             is backward compatible with 2G GSM. The second
+               area network deployment rather than wide-area                                    supported 3GPP standard is LTE-M, a solution com-
+               type systems. In addition to higher traffic demands                              patible with LTE with a lower operating bandwidth
+               and stricter delay requirements, the reliability of                              of 1.4 MHz and reduced device complexity. The last
+               the communication becomes essential. Within the                                  3GPP option is NB-IoT that operates over 200 kHz
+               scope of the light control example, should the                                   with a completely newly designed radio access.
+               desired operation malfunction, it can result in a                                    In the star topology, device-to-device (D2D)
+               non-optimal end-user experience and may lead                                     communication is not supported. What drives the
+               to a significant risk of injury. Similarly, the com-                             system design to maintain large link budget values
+               munication must avoid a single point of failure,                                 to reduce the possibility of being out of coverage.
+               and operation should be possible even if the con-                                Consequently, the available data rates in Sigfox,
+               nection to the infrastructure is lost. Systems must                              LoRA, and NB-IoT are limited due to the signal
+               ensure that a single communication failure does                                  and bandwidth design.
+               not prevent other parts from operating and that                                      To support high node densities and satisfy strict-
+               the problem is isolated to only the impacted node.                               er delay and loss guarantees, network designers
+                    In summary, the new mMTC applications                                       may consider expanding the frequency resources
+               require stricter performance targets than declared                               available for mMTC communications, resulting in
+               in [5]. The DECT-2020 mMTC standard aims to                                      increased capital expenditures for mMTC opera-
+               fill this void while supporting the wide-area IoT                                tors. Alternatively, one may rely on spatial frequen-
+               requirements defined by ITU-R.                                                   cy reuse by employing multihop relaying. The use
+                                                                                                of mesh systems induces its own shortcomings,
+                           Design Approaches and Modern Enablers                                including the need for routing functionality at end
+               Within the 5G mMTC technology standardization,                                   systems and complex random access protocols.
+               two independent tracks are identified. The first track                           However, they can be alleviated by introducing
+               is based on self-configured and infrastructure-less                              special topologies such as trees or directed acyclic
+               wireless sensor networks that operate in unlicensed                              graphs that do not require explicit routing. Thus,
+               spectrum. This type of operation is achieved by                                  several telecommunications actors consider multi-
+               mesh network topology, where devices can route                                   hop systems as a potential solution for 5G.
+
+
+               IEEE Communications Magazine • June 2022                                                                                                                                         59
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                       deployment needs. It is an important aspect for
+                                                             Upper layers                                              local network deployments as, for example, factory
+                                                                                             DTCH MTCH                 or building owners can use the most suitable con-
+                                                                                                                       nectivity to data cloud or local servers. Additional-
+                                                                                                                       ly, integration to 3GPP networks can be enabled
+                                                                                                                       based on non-3GPP access interworking architec-
+                              MAC Control Entity                                                                       tures enabling cellular operators to integrate local
+                           PCCH BCCH CCCH DCCH                                                                         DECT-2020 networks as part of their infrastructure.
+                                                                                                                           The mesh network topology supports direct
+                                                                                                                       communication between RDs as well as group
+                                                                                                                       communication without a dedicated D2D opera-
+                                    Logical Channel Prioritization (UL&DL)                                             tion mode, enabling different use cases not possi-
+                                                                                                                       ble with the star topology, such as lighting control.
+                                  (De-)                                          (De-)
+                                                                              Multiplexing
+                                                                                                      (De-)
+                                                                                                   Multiplexing
+                                                                                                                       The strong benefit of mesh topology is that range
+                               Multiplexing
+                                                                                                                       and coverage can be extended by adding more
+                                                                                                                       nodes to the network. Therefore, communication
+                                                            MAC security                                               with low-quality radio links can be avoided with
+                                                                                                                       the benefit of removing the single points of failure
+                                                                HARQ                                                   within the network.
+
+                                                                                                                                      Radio Interface Architecture
+                                                                                                                       The radio interface architecture of DECT-2020
+                              PCH/BCH DCH                            RACH                                              mMTC Standard is shown in Fig. 2. It consists of
+                                                            Physical layer                         Packet              two layers: the physical layer and the medium
+                                                                                                                       access control (MAC) layer.
+                        Sync.                                           Data field                     Guard int.          The new DECT-2020 physical layer, designed
+                                                                                                                       to support 17 different frequency bands, is suit-
+                         STF                                                 DF                                   GI   able for operating in frequency bands below
+                                                                                                                       6 GHz. The employed RF technologies for the
+                    S S S S S S S CP       D      C
+                                                  P     D                                              C
+                                                                                                       P   D      GI   physical layer are time-division duplex mode and
+                                                                                                                       cyclic prefix orthogonal frequency-division multi-
+                                                                                                                       plexing (CP-OFDM) with multiple access schemes
+               FIGURE 2. Protocol stack architecture and packet structure in DECT-2020.
+                                                                                                                       utilizing both time-division multiple access and
+                                                                                                                       frequency-division multiple access. The base sub-
+                                                                        DECT-2020 MMTC Standard                        carrier spacing (SCS) is 27 kHz obtained with a
+                                                                                                                       scaling factor of 1. The SCS scaling supports the
+                                                                                 System Architecture                   power of two scaling with 2, 4, 8 as other possible
+                                                                                                                       values. The base fast Fourier transform (FFT) size
+                                                       The system architecture of DECT-2020, described                 is 64 obtained with a bandwidth scaling factor of
+                                                       in the multi-part ETSI standard [11], is a clus-                1. Other possible scaling values are 2, 4, 8, 12,
+                                                       ter-tree mesh network topology without dedicat-                 16, resulting in the minimum channel bandwidth
+                                                       ed network infrastructure nodes, as shown in Fig.               of 1.728 MHz with a maximum of 221.184 MHz.
+                                                       1. The first part of the standard specifies radio                   The DECT-2020 NR utilizes a physical layer pack-
+                                                       devices (RD)s that may operate in fixed (FT) or                 et structure depicted in Fig. 2. It consists of two sep-
+                                                       portable termination (PT) modes or both modes                   arate parts: the synchronization training field (STF)
+                                                       simultaneously. In the FT mode, an RD applies                   and the data field (DF). The STF part is used for the
+                                                       a radio coordination function to manage local                   per-packet synchronization of the receiver and to
+                                                       radio resources and enable other RDs in PT mode                 indicate the demodulation reference signal (DRS)
+                                                       to connect to it. The RD, operating in FT mode,                 configuration used to transmit the physical layer
+                                                       routes data from these RDs and its own data in                  packet. The DF part of the physical layer packet
+                                                       PT mode toward the next hop RD operating in FT                  offers two different channels: the physical control
+                                                       mode, reaching the RD in FT mode with an exter-                 channel (PCC) and the physical data channel (PDC).
+                                                       nal Internet connection. Thus, the same RD can                  The DF part carries DRS for up to eight antenna
+                                                       also operate in FT mode to provide connectivity                 ports for channel estimation and equalization at the
+                                                       to another set of RDs, as shown in Fig. 1.                      receiver. The PCC uses 98 subcarriers, where the
+                                                           At the network initiation, only RDs with direct             physical control field bits, set by the MAC layer, are
+                                                       connection to the external network operate in FT                turbo encoded as specified in [11, Part 3].
+                                                       mode. Usually, these RDs are sink nodes, which                      The physical control field has either 40 or 80
+                                                       are neither traffic sources nor destinations. Once              information bits referred to as Type 1 and Type
+                                                       RD in PT mode establishes a connection to an RD                 2, respectively. The receiver decodes blindly
+                                                       in FT mode, it can also start operating in FT mode              whether the physical layer packet uses Type 1 or
+                                                       to provide connection to other RDs. When alter-                 Type 2 content, allowing the reception of both
+                                                       native connection is available for RD in PT mode,               types without any foreknowledge. The first type
+                                                       it can switch between RDs in FT mode depending                  is optimized for beacon transmission with a lower
+                                                       on the configuration.                                           coding rate to provide improved coverage for
+                                                           For high scalability, the devices are free to               PCC detection of beacon transmission. The sec-
+                                                       choose the operation mode locally. The exter-                   ond type is used when PDC carries higher-layer
+                                                       nal Internet connectivity is outside of the DECT-               data such as unicast or multicast data. Type 2 is
+                                                       2020 standard, allowing the use of different wired              designed to support advanced physical layer func-
+                                                       or wireless connectivity solutions depending on                 tionalities, as discussed further. For operation in
+
+
+               60                                                                                                                     IEEE Communications Magazine • June 2022
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+               license-exempt bands with multiple overlapping                   random access channel (RACH) transmission and
+               networks, the PCC carries a short Network ID and                 scheduled transmission use the same physical layer                 The mesh-based sensor net-
+               the 16-bit receiver and transmitter IDs.                         packet format and support HARQ. The RD in FT                         works are typically based
+                   The physical layer specified in [11, Part 3] is also         mode can control the number of resources allo-
+               responsible for performing the following functions:              cated for both types of transmissions and assign                   on Institute of Electrical and
+               • Error detection on the physical channel                        scheduled resources for any associated RD. For                     Electronics Engineers (IEEE)
+               • Forward error correction encoding/decoding                     RACH, RD in FT mode indicates the slots and sub-                      802.15 solutions, such as
+                  of the physical channel                                       slots when RACH transmission is possible. The
+               • Hybrid automatic repeat request (HARQ)                         transmitting RD selects the MCS of the transmis-                     Bluetooth, Thread, ZigBee,
+                  soft-combining                                                sion and the actual packet duration to prevent                      and Wirepas Mesh [9]. The
+               • Rate matching of the coded physical channel                    exceeding the maximum allowed resources set by
+                  data to physical channels                                     the RD in FT mode. Before the actual RACH trans-                    utilized radio technologies
+               • Mapping of the coded physical channel data                     mission, an RD performs LBT to avoid collisions.                     are often simple and have
+                  onto physical channels                                        The minimum sensing time for the LBT in RACH                        limited capabilities regard-
+               • Modulation and demodulation of physical                        transmission is designed to be as short as two sym-
+                  channels                                                      bols, allowing for rapid access to the medium.                       ing the data rate, modula-
+               • Frequency and time synchronization                                 For the scheduled access, the RD in FT mode                     tion schemes, and channel
+               • Radio characteristics measurements                             uses the MAC resource allocation information ele-
+               • Multiple-input multiple-output (MIMO) trans-                   ment (IE) to assign RD-specific resources in sub-                  coding. The most significant
+                  mit diversity and beamforming                                 slots for operation. The transmitting RD performs                     benefit is that there is no
+               DECT-2020 combines the latest physical layer                     a selection of MCS, MIMO mode, and Tx power.                       need for network infrastruc-
+               technologies to inbuilt mesh system architecture                 The resource duration can be assigned with sub-
+               to future IoT solutions. Variants of these physical              slot accuracy with desired repetition and validity in                ture, implying that anyone
+               layer technologies have been previously available                time. The validity of allocation can be configured                   can deploy nodes without
+               only in 3GPP cellular solutions or latest amend-                 as single transmission and permanent allocation,
+               ments of IEEE 802.11, and have never been uti-                   based on service needs and spectrum regulation,                       contract or subscription
+               lized in mesh-based sensor network solutions.                    as the RD in FT mode needs to restrict the validity                with a commercial or private
+                                                                                and perform LBT before rescheduling resources.                            network operator.
+                              MAC Protocol and Coexistence                      This functionality can be utilized for voice or audio
+               The DECT-2020 MAC protocol (Fig. 2) supports                     communications and industrial applications with
+               both license-exempt and licensed spectrum                        deterministic delay requirements. Additionally, it
+               operation. This has been taken into account in                   can be used in sensor applications, where resource
+               network and RD addressing as well as in radio                    allocation is performed once for a group of nodes.
+               resource management. For network addressing,                         To enable coexistence and interference avoid-
+               the DECT-2020 uses a 32-bit network ID where                     ance, DECT-2020 supports two types of received
+               24 most significant bits (MSBs) are used to iden-                signal strength indicator (RSSI) measurements as
+               tify the DECT-2020 network globally and trans-                   defined in [11, Part 2]. RSSI-1 is generic for inter-
+               mit in Network and Cluster Beacon messages.                      fering signals of any kind and is used in LBT. In
+               The 8 least significant bits (LSBs) Network ID is                RSSI-2, the measurement is done for any DECT-
+               selected locally and transmitted in PCC. For RD                  2020 signal where PCC is decoded. As PCC
+               addressing, DECT-2020 uses a 32 bit-long RD ID                   contains both a short network ID and 16-bit trans-
+               that identifies RD uniquely in a DECT-2020 net-                  mitter and receiver IDs, an RD can associate the
+               work. Furthermore, each RD has a 16-bit short                    obtained measurement report with the correct
+               RD ID, randomly selected by the RD. It is used in                DECT-2020 network (its own or another) rather
+               PCC for identifying the transmitter and receiver                 than considering this interference like any arbi-
+               of a packet. Both short and long RD IDs are used                 trary interference. This functionality is utilized in
+               during association signaling to specify the linkage              the DECT core frequency band, 1880–1900 MHz
+               between short and long RD IDs.                                   in Europe, and when operating at a spectrum with
+                   Following [11, Part 4] for radio resource man-               local or shared license schemes. For operation in
+               agement, RD may initiate an FT mode operation.                   DECT core bands, the channel access rules have
+               In this mode, RD coordinates local radio resourc-                additional features to detect whether slots are
+               es and provides information about how other RDs                  used by legacy DECT.
+               may connect and communicate with it. In the FT
+               mode, RD performs the following functions: (i)                          Performance Insights and Comparison
+               carrier and sub-slots selection, (ii) transmitting               In this section, we provide
+               beacons to enable other RDs to identify, measure,                • Assessment of the critical performance met-
+               and initiate an association with it, (iii) configuring              rics including PLR, 99 latency percentile, and
+               the radio communication parameters of the con-                      energy consumption
+               nections with associated RDs, (iv) HARQ retrans-                 • Showing the ranges of device densities,
+               missions and feedback signaling in PCC, and (v)                     where ITU-R parameters are satisfied
+               link adaptation by selecting the optimum modula-                 • Whenever possible, comparing DECT-2020
+               tion and coding scheme (MCS) and transmission                       with other technologies
+               power. An RD in PT mode operates based on the
+               information provided by RDs in FT mode. Note                                       Simulation Environment
+               that RD can operate in both FT and PT modes                      The system model has been implemented using
+               simultaneously, enabling cluster-tree mesh net-                  the system-level simulation tool WINTERsim
+               work topology (Fig. 1).                                          extended to capture the specifics of the DECT-
+                   According to [11, Part 4], MAC supports the                  2020 technology. WINTERsim is a discrete event
+               listen before talk (LBT) with binary exponential                 system-level (NS3-like) Python3-based simulation
+               backoff and scheduled transmission regimes. Both                 tool. For DECT-2020, we used node abstraction
+
+
+               IEEE Communications Magazine • June 2022                                                                                                                             61
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+                    Parameter                                                Value                                      The simulation procedure starts with node
+                                                                                                                    placement and path loss calculations, which are
+                                            Baseline evaluation configuration parameters                            done according to 3GPP guidelines [12]. The sim-
+                    System architecture                                      Mesh, 19 gateways, 57 sinks            ulations have been performed according to urban
+                                                                                                                    macro-mMTC test Configuration A from ITU-R
+                    Carrier frequency                                        1900 MHz                               guidelines [8]. Particularly, it consists of standard
+                    Number of channels                                       1 and 3
+                                                                                                                    19 cells deployment with an inter-site distance of
+                                                                                                                    500 m. RDs in TBSs are assumed to be equipped
+                    Channel bandwidth                                        1.728 MHz                              with omnidirectional antennas. As neither 3GPP
+                                                                                                                    nor ITU-R describes the procedure for calculating
+                    Channel model, Sink-Node                                 Urban macro
+                                                                                                                    device-to-device (D2D) links specifically, we use
+                    Channel model, Node-Node                                 Urban street canyon                    different models for different types of links: for
+                                                                                                                    RDFT-to-any, we used the urban macro model
+                    Base station (BS) antenna height                         5 m and 25 m
+                                                                                                                    for RDFT,PT-RDPT; and for RDFT,PT-RDF-PT, we
+                    Total Tx power per TRxP in BS/sink                       7 and 17 dBm                           used the urban micro model. If both RDs were
+                                                                                                                    indoors and closer than 25 m, we used the indoor
+                    Node power class                                         7 dBm                                  office model, and for each indoor-to-outdoor pen-
+                                        Additional parameters for system-level simulation                           etration, we also added random building pene-
+                                                                                                                    tration loss according to the 3GPP model. The
+                    Inter-site distance (sink) distance                      500 m                                  percentage of indoor devices is equal to 80. The
+                    Node density                                             0.1-24 million devices per km          simulation procedure consists of two periods: the
+                                                                                                                    “warm-up” period, when all the RDs establish a
+                    Number of node/sink antenna elements                     1                                      tree topology using different biases, and the actu-
+                    Inter-site interference modeling                         Explicitly modeled.
+                                                                                                                    al simulation. The default system parameters are
+                                                                                                                    provided in Table 1.
+                    BS noise figure                                          7 dB                                       To obtain the metrics of interest, we employ
+                                                                                                                    the following procedure. For each set of param-
+                    End node noise figure                                    7 dB
+                                                                                                                    eters, we ran simulations for 25 hours of system
+                    BS/sink antenna element gain                             0 dBi                                  time. The steady-state period was detected by uti-
+                                                                                                                    lizing the moving average statistics, and the data
+                    RD antenna element gain                                  0 dBi                                  were collected during the steady-state period. To
+                    Thermal noise level                                      –174 dBm/Hz                            remove residual correlations, we utilized the batch
+                                                                                                                    means strategy. Due to the large size of statistical
+                    Traffic model                                            1 message/2 hours/node                 samples, only the point estimates are shown.
+                    Application data message size                            32 bytes                                   With Release 16, 3GPP has introduced mod-
+                                                                                                                    ifications to LTE-M and NB-IoT to reduce radio
+                                                               PHY Design                                           resource control (RRC) signaling and physical
+                    MCS                                                      Quadrature phase-shift keying (QPSK)   layer control channel overhead to improve spec-
+                                                                                                                    tral efficiency and device power consumption.
+                    Transmission of (negative) acknowledgments
+                                                                             Single slot using QPSK                 The 3GPP NR Industrial IoT (IIoT) in Release 16
+                    ACK/NACK                                                                                        primarily focuses on augmented reality (AR) and
+                    Maximal number or retransmissions                        3                                      virtual reality (VR) and new use cases like fac-
+                                                                                                                    tory automation to differentiate from low-pow-
+                    End node antenna height                                  1.5 m                                  er use cases further [13]. Performance of these
+                                                                                                                    improvements introduced to LTE-M and NB-IoT
+                    Frame size                                               10 slots (10 m
+                                                                                                                    and NR IIoT would be interesting separate stud-
+                    Slot size                                                10 symbols (416 s)                    ies. However, we chose to use 3GPP Release 15
+                                                                                                                    as a benchmark, as it was submitted to ITU-R as
+                    Transport block size                                     456 bits
+                                                                                                                    5G proposal by 3GPP. More specifically, we con-
+                    SCS                                                      27 kHz                                 sider the LTE-M technology [14] and a single-hop
+                                                                                                                    regime of DECT-2020 technology. To enable the
+                    Modulation scheme                                        CP-OFDM                                comparison, we adjust the amount of emitted
+               TABLE 1. System parameters for the conducted performance evaluation.                                 power such that no cell edge users experience
+                                                                                                                    outages. For the multihop regime, we chose the
+                                                                                                                    radiated power value to be 10 times lower than
+                                                      as the basic class for all types of network devices,          for single-hop, which results in only a third of the
+                                                      which contains all the node parameters (e.g., posi-           nodes having direct connectivity to a sink.
+                                                      tion, mobility model, antenna parameters, power)
+                                                      and serves as a container for L2 interfaces, routing                          Numerical Assessment
+                                                      protocol implementations, flow tables, signaling              We start by analyzing the PLR as a function of
+                                                      engine, application handlers, traffic generators,             node density for several operational regimes
+                                                      physical layer interfaces, and so on. To simulate             demonstrated in Fig. 3. First, by comparing mesh-
+                                                      such a high-density deployment, we implemented                based multihop and single-hop solutions, we
+                                                      specific physical layer abstraction, which stores             note that the mesh-based solution shows better
+                                                      all the bidirectional path loss states between the            results. Particularly, for the single-channel regime,
+                                                      RDs, having reception signal strengths higher than            the density of nodes satisfying the 1 percent PLR
+                                                      the noise level. During the simulation, all the com-          requirement [5] increases more than twice from
+                                                      ponents can gather component-specific and glob-               7 million for the single-hop solution to the maxi-
+                                                      al statistics on packet deliveries, delays, power             mum of 16 million for DECT-2020. However, the
+                                                      consumption, and so on.                                       available resources increase from one to three
+
+
+               62                                                                                                                 IEEE Communications Magazine • June 2022
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+               channels does not lead to substantial perfor-
+               mance improvement. The rationale is that each
+               base station (BS) is allowed to use only one chan-
+               nel. Specifically, with respect to requirements of 1
+               percent PLR, the density of end nodes increases
+               by at most 1 million for all considered configura-
+               tions. Note that these results are in line with [15],
+               which studies the system in similar conditions.
+                   Now, we introduce the bias parameter for the
+               multihop operation: zero-bias means operation at
+               the receiver sensitivity level, while, say, 3 dB bias
+               means operating 3 dB above the receiver sensitiv-
+               ity. The usage of higher bias values forces nodes
+               to choose next-hop neighbors that are closer to
+               them. In practice, this feature can be implement-
+               ed by setting the minQuality threshold in beacons
+               as specified in [11, Part 4]. Observing Fig. 3, one
+               may notice that the usage of bias improves the
+               system capacity in the multihop regime. For exam-
+               ple, for the single-channel regime, by increasing
+               the bias from 3 dB to 20 dB, we improve the
+               device density from 13 to approximately 17 mil-
+               lion. Finally, note that the gain caused by bias is
+               similar for one- and three-channel cases.                        FIGURE 3. Packet loss rate as a function of node density.
+                   Another critical performance measure is
+               latency. To this aim, Fig. 4 shows the 99th laten-
+               cy percentile. As one may observe, single-hop
+               communication leads to better delay performance
+               for the low density of end nodes. Raising the bias
+               from 3 dB to 20 dB increases the delay as the data
+               are transmitted by utilizing more hops on average.
+               At the same time, the 99th latency percentile is
+               not severely affected by the number of channels
+               utilized, as for higher device density, starting from
+               approximately half a million, all curves coincide,
+               leading to similar performance. However, even for
+               high device densities of around 10 million, where
+               PLR is still within the requirement of one percent
+               (Fig. 3), the latency of successfully delivered pack-
+               ets is within 10 s, even for the single-hop regime.
+               The comparison between the DECT-2020 mMTC
+               solution and LTE-M technology is of special inter-
+               est. By utilizing the LTE-M performance evalua-
+               tion results [14] for a single 1.4 MHz channel, we
+               observe that DECT-2020 outperforms LTE-M in
+               terms of delay: 3–7 ms for DECT-2020 operation-
+               al modes and slightly over 1 s for LTE-M for the
+               node density of half a million devices. As LTE-M
+               uses repetitions resulting in high delay even in low             FIGURE 4. 99th latency percentile as a function of node density.
+               load conditions, DECT-2020 avoids such opera-
+               tion, and it eventually turns into reduced latency.
+                   A critical metric responsible for an end node                is that this configuration leads to lower interfer-
+               lifetime is energy efficiency, presented in Fig. 5 in            ence, and this gain outweighs that associated with
+               megabits per Joule. First, note that the single-hop              the decrease in the number of hops.
+               configuration leads to much worse performance                        We note that even the single-channel regime
+               than all considered multihop DECT-2020 setups                    of DECT-2020 satisfies ITU loss and delay require-
+               and device densities. This effect is explained by                ments for 5G mMTC communications [5]. How-
+               the fact that the amount of energy needed to                     ever, from the energy efficiency point of view,
+               reach a BS in a single hop is much higher. The                   this regime is much worse compared to multihop
+               gradual decrease in energy efficiency for all con-               mode. Furthermore, single-hop communication
+               sidered schemes is caused by the increase in the                 end systems have to be more complex, allowing
+               interference level, eventually leading to more fre-              them to reach high emitted power.
+               quent link-layer retransmissions. By comparing
+               DECT-2020 multihop configurations, we observe                                                 Conclusions
+               that the higher bias value leads to worse energy                 In this article, we introduce the recently standard-
+               efficiency. The reason is that higher biases require             ized DECT-2020 solution for novel massive IoT
+               a higher number of hops on average and thus                      applications requiring stricter delay and loss per-
+               higher energy per bit. However, as the device                    formance guarantees. Utilizing a mesh topology
+               density increases, the mode with 20 dB bias                      to reduce interference, DECT-2020 can manage
+               approaches the one with 3 dB bias. The rationale                 these deployments thanks to dynamic channel
+
+
+               IEEE Communications Magazine • June 2022                                                                                                                    63
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                               Commun. Mag., vol. 56, no. 10, Oct. 2018, pp. 114–20.
+                                                                                                                          [2] M. Mohammadi et al., “Deep Learning for IoT Big Data and
+                                                                                                                               Streaming Analytics: A Survey,” IEEE Commun. Surveys &
+                                                                                                                               Tutorials, vol. 20, no. 4, 2018, pp. 2923–60.
+                                                                                                                          [3] M. T. Okano, “IoT and Industry 4.0: the Industrial New Revo-
+                                                                                                                               lution,” Int’l. Conf. Mgmt. and Info. Sys., vol. 25, Sept. 2017,
+                                                                                                                               pp. 75–82.
+                                                                                                                          [4] S. Winkelhaus and E. H. Grosse, “Logistics 4.0: A Systematic
+                                                                                                                               Review Towards A New Logistics System,” Int’l. J. of Produc-
+                                                                                                                               tion Research, vol. 58, no. 1, 2020, pp. 18–43.
+                                                                                                                          [5] ITU-R M.2410-0, “Minimum Requirements Related to Tech-
+                                                                                                                               nical Performance for IMT-2020 Radio Interface,” July 2017.
+                                                                                                                          [6] “Study on Self-Evaluation Toward IMT-2020 Submission,”
+                                                                                                                               3GPP TS 37.910, Oct. 2019.
+                                                                                                                          [7] “Low Throughput Network (LTN); Use Cases and System
+                                                                                                                               Characteristics,” ETSI TS 103 249 V1.1.1, Oct. 2017.
+                                                                                                                          [8] ITU-R M.2412-0, “Guidelines for Evaluation of Radio Inter-
+                                                                                                                               face Technologies for IMT-2020,” July 2017.
+                                                                                                                          [9] Electromagnetic Compatibility and Radio Spectrum Matters
+                                                                                                                               (ERM); System Reference Document (SRdoc); Data Trans-
+                                                                                                                               mission Systems Using Wide Band technologies in the 2.4
+                                                                                                                               GHz band, ETSI TR 103 665 v1.1.1, Jan. 2021.
+                                                                                                                          [10] J. Ding et al., “IoT Connectivity Technologies and Applica-
+                                                                                                                               tions: A Survey,” IEEE Access, vol. 8, 2020, pp. 67,646–73.
+                                                                                                                          [11] DECT-2020 New Radio (NR); Parts 1 to 4, ETSI TS 103 636,
+                                                                                                                               Apr. 2021.
+                                                                                                                          [12] “Study on Channel Model for Frequencies from 0.5 to 100
+                                                                                                                               GHz (Release 14), 3GPP TR 38.901 V14.1.1,” July 2017.
+                                                                                                                          [13] “3GPP Releases 16, 17 & Beyond,” 5G Americas, White
+                                                                                                                               Paper, Jan. 2021; https://www.5gamericas.org/wp-content/
+                                                                                                                               uploads/2021/01/InDesign-3GPP-Rel-16-17-2021.pdf
+               FIGURE 5. Energy efficiency as a function of node density.                                                 [14] “IMT-2020 Self-Evaluation: mMTC Non-Full Buffer Con-
+                                                                                                                               nection Density for LTE-MTC and NB-IoT,” 3GPP TSG-RAN
+                                                                                                                               WG1 R1-1809780, Aug. 2018.
+                                                        selection and cognitive radio principles without                  [15] A. Anttonen et al., “Enabling Massive Machine Type Com-
+                                                        a need for precise frequency planning. Together                        munications with DECT-2020 Standard: A System-Level Per-
+                                                                                                                               formance Study,” VTT Technical Research Centre of Finland.
+                                                        with the state-of-the-art radio capabilities, these                    VTT Research Report No. VTT-R-00367-21, Jan. 1. 2021;
+                                                        features make it a very attractive option for the                      https://cris.vtt.fi/ws/files/45087959/VTT_R_00367_21.pdf
+                                                        local-area, low-latency, self-hosted mMTC and
+                                                        other IoT networks.                                                                           Biographies
+                                                            Benchmarking the performance of the DECT-                     Roman Kovalchukov (roman.kovalchukov@tuni.fi) is a doctoral
+                                                        2020 solution against operator-driven CIoT solu-                  researcher at Tampere University, Finland. His research interests
+                                                                                                                          are in wireless communications, focusing on machine learning,
+                                                        tions demonstrates that the mesh-based approach                   queuing theory, and system-level simulations.
+                                                        allows reaching much higher node densities for
+                                                        the same delay and loss performance bounds,                       Dmitri Moltchanov (dmitri.moltchanov@tuni.fi) is a university
+                                                        enabling wide-area networking for many different                  lecturer at Tampere University. His research interests include
+                                                                                                                          5G/5G+ systems, terahertz communications, Industrial IoT appli-
+                                                        applications. From the analysis, we conclude that                 cations, and mission-critical V2V/V2X systems.
+                                                        the DECT-2020 standard is best suited for smart
+                                                        IoT applications such as homes, buildings, cities,                Juho Pirskanen (juho.pirskanen@wirepas.com) is a principal
+                                                        and industrial automation, performing tracking,                   system engineer at Wirepas, Finland. His research interests are
+                                                                                                                          different radio communication solutions on physical and radio
+                                                        metering, and control tasks.                                      protocol layers for new wireless standards.
+                                                            One of the open questions is the support of
+                                                        extremely high mobility scenarios (e.g., enabling                 Joonas Säe (joonas.sae@tuni.fi) is a staff scientist at Tampere
+                                                        connectivity at highways and high-speed rail-                     University. His research interests include 5G mobile networks,
+                                                                                                                          IoT technologies, and UAV communications.
+                                                        roads), where mesh solutions may show sub-opti-
+                                                        mal performance. Specifically, if the routing nodes               Jussi Numminen (jussi.numminen@wirepas.com) is the head of
+                                                        move too fast, it may negatively affect the stability             radio strategy and IPR at Wirepas. His research interests are
+                                                        of the network topology. However, if only leaf                    radio communications performance on physical and radio pro-
+                                                                                                                          tocol layers for new wireless standards.
+                                                        nodes are highly mobile, they can still use the
+                                                        uplink connection. Such features as local broad-                  Y evgeni K oucheryavy (yevgeni.koucheryavy@tuni.fi) is a full
+                                                        casting might also enable the downlink. To solve                  professor at Tampere University. His research interests include
+                                                        these issues, additional changes to the routing                   terahertz communications, 5G/5G+ systems, and nanonetworks.
+                                                        procedures are needed.                                            Mikko Valkama (mikko.valkama@tuni.fi) is a full professor and
+                                                                                                                          head of the Electrical Engineering Unit at Tampere University.
+                                                                                  References                              His research interests include radio communications, localiza-
+                                                        [1] D. Wang et al., “From IoT to 5G I-IoT: The Next Generation    tion, and sensing, with emphasis on 5G and beyond mobile
+                                                            IoT-Based Intelligent Algorithms and 5G Technologies,” IEEE   networks.
+
+
+
+
+               64                                                                                                                           IEEE Communications Magazine • June 2022
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on February 25,2026 at 12:42:53 UTC from IEEE Xplore. Restrictions apply.
+

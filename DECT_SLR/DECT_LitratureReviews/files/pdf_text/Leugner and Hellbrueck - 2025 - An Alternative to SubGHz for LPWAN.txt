@@ -1,0 +1,385 @@
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+
+                     An Alternative to SubGHz for LPWAN
+                                     Swen Leugner                                                        Horst Hellbrück
+                           Center of Excellence CoSA                                             Center of Excellence CoSA
+                       University of Applied Science Lübeck                                  University of Applied Science Lübeck
+                                 Lübeck, Germany                                                       Lübeck, Germany
+                           swen.leugner@th-luebeck.de                                          horst.hellbrueck@th-luebeck.de
+
+
+
+
+    Abstract—Low Power Wide Area Networks (LPWAN) enable                            of the 868 MHz band. LoRa operating in the global 2.4 GHz
+ energy-efﬁcient communication over long distances, making them                     ISM band is free from duty cycle restrictions, while DECT
+ interesting for Internet of Things (IoT) applications. Some                        NR+ operates within the 1.88–1.9 GHz band in Europe. This
+ applications require a higher data rate than standard LPWAN
+ while keeping a moderate range for keeping infrastructure re-                      exclusive frequency allocation prevents interference with other
+ quirements low. This paper provides a comparative evaluation of                    radio standards, thereby reducing transmission collisions and
+ two LPWAN technologies, LoRa operating at 2.4 GHz and DECT                         ensuring higher reliability, particularly in urban or industrial
+ NR+ for these kind of applications. We conducted modeling and                      settings.
+ experimental evaluations to assess their performance in terms of                      Selecting the appropriate radio standard strongly depends
+ range and data rate across indoor, indoor-outdoor, and outdoor
+ scenarios. For modeling we applied the log-distance path loss                      on the speciﬁc application requirements. Parameters such as
+ model, accounting for environmental conditions. Results show                       range, data rate, and building penetration must be balanced
+ that LoRa achieves signiﬁcantly greater range, with up to 259                      to suit diverse scenarios, ranging from building control and
+ meters in indoor-outdoor scenarios, compared to DECT NR+                           industrial automation to critical emergency communication.
+ with a maximum of 16 meters. Outdoor evaluations revealed                          However, a systematic analysis comparing DECT NR+ and
+ LoRa’s capability to maintain connectivity at distances exceeding
+ 1 kilometer in non-line-of-sight conditions. However, DECT NR+                     LoRa in the 2.4 GHz band remain scarce.
+ offers higher data rates, reaching up to 3744 kBit/s, making                          This publication aims to address this gap by providing a
+ it advantageous for applications demanding robust data rates                       comprehensive evaluation of the two technologies. Combining
+ in limited-range scenarios. The ﬁndings highlight the trade-offs                   modeling and experimental validation, this study examines
+ between range and data rate.                                                       range, building penetration, and data rate. The results aim
+    Index Terms—IoT, LPWAN, LoRa, DECT NR+, ISM, RF
+ Modeling
+                                                                                    to offer technical insights and practical recommendations for
+                                                                                    tailored IoT applications.
+                                                                                       The contributions of our work are as follows:
+                             I. I NTRODUCTION
+                                                                                       • Comparison between DECT NR+ and LoRa 2.4 GHz
+    The Internet of Things (IoT) is rapidly evolving, trans-                           • Modeling and evaluation of realistic scenarios
+ forming the way we live and work. Modern devices are                                  • Recommendations for practical applications
+ increasingly equipped with wireless radio interfaces, enabling                        • New contribution to the discussion on LPWAN technolo-
+ seamless communication. In the context of smart city projects                            gies
+ and industrial applications, the number of wireless sensors                           The rest of the paper is organized as follows. Section II
+ operating within the 868 MHz band has signiﬁcantly grown in                        discusses related work for DECT NR+ and LoRa 2.4 GHz. In
+ the last years. This trend demonstrates the importance of Low                      Section III, we introduce the modeling framework and method-
+ Power Wide Area Networks (LPWANs) for IoT solutions, with                          ology used in this study. We provide an evaluation of range
+ LoRaWAN being a prime solution for energy efﬁciency and                            and performance in Section IV, presenting the experimental
+ extended range.                                                                    ﬁndings. Finally, we draw conclusions and suggest directions
+    LoRaWAN in the 868 MHz band offers key advantages,                              for future work in Section V.
+ including excellent building penetration, long battery life, and
+ extended range [1] [2]. These characteristics are particularly                                              II. R ELATED W ORK
+ crucial for IoT applications like water meter readings [3].                           In this section, we will present related work on LoRa in
+ However, its low data rate and regulatory restrictions, such                       the 2.4 GHz frequency band and DECT NR+. We will start
+ as the 1% duty cycle limitation in Europe, pose challenges to                      with DECT NR+ ﬁrst. Various terms are often used for DECT
+ dynamic control of connected actuators [4]. Such constraints                       NR+ in the literature. It is sometimes called DECT-2020
+ limit its potential for real-time applications that require bidi-                  NR, DECT NR or similar. We will continue to use the term
+ rectional communication, such as those vital for emergency                         DECT NR+ for this paper, but it is mentioned for the sake of
+ services like ﬁreﬁghters.                                                          completeness. In [5], Samuylov et al. investigate coexistence
+    Emerging technologies, such as DECT NR+ and LoRa in                             mechanisms and the performance of DECT NR+ compared
+ the 2.4 GHz band, provide viable alternatives to the limitations                   to classic DECT. They use a simulation at system level and
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               109                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+ come to the conclusion that DECT NR+ is coexistent with                            modulation can also cause demodulation, although interference
+ classic DECT. In [6] Maliatsos et al. brieﬂy introduce DECT                        from other technologies is present.
+ NR+, they show that DECT NR+ uses a cluster tree topology                             In our research, we were unable to ﬁnd a direct comparison
+ to build a mesh network and emphasize this feature in DECT                         between DECT NR+ and LoRa 2.4 GHz. Furthermore, the
+ NR+. In [7], Troccoli et al. present a new type of localization                    related work shows that unusually long or short distances are
+ in DECT NR+. The authors use direction-of-arrival to enable                        assumed for DECT NR+ and LoRa 2.4 GHz. We will therefore
+ localization in large DECT NR+ networks. The direction-of-                         ﬁrst carry out a modeling of the two radio standards in order
+ arrival is implemented in Matlab as a simulation environment.                      to compare them. We will then carry out a range evaluation.
+ The solution is not implemented or evaluated in or with DECT
+                                                                                                                III. M ODELING
+ NR+ hardware. In [8], Waßmann et al. carry out a performance
+ evaluation with DECT NR+ in an industrial environment. The                            In order to show the differences between LoRa and DECT
+ authors created DECT NR+ frames with Matlab and used                               NR+, we will ﬁrst carry out a modeling. The aim of the
+ software-deﬁned radios for transmission and reception. The                         modeling is to obtain an estimate of the range and data rate
+ authors examined the 450 MHz, 1350 MHz and 3700 MHz                                of the two radio standards in order to be able to identify
+ frequency bands. The 450 MHz and 3700 MHz frequency                                applications for them. In the next section, we will then
+ bands are subject to licensing in Germany. The 1350 MHz                            empirically determine the range in a test.
+ band is only released for wireless microphones in Germany.                            For modeling purposes, we use a transmitter, a transmission
+ The 1880-1900 MHz frequency band intended exclusively for                          channel and a receiver. The transmitter emits a continuous
+ classic DECT or DECT NR+ was not evaluated.                                        wave, which is attenuated via the transmission channel and
+    In [9] Haque et al. evaluated the link distance performance                     received by the receiver. To model the attenuation, we use the
+ in different radio environments. To perform the evaluation,                        log-distance path loss model. The log-distance path loss model
+ they used the free space pathloss model, 3GPP TR 38.901                            is suitable for the frequency range from 1.9 GHz to 2.5 GHz
+ path loss model, two-ray ground reﬂection model and COST-                          and can be easily adapted for urban, suburban or rural areas.
+ 231 hata model. The models all showed mixed results. We                            The log-distance path loss model is calculated as
+                                                                                                                                         
+ will therefore use the log-distance path loss model for our                                                          d                  f
+ investigation, as it can be easily adapted to other environments                   P L(d) = P L(d0 )+10·n·log10          +20·log10           +Xσ ,
+                                                                                                                     d0                1000
+ using the path loss exponent. In addition to modeling the path                                                                                (1)
+ loss models, Haque et al. also carried out measurements with                       where d represents the distance between the transmitter and
+ real hardware. The authors were able to achieve ranges of                          the receiver in meters, while d0 is the reference distance at
+ up to 190 m indoors. Outdoor ranges of up to 2.4 km could                          which the path loss, P L(d0 ), is known. The term P L(d0 )
+ be achieved. However, the range was not estimated using a                          (in dB) stands for the path loss at the reference distance d0 .
+ model. The data rate was also not speciﬁed for the maximum                         The path loss exponent, n, characterizes the attenuation of
+ distances that can be achieved between the transmitter and                         the signal and depends on the environmental conditions, such
+ receiver. However, this is an important criterion for assessing                    as whether the signal propagates in urban, rural, or indoor
+ whether the radio standard is suitable for the user’s intended                     settings. The parameter Xσ accounts for shadowing effects
+ application. We will therefore add the data rate to the model                      modeled as a Gaussian random variable. Finally, f refers to
+ in our publication.                                                                the carrier frequency of the signal, expressed in megahertz.
+    In [10], Janssen et al. discussed LoRa 2.4 GHz and speciﬁed                        The received signal power at the receiver at distance d is
+ the range and data rate using the free space and dominated path                    then calculated from
+ loss model. They described unusually long distances (up to
+                                                                                                 P (d)Rx = PT x + GT x − P L(d) + GRx ,                        (2)
+ 133 km). In addition to the model, Janssen et al. did not carry
+ out any validation in a real radio environment in which the                           where PT x is the transmission power in dBm, GT x is the
+ unusually long radio environment would have been noticeable.                       antenna gain in dB of the transmitter, P L(d) is the path loss at
+ In [11], Derévianckine et al. compared LoRa in the 2.4 GHz                         distance d and GRx is the antenna gain in dB of the receiver.
+ frequency band with LoRa in the 868 MHz band. They carried                            To calculate the data rate for the received signal strength,
+ out indoor and outdoor experiments for both frequency bands                        we applied Table I. The values for LoRa were taken from the
+ with the SX1276 radio chip and SX1280 radio chip from                              data sheet of the SX1280 LoRa transceiver [12]. The values
+ Semtech, but did not develop a model. Derévianckine et al.                         for DECT NR+ were taken from Signal Vortex [13].
+ see several advantages in the 2.4 GHz frequency band. On                              The table is structured in such a way that we have a
+ the one hand, LoRa in the 2.4 GHz frequency band achieves                          column for LoRa and DECT NR+ radio technology. For LoRa,
+ higher data rates than LoRa in the 868 MHz frequency band.                         we have speciﬁed the data rate for the bandwidths 203 kHz
+ Secondly, the radio channel is better utilized as there is no duty                 and 1625 kHz and thus the smallest bandwidth and largest
+ cycle limitation in the 2.4 GHz frequency band. For example,                       bandwidth of the SX1280 radio chip. For 31.72 kBit/s, the
+ in Europe only 1% of the 868 MHz may be occupied by the                            received signal must therefore have a received signal strength
+ respective 868 MHz LoRa device. With regard to robustness                          (RSS) of at least -109 dBm. This is analogous to the reception
+ against interference, Derévianckine et al. state that LoRa                         sensitivity that is achieved with a spreading factor of 5.
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               110                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+                              TABLE I                                               bandwidth shown in orange and DECT NR+ shown in green.
+        DATA RATES FOR DIFFERENT MODES BASED ON RSS VALUES .                        We can see that DECT NR+ has the shortest range but the
+         Technology         RSS Range (dBm)           Data Rate (kBit/s)            highest data rate. The range in the model for DECT NR+ is
+                                ⩾ −109                      31.72                   16 m. The range for LoRa with 203 kHz bandwidth is 70 m.
+                           −111 ⩽ RSS < −109                19.03                   The steps indicate the spreading factor (SF) for LoRa and the
+                           −115 ⩽ RSS < −111                 11.1
+                           −118 ⩽ RSS < −115                 6.34                   MCS for DECT NR+. The highest range with DECT NR+ is
+       LoRa 203 kHz
+                           −121 ⩽ RSS < −118                 3.57                   achieved with MCS0 and with LoRa with SF12.
+                           −124 ⩽ RSS < −121                 1.98
+                           −130 ⩽ RSS < −124                 1.09
+                                < −130                        0
+                                 ⩾ −99                     253.91
+                           −103 ⩽ RSS < −99                152.34
+                           −106 ⩽ RSS < −103                88.87
+                           −109 ⩽ RSS < −106                50.78
+       LoRa 1625 kHz
+                           −111 ⩽ RSS < −109                28.56
+                           −114 ⩽ RSS < −111                15.87
+                           −120 ⩽ RSS < −114                 8.73
+                                < −120                        0
+                                 ⩾ −81                      3744
+                            −85 ⩽ RSS < −81                 2496
+                            −88 ⩽ RSS < −85                 1872
+         DECT NR+
+                            −90 ⩽ RSS < −88                 1248
+                            −93 ⩽ RSS < −90                  624
+                                 < −93                        0
+
+
+                                                                                    Fig. 1. Model Datarate vs Distance of LoRa and DECT NR+ for Indoor-
+ Accordingly, signals with a spreading factor of 12 can be                          Indoor Scenario
+ received up to -130 dBm.
+    The minimum reception sensitivity for the modulation cod-                          Figure 2 shows the indoor-outdoor scenario. The coloring of
+ ing scheme were also assumed for DECT NR. MCS 4 is                                 the curves is the same as in Figure 1. The same applies to the
+ therefore used above -81 dBm. Signals can be received with                         scaling of the X-axis. We therefore assume that a higher range
+ MCS 0 to -93 dBm.                                                                  is achieved in the indoor-outdoor scenario. In the model we
+    In the following, we will model a scenario in which the                         assume 270 m. In principle, both scenarios show that DECT
+ transmitter is indoors and the receiver is outdoors. We refer                      NR+ will have a lower range. It is about 2/3 below the range
+ to this scenario as indoor-outdoor. As a further scenario, the                     we expect with LoRa.
+ transmitter is placed indoors and the receiver is also indoors.
+ We refer to this scenario as indoor-indoor.
+    Table II shows the parameters used for the modeled scenar-
+ ios.
+
+                              TABLE II
+  PARAMETERS FOR I NDOOR -I NDOOR AND I NDOOR -O UTDOOR SCENARIOS .
+
+         Parameter                  Indoor-Indoor      Indoor-Outdoor
+         d0                             1.0 m               1.0 m
+         P L(d0 )                      40.0 dB             40.0 dB
+         n                               4.45                5.8
+         Xσ                                0                  0
+         fLoRa                        2400 MHz            2400 MHz
+         fDECT                        1900 MHz            1900 MHz
+         PTX, LoRa                     15 dBm              15 dBm
+         PTX, DECT, EU                 19 dBm              19 dBm
+         LoRa GTX , GTX                 5 dBi               5 dBi                   Fig. 2. Model Datarate vs Distance of LoRa and DECT NR+ for Indoor-
+         DECT NR+ GTX , GTX             4 dBi               4 dBi                   Outdoor Scenario
+
+                                                                                      However, if the range with DECT NR+ is sufﬁcient, the
+   We determined the path loss at P L(d0 ) empirically for                          data rate is higher than that of LoRa in all cases. We therefore
+ the development kits used later at a distance of 1 m. The                          deduce from the model: If the range is sufﬁcient for the
+ Xσ was assumed to be 0, as no Gaussian noise should be                             application, DECT NR+ should be preferred due to the higher
+ superimposed. This is a simpliﬁcation to make the curves                           data rate. In the next section, we will evaluate LoRa and DECT
+ easier to read. The remaining parameters correspond to the                         NR+ using development kits. The range evaluation will be
+ development kits used later.                                                       carried out for this purpose. Due to the limited range of DECT
+   Figure 1 shows the indoor-indoor scenario. We see LoRa                           NR+, we will primarily carry out the range evaluation with
+ with 203 kHz bandwidth shown in blue, LoRa with 1625 kHz                           LoRa.
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               111                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+                        IV. R ANGE E VALUATION                                      be set in the development kit. Both antennas have the same
+    We are using two development kits to evaluate the range.                        antenna gain of 4 dBi. For the evaluation, we conﬁgured one
+ The LoRa development kit is the T3S3 from Lillygo. It was                          of the development kits as a transmitter and the other as a
+ chosen because, unlike the development kit from Semtech, it                        receiver.
+ has a power ampliﬁer. The power ampliﬁer enables a total                              For the further procedure, we ﬁrst carried out an indoor-
+ transmission power of +20 dBm, which is the maximum                                indoor test, which serves as a reference in order to carry out
+ transmission power permitted in Germany in the 2.4 GHz                             a subsequent outdoor test and thus determine the maximum
+ band. The transceiver in the development kit is an SX1280                          range. The indoor-indoor test was carried out in Building 17,
+ from Semtech. We used the DECT NR+ Evaluation Board                                Building 18 and Building 13 of the University of Applied
+ from RFMondial as the DECT NR+ Development Kit. It                                 Science Lübeck. The buildings are marked in Figure 4. The
+ has the NRF9161 transceiver from Nordicsemiconductor. A                            buildings are multi-storey and have large glass panes. Inside
+ Raspberry PI Computation Module is installed on the evalua-                        there are laboratories, ofﬁces and seminar rooms, the partition
+ tion board, which serves as an application processor. In both                      walls are made of plasterboard. The transmitter was placed in
+ cases, only the physical layer is considered. A datalink layer                     the center of building 18 on the 2nd ﬂoor. The receiver was
+ is not considered. Figure 3 shows the development kits. The                        used to determine the maximum distance at which reception is
+ development kits are shown with the antennas included in the                       still possible. This showed that DECT NR+ no longer allows
+ development kits.                                                                  reception after 16 meters. On the second ﬂoor, data could still
+                                                                                    be received within a range of 10 meters around the transmitter.
+                                                                                    On the ﬁrst ﬂoor, reception was possible 4 meters around the
+                                                                                    transmitter.
+
+
+
+
+ Fig. 3. Development kits Lillygo T3S3 (left), RFmondial DECT NR+
+ Evaluation Board (right)
+
+    The settings for the range evaluation of the individual kits
+ are shown in Table III.
+
+                                 TABLE III
+                      S ETTINGS FOR RANGE EVALUATION
+                                                                                    Fig. 4. Evaluation area. Red marking for Indoor area. Red star for maximum
+                                    LoRa             DECT NR+                       indoor-outdoor range. Yellow marking as outdoor route
+             Center Frequency       2400.5 MHz       1881.792 MHz
+             Bandwidth              203 kHz          1.728 MHz
+             TX Power               20 dBm           19 dBm                            With the LoRa Development Kit, Building 17 and Building
+             Modulation             LoRa SF12        MCS0                           18 could be covered across all ﬂoors. The signal was inter-
+                                                                                    rupted on the ﬁrst ﬂoor of building 13. Data could be received
+    For LoRa we have chosen the lower 2400.5 GHz band                               within a radius of 59 m in that indoor-outdoor-indoor test.
+ as it is likely to interfere with WiFi. A bandwidth of 203                         The maximum range between indoor transmitter and outdoor
+ kHz was chosen to allow a long range. The transmission                             receiver was 259 m and is marked a red star in Figure 4. As the
+ power (incl. antenna gain) was set to +20 dBm in order to                          measurements corresponded to the indoor-outdoor model in
+ transmit at the maximum permitted transmission power in                            relation to each other, the outdoor-outdoor investigations were
+ Germany. As modulation we utilized LoRa with spreading                             carried out exclusively with LoRa. The measurement path is
+ factor (SF) 12. For DECT NR+, we have chosen the frequency                         marked in yellow in Figure 4.
+ 1881.792 MHz, which can be selected at will as DECT NR+                               For the outdoor evaluation, the transmitter was placed
+ coexists with classic DECT. The bandwidth is ﬁxed for the                          outside the building at a height of 10 m in the corridor
+ NRF9161 transceiver. The transmission power of +19 dBm                             between Building 17 and Building 18. The route for the
+ is the maximum supported by the NRF9161 transceiver. The                           outdoor test was chosen so that, starting from building 18,
+ Modulation Scheme Index (MCS) 0 is the smallest that could                         there is initially a 200 m long line-of-sight connection. A
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               112                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+ building is then passed through on the ﬁrst ﬂoor. At a distance                    environmental conditions present in real-world measurements.
+ of around 400 m, the route then passes through a densely built-                    These factors could be incorporated by replacing the log-
+ up area, which represents a non-line-of-sight connection to the                    distance path loss model with a ray-tracing model, although
+ transmitter. Following this, the environment of the non-line-                      this is beyond the scope of this publication.
+ of-sight connection changes to a mix of trees and buildings.                          For practical applications, the model-based range estima-
+ The longer straight section in this area is around 410 m to                        tion provides a useful guideline, but empirical measurements
+ 780 m away from the transmitter and is slightly elevated.                          remain essential to determine precise values for speciﬁc de-
+ There is no line-of-sight connection here either. We would                         ployment scenarios.
+ take the route to the northernmost point and back in order to
+ record as many samples as possible. Each samples consisted                                                     V. C ONCLUSION
+ of a received signal strength indicator (RSSI) and signal noise                       This paper evaluated the LPWAN technologies LoRa in the
+ ratio (SNR) values and are shown in Figure 5.                                      2.4 GHz band and DECT NR+ in terms of range and data
+                                                                                    rate across various scenarios. The results indicate that LoRa
+                                                                                    in the 2.4 GHz band, due to its signiﬁcant range, is particularly
+                                                                                    well-suited for applications requiring reliable long-distance
+                                                                                    communication, such as reading and controlling water meters,
+                                                                                    as well as transmitting telemetry data for emergency services
+                                                                                    like ﬁreﬁghters, which exceed the 1% duty cycle limitation
+                                                                                    of the 868 MHz band. DECT NR+, while limited in range,
+                                                                                    offers superior data rates, making it ideal for applications
+                                                                                    requiring higher data rate, such as industrial automation and
+                                                                                    data-intensive real-time communication.
+                                                                                       The combination of modeling and experimental evaluations
+                                                                                    highlights the key strengths and weaknesses of both technolo-
+                                                                                    gies. Practical recommendations from this work include using
+                                                                                    LoRa for scenarios prioritizing robustness and range, while
+                                                                                    DECT NR+ serves as a valuable alternative for conﬁned areas
+                                                                                    beneﬁting from high data rates.
+  Fig. 5. RSSI and SNR of the Outdoor Range Evaluation with LoRa SF12                  Future research should focus on analyzing additional fac-
+                                                                                    tors such as interference and mobility. Furthermore, hybrid
+    Shown in blue is the received signal strength in dBm. As                        approaches that combine both technologies could present
+ we started the reception strength measurement close to the                         innovative solutions for IoT applications.
+ transmitter, a relatively high received signal strength can be
+ seen at the beginning. We then went into building 18, down                                                  ACKNOWLEDGMENTS
+ the stairwell and back outside. As a result, there is a drop in
+                                                                                      The work is part of funded research project AKTIV
+ the received signal strength and an increase. In the middle
+                                                                                    (13N16400) of Federal Ministry of Education and Research.
+ between 400 and 600 samples, we are about 1 km away
+                                                                                    Horst Hellbrück is an adjunct professor at the Institute of
+ from the transmitter at the northernmost point at the top right
+                                                                                    Telematics of University of Lübeck.
+ of Figure 5. We can see that the received signal strength
+ is relatively high, but the signal-to-noise ratio is very low                                                    R EFERENCES
+ and reception was therefore only possible to a limited extent.
+ This was also shown by the fact that hardly any frames were                          [1] P. J. Basford, F. M. J. Bulot, M. Apetroaie-Cristea, S. J. Cox,
+                                                                                          and S. J. Ossont, “Lorawan for smart city iot deployments: A long
+ received in this area, which also represents the limit of the                            term evaluation,” Sensors, vol. 20, no. 3, 2020. [Online]. Available:
+ transceivers. According to the resulting data set, the transceiver                       https://www.mdpi.com/1424-8220/20/3/648
+ can receive signals down to -95 dBm in the prevailing radio                          [2] H. H. R. Sherazi, L. A. Grieco, M. A. Imran, and G. Boggia, “Energy-
+                                                                                          efﬁcient lorawan for industry 4.0 applications,” IEEE Transactions on
+ environment. The signal-to-noise ratio can be as low as -25                              Industrial Informatics, vol. 17, no. 2, pp. 891–902, 2020.
+ dB.                                                                                  [3] M. Piechowiak, P. Zwierzykowski, and B. Musznicki, “Lorawan
+    Finally, we compare the results from the model with the                               metering infrastructure planning in smart cities,” Applied Sciences,
+                                                                                          vol. 13, no. 14, 2023. [Online]. Available: https://www.mdpi.com/2076-
+ range evaluation. In the modeling, we analyzed the tech-                                 3417/13/14/8431
+ nologies using the log-distance path loss model to estimate                          [4] N. Benkahla, H. Tounsi, Y.-Q. Song, and M. Frikha, “Enhanced dynamic
+ the range relationship under identical conditions based on                               duty cycle in lorawan network,” in Ad-hoc, Mobile, and Wireless
+                                                                                          Networks: 17th International Conference on Ad Hoc Networks and
+ modulation and receiver sensitivity. The model indicates that                            Wireless, ADHOC-NOW 2018, Saint-Malo, France, September 5-7,
+ LoRa achieves approximately three times the range of DECT                                2018. Proceedings 17. Springer, 2018, pp. 147–162.
+ NR+. This estimate was conﬁrmed in the indoor-indoor test,                           [5] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Kouch-
+                                                                                          eryavy, and M. Valkama, “Performance assessment of dect-2020 nr and
+ where LoRa reached 56 meters while DECT NR+ achieved                                     classic dect coexistence mechanisms,” in 2023 IEEE 97th Vehicular
+ 16 meters. However, the model does not account for speciﬁc                               Technology Conference (VTC2023-Spring). IEEE, 2023, pp. 1–7.
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               113                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+                                        ITG-Fachbericht 319: Mobilkommunikation, 20. – 21.05.2025 in Osnabrück
+
+
+  [6] K. Maliatsos, A. Gotsis, and A. Alexiou, “Evaluation of the imt-
+      2020 candidate radio interface technology dect-2020 nr,” in 2022 14th
+      International Conference on COMmunication Systems & NETworkS
+      (COMSNETS). IEEE, 2022, pp. 889–893.
+  [7] T. Troccoli, H. J. Damsgaard, J. Pirskanen, E. S. Lohan, A. Ometov,
+      J. Morte, J. Nurmi, and V. Kaseva, “Novel direction-of-arrival-based
+      localization in massive dect-2020 5g nr networks,” IEEE Internet of
+      Things Journal, 2024.
+  [8] M. Waßmann, A. Poets, J. Peissig, and J. Pilz, “Performance of dect-
+      2020 nr in an industrial environment for varying rf bands,” in 2024 Joint
+      European Conference on Networks and Communications & 6G Summit
+      (EuCNC/6G Summit). IEEE, 2024, pp. 610–615.
+  [9] M. M. Haque, J. Sae, J. Pirskanen, and M. Valkama, “Dect-2020 nr
+      link distance performance in varying environments: Models and mea-
+      surements,” 2025. [Online]. Available: https://arxiv.org/abs/2410.24112
+ [10] T. Janssen, N. BniLam, M. Aernouts, R. Berkvens, and M. Weyn, “Lora
+      2.4 ghz communication link and range,” Sensors, vol. 20, no. 16, 2020.
+      [Online]. Available: https://www.mdpi.com/1424-8220/20/16/4366
+ [11] G. H. Derévianckine, A. Guitton, O. Iova, B. Ning, and F. Valois,
+      “Opportunities and challenges of lora 2.4 ghz,” IEEE Communications
+      Magazine, vol. 61, no. 10, pp. 164–170, 2023.
+ [12] Semtech, Datasheet SX1280 Rev 3.3 2023.
+ [13] SignalVortex.      Dect    nr   mcs    index.     [Online].    Available:
+      https://signalvortex.com/dect-nr-mcs-index/
+
+
+
+
+           ISBN 978-3-8007-6530-0                                               114                    @ VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 10:38:56 UTC from IEEE Xplore. Restrictions apply.
+

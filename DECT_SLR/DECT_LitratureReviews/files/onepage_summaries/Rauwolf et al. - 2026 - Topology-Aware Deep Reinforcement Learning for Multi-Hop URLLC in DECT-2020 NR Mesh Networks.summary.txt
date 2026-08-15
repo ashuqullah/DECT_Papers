@@ -1,0 +1,73 @@
+Title: Topology-Aware Deep Reinforcement Learning for
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—DECT-2020 New Radio (NR) is a radio interface technology (RIT) standardized by
+the European Telecommunications Standards Institute (ETSI) for large-scale
+massive machine-type communication (mMTC) and Ultra-Reliable and Low-Latency
+Communications (URLLC) deployments. In DECT2020 NR mesh networks, multi-hop
+delivery is typically realized by flooding-based forwarding, which is robust but
+increases network load and does not explicitly optimize end-to-end latency or
+reliability. In this paper, we propose a topology-aware Deep Reinforcement
+Learning (DRL) framework for URLLC-oriented multi-hop routing in DECT-2020 NR
+mesh networks. Nexthop selection is modeled as a Markov decision process (MDP)
+whose state combines link-level latency and packet error rate (PER) metrics with
+graph-structured topology information. An inductive graph neural network (GNN)
+encoder summarizes the current mesh topology and a per-edge Deep Q-Network (DQN)
+head selects the next hop using a URLLC-shaped reward that jointly captures end-
+to-end latency and reliability. To improve scalability, the agent is trained
+through a curriculum over progressively larger topologies. Simulation results
+over small to large mesh topologies show that the proposed GNN+DRL routing
+policy improves the URLLC trade-off compared with both the existing latency-only
+routing method and the DECT2020 NR flooding procedure. For a representative
+medium-sized mesh network, it reduces end-to-end latency by up to 19.9%, lowers
+end-to-end PER by up to 10%, and decreases the number of transmissions per
+delivered packet compared with the existing approach.
+
+Approach and methods:
+the current mesh topology and a per-edge Deep Q-Network (DQN) head selects the
+next hop using a URLLC-shaped reward that jointly captures end-to-end latency
+and reliability. To improve scalability, the agent is trained through a
+curriculum over progressively larger topologies. Simulation results over small
+to large mesh topologies show that the proposed GNN+DRL routing policy improves
+the URLLC trade-off compared with both the existing latency-only routing method
+and the DECT2020 NR flooding procedure. For a representative medium-sized mesh
+network, it reduces end-to-end latency by up to 19.9%, lowers end-to-end PER by
+up to 10%, and decreases the number of transmissions per delivered packet
+compared with the existing approach. Index Terms—DECT-2020 NR, URLLC, routing,
+deep reinforcement learning, graph neural networks, mesh networks. I. I
+NTRODUCTION Digital Enhanced Cordless Telecommunications (DECT), standardized by
+European Telecommunications Standards Institute (ETSI), has evolved into Digital
+Enhanced Cordless Telecommunications-2020 New Radio (DECT-2020 NR) as a radio
+interface technology tailored for large-scale, low-power Internet of Things
+(IoT) and industrial scenarios. Operating in license-exempt spectrum with
+decentralized scheduling and mesh support, DECT-2020 NR enables self-organizing
+multihop topologies in which battery-powered radio devices (RDs) may operate in
+Fixed Termination (FT), Portable Termination (PT), or combined FT/PT modes. The
+corresponding
+
+Key findings:
+Neural Network Empowered Wireless Communications: Fundamentals, State-of-the-
+Art, Challenges, and Opportunities,” IEEE Wireless Communications, vol. 32, no.
+5, pp. 162–168, 2025. [18] Y. Lu, Y. Li, R. Zhang, W. Chen, B. Ai, and D.
+Niyato, “Graph Neural Networks for Wireless Networks: Graph Representation,
+Architecture and Evaluation,” IEEE Wireless Communications, vol. 32, no. 1, pp.
+150–156, 2024. [19] M. Ding, Y. Guo, Z. Huang, B. Lin, and H. Luo, “GROM: A
+Generalized Routing Optimization Method with Graph Neural Network and Deep
+Reinforcement Learning,” Journal of Network and Computer Applications, vol. 229,
+p. 103927, 2024. [20] B. Ghojogh and A. Ghodsi, “Reinforcement Learning:
+Tutorial and Survey,” OSF Preprints, 2024. R EFERENCES [1] European
+Telecommunications Standards Institute, “DECT-2020 New Radio (NR): Part 1:
+Overview; Release 1,” ETSI, Tech. Rep. ETSI TS 103 636-1 V1.3.1, Dec. 2021. [2]
+——, “DECT-2020 New Radio (NR): Part 4: MAC Layer; Release 1,” ETSI, Tech. Rep.
+ETSI TS 103 636-4 V1.4.1, 2023. [3] ——, “DECT-2020 New Radio (NR): Part 3:
+Physical Layer; Release 1,” ETSI, Tech. Rep. ETSI TS 103 636-3 V1.1.1, Jan.
+2024. Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 09:11:34 UTC from IEEE Xplore.
+Restrictions apply. 147
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

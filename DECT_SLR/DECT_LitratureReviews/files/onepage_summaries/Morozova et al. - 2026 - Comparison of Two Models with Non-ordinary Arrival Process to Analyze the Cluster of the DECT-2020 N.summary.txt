@@ -1,0 +1,53 @@
+Title: Comparison of Two Models
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+. DECT-2020 NR is a wireless communication standard designed for large-scale IoT
+networks with a large number of devices. In such networks, a sink node collects
+data from multiple sources. In this paper, we modeled a DECT-2020 sink node as a
+discrete packet arrival system, where data packets are processed in batches. We
+compared two types of systems with diﬀerent arrival disciplines, Early Arrival
+and Late Arrival, across several metrics, including the age of information
+(AoI), which measures the freshness of the received data. The results showed how
+the diﬀerence in the order of batch arrival aﬀected network performance and Age
+of Information.
+
+Approach and methods:
+The rapid development of ﬁfth-generation (5G) networks creates new opportunities
+for enabling applications that demand massive machine-type communications (mMTC)
+and ultra-reliable low-latency communications (URLLC). These capabilities are of
+particular importance in the context of the Internet of Things (IoT), where
+millions of devices are expected to communicate simultaneously with high levels
+of reliability, resilience, and scalability. Among the promising technologies in
+this domain is the DECT-2020 New Radio (NR) protocol, standardized by the
+European Telecommunications Standards Institute (ETSI) [1–4]. Unlike
+conventional cellular systems that rely on centralized base stations and ﬁxed
+infrastructure, DECT-2020 NR operates in the unlicensed 1880–1930 MHz frequency
+band and supports a fully decentralized mesh network topology (see Fig. 1). c
+The Author(s), under exclusive license to Springer Nature Switzerland AG 2026 Y.
+Koucheryavy et al. (Eds.): ruSMART 2025/NEW2AN 2025, LNCS 16461, pp. 27–47,
+2026. https://doi.org/10.1007/978-3-032-19978-2_3 28 U. Morozova et al. In
+DECT-2020 NR, each radio device (RD) can act as a transmitter (RDPT ), repeater
+(RDFT,PT ), or receiver (RDFT ), thereby supporting ﬂexible multi-hop
+communication. This self-organizing architecture enables scalable deployments
+with densities of up to one million devices per square kilometer [5], which
+significantly exceeds the capacity of traditional wireless technologies such as
+Wi-Fi,
+
+Key findings:
+In this work, we investigated a model of a DECT-2020 NR network cluster using a
+discrete-time system with diﬀerent arrival disciplines. Based on the derived PGF
+of the waiting time, we also succeed to obtain an analytical expression for the
+PGF of the PAoI. We compared the average peak age of information in the
+DECT-2020 NR network cluster under the EA and LA disciplines. As the results of
+experiments, it is recommended to rely on the LA system, which provides an upper
+bound for the delay metrics, when calculating and designing a DECT-2020 NR
+network. In future work, we also plan to focus on the study of discrete-time
+systems with batch service of variable batch size. Estimating the distribution
+of the incoming batch length is also the goal of our further research.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

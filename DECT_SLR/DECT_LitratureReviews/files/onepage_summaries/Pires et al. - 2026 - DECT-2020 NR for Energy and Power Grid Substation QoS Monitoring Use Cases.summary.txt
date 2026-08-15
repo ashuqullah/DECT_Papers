@@ -1,0 +1,69 @@
+Title: DECT-2020 NR for Energy and Power Grid
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—Modern power grids and industrial systems require scalable and reliable
+wireless connectivity to support real-time monitoring and control. DECT-2020 New
+Radio (NR), an ETSIstandardized wireless technology operating in license-exempt
+spectrum, offers native mesh networking, low latency, and flexible deployment
+for industrial Internet-of-Things (IoT) applications. This paper investigates
+the suitability of DECT-2020 NR mesh networking for power grid monitoring within
+the Ultra Scalable Wireless Access (USWA) project. Two proof-of-concept (PoC)
+deployments are evaluated, collecting data from multiple sensors under varying
+conditions, including packet fragmentation, multihop communication, and
+different data rates to assess the endto-end performance of the system in terms
+of quality-of-service (QoS) metrics. From the results, we found that DECT-2020
+NR shows potential for larger scale energy and substation monitoring
+deployments.
+
+Approach and methods:
+of Things (IoT), Proof of Concept (PoC), Mesh Networks I. I NTRODUCTION
+Digitization of industries requires efficient, flexible, and cost-effective
+wireless connectivity solutions. Many industrial facilities still rely on cables
+for communication, which limits scalability and reconfiguration. DECT-2020 New
+Radio (NR) – a modern wireless ETSI standard – has emerged as a promising
+candidate to address this gap. DECT-2020 NR offers a stateof-the-art radio
+interface tailored for industrial Internet-ofThings (IoT) applications,
+including native mesh networking capabilities that enable large-scale local
+networks through multihop relaying between devices, as well as point-to-point
+and star network topologies. Operating in a license-exempt band (the frequency
+band previously used by Digital Enhanced Cordless Telecommunication devices,
+i.e., legacy DECT), it allows industrial users to deploy and manage private
+networks without licensing costs, opening opportunities for more autonomous and
+scalable digitization efforts in factories, buildings, utility sites, and
+cities. This paper is conducted within the framework of the Ultra Scalable
+Wireless Access (USWA) project (project running from 12/2022 to 11/2025), which
+investigated how advanced DECT2020 NR features can support diverse industrial
+use cases. The project goals included defining system architectures and
+performance requirements, developing scalable and energy-efficient mesh
+networking for massive machine type communications (mMTC) IoT deployments,
+
+Key findings:
+Power Delivery, vol. 23, no. 1, pp. 618–624, 2008. [7] A. Inc., “New standard
+lets data center devices change functions and talk to all their neighbors,” ABB,
+Tech. Rep., 2015, white Paper. [Online]. Available:
+https://www.abb.com/datacenters [8] H. Kokkoniemi-Tarkkanen, P. Raussi, S.
+Horsmanheimo, P. Hovila, A. Kulmala, and S. Borenius, “5g edge for power system
+applications,” in 27th International Conference on Electricity Distribution
+(CIRED 2023), vol. 2023, 2023, pp. 1871–1875. [9] M. van Rensburg, D. Dolezilek,
+and J. Dearien, “Case study: Using IEC 61850 network engineering guideline test
+procedures to diagnose and analyze ethernet network installations,” in
+Proceedings of the PAC World Africa Conference, Johannesburg, South Africa, Nov.
+2015. [Online]. Available: https://selinc.com/api/download/112218/ [10]
+DECT-2020 New Radio (NR); Part 1: Overview; Release 2, ETSI Std. TS 103 636-1
+V2.1.1, October 2024, available: https://www.etsi.org/standards-search. [11]
+DECT-2020 New Radio (NR); Part 5: DLC and Convergence layers; Release 2, ETSI
+Std. TS 103 636-5 V2.1.1, October 2024, available:
+https://www.etsi.org/standards-search. [12] ABB, CMS Manual, Online, ABB,
+Zurich, Switzerland, 2024, manual for the ABB CMS-700 device. [Online].
+Available: https://
+library.e.abb.com/public/ae914775dba84d5ea4ed896c6c0378f9/CMS% 20Manual web.pdf
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und
+Wirtschaft. Downloaded on July 09,2026 at 10:37:26 UTC from IEEE Xplore.
+Restrictions apply. 377
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

@@ -1,0 +1,1073 @@
+Received 11 August 2025, accepted 24 August 2025, date of publication 29 August 2025, date of current version 8 September 2025.
+Digital Object Identifier 10.1109/ACCESS.2025.3603591
+
+
+
+
+Deployment and Performance Evaluation of 5G
+Private Networks, Enabling Use Cases in
+Rural Remote Areas
+MARIA RAFTOPOULOU 1 , MUHAMMAD FAHEEM AWAN 2 ,
+ALEJANDRO RAMÍREZ-ARROYO 3 , MEHMET IZZET SAĞLAM 4 , LJUPCO JORGUSESKI 1 ,
+FLORIS DRIJVER1 , PAWEŁ MAĆKOWIAK1 , AND MARIA RITA PALATTELLA 5 , (Member, IEEE)
+1 Department of Networks, Netherlands Organisation for Applied Scientific Research (TNO), 2595 DA The Hague, The Netherlands
+2 Telenor Research and Innovation, 1360 Fornebu, Norway
+3 Department of Electronic Systems, Aalborg University (AAU), 9220 Aalborg, Denmark
+4 Department of Research and Development, Turkcell Research and Development Center, 34854 İstanbul, Türkiye
+5 Luxembourg Institute of Science and Technology, 4422 Belvaux, Luxembourg
+
+Corresponding author: Maria Raftopoulou (maria.raftopoulou@tno.nl)
+This work was carried out within the COMMECT project, which received funding from the European Union’s Horizon Europe Research
+and Innovation Programme under Grant Agreement No 101060881.
+
+
+
+
+  ABSTRACT Rural remote areas have unique challenges for providing reliable and high-speed cellular
+  connectivity, which makes them unattractive for mobile network operators. The Horizon Europe COMMECT
+  project has addressed connectivity in rural remote areas by 5G private network deployments, which
+  so far have mainly been studied and deployed in industrial environment. The evaluation of the 5G
+  private network deployments is conducted through field trials in four different environment, each of them
+  characterized by different challenges and aiming to support different agro-forestry use cases. In particular, the
+  evaluations relate to 1) indoor environments (e.g. hospitals and educational centers), 2) forestry, 3) livestock
+  transportation, and 4) mines. The obtained results showcase that 5G private networks can support the
+  proposed use cases. For example, in indoor environments, a downlink and uplink throughput of 700 Mbps
+  and 50 Mbps, respectively, were measured, which are sufficient to enable e.g. remote monitoring of hospital
+  patients. Moreover, it was measured that at least 10 Mbps in the uplink can be achieved for up to 300 m
+  deep in the forest. The 10 Mbps target is also met in the farm location, including a satellite backhaul, which
+  can enable e.g. the use case of (un)loading livestock from/to the truck. Additionally, throughput of more
+  than 100 Mbps was measured at the mine location, which is sufficient to enhance safety by e.g. operating
+  autonomous vehicles.
+
+  INDEX TERMS 5G private networks, field trials, forestry, indoor environments, livestock transportation,
+  mines, network deployment, remote areas.
+
+
+
+I. INTRODUCTION                                                                                 5G networks are deployed and managed by mobile network
+In recent years, the fifth generation of mobile networks (5G)                                   operators (MNOs), which then offer their supported services
+has seen wide deployment around the globe. Continuing the                                       to individuals or businesses.
+trend of the previous generations of cellular networks, 5G                                         While MNOs provide a range of services, e.g. Internet
+further improves broadband services as well as enabling a                                       access, and video streaming, through their 5G networks,
+range of new services by also offering ultra-low latency and                                    their network deployments are mostly focused on urban
+massive connectivity [1]. Typically, these so-called public                                     areas. Providing connectivity in rural areas is unattractive and
+                                                                                                challenging for MNOs due to the high investment needed for
+   The associate editor coordinating the review of this manuscript and                          the infrastructure deployment and the low population density
+approving it for publication was Nurul I. Sarkar            .                                   in those areas [2]. Thus, rural areas often face limited or
+                                                  2025 The Authors. This work is licensed under a Creative Commons Attribution 4.0 License.
+VOLUME 13, 2025                                          For more information, see https://creativecommons.org/licenses/by/4.0/                          154581
+                                                               M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+poor connectivity, which in return impacts the residents and           between the video equipment and the 5G modem, rather than
+businesses, hampering economic development.                            in rural areas.
+   To allow more flexibility on the network deployment and                Despite previous work, very limited works are available
+the supported services of the 5G network, the concept of               on practical deployment of 5G private networks in rural
+5G private networks or 5G non-public networks (NPNs) has               areas. Among them, Schellenberger et al. [18] focus on
+been introduced and standardized within the third generation           an agricultural use case, where a drone and a robot are
+partnership project (3GPP) [3], [4]. 5G private networks are           connected through a 5G nomadic network to a remote
+localized networks, which are deployed within the premises             server. Even though the system architecture is validated
+of the private entity e.g. an organization or an enterprise,           as feasible, no detailed results on throughput and latency
+and they are customized to the needs of the private entity.            have been reported. To address the challenges and enable
+Moreover, 5G private networks are managed by the private               new applications in rural areas, Mendes et al. [2] propose
+entity or a third-party provider, e.g. an MNO, on their behalf.        the 5G-RANGE network, which is evaluated with field
+   Due to the flexibility offered by 5G private networks,              demonstration. The designed 5G-RANGE network proposes
+they have gained a lot of attention for deployment in                  new physical, medium access control and network layers that
+industrial environments, which require enhanced security,              are specifically designed for rural areas. Thus, 5G-RANGE
+and high communication availability [5], [6]. To that end,             can be used as a different operation mode for beyond 5G
+the 5G alliance for connected industries and automation                standards.
+(5G-ACIA) has identified different types of 5G private net-               Differently, in our work we showcase how 5G private
+work deployments [7], and multiple deployment evaluations              networks can be used to enable new applications in remote
+are performed e.g. in [8] and [9]. Even though there is high           areas. In addition, several deployments are considered to
+interest on 5G private networks for industrial environments,           provide an overview of the performance of these types of
+these networks are also attractive to provide connectivity             networks in rural areas. Section I-B describes in detail the
+and new services in rural areas to support community                   main contributions and novelty of this study.
+development. For example, different use cases can be enabled
+such as smart agriculture, rural remote healthcare, smart               B. CONTRIBUTIONS AND PAPER ORGANIZATION
+energy, environment monitoring, among many others [2].                 Within the COMMECT project the investigations have been
+                                                                       focused on evaluating the possible connectivity solutions,
+                                                                       in this case 5G private networks, for different use cases
+A. RELATED WORK
+                                                                       in remote areas [19]. The approach taken was via field
+Due to the recent conception and conceptualization of 5G               trials that could reflect, to the extend possible, the actual
+private networks, several state-of-the-art works focus on sim-
+                                                                       conditions in these remote areas. Previously, in [20], two
+ulations and theoretical models. For instance, Lim et al. [10]         use cases in remote areas, namely forestry and livestock
+propose a deep reinforcement learning approach to optimize             transportation, have been described. For each of the two
+content allocation strategy and cache replacement policies             use cases, a network deployment has been proposed and
+in 5G private networks. Chang et al. [11] present an                   evaluated with field trials. However, the evaluation was
+optimization algorithm to enhance the distribution and                 limited to the experienced uplink throughput. This paper is
+signal coverage of 5G base stations in mine deployments.               an extension of our previously published work [20] and the
+Luo et al. [12] analyze the challenges associated with 5G              main contributions can be summarized as follows:
+private network design in the frequency range 2 band based
+on a game theoretic user allocation algorithm to minimize                 1) Description of four use cases in remote areas that can
+co-channel interference.                                                     be enabled by the deployment of 5G private networks,
+   In parallel, practical work related to different fields such as           and their associated network deployment. In addition
+drone scenarios and cyber security is emerging. For instance,                to the two previously studied use cases, the deployment
+Urama et al. [13] present the deployment of 5G private net-                  of 5G private networks in indoor environments, for e.g.
+works based on drone scenarios. Neinavaie et al. [14] exploit                rural educational purposes, and in mines is also studied
+reference signals in private networks for cognitive navigation               in this paper.
+on ground and aerial platforms. Skokowski et al. [15]                     2) Illustration of the performance and limitations of 5G
+employ a 5G private network to test the robustness of the                    private network deployments through field trials. The
+technology against low-energy and smart jamming attacks.                     extended field test evaluation results include coverage
+Akgun et al. [16] study a machine learning algorithm for                     analysis, uplink and downlink throughput, latency, and
+predicting cell interference by exploiting the channel state                 uplink throughput performance for the case of satellite
+information reported by a 5G private network. Uitto and                      backhauling link.
+Heikkinen [17] evaluate video streaming in standalone 5G                  3) A cost benefit analysis of the deployment of 5G private
+networks by measuring the latency and jitter under different                 networks.
+video and network configurations. However their evaluation                In summary, this work is one of the first to report
+scenario is performed indoors and with a short distance                field trial-based evaluations across four different scenarios
+
+154582                                                                                                                            VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+TABLE 1. List of abbreviations.                                                    One of the main advantages of deploying 5G private
+                                                                                networks in remote areas is that it allows for high perfor-
+                                                                                mance connectivity. Reliable and high-speed connectivity is
+                                                                                challenging in remote areas. Introducing 5G private networks
+                                                                                could be a game-changer with several notable benefits.
+                                                                                Firstly, residents and businesses could enjoy faster download
+                                                                                and upload speeds, facilitating more efficient access to
+                                                                                online services, video streaming, and large file downloads.
+                                                                                Secondly, latency performance can be improved that is crucial
+                                                                                for real-time applications like video conferencing, tele-
+                                                                                health services, and remote monitoring, ensuring seamless
+                                                                                communication and rapid response times. Finally, the larger
+                                                                                local capacity would be very helpful as it could accommodate
+                                                                                a vast number of connected devices simultaneously, ranging
+                                                                                from smartphones and tablets to IoT sensors and autonomous
+                                                                                equipment, meeting the diverse connectivity needs of the
+                                                                                remote area communities.
+                                                                                   Another advantage is the high communication customiza-
+                                                                                tion. 5G private networks are customized such that priority
+                                                                                or high-quality is given to the limited set of services that
+                                                                                are of crucial importance for the business or the enterprise.
+for rural use case applications, offering valuable insights                     Another example is localization features (or in future sensing)
+for both the academic research community and engineers                          that can potentially revolutionize precision farming, forestry,
+at commercial operators. The key performance indicators                         or remote indoor/mines practices. This feature combined
+(KPIs) and metrics measured offer valuable real-world data                      with high-resolution video connectivity could also enable
+for model validation in simulation, cross-comparison in real                    remote monitoring and teleworking. Furthermore, the 5G
+environments, and insights into the deployment of private 5G                    private network can be customized to seamlessly integrate
+networks in rural environments.                                                 IoT devices such as various sensors and actuators to satisfy
+   The remainder of this paper is organized as follows.                         the needs of the local area services and subscribers.
+In Section II the background of 5G private networks is pre-
+sented including the major challenges from their deployment
+in remote areas. Section III presents the four use cases in                     B. TYPES OF DEPLOYMENT
+remote areas that are under investigation and the associated                    5G private networks (or NPNs) can be deployed in different
+network deployment. The performance evaluation of the                           ways, depending on which part(s) of the network are shared
+proposed network deployments is presented in Section IV,                        (or not) with a public land mobile network [7], [21].
+whereas the relevant cost benefit analysis is presented in                      We identify the following two categories of private network
+Section V. Finally, Section VI concludes the paper. For ease                    (or NPN) deployments:
+of reading, all abbreviations used across the sections are                         Standalone non-public networks (SNPN): These private
+summarized in Table 1.                                                          network deployments do not share any of their functions with
+                                                                                the public network, which allows full control of the private
+                                                                                network. SNPN deployments do not necessarily dictate
+II. 5G PRIVATE NETWORKS IN REMOTE AREAS
+                                                                                that all network components are deployed at the enterprise
+This section provides background information on 5G private                      premises. Different deployment flavours exist that can host
+networks, its types of deployment, advantages, and chal-                        some of the network functions outside the premises.
+lenges for deployment in rural remote areas.                                       Public network integrated non-public network (PNI-NPN):
+                                                                                These private network deployments share some of their
+A. BACKGROUND                                                                   functions with one or more public networks. Different
+5G private networks are intended for non-public use, meaning                    flavours of PNI-NPN deployments exist, depending on which
+that their utilization is normally targeting specific services or               functions are shared with or hosted by the public network(s)
+use cases. Typically, 5G private networks allow access only                     and where these network functions are hosted. For example,
+to a limited set of devices (e.g. devices from employees and                    in [7], the ‘‘shared radio access network (RAN)’’ deployment
+Internet of Things (IoT) devices of an enterprise) in a limited                 is presented, where the private network shares its RAN with
+area (or number of areas). Additionally, due to data sensitivity                the public network. Moreover, a special case of PNI-NPNs
+and security reasons, a private 5G network can be organized                     are the public-network-hosted 5G private networks, also
+such that both the communication data and/or operations and                     known as ‘‘virtual 5G private networks’’, where all network
+management data are kept within the enterprise premises.                        functions are embedded in the public network.
+
+VOLUME 13, 2025                                                                                                                         154583
+                                                            M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+   The two categories of 5G private network deployments are         leading to poor coverage [22]. In this paper, coverage results
+designed to accommodate different total cost of ownership           are presented for each of the deployed networks, covering
+and scaling/customization dependency on the MNO oper-               both SNPNs and PNI-NPNs.
+ating the public network. Consequently, some deployments               Apart from coverage, the network performance also
+have a low scaling/customization dependency on the public           depends from the RAN configuration. In particular, in this
+network, but a high total cost of ownership, with the extreme       paper, we address the challenges of identifying the most
+case of SNPNs having no dependency on the public network.           appropriate bandwidth size and time division duplex (TDD)
+On the other hand, the deployments that share many functions        frame configuration, which are directly related to the use
+with the public network, have a low total cost of ownership         case requirements. Both the bandwidth size and TDD frame
+but a high scaling/customization dependency on the public           configuration have a direct effect on the achievable uplink
+network. For example, the extreme case of virtual 5G private        and downlink throughput, with the TDD frame configuration
+networks are fully dependent on the public network.                 defining how many time slots are allocated to the uplink
+                                                                    and downlink channels within a given time period. When
+C. CHALLENGES                                                       deploying SNPNs, there are strict regulations in terms of
+For the deployment of 5G private networks in remote areas,          5G frequency license, which only allow for bandwidth sizes
+different challenges need to be addressed, for example,             in a multiple of 10 MHz [23] and/or having a maximum
+acquisition of spectrum licenses for SNPNs, coverage for            allowed bandwidth size. Moreover, the license conditions
+PNI-NPN with shared RAN, bandwidth size selection,                  include requirements in terms of TDD configuration, due to
+and backhauling for SNPN. Some of these challenges are              synchronization restrictions with other network operating in
+addressed in this paper through the performance evaluation          close proximity [24]. This could also restrict the performance
+of different 5G private network deployments to support use          of 5G private networks, especially for use cases where there is
+cases in remote areas.                                              mostly uplink-oriented traffic. Both of this aspects are studied
+   One of the challenges of 5G private networks is to               in this paper.
+identify the most appropriate deployment, i.e. SNPN or PNI-            Last but not least, the availability of backhaul links is also
+NPN, based on the requirements of the use case as well              critical, as they are required for the connection of the 5G
+as the total cost of ownership, which includes both capital         private network to the Internet. This can be especially difficult
+and operational expenditure. Typically, there is a trade-off        in remote areas, where the terrestrial infrastructure is limited
+between network performance and total cost of ownership.            or non-existent. A potential solution for backhauling is the
+Therefore, a clear understanding of this trade-off is required      use of satellite communications. However, the performance
+per use case, as well as the definition of business models.         of satellite communications may still be limited, regardless
+This paper addresses this challenge by proving a cost benefit       of the many recent technological advancements. Considering
+analysis in Section V.                                              that the backhaul could be the limiting factor in the
+   Moreover, the performance of the deployed 5G private             performance of 5G private networks, it has been chosen for
+network, depends on a number of parameters. For example,            study in this paper.
+the network coverage should be large enough such that
+all devices in the intended area can communicate with the
+                                                                     III. 5G PRIVATE NETWORK ENABLED USE CASES
+network. Typically a location is considered as ‘‘covered’’
+                                                                    This section describes the use cases, the challenges of
+by the network if the reference signal received power
+                                                                    each use case, and their associated 5G private network
+(RSRP) at that location exceeds a threshold. Therefore,
+                                                                    deployments. The methodology and setups presented allow
+to guarantee sufficient coverage and capacity, the location
+                                                                    for the reproducibility or comparison of deployments under
+of the base stations, and the coverage optimization of
+                                                                    similar conditions, enabling future evaluations in similar
+the sectored antennas per allocated carrier frequency are
+                                                                    contexts.
+essential. However, for PNI-NPN deployments, where the
+RAN (and thus, the base stations) of the public network
+is shared with the private network, sufficient coverage and         A. INDOOR ENVIRONMENTS
+capacity tailored to the localized ‘‘private’’ area of the          1) USE CASES
+particular enterprise could be challenging. This is due to          The concept of wireless factories has spread significantly
+the dependency on the public network’s RAN infrastructure           in the last decade. Due to advances in cellular connectivity,
+that is potentially optimized to serving other ‘‘public’’ users     highly reliable automated production lines can now be imple-
+outside the ‘‘private’’ area. On the contrary, with SNPNs,          mented according to the concepts introduced by Industry
+there is full control within the 5G private network in terms        4.0 and the industrial Internet of things (IIoT) [25]. Among
+of base station location and antenna direction to achieve           the connectivity solutions proposed to provide high reliability
+the required coverage and capacity. For instance, in dense          in wireless environments are 5G private networks due to
+environments with strong multipath components, such as              dedicated spectrum and infrastructure [3].
+indoor environments, signal blocking or non-line-of-sight              Among the use cases, we highlight the massive connection
+(NLoS) can strongly affect the dynamic range and RSRP,              of sensors with IoT devices for real-time monitoring,
+
+154584                                                                                                                         VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+allowing maintenance work and efficient resource manage-                        of the facility with an approximate area of 400 m2 , and is
+ment. Additionally, this connectivity can be extended to the                    located at a height of 5 m.
+control of autonomous mobile robots (AMRs) in charge                               To analyze the performance of the described private
+of logistics in factories [26]. Finally, this highly reliable                   network, a SIMCOM SIM8380G-M2 modem with support
+connectivity could enable augmented reality and digital twins                   for 5G NSA/SA in the network operating band is used as
+for remote assistance and control in the production chain.                      user equipment (UE). Four antennas are connected to this UE
+   This first use case, focused on indoor environments,                         to take advantage of the modem’s multiple-input multiple-
+is presented as a baseline for the performance of a                             output (MIMO) capabilities, as illustrated in Fig. 1(a).
+private 5G network compared to outdoor environments                             To monitor UE operations, the UE is connected to a small
+(see following use cases). Establishing this indoor baseline                    computing box (next unit of computing) from which ping
+is essential for subsequent comparisons with deployments                        and iperf commands run to evaluate network performance.
+in more challenging rural or remote environments, where                         Both the modem and the computing box are placed on an
+factors such as propagation, interference, and infrastructure                   AMR with the ability to navigate the 5G SmartLab following
+limitations can significantly impact performance. From a                        predefined routes due to a LiDAR-based positioning system
+high-level perspective, a 5G private indoor network can                         (see Fig. 1(a)). While the AMR stores data related to its
+offer multiple use cases beyond those already explained                         positioning within the laboratory, the modem stores data
+in industrial environments, especially in rural areas where                     related to network performance and signal quality. Therefore,
+indoor environments like greenhouses or local healthcare                        by synchronizing the timestamps from both ends it is possible
+and education centers can benefit greatly from advanced                         to accurately map the network performance parameters at
+connectivity. Some examples are: (i) automation and sensor                      each location in the industrial scenario. The analysis of the
+networks in agro-forestry applications (e.g., smart green-                      radio propagation characteristics and performance of the 5G
+houses requiring reliable low-latency connections for precise                   private indoor network is presented throughout Section IV.
+climate control or automated irrigation), (ii) connectivity
+in healthcare centers and hospitals for remote monitoring
+or remote surgery, which have critical ultra-low latency                        B. FORESTRY
+requirements, or (iii) connectivity in education centers where                  1) USE CASES
+virtual and augmented reality classes are held, which may                       In Norway, forests cover roughly 33% of the country’s
+require high bandwidths [27], [28], [29].                                       land area, making them a crucial part of both the economy
+   Given the previous use cases, this paper analyzes an indoor                  and environmental management efforts. Sustainable forest
+5G private network to assess the coverage and performance                       management is central to Norway’s strategy, supporting
+in terms of latency and throughput that such a deployment                       the long-term vitality of the forests while enabling a
+can provide in a realistic indoor scenario such as an industrial                wide range of economic activities. However, the forestry
+environment.                                                                    sector in Norway faces a significant challenge in terms of
+                                                                                digitalization. The sector’s value chain has not yet fully
+                                                                                embraced technological innovations, particularly with regard
+2) NETWORK DEPLOYMENT                                                           to connectivity solutions [30]. As Norway continues to foster
+The AAU 5G Smart Production Lab is a 1200 m2 research                           innovation across various sectors, there is an opportunity
+laboratory located at Aalborg University (Denmark), which                       to boost the forestry industry’s resilience and sustainability
+emulates the physical conditions of an industrial environ-                      by adopting digital transformation and keeping pace with
+ment. Therefore, these facilities emulate an industrial setting                 technological developments. The COMMECT project has
+with multiple production lines, robotic arms or autonomous                      identified two key use cases where 5G private networks could
+mobile robots. Due to the research nature of the environment,                   play a pivotal role, as depicted in Fig. 2.
+there are multiple connectivity solutions deployed such as                         Remote Operational Support for Forest Machinery Opera-
+MULTEfire, Wi-Fi 6 or private 4G and 5G networks.                               tors: The forestry industry faces a critical need for remote
+   In the framework of this work, a 5G private network                          expert assistance during thinning and logging activities,
+deployed in the lab has been assessed. This private network is                  where operators in the field require immediate guidance and
+connected to the public core of a Danish operator through a                     support. This challenge is compounded by the limited cover-
+dedicated core-RAN over a fiber connection. This solution,                      age and performance of public mobile networks in forested
+deployed in the 3.7 GHz in frequency range 1 n78 band,                          regions. To address this, the proposed solution involves
+has a bandwidth of 100 MHz, a TDD frame configuration                           deploying a mobile 5G private network on wheels (NoW),
+of 3 uplink and 7 downlink slots, and a subcarrier spacing                      specifically designed for forestry environments, as shown in
+configuration of 30 kHz. The private network hardware                           Fig. 2. This 5G private NoW facilitates high-quality video
+deployment consists of a Nokia Mxie 5G SA core and a                            transmission from forestry machinery, enabling real-time
+Nokia AirScale indoor radio unit, which can be visualized in                    remote assistance through online cameras. Experts from
+Figs. 1(a) and 1(b), respectively. The indoor radio unit, which                 the forest operator’s company can guide on-site operators
+acts as an access point, provides coverage to one of the halls                  in making informed decisions. Additionally, this solution
+
+VOLUME 13, 2025                                                                                                                        154585
+                                                                      M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+                                                                              FIGURE 2. Depiction of forestry use cases.
+
+
+
+
+                                                                              High-resolution, multi-spectral cameras mounted on drones
+                                                                              capture aerial imagery, which is transmitted in real-time via
+                                                                              the private 5G NoW to an external edge server. The inclusion
+                                                                              of on-map analytics further enhances the ability to visualize
+                                                                              forest conditions, ensuring timely and effective responses to
+                                                                              any alarming changes.
+
+                                                                              2) NETWORK DEPLOYMENT
+                                                                              The COMMECT forestry use cases require substantial uplink
+                                                                              throughput to support the transmission of high-quality video
+                                                                              streams from remote forestry machinery and drones. To meet
+                                                                              this demand, the concept of a 5G private network, specifically
+                                                                              the NoW, has been introduced. The NoW functions as a
+                                                                              self-contained system, integrating 5G radio, 5G core, and
+                                                                              related applications within a single, highly mobile platform,
+                                                                              as depicted in Fig. 3(a). This configuration enables the
+                                                                              rapid deployment of a standalone 5G private network that
+                                                                              delivers seamless 5G coverage. The traffic generated by
+                                                                              NoW is backhauled through either terrestrial networks or
+                                                                              satellite links, depending on the operational requirements and
+                                                                              location, allowing remote access to cloud services or the
+FIGURE 1. (a) Photograph of the SIMCOM modem and the next unit of             internet for expert consultations. To enhance real-time forest
+computing (NUC) assembled on the AMR, and the 5G SA core located in           monitoring and situational awareness, the NoW’s Edge server
+the 5G SmartLab, and (b) scenario through which the AMR navigates.
+AirScale indoor radio (ASiR) is illustrated on the roof of the factory.       can be equipped with artificial intelligence (AI) and machine
+                                                                              learning algorithms to detect and respond to incidents such as
+                                                                              forest fires or other anomalies efficiently.
+                                                                                 To evaluate the suitability of NoW for forestry applica-
+facilitates remote maintenance, diagnostics, and repairs of                   tions, multiple tests were performed with the NoW, pro-
+machinery, with vendor experts providing supervision via                      viding both 5G radio and 5G core functionalities, deployed
+high-definition video feeds.                                                  in a selected forest location. The tests were conducted
+   Enhanced Situational Awareness in Forests: The increas-                    using 80 MHz of bandwidth in the 3.3–3.4 GHz frequency
+ing risk of forest fires, exacerbated by climate change,                      range, with a transmit power of 35 dBm and an antenna
+underscores the need for a sophisticated monitoring and                       height of 2.5 m. An uplink-heavy TDD frame configuration
+surveillance system in forested areas. Forests are vulnerable                 of 3 uplink and 7 downlink slots was utilized to prioritize
+to a range of emergencies, including wildfires, landslides, and               uplink performance. The measurement locations within the
+floods, necessitating advanced solutions to ensure the safety                 forest are shown in Fig. 3(b). Due to the dense forest canopy,
+of both the environment and emergency responders, including                   measurements could not be taken farther from the NoW
+police, ambulances, fire departments, and volunteers. Current                 deployment point. The measurements were conducted using
+systems require rapid reporting of incidents, such as fires,                  a Huawei P40 smartphone, acting as a UE, held at a typical
+through digital channels. In response, the NoW solution                       natural height of 1.5 m. The tests employed the web-based
+shown in Fig. 2, integrated with drone technology and                         OpenSpeedTest tool,1 which was hosted on the NoW’s Edge
+on-the-ground sensors, offers a comprehensive monitoring                      server. This tool measures uplink and downlink throughput,
+and surveillance platform. This system enables the swift
+notification of emergency personnel during critical incidents.                   1 https://openspeedtest.com/selfhosted-speedtest
+
+
+154586                                                                                                                                   VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+FIGURE 3. (a) Network on Wheels (NoW), and (b) measurement points in a dense forest with high vegetation, where the base station marks the location
+of the NoW.
+
+
+
+
+and latency, directly through a browser, without the need                       beneficial to monitor and detect the status of the animals, e.g.
+for additional software. These measurements are performed                       injuries, to ensure that their health status remained unchanged
+using multiple transmission control protocol (TCP) streams.                     during their transport. The envisioned solution includes the
+The distance between the NoW and the UE was calculated                          deployment of a camera at the (un)loading location, which
+using global positioning system (GPS) coordinates, with                         will live stream a video of the (un)loading process to a remote
+an accuracy of approximately 3 m. Notably, no backhaul                          server, where the relevant software will run.
+was involved in this phase of testing, as the focus was on                         The envisioned deployment solutions for both use cases
+evaluating the performance of the 5G private network itself.                    is similar i.e. deployment of a camera that will upload an
+The performance evaluation is presented in Section IV.                          image/video to a remote server. From a communications
+                                                                                point of view, sufficient uplink throughput, and thus cov-
+C. LIVESTOCK TRANSPORTATION                                                     erage, should be ensured both at the road barrier and at
+1) USE CASES                                                                    the (un)loading location. In terms of uplink throughput,
+One of the major industries in Denmark is the pig industry,                     the 10 Mbps [33] have been identified as a minimum
+which is highly regulated by both the European Union and                        requirement, whereas for coverage, typically, an RSRP target
+the Danish authorities to ensure the welfare of animals                         of -120 dBm is chosen.
+before, during and after their transport [31], [32]. Within
+the COMMECT project, discussions have been taken place                          2) NETWORK DEPLOYMENT
+with stakeholders from the livestock transportation industry                    To support the livestock transportation use cases, the
+and two potential use cases have been identified that will be                   connectivity solution in Fig. 4 is proposed. Specifically, local
+beneficial to the industry.                                                     connectivity at the (un)loading location is provided with a
+   Automatic license plate recognition: For a transportation                    5G private network, which is then connected to the remote
+truck to be allowed to enter a piglet (un)loading location,                     server via terrestrial or satellite Internet access. The choice
+a check on the license plate number should be performed.                        of backhaul depends on the availability of terrestrial networks
+This process is important as trucks need to go through a                        at the (un)loading location, which is typically in rural areas
+disinfection process before being allowed at a (un)loading                      with little or no cellular coverage. In this work, and in
+location and the truck’s clearance is registered to a database,                 relation to the livestock transportation use case, we assess the
+coupled to their license plate number. As a solution, it is                     performance of a 5G private network in terms of coverage and
+envisioned that a camera will be installed on and control the                   uplink throughput. Moreover, we assess the performance of
+road barrier leading to the (un)loading location. The camera                    the backhaul via satellites, as the backhaul can significantly
+will upload the image of the license plate to a remote server,                  limit the experienced end-to-end uplink throughput.
+which is connected to the database and where the relevant                          For our evaluations, we performed field tests at a farm
+software runs.                                                                  location in The Netherlands, where the Amarisoft CallBox
+   Automatic animal counting and monitoring: The animals                        Classic,2 illustrated in Fig. 5(a), was used to act as an SNPN,
+are being counted during their (un)loading from/to the
+truck, and thus an efficient and correct animal counting is                        2 https://www.amarisoft.com/test-and-measurement/device-
+important. Moreover, during the (un)loading process, it is                      testing/device-products/amari-callbox-classic
+
+VOLUME 13, 2025                                                                                                                               154587
+                                                                     M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+                                                                             mines are dug at an angle and include steps to prevent
+                                                                             avalanches from occurring inside the building site. These
+                                                                             walls in the open-pit mines are dangerous for the operators of
+                                                                             the excavators and drivers of the heavy dump trucks. The goal
+                                                                             is to decrease accidents and mistakes in the risky environment
+                                                                             of Türkiye’s open-pit mines with autonomous collaborative
+                                                                             vehicles connected to a private network.
+                                                                                 The private network solution is developed for automated
+                                                                             and teleoperated vehicles in open-pit mines located in
+                                                                             extremely suburban areas. With the support of 5G infrastruc-
+                                                                             ture, AI-supported central task planning, and smart sensors,
+                                                                             autonomous collaborative vehicles will be developed and
+                                                                             operated for excavation works.
+FIGURE 4. Livestock transportation use case with a 5G private network.
+
+                                                                             2) NETWORK DEPLOYMENT
+providing both 5G radio and 5G core functionalities. The                     With the scalability of the 5G open-pit mine private network
+Amarisoft was configured in the n77 band, in particular                      architecture, two experience zone activations have been
+between 3.825 GHz and 3.875 GHz and its maximum                              carried out at high-profile events, where participants were
+transmission power was -20 dBm/MHz. For the measure-                         able to experience the control of excavator from a remote
+ments two different bandwidth sizes were considered, i.e.                    location 800 km away, with a latency of one-tenth of the blink
+20 MHz and 50 MHz. Moreover, two different TDD frame                         of a human eye. In addition to enabling 5G standalone edge
+configurations were considered. The first TDD configuration                  network in the open-pit mine private network, the quality of
+is typically recommended for mostly downlink oriented                        services is guaranteed by AI-based resource optimisation of
+traffic and consists of 3 downlink slots, 1 special slot and                 network slicing technology. The open-pit mine 5G private
+1 uplink slot [24]. The second TDD configuration is an                       network solution is covered by five road side units and
+uplink heavy configuration as it consists of 5 downlink slots,               two fibre base stations with advanced cellular vehicle-
+2 special slot and 3 uplink slots during a 10 slots frame [24].              to-everything use cases that AI on the edge applications
+   To perform the relevant coverage and uplink throughput                    and 5G standalone edge network scalable architecture. The
+measurements, the Quectel RM502Q-GL has been used to                         open-pit mine private network deployment uses 100 MHz
+act as a UE at different locations at the farm, which are                    of bandwidth in the 3.5–3.6 GHz frequency range, with a
+illustrated in Fig. 5(b). For the assessment of the backhaul                 transmit power of 55 dBm and an antenna height of 18 m.
+link, in terms of uplink throughput, the Starlink Standard V3                The deployment of five road site units is shown in Fig. 6.
+terminal3 has been connected to the Amarisoft CallBox to                        The proposed private network aims to enable 5G connec-
+provide connectivity between the UE and a server located                     tivity along with an edge network architecture that provides
+in Amsterdam. For all uplink throughput measurements, the                    AI-assisted perceived zero latency and ultra-reliability in
+iPerf34 has been used in user datagram protocol (UDP) mode,                  open-pit mining areas. The private network deployment
+which is a commonly used protocol for video streaming                        includes 5G radio equipment mounted on the base stations in
+codecs due to its latency characteristics and packet loss                    the demo location, the transformation of 5G sites into 5G fibre
+tolerance. The results on coverage, uplink throughput, and                   sites, and conducting fault tests. AI-assisted perceived zero
+backhaul are presented in Section IV.                                        latency and ultra-reliability algorithm was developed with
+                                                                             the data collection platform designed and located at open-pit
+D. MINES                                                                     mine private network. This platform was also designed to
+1) USE CASES
+                                                                             support custom data generation. The performance evaluation
+                                                                             of the proposed private network is presented in Section IV.
+Open-pit or opencast mine extracts minerals from the surface
+instead of underground. Open-pit mining is the most common
+                                                                              IV. PERFORMANCE EVALUATION
+method used in Türkiye for mineral mining and does not
+                                                                             This section presents the performance evaluation of the
+require extractive methods or tunnels. This surface mining
+                                                                             proposed 5G private networks to support the previously
+technique is used when minerals or deposits are relatively
+                                                                             described use cases. The results are presented per KPI rather
+close to the surface of the earth. Open pits are sometimes
+                                                                             than per use case to more easily showcase the difference
+called quarries when building materials and dimension stones
+                                                                             in performance between the different network deployments
+are produced.
+                                                                             on a specific KPI. Moreover, network deployments have
+   Open-pit mines are dug on different benches depending
+                                                                             only been evaluated for the KPIs that are relevant for the
+on the excavation machinery. The walls of the open-pit
+                                                                             associated use cases. Therefore, not all network deployments
+  3 https://www.starlink.com/specifications                                  are compared for each KPI. The KPIs that are under
+  4 https://iperf.fr/                                                        investigation are coverage (in terms of RSRP measurements),
+
+154588                                                                                                                                  VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+FIGURE 5. (a) Measurement setup with Amarisoft CallBox Classic and (b) measurement locations at the farm.
+
+
+
+
+                                                                                within the lab. This range varies between 8 m when the AMR
+                                                                                is in the vicinity of the access point and 22 m when the
+                                                                                AMR navigates the northern part of the lab. Notably, there
+                                                                                is line-of-sight (LoS) between the UE and the access point
+                                                                                in most locations of the hall, except in the western area,
+                                                                                where a rack with heavy machinery blocks the link. Fig. 7(b)
+                                                                                shows the RSRP acquired on the navigated route. Note that
+                                                                                this value is calculated as the average received signal in the
+                                                                                synchronization signal blocks that the network transmits with
+                                                                                20 ms periodicity. Regarding the south location of the hall,
+                                                                                the RSRP reaches values of around −60 dBm due to the LoS
+FIGURE 6. Network deployment of open-pit mine private network.                  condition, and the short range of the link. In the northern part,
+                                                                                these values decrease to values below −70 dBm due to the
+                                                                                larger link range. It is notable that in the western part, there is
+uplink throughput, downlink throughput, latency, and uplink                     an abrupt transition where the signal drops to −80 dBm due
+throughput for a satellite backhaul.                                            to the blocking of the signal given the machinery and racks
+                                                                                present in the scenario.
+A. COVERAGE                                                                        To analyze in more detail the behavior of the RSRP
+Coverage is an important KPI for all network deployments                        over distance, Fig. 8(a) shows the relation between both
+as it defines the area where the UEs can connect to the                         parameters, where a decrease of the RSRP is observed
+network. Typically, to determine the coverage area, RSRP                        as the distance increases due to propagation attenuation.
+measurements are performed at different locations, based on                     To quantitatively evaluate the decrease in RSRP, the path
+a reference signal transmitted by the network. The RSRP, and                    gain can be modeled simply through a slope-intercept model
+hence the coverage, depend among others on the transmit                         which accounts for the path loss exponent n [34]. Considering
+power, antenna gains, and the propagation conditions in the                     the linear relation between RSRP and path gain given the
+environment. Therefore, for each network deployment, the                        fixed transmit power and the omnidirectional gain of the
+RSRP values over different distances are presented. Note that                   antennas in UE and AP, RSRP curves in terms of distance can
+typically a location is considered as covered when the RSRP                     be established for different values of path loss exponent n.
+exceeds -120 dBm.                                                               Therefore, radio propagation conditions can be determined
+                                                                                taking into account a loss exponent n = 2 for free space
+1) INDOOR ENVIRONMENTS                                                          as a baseline. Referring to Fig. 8(a), it can be observed
+Given the setup explained in Section III-A and illustrated                      that the scatter plot tends to converge to values close to
+in Fig. 1, we evaluated the indoor coverage as the strength                     the curves denoted by n = 3 and n = 4. These values
+signal received along the hall in the industrial scenario.                      are similar to those observed in industrial environments
+For this purpose, we proceed to navigate a route with the                       with high machinery density in the state of the art [22],
+AMR in which the UE measures the RSRP level at different                        [35]. Finally, it is worth noting the region located within
+locations in the hall. Fig. 7(a) shows the range between the                    the range of 10 to 13 m, where a sharp drop in RSRP is
+UE−access point link given the different AMR locations                          observed. This region corresponds to the previously described
+
+VOLUME 13, 2025                                                                                                                             154589
+                                                                     M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+                                                                             4) MINES
+                                                                             The open-pit mine private network aims to cover different
+                                                                             coverage challenges, including hotspots, enabling high data
+                                                                             rates and capacity while ensuring a seamless user experience
+                                                                             for heavy dump truck and excavator operators. The RSRP
+                                                                             coverage measurements that are collected from the open-pit
+                                                                             mine private network are shown in Fig. 8(d).
+                                                                                The measurement points are chosen based on the open-pit
+                                                                             mine area. We chose five points that model the performance
+                                                                             of the heavy dump trucks and excavators. Five points are
+                                                                             selected, four in the corner of the open-pit mine and one in the
+                                                                             middle. These points belong to road side units that are based
+                                                                             on specific locations rather than on a specific trajectory and
+                                                                             they are connected to gNodeB 1 or gNodeB 2 (see Fig. 6 for
+FIGURE 7. AMR navigated journey in the 5G SmartLab illustrating: (a) the     their locations). Apart from the RSRP measurements shown
+range between the UE and access point, and (b) the RSRP in the link          in Fig. 8(d), the signal to interference and noise ratio (SINR)
+budget.
+                                                                             is also measured at the same locations as the RSRP, as shown
+                                                                             in Fig. 9.
+                                                                                The results show that the RSRP and SINR do not decrease
+area that experiences total signal blockage, relying on signal               with distance, which happens due to two main reasons.
+reflections and diffractions in the environment rather than on               The first reason is that road side units get service from
+LoS.                                                                         two different base station towers (gNodeB 1 or gNodeB2)
+                                                                             and there are available blockages during the performance
+2) FORESTRY                                                                  evaluation. The second reason is that the base station towers
+Fig. 8(b) shows the RSRP values against the varying distance                 are not designed and optimized specifically for the open-pit
+inside the deep forest. The RSRP measurements in a deep                      mine. These two base stations are commercially available by
+forest environment demonstrate a clear attenuation of signal                 the mobile network operator and give service the surrounding
+strength with increasing distance from the NoW location.                     villages, and private networks are deployed on them. The base
+At a short distance of 15 m, the RSRP is strong at -35 dBm,                  station tower’s antenna direction, tilt values, and height are
+indicating minimal signal loss. However, as the distance                     chosen based on the surrounding village and road, not the
+increases, the signal strength diminishes significantly. At                  open-pit mine. Road side units receive signal from the closest
+133 m, the RSRP drops to -68 dBm, highlighting the impact                    base station, and the base station sector does not directly point
+of dense foliage on signal propagation. Beyond 200 m,                        to the road side units, excavators or trucks.
+the signal degradation becomes more pronounced, with
+RSRP values reaching -87 dBm at 207 m and -98 dBm
+                                                                              B. UPLINK THROUGHPUT
+at 286 m. These measurements underline the challenging
+nature of maintaining robust wireless communication links                    Uplink throughput is a relevant KPI for all network deploy-
+in heavily forested environments, where signal absorp-                       ments as all use cases have requirements on the quality of
+tion and scattering by vegetation contribute to substantial                  the uplink channel. For example, sufficient uplink throughput
+path loss.                                                                   is required for uploading a video to a remote server for
+                                                                             processing. Uplink throughput depends among others on
+3) LIVESTOCK TRANSPORTATION                                                  the distance, transmit power, antenna gains, propagation
+                                                                             environment, bandwidth, as well as the TDD configuration.
+Fig. 8(c) shows the RSRP over distance, measured at the farm
+                                                                             For the different network deployments, the uplink throughput
+location, and illustrates that connectivity can be maintained
+                                                                             is shown for different distances.
+for distances up to about 60 m from the receiver, where the
+RSRP is about -115 dBm. Note that the RSRP measurements
+are independent of the bandwidth and the TDD configuration                   1) INDOOR ENVIRONMENTS
+and thus all four curves in Fig. 8(c) have similar performance.              To evaluate the AMR uplink performance in a realistic
+Moreover, because the measurements were performed in LoS                     indoor 5G environment, tests were carried out at the 5G
+and there were not many obstacles in the environment, a close                Smart Production Lab. During these experiments, the AMR
+to free space propagation has been observed. The rather                      navigated autonomously through the lab while an iperf
+limited coverage achieved with the Amarisoft CallBox is                      client, running on the modem acting as the UE, measured
+due to its limited hardware capabilities, i.e., four simple and              the maximum uplink packet transmission rate using the
+low-cost omnidirectional antennas and low transmit power.                    UDP protocol. Throughput was recorded at one-second
+This showcases a clear trade-off between performance and                     intervals along the robot’s trajectory to capture variations
+investment in equipment.                                                     in performance across the scenario. Fig. 10(a) shows the
+
+154590                                                                                                                                  VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+  FIGURE 8. RSRP over distance (a) in the 5G SmartLab indoor scenario (path loss exponent curves n = 2, 3 and 4 are shown for reference), (b) in the
+  deep forest, (c) at the farm, and (d) at the open-pit mine.
+
+
+
+
+                                                                                is able to provide uplink throughput between 60-70 Mbps.
+                                                                                However, when the AMR enters the NLoS condition or the
+                                                                                range of the measurements increases, it is observed that
+                                                                                the uplink throughput drops significantly to values below
+                                                                                30 Mbps. This fact can be explained from the link budget
+                                                                                perspective, since the transmission power at the UE side
+                                                                                might be constrained, not reaching RSRP or SINR values
+                                                                                to establish modulation and coding schemes leading to large
+                                                                                uplink throughput.
+
+
+                                                                                2) FORESTRY
+                                                                                Fig. 10(b) shows the uplink throughput against the distance
+                                                                                which also corresponds to different RSRP values. The peak
+                                                                                uplink throughput was achieved at the location with the
+                                                                                maximum RSRP at a nearby distance of approximately 15 m
+FIGURE 9. SINR over distance at the open-pit mine.                              whereas around 10 Mbps is achieved at a distance of 300 m
+                                                                                deep in the forest. Moreover, the uplink throughput (and the
+uplink throughput at different positions of the 5G smartlab                     coverage distance) can be further increased by increasing the
+given 100 MHz bandwidth and the TDD configuration of                            transmit antenna height, the height of the receiving unit with
+3 uplink and 7 downlink slots. At short range, the network                      multiple antennas and other features like beamforming.
+
+VOLUME 13, 2025                                                                                                                                 154591
+                                                                      M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+ FIGURE 10. Average uplink throughput over different distances (a) in the 5G SmartLab, (b) in the deep forest, (c) at the farm, and (d) at the open-pit
+ mine.
+
+
+
+
+3) LIVESTOCK TRANSPORTATION                                                    transmission, e.g. transmit power and modulation and coding
+Fig. 10(c) shows the average uplink throughput versus                          scheme. Regardless of the modest uplink throughput achieved
+distance for the considered bandwidth sizes and TDD con-                       with the Amarisoft CallBox, the use case requirement
+figurations. Overall, it is illustrated that the larger bandwidth              of 10 Mbps has been achieved for distances up to about 40 m
+sizes provide higher uplink throughput, because gener-                         from the receiver (or RSRP of -100 dBm) when 20 MHz
+ally throughput scales with bandwidth size. Additionally,                      are used. For the configuration with 50 MHz, the 10 Mbps
+Fig. 10(c) shows that the uplink heavy TDD configurations                      requirement is achieved for distances up to about 55 m from
+provide higher uplink throughput, which results from having                    the receiver (or RSRP of -107 dBm).
+more uplink slots available within the TDD frame. However,
+for distances more than about 50 m (or for RSRP lower
+than -100 dBm), the uplink heavy TDD configurations have                       4) MINES
+a similar performance as their respective ‘‘regular’’ TDD                      A mobile network operator provides services that require
+configurations.                                                                different uplink throughput at the same time. The proposed
+   Fig. 10(c) shows that the measured average uplink                           private network is designed to handle a mix of a wide
+throughput does not significantly exceed the 40 Mbps,                          range of traffic types. For example, traffic due to a file
+which is considered as a modest performance. The limited                       upload can exploit a grant intended for a latency-critical
+performance is due to the same reasons highlighted in                          service. The starvation problem can be seen in the public
+Section IV-A3. Specifically, the limited receiver antenna gain                 networks. In contrast, from day one, the private network
+and transmit power impact the pilot measurements performed                     architecture design mitigates it for latency-critical services
+at the UE, based on which the UE configures its uplink                         like autonomous trucks or excavator data.
+
+154592                                                                                                                                     VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+   The uplink throughput measurements that are collected                        D. LATENCY
+from the open-pit mine private network are illustrated in                       Latency is a relevant KPI particularly for the use cases
+Fig. 10(d). The uplink throughput measured values are                           of indoor environments and forestry. For example, low
+distributed between 100 and 125 Mbps in the measurement                         latency is required to support remote surgery in healthcare
+points. The different values have been monitored in both base                   centers and remote assistance in the forest. Generally, latency
+stations. For the uplink, the available transmission power is                   depends among others on the channel quality and achievable
+significantly lower than for the downlink. Uplink throughput                    throughput, as well as the location of the user plane function,
+depends on the availability of the UE in the gNodeB. The                        which will provide access to the Internet. For the two relevant
+measured values are not correlated with the RSRP, SINR and                      network deployments, the latency is shown over time and
+distance for the uplink.                                                        distance.
+
+C. DOWNLINK THROUGHPUT                                                          1) INDOOR ENVIRONMENTS
+Downlink throughput is a relevant KPI particularly for the                      One of the main advantages of 5G private networks is the
+use cases of indoor environments and forestry. For example,                     reduced number of nodes that need to be routed to access
+sufficient downlink throughput is required to support virtual                   the Internet, so that the end-user benefits from an ultra-
+reality glasses in education centers and remote assistance                      reliable, low-latency system. To demonstrate this, Fig. 13(a)
+in the forest. Downlink throughput depends among others                         shows a round-trip time trace in the 5G private network
+on the distance, transmit power, antenna gains, propagation                     for a predefined AMR path along the hall. This is done
+environment, bandwidth, as well as the TDD configuration.                       using the ping tool, which evaluates the round-trip time at
+For the two relevant network deployments, the downlink                          100 ms intervals. During the whole route, which accounts
+throughput is shown for different distances.                                    for approximately 7 minutes, the maximum round-trip time
+                                                                                found is less than 25 ms, denoting the reliability of the
+1) INDOOR ENVIRONMENTS                                                          network. By applying a moving average for 5 s intervals,
+                                                                                it is observed that the average round-trip time value is in
+Following a procedure similar to the one presented in
+                                                                                the range between 8 ms and 15 ms, taking into account that
+Section IV.B.1, Fig. 11(a) shows the downlink throuhgput
+                                                                                the route has mixed LoS and NLoS conditions. These results
+measured with iperf throughout the scenario. Given the
+                                                                                confirm the feasibility of carrying out critical low latency
+favorable resource allocation in the downlink due to the
+                                                                                communications, thus enabling multiple use cases.
+TDD configuration, the downlink throughput obtained is
+significantly higher than that uplink throughput seen in
+Fig. 10(a), with values up to 700 Mbps. These values                            2) FORESTRY
+decrease as the distance increases. However, in the worst case,                 Fig. 13(b) shows the latency and jitter values evaluated during
+a throughput of at least 100 Mbps is ensured for distances                      the measurement campaign in the forest. The measured
+up to 22 m. It is noteworthy that when moving from LoS to                       latency and jitter values for the 5G private network deployed
+NLoS condition, the throughput is reduced from 700 Mbps                         in a forested environment exhibit notable variations across
+to around 400 Mbps, while for uplink, this value was reduced                    different distances, highlighting the challenges of main-
+from 50 Mbps to 10 Mbps. Although in absolute terms the                         taining consistent network performance in such conditions.
+drop is larger, in relative terms the drop is lower, which can                  Latency ranges from 12 ms to 27 ms, with fluctuations
+be explained by the fact that the access point has recovery                     observed throughout the distance spectrum rather than a
+mechanisms to avoid an abrupt SINR drop in the channel                          strictly increasing trend. For instance, higher latency values
+due to the larger flexibility in terms of power transmission.                   are recorded at both 45 m (26 ms) and 285 m (27 ms), while
+Fig. 12 shows the downlink throughput in terms of the                           lower latency values, such as 12 ms, appear at intermediate
+different RSRP values acquired during the measurements.                         distances (132 m). Similarly, jitter varies between 1 ms and
+Both metrics show a positive correlation, with the locations                    7.5 ms, with higher values observed at greater distances, such
+whose RSRP is higher being those with the highest downlink                      as 7.5 ms at 285 m. These results indicate that predicting
+throughputs in the scenario.                                                    latency and jitter in a forested environment is complex,
+                                                                                as they are influenced not only by distance but also by factors
+2) FORESTRY                                                                     such as foliage density, signal reflections, obstructions, and
+Fig. 11(b) shows the achieved downlink throughput                               environmental conditions. However, despite these variations,
+against distance in the forest. The peak throughput of                          the measured values remain well within acceptable limits,
+around 650 Mbps is achieved around a distance of 120 m                          demonstrating that the 5G private network performs reliably
+whereas the throughput of around 100 Mbps is achieved                           even in challenging terrain.
+at a distance of around 300 m. The results show that
+signal attenuation is quite high and unpredictable in the                       E. BACKHAULING
+forested environment due to the high vegetation and foliage                     Throughput of the backhauling link is an important KPI for
+environment.                                                                    the connection of a standalone private network to the Internet.
+
+VOLUME 13, 2025                                                                                                                         154593
+                                                                 M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+         FIGURE 11. (a) Downlink throughput from the AMR navigated journey in the 5G SmartLab, and (b) average downlink throughput
+         over distance in the forest.
+
+
+
+
+                                                                         between 9.41 Mbps and 21.3 Mbps. The observed variation
+                                                                         of the uplink throughput is due to a.o. the position of the
+                                                                         Starlink satellite, traffic from other users handled by the
+                                                                         Starlink satellite, and the weather conditions. Moreover,
+                                                                         the performance also depends on the applied Starlink
+                                                                         subscription, which in this case was a roam subscription.
+                                                                         Overall, the observed uplink throughput range is in line with
+                                                                         the publicly reported Starlink performance in Europe [37].
+                                                                            Based on the performed measurements and the publicly
+                                                                         reported Starlink performance in Europe, we conclude that
+                                                                         the achievable uplink throughput is in the range of 10 Mbps
+                                                                         to 20 Mbps. Comparing this range with the measured uplink
+                                                                         throughput provided locally by the 5G private network,
+FIGURE 12. Downlink throughput over RSRP in the 5G SmartLab.             as shown in Fig. 10(c), we conclude that the satellite link is a
+                                                                         limiting factor and acts as an upper-bound to the achievable
+                                                                         uplink throughput. However, its performance is sufficient
+For the livestock transportation use case, it is assumed that            to support the livestock transportation use cases, which
+no terrestrial infrastructure is available for backhauling and           require 10 Mbps in the uplink channel.
+thus a satellite backhaul is required. The uplink throughput
+of the satellite-based backhauling link depends among others
+on the total traffic handled by the satellite, the location of the        V. COST BENEFIT ANALYSIS
+satellite and the weather conditions.                                    Based on the performance evaluation, we provide a
+                                                                         cost-benefit analysis between public and private 5G net-
+1) LIVESTOCK TRANSPORTATION                                              works, outlining several recommendations for researchers
+When satellite links are used for backauling, it is likely               and stakeholders involved in deployment, assessing the
+that the end-to-end uplink throughput is dictated by the                 feasibility of this type of network in rural contexts. For the
+achievable uplink throughput of the satellite link. Therefore,           cost benefit analysis, two 5G private network deployments
+we investigate the end-to-end uplink throughput between the              are considered, namely SNPN and PNI-NPN with end-to-
+UE and the iperf server, when the backhauling is provided                end network slicing. SNPNs share no network infrastructure
+by connecting the Starlink terminal to the Amarisoft. For the            with the MNO, whereas a network sliced realized PNI-NPN
+local 5G connectivity between the UE and the Amarisoft,                  has all infrastructure and functionality with the MNO. The
+the bandwidth was set at 50 MHz and the uplink friendy                   reason to choose these two extreme deployments is clarity and
+TDD configuration was applied, as this was the configuration             conciseness of the cost benefit analysis. Any other ‘‘hybrid’’
+providing the highest uplink throughput, as shown in                     5G private network deployments are situational dependent
+Fig. 10(c).                                                              and rely on the business and technical conditions between the
+   Multiple measurements have been performed for the end-                private entity and the public MNO. For the cost analysis, the
+to-end uplink throughput revealing that the throughput ranges            following categories are taken into account:
+
+154594                                                                                                                              VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+       FIGURE 13. (a) Round-trip time temporal trace in the 5G Smartlab, and (b) latency and jitter over distance in the forest.
+
+
+
+
+   • Spectrum costs: For SNPNs this is the cost for using                             For the benefit analysis, the following categories are taken
+     a local frequency license for operating the 5G private                        into account:
+     network. In Europe this is typically up to 100 MHz                               • Communication performance: For SNPNs the through-
+     bandwidth in the spectrum range from 3.4 to 3.8 GHz                                put and delay of the communication links is more con-
+     (or in future 3.8 to 4.2 GHz). Typical costs are in the                            trollable/bounded due to customization (see also next
+     range of about 1000 Euro per year, or more depending                               category below) and typically low delays are achievable.
+     on the coverage area of the 5G private network.                                    As the results in this study show depending on the rural
+     In some European countries there are also exceptions                               use case and 5G private network configuration download
+     of sub-usage of already allocated spectrum from MNOs                               (upload) throughput of few hundreds (tens) of Mbps are
+     (e.g. Finland, UK) [38], and in USA there is also a                                achievable per user. From delay performance side field
+     spectrum sharing framework via the Citizen Broadcast                               results show typical values of about 15-20 ms round trip
+     Radio Service (CBRS). For PNI-NPNs the usage of                                    time an below 5 ms jitter. For PNI-NPNs the throughput
+     already allocated spectrum of the MNO can be assumed,                              performance depends on the available coverage/capacity
+     which means low initial costs. However, the previous                               from the existing MNO infrastructure and there would
+     investments in spectrum by the MNO would be typically                              be typically, higher delays.
+     introduced in the subscription cost for the private entity.                      • Customization/scalability: For SNPNs this is the benefit
+   • Infrastructure costs: For SNPNs this is the cost for                               of customizing and scaling the network infrastructure for
+     installed infrastructure in terms of base stations for                             the desired performance and supported services closely
+     the wireless access part, all the transportation network                           tailored to the specific needs of the local enterprise.
+     needed, and the computing and storage hardware (e.g.                               For PNI-NPNs there will be lower customization and
+     servers) for deploying the network functions, core                                 scalability due to the shared MNO’s infrastructure and
+     network, services platform and the operations and                                  inter-dependencies with other subscribers or private
+     maintenance software. For PNI-NPNs the usage of                                    networks.
+     already installed infrastructure by the MNO can be                               • Security/Reliability: For SNPNs this is the benefit
+     assumed. Note here that it should be expected that as                              regarding secure access and control of enterprise sensi-
+     MNO’s infrastructure is shared also for the 5G private                             tive data and reliability of the connectivity service as the
+     network purpose the associated infrastructure usage cost                           private entity is in full control of the communication data
+     will be somehow included as fee in the operational and                             streams and the reliability of the installed infrastructure.
+     maintenance costs.                                                                 For PNI-NPNs there is dependency on the security
+   • Operational and maintenance costs: For SNPNs, this is                              and reliability standards from the MNO. The eventual
+     the cost to keep the installed network up and running,                             sensitive private entity data will be traversing and stored
+     monitor its functioning and service quality as well                                in public MNO’s infrastructure.
+     as upgrades of the installed infrastructure or network                           Based on the above cost benefit analysis, the following
+     functionality. For PNI-NPNs existing operations and                           deployment recommendations can be drawn.
+     maintenance processes can be shared, and yet the                                 Deployment of SNPNs is recommended if the public MNO
+     operational costs can be increased by the MNO to                              infrastructure in the desired coverage area of the private entity
+     account for the spectrum and infrastructure use.                              is non-existent or providing poor coverage/capacity, and there
+
+VOLUME 13, 2025                                                                                                                              154595
+                                                             M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+is somewhat larger operational private area requiring low            components in the network and not only the performance of
+delay connectivity. This could be applicable for example             the 5G private network.
+for large agricultural/mining enterprises that have sufficient
+budgets and require extensive coverage, high data throughput          REFERENCES
+and low latency for applications like drone surveillance,             [1] S. Ahmadi, 5G NR: Architecture, Technology, Implementation, and
+autonomous machinery, and IoT sensors/actuators for highly                Operation of 3GPP New Radio Standards, 1st ed., New York, NY, USA:
+critical business processes including high security and control           Academic, 2019.
+                                                                      [2] L. L. Mendes, C. S. Moreno, M. V. Marquezini, A. M. Cavalcante,
+for protecting sensitive enterprise data and ensuring reliable            P. Neuhaus, J. Seki, N. F. T. Aniceto, H. Karvonen, I. Vidal, F. Valera,
+operations.                                                               P. A. S. M. Barreto, M. F. Caetano, W. D. Dias, and G. Fettweis, ‘‘Enhanced
+   Deployment of PNI-NPN is recommended if the pub-                       remote areas communications: The missing scenario for 5G and beyond 5G
+                                                                          networks,’’ IEEE Access, vol. 8, pp. 219859–219880, 2020.
+lic MNO infrastructure can provide reasonable cover-                  [3] M. Wen, Q. Li, K. J. Kim, D. López-Pérez, O. A. Dobre, H. V. Poor,
+age/capacity in the desired coverage area of the private                  P. Popovski, and T. A. Tsiftsis, ‘‘Private 5G networks: Concepts,
+entity. Further, this deployment could be better suited for               architectures, and research landscape,’’ IEEE J. Sel. Topics Signal Process.,
+                                                                          vol. 16, no. 1, pp. 7–25, Jan. 2022.
+smaller-scale operations requiring moderate connectivity,
+                                                                      [4] J. Prados-Garzon, P. Ameigeiras, J. Ordonez-Lucena, P. Muñoz,
+including smaller private entities or those with budget                   O. Adamuz-Hinojosa, and D. Camps-Mur, ‘‘5G non-public networks:
+constraints. Here, leveraging existing public MNO network                 Standardization, architectures and challenges,’’ IEEE Access, vol. 9,
+infrastructure will reduce deployment and operational costs               pp. 153893–153908, 2021.
+                                                                      [5] A. Mahmood, L. Beltramelli, S. F. Abedin, S. Zeb, N. I. Mowla,
+at the price of moderate connectivity services, such as basic             S. A. Hassan, E. Sisinni, and M. Gidlund, ‘‘Industrial IoT in 5G-
+IoT sensor networks for monitoring soil conditions, weather,              and-beyond networks: Vision, architecture, and design trends,’’
+and livestock and the private entity can afford sensitive data            IEEE Trans. Ind. Informat., vol. 18, no. 6, pp. 4122–4137,
+                                                                          Jun. 2022.
+to be handled via public MNO infrastructure and can accept            [6] A. Aijaz, ‘‘Private 5G: The future of industrial wireless,’’ IEEE Ind. Elec-
+the reliability guarantees provided by the MNO.                           tron. Mag., vol. 14, no. 4, pp. 136–145, Dec. 2020.
+                                                                      [7] 5G-ACIA. (Sep. 2021). 5G Non-Public Networks for Industrial
+VI. CONCLUSION AND FUTURE WORK                                            Scenarios. [Online]. Available: https://5g-acia.org/media/2021/04/
+                                                                          WP$5G$NPN$2019$01.pdf
+5G private networks have gained a lot of attention for deploy-        [8] X. Li, C. Guimarães, G. Landi, J. Brenes, J. Mangues-Bafalluy,
+ments in industrial environments. Within the COMMECT                      J. Baranda, D. Corujo, V. Cunha, J. Fonseca, J. Alegria, A. Z. Orive,
+project, different 5G private network deployments have been               J. Ordonez-Lucena, P. Iovanna, C. J. Bernardos, A. Mourad, and X. Costa-
+                                                                          Pérez, ‘‘Multi-domain solutions for the deployment of private 5G
+proposed to address the connectivity challenges in remote                 networks,’’ IEEE Access, vol. 9, pp. 106865–106884, 2021.
+areas and enable new use cases. In particular, use cases within       [9] A. Karaagac, O. Dobrijevic, D. Schulz, G. Seres, A. Nazari, H. Przybysz,
+four different environments have been considered, namely                  and J. Sachs, ‘‘Managing 5G non-public networks from industrial
+                                                                          automation systems,’’ in Proc. IEEE 19th Int. Conf. Factory Com-
+indoor environments (for e.g. healthcare or educational                   mun. Syst. (WFCS), Apr. 2023, pp. 1–8.
+centers), forestry, livestock transportation, and mines. The         [10] J. Lim, D. Kim, and Y. Yoo, ‘‘Joint cache allocation and replacement
+proposed network deployments are diverse in terms of                      for content-centric network-based private 5G networks: Deep rein-
+hardware (and thus cost) and configuration, and they have                 forcement learning approach,’’ IEEE Access, vol. 12, pp. 56214–56225,
+                                                                          2024.
+been evaluated via field trials. The results have shown that the     [11] Z. Chang, Q. Gu, C. Lu, Y. Zhang, S. Ruan, and S. Jiang, ‘‘5G
+deployed networks can support the presented use cases and                 private network deployment optimization based on RWSSA in open-
+that there is a clear trade-off between performance and cost.             pit mine,’’ IEEE Trans. Ind. Informat., vol. 18, no. 8, pp. 5466–5476,
+                                                                          Aug. 2022.
+This highlights the need for designing 5G private networks           [12] H. Luo, A. Bishnu, and T. Ratnarajah, ‘‘Design and analysis of in-band
+based on the use case and the respective requirements,                    full-duplex private 5G networks using FR2 band,’’ IEEE Access, vol. 9,
+which could potentially lead to new business models and                   pp. 166886–166905, 2021.
+opportunities within the telecom sector. Therefore, this work        [13] J. Urama, R. Wiren, O. Galinina, J. Kauppi, K. Hiltunen, J. Erkkila,
+                                                                          F. Chernogorov, P. Etelaaho, M. Heikkila, J. Torsner, S. Andreev, and
+has performed an empirical assessment and validation across               M. Valkama, ‘‘UAV-aided interference assessment for private 5G NR
+challenging and underexplored remote scenarios, which are                 deployments: Challenges and solutions,’’ IEEE Commun. Mag., vol. 58,
+essential for understanding the feasibility and limitations of            no. 8, pp. 89–95, Aug. 2020.
+                                                                     [14] M. Neinavaie, J. Khalife, and Z. M. Kassas, ‘‘Cognitive opportunis-
+5G private networks in rural contexts.                                    tic navigation in private networks with 5G signals and beyond,’’
+   For future work, we propose to study the performance of                IEEE J. Sel. Topics Signal Process., vol. 16, no. 1, pp. 129–143,
+other technologies which could potentially support the use                Jan. 2022.
+                                                                     [15] P. Skokowski, K. Malon, M. Kryk, K. Maślanka, J. M. Kelner,
+cases, e.g. Wi-Fi. Then, a more in-depth cost benefit analysis            P. Rajchowski, and J. Magiera, ‘‘Practical trial for low-energy effective
+will provide further insights on the applicability of 5G                  jamming on private networks with 5G-NR and NB-IoT radio interfaces,’’
+private networks, the opportunities that they bring and their             IEEE Access, vol. 12, pp. 51523–51535, 2024.
+challenges. Additionally, further analysis is recommended on         [16] B. Akgun, D. S. M. Singh, S. Kotla, V. Jain, S. Namdeo, R. Acharya,
+                                                                          M. Jayabalan, A. Kumar, V. Chande, A. Kannan, J. Swami, Y. Chen,
+the backhaul performance, as it can significantly limit the 5G            J. Boyd, and X. Zhang, ‘‘Interference-aware intelligent scheduling for
+private network performance. Apart from satellite communi-                virtualized private 5G networks,’’ IEEE Access, vol. 12, pp. 7987–8003,
+cations for the backhaul, an alternative worth investigating is           2024.
+                                                                     [17] M. Uitto and A. Heikkinen, ‘‘Evaluating 5G uplink performance in low
+fixed wireless access. Finally, it is recommended to perform              latency video streaming,’’ in Proc. Joint Eur. Conf. Netw. Commun. 6G
+end-to-end measurements to investigate the impact of all the              Summit (EuCNC/6G Summit), Jun. 2022, pp. 393–398.
+
+154596                                                                                                                                VOLUME 13, 2025
+M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+[18] C. Schellenberger, C. Hobelsberger, B. Kolb-Grunder, F. Herrmann,                                        MARIA RAFTOPOULOU received the M.Eng.
+     and H. D. Schotten, ‘‘Leveraging 5G private networks, UAVs and                                           degree in electrical and computer engineering
+     robots to detect and combat broad-leaved dock (Rumex obtusifolius) in                                    from the National Technical University of Athens,
+     feed production,’’ in Proc. Mobile Commun.-Technol. Appl.; 27. ITG-                                      Greece, in 2016, and the M.Sc. degree (cum laude)
+     Symp., 2023, pp. 1–6.                                                                                    in telecommunications and sensing systems and
+[19] (2025). Horizon Europe COMMECT Project. [Online]. Available:                                             the Ph.D. degree from Delft University of Technol-
+     https://www.horizoneurope-commect.eu/                                                                    ogy, The Netherlands, in 2018 and 2024, respec-
+[20] M. F. Awan, L. Jorguseski, M. Raftopoulou, A. Cherifi, P. Maćkowiak,                                     tively. From 2018 to 2019, she was a Technology
+     F. Drijver, M. I. Saglam, and M. R. Palattella, ‘‘5G private networks for
+                                                                                                              Young Talent at KPN, The Netherlands. She is
+     rural communities: Use cases and field trials,’’ in Proc. IEEE Wireless
+                                                                                                              currently a Scientist Innovator with Netherlands
+     Commun. Netw. Conf. (WCNC), Mar. 2025, pp. 1–6.
+[21] 5G-PPP. (2022). Non-public-networks—State of the Art and Way For-             Organisation for Applied Scientific Research (TNO), The Netherlands. Her
+     ward. [Online]. Available: https://zenodo.org/records/7230191                 research interests include radio resource management and optimisation over
+[22] A. Ramírez-Arroyo, M. López, I. Rodríguez, T. B. Sørensen, S. C. del          wireless networks.
+     Barrio, P. Padilla, J. F. Valenzuela-Valdés, and P. Mogensen, ‘‘FR2
+     5G networks for industrial scenarios: Experimental characterization
+     and beam management procedures in operational conditions,’’ IEEE
+     Trans. Veh. Technol., vol. 73, no. 9, pp. 13513–13525, Sep. 2024.
+[23] L. M. Bartolín-Arnau, J. Vera-Pérez, V. Sempere-Payá, and J. Silvestre-
+     Blanes, ‘‘Are European initiatives related to local spectrum allocation for
+     private 5G networks ready for use in industrial cases?’’ IEEE Access,                                   MUHAMMAD FAHEEM AWAN received the
+     vol. 12, pp. 19887–19901, 2024.                                                                         Ph.D. degree in electronics and telecommuni-
+[24] GSMA. (2020). 5G TDD Synchronisation. [Online]. Available:                                              cations from the Norwegian University of Sci-
+     https://www.gsma.com/connectivity-for-good/spectrum/wp-                                                 ence and Technology (NTNU), Norway, in 2020.
+     content/uploads/2020/04/3.5-GHz-5G-TDD-Synchronisation.pdf                                              He is currently a Research Scientist with Telenor
+[25] L. Chettri and R. Bera, ‘‘A comprehensive survey on Internet of Things
+                                                                                                             Research and Innovation, Fornebu, Norway. His
+     (IoT) toward 5G wireless systems,’’ IEEE Internet Things J., vol. 7, no. 1,
+                                                                                                             current research interests include 5G and beyond
+     pp. 16–32, Jan. 2020.
+                                                                                                             5G radio access technologies, advance 5G/B5G
+[26] D. S. Fowler, Y. K. Mo, A. Evans, S. Dinh-Van, B. Ahmad, M. D. Higgins,
+     and C. Maple, ‘‘A 5G automated-guided vehicle SME testbed for                                           use cases, 5G positioning, and mission critical
+     resilient future factories,’’ IEEE Open J. Ind. Electron. Soc., vol. 4,                                 communications.
+     pp. 242–258, 2023.
+[27] P. I. Tebe, G. Wen, J. Li, Y. Yang, W. Tian, J. Chong, and W. Zhang,
+     ‘‘5G-enabled medical data transmission in mobile hospital systems,’’ IEEE
+     Internet Things J., vol. 9, no. 15, pp. 13679–13693, Aug. 2022.
+[28] J. Rischke, P. Sossalla, S. Itting, F. H. P. Fitzek, and M. Reisslein, ‘‘5G
+     campus networks: A first measurement study,’’ IEEE Access, vol. 9,
+     pp. 121786–121803, 2021.                                                                               ALEJANDRO RAMÍREZ-ARROYO was born
+[29] B. Kizilkaya, G. Zhao, Y. A. Sambo, L. Li, and M. A. Imran, ‘‘5G-enabled                               in Córdoba, Spain, in 1997. He received the
+     education 4.0: Enabling technologies, challenges, and solutions,’’ IEEE                                B.Sc., M.Sc., and Ph.D. degrees in telecom-
+     Access, vol. 9, pp. 166962–166969, 2021.                                                               munication engineering from the University of
+[30] P. J. Nesse, N. V. Nielsen, S. Davidson, L. Gillund, and M. F. Awan,                                   Granada (UGR), Spain, in 2019, 2021, and 2023,
+     ‘‘5G in rural forest enables real time decision support and new                                        respectively. From 2019 to 2024, he was with
+     remote operation solutions,’’ in Proc. 3rd Int. Conf. Electr., Comput.,
+                                                                                                            the Smart Wireless Applications and Technologies
+     Commun. Mechatronics Eng. (ICECCME), Jul. 2023, pp. 1–6.
+                                                                                                            (SWAT) Research Group, Department of Signal
+[31] (2008). Council Regulation (EC), no. 1/2005. [Online]. Available:
+                                                                                                            Theory, Telematics, and Communications, UGR.
+     https://eur-lex.europa.eu/legal-content/en/ALL/?uri=CELEX%3A32005
+     R0001                                                                                                  In 2022, he was with the Wireless Communication
+[32] Danish Agriculture and Food Council. Accessed: Aug. 1, 2025.                  Networks Section, Aalborg University (AAU), Denmark, as an invited
+     [Online]. Available: https://pigresearchcentre.dk/DANISH-quality-assur        Ph.D. Student. Since 2024, he has been a Postdoctoral Researcher
+     ance-scheme/-/media/D5F89185691F4D3EB282A0F1312DC9EB.ashx                     with the Department of Electronic Systems, AAU. His current research
+[33] Deliverable D1.2: COMMECT Requirements and KPIs, Horizon Europe               interests include optimization techniques, radio propagation, and channel
+     COMMECT project, Villach, Austria, 2024.                                      characterization for mmWaves and 5G communications.
+[34] A. Ramírez-Arroyo, T. B. Sørensen, P. Beltoft, H. Christiansen,
+     J. F. Valenzuela-Valdés, and P. Mogensen, ‘‘Observations on large-
+     scale attenuation effects in a 26 GHz urban micro-cell environ-
+     ment,’’ IEEE Wireless Commun. Lett., vol. 13, no. 9, pp. 2611–2615,
+     Sep. 2024.
+[35] T. Jiang, J. Zhang, P. Tang, L. Tian, Y. Zheng, J. Dou, H. Asplund,
+     L. Raschkowski, R. D’Errico, and T. Jämsä, ‘‘3GPP standardized 5G                                     MEHMET IZZET SAĞLAM received the B.S.
+     channel model for IIoT scenarios: A survey,’’ IEEE Internet Things J.,
+                                                                                                           degree in electrical and electronics engineering
+     vol. 8, no. 11, pp. 8799–8815, Jun. 2021.
+                                                                                                           from Çukurova University, in 2001, the M.S. and
+[36] D. Eberhard and E. Voges, ‘‘Digital single sideband detection for
+     interferometric sensors,’’ Proc. SPIE, vol. 514, p. 381, Nov. 1984.
+                                                                                                           Ph.D. degrees in wireless communication from
+[37] L. Kehoe. (2025). Starlink Shines in Europe As Constellation                                          Istanbul Technical University, in 2003 and 2018,
+     Investments Boost Performance. [Online]. Available: https://www.ookla.                                respectively, and the Executive M.B.A. degree
+     com/articles/starlink-europe-q1-2024                                                                  from Yıldız Technical University. He is currently a
+[38] EU4Digital. (2024). 5G Private Networks Development; EU Best                                          Researcher and a 3GPP RAN WG2 delegate with
+     Practice Report. [Online]. Available: https://eufordigital.eu/wp-content/                             the Turkcell Research and Development Center.
+     uploads/2024/03/EU4D-Telecom-Rules-Report-on-5G-private-network-                                      His current research interests include 5G advanced
+     development-1.pdf                                                             and 6G radio access networks.
+
+
+
+
+VOLUME 13, 2025                                                                                                                                         154597
+                                                                        M. Raftopoulou et al.: Deployment and Performance Evaluation of 5G Private Networks
+
+
+
+
+                          LJUPCO JORGUSESKI received the Dipl.-Ing.                                        MARIA RITA PALATTELLA (Member, IEEE)
+                          degree from the Ss. Cyril and Methodius Uni-                                     received the bachelor’s degree (Hons.) in telecom-
+                          versity in Skopje, Skopje, Macedonia, in 1996,                                   munication engineering and the master’s degree
+                          and the Ph.D. degree from Aalborg University,                                    (Hons.) in telecommunication engineering from
+                          Denmark, in 2008. From 1997 to 1999, he was an                                   the Politecnico di Bari, Italy, in 2004 and 2007,
+                          Applied Researcher with TU Delft, followed by                                    respectively, and the dual Ph.D. degree in electron-
+                          a research position on wireless 3G/4G systems at                                 ics engineering from the Scuola Interpolitecnica
+                          KPN Research, The Netherlands, until 2003. Since                                 di Dottorato (SIPD) and the Politecnico di Bari,
+                          2003, he has been a Senior Consultant of wireless                                in February 2011. From 2011 to 2016, she was
+                          access at TNO, focusing on radio planning and                                    a Research Associate with the Interdisciplinary
+(self-)optimization of wireless networks, and 3GPP and O-RAN alliance           Centre for Security, Reliability and Trust (SnT), University of Luxembourg.
+standardization activities. He has (co-)authored over 30 publications in        She contributed to the design of MAC protocols and energy-efficient
+conferences, journals, book chapters, and patent applications.                  scheduling algorithms for wireless sensor networks. She was involved in
+                                                                                several EU FP7 and H2020 projects, including OUTSMART, IoT6, and
+                        FLORIS DRIJVER was born in Leiderdorp,                  F-Interop. Since 2016, she has been with the Environmental Research
+                        The Netherlands, in February 1994. He received          and Innovation (ERIN) Department, Luxembourg Institute of Science and
+                        the B.S.E. degree in electrical engineering and the     Technology (LIST), as a Senior Research and Technology Associate. Since
+                        M.Sc. degree in electrical engineering: telecom-        October 2024, she has been a Principal Scientist, leading the work on
+                        munications and sensing systems from Delft              the design of innovative communication systems and network architectures
+                        University of Technology. Since 2017, he has            for different Internet of Things (IoT) applications, with a focus on digital
+                        been with the Networks Department, Netherlands          agriculture. Her current research interests include the IoT-NTN, and she
+                        Organisation for Applied Scientific Research            has contributed to this research topic through several projects: ESA ITT
+                        (TNO), as a Senior Scientist. His focus has been on     M2MSAT, FNR LORSAT, SMC Lux5GCloud, SatNex V ONION, and
+                        4G and later 5G and 6G field labs. He is currently      INVENTIVE. She is currently coordinating the HEU COMMECT Project,
+the Technical Lead of the Future Network Services (FNS) National 6G             aiming to extend connectivity in rural remote area, integrating 5G public
+Testbed.                                                                        and private networks, the IoT cellular and non-cellular (NB-IoT and
+                                                                                LoRa), and NTN (satellites and drones), to make rural communities more
+                         PAWEŁ MAĆKOWIAK was born in Poznań,                    sustainable and competitive. She is also the PI of the GEH LIFE and
+                         Poland, in September 1995. He received the             FNR 5G-AGROBOT projects, investigating the use of digital twins
+                         B.S.E. degree in electronics and telecom-              and robotics in controlled agriculture environments. She is strongly
+                         munications from Poznań University of                  engaged with the Telecommunication and Space Industry, and IoT
+                         Technology, and the M.Sc. degree in electrical         companies in Luxembourg, and abroad, as evidenced by her collab-
+                         engineering from Delft University of Technology.       oration in several national and international projects with local and
+                         From 2019 to 2025, he was with the Net-                external stakeholders. She sits on the Editorial Board of the Trans-
+                         works Department, Netherlands Organisation for         actions on Emerging Telecommunications Technologies and the EAI
+                         Applied Scientific Research (TNO), as a Research       Transactions on IoT. She has (co)-authored several papers published in
+                         Scientist. He is currently a Field Software            well known, high-impact journals and international conferences, and two
+Engineer with the Data Center Enterprise Team, Canonical. His research          patents.
+interests include 5G/6G and cloud computing.
+
+
+
+
+154598                                                                                                                                        VOLUME 13, 2025
+

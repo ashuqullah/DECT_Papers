@@ -1,0 +1,403 @@
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+           DECT NR+:Unveiling the Essentials of a new
+              non-cellular 5G Standard for Verticals
+        1st M. Dolores Pérez-Guirao                        2nd Thomas Weisshaupt                                  3rd Andreas Wilzeck
+          Communication Technology                        Head of D-A-CH Region                            Spectrum Policy and Standards
+               Ostfalia HAW                                     Wirepas Oy                              Sennheiser electronic GmbH & Co. KG
+           Wolfenbüttel, Germany                              City, Finland                                    Wedermark, Germany
+             m.perez@ostfalia.de                       thomas.weisshaupt@wirepas.com                       andreas.wilzeck@sennheiser.com
+
+
+
+    Abstract—DECT-2020 NR is a young radio standard devel-                              The rest of the paper is organized as follows. The relation-
+ oped by ETSI, which aims to provide a lean but powerful                             ship between DECT-2020 NR and IMT-2020, i.e. the ﬁfth-
+ technical foundation for industrial IoT applications (IIoT) such                    generation of mobile communication standards, is explained in
+ as e.g. Industry 4.0, media content production, mission-critical
+ or building automation and monitoring. The DECT Forum                               Section II. Section III outlines the fundamental concepts, tech-
+ markets DECT-2020 NR as DECT NR+. In the fall of 2021,                              nical parameters and network architecture of DECT-2020 NR,
+ ITU-R adopted DECT-2020 NR as part of the IMT-2020 family                           with particular focus on its capacity to deploy scalable, self-
+ of standards, also known as the 5th generation (5G) of wire-                        organizing networks. Section IV exposes some potential ver-
+ less access technology. Driving underlying design objective of                      tical markets, and their requirements, that can stand to beneﬁt
+ DECT-2020 NR has been to create a wireless communication
+ technology, which can be deployed by anyone, be operated                            from DECT-2020 NR. Future work directions in spectrum
+ by anybody and used anywhere opening in that sense exten-                           policy and governance models are derived in Section V for the
+ sive opportunities for sustainable, independent or cooperative                      highligthed vertical markets. Section V concludes the paper.
+ wireless connectivity solutions, especially for medium-sized in-
+ dustries. This paper provides an overview of the essentials                          II. DECT-2020 NR IS A NON - CELLULAR 5G S TANDARD
+ of the state of the art in DECT NR+ represented by the
+ ETSI TC DECT-2020 NR technical speciﬁcations. We describe                              DECT-2020 NR technology underwent the international
+ the fundamental concepts of DECT-2020 NR, highlighting how                          mobile telecommunication (IMT) evaluation process as
+ application and solution development is facilitated, and propose                    a set of radio interface technologies (SRIT) known as
+ various possible innovation paths inﬂuencing future standardiza-                    DECT 5G-SRIT. Fig.1 illustrates DECT 5G-SRIT consisting
+ tion and spectrum policy concepts for local area private industrial                 of the two radio interface technologies (RIT) DECT-2020 NR
+ networks. In addition, we point out options for governance
+ models that can lead to democratisation of 5G and IIoT.                             and 3GPP NR. DECT-2020 NR RIT component comprises
+    Index Terms—DECT-2020 NR, DECT NR+, IMT-2020, 5G,                                Releases 1 and beyond, while 3GPP NR RIT component
+ private networks, spectrum policy, governance                                       comprises Releases 15 and beyond. In order to include
+                                                                                     DECT 5G-SRIT as an IMT-2020 technology, ITU-R appointed
+                             I. I NTRODUCTION                                        various independent assessment groups to evaluate the per-
+    DECT is a long-standing and successful wireless                                  formance of the RIT components, specially DECT-2020 NR,
+ technology, which has it most recognized and widespread                             against the IMT-2020 requirements [1]–[3].
+ application area in the cordless telephony. However, many                              The IMT evaluation process concluded in fall 2021 and
+ other diverse applications ranging from audio microphones                           Recommendation ITU-R M.2150-1 [4] conﬁrmed that the
+ and headsets to smart home and smart building apply DECT                            DECT-5G-SRIT fulﬁls all technical performance requirements
+ connectivity solutions.                                                             in all ﬁve selected test environments and that the component
+    ETSI released the ﬁrst DECT Standard in 1992. Since                              RIT DECT-2020 NR fulﬁls the technical performance require-
+ then, the standardization process has never stop re-shaping                         ments in two selected test environments: Urban Macro – Ultra
+ itself, adding innovative features and targeting new markets.                       Reliable Low Latency Communication (URLLC) and Urban
+ For instance, in 2013 the DECT Ultra Low Energy (ULE)                               Macro massive Machine Type Communication (mMTC). It is
+ standard was added to the DECT family to target IoT centric                         worth noting that the DECT-2020 NR RIT can also handle
+ markets like smart home and smart building. In fall 2021,                           reliable, broadband communications at high data rates (several
+ the latest DECT speciﬁcation, known as DECT-2020 NR,                                Gbit/s), provided sufﬁcient radio spectrum is available.
+ was recognized by ITU as a 5G (i.e. IMT-2020 conform)                                  Certainly, a relevant feature of the legacy DECT technology
+ technology, with focus on ultra-reliable low latency and mas-                       is its license-exempted operation in radio bands around 1,9
+ sive machine type communications, i.e. URLLC and mMTC,                              GHz. For the European Union the decision ERC/DEC/(94)03
+ respectively. Since then, DECT-2020 NR has enriched the                             [5] dedicates 1880-1900 MHz speciﬁcally to DECT, so that
+ IMT-2020 standards landscape as the only non-cellular 5G                            DECT operation shall have priority over other radio systems
+ standard.                                                                           and be protected from harmful interference in the designated
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                        40                           © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+                                                                                                                   TABLE I
+                                                                                                  C OMPARISON BETWEEN 3GPP NR AND DECT NR+
+
+
+                                                                                                           3GPP NR                      DECT NR+
+                                                                                      Deployment           Public Network (PLMN)        Anywhere, Anytime, by
+                                                                                                           Non-Public     Network       Anyone
+                                                                                                           (NPN)
+                                                                                      Topology             Cellular                     Point-to-point/multipoint,
+                                                                                                                                        star, cell or mesh tree
+                                                                                      Device Types         Base station (gNB),          Radio Device (RD) with
+                                                                                                           User Equipment (UE)          context-based roles
+                                                                                      Infrastructure       PLMN; NPN (Campus            User deployed RDs
+ Fig. 1. DECT-2020 has been recognized by ITU-R (WP5D) as IMT-2020                                         network)
+ technology.                                                                          Network              MNO                          User
+                                                                                      operation
+                                                                                      Spectrum             Spectrum auctioned to        1, 9 GHZ, IMT-Spectrum,
+                                                                                                           MNO; Site licenses           Site licenses, SRD/RLAN
+ band. In addition to the legacy DECT core band [1880 -                               Spectrum             Planning by MNO; Ex-         Local, self-organized
+ 1900/1920] MHz, the DECT-2020 NR standard is designed                                Management           pert tool
+ for all IMT TDD frequencies below 6 GHz, thus expanding
+ far beyond the legacy core band.
+                                                                                     B. System and Network Architectures
+                III. F UNDAMENTALS OF DECT NR+
+                                                                                        DECT-2020 NR enables wireless network deployment
+    DECT NR+ is a local, self-organizing radio network tech-                         in point-to-point/multipoint, star, and mesh tree network
+ nology that supports numerous network topologies and fea-                           topologies. Contrary to conventional cellular technologies,
+ tures automatic interference management that eliminates the                         DECT-2020 NR does not distinguish between ﬁxed radio
+ need for manual network or frequency planning. In this                              stations (e.g. base stations, eNBs, gNBs) and mobile terminals
+ section, we present the fundamental concepts of DECT NR+                            (e.g. UE). Each DECT NR+ radio device (RD) can adapt its
+ design and basic terminologies, with a comparison of the prin-                      role in the network depending on the context of the application.
+ cipal differences between cellular 3GPP NR and DECT NR+                             The roles a RD can take are:
+ given in Table I.                                                                      • Fixed Termination point (FT), RDF T , the RD acts as the
+                                                                                           initiator and coordinator of a set of local resources, other
+ A. Design Objectives: Anywhere, Anytime, Anyone                                           RDs may connect and communicate with it;
+    DECT-2020 NR was deliberately kept agnostic to use cases                            • Portable Termination point (PT), RDP T , the RD selects a
+ and business models of manufacturers, users or operators but                              RDF T for communication, associates with it and follows
+ taking into account that the possibility to build and operate                             coordination decisions;
+ own, local networks is indispensable for many vertical indus-                          • Combination of FT and PT, RDF T,P T , the RD acts
+ tries (e.g. Industry 4.0, content production, utility and smart                           simultaneously as a RDF T and as a RDP T .
+ cities).                                                                               A RDF T is also responsible for routing data from its
+    The ultimate goal of ETSI by the design of the                                   associated (RDP T s) to an Internet connection point, either
+ DECT-2020 NR technical speciﬁcations was to offer a local                           directly or through another RDF T .
+ but scalable, self-contained wireless connectivity solution that
+ could be self-deployed and self-operated by industrial users
+ (anyone) anywhere and anytime. Concretely, this means that
+ DECT-2020 NR can be used without separate infrastructure
+ or in conjunction with any IP-enabled Wide Area Network
+ (WAN) infrastructure (e.g., ﬁber, satellite, or public cellular
+ network); it also allows the use of proprietary (i.e. non-
+ IP) network or application protocols without compromising
+ security.
+    This unique set of circumstances offers signiﬁcant beneﬁts
+ for industries that require reliable service for production-
+ relevant and mission critical processes but not necessarily the
+ custody or intermediation of a commercial network operator.
+ Industrial and process automation, media content production,
+                                                                                     Fig. 2. DECT-2020 NR overall protocol architecture for point-to-point or
+ smart building, and PPDR are examples of industries that                            simpliﬁed star topoloby [6].
+ attach top priority to the possibility to set up and operate their
+ own mission critical private local networks and can stand to                           URLLC use cases (e.g. cable replacement or wireless
+ beneﬁt from DECT NR+ unique connectivity proposition.                               local area network) beneﬁt from a point-to-point, point-to-
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                        41                           © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+                                                                                     bandwidth of 1.728MHz is achieved with the conﬁguration
+                                                                                     (μ ,β)=(1, 1), while the conﬁguration (μ ,β)=(8, 16) achieves
+                                                                                     the maximum channel bandwidth of 221.184 MHz.
+
+
+
+
+ Fig. 3. DECT-2020 NR overall protocol architecture for mesh networking
+ [6].
+
+
+
+ multipoint, or star topology. For this kind of use cases, the
+ context of the communication tend to be stable, so RDs keep
+ their selected roles during the application lify cycle. Fig.2                                      Fig. 4. DECT-2020 NR frame structure [7].
+ illustrates an example of protocol architecture exploiting a
+ point-to-point or a simpliﬁed star topology for both IP and                            The DECT-2020 NR radio frame (see Fig. 4) has a total
+ non-IP applications. RD1 takes the RDP T and RD2 the                                duration of 10 ms and consists of 24 slots with a slot
+ RDF T ; changes are not expected.                                                   duration of 416.67μs. Both frame duration and slot duration
+    mMTC use cases beneﬁt from a clustered mesh tree network                         have been selected to enable coexistence with legacy DECT
+ topology, where RDs may change their role autonomously                              systems. Depending on the subcarrier scaling factor, μ, each
+ based on local context so to best contribute to the formation                       slot consists of 10, 20, 40 or 80 OFDM symbols. To allow even
+ and resilience of the network. Details on the cluster formation                     shorter transmissions, slots can be further divided into 2, 4, 8 or
+ and autonomous routing strategies can be found in [6]. Ba-                          16 subslots, again depending on the value of μ. It is noted that
+ sically, each RD selects the next hop individually among the                        due to this partitioning, a subslot is always 5 OFDM symbols
+ set of available routes towards the Internet connection point.                      long, which is also the smallest possible transmission length.
+ Routing decisions are taken autonomously by each RD using                           The duration of a packet transmission, uplink or downlink, is
+ a cost value without the need to maintain routing tables in                         speciﬁed in terms of slots or subslots, with a maximum of 16,
+ each device. The route cost calculation is not standarized but                      respectively.
+ left to implementation. Route cost value will increase at least                        Further key features are the support for advanced channel
+ in 1 unit with every hop. The maximum route cost value is                           coding (turbo coding) schemes for both control and physical
+ speciﬁed to be 254, which is but not seen as a limiting factor                      channels and Hybrid ARQ (HARQ) with incremental redun-
+ in real deployments. Fig.3 illustrates an example of protocol                       dancy. The advanced channel coding together with HARQ
+ architecture exploiting mesh topology and autonomous routing                        ensures low latency and highly reliable communication. In
+ for IP and non-IP applications.                                                     addition, the physical layer supports fast link adaptation,
+                                                                                     transmitter and receiver diversity, and MIMO operation with
+ C. PHY Layer
+                                                                                     up to 8 streams.
+    The PHY layer of DECT-2020 NR addresses in principle
+ all frequency bands below 6 GHz and is described in [7].                            D. MAC Layer
+    The physical layer uses Cyclic Preﬁx Orthogonal Frequency
+                                                                                        The overall MAC design of DECT-2020 NR is still ongoing.
+ Division Multiplexing (CP-OFDM) combined with Time Di-
+                                                                                     Initial considerations and fundamental design decisions are
+ vision Multiplexing (TDMA) and Frequency Division Mul-
+                                                                                     described in [8].
+ tiplexing (FDMA) according to the Time Division Duplexing
+                                                                                        The MAC layer provides data transfer and radio resource
+ (TDD) method. The physical layer numerology offers multiple
+                                                                                     allocation services to upper layers. The data transfer service
+ options for the combination of subcarrier spacing, cyclic preﬁx
+                                                                                     can be conﬁgured in two operational modes:
+ length and FFT size, allowing operation with different channel
+ bandwidths and enabling operation in different frequency                              • scheduled access: for synchronous, periodic URLLC
+ bands and propagation environments.                                                     trafﬁc,
+    Depending on the subcarrier scaling factor μ = 1, 2, 4 or 8,                       • unscheduled/random access: for asynchronous inmediate
+
+ the OFDM subcarrier spacing can be conﬁgured between 27                                 packet data transmission
+ kHz, 54 kHz, 108 kHz or 216 kHz, respectively. In addition,                           Packets for scheduled services are allocated by the RDF T
+ the Fourier transform scaling factor, β, can be set to allow                        and are only usable after a MAC signalling process (with
+ different channel transmission bandwidth for each conﬁgura-                         conﬁrmed setup and release). On the other hand, packets for
+ tion of the subcarrier spacing. The minimum nominal channel                         random access services can be used without feedback from the
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                        42                           © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+ receiving part. Different packet formats have been designed for                     sovereignty, network transparency and economic independence
+ random access and scheduled access services.                                        in the solution are often further essential requirements.
+    Radio resource allocation functionality is controlled by                            Policy discussions and technical developments around 5G
+ radio devices operating as RDF T for any scheduled data                             and beyond have acted and will continue to act as a catalyst for
+ transfer service. Resources used by scheduled services may                          the digitization of industry. However, there is no ”one size ﬁts
+ be designated as protected so to prevent collisions from non-                       all” 5G solution that can meet the diverse needs, requirements
+ scheduled access in the same system.                                                and price points of vertical industry applications. Meanwhile,
+    Effort has been taken so that DECT-2020 NR inherits                              it has been accepted that a large-scale roll out of 5G, requires
+ legacy DECT feature of automatic interference management,                           tailored, optimized solutions.
+ which eliminates the need for extensive frequency planning.                            Industrial areas that can beneﬁt most from novel DECT
+ In legacy DECT this feature is called the DECT Channel                              NR+ wireless connectivity proposition are identiﬁed as:
+ Allocation/Selection (DCA/S) algorithm and relies on the                               • for mMTC type of connectivity: manufacturing plants,
+ exchange of ”blind slots” information indicating which slots                              agriculture, smart cities, energy management in buildings,
+ are busy/blind or free. The ”blind slots” information in legacy                           warehouse logistics, mission critical communication ser-
+ DECT is a bit mask; details on the DCA/S algorithm can                                    vices and the management of distributed energy sources
+ be found in [9]. DECT-2020 NR cannot handled resource                                     that form a smart grid;
+ allocation information exchange by a simple bit mask but it                            • for URLLC type of connectivity: production (goods,
+ uses a broadcast mechanism over a pilot bearer.                                           media content) and mission-critical applications.
+                                                                                     Following two subclauses list example use cases and applica-
+ E. Spectrum Bands
+                                                                                     tions where DECT NR+ is expected to provide potential for
+    DECT-2020 NR is designed for operation in IMT spec-                              innovation.
+ trum. The radio channel numbering scheme enables to assign
+ channels from 450 MHz up to 5 875 MHz organized into                                A. mMTC Use Cases and applications
+ 17 different operating bands listed in [10]. The nominal RF                            In the area of mMTC, DECT NR+ is suitable for e.g.:
+ bandwidth can vary from 1,728 MHz up to 221,184 MHz.
+                                                                                        • Connectivity of Battery-Powered Mobile Robotic Sys-
+    Current release 1 assumes access to legacy DECT spectrum
+                                                                                           tems like Autonomous Mobile Robots (AMRs)
+ [1 880 -1 900/1 920] MHz and future additional access to
+                                                                                        • Asset Tracking of Tools, Pallets, Containers, and any
+ new spectrum allocations under 6 GHz. Following candidate
+                                                                                           other Equipment
+ spectrum bands have been taken into account in the technical
+                                                                                        • Telemetry of Fixed and Mobile Sensor Units (e.g. Elec-
+ speciﬁciations:
+                                                                                           tricity smart metering, Integration of Distributed Energy
+    • Frequency bands currently allocated to IMT-FT service,                               Ressources or Environmental sensing in Cities at larger
+      i.e. to legacy DECT as a member of the IMT-2000 family                               scale)
+      (1 900 MHz - 1 980 MHz and 2 010 MHz - 2 025 MHz)                                 • Condition-Based Monitoring, such as Occupancy Detec-
+      [11],                                                                                tion in Buildings or Machine level Condition monitoring
+    • New license exempt frequencies at the 5 GHz band                                  • Large area environmental monitoring such as early warn-
+      (SRD/RLAN bands),                                                                    ing systems for Wildﬁres, heavy ﬂooding or montioring
+    • New local area licensed frequencies at midbands (e.g. 3,7                            systems in the crop and cattle growth
+      GHz - 3,8 GHz band in Germany, 3,8 - 4,2 GHz in UK).                              • Mission critical communication for the organization and
+    Operation over higher frequency bands (e.g. 24,25 GHz)                                 coordination of rescue services in case of disasters
+ is identiﬁed as possible in the future, however it is assumed                          These use cases beneﬁt from DECT NR+’s ability to deploy
+ to require a revision of the MAC layer, e.g. with additional                        scalable wireless networks at an efﬁcient cost of ownership
+ subcarrier spacing scaling factors.                                                 based on inherent self-operation and realization of private
+                                                                                     networks in dedicated spectrum.
+      IV. A REAS WHERE DECT NR+ CAN B RING VALUE                                        Initial application developments are underway in smart
+    Innovations in IT and wireless technology are essential                          metering, where a variety of connectivity standards have been
+ elements of the ongoing digital transformation process in                           deployed in different regions to date. The combination of
+ vertical industries. Industrial applications often beneﬁt from                      long range meshing between nodes, near infrastructure-free
+ technological developments in consumer market applications,                         networks, and high density in free and dedicated spectrum
+ but have both speciﬁc technical and non-technical require-                          makes smart power metering an excellent example where
+ ments. While for consumer market application it is ﬁne to                           DECT NR+ helps overcome known and transparent risks such
+ provision connectivity features such as data rate, latency, jitter                  as high device density, the need for easy deployment and full
+ or reliability as statistical averages, many vertical industry                      coverage, and regulatory constraints in the sub-GHz bands.
+ applications require provisioning within exact ﬁxed limits. Re-
+ silience to disruptions and to limited infrastructure availability,                 B. URLLC Use Cases and applications
+ the ability to operate ”anywhere, anytime and by anyone”, data                        In the area of URLLC, DECT NR+ is suitable for e.g.:
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                        43                           © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+     • Factory automation with deterministic cyclic-trafﬁc re-                       undergoing at ETSI TC DECT for the deﬁnition of suitable
+       quirements                                                                    interworking proﬁles in [18].
+     • Professional media content production                                            Basically, a DECT-2020 NR network can provide stand-
+     • Uniﬁed Communications for enterprises: high-quality au-                       alone non-3GPP access to a 3GPP core network. Therefore,
+       dio, messaging (alarm, control), positioning                                  3GPP foresees two possibilities. The DECT-2020 NR net-
+     • Healthcare (institutional and home)                                           work can access the 3GPP 5G core network either as an
+     • Mission critical connectivity islands                                         untrusted access network via the on-3GPP Inter-Working-
+    These use cases beneﬁt from DECT NR+’s ability to easily                         Function (N3IWF) or as a trusted access network via a
+ set up and operate self-organizing, low latency, locally con-                       Trusted Non-3GPP Gateway Function (TNGF). For details on
+ ﬁned wirelesss networks. Beyond, DECT NR+’s decentralized                           the 3GPP 5G core network architecture and the mentioned
+ setup and operation makes it ideal for mobile ad-hoc deploy-                        interworking functionality refer to [19].
+ ments, which is of particular interest for professional media                          Other scenarios of interest are: (i) a RDF T acting as an
+ content production [12] and mission critical use cases [13].                        intelligent gateway between a DECT-2020 NR and a 3GPP
+    Initial application developments are underway e.g. in audio-                     network for extended connectivity; (ii) a dual radio interface
+ PMSE, where DECT NR+ can deliver the strict performance                             RDP T , i.e. a radio device that supports both the 3GPP NR
+ (e.g. latency, jitter, synchronization, reliability) required for                   and the DECT-2020 RITs, could act as a UE in the 3GPP
+ many professional audio systems (wireless microphones, in-                          network while keeping a parallel, on-demand connection to a
+ ear systems, intercom) used by touring bands, recording                             stand-alone DECT-2020 NR network.
+ studios, theatres and broadcasting (including electronic news
+ gathering). The use of DECT NR+ for professional audio sys-                                                  VI. C ONCLUSIONS
+ tems can help meet the ever-increasing demand for spectrum                             DECT NR+ is a young radio standard developed by ETSI
+ access in all areas of live & recorded entertainment and media                      and DECT Forum. This paper reveals the fundamentals of the
+ streaming.                                                                          technology, highlights relevant use cases and proposes future
+                                                                                     work directions in the areas of spectrum policy and governance
+         V. S PECTRUM P OLICY AND G OVERNANCE M ODELS                                models with the goal to motivate and incentivate research
+    Network slicing in public networks and the deployment                            activities.
+ and operation of customized non-public networks/campus net-                            Key technology features of DECT-2020 NR include ad-
+ works by or for industrial companies are initial answers to                         vanced OFDM-based physical layer numerology and medium
+ the special requirements of vertical industries. At the local                       access control algorithms, decentralized setup and operation
+ network level in particular, 5G can bring disruptive change                         enabling self-organizing and self-healing wireless networks.
+ and create new growth opportunities for vertical industries,                        Technology is easy to introduce into new IMT frequency bands
+ provided the remaining regulatory challenges related to local                       beyond the legacy DECT core band.
+ spectrum availability can be resolved.                                                 DECT-2020 NR offers local deployment capabilities with-
+    DECT-2020 NR extends by design the radio capabilities of                         out the need for separate network infrastructure or network
+ legacy DECT technology to operate in all TDD IMT bands                              planning. Further, minimal deployment or maintenance re-
+ below 6 GHZ. The opening of additional bands beyond the                             quirements make this technology attractive, especially for
+ DECT core band, e.g. 2.4 GHz, 5 GHz, 5.8 GHz, and 6 GHz                             small companies and medium-sized industries.
+ bands can offer considerable opportunities for sustainable,                            The ﬂexible and autonomous operation of the network
+ independent or cooperative innovations in the area of non-                          allows industry players to focus on developing applications
+ public 5G networks.                                                                 and solutions, keeping them completely under their control,
+    To accomodate different application requirements, it may                         without the value of the application being compromised by the
+ be necessary to consider the operation of DECT NR+ under                            additional cost and complexity of network commissioning.
+ different spectrum authorization regimes, from local licensing                         As a pure ETSI standard, it might not be exaggerated to
+ models to emerging spectrum sharing frameworks, such as                             claim that DECT-2020 NR can be one most important inno-
+ e.g. LSA/eLSA [14], [15] in Europe or CBRS [16] in the                              vation driver for more technological sovereignty in Europe.
+ United States. Further, licensing models should be suitable for
+ different operational needs of industrial use cases, including                                                   R EFERENCES
+ permanent vs. temporary, stationary vs. nomadic.                                    [1] ETSI Evaluation Group; Final Evaluation Report on DECT-2020 NR,
+    ETSI TC DECT has recently approved a new work item to                                ETSI TR 103 810 V1.1.1 (2021-11), November 2021.
+ study radio spectrum and related technical requirements for                         [2] M. Penner, M. Nabeel and J. Peissig, ”URLLC Performance Evaluation
+                                                                                         of IMT-2020 Candidate Technology: DECT-2020 New Radio,” 2021
+ the evolution of DECT-2020 NR [17]. This study may include                              IEEE 94th Vehicular Technology Conference (VTC2021-Fall), 2021, pp.
+ practical evaluation of additional frequency ranges.                                    1-7, doi: 10.1109/VTC2021-Fall52928.2021.9625340.
+    Because DECT-NR+ is clearly a complementary technology                           [3] Anttonen, A., Karhula, P., Lasanen, M., & Majanen, M. (2021). Enabling
+                                                                                         Massive Machine Type Communications with DECT-2020 Standard: A
+ to 3GPP’s eco-system, ETSI TC DECT aim to deﬁne appropri-                               System-Level Performance Study. VTT Technical Research Centre of
+ ate interworking proﬁles for 3GPP 5G NR. Work is currently                              Finland. VTT Research Report No. VTT-R-00367-2.
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                        44                           © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+                                       ITG-Fachbericht 304: Mobilkommunikation, 18. – 19.05.2022 in Osnabrück
+
+
+
+
+  [4] Rec. ITU-R M.2150-1, Detailed speciﬁcations of the terrestrial radio in-
+      terfaces of International Mobile Telecommunications-2020 (IMT-2020),
+      February 2022.
+  [5] ERC/DEC/(94)03, ERC Decision of 24th of October 1994, on the
+      frequency band to be designated for the coordinated introduction of
+      the Digital European Cordless Telecommunications system.
+  [6] ETSI TS 103 636-1: DECT-2020 New Radio (NR); Part 1: Overview
+  [7] ETSI TS 103 636-3: DECT-2020 New Radio (NR); Part 3: Physical
+      layer
+  [8] ETSI TS 103 636-4: DECT-2020 New Radio (NR); Part 4: Medium
+      Access Control layer
+  [9] ETSI EN 300 175-3: ”Digital Enhanced Cordless Telecommunications
+      (DECT); Common Interface (CI); Part 3: Medium Access Control
+      (MAC) layer”.
+ [10] ETSI TS 103 636-2: ”DECT-2020 New Radio (NR); Part 2: Radio
+      Reception and Transmission requirements”
+ [11] ETSI EN 301 908-10 V4.2.2 (2016-11); Electromagnetic compatibility
+      and Radio spectrum Matters (ERM); Base Stations (BS), Repeaters and
+      User Equipment (UE) for IMT-2000 Third-Generation cellular networks;
+      Part 10: Harmonised Standard for IMT-2000, FDMA/TDMA (DECT)
+      covering the essential requirements of article 3.2 of the Directive
+      2014/53/EU
+ [12] CEPT ECC Report 323; Spectrum use and future spectrum requirements
+      for PMSE; February 2021.
+ [13] EU Project FUDGE-5G; https://fudge-5g.eu/en/use-cases/ppdr; last vis-
+      ited April 2022.
+ [14] ECC Report 205 - Licensed Shared Access (LSA.
+ [15] ETSI TS 103 652-1 V1.1.1. (2019-02): Reconﬁgurable radio systems
+      (RRS); evolved Licensed Shared Access (eLSA); Part 1: System re-
+      quirements.
+ [16] CBRS Final FCC Report & Order; October 2018.
+ [17] Study on radio spectrum and related technical requirements for DECT-
+      2020 NR (DTR/DECT-00389)
+ [18] ETSI TR 103 670: “DECT Study on Interworking of DECT with 3GPP
+      network” (under development)
+ [19] ETSI TS 123 501: 5G; System architecture for the 5G System (5GS)
+      (3GPP TS 23.501 Release 16)
+
+
+
+
+  ISBN 978-3-8007-5873-9                                                         45                          © VDE VERLAG GMBH Â Berlin Â Offenbach
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 08,2026 at 13:26:32 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,876 @@
+      Priority-aware Radio Resource Scheduling
+       for mMTC in 5G Networks – Balancing
+                Efficiency and Fairness
+                                       Prashant Kumar Baheti and Ajay Khunteta
+                                            Poornima University, Jaipur, Rajasthan, India
+
+
+https://doi.org/10.26636/jtit.2026.1.2336
+
+Abstract  Efficient and fair resource allocation for massive              scheduling requirements compared to previous generations.
+machine-type communication remains a significant challenge in              Most MTC traffic is uplink driven, with UEs periodically
+5G New Radio networks due to the diverse quality of service re-            or sporadically transmitting data, status updates, or alarm
+quirements and dynamic traffic patterns. This paper proposes               notifications.
+a priority-aware uplink scheduling (PAUS) algorithm that joint-
+ly considers channel quality, 5G QoS identifier, packet aging,             The 5G NR uplink framework introduces several key enhance-
+and fairness in physical resource block allocation, while simul-           ments capable of addressing mMTC requirements. Flexi-
+taneously mitigating starvation of low-priority user equipment.            ble system-supporting subcarrier spacings equaling from 15
+The algorithm utilizes a composite fitness function to implement           to 240 kHz may enable the allocation of resources for dis-
+binary integer optimization for uplink scheduling, supported
+                                                                           tinct mMTC service classes. Additionally, the bandwidth part
+by heuristic resource assignment to ensure scalability. Simu-
+lation results demonstrate that the PAUS algorithm achieves
+                                                                           (BWP) configuration allows for dynamic spectrum allocation
+an improved balance between throughput, resource utilization,              to meet specific mMTC application requirements [6].
+delay, priority satisfaction, and fairness compared to baseline            Despite these improvements, mMTC uplink scheduling in
+schedulers with polynomial-time complexity.
+                                                                           5G NR faces several challenges, for example extreme hetero-
+Keywords  5G networks, efficiency, fairness, priority-aware               geneity in priority requirements, bursty traffic patterns with
+scheduling, quality of service, radio resource scheduling                  varying delay sensitivities, energy constrained UEs, massive
+                                                                           connectivity scenarios that require scalable scheduling algo-
+                                                                           rithms for high number of UEs, and the necessity to maintain
+                    1. Introduction                                        long-term fairness to balance fair resource distribution with
+                                                                           adherence to application priorities [7].
+The advent of 5G New Radio networks has fundamental-
+                                                                           Traditional uplink scheduling algorithms such as proportional
+ly transformed wireless communications [1]. The Interna-
+                                                                           fair (PF) best channel quality (BestCQI) were optimized
+tional Telecommunication Union radiocommunication sector
+                                                                           primarily for LTE communication, with relatively uniform
+(ITU-R) introduced its 5G vision in 2015 through ITU-R
+                                                                           traffic patterns and QoS requirements. In contrast, mMTC
+recommendation M.2083, emphasizing that 5G NR would
+                                                                           scenarios introduce diverse QoS requirements and varying
+expand beyond enhanced mobile broadband (eMBB) to in-
+                                                                           UE capabilities across service classes, necessitating priority-
+clude massive machine-type communications (mMTC) and
+                                                                           aware scheduling mechanisms with dynamic physical resource
+ultra-reliable low-latency communications (URLLC), each
+                                                                           block (PRB) assignment [8].
+with stringent and diverse requirements [2].
+According to [3], mMTC is characterized by low cost and                    The scheduling problem also intensifies under high UE densi-
+low complexity of user equipment (UE), offering extended                   ties, due to resource shortages and the need to simultaneously
+battery life, sporadic small data transmissions and relaxed                support grant-based and grant-free transmission modes. Ex-
+latency constraints compared to URLLC applications. Dif-                   isting scheduling algorithms often fail to optimally integrate
+ferent mMTC applications have different priority and delay                 all relevant QoS indicators into effective PRB allocation de-
+tolerance characteristics, creating heterogeneous service re-              cisions, and their performance is degraded under massive
+quirements that pose unique challenges to radio resource                   connectivity and heterogeneous service requirements [9].
+allocation. 5G NR networks must ensure high throughput,                    Therefore, 5G NR networks introduce complexity to uplink
+massive connectivity, and optimal support for latency-tolerant             PRB scheduling, especially since they converge diverse ser-
+and mission-critical applications [4].                                     vice requirements, flexible frame structures, and massive UE
+Machine-type communication (MTC) represents a paradigm                     quality. Efficient and fair scheduling solutions are essential
+shift from traditional wireless communications. The integra-               to realize the potential of 5G NR for mMTC applications –
+tion of MTC into 5G NR networks introduces fundamen-                       from low-priority environmental sensors to mission-critical
+tal changes in traffic patterns [5], resource utilization, and             automation systems.
+JOURNAL OF TELECOMMUNICATIONS
+AND INFORMATION TECHNOLOGY            1/2026                This work is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) License.
+                                                                   For more information, see https://creativecommons.org/licenses/by/4.0/
+                                                                                                                                                                29
+Prashant Kumar Baheti and Ajay Khunteta
+
+
+Tab. 1. Comparison of key papers on priority-aware uplink scheduling for mMTC in 5G.
+
+  Ref.       Methodology            Traffic types                 Contribution                              Results
+             Heuristic and        Heterogeneous                                              Improved fairness, lower packet drop
+  [24]                                              Adaptive GF resource partitioning
+                DRL                  mMTC                                                      rate, better resource utilization
+              Simulation-            Smart city        Fairness and priority-based             Outperforms PF and BestCQI in
+  [25]
+                based                 mMTC                     scheduling                      terms of fairness and utilization
+           CTMC queuing           eMBB, URLLC,         Priority-based allocation in          Higher resource utilization, reduced
+  [26]
+              model                  mMTC                    C-RAN slicing                     forced termination for mMTC
+           Dynamic priority          Multi-RAT         Two-stage dynamic priority                 20 – 30% improvement in
+  [27]
+             assignment                MTC                    scheduling                          outage/success probability
+            Mathematical          eMBB, URLLC,      Mixed reservation/priority RAN             Up to 95% resource utilization,
+  [28]
+             modeling                mMTC                       slicing                              improved isolation
+
+
+This work addresses these challenges by proposing a priority-         ing mechanism to optimize resource allocation by addressing
+aware uplink radio resource scheduling framework for mMTC             the trade-off between throughput, energy efficiency, and fair-
+scenarios that optimally balances efficiency and fairness,            ness through dynamic allocation of radio resources.
+adheres to 5G NR standards, and addresses the unique QoS              In [19], a fairness-aware uplink resource allocation scheme
+requirements of dense mMTC deployments.                               and an optimization problem are presented to ensure QoS sat-
+                                                                      isfaction, using a demand-oriented greedy algorithm for PRB
+1.1. Literature Review                                                assignment and a bisection method for power allocation in
+                                                                      UE, achieving performance improvements of up to 44.3% in
+The author of [10] proposes a 5G scheduler to minimize                fairness and 19.17% in QoS satisfaction. Furthermore, [20]
+the long-term average age of information (AoI) for dense              proposes the min–max rate (MMR) algorithm to improve
+urban mMTC scenarios in which UEs frequently connect                  throughput and fairness compared to standard scheduling al-
+and disconnect, and adapts per-slot scheduling decisions              gorithms. In the same context, article [21] proposes an uplink
+with a priority algorithm to meet delay needs and reduce              scheduler to address spatial and frequency domain coupling,
+the average AoI by 10%, the deadline violation rate by 40%,           while achieving superior performance with polynomial-time
+and the consecutive violation rate by 20%. Similarly, [11]            complexity.
+proposes a service-based M2M scheduling approach that
+integrates UE priority, service type, and channel quality to          The authors of [22] address the PRB allocation problem as
+optimize throughput and resource utilization.                         a mixed integer linear program (MILP), which utilizes mixed
+                                                                      numerology, latency, and throughput requirements, multiple
+The studies also focus on deep reinforcement learning (DRL)-          slices per UE, and internumerology interference, and propose
+based research. Dynamic DRL-based slicing selects optimal             a solution based on DRL. Also, article [23] proposes two
+slices under fluctuating demands while minimizing violations          schedulers based on the shortest job first (SJF) principle for
+of service level agreements and allowing virtual network              minimum latency, and another for the joint optimization of
+function migration for resource contention scenarios [12].            energy efficiency (EE) and latency for complex multicellular
+DRL-based resource slicing for multiservice coexistence               scenarios.
+provides near-optimal decoding and sum-rate performance
+according to [13]. In vehicular networks, slicing with QoS            Table 1 presents a comparison of key studies focusing on
+support prioritizes emergency traffic and maintains optimal           priority-based uplink scheduling for mMTC in 5G networks.
+throughput and reliability under road-specific conditions [14].       The review demonstrates that priority-aware uplink schedul-
+                                                                      ing is essential for supporting diverse mMTC requirements.
+Paper [15] focused on traffic modeling for mMTC and revealed          Although these schemes are capable of reducing latency as
+that despite growing UE numbers, aggregated inter-arrival             well as improving resource utilization and fairness, the trade-
+times converge to a Poisson process, suggesting predictable           off between prioritizing critical traffic and maintaining fair-
+scheduling opportunities even in massive deployments. For             ness for all UEs remains a challenge, particularly in congested
+mMTC based on DECT-2020 NR, the MAC-layer design for                  scenarios with mixed traffic types and delay constraints.
+power control and relay selection affects the packet delivery
+success, improving it by up to 10% [16].
+                                                                      1.2. Research Motivation and Contribution
+The authors [17] propose a priority-enabled grant-free (GF)
+transmission access scheme that dynamically allocates slots           The increase in the number of mMTC UEs requires optimal
+within each 5G NR subframe, giving first access while as-             resource scheduling solutions capable of addressing diverse
+signing remaining slots to low-priority traffic, and develop          QoS constraints, latency budgets, and dense deployment chal-
+a two-dimensional Markov chain model that accounts for both           lenges. In 5G NR, differentiated services enabled by 5QI
+types of traffic. Furthermore, paper [18] proposes a schedul-         require scheduling frameworks that ensure fast transmission
+
+30
+                                                                                     JOURNAL OF TELECOMMUNICATIONS
+                                                                                     AND INFORMATION TECHNOLOGY            1/2026
+                                          Priority-aware Radio Resource Scheduling for mMTC in 5G Networks – Balancing Efficiency and Fairness
+
+
+
+
+                                  NG RAN
+                                                                                               NG CORE
+    MTC UE              gNB                      gNB
+                                                                         NSSF     NEF        NRF     PCF        UDM   AF
+      UE1
+                                                                                                                                     I
+                                                                                                                                     N
+      UE2                                                                                                                            T
+                       Xn                        Xn                                                                                  E
+                                                                                                                                     R
+      UE3               gNB        Xn gNB                                 NSSAF     AUSF           AMF     SMF        SCP            N
+                                                 gNB-CU                                                                              E
+                                                                    N2
+                                            F1            F1                                               N4                        T
+                                                                                                    N3                N6
+      UEN                                gNB-DU        gNB-DU                                              UPF
+
+
+
+
+Fig. 1. 5G NR architecture components and interfaces [29].
+
+
+for priority traffic, while maintaining fair resource sharing            interconnected by the Xn interface. A gNB can be subdivided
+among heterogeneous UEs. Overcoming traditional schedul-                 into a central gNB unit (gNB-CU) and gNB distributed units
+ing limitations, such as the starvation of low-priority UEs              (gNB-DU), connected by the F1 interface, supporting FDD
+and inefficient PRB utilization, requires optimal scheduling             and TDD modes. 5GC comprises modular network functions
+algorithms that explicitly balance efficiency with fairness.             (NF) such as:
+The contributions of this work are as follows:                           • user plane function (UPF) for data transport and data
+• It proposes a dynamic fitness function that integrates in-                network (DN) for external connectivity,
+   stantaneous channel quality, 5QI priorities, packet aging,            • control plane for access and mobility management function
+   and fairness adjustment in uplink scheduling decisions.                  (AMF), session management function (SMF), application
+• It formulates the scheduling challenge as a constrained                   function (AF), unified data management (UDM), policy
+  binary integer program, solved with greedy heuristics,                    control function (PCF), network repository function (NRF)
+  suitable for real-time implementation with polynomial                     and network slice selection function (NSSF).
+  complexity.                                                            The separation of control and user planes, which supports
+• It implements comprehensive simulation experiments us-                 flexible user/data anchoring and virtualization of network
+   ing the 5G NR system simulation library, benchmarking                 functions, distinguishes 5G from LTE [30].
+   against BestCQI, priority-only, packet scheduling, and pro-
+                                                                         2.1. 5G QoS Framework
+   portional fair algorithms. The outcomes are demonstrated
+   with the use of comprehensive performance metrics such                The 5G NR QoS framework supports diverse service require-
+   as throughput, resource utilization, fairness, priority satis-        ments using a flow-based model, where each service flow
+   faction, and delay violation rate.                                    is mapped to a data radio bearer (DRB) and is identified
+The remainder of this paper is organized as follows. Section 2           by a 5QI. The 5QI ensures differentiation by defined values
+provides a background of the 5G network. Section 3 describes             ranging from 1 to 86 [31]. Each 5QI value corresponds to
+the proposed priority-aware scheduling algorithm. Section 4              a predefined set of QoS parameters, such as:
+presents the performance evaluation methodology. Section 5               • resource type: guaranteed bit rate (GBR), delay critical
+discusses the results, evaluation, and analysis. Finally, Section           GBR, and non-GBR,
+6 concludes the article.                                                 • priority: small priority value indicates higher priority,
+                                                                         • packet delay budget (PDB): maximum allowable delay
+                                                                           Dmax [ms],
+            2. 5G Network Background
+                                                                         • packet error rate (PER): maximum error rate,
+This section provides an overview of the 5G NR architec-                 • default maximum data burst volume: for delayed critical
+ture, the QoS framework, and the fundamentals of the radio                 GBR services.
+resource grid. 5G NR networks can be deployed based on
+non-standalone (NSA) or standalone (SA) architectures. The               2.2. Priority and Delay Management
+SA architecture uses the complete 5G core (5GC), while the
+NSA extends the existing LTE infrastructure.                             Let ri,p and rj,q represent PRB allocations for UE i and j with
+                                                                         priority p and q, respectively. A priority-based QoS violation
+As shown in Fig. 1, the essential components are the UE,
+                                                                         occurs if:
+the radio access network (RAN), and the service-based 5GC.                                 (
+The main element of RAN is a set of gNB (5G node B) or                                         1 if ri,p = ∅ and rj,q ̸= ∅ (p < q)
+                                                                                Vp,i (t) =                                           .    (1)
+(next generation node B) units, i.e. the base station and is                                   0 otherwise
+
+JOURNAL OF TELECOMMUNICATIONS
+AND INFORMATION TECHNOLOGY            1/2026                                                                                               31
+Prashant Kumar Baheti and Ajay Khunteta
+
+
+
+Each flow delay is managed with its PDB, Dimax . If the
+                                                                                                                                                                             One slot
+network access delay Din for UE i exceeds Dimax , a delay
+
+
+
+
+                                                                                                                                                    RB
+                                                                                                                                                       –1
+violation occurs, thus:
+
+
+
+
+                                                                                                                                     k = Ngrid,x × Nsc
+
+
+
+
+                                                                                                                                                                                                          Resource grid
+                    Din ¬ Dimax ,   ∀i ∈ U (t) .            (2)
+
+
+
+
+                                                                                                                                  size,μ
+A QoS violation for delay-bound MTC occurs if:
+                        (
+                             1, if Din > Dimax
+                Vd,i (t) =                         .        (3)
+
+
+
+
+                                                                                                                                                                                                            Resource block
+                             0, otherwise
+
+
+
+
+                                                                     Frequency (subcarrier)
+It ensures that the scheduler satisfies the priority and delay
+
+
+
+
+                                                                                                             subcarriers
+                                                                                                                               = 12 subcarriers
+requirements for each QoS flow [32].
+
+
+
+
+                                                                                                                                                                                                            Resource element
+2.3. 5G Frame Structure and Resource Grid
+
+
+
+
+                                                                                                          RB
+                                                                                               Ngrid,x × Nsc
+5G NR uses flexible numerology µ (µ = 0, 1, 2, 3, 4) to
+
+
+
+
+                                                                                                                            RB
+                                                                                                                           Nsc
+                                                                                              size,μ
+define the subcarrier spacing (SCS) ∆f = 2µ × 15 kHz,
+impacting slot duration and radio frame structure. Each radio
+frame spans 10 ms, comprising 10 subframes (1 ms each).
+Unlike LTE, which uses a fixed 15 kHz SCS, NR supports
+15, 30, 60, 120, and 240 kHz SCS, allowing slot durations as
+low as 0.0625 ms for low-latency services [33].
+Numerologies enable scalable, low-latency, or high-
+
+
+                                                                                                                                                    k=0
+bandwidth scheduling, with slot durations decreasing as
+SCS increases. Each slot contains 14 orthogonal frequency-                                                                                                  l=0
+                                                                                                                                                                                            slot
+division multiplexing (OFDM) symbols (normal cyclic pre-                                                                                                          Time (OFDM symbol) l = Nsymb × 2μ – 1
+fix). Table 2 presents the supported flexible transmission
+numerologies in 5G. As shown in Fig. 2, the resource grid
+represents the allocation of time-frequency resources as a two-   Fig. 2. Resource grid in 5G NR: subcarriers, OFDM symbols, PRB,
+                                                                  and RE [35]
+dimensional grid with the frequency axis representing sub-
+            size,µ      P RB
+carriers (Ngrid,x  × Nsc      ) and the time axis representing    • type 1 (RB-based, enabling contiguous resource assign-
+OFDM symbols (Nsymb × 2µ ), where PRB is the collection
+                     slot
+                                                                     ments for each UE).
+of 12 subcarriers in the frequency domain for one slot dura-
+                                                                  The proposed scheduler considers service classes and dynam-
+tion and resource element (RE) is the smallest resource unit
+                                                                  ically assigns PRBs for sporadic, bursty mMTC traffic. The
+representing one subcarrier for one OFDM symbol duration.
+                                                                  BSR, PDB, and throughput requirements are implemented in
+                                                                  resource assignment.
+2.4. 5G Radio Resource Scheduling Framework
+
+The scheduler, a key function of the gNB, allocates time-
+frequency resources to UEs for uplink and downlink com-
+                                                                            3. Priority-aware Uplink Scheduling
+munication. It is located within the medium access control
+                                                                  3.1. Network Model
+(MAC) layer, but its operation is coordinated with the radio
+link control (RLC) and the physical layer (PHY) to enable         Consider a 5G NR cell with a single gNB serving a set U =
+efficient resource mapping [36].                                  {1, 2, . . . , N } of mMTC UEs that are randomly distributed
+The scheduling framework is driven by a set of metrics and        within the cell coverage area. At any scheduling interval t, let
+reports transmitted by the UE. The gNB is based on a com-         Xt ⊆ U represent the subset of eligible UEs with buffered
+bination of UE-reported and gNB-measured information to           data. Each UE i ∈ Xt has a pending uplink grant request,
+efficiently allocate resources [37].                              with a resource requirement of rit PRBs. Scheduling decisions
+Scheduling metrics include uplink channel state measurement,      are made at each transmission time interval (TTI) of the
+buffer status report (BSR) and scheduling request, traffic pat-   duration TT T I . The total number of PRBs available in the
+tern, power headroom report, logical channel configuration,       cell is M [40].
+and hybrid automatic repeat request (HARQ) [38].
+                                                                  3.2. Channel Model
+PRB allocations in NR can be either contiguous or non-
+contiguous for a given UE. NR defines multiple types of the       The wireless channel between UE i and gNB is characterized
+resource allocation process [39]:                                 by the channel quality indicator (CQI), cti ∈ {0, 1, 2, . . . , 15}.
+• type 0 (resource block group, RBG-based, allowing non-          CQI is derived from signal-to-interference-plus-noise ratio
+   contiguous allocation across the BWP,                          (SINR) measurements using an effective SINR mapping
+
+32
+                                                                                                                                                    JOURNAL OF TELECOMMUNICATIONS
+                                                                                                                                                    AND INFORMATION TECHNOLOGY                     1/2026
+                                               Priority-aware Radio Resource Scheduling for mMTC in 5G Networks – Balancing Efficiency and Fairness
+
+
+Tab. 2. 5G NR-supported flexible transmission numerologies [34].
+
+    µ            SCS [kHz]          FR1          FR2                         PRB BW          Slots/frame           Slot duration                Symbol duration
+                                     √
+    0                  15                            ×                       180 kHz              10                   1000 µs                        66.67 µs
+                                     √
+    1                  30                            ×                       360 kHz              20                    500 µs                        33.33 µs
+                                     √               √
+    2                  60                                                    720 kHz              40                    250 µs                        16.67 µs
+                                                     √
+    3               120              ×                                       1.44 MHz             80                    125 µs                        8.33 µs
+                                                     √
+    4               240              ×                                       2.88 MHz            160                    62.5 µs                       4.17 µs
+
+
+procedure:                                                                              where tlast
+                                                                                                 i   is the last scheduling time for UE i, Di is the
+                                         Ns              t
+                                                                 !                      PDB for UE i, β ∈ [0.01, 1] is the decay rate parameter,
+                                  1 X SINRi,k                                           0 ¬ ϵ ¬ 0.2 × Di , is a tolerance threshold, and αit ∈ [0, 1].
+          SINRteff,i = β1 I −1       I                               ,          (4)
+                                  Ns    β2
+                                       k=1                                              The decay mechanism ensures that UEs are scheduled before
+                                                                                        their packet deadline while resetting at the edge of the deadline
+where Ns is the number of SINR samples, I(·) is the mutual                              to mitigate QoS delay violations and enforces soft deadline
+information function and β1 , β2 are parameters specific to                             scheduling.
+the modulation and coding scheme (MCS).
+                                                                                        To mitigate the starvation of low-priority UEs, we incorporate
+Furthermore, [41] specifies a mapping table that relates the                            a fairness adjustment term that provides a gradually increasing
+resulting SINR to the CQI and the transport block size (TBS)                            boost to UEs that have not been scheduled for a long time.
+index, and we use it.                                                                                                   η
+                                                                                                       ξit =                          ,   0 ¬ ξit ¬ η ,           (8)
+                                                                                                                     −λ·(t−tlast )
+                                                                                                               1+e          i
+3.3. Dynamic Fitness Function
+                                                                                        where η ∈ [0.1, 2] controls the maximum fairness boost and
+The proposed priority-aware uplink scheduling (PAUS) al-                                λ ∈ [0.05, 2] determines the steepness of the sigmoid func-
+gorithm employs a dynamic fitness function to maximize                                  tion. This term implements a bounded increase in fitness score
+the utility of the system by considering channel quality, QoS                           proportional to waiting time, ensuring that no UE experiences
+priority, packet aging, and long-term fairness. For each UE                             starvation regardless of its priority or channel conditions.
+i ∈ Xt at scheduling time t, the fitness function is defined as:                        Sigmoid-based term increases fitness for prolonged unsched-
+                    t    t    t     t−1    t
+                                                                                       uled UEs, but is upper bounded by η, preventing instability.
+                  Fi = ωi + αi · Fi           + ξi   ,                          (5)
+                                                                                        The specific default values and recommended ranges for γ, β,
+where ωit is the channel-aware priority weight, αit is a temporal                       η, and λ were determined by the R-method [42], a technique
+decay factor, Fit−1 is the historical fitness value from the                            to classify multiple weighted criteria or parameters.
+previous TTI (Fi0 = 0) and ξit is a fairness adjustment term.
+                                                                                        3.4. Optimization Problem Formulation
+The fitness value acts as a dynamic scheduling weight that
+evolves over time.                                                                      The dynamic uplink scheduling problem is formulated as a
+To balance efficiency with QoS requirements, we define a                                constrained binary integer optimization problem aimed at
+priority weight that combines channel conditions and static                             maximizing the aggregate fitness of scheduled UEs while
+QoS priority. We assume that each UE i has a static priority                            respecting resource and operational constraints. The deci-
+pi ∈ {10, 20, . . . , P }, where lower values indicate a higher                         sion variables are the UE scheduling vector xt and the PRB
+priority (i.e., pi = 10 is the highest priority). We normalize                          assignment matrix st :
+CQI to [0,1], as cti,norm = cti /15. The channel-aware priority
+                                                                                                                   X t t
+                                                                                                                   max              xi · Fi ,                     (9)
+                                                                                                                    xt ,st
+weight is formulated as:                                                                                                     i∈Xt
+
+                                            P − pi
+                                             
+                 ωit = (cti,norm )γ · 1 +                    ,                  (6)     subject to
+                                              P                                                                     X
+                                                                                                                             xti · rit ¬ M,                      (10)
+where γ ∈ [0.5, 2] is a scaling parameter that controls the                                                         i∈Xt
+
+influence of channel quality and P is the lowest priority index.
+                                                                                                                xti ∈ {0, 1},         ∀i ∈ Xt ,                  (11)
+This ensures that a higher CQI combined with a higher QoS
+priority increases the chances of UE scheduling.                                                         X t
+                                                                                                                si,j ¬ 1,       ∀j ∈ {1, . . . , M },            (12)
+To prevent excessive delays for buffered packets and ensure                                              i∈Xt
+timely delivery for delay-sensitive applications while main-                                                M
+taining system stability, a temporal decay factor is introduced:
+                                                                                                            X t
+                                                                                                                  si,j = rit · xti ,      ∀i ∈ Xt ,              (13)
+               (          last                                                                              j=1
+                   e−β·(t−ti )   if t − tlast max
+                                         i < Di   −ϵ
+         αit =                                                           ,      (7)
+                   0             otherwise                                                           sti,j ∈ {0, 1},     ∀i ∈ Xt , j ∈ {1, . . . , M }.          (14)
+
+JOURNAL OF TELECOMMUNICATIONS
+AND INFORMATION TECHNOLOGY                  1/2026                                                                                                                33
+Prashant Kumar Baheti and Ajay Khunteta
+
+
+
+The optimization problem forms Eqs. (9) – (14) and deter-           Algorithm 1 PAUS algorithm for dynamic scheduling
+mines the set of UEs to be scheduled and the corresponding           1: Input: Xt , {pi , cti , rit , Di , tlast
+                                                                                                                 t−1
+                                                                                                                }i∈Xt ,
+                                                                                                            i , Fi
+PRB-level allocation within each TTI. Constraint (10) en-                         M , γ, β, η, λ, ϵ
+forces the PRB limitation of the uplink bandwidth by ensuring        2: Output: scheduled UE set St , updated fitness
+that the aggregate PRB requirement of all selected UEs does                        {Fit }i∈Xt , PRB allocation map st
+not exceed the total number of PRBs available. The binary            3: Initialize: St = ∅, Mrem = M
+constraint (11) specifies whether UE i is selected for trans-        4: for each i ∈ Xt do
+mission and manages the scheduling decision, while (12)              5:     Compute ωit using Eq. (6)
+enforces PRB exclusivity by ensuring that each PRB is as-            6:     Compute αit using Eq. (7)
+signed to no more than one UE, reflecting the orthogonality          7:     Compute ξit using Eq. (8)
+requirement of NR uplink transmissions. Completeness con-            8:     Compute Fit using Eq. (5)
+straint (13) imposes an all-or-nothing allocation rule, ensuring     9: end for
+that a UE receives either the full set of PRBs it requests or       10: Sort UEs in Xt in descending order of Fit values
+nothing, thereby avoiding partial transport block formation         11: for each UE i in sorted order do
+and simplifying HARQ operations [43].                               12:     if rit ¬ Mrem then
+Finally, constraint (14) ensures the binary PRB assignment          13:          St = St ∪ {i}
+and manages resource mapping. Therefore, the formulation            14:          Mrem = Mrem − rit
+captures the discrete, non-linear, and coupled nature of uplink     15:          Allocate rit PRBs to UE i
+scheduling in 5G NR, making the problem NP hard and mo-             16:          Set sti,j = 1 for all allocated PRBs j
+tivating the use of heuristic algorithms such as the proposed       17:          Update tlast
+                                                                                           i =t
+PAUS Algorithm 1.                                                   18:     end if
+Because the uplink scheduling problem is formulated in              19: end for
+Eqs. (9) – (14) is NP-hard, a greedy heuristic is adopted to        20: Return St , {Fit }i∈Xt and PRB allocation map st
+obtain an efficient real-time solution. The algorithm computes
+the fitness value for each eligible UE and iteratively selects      For PHY modeling, we utilize the integrated PHY abstrac-
+the UEs in descending order of fitness until all PRBs are           tion in the 5G Toolbox, which implements link-to-system
+exhausted. This procedure ensures that the scheduler does not       mapping for performance evaluation. The channel model is
+forget about UEs that have been waiting, making it inherently       the 3GPP TR 38.901 urban macro (UM) scenario [44]. RLC
+fair while still being efficient. The uplink scheduling workflow    entities operate in an unacknowledged mode to reduce pro-
+is illustrated in Fig. 3.                                           tocol overhead, a suitable choice for latency-sensitive and
+The computational complexity of the PAUS algorithm is               small-payload mMTC traffic.
+dominated by the UE fitness sorting step. Calculating the           Scheduling decisions are executed in the MAC layer of the
+fitness function for all eligible UEs requires O(|Xt |) opera-      gNB, which supports the integration of custom uplink sched-
+tions. The sorting step has the complexity of O(|Xt | log |Xt |).   ulers. The proposed PAUS scheduler utilizes a composite
+The greedy resource allocation loop executes at most                metric that incorporates instantaneous CQI feedback, 5QI
+O(|Xt |) iterations. Therefore, the overall time complexity is      priority, packet aging, and long-term fairness. The key simu-
+O(|Xt | log |Xt |), which is polynomial and feasible for real-      lation parameters are summarized in Tab. 3. A duration of
+time scheduling, where |Xt | may range from tens to thousands
+of UEs per TTI.                                                                               Eligible UEs:
+                                                                                           non-zero buffer status
+
+
+            4. Performance Evaluation                                                   Calculate resource require-
+                                                                                        ments for each eligible UE
+4.1. Simulation Setup
+
+We consider a network scenario with a coverage radius of                                 Calculate UE priority
+1 km, where mMTC UEs are randomly distributed within                                      for each eligible UE
+a single 5G NR macro cell, and gNB is positioned at the cell’s                      (BestCQI, PF, PA, PS, proposed)
+center. UEs communicate directly with the gNB without re-
+quiring dedicated gateways. UEs with the same 5QI priorities
+are grouped for traffic differentiation.                                             Sort UEs by descending priority
+
+The simulation is implemented using the Matlab 5G NR
+system simulator. This framework provides comprehensive
+                                                                                            Allocate resources:
+simulation capabilities, incorporating the PHY, MAC, and                                    generate UL grants,
+RLC layers, as well as configurable traffic generation. UEs                             assign RBs to selected UEs
+remain stationary during each simulation run to isolate sched-
+uler performance from mobility-based channel variations.            Fig. 3. Particle swarm optimization flow chart.
+
+
+34
+                                                                                     JOURNAL OF TELECOMMUNICATIONS
+                                                                                     AND INFORMATION TECHNOLOGY        1/2026
+                                        Priority-aware Radio Resource Scheduling for mMTC in 5G Networks – Balancing Efficiency and Fairness
+
+
+Tab. 3. Simulation parameters.                                        • Proportional fair (PF) scheduler. It balance throughput and
+             Parameter                        Value                     fairness by prioritizing UEs with high instantaneous-to-
+                                                                        average rate ratios, using an exponential moving average.
+        Channel bandwidth                    5 MHz
+         Number of PRBs                         25                    4.4. Performance Metrics
+
+           Duplex mode                         FDD                    The following key performance indicators are used to assess
+                                                                      the efficiency of uplink scheduling algorithms.
+         Number of gNBs                          1
+                                                                      The average cell throughput Rcell measures the mean data rate
+          Numerology (µ)                0 (15 kHz SCS)                successfully delivered from all scheduled UEs to the gNB
+       Subcarriers per PRB                      12                    and is defined as:
+                                                                                                   T N        
+                                                                                                     slot P
+     OFDM symbols per slot                      14                                                  P        t
+                                                                                                                            Ri       ×8
+                                                                                                              t=1 i=1
+        Slots per subframe                       1                                   Rcell [Mbps] =                                       ,   (15)
+                                                                                                                  Tsim × 106
+       Subframes per frame                      10
+                                                                      where Rit is the data [bytes] received from UE i in slot t, Tslot is
+          Frame duration                      10 ms                   the total number of slots, Tsim (NumFrames × 0.01 s/frame)
+           Slot duration                       1 ms                   is the total simulation time in seconds, and N is the total
+          Channel model                Urban macro (UM)               number of active UE.
+                                                                      Resource utilization ρ quantifies the ratio of PRBs allocated
+          Number of UEs                100, 200, . . . , 500          to the total PRBs available and is defined as:
+           UE positions                      Random                                                  N
+                                                                                                        rit
+                                                                                                    P
+                                                                                              Tslot
+             UE height                        1.5 m                                       1   X     i=1
+                                                                                    ρ=                            ,         0¬ρ¬1,            (16)
+        Simulation duration                500 frames                                    Tslot           M
+                                                                                                 t=1
+
+                                                                      where rit is the number of PRBs allocated to UE i in the slot
+500 frames provides sufficient time to observe steady-state           t and M is the total number of PRBs available per slot.
+scheduler behavior under varying mMTC loads while keeping             Instantaneous resource utilization is defined as:
+simulation runtime practical.                                                                         N
+                                                                                                          t
+                                                                                                     P
+                                                                                                                       ri
+                                                                                                              i=1
+                                                                                                  ρ(t) =                    .                 (17)
+4.2. Application Scenario                                                                                         M
+                                                                      The fairness index F evaluates the equitable distribution of
+The evaluation considers a smart city deployment charac-              radio resources among competing UEs, using Jain’s fairness
+terized by high-density machine-type connectivity. mMTC               index is:
+UEs, such as smart meters, environmental sensors, public                                N
+                                                                                          P
+                                                                                               2
+asset monitors, and traffic control are utilized. Their commu-                                     Ri
+                                                                                             i=1
+nication pattern consists mainly of sporadic small payload                           F=         N
+                                                                                                              ,         0¬F ¬1,               (18)
+                                                                                                  P
+uplink transmissions. The primary challenge for the 5GC and                                 N·          Ri2
+NR RAN is to efficiently support massive connectivity while                                       i=1
+
+minimizing signaling load and satisfying heterogeneous QoS            where each Ri is the throughput for UE i:
+                                                                                               T       
+requirements. The traffic distribution across 5QI classes is                                     slot
+                                                                                                 P    t
+                                                                                                                  Ri        ×8
+presented in Tab. 4 [45].                                                                                t=1
+                                                                                            Ri =                                 .            (19)
+                                                                                                         Tsim × 106
+4.3. Baseline Algorithms                                              5QI priority satisfaction evaluates the proportion of schedul-
+                                                                      ing events where the scheduler fails to satisfy QoS priority
+To evaluate PAUS performance, we implement four bench-                differentiation among traffic classes. Lower values indicate
+mark algorithms for comparison purposes:                              better 5QI priority satisfaction and improved QoS differenti-
+• Best CQI (BestCQI) scheduler. It allocates PRBs to UEs              ation.
+  with the highest instantaneous channel quality, maximizing          The delay violation rate represents the average number of
+  throughput but ignoring fairness, calculated from channel-          events when the packets exceed their PDB before successful
+  dependent MCS, transmission rank, and available REs.                transmission. A lower delay violation rate indicates better
+• Priority algorithm (PA). It schedules UEs strictly based            delay performance.
+  on static 5QI priority, independently of channel conditions
+  and fairness.                                                                    5. Results and Discussion
+• Packet scheduling (PS). This algorithm [46] combines QoS
+  requirements with the fairness mechanism, but fairness              This section analyzes the experimental results obtained from
+  deteriorates drastically with network load.                         extensive simulations for a range of mMTC network sizes
+JOURNAL OF TELECOMMUNICATIONS
+AND INFORMATION TECHNOLOGY           1/2026                                                                                                    35
+Prashant Kumar Baheti and Ajay Khunteta
+
+
+Tab. 4. mMTC traffic parameters for the cell radius r = 1000 m.
+
+  Priority                                   5QI            Dimax [ms]        Packets/min          Traffic type                                     UE [%]                  Example service
+                               10                5              100               5                Event update                                          12          Emergency notification service
+                               20                1              100              10                Event update                                           7            Intrusion detection service
+                               30                3               50              30               Periodic update                                        12            Critical monitoring service
+                               40                2              150              30          Event/periodic update                                       12             Environment monitoring
+                               50                4              300              40          Event/periodic update                                       19               Smart home service
+                               60                6              300              60               Periodic update                                        19            Utility application service
+                               70                7              100              60               Periodic update                                        19                   Smart meters
+
+
+
+                                                                                                                                             1
+     Average cell throughput [Mbps]
+
+
+
+
+                                      10                                                                                                                BestCQI
+
+
+
+
+                                                                                                             Average resource utilization
+                                                 BestCQI
+                                                   PF                                                                                                     PF
+                                                  PAUS                                                                                      0.8          PAUS
+                                      8            PS                                                                                                     PS
+                                                                                                                                                          PA
+                                                   PA
+                                                                                                                                            0.6
+                                      6
+
+                                                                                                                                            0.4
+                                      4
+
+                                      2                                                                                                     0.2
+
+
+                                      0                                                                                                      0
+                                           100             200       300        400         500                                                   100         200       300       400      500
+                                                              Number of UEs                                                                                         Number of UEs
+
+Fig. 4. Average cell throughput.                                                                          Fig. 5. Average resource utilization.
+
+and load conditions. Each experiment is repeated for 50
+                                                                                                          underlining the importance of channel awareness for spectral
+independent runs. The reported results correspond to the
+                                                                                                          efficiency.
+sample mean across the runs.
+
+5.1. Average Cell Throughput                                                                              5.3. Fairness Index
+
+Average cell throughput is defined in Eq. (15). Figure 4 com-                                             The fairness index is defined in Eq. (18), where values close to
+pares the average cell throughput of the five schedulers under                                            1 denote high fairness. Figure 6 illustrates that PAUS achieves
+consideration as the number of UEs increases from 100 to                                                  higher fairness ≈ 0.84 than a purely channel-oriented sched-
+500. Channel-oriented schemes (BestCQI and PF) achieve the                                                uler ≈ 0.30 and static priority ≈ 0.46 at 500 UEs. PF exhibits
+highest throughput because they prioritize instantaneous chan-                                            intermediate fairness. The high fairness of PAUS is due to the
+nel capacity. The PAUS scheduler achieves optimal through-                                                sigmoid-based fairness boost ξit and the aging-aware decay
+put while improving fairness and priority satisfaction. Impor-                                            factor, which together mitigate the starvation of low-priority
+tantly, PAUS outperforms the PA and PS baselines across all                                               or persistently poor-channel UEs, suitable for dense, hetero-
+network sizes by combining channel awareness with priority                                                geneous IoT environments.
+and aging information, aligning scalability and efficiency.
+
+5.2. Resource Utilization                                                                                 5.4. Priority Satisfaction
+
+Resource utilization, defined in Eq. (16), quantifies the effi-                                           Figure 7 shows that the PA baseline delivers the lowest viola-
+ciency of PRB usage. Figure 5 shows that CQI-centric sched-                                               tion rate (highest 5QI satisfaction), but at a cost to throughput
+ulers (BestCQI, PF) achieve the highest utilization, exceeding                                            and fairness. PAUS achieves a balanced trade-off with 0.23
+90% under heavy load. PAUS achieves high utilization (up                                                  for 500 UE, lower than PF and BestCQI, while maintaining
+to 90%) by opportunistically exploiting channel instances                                                 optimal throughput and fairness than PA. PF and BestCQI
+while respecting priority constraints. The PA algorithm un-                                               prioritize instantaneous channel conditions, accumulating
+derperforms in utilization at high loads because it schedules                                             more 5QI priority violations. This shows that PAUS effec-
+according to static priority, often leaving spectral opportuni-                                           tively balances QoS differentiation with minimum sacrifice
+ties unused when high-priority UEs have poor channel quality,                                             of efficiency.
+
+36
+                                                                                                                                                    JOURNAL OF TELECOMMUNICATIONS
+                                                                                                                                                    AND INFORMATION TECHNOLOGY                1/2026
+                                                             Priority-aware Radio Resource Scheduling for mMTC in 5G Networks – Balancing Efficiency and Fairness
+
+
+
+                        0.9                                                                                     18
+                                BestCQI                                                                         16         BestCQI
+                        0.8       PF                                                                                         PF
+                                 PAUS                                                                           14          PAUS
+
+
+
+
+                                                                                              Delay violation
+                        0.7       PS                                                                                         PS
+    Fairness index
+
+
+
+
+                                                                                                                12           PA
+                                  PA
+                        0.6                                                                                     10
+                                                                                                                8
+                        0.5                                                                                     6
+                        0.4                                                                                     4
+                                                                                                                2
+                        0.3                                                                                     0
+                        0.2                                                                                          100             200         300       400   500
+                              100         200      300          400        500
+                                             Number of UEs                                                                                 Number of UEs
+
+Fig. 6. Fairness index.                                                                    Fig. 8. 5QI priority satisfaction.
+
+                                                                                           ployments. The novelty of the proposed algorithm lies in its
+                        0.8
+                                                                                           dynamic fitness function, which integrates a channel-aware
+                                BestCQI                                                    priority weight to utilize channel conditions, a temporal decay
+                        0.7       PF
+                                                                                           mechanism to mitigate delay violations based on the PDB,
+  5QI violation index
+
+
+
+
+                                 PAUS
+                        0.6       PS                                                       and a sigmoid-based fairness adjustment to prevent starvation
+                                  PA
+                        0.5                                                                of low-priority or poor-channel UEs.
+                        0.4                                                                Extensive simulation results demonstrated that PAUS
+                        0.3                                                                achieved near-optimal throughput and resource utilization,
+                                                                                           close to channel-aware schemes (PF, BestCQI). PAUS out-
+                        0.2
+                                                                                           performed efficiency-focused schemes in QoS metrics and
+                        0.1                                                                achieved the highest fairness and the lowest delay violation
+                          0                                                                rate, which can manage delay-sensitive traffic. Furthermore,
+                              100         200       300       400          500             it maintained a low 5QI priority violation, demonstrating ef-
+                                                Number of UEs
+                                                                                           fective QoS differentiation with balanced spectral efficiency.
+Fig. 7. 5QI priority satisfaction.                                                         Polynomial-time complexity makes PAUS implementable
+                                                                                           within real-time 5G gNB MAC scheduler architectures and is
+5.5. Delay Violation Rate                                                                  suitable for supporting the large-scale, heterogeneous traffic
+                                                                                           requirements of urban smart city and industrial IoT applica-
+The delay violation rate is a critical mMTC reliability indica-                            tions.
+tor. The results shown in Fig. 8 illustrate that PAUS yields the
+lowest average delay violation, ≈ 8.5 for 500 UE, due to the
+deadline-aware temporal decay αit and the fairness boost that                                                                        References
+prioritizes aged packets, and is lower than all other schemes.
+                                                                                             [1] 3GPP, “5G; Study on New Radio (NR) Access Technology (3GPP
+PF and BestCQI, which ignore deadline information, incur                                         TR 38.912 Version 18.0.0 Release 18)”, Technical Report, 2024.
+substantially higher delay violations under heavy loads. The                                 [2] J. Janković et al., “Effects of Differentiated 5G Services on Computa-
+findings suggest the suitability of PAUS for delay-sensitive                                     tional and Radio Resource Allocation Performance”, IEEE Transac-
+mMTC traffic.                                                                                    tions on Network and Service Management, vol. 18, pp. 2226–2241,
+                                                                                                 2021 (https://doi.org/10.1109/TNSM.2021.3060865).
+The results demonstrate that PAUS achieves a balance be-                                     [3] 3GPP, “5G; NR; NR and NG-RAN Overall Description; Stage-2
+tween efficiency and fairness/QoS differentiation in dense                                       (3GPP TS 38.300 Version 17.0.0 Release 17)”, Technical Specifica-
+mMTC deployments. Although BestCQI and PF maximize                                               tion, 2022.
+                                                                                             [4] S.R. Pokhrel et al., “Towards Enabling Critical mMTC: A Review of
+throughput, they suffer from poor fairness and higher 5QI                                        URLLC within mMTC”, IEEE Access, vol. 8, pp. 131796–131813,
+violations. In contrast, PA satisfy priority at the cost of effi-                                2020 (https://doi.org/10.1109/ACCESS.2020.3010271).
+ciency. PAUS achieves near-PF throughput with substantially                                  [5] S. Rezwan and W. Choi, “Priority-based Joint Resource Allocation
+improved fairness and priority satisfaction, making it suitable                                  with Deep Q-learning for Heterogeneous NOMA Systems”, IEEE
+                                                                                                 Access, vol. 9, pp. 41468–41481, 2021 (https://doi.org/10.1
+for urban mMTC scenarios.                                                                        109/ACCESS.2021.3065314).
+                                                                                             [6] M. Attaran, “The Impact of 5G on the Evolution of Intelligent Au-
+                                                                                                 tomation and Industry Digitization”, Journal of Ambient Intelli-
+                                    6. Conclusions                                               gence and Humanized Computing, vol. 14, pp. 5977–5993, 2023
+                                                                                                 (https://doi.org/10.1007/s12652-020-02521-x).
+                                                                                             [7] S. Hamdoun, A. Rachedi, and Y. Ghamri-Doudane, “Graph-based
+This paper presents a priority-aware uplink radio resource                                       Radio Resource Sharing Schemes for MTC in D2D-based 5G Net-
+scheduling algorithm to address the challenge of balanc-                                         works”, Mobile Networks and Applications, vol. 25, pp. 1095–1113,
+ing efficiency with optimal fairness in dense 5G mMTC de-                                        2020 (https://doi.org/10.1007/s11036-020-01527-1).
+
+JOURNAL OF TELECOMMUNICATIONS
+AND INFORMATION TECHNOLOGY                              1/2026                                                                                                         37
+Prashant Kumar Baheti and Ajay Khunteta
+
+
+
+ [8] P.K. Baheti and A. Khunteta, “QoS Aware Resource Scheduling in                Type Communication in 5G and Beyond Networks”, IEEE Transac-
+     LTE Network for Smart City M2M Communication”, 2021 IEEE                      tions on Network and Service Management, vol. 22, pp. 1188–1204,
+     International Conference on Technology, Research, and Innovation              2025 (https://doi.org/10.1109/TNSM.2024.3493015).
+     for Betterment of Society (TRIBES), Raipur, India, 2021 (https:          [25] P.K. Baheti and A. Khunteta, “Priority-based Resource Scheduling
+     //doi.org/10.1109/TRIBES52498.2021.9751661).                                  for Smart City M2M Communication in 5G Networks”, 2023 3rd
+ [9] T.-S. Lee, C.-H. Yang, T.-Y. Kuo, and Y.-J. Wu, “Chapter 13 - Resource        International Conference on Mobile Networks and Wireless Commu-
+     Allocation in Massive Machine-type Communications”, in: Resource              nications (ICMNWC), Tumkur, India, 2023 (https://doi.org/10
+     Optimization in Wireless Communications, pp. 317–347, 2025 (http              .1109/ICMNWC60182.2023.10435821).
+     s://doi.org/10.1016/B978-0-44-330092-9.00019-7).                         [26] S.A. AlQahtani, “Cooperative-aware Radio Resource Allocation
+[10] B.-S. Kim, “A Priority-aware Dynamic Scheduling Algorithm for En-             Scheme for 5G Network Slicing in Cloud Radio Access Networks”,
+     suring Data Freshness in 5G Networks”, Future Generation Computer             Sensors, vol. 23, art. no. 5111, 2023 (https://doi.org/10.339
+     Systems, vol. 163, art. no. 107542, 2025 (https://doi.org/10.1                0/s23115111).
+     016/j.future.2024.107542).                                               [27] W.U. Rehman et al., “Improved Resource Allocation in 5G MTC
+[11] P.K. Baheti and A. Khunteta, “Service-aware Resource Scheduling for           Networks”, IEEE Access, vol. 8, pp. 49187–49197, 2020 (https:
+     Heterogeneous M2M Communication in 5G Networks”, International                //doi.org/10.1109/ACCESS.2020.2974632).
+     Journal of Basic and Applied Sciences, vol. 14, pp. 137–143, 2025        [28] D. Ivanova et al., “Mathematical Framework for Mixed Reservation-
+     (https://doi.org/10.14419/saqrkp91).                                          and Priority-based Traffic Coexistence in 5G NR Systems”, Mathe-
+[12] P. Vidhya, K. Subashini, R. Sathishkannan, and S. Gayathri, “Dynam-           matics, vol. 11, art. no. 1046, 2023 (https://doi.org/10.3390/
+     ic Network Slicing Based Resource Management and Service Aware                math11041046).
+     Virtual Network Function (VNF) Migration in 5G Networks”, Com-           [29] S.B. Prathiba, K. Raja, R.V. Saiabirami, and G. Kannan, “An Energy-
+     puter Networks, vol. 259, art. no. 111064, 2025 (https://doi.or               aware Tailored Resource Management for Cellular-based Zero-touch
+     g/10.1016/j.comnet.2025.111064).                                              Deterministic Industrial M2M Networks”, IEEE Access, vol. 12, pp.
+[13] S. Malta, P. Pinto, and M. Fernandez-Veiga, “Optimizing 5G Network            33613–33627, 2024 (https://doi.org/10.1109/ACCESS.2024.
+     Slicing with DRL: Balancing eMBB, URLLC, and mMTC with OMA,                   3372417).
+     NOMA, and RSMA”, Journal of Network and Computer Applications,           [30] M.R.M. Anfar and J. Mwangama, “Machine Learning-based Service
+     vol. 234, art. no. 104068, 2025 (https://doi.org/10.1016/j.                   Differentiation in the 5G Core Network”, 2021 International Con-
+     jnca.2024.104068).                                                            ference on Artificial Intelligence in Information and Communication
+[14] W. Hamdi, O. Dağdeviren, and H. Bulut, “QoS-aware Network Slicing            (ICAIIC), Jeju Island, South Korea, 2021 (https://doi.org/10.1
+     and Resource Management for Internet of Vehicles in 5G Networks”,             109/ICAIIC51459.2021.9415263).
+     Ad Hoc Networks, vol. 178, art. no. 103976, 2025 (https://doi.           [31] 3GPP, “5G; System Architecture for the 5G System (5GS) (3GPP
+     org/10.1016/j.adhoc.2025.103976).                                             TS 23.501 Version 17.5.0 Release 17)”, Technical Specification,
+[15] E. Goshi, F. Mehmeti, T.F. La Porta, and W. Kellerer, “Modeling and           2022 (https://www.etsi.org/deliver/etsi_ts/123500_12
+     Analysis of mMTC Traffic in 5G Core Networks”, IEEE Transactions              3599/123501/17.05.00_60/ts_123501v170500p.pdf).
+     on Network and Service Management, vol. 22, pp. 409–425, 2025            [32] S.O. Oladejo and O.E. Falowo, “Latency-aware Dynamic Resource
+     (https://doi.org/10.1109/TNSM.2024.3481240).                                  Allocation Scheme for Multi-tier 5G Network: A Network Slicing-
+[16] A. Samuylov et al., “Performance of MAC Layer Mechanisms in                   multitenancy Scenario”, IEEE Access, vol. 8, pp. 74834–74852, 2020
+     DECT-2020 NR mMTC Technology”, 2024 IEEE 99th Vehicular                       (https://doi.org/10.1109/ACCESS.2020.2988710).
+     Technology Conference (VTC2024-Spring), Singapore, Singapore,            [33] B. Agarwal, M.A. Togou, M. Marco, and G.-M. Muntean, “A Com-
+     2024 (https://doi.org/10.1109/VTC2024-Spring62846.202                         prehensive Survey on Radio Resource Management in 5G HetNets:
+     4.10683658).                                                                  Current Solutions, Future Trends and Open Issues”, IEEE Com-
+[17] T.N. Weerasinghe, V. Casares-Giner, I.A.M. Balapuwaduge, and                  munications Surveys & Tutorials, vol. 24, pp. 2495–2534, 2022
+     F.Y. Li, “Priority Enabled Grant-free Access with Dynamic Slot                (https://doi.org/10.1109/COMST.2022.3207967).
+     Allocation for Heterogeneous mMTC Traffic in 5G NR Networks”,            [34] A. Yazar and H. Arslan, “Flexible Multi-numerology Systems for 5G
+     IEEE Transactions on Communications, vol. 69, pp. 3192–3206, 2021             New Radio”, Journal of Mobile Multimedia, vol. 14, pp. 367–394,
+     (https://doi.org/10.1109/TCOMM.2021.3053990).                                 2018.
+[18] M. Abdullah et al., “Satellite Synergy: Navigating Resource Allocation   [35] E. Engin, I. Hokelek, A. Gorcin, and H.A. Cirpan, “A Pre-emptive
+     and Energy Efficiency in IoT Networks”, Journal of Network and                Scheduling Mechanism for Service Assurance of Network Slicing
+     Computer Applications, vol. 230, art. no. 103966, 2024 (https:                in Next Generation Cellular Networks”, IEEE Access, vol. 13, pp.
+     //doi.org/10.1016/j.jnca.2024.103966).                                        23297–23311, 2025 (https://doi.org/10.1109/ACCESS.2025.
+[19] Y.L. Lee, T.C. Chuah, J. Loo, and F. Ke, “Proportional-fair Uplink            3536997).
+     Resource Allocation with Statistical QoS Provisioning for RAN            [36] 3GPP, “5G; NR; Medium Access Control (MAC) Protocol Speci-
+     Slicing”, Physical Communication, vol. 65, art. no. 102389, 2024              fication (3GPP TS 38.321 Version 16.1.0 Release 16)”, Technical
+     (https://doi.org/10.1016/j.phycom.2024.102389).                               Specification, 2020.
+[20] M.O. Kabaou et al., “Empowering Communication Networks with              [37] V. Kovtun, O. Kovtun, K. Grochla, and O. Yasniy, “The Quality of
+     MMR Scheduler: A Novel Approach to Balancing User Throughput                  Service Assessment of eMBB and mMTC Traffic in a Clustered 5G
+     and Fairness”, Alexandria Engineering Journal, vol. 76, pp. 641–649,          Ecosystem of a Smart Factory”, Egyptian Informatics Journal, vol.
+     2023 (https://doi.org/10.1016/j.aej.2023.06.042).                             29, art. no. 100598, 2025 (https://doi.org/10.1016/j.eij.
+[21] L. Zhang, A. Liu, and X. Chen, “A WMMSE-based Contiguous                      2024.100598).
+     Resource Scheduling Algorithm for 5G-NR Uplink”, IEEE Wireless           [38] T. Wang, “Energy-efficient Resource Allocation for UAV-aided Full-
+     Communications Letters, vol. 13, pp. 466–470, 2024 (https://do                duplex OFDMA Wireless Powered IoT Communication Networks”,
+     i.org/10.1109/LWC.2023.3332327).                                              Journal of King Saud University - Computer and Information Sciences,
+[22] K. Boutiba, M. Bagaa, and A. Ksentini, “Optimal Radio Resource                vol. 36, art. no. 102225, 2024 (https://doi.org/10.1016/j.jk
+     Management in 5G NR Featuring Network Slicing”, Computer Net-                 suci.2024.102225).
+     works, vol. 234, art. no. 109937, 2023 (https://doi.org/10.101           [39] P.K. Korrai et al., “Joint Power and Resource Block Allocation for
+     6/j.comnet.2023.109937).                                                      Mixed-numerology-based 5G Downlink under Imperfect CSI”, IEEE
+[23] O. Elgarhy et al., “Energy Efficiency and Latency Optimization for IoT        Open Journal of the Communications Society, vol. 1, pp. 1583–1601,
+     URLLC and mMTC Use Cases”, IEEE Access, vol. 12, pp. 23132–                   2020 (https://doi.org/10.1109/OJCOMS.2020.3029553).
+     23148, 2024 (https://doi.org/10.1109/ACCESS.2024.33643                   [40] 3GPP, “5G; NR; Physical Channels and Modulation (3GPP TS 38.211
+     49).                                                                          Version 16.2.0 Release 16)”, Technical Specification, 2020.
+[24] Y. Kaura, B. Lall, R.K. Mallik, and A. Singhal, “Adaptive Scheduling     [41] 3GPP, “5G; NR; Physical Layer Procedures for Data (3GPP TS 38.214
+     of Shared Grant-free Resources for Heterogeneous Massive Machine              Version 16.2.0 Release 16)”, Technical Specification, 2020.
+
+
+
+38
+                                                                                               JOURNAL OF TELECOMMUNICATIONS
+                                                                                               AND INFORMATION TECHNOLOGY                  1/2026
+                                               Priority-aware Radio Resource Scheduling for mMTC in 5G Networks – Balancing Efficiency and Fairness
+
+
+
+[42] R.V. Rao and J. Lakshmi, “R-method: A Simple Ranking Method             Prashant Kumar Baheti, Research Scholar
+     for Multi-attribute Decision-making in the Industrial Environment”,     Department of Computer Science and Engineering
+     Journal of Project Management, vol. 6, pp. 223–230, 2021 (https:
+     //doi.org/10.5267/j.jpm.2021.5.001).                                       https://orcid.org/0009-0003-0728-0009
+[43] 3GPP, “5G; NR; Physical Layer Procedures for Control (3GPP TS           E-mail: 2020phdevenprashant9185@poornima.edu.in
+     38.213 Version 17.1.0 Release 17)”, Technical Specification, 2022.      Poornima University, Jaipur, Rajasthan, India
+[44] 3GPP, “5G; Study on Channel Model for Frequencies From 0.5 to           https://www.poornima.edu.in
+     100 GHz (3GPP TR 38.901 Version 16.1.0 Release 16)”, Technical
+     Report, 2020.
+[45] J. Navarro-Ortiz et al., “A Survey on 5G Usage Scenarios and Traffic
+     Models”, IEEE Communications Surveys & Tutorials, vol. 22, pp.
+     905–929, 2020 (https://doi.org/10.1109/COMST.2020.297                   Ajay Khunteta, Ph.D., Professor
+     1781).                                                                  Department of Computer Science and Engineering
+[46] A. Iqbal, T. Khurshaid, A. Nauman, and S.-B. Rhee, “Energy-aware
+     Ultra-reliable Low-latency Communication for Healthcare IoT in             https://orcid.org/0000-0002-5335-9434
+     Beyond 5G and 6G Networks”, Sensors, vol. 25, art. no. 3474, 2025       E-mail: ajay.khunteta@poornima.edu.in
+     (https://doi.org/10.3390/s25113474).                                    Poornima University, Jaipur, Rajasthan, India
+                                                                             https://www.poornima.edu.in
+

@@ -1,0 +1,393 @@
+\documentclass[10pt]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfig}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usepackage{svg}
+\usepackage{xcolor}
+
+%------------------------------------------------
+% IMPORTANT:
+% Overleaf -> Compiler -> XeLaTeX
+% Enable shell escape if required
+
+% Colors
+\definecolor{AalenPurple}{RGB}{87,90,170}
+\definecolor{AalenBlue}{RGB}{104,182,255}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+%------------------------------------------------
+% CONTENT BACKGROUND (all normal slides)
+\newcommand{\ContentBackground}{
+\begin{tikzpicture}[remember picture,overlay]
+
+% White background
+\fill[white] (current page.south west) rectangle (current page.north east);
+
+% Top gradient bar
+\shade[left color=AalenBlue,right color=magenta]
+(current page.north west) rectangle ([yshift=-0.20cm]current page.north east);
+
+% Hochschule Aalen logo only
+\node[anchor=south west,xshift=0.35cm,yshift=0.35cm]
+at (current page.south west)
+{\includesvg[width=2.4cm]{hsa_logo}};
+
+\end{tikzpicture}
+}
+
+%------------------------------------------------
+% AGENDA BACKGROUND (Agenda slide only)
+\newcommand{\AgendaBackground}{
+\begin{tikzpicture}[remember picture,overlay]
+
+% White background
+\fill[white] (current page.south west) rectangle (current page.north east);
+
+% Top gradient bar
+\shade[left color=AalenBlue,right color=magenta]
+(current page.north west) rectangle ([yshift=-0.10cm]current page.north east);
+
+% Agenda decorative design only
+\node[anchor=south east,xshift=0.1cm,yshift=-0.1cm]
+at (current page.south east)
+{\includegraphics[width=4cm]{decor_right.png}};
+
+% Hochschule Aalen logo
+\node[anchor=south west,xshift=0.35cm,yshift=0.35cm]
+at (current page.south west)
+{\includesvg[width=2.4cm]{hsa_logo}};
+
+\end{tikzpicture}
+}
+
+%------------------------------------------------
+%------------------------------------------------
+% TITLE PAGE BACKGROUND
+\newcommand{\TitleBackground}{
+\begin{tikzpicture}[remember picture,overlay]
+
+% White background
+\fill[white] (current page.south west) rectangle (current page.north east);
+
+% Top gradient bar
+\shade[left color=AalenBlue,right color=magenta]
+(current page.north west) rectangle ([yshift=-0.20cm]current page.north east);
+
+% Full page-height decorative strip on right side
+% This crops horizontally while forcing full vertical coverage
+\node[anchor=south east,xshift=2cm,yshift=0.1cm]
+at (current page.south east)
+{\includegraphics[width=6.372cm]{rigt_design.png}};
+
+% Hochschule Aalen logo top-left
+\node[anchor=north west,xshift=0.65cm,yshift=-0.55cm]
+at (current page.north west)
+{\includesvg[width=3cm]{hsa_logo}};
+
+\end{tikzpicture}
+}
+%------------------------------------------------
+% Default = content slides
+\setbeamertemplate{background}{\ContentBackground}
+
+%------------------------------------------------
+% Frame title style
+\setbeamercolor{frametitle}{fg=AalenPurple,bg=white}
+\setbeamerfont{frametitle}{size=\fontsize{24}{26}\selectfont}
+
+%------------------------------------------------
+% Footer
+\setbeamertemplate{footline}{
+\hfill
+\insertframenumber
+\hspace{0.35cm}
+\vspace{0.25cm}
+}
+
+\begin{document}
+
+%================================================
+% TITLE PAGE
+{
+\setbeamertemplate{background}{\TitleBackground}
+
+\begin{frame}[plain]
+
+\vspace{2.1cm}
+
+\begin{minipage}{0.70\textwidth}
+{\color{AalenPurple}\fontsize{16}{18}\selectfont\textbf{Measurement-Driven
+Latency Analysis of UL/DL
+Scheduling in DECT-2020 NR
+}}
+\end{minipage}
+
+\vspace{0.8cm}
+
+{\large
+Presented by:Ashuqullah Alizai
+}
+
+\vspace{0.35cm}
+
+Hochschule Aalen -- University of Applied Sciences
+
+\vfill
+
+{\small
+IEEE INSECT-2026, Pune, India\\
+29--30 May 2026
+}
+
+\end{frame}
+}
+
+%================================================
+% AGENDA PAGE
+{
+\setbeamertemplate{background}{\AgendaBackground}
+
+\begin{frame}{Agenda}
+\begin{enumerate}
+    \item Motivation
+    \item System Model
+    \item Experimental Setup
+    \item Measurement Results
+    \item Key Findings
+    \item Conclusion
+\end{enumerate}
+\end{frame}
+}
+
+%------------------------------------------------
+\begin{frame}{Motivation}
+\begin{itemize}
+    \item DECT-2020 NR targets low-latency private and industrial wireless networks.
+    \item Existing studies mainly report end-to-end latency.
+    \item The internal contribution of UL/DL scheduling and RX--TX turnaround is not well quantified.
+    \item This is important for short-packet and request--response industrial traffic.
+\end{itemize}
+
+\begin{block}{Main Question}
+How much latency is caused by RX--TX turnaround in practical DECT-2020 NR systems?
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Problem Statement and Contribution}
+\begin{itemize}
+    \item Single-transceiver platforms cannot transmit and receive simultaneously.
+    \item Each UL/DL direction change requires hardware and firmware reconfiguration.
+    \item This creates RX--TX turnaround delay.
+\end{itemize}
+
+\begin{block}{Contributions}
+\begin{itemize}
+    \item Measurement-based RX--TX turnaround analysis.
+    \item Evaluation of sequential and grouped UL scheduling.
+    \item Identification of hardware-induced latency limits.
+\end{itemize}
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{System Model}
+\begin{figure}
+\centering
+\includegraphics[width=0.4\linewidth]{SandAC.png}
+\caption{Industrial sensor--actuator DECT-2020 NR star topology.}
+\end{figure}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Latency Components}
+End-to-end latency is decomposed as:
+
+\begin{equation}
+L_{\mathrm{E2E}} =
+L_{\mathrm{sched}} +
+L_{\mathrm{turnaround}} +
+L_{\mathrm{PHY}}
+\end{equation}
+
+\begin{itemize}
+    \item $L_{\mathrm{sched}}$: MAC scheduling and queuing delay
+    \item $L_{\mathrm{turnaround}}$: RX--TX switching delay
+    \item $L_{\mathrm{PHY}}$: physical-layer transmission time
+\end{itemize}
+
+\begin{alertblock}{Focus}
+This work focuses on RX--TX turnaround and scheduling impact.
+\end{alertblock}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Experimental Setup}
+
+\begin{columns}[T]
+
+%---------------------------------
+% Left column: bullet points
+\begin{column}{0.4\textwidth}
+
+\begin{itemize}
+    \item One nRF9151 node configured as \textbf{Fixed Termination (FT)}
+    \item One nRF9151 node configured as \textbf{Portable Termination (PT)}
+    \item GPIO timing markers capture:
+    \begin{itemize}
+        \item RX completion
+        \item TX initiation
+    \end{itemize}
+    \item DSO used for ground-truth RX--TX turnaround measurement
+
+\end{itemize}
+
+\end{column}
+
+%---------------------------------
+% Right column: image
+\begin{column}{0.58\textwidth}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{main_setup.jpg}
+\caption{Laboratory setup using two nRF9151 nodes and DSO measurements.}
+\end{figure}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Scheduling Scenarios}
+\begin{figure}
+\centering
+\subfloat[Sequential UL scheduling]{
+\includegraphics[width=0.54\linewidth]{scenario1.jpg}}
+\hfill
+\subfloat[Grouped UL scheduling]{
+\includegraphics[width=0.47\linewidth]{scenario2.jpg}}
+\caption{Evaluated UL scheduling scenarios.}
+\end{figure}
+
+\begin{itemize}
+    \item Scenario 1: each UL packet followed by DL acknowledgment.
+    \item Scenario 2: multiple UL packets grouped in one frame.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Latency Models}
+Sequential UL scheduling:
+
+\begin{equation}
+L_{n}^{(1)} =
+\frac{7~\mathrm{slots} + T_{\mathrm{data}}^{UL_x}}
+{10~\mathrm{ms}}
+=
+\frac{2.9~\mathrm{ms} + T_{\mathrm{data}}^{UL_x}}
+{10~\mathrm{ms}}
+\end{equation}
+
+Grouped UL scheduling:
+
+\begin{equation}
+L_{n}^{(2)} =
+\frac{19~\mathrm{slots} + T_{\mathrm{data}}^{UL_{1,2,3}}}
+{10~\mathrm{ms}}
+=
+\frac{7.9~\mathrm{ms} + T_{\mathrm{data}}^{UL_{1,2,3}}}
+{10~\mathrm{ms}}
+\end{equation}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Measured Scheduling Impact}
+\begin{figure}
+\centering
+\subfloat[Scenario 1]{
+\includegraphics[width=0.47\linewidth]{s1graph.jpg}}
+\hfill
+\subfloat[Scenario 2]{
+\includegraphics[width=0.47\linewidth]{s2graph.jpg}}
+\caption{Measured latency versus number of UL transmissions.}
+\end{figure}
+
+\begin{itemize}
+    \item Latency increases approximately linearly.
+    \item Grouping reduces overhead, but does not remove turnaround delay.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{RX--TX Turnaround Measurement}
+\begin{figure}
+\centering
+\includegraphics[width=0.78\linewidth]{osceliscope.jpg}
+\caption{RX--TX turnaround measured using GPIO timing markers.}
+\end{figure}
+
+\begin{block}{Measured Result}
+\[
+T_{\mathrm{turnaround}} \approx 850~\mu s
+\]
+This corresponds to nearly two DECT-2020 NR slots.
+\end{block}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Key Findings}
+\begin{itemize}
+    \item RX--TX turnaround is a significant latency component.
+    \item Sequential scheduling accumulates more delay due to frequent UL/DL alternation.
+    \item Grouped scheduling helps, but only partially.
+    \item On single-transceiver hardware, scheduling alone cannot eliminate the bottleneck.
+\end{itemize}
+
+\begin{alertblock}{Main Insight}
+Latency is strongly constrained by hardware RX--TX turnaround, not only by MAC scheduling.
+\end{alertblock}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Design Implications}
+\begin{itemize}
+    \item Future DECT-2020 NR systems should consider:
+    \begin{itemize}
+        \item separate RX and TX chains,
+        \item UL/DL resource separation,
+        \item turnaround-aware scheduling,
+        \item hybrid low-latency operating modes.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Conclusion}
+\begin{itemize}
+    \item This work presented a measurement-driven latency analysis of DECT-2020 NR.
+    \item RX--TX turnaround was measured at approximately $850~\mu s$.
+    \item This delay is nearly two DECT-2020 NR slots.
+    \item Turnaround dominates short-packet and request--response traffic.
+    \item Low-latency DECT-2020 NR design requires hardware-aware scheduling.
+\end{itemize}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}
+\centering
+\Huge Thank You\\[0.5cm]
+\Large Questions?
+\end{frame}
+
+\end{document}

@@ -1,0 +1,75 @@
+Title: EWDC: Integrating DECT-2020 With Wi-Fi for
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+—The rapid growth of smartphones, laptops, and Internet of Things (IoT) devices
+has created an increasing demand for seamless, secure, and energy-efficient
+wireless direct communication. Current popular solutions, such as AirDrop and
+Intel Unison, rely on bluetooth low energy (BLE) for device discovery and
+pairing, alongside IEEE 802.11 (Wi-Fi) for high-speed data transmission.
+However, research has identified significant vulnerabilities in BLE, including
+information leakage and profile manipulation. To address these challenges, we
+propose an enhanced wireless direct connectivity (EWDC) framework that
+integrates digital enhanced cordless telecommunications (DECT)-2020 new radio
+(NR) with Wi-Fi. In this framework, DECT replaces BLE to enable secure and
+efficient device discovery, while Wi-Fi supports high-bandwidth data
+transmission. Specifically, DECT utilizes its licensed spectrum to establish a
+secure communication channel for sharing Wi-Fi configuration information,
+enabling a secure and reliable setup of high-speed Wi-Fi data transmission links
+between devices. To validate this approach, we implemented the DECT medium
+access control layer on the Nordic nRF9161-DK platform and evaluated the end-to-
+end delay between two devices. Our results demonstrate an impressive
+transmission delay of less than 1 µs for EWDC communication, enabling rapid
+device discovery and highly efficient operation. Furthermore, to enhance the
+security of wireless direct connections, the WireGuard, a VPN tunnel, is
+employed to encrypt data transmission over Wi-Fi providing robust protection for
+data shared on public frequency bandwidths. The proposed hybrid DECT-2020 NR and
+Wi-Fi solution significantly improves reliability, security, and communication
+efficiency, positioning it as a robust candidate for next-generation IoT
+communication systems.
+
+Approach and methods:
+setup of high-speed Wi-Fi data transmission links between devices. To validate
+this approach, we implemented the DECT medium access control layer on the Nordic
+nRF9161-DK platform and evaluated the end-to-end delay between two devices. Our
+results demonstrate an impressive transmission delay of less than 1 µs for EWDC
+communication, enabling rapid device discovery and highly efficient operation.
+Furthermore, to enhance the security of wireless direct connections, the
+WireGuard, a VPN tunnel, is employed to encrypt data transmission over Wi-Fi
+providing robust protection for data shared on public frequency bandwidths. The
+proposed hybrid DECT-2020 NR and Wi-Fi solution significantly improves
+reliability, security, and communication efficiency, positioning it as a robust
+candidate for next-generation IoT communication systems. Index Terms—DECT-2020,
+digital enhanced cordless telecommunications (DECT), enhanced wireless direct
+connectivity (EWDC), wireless direct communication. I. I NTRODUCTION ITH the
+rapid development of Internet of Things (IoT) technologies and applications, the
+demand for wireless direct communication has grown significantly to enable
+seamless information exchange between devices over noncellular networks. To meet
+this need, wireless direct communication in the IoT context must provide both
+efficient device discovery and high-speed data transfer. Prominent examples
+include W Received 7 January 2025; revised 7 April 2025; accepted 23 May
+
+Key findings:
+Schneider, “All the numbers are U.S.: Large-scale abuse of contact discovery in
+mobile messengers,” Cryptology ePrint Arch., IACR, Bellevue, WA, USA, Rep.
+2020/1119, 2020. [35] M. Stute, D. Kreitschmann, and M. Hollick, “One billion
+apples’ secret sauce: Recipe for the apple wireless direct link ad hoc
+protocol,” in Proc. 24th Annu. Int. Conf. Mobile Comput. Netw., 2018, pp.
+529–543. [36] F. De Santis, A. Schauer, and G. Sigl, “ChaCha20-Poly1305
+authenticated encryption for high-speed embedded IoT applications,” in Proc.
+Design, Autom. Test Europe Conf. Exhibit. (DATE), 2017, pp. 692–697. [37] J.
+Katz and Y. Lindell, Introduction to Modern Cryptography: Principles and
+Protocols. Boca Raton, FL, USA: Chapman and Hall/CRC, 2007. [38] Y. Xiao et al.,
+“Modeling energy consumption of data transmission over Wi-Fi,” IEEE Trans.
+Mobile Comput., vol. 13, no. 8, pp. 1760–1773, Aug. 2014. [39] P. H. Kindt, D.
+Yunge, R. Diemer, and S. Chakraborty, “Energy modeling for the Bluetooth low
+energy protocol,” ACM Trans. Embedded Comput. Syst., vol. 19, no. 2, pp. 1–32,
+2020. [40] D. Feng, C. Jiang, G. Lim, L. J. Cimini, G. Feng, and G. Y. Li, “A
+survey of energy-efficient wireless communications,” IEEE Commun. Surveys Tuts.,
+vol. 15, no. 1, pp. 167–178, 1st Quart., 2012.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

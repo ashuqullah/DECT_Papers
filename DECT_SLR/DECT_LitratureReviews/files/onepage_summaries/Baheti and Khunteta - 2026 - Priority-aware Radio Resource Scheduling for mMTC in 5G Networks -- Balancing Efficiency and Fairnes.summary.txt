@@ -1,0 +1,64 @@
+Title: Priority-aware Radio Resource Scheduling
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+ Efficient and fair resource allocation for massive machine-type communication
+remains a significant challenge in 5G New Radio networks due to the diverse
+quality of service requirements and dynamic traffic patterns. This paper
+proposes a priority-aware uplink scheduling (PAUS) algorithm that jointly
+considers channel quality, 5G QoS identifier, packet aging, and fairness in
+physical resource block allocation, while simultaneously mitigating starvation
+of low-priority user equipment. The algorithm utilizes a composite fitness
+function to implement binary integer optimization for uplink scheduling,
+supported by heuristic resource assignment to ensure scalability. Simulation
+results demonstrate that the PAUS algorithm achieves an improved balance between
+throughput, resource utilization, delay, priority satisfaction, and fairness
+compared to baseline schedulers with polynomial-time complexity.
+
+Approach and methods:
+The advent of 5G New Radio networks has fundamentally transformed wireless
+communications [1]. The International Telecommunication Union radiocommunication
+sector (ITU-R) introduced its 5G vision in 2015 through ITU-R recommendation
+M.2083, emphasizing that 5G NR would expand beyond enhanced mobile broadband
+(eMBB) to include massive machine-type communications (mMTC) and ultra-reliable
+low-latency communications (URLLC), each with stringent and diverse requirements
+[2]. According to [3], mMTC is characterized by low cost and low complexity of
+user equipment (UE), offering extended battery life, sporadic small data
+transmissions and relaxed latency constraints compared to URLLC applications.
+Different mMTC applications have different priority and delay tolerance
+characteristics, creating heterogeneous service requirements that pose unique
+challenges to radio resource allocation. 5G NR networks must ensure high
+throughput, massive connectivity, and optimal support for latency-tolerant and
+mission-critical applications [4]. Machine-type communication (MTC) represents a
+paradigm shift from traditional wireless communications. The integration of MTC
+into 5G NR networks introduces fundamental changes in traffic patterns [5],
+resource utilization, and JOURNAL OF TELECOMMUNICATIONS AND INFORMATION
+TECHNOLOGY 1/2026 scheduling requirements compared to previous generations. Most
+MTC traffic is uplink driven, with UEs periodically or sporadically transmitting
+data, status updates, or alarm notifications. The 5G NR uplink framework
+introduces several key enhancements
+
+Key findings:
+s This paper presents a priority-aware uplink radio resource scheduling
+algorithm to address the challenge of balancing efficiency with optimal fairness
+in dense 5G mMTC deJOURNAL OF TELECOMMUNICATIONS AND INFORMATION TECHNOLOGY
+1/2026 ployments. The novelty of the proposed algorithm lies in its dynamic
+fitness function, which integrates a channel-aware priority weight to utilize
+channel conditions, a temporal decay mechanism to mitigate delay violations
+based on the PDB, and a sigmoid-based fairness adjustment to prevent starvation
+of low-priority or poor-channel UEs. Extensive simulation results demonstrated
+that PAUS achieved near-optimal throughput and resource utilization, close to
+channel-aware schemes (PF, BestCQI). PAUS outperformed efficiency-focused
+schemes in QoS metrics and achieved the highest fairness and the lowest delay
+violation rate, which can manage delay-sensitive traffic. Furthermore, it
+maintained a low 5QI priority violation, demonstrating effective QoS
+differentiation with balanced spectral efficiency. Polynomial-time complexity
+makes PAUS implementable within real-time 5G gNB MAC scheduler architectures and
+is suitable for supporting the large-scale, heterogeneous traffic requirements
+of urban smart city and industrial IoT applications.
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

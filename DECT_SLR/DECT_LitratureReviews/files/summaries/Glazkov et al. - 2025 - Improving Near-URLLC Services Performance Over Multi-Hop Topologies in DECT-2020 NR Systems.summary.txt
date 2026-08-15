@@ -1,0 +1,16 @@
+Title: Glazkov et al. - 2025 - Improving Near-URLLC Services Performance Over Multi-Hop Topologies in DECT-2020 NR Systems
+
+Summary:
+
+This paper addresses the key challenges and contributions of the work through a link-level summary of its objectives, methods, results, and practical implications.
+
+Core focus:
+—DECT-2020 NR is a radio access technology de- hinder their ability to fully meet the stringent requirements of signed for 5G Internet of Things (IoT) applications. By lever- these emerging applications. In addition, such systems have aging multi-hop communications and listen-before-talk (LBT) been designed exclusively for mMTC applications and cannot mechanisms, DECT-2020 NR offers a flexible and cost-effective deployment solution for massive machine-type communications multiplex traffic with strict performance requirements. (mMTC). The ETSI standardization committee currently con- Recent studies [5], [6] demonstrated that the capacity of siders extending use-case options to ultra-reliable low-latency the recently introduced DECT-2020 system can scale up to communications by enabling scheduled access along with LBT. millions of radio devices (RDs) per square kilometer while However, this approach can increase the cost of the end systems. meeting the performance requirements for 5G mMTC appli- The aim of this study is to investigate whether standardized phys- ical and medium access control (MAC) mechanisms, including cations outlined in [4], [7]. However, as opposed to LTE-M power control, LBT, and priority queuing, can provide near- and NB-IoT, DECT-2020 NR is not limited to mMTC use URLLC operation over multihop topologies. Our results show cases. Currently, at the third evolution stage of the DECT- that to improve loss performance one needs to disable power 2020 NR specifications, the support of near-URLLC services control, use a shorter back-off window, and enable priority over multi-hop topologies is investigated. Specifically, DECT- data transmission. For improving latency performance it is critical to use shorter acknowledgement (ACK) timeout and 2020 adopts scheduling-based access for latency-critical traffic send ACKs immediately after data packet reception. Applying [8]. However, the
+
+Additional context and findings:
+of scheduled transmissions over these techniques allows us to improve multi-hop URLLC latency multi-hop topologies requires significant signaling overhead performance by up to 30-80% and loss performance by up to 10- and more complex and thus more expensive end devices. 20% depending on URLLC and mMTC traffic conditions with It has already been demonstrated that such services can be only negligible impact on mMTC traffic performance.
+
+Key takeaways:
+- The paper presents a new or improved technical approach in the DECT-2020 NR / 5G / wireless communication domain.
+- It evaluates performance using simulation or experimental analysis to support claims and compare with relevant baselines.
+- The work contributes to understanding, optimizing, or validating DECT-2020 NR, URLLC, mMTC, mesh networking, or related 5G-enabled radio technologies.

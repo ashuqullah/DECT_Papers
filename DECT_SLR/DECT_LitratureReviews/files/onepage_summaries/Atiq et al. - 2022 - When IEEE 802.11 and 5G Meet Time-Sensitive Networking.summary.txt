@@ -1,0 +1,65 @@
+Title: Received 19 October 2021; revised 4 December 2021; accepted 8 December 2021. Date of publication 15 December 2021;
+
+Summary:
+
+This paper addresses the central research challenge of the selected DECT-2020 NR / 5G / wireless networking domain. It focuses on how the proposed design or algorithm improves reliability, coverage, resource management, or performance for emerging URLLC, mMTC, or mesh-networked applications.
+
+Problem and motivation:
+Many emerging applications require a higher level of flexibility, modularity,
+and efficiency but are dependent on advancements in communication infrastructure
+and distributed computing. Time-sensitive networking (TSN) standards aim at
+providing vendor agnostic, reliable, and deterministic communications over the
+Ethernet, but lack in flexibility and modularity provisions. In this context
+wireless communication systems are preferred given the obvious benefits in terms
+of increased flexibility, reduced deployment & maintenance costs, and inherent
+mobility support. However, the stochastic nature of the wireless medium poses
+several challenges in achieving these benefits. In this paper we comprehensively
+analyze the recent standardization efforts and developments in IEEE 802.11 and
+5G to enable low-latency, deterministic communications and present the current
+status of their integration with wired TSN. Then, we present a set of use cases
+that may be enabled by wireless TSN including industrial automation, automotive,
+or audiovisual applications.
+
+Approach and methods:
+The development of future information technology (IT) and operational technology
+(OT) is being promoted by the vision of flexible, enhanced intelligence, and
+modular networks. The communication requirements for various applications are
+both demanding and diverse [1]. As an example, the growing complexity in
+industrial sensing and closed-loop control systems require the use of
+heterogeneous sensors, actuators, and control units that have to operate in a
+predictable and synchronous manner. The elements of the control system can be
+distributed over short or long distances, and thus the use of communication
+networks is compulsory to obtain a costeffective solution. Additionally, there
+is a high demand on the degree of flexibility provided by the communication
+network given the increasing number of mobile devices. On the one hand, the
+wired communication solutions that provide deterministic latency and high
+reliability may require cumbersome and expensive cabling or may not be even
+suitable due to lack of functionality such as mobility [2], [3]. On the other
+hand, the current state of wireless solutions do not provide the deterministic
+latency and high reliability required for emerging use cases. The time-sensitive
+networking (TSN) task group (TG) [4] is working on a set of standards that
+enable vendor agnostic
+
+Key findings:
+“Survey on unmanned aerial vehicle networks for civil applications: A
+communications viewpoint,” IEEE Commun. Surv. Tuts., vol. 18, no. 4, pp.
+2624–2661, Oct.–Dec. 2016. [128] I. Bekmezci, O. K. Sahingoz, and Ş. Temel,
+“Flying ad-hoc networks (FANETs): A survey,” Elsevier Ad Hoc Netw., vol. 11, no.
+3, pp. 1254–1270, 2013. [129] X. Du, C. E. Luis, M. Vukosavljev, and A. P.
+Schoellig, “Fast and in sync: Periodic swarm patterns for quadrotors,” in Proc.
+IEEE Int. Conf. Robot. Automat., 2019, pp. 9143–9149. [130] 3GPP, “TS 22. 125:
+Technical specification group services and system aspects, unmanned aerial
+system (UAS) support in 3GPP),” Release17, v17.2.0, 2020. [131] R. Muzaffar, E.
+Yanmaz, C. Raffelsberger, C. Bettstetter, and A. Cavallaro, “Live multicast
+video streaming from drones: An experimental study,” Auton. Robots, vol. 44, no.
+1, pp. 75–91, 2020. [132] United Nations, Depart. Econ. Soc. Affairs, Pop. Div.,
+“World population ageing 2017—highlights,” 2017. [Online]. Available:
+https://www.un.org/en/development/desa/population/publications/
+pdf/ageing/WPA2017_Highlights.pdf [133] N. Tejima, “Rehabilitation robotics: A
+review,” Adv. Robot., vol. 14, no. 7, pp. 551–564, 2001. [134] M. J. Matarić,
+J. Eriksson, D. J. Feil-Seifer, and C. J. Winstein, “Socially assistive robotics
+for post-stroke rehabilitation,” Springer J. NeuroEngineering Rehabil., vol. 4,
+no. 1, pp. 1–9, 2007. VOLUME 3, 2022
+
+Contributions and implications:
+The work contributes practical insight for DECT-2020 NR and related next-generation wireless systems. It provides experimental or simulated evidence for the proposed scheme and highlights how the results support stricter reliability, lower latency, or improved resource utilization in private network or industrial IoT scenarios.

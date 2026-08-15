@@ -1,0 +1,467 @@
+                                                                                                                                                                          Performance of MAC Layer Mechanisms in
+                                                                                                                                                                              DECT-2020 NR mMTC Technology
+                                                                                                                                                                             Andrey Samuylov1 , Dmitri Moltchanov1 , Mirza Alam2 , Juho Pirskanen2 , Jussi Numminen2 ,
+                                                                                                                                                                                                    Yevgeni Koucheryavy1 , Mikko Valkama1
+                                                                                                                                                                                                       1
+                                                                                                                                                                                                           Unit of Electrical Engineering, Tampere University, Finland
+                                                                                                                                                                                                                       2
+                                                                                                                                                                                                                          Wirepas Oy, Tampere, Finland
+                                                                                                                                                                                                                Contact author’s e-mail: andrey.samuylov@tuni.fi
+2024 IEEE 99th Vehicular Technology Conference (VTC2024-Spring) | 979-8-3503-8741-4/24/$31.00 ©2024 IEEE | DOI: 10.1109/VTC2024-SPRING62846.2024.10683658
+
+
+
+
+                                                                                                                                                                Abstract—DECT-2020 is a recently standardized enabling tech-                      The unique feature of DECT-2020 technology is that it
+                                                                                                                                                             nology for 5G massive machine-type communications operating                       utilizes multi-hop communications, enabling cost-controlled
+                                                                                                                                                             in the unlicensed band. By relying upon multi-hop communica-                      deployment flexibility [11]. To enable an efficient routing-
+                                                                                                                                                             tions, DECT-2020 allows for cost-controlled flexible deployments,
+                                                                                                                                                             it requires an efficient solution for topology design, including                  free delivery spanning tree topologies are supported. However,
+                                                                                                                                                             the relay selection and next-hop selection mechanisms. The goal                   in addition to these advantages, multi-hop communications
+                                                                                                                                                             of this paper is to evaluate the impact of these algorithms on                    pose new challenges for system designers. Indeed, the initial
+                                                                                                                                                             the fraction of successfully delivered packets for DECT-2020                      topology is created at the network initialization phase by
+                                                                                                                                                             technology. To this aim, we utilize the system-level simulation tool              the end devices choosing the operational mode – forwarding
+                                                                                                                                                             to capture the functionality of the physical and data-link DECT-
+                                                                                                                                                             2020 solutions. Our numerical results illustrate that the system is               node or leaf node. This is enabled by two mechanisms that
+                                                                                                                                                             susceptible to the choice of the energy conservation parameters                   significantly affect the resulting topology and, consequently,
+                                                                                                                                                             with the difference in the fraction of delivered packets reaching                 the system performance: (i) relay selection and (ii) next-hop
+                                                                                                                                                             10% and may effectively lead to non-operational conditions.                       selection.
+                                                                                                                                                             Without simple analytical models, these parameters must be
+                                                                                                                                                             set with caution. The relay-selection mechanism procedure is
+                                                                                                                                                                                                                                                  The goal of this paper is to propose and assess the perfor-
+                                                                                                                                                             generally insensitive to the parameters of the relay selection                    mance of the medium access control and physical layer mech-
+                                                                                                                                                             procedure, resulting in a deviation of at most 3%. Finally, the                   anisms for DECT-2020, including energy conservations, power
+                                                                                                                                                             power control feature gives an additional gain of around 2-4%                     control, relay, and next-hop selection mechanisms. We utilize
+                                                                                                                                                             compared to the system without power control.                                     the packet loss rate and fraction of delivered packets within
+                                                                                                                                                                Index Terms—DECT-2020; New Radio; multi-hop; IoT; topol-
+                                                                                                                                                                                                                                               a specific time constraint as the primary metric of interest
+                                                                                                                                                             ogy; algorithms; mMTC.
+                                                                                                                                                                                                                                               for mMTC technology as specified in [8]. By utilizing ITU-R
+                                                                                                                                                                                                                                               compliant system-level simulation (SLS) techniques, we assess
+                                                                                                                                                                                        I. I NTRODUCTION
+                                                                                                                                                                                                                                               the impact of parameters of the considered mechanisms and
+                                                                                                                                                                Internet of Things (IoT) applications are gradually be-                        provide guidelines for configuring them.
+                                                                                                                                                             coming a part of our everyday life, enabling many remote                             The main contributions of our paper are:
+                                                                                                                                                             applications from sensing to actuation [1]. Massive machine
+                                                                                                                                                             type communications (mMTC) technologies specified as one                             • The system is susceptible to the choice of the energy con-
+                                                                                                                                                             of the three primary services for 5G IMT-2020 systems serve                            servation parameters with the difference in the fraction of
+                                                                                                                                                             as enablers for IoT [2]. Nowadays, NB-IoT technology [3]                               delivered packets reaching 10% and may effectively lead
+                                                                                                                                                             represents a 3GPP solution for cellular IoT (CIoT, [4]) while                          to non-operational conditions.
+                                                                                                                                                                                                                                                  • The performance of the DECT-2020 system is generally
+                                                                                                                                                             the leading non-cellular standard is DECT-2020 [5].
+                                                                                                                                                                DECT-2020 is the first 5G mMTC enabler operating in                                 insensitive to the number of relay nodes in the radio
+                                                                                                                                                             the unlicensed frequency band, 1880 − 1900 MHz band in                                 neighborhood and the number of RDs associated with
+                                                                                                                                                             Europe and Australia and 1900 − 1920 MHz band in other                                 a single relay produced. The network density produces a
+                                                                                                                                                             regions. The recent studies [6], [7] demonstrated that it can                          much more noticeable impact.
+                                                                                                                                                                                                                                                  • Although power control is beneficial for an overloaded
+                                                                                                                                                             support up to multiple millions of radio devices (RD) per
+                                                                                                                                                             squared kilometer while satisfying the performance guarantees                          system regime, the listen-before-talk (LBT) mechanism
+                                                                                                                                                             for 5G mMTC applications outlined in [8] of more than 0.05%                            utilized by DECT-2020 is reliable enough to efficiently
+                                                                                                                                                             packet loss rate (PLR) while ensuring that 99% of packets                              combat interference at conventional loads even in dense
+                                                                                                                                                             experience end-to-end latency of no more than 10 s. Being                              network conditions.
+                                                                                                                                                             inherently compliant with 5G requirements, its physical layer                       The rest of the paper is organized as follows. First, in
+                                                                                                                                                             supports flexible modulation and coding schemes (MCS), per-                       Section II, we remind the basics of DECT-2020 technology.
+                                                                                                                                                             link hybrid automatic repeat request (HARQ) procedures, and                       In Section II, we introduce the considered mechanisms. In
+                                                                                                                                                             various numerologies [9], [10].                                                   Section IV, we outline the considered scenario, the utilized
+
+
+
+
+                                                                                                                                                              979-8-3503-8741-4/24/$31.00
+                                                                                                                                                            Authorized licensed use limited to:©2024 IEEEAalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                                                                                                               Hochschule
+                                                                                         Aiming to avoid explicit routing, the DECT-2020 standard
+                    Cloud                                                             specifies the use of tree topologies. Upon initialization, each
+                                                                                      device in PT mode selects the most optimum RD for asso-
+                               Cluster 1 at channel 1        Cluster 4 at channel 2   ciation based on received link quality and announced cost,
+                                                                                      indicating how ”good” the path towards the external backend
+                                                                                      systems is. Thus, RDs, being the source of the data, do not
+                                                                                      need to establish and maintain the data path before initiating
+                                                                                      communication, rather connection only to the next hop is
+                                                                                      required. Thus, relay and next-hop selection are crucial for
+                                                                                      network performance.
+                                                                                         In addition to the functionalities mentioned above, the
+                                                                                      DECT-2020 MAC layer also allows for several advanced func-
+                                                                                      tions, including energy conservation mechanisms and power
+                                                                                      control functions. The former is aimed at increasing the RD’s
+   Cluster 3 at channel 2                       Cluster 2 at channel 3                operational cycle, while the latter allows to decrease the impact
+                                                                                      of interference further. Operating over tree topologies, the
+              Fig. 1. Illustration of DECT-2020 network formation.                    ultimate effect of these functions on network performance is
+                                                                                      generally more complex than CIoT systems.
+
+ simulation tool, and the metrics of interest. Numerical results                                     III. C ONSIDERED M ECHANISMS
+ are provided in Section V. Conclusions are drawn in the last                           In this section, we will introduce the considered mechanisms
+ section.                                                                             and their parameters, including energy conservation, power
+                                                                                      control, relay, and next-hop selection.
+                       II. DECT-2020 E SSENTIALS
+                                                                                      A. Energy Conservation
+    DECT-2020 NR physical layer has been designed to meet                                To reduce the power consumption of RDs (especially those
+ modern radio technology requirements. The set of standards                           operating in PT mode) DECT-2020 system offers an intelligent
+ [5] commenced in 2021 and defined 19 operational bands. The                          duty cycling regime. Accordingly, RD is periodically put into
+ most commonly used are classic DECT bands, 1880 − 1900                               standby mode with its TRx module switched off. Every RD
+ MHz band in Europe and Australia and 1900 − 1920 MHz                                 is supposed to be in standby mode by default and wakes up
+ band in other regions, supporting up to 11 channels with a                           only when needed to either transmit and receive data and/or
+ bandwidth of 1.728 MHz each. Similarly to 3GPP NR, the                               to maintain network connectivity.
+ physical layer supports multiple numerologies ranging from                              Each RD can operate in a downlink (leaf node), uplink
+ 27 KHz to 216 KHz. Time division duplex (TDD) is used to                             (sink), or down/uplink (relay) role. Depending on the role,
+ organize uplink and downlink channel, while Cyclic Prefix Or-                        a device is required to perform the following functions:
+ thogonal Frequency Division Multiplexing (CP-OFDM) with                                 • Uplink devices need to wake up periodically every Bea-
+ Time Division Multiple Access (TDMA) and Frequency Divi-                                  con Interval to broadcast a beacon packet containing their
+ sion Multiple Access (FDMA) are utilized for radio resource                               duty cycle information, i.e., for how long the device will
+ allocation. In general, the physical layer allows it to operate                           stay awake and ready to receive data from the coupled
+ with different channel bandwidths, symbol lengths, and the                                downlink RD. The uplink RD then remains awake for the
+ number of symbols in a slot. It has been recently shown that
+ these design choices allow for fair coexistence between classic
+ DECT and DECT-2020 technologies [12].                                                                 Awake            Standby            Awake
+    At the medium access control (MAC) layer, DECT-2020
+ allows RDs to operate in fixed (FT) or portable termination                                Beacon                             Beacon
+ (PT) modes or in both modes simultaneously, see Fig. 1. In
+ the FT mode, an RD served as a router by applying a radio                                                         (a) Uplink RD
+ coordination function to manage local radio resources and                                                              Standby
+                                                                                                       Awake                               Awake
+ enabling other RDs in PT mode to connect to it. The RD,
+ operating in FT mode, routes data from these RDs and its data                              Beacon                             Beacon
+ towards the next-hop RD operating in FT mode. Both FT and
+ PT utilize the LBT approach with a binary back-off procedure
+ for uplink transmissions. The minimum sensing time for                                       Scan                                        Awake
+                                                                                                                  Data accumulation
+ the LBT in random access channel (RACH) transmission is                                                          (b) Downlink RD
+ designed to be as short as two symbols, allowing for rapid
+ access to the medium.                                                                         Fig. 2. Energy conservation approach in DECT-2020.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+                          Downlink                                                  C. Relay Selection Mechanism
+                         power match
+
+          Beacon                 Ack          Beacon
+                                                                                       For scalability reasons, RDs are allowed to choose the
+                       Data                                                         operational mode, either FT or PT, locally. Once RD in PT
+                                                                                    mode establishes a connection to an RD in FT mode, it can
+            Uplink power                        Uplink power
+            measurement                         measurement                         also start operating in FT mode to provide a link to other
+                                                                                    RDs. When designing the relay selection mechanism, one must
+                     Fig. 3. Power control in DECT-2020.                            account for several factors, including constrained RD power,
+                                                                                    network connectivity, and traffic performance.
+                                                                                       In our implementation, each RD makes a local decision
+       announced period and switches back to standby mode.                          whether to switch to FT mode or not. The decision is based
+       This procedure is presented in Fig. 2(a).                                    on a set of rules that are chosen to suit better a specific
+     • Downlink RDs are first required to check for the uplink
+                                                                                    scenario and quality of service (QoS) requirements. When an
+       RD availability. When a downlink RD is coupled to an                         RD decides to switch to FT mode, it should first make sure
+       uplink RD, it should obey the uplink RD duty cycle, i.e.,                    that it is coupled to an uplink RD in FT mode and then assess
+       wake up just before the uplink RD broadcasts a beacon                        the environment for a specific period if there are no more
+       packet, receive it, and interpret the duty cycle informa-                    than a specified number of other RDs in FT mode in the radio
+       tion. Next, within the corresponding beacon interval, the                    neighborhood. The number of other RDs in FT mode is a
+       downlink RD can send data only when the coupled uplink                       free parameter that needs to be chosen such that the network
+       RD is awake; the rest of the time, the downlink RD can                       connectivity is provided at all times. Other devices in FT mode
+       remain in standby mode. This operation is illustrated in                     are only accounted for if the measured link quality to the RD
+       Fig. 2(b).                                                                   meets the minimum link quality. The minimum link quality is
+     • Down/uplink RDs follow both described procedures.
+                                                                                    based on the target data MCS. The length of the measurement
+    This way, each uplink RD is awake for only a fraction of                        period is chosen so that an RD can reliably receive at least
+ its beacon interval, while the downlink RDs are required to be                     one beacon packet from the neighboring RDs in FT mode and
+ awake only to receive the corresponding beacon. The choice                         usually equals 3 beacon intervals.
+ of the duty cycle interval is critical for RD power conservation
+ and overall network performance.                                                   D. Next-hop Selection Mechanism
+
+ B. Power Control                                                                      DECT-2020 standard allows RDs to make autonomous
+                                                                                    routing decisions for each data packet. The next hop, how-
+    Power control is conventionally deemed efficient at reducing
+                                                                                    ever, needs to be chosen such that not only traffic service
+ unwanted interference between different network RDs and
+                                                                                    requirements are met, but the network is not overloaded.
+ further enhancing energy efficiency by reducing transmission
+                                                                                       Similarly to the relay selection mechanism, the next-hop
+ power. In CIoT technologies it helps to ensure efficient spectral
+                                                                                    selection is done locally on each RD. An RD is allowed to
+ reuse while maintaining the constant error rate.
+                                                                                    select the next hop at any time. However, it should initially
+    Efficient power control requires at least some degree of
+                                                                                    execute the following procedure: (i) receive a broadcast beacon
+ coordination between a downlink and the coupled uplink RDs.
+                                                                                    packet from another device in FT mode, (ii) assess the link
+ It is based on the power measurement of a beacon packet
+                                                                                    quality based on the measured received beacon power and the
+ broadcasted by the coupled uplink RD – downlink RD assesses
+                                                                                    announced beacon, (iii) discard the beacon packet if the link
+ the path loss between the two devices by subtracting the
+                                                                                    quality is below the minimum link quality. Then, if the RD
+ measured received power from the announced transmission
+                                                                                    currently has no next hop, it assigns the RD corresponding to
+ power in the beacon packet. The assessed path loss is then
+                                                                                    the received beacon as the next hop. Otherwise, if the number
+ utilized for consecutive data transmission during this beacon
+                                                                                    of hops to the sink in the received beacon packet is less than
+ interval. The data transmission power is calculated as
+                                                                                    the number of hops to the currently available next hop, the
+          tx
+         Pdata             tx
+               = Pnoise + Pbeacon    rx
+                                  − Pbeacon + Pmcs + Pmargin ,              (1)     next hop is changed. If there is more than a single path to the
+                                                                                    sink having the same number of hops, the path with the best
+ where Pnoise is the noise power level on the chosen channel,                       link quality is chosen.
+   tx
+ Pbeacon  is the announced uplink transmission power for the
+                          rx
+ latest beacon packet, Pbeacon   is the measured power of the                            IV. P ERFORMANCE A SSESSMENT M ETHODOLOGY
+ received latest beacon packet, Pmcs corresponds to the SNR
+ level needed for transmission for the chosen data MCS, and                           In this section, we will describe the elements of the
+ Pmargin is a constant margin to offset any measurement errors.                     performance evaluation methodology. We will start with the
+ The uplink RD may then choose to match the transmission                            employed SLS, illustrate the scenario, and discuss the data
+ power for an acknowledgment packet or to use the full power                        processing routines. Finally, the metrics of interest are intro-
+ for it. In this work, we will utilize the latter option.                           duced.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+ A. System-Level Simulation Tool                                                                                 TABLE I
+                                                                                              C ONSIDERED SYSTEM AND EVALUATION PARAMETERS
+    The complexity of the LBT-based channel access operat-
+ ing in a multi-hop communications environment forces the                                             Parameter                             Value
+ utilization of a system-level simulation tool for performance                                             Simulation scenario parameters
+ assessment of the considered relay and next-hop selection                            DECT-2020 NR FT                           1, height 25 m, outdoors
+                                                                                      Carrier frequency                         1900 MHz
+ mechanisms. The system model has been implemented using
+                                                                                      Number of channels                        1
+ the system-level simulation tool WINTERsim utilized during                           Channel bandwidth                         1.728 MHz
+ the standardization process of DECT-2020 technology [6]. To                          Simulation area                           radius of 170 m, 90800 m2
+ this aim, it has been extended to capture the specifics of the                       Number of DECT-2020 NR RD                 1000
+                                                                                      DECT-2020 NR RD deployment                Uniformly random
+ considered mechanisms under evaluation.                                              Building penetration loss                 20 dB (ITU-R)
+    WINTERsim is a discrete event system-level (NS3-like)                             Indoor/outdoor fraction                   80% / 20%
+ Python3 based simulation tool. For DECT-2020, we used node                           Channel model, Sink-Node                  Urban macro
+ abstraction as the basic class for RDs, which contains all                           Channel model, Node-Node                  Urban street canyon
+                                                                                      Number of node/sink antenna elements      1
+ the node parameters (e.g., position, mobility model, antenna                         Sink/UE noise figure                      7 dB
+ parameters, power) and serves as a container for L2 interfaces,                      Sink/UE antenna element gain              0 dBi
+ forwarding implementation, flow tables, signaling engine, ap-                        Thermal noise level                       –174 dBm/Hz
+                                                                                      Traffic model                             Bursts of 2 packets
+ plication handlers, traffic generators, physical layer interfaces,                   Application data message size             32 bytes
+ etc. To simulate such a high-density deployment, we imple-                           Mean inter-arrival time                   10-50 s
+ mented a particular physical layer abstraction that stores all                       Inter-arrival time distribution           Exponential
+ the bidirectional path loss states between the RDs, having                           Channel access                            LBT + extensions
+                                                                                      Contention window size                    min – 24, max – 768
+ reception signal strengths higher than the noise level. During                       LBT threshold                             -75 dBm, -100 dBm
+ the simulation, all the components can gather component-                             Minimum link quality                      15 dB
+ specific and global statistics on packet deliveries, delays,                         Error correction                          HARQ with 3 attempts
+                                                                                      Sensitivity                               -99.7 dBm (TS 103.636-2)
+ power consumption, etc.
+                                                                                      Tx power                                  10/19/23 dBm
+                                                                                      Format                                    MSC 1,3,4 for 1,2,3 packets
+ B. Considered Scenario
+    The simulation procedure starts with node placement
+                                                                                       As metrics of interest, we consider PLR and the fraction
+ and path loss calculations, done according to 3GPP guide-
+                                                                                    of packets delivered within 10 s to the sink. These metrics
+ lines [13]. The simulations have been performed according
+                                                                                    are utilized as a main traffic performance indicator in [8]. The
+ to urban macro-mMTC test Configuration A from ITU-R
+                                                                                    power consumption of the routers is accounted for implicitly
+ guidelines [14] with the exception of considering a single
+                                                                                    by trying to keep the number of FT devices at a minimum.
+ cell environment. RDs in TBSs are assumed to be equipped
+ with omnidirectional antennas. As neither 3GPP nor ITU-R                                                 V. N UMERICAL R ESULTS
+ describes the procedure for calculating direct communications                         In this section, we numerically evaluate the considered relay
+ links specifically, we use different models for different types                    and next-hop selection schemes. We start with the impact
+ of links: for RDF T -to-any we use the Urban macro model                           of the energy conservation mechanism and then proceed to
+ for RDF T,P T -RDP T and RDF T,P T -RDF T,P T we used Urban                        assess its effects jointly with power control, relay- and next-
+ Micro model if both RDs are indoor and closer than 25m we                          hop selection mechanisms. The default system and scenario
+ used Indoor Office (InH) model, for each indoor-to-outdoor                         parameters are provided in Table I.
+ penetration we also added random building penetration loss                            We start with the energy conservation mechanism. The
+ according to 3GPP model. The percentage of indoor devices                          obtained results are shown in Fig. 4 as a function of the packet
+ is equal to 80. The simulation procedure consists of two                           generation period for different values of the duty cycle time
+ periods: the “warm-up” period when all the RDs establish a                         and the time RD is active during the duty cycle. The chosen
+ tree topology using different biases, and the actual simulation.                   parameters of duty cycle and active window of 4000/2000
+ The default system parameters are provided in Table I.                             ms and 500 ms, respectively in Fig. 4(a) are sufficient to
+                                                                                    handle the arrival traffic in the system. By decreasing the
+ C. Data Processing and Metrics of Interest                                         active window during the duty cycle from 0.5 s to 0.2 s
+    To gather the data and further calculate and obtain the met-                    (see Fig. 4(b)), the drop in performance is around 10% for
+ rics of interest, we employ the method replication procedure.                      both duty cycle duration in terms of the fraction of delivered
+ For each set of parameters, we ran simulations 25 times, each                      packets for the packet generation period of around 100 s.
+ time gathering 105 observations in the steady state. The steady-                   Specifically for the drop in the considered metric is around
+ state period has been detected by utilizing the moving average                     10% for (4000, 200) ms duty cycle and active window pair
+ statistics, and the data have been collected during this period                    reaching 18% for (2000, 200) ms pair. This highlights that the
+ only. Due to the large size of statistical samples, only the point                 system performance is sensitive to both considered parameters,
+ estimates are shown.                                                               i.e., 200 ms active window duration is too short to handle
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+                                   1.0                                                                           1.0                                                                           1.0
+
+       Delivered frames fraction
+
+
+
+
+                                                                                     Delivered frames fraction
+
+
+
+
+                                                                                                                                                                   Delivered frames fraction
+                                   0.9                                                                           0.9                                                                           0.9
+
+
+                                   0.8                                                                           0.8                                                                           0.8
+
+
+                                   0.7                                                                           0.7                                                                           0.7
+                                                Wnd=4000 ms        Wnd=2000 ms                                                Wnd=4000 ms        Wnd=2000 ms                                                 Wnd=500 ms        Wnd=200 ms
+                                   0.6                                                                           0.6                                                                           0.6
+                                          100 150 200 250 300 350 400                                                   100 150 200 250 300 350 400                                                   100 150 200 250 300 350 400
+                                            Packet generation period, s                                                   Packet generation period, s                                                   Packet generation period, s
+                                          (a) Active window: 500 ms                                                     (b) Active window: 200 ms                                                (c) Active window: 500/200 ms
+
+                                                                     Fig. 4. The delivered packet fraction as a function of different sleep patterns.
+                                   1.00                                                                          1.00                                                                          1.00
+       Delivered frames fraction
+
+
+
+
+                                                                                     Delivered frames fraction
+
+
+
+
+                                                                                                                                                                   Delivered frames fraction
+                                   0.95                                                                          0.95                                                                          0.95
+
+
+                                   0.90                                                                          0.90                                                                          0.90
+
+                                                  Tot=10, Rel=5     Tot=10, Rel=7                                               Tot=10, Rel=5     Tot=10, Rel=7                                               Tot=10, Rel=5    Tot=10, Rel=7
+                                   0.85                                                                          0.85                                                                          0.85
+                                                  Tot=20, Rel=5     Tot=20, Rel=7                                               Tot=20, Rel=5     Tot=20, Rel=7                                               Tot=20, Rel=5    Tot=20, Rel=7
+                                                  Tot=30, Rel=5     Tot=30, Rel=7                                               Tot=30, Rel=5     Tot=30, Rel=7                                               Tot=30, Rel=5    Tot=30, Rel=7
+
+                                   0.80                                                                          0.80                                                                          0.80
+                                          10        20        30     40         50                                      10        20        30     40         50                                      10        20        30    40          50
+                                               Packet generation period, s                                                   Packet generation period, s                                                   Packet generation period, s
+                                          (a) Neighbors: 3, total: 1000                                                 (b) Neighbors: 7, total: 1000                                                 (c) Neighbors: 3, total: 1500
+
+                                                           Fig. 5. Delivered packet ratio as a function of different number of relays and the number of RDs.
+
+ the arrival traffic and increasing the duty cycle from 2000 ms                                                                            is non-detectable. The rationale is that for a given number
+ to 4000 ms decreases the amount of available resource even                                                                                of RDs in the system (1000) and considered deployment the
+ further. In general, we conclude that the DECT-2020 system                                                                                value of 10 is sufficient to provide associations for all RDs.
+ is highly sensitive to the choice of these parameters. Results                                                                              The most impact, however, is observed by increasing the
+ shown in Fig. 4(c) further illustrate that uneducated choise of                                                                           number of RDs in the system from 1000 to 1500 nodes, i.e.,
+ these parameters could make the difference between good and                                                                               increasing the network density and load by 50% and leaving
+ unacceptable network performance. As these parameters also                                                                                the deployment area intact. By cross-comparing the results
+ heavily depend on the RD density and network size, simple                                                                                 shown in Fig. 5(a) and 5(c), we observe a 7-9% difference in
+ analytical models are needed to establish them, or they have                                                                              the delivered packets fraction for 10 s of packet generation
+ to be set with caution, compromising the energy efficiency in                                                                             period and the same number of relay nodes in the radio
+ favor of network performance.                                                                                                             neighborhood and the number of RDs that can be associated
+    Now, we proceed to investigate the impact of the relay                                                                                 with a single relay. The difference remains noticeable even for
+ selection procedure parameters. To this aim, Fig. 5 shows the                                                                             a packet generation period of 30 s, which amounts to 2-3%.
+ delivered packet ratio as a function of the packet generation                                                                             These observations, however, are mainly explained due to the
+ interval for a different number of relay nodes in the radio                                                                               increased system load.
+ neighborhood, the number of RDs that can be associated                                                                                       Finally, we evaluate the impact of the power control option
+ with a single relay, and the overall number of RDs in the                                                                                 on the fraction of the successfully delivered packets illustrated
+ system. Here, we assume that leaves and relays are always                                                                                 in Fig. 6 for different maximum numbers of neighbors, con-
+ active. As one may observe, the former two parameters provide                                                                             nected relays, and total connected RDs. By cross-comparing
+ insignificant impact on the considered metric. Specifically,                                                                              the presented illustrations, one may observe that the power
+ by varying the number of RDs that can be associated with                                                                                  control allows for improvement in the fraction of delivered
+ a single relay from 10 to 30, the observed performance                                                                                    packets by approximately 1-3% depending on the parameters
+ difference is well within 2% for the packet generation period                                                                             for the point where the system starts to be overloaded – packet
+ of 10 s. For the same traffic conditions (Fig. 5(a) and Fig.                                                                              generation period of 10 s. For less frequent traffic arrival
+ 5(b)), the increase in the number of relay nodes in the radio                                                                             process, e.g., 20 s between packet generation, the gain of
+ neighborhood results in a difference upper bounded by 3%.                                                                                 power control is even smaller and generally less than 1%.
+ For a smaller packet generation period, e.g., 30 s, the impact                                                                            These results show that although the use of power control
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+                                             1.00                                                                      ACKNOWLEDGMENT
+
+
+
+                 Delivered frames fraction
+                                                                                               The work on this paper has been supported by the CELTIC-
+                                             0.95                                             NEXT ”Ultra Scalable Wireless Access” (USWA) project.
+
+                                             0.90                                                                          R EFERENCES
+                                                                                               [1] A. Khanna and S. Kaur, “Internet of things (iot), applications and chal-
+                                                            Tot=10, Rel=5    Tot=10, Rel=7         lenges: a comprehensive review,” Wireless Personal Communications,
+                                             0.85                                                  vol. 114, no. 2, pp. 1687–1762, 2020.
+                                                            Tot=20, Rel=5    Tot=20, Rel=7
+                                                            Tot=30, Rel=5    Tot=30, Rel=7     [2] M. R. Palattella, M. Dohler, A. Grieco, G. Rizzo, J. Torsner, T. Engel,
+                                             0.80                                                  and L. Ladid, “Internet of things in the 5G era: Enablers, architecture,
+                                                    10        20        30    40         50        and business models,” IEEE Journal on Selected Areas in Communica-
+                                                         Packet generation period, s               tions, vol. 34, no. 3, pp. 510–527, 2016.
+                                                                                               [3] H. Fattah, 5G LTE Narrowband Internet of Things (NB-IoT). CRC
+                                                    (a) Without power control                      Press, 2018.
+                                                                                               [4] L. Chettri and R. Bera, “A comprehensive survey on internet of things
+                                             1.00                                                  (IoT) toward 5G wireless systems,” IEEE Internet of Things Journal,
+                 Delivered frames fraction
+
+
+
+
+                                                                                                   vol. 7, no. 1, pp. 16–32, 2019.
+                                                                                               [5] ETSI, “DECT-2020 New Radio (NR); Part 1: Overview,” ETSI, TS 103
+                                             0.95                                                  636-1 v1.3.1, December 2021.
+                                                                                               [6] R. Kovalchukov, D. Moltchanov, J. Pirskanen, J. Säe, J. Numminen,
+                                                                                                   Y. Koucheryavy, and M. Valkama, “DECT-2020 New Radio: The Next
+                                             0.90                                                  Step toward 5G Massive Machine-Type Communications,” IEEE Com-
+                                                                                                   munications Magazine, vol. 60, no. 6, pp. 58–64, 2022.
+                                                            Tot=10, Rel=5    Tot=10, Rel=7     [7] A. Anttonen, P. Karhula, M. Lasanen, and M. Majanen, “Enabling
+                                             0.85                                                  Massive Machine Type Communications with DECT-2020 Standard: A
+                                                            Tot=20, Rel=5    Tot=20, Rel=7
+                                                            Tot=30, Rel=5    Tot=30, Rel=7         System-Level Performance Study,” 2021.
+                                             0.80
+                                                                                               [8] ITU-R, “Minimum requirements related to technical performance for
+                                                    10        20        30    40         50        IMT-2020 radio interface,” ITU-R, M.2410-0, July 2017.
+                                                                                               [9] ETSI, “DECT-2020 New Radio (NR); Part 2: Radio reception and
+                                                         Packet generation period, s
+                                                                                                   transmission requirements; Release 1,” ETSI, TS 103 636-2 v1.3.1,
+                                                     (b) With power control                        December 2021.
+                                                                                              [10] ——, “DECT-2020 New Radio (NR); Part 3: Physical layer; Release 1,”
+                                  Fig. 6. The impact of the power control.                         ETSI, TS 103 636-3 v1.3.1, December 2021.
+                                                                                              [11] ——, “DECT-2020 New Radio (NR); Part 4: MAC layer; Release 1,”
+                                                                                                   ETSI, TS 103 636-4 v1.3.1, December 2021.
+ is beneficial for an overloaded regime of the system, the                                    [12] A. Samuylov, D. Moltchanov, J. Pirskanen, J. Numminen, Y. Kouch-
+ LBT mechanism utilized by DECT-2020 is reliable enough                                            eryavy, and M. Valkama, “Performance assessment of dect-2020 nr and
+                                                                                                   classic dect coexistence mechanisms,” in 2023 IEEE 97th Vehicular
+ to efficiently combat interference at conventional loads even                                     Technology Conference (VTC2023-Spring). IEEE, 2023, pp. 1–7.
+ in dense network conditions.                                                                 [13] 3GPP, “Study on channel model for frequencies from 0.5 to 100 GHz
+                                                                                                   (Release 14),” 3GPP TR 38.901 V14.1.1, July 2017.
+                                                                                              [14] ITU-R, “Guidelines for evaluation of radio interface technologies for
+                                                     VI. C ONCLUSIONS                              IMT-2020,” ITU-R, M.2412-0, July 2017.
+
+
+    DECT-2020 NR is a recently standardized mMTC enabler
+ satisfying the IMT-2020 5G performance requirements. How-
+ ever, the standard does not specify several critical mechanisms
+ and/or makes some of those optional. Motivated by this, in our
+ paper, we evaluated the impact of energy conservation patterns,
+ power control, relay, and next hop selection mechanisms on
+ the packet delivery performance in DECT-2020 system.
+    Our numerical results indicate that the impact of the sleep
+ patterns in both routers and RDs have a linear impact on
+ the system capacity, implying that the system can adapt well
+ to different traffic conditions. The impact of relay selection
+ mechanisms is relatively negligible in dense network con-
+ ditions and generally depends on the number of connected
+ RDs and relays having a packet to the sink. Specifically, the
+ impact of the network density is an order of magnitude more
+ significant as compared to the relay node selection parameters.
+ Finally, power control has a mild effect on the packet delivery
+ ratio, allowing it to improve it by around 3% even in dense
+ network conditions. These observations highlight that DECT-
+ 2020 offers robust solutions suitable for different network
+ deployments and the implementation of optional mechanisms.
+
+
+
+
+Authorized licensed use limited to: Hochschule Aalen (FH) - Technik und Wirtschaft. Downloaded on July 09,2026 at 09:11:06 UTC from IEEE Xplore. Restrictions apply.
+
