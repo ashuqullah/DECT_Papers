@@ -1,0 +1,285 @@
+\begin{figure*}[!t]
+\centering
+
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    font=\sffamily,
+    phase/.style={
+        rounded corners=4pt,
+        draw=#1,
+        very thick,
+        fill=#1!4,
+        minimum width=6.7cm,
+        minimum height=17.8cm
+    },
+    header/.style={
+        rounded corners=4pt,
+        draw=#1,
+        fill=#1,
+        text=white,
+        font=\bfseries\Large,
+        minimum width=6.6cm,
+        minimum height=1.55cm,
+        align=center
+    },
+    purpose/.style={
+        font=\bfseries\itshape,
+        text width=5.55cm,
+        align=center,
+        minimum height=1.5cm
+    },
+    step/.style={
+        rounded corners=3pt,
+        draw=#1,
+        fill=#1!7,
+        line width=0.8pt,
+        text width=5.45cm,
+        minimum height=1.9cm,
+        inner sep=5pt,
+        align=left
+    },
+    output/.style={
+        rounded corners=3pt,
+        draw=#1,
+        fill=#1!5,
+        text width=5.45cm,
+        minimum height=3.0cm,
+        inner sep=5pt,
+        align=left
+    },
+    flow/.style={
+        -{Latex[length=2.4mm]},
+        line width=0.9pt
+    }
+]
+
+% ============================================================
+% COLORS
+% ============================================================
+
+\definecolor{identblue}{RGB}{39,84,138}
+\definecolor{screengreen}{RGB}{52,112,64}
+\definecolor{eliggold}{RGB}{196,143,0}
+\definecolor{synthpurple}{RGB}{101,60,140}
+
+% ============================================================
+% PHASE PANELS
+% ============================================================
+
+\node[phase=identblue] (p1) at (0,0) {};
+\node[phase=screengreen, right=0.55cm of p1] (p2) {};
+\node[phase=eliggold, right=0.55cm of p2] (p3) {};
+\node[phase=synthpurple, right=0.55cm of p3] (p4) {};
+
+% ============================================================
+% HEADERS
+% ============================================================
+
+\node[header=identblue, anchor=north]
+    (h1) at ([yshift=-0.15cm]p1.north)
+    {1. IDENTIFICATION};
+
+\node[header=screengreen, anchor=north]
+    (h2) at ([yshift=-0.15cm]p2.north)
+    {2. SCREENING};
+
+\node[header=eliggold, anchor=north]
+    (h3) at ([yshift=-0.15cm]p3.north)
+    {3. ELIGIBILITY};
+
+\node[header=synthpurple, anchor=north]
+    (h4) at ([yshift=-0.15cm]p4.north)
+    {4. INCLUDED STUDIES\\AND SYNTHESIS};
+
+% ============================================================
+% PURPOSE STATEMENTS
+% ============================================================
+
+\node[purpose, below=0.30cm of h1]
+    (pu1)
+    {Finding and collecting\\potentially relevant studies};
+
+\node[purpose, below=0.30cm of h2]
+    (pu2)
+    {Filtering studies based on\\titles and abstracts};
+
+\node[purpose, below=0.30cm of h3]
+    (pu3)
+    {Assessing full-text studies\\for eligibility and quality};
+
+\node[purpose, below=0.30cm of h4]
+    (pu4)
+    {Extracting data and\\synthesizing evidence};
+
+% ============================================================
+% IDENTIFICATION
+% ============================================================
+
+\node[step=identblue, below=0.35cm of pu1] (id1) {
+\textbf{1.1 Formulate research questions}\\
+Define the scope, objectives, and research questions.
+};
+
+\node[step=identblue, below=0.22cm of id1] (id2) {
+\textbf{1.2 Select information sources}\\
+IEEE Xplore, Scopus, ACM Digital Library, SpringerLink,
+ScienceDirect, and Google Scholar.
+};
+
+\node[step=identblue, below=0.22cm of id2] (id3) {
+\textbf{1.3 Develop search strategy}\\
+Define keywords, synonyms, Boolean operators, and search strings.
+};
+
+\node[step=identblue, below=0.22cm of id3] (id4) {
+\textbf{1.4 Search literature}\\
+Run searches in the selected databases and identify additional
+studies through snowballing.
+};
+
+\node[step=identblue, below=0.22cm of id4] (id5) {
+\textbf{1.5 Remove duplicates}\\
+Consolidate retrieved records and remove duplicate publications.
+};
+
+\node[output=identblue, anchor=south]
+    (out1) at ([yshift=0.30cm]p1.south) {
+\textbf{Key outputs}\\
+$\bullet$ Research questions\\
+$\bullet$ Search strategy\\
+$\bullet$ Deduplicated record set
+};
+
+\draw[flow] (id1) -- (id2);
+\draw[flow] (id2) -- (id3);
+\draw[flow] (id3) -- (id4);
+\draw[flow] (id4) -- (id5);
+\draw[flow] (id5) -- (out1);
+
+% ============================================================
+% SCREENING
+% ============================================================
+
+\node[step=screengreen, below=0.50cm of pu2] (sc1) {
+\textbf{2.1 Title screening}\\
+Exclude records that are clearly outside the review scope.
+};
+
+\node[step=screengreen, below=0.35cm of sc1] (sc2) {
+\textbf{2.2 Abstract screening}\\
+Apply the predefined inclusion and exclusion criteria.
+};
+
+\node[step=screengreen, below=0.35cm of sc2] (sc3) {
+\textbf{2.3 Record exclusion decisions}\\
+Document the principal reasons for excluding records.
+};
+
+\node[output=screengreen, anchor=south]
+    (out2) at ([yshift=0.30cm]p2.south) {
+\textbf{Key outputs}\\
+$\bullet$ Screened records\\
+$\bullet$ Excluded records\\
+$\bullet$ Potentially eligible studies
+};
+
+\draw[flow] (sc1) -- (sc2);
+\draw[flow] (sc2) -- (sc3);
+\draw[flow] (sc3) -- (out2);
+
+% ============================================================
+% ELIGIBILITY
+% ============================================================
+
+\node[step=eliggold, below=0.50cm of pu3] (el1) {
+\textbf{3.1 Retrieve full texts}\\
+Obtain the complete publications for potentially eligible studies.
+};
+
+\node[step=eliggold, below=0.28cm of el1] (el2) {
+\textbf{3.2 Assess full-text eligibility}\\
+Apply the predefined inclusion and exclusion criteria.
+};
+
+\node[step=eliggold, below=0.28cm of el2] (el3) {
+\textbf{3.3 Quality assessment}\\
+Evaluate methodological quality using the predefined quality checklist.
+};
+
+\node[step=eliggold, below=0.28cm of el3] (el4) {
+\textbf{3.4 Record exclusion decisions}\\
+Document reasons for exclusion following full-text assessment.
+};
+
+\node[output=eliggold, anchor=south]
+    (out3) at ([yshift=0.30cm]p3.south) {
+\textbf{Key outputs}\\
+$\bullet$ Full texts assessed\\
+$\bullet$ Quality-assessed studies\\
+$\bullet$ Eligible research corpus
+};
+
+\draw[flow] (el1) -- (el2);
+\draw[flow] (el2) -- (el3);
+\draw[flow] (el3) -- (el4);
+\draw[flow] (el4) -- (out3);
+
+% ============================================================
+% INCLUDED STUDIES AND SYNTHESIS
+% ============================================================
+
+\node[step=synthpurple, below=0.65cm of pu4] (in1) {
+\textbf{4.1 Data extraction and coding}\\
+Extract predefined variables and classify the included studies
+using a structured data-extraction framework.
+};
+
+\node[step=synthpurple, below=0.45cm of in1] (in2) {
+\textbf{4.2 Data synthesis}\\
+Perform descriptive, comparative, quantitative, and thematic synthesis.
+};
+
+\node[step=synthpurple, below=0.45cm of in2] (in3) {
+\textbf{4.3 Report findings}\\
+Present research characteristics, technical synthesis,
+research gaps, and future directions.
+};
+
+\node[output=synthpurple, anchor=south]
+    (out4) at ([yshift=0.30cm]p4.south) {
+\textbf{Key outputs}\\
+$\bullet$ Final research corpus\\
+$\bullet$ Structured extraction dataset\\
+$\bullet$ Research taxonomy\\
+$\bullet$ Technical synthesis and research roadmap
+};
+
+\draw[flow] (in1) -- (in2);
+\draw[flow] (in2) -- (in3);
+\draw[flow] (in3) -- (out4);
+
+% ============================================================
+% CONNECTIONS BETWEEN PHASES
+% ============================================================
+
+\draw[flow]
+    ([yshift=1.0cm]p1.east)
+    -- ([yshift=1.0cm]p2.west);
+
+\draw[flow]
+    ([yshift=1.0cm]p2.east)
+    -- ([yshift=1.0cm]p3.west);
+
+\draw[flow]
+    ([yshift=1.0cm]p3.east)
+    -- ([yshift=1.0cm]p4.west);
+
+\end{tikzpicture}%
+}
+
+\caption{Systematic literature review workflow adopted in this study.
+The review comprises four principal phases: identification, screening,
+eligibility assessment, and evidence synthesis.}
+\label{fig:review_workflow}
+
+\end{figure*}

@@ -1,0 +1,499 @@
+\begin{figure}[htbp]
+\centering
+
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    x=1cm,
+    y=1cm,
+    font=\small,
+    task/.style={
+        rounded corners=2pt,
+        minimum height=0.28cm,
+        inner sep=0pt
+    }
+]
+
+% -------------------------------------------------
+% Dimensions
+% -------------------------------------------------
+\def\labelwidth{8.8}
+\def\quarterwidth{1.0}
+\def\chartwidth{20.8}
+
+% -------------------------------------------------
+% Colors
+% -------------------------------------------------
+\definecolor{headerblue}{RGB}{8,35,78}
+\definecolor{timelineblue}{RGB}{55,119,205}
+\definecolor{timelinegreen}{RGB}{102,167,61}
+\definecolor{timelinepurple}{RGB}{145,105,204}
+\definecolor{timelineorange}{RGB}{225,135,45}
+
+\definecolor{phaseblue}{RGB}{235,243,252}
+\definecolor{phasegreen}{RGB}{240,247,233}
+\definecolor{phasepurple}{RGB}{246,240,252}
+
+\definecolor{gridgray}{RGB}{190,190,190}
+
+% =================================================
+% MAIN TITLE
+% =================================================
+\fill[headerblue] (0,0) rectangle (\chartwidth,-0.8);
+\draw[gray!70] (0,0) rectangle (\chartwidth,-0.8);
+
+\node[
+    text=white,
+    font=\bfseries\Large
+] at (\chartwidth/2,-0.4)
+{Three-Year PhD Research Timeline};
+
+% =================================================
+% LEFT HEADER: PHASE / ACTIVITY
+% =================================================
+\fill[white] (0,-0.8) rectangle (\labelwidth,-2.2);
+\draw[gray!70] (0,-0.8) rectangle (\labelwidth,-2.2);
+
+\node[
+    font=\bfseries\large
+] at (\labelwidth/2,-1.5)
+{Phase / Activity};
+
+% =================================================
+% YEAR HEADERS
+% =================================================
+\foreach \x/\year in {
+    8.8/Year 1,
+    12.8/Year 2,
+    16.8/Year 3
+}{
+    \fill[white] (\x,-0.8) rectangle ++(4,-0.7);
+    \draw[gray!70] (\x,-0.8) rectangle ++(4,-0.7);
+
+    \node[
+        font=\bfseries\large
+    ] at (\x+2,-1.15)
+    {\year};
+}
+
+% =================================================
+% QUARTER HEADERS
+% =================================================
+\foreach \i/\quarter in {
+    0/Q1,1/Q2,2/Q3,3/Q4,
+    4/Q1,5/Q2,6/Q3,7/Q4,
+    8/Q1,9/Q2,10/Q3,11/Q4
+}{
+    \pgfmathsetmacro{\qx}{\labelwidth+\i}
+
+    \fill[white]
+        (\qx,-1.5)
+        rectangle
+        ++(\quarterwidth,-0.7);
+
+    \draw[gray!70]
+        (\qx,-1.5)
+        rectangle
+        ++(\quarterwidth,-0.7);
+
+    \node[
+        font=\bfseries
+    ] at (\qx+0.5,-1.85)
+    {\quarter};
+}
+
+% =================================================
+% PHASE 1 HEADER
+% =================================================
+\fill[phaseblue] (0,-2.2) rectangle (\chartwidth,-2.9);
+\draw[gray!55] (0,-2.2) rectangle (\chartwidth,-2.9);
+
+% Small clipboard-style icon
+\draw[timelineblue, line width=0.8pt, rounded corners=1pt]
+    (0.25,-2.73) rectangle (0.58,-2.37);
+\draw[timelineblue, line width=0.8pt]
+    (0.34,-2.34) rectangle (0.49,-2.28);
+\draw[timelineblue, line width=0.6pt]
+    (0.31,-2.48) -- (0.52,-2.48);
+\draw[timelineblue, line width=0.6pt]
+    (0.31,-2.57) -- (0.52,-2.57);
+\draw[timelineblue, line width=0.6pt]
+    (0.31,-2.66) -- (0.45,-2.66);
+
+\node[
+    anchor=west,
+    font=\bfseries\large
+] at (0.82,-2.55)
+{Year 1: Requirements and Initial Design};
+
+% =================================================
+% YEAR 1 ACTIVITIES
+% =================================================
+\node[anchor=west, font=\large]
+    at (0.60,-3.25)
+    {Literature Review};
+
+\node[anchor=west, font=\large]
+    at (0.60,-3.90)
+    {Application Requirements Analysis};
+
+\node[anchor=west, font=\large]
+    at (0.60,-4.55)
+    {System Model and Testbed Setup};
+
+\node[anchor=west, font=\large]
+    at (0.60,-5.20)
+    {Initial MAC Scheduling Design};
+
+\node[
+    anchor=west,
+    font=\normalsize\bfseries,
+    text=timelineorange!85!black
+] at (0.60,-5.85)
+{Publication on Literature Review};
+
+% Year 1 bars
+\filldraw[
+    task,
+    fill=timelineblue!88,
+    draw=timelineblue
+]
+(\labelwidth,-3.40)
+rectangle
+(\labelwidth+2.0,-3.10);
+
+\filldraw[
+    task,
+    fill=timelineblue!88,
+    draw=timelineblue
+]
+(\labelwidth,-4.05)
+rectangle
+(\labelwidth+3.50,-3.75);
+
+\filldraw[
+    task,
+    fill=timelineblue!82,
+    draw=timelineblue
+]
+(\labelwidth+1.30,-4.70)
+rectangle
+(\labelwidth+4.55,-4.40);
+
+\filldraw[
+    task,
+    fill=timelineblue!88,
+    draw=timelineblue
+]
+(\labelwidth+2.50,-5.35)
+rectangle
+(\labelwidth+5.05,-5.05);
+
+% Year 1 publication bar
+\filldraw[
+    task,
+    fill=timelineorange!80,
+    draw=timelineorange
+]
+(\labelwidth+2.40,-6.00)
+rectangle
+(\labelwidth+4.00,-5.70);
+
+% =================================================
+% PHASE 2 HEADER
+% =================================================
+\fill[phasegreen] (0,-6.30) rectangle (\chartwidth,-7.00);
+\draw[gray!55] (0,-6.30) rectangle (\chartwidth,-7.00);
+
+% Small gear-style icon
+\draw[
+    timelinegreen,
+    line width=1.1pt
+]
+(0.43,-6.65) circle (0.18);
+
+\foreach \angle in {0,45,...,315}{
+    \draw[
+        timelinegreen,
+        line width=2pt
+    ]
+    ($(0.43,-6.65)+(\angle:0.20)$)
+    --
+    ($(0.43,-6.65)+(\angle:0.27)$);
+}
+
+\node[
+    anchor=west,
+    font=\bfseries\large
+] at (0.82,-6.65)
+{Year 2: Design and Implementation};
+
+% =================================================
+% YEAR 2 ACTIVITIES
+% =================================================
+\node[anchor=west, font=\large]
+    at (0.60,-7.35)
+    {Deterministic MAC Scheduling};
+
+\node[anchor=west, font=\large]
+    at (0.60,-8.00)
+    {Reliability-Oriented Allocation};
+
+\node[anchor=west, font=\large]
+    at (0.60,-8.65)
+    {Energy-Efficient Scheduling};
+
+\node[anchor=west, font=\large]
+    at (0.60,-9.30)
+    {Hardware Implementation};
+
+\node[anchor=west, font=\large]
+    at (0.60,-9.95)
+    {Initial Experimental Evaluation};
+
+\node[
+    anchor=west,
+    font=\normalsize\bfseries,
+    text=timelineorange!85!black
+] at (0.60,-10.60)
+{Publication on MAC Design and Implementation};
+
+% Year 2 bars
+\filldraw[
+    task,
+    fill=timelinegreen!88,
+    draw=timelinegreen
+]
+(\labelwidth+1.70,-7.50)
+rectangle
+(\labelwidth+5.10,-7.20);
+
+\filldraw[
+    task,
+    fill=timelinegreen!75,
+    draw=timelinegreen
+]
+(\labelwidth+2.05,-8.15)
+rectangle
+(\labelwidth+7.25,-7.85);
+
+\filldraw[
+    task,
+    fill=timelinegreen!68,
+    draw=timelinegreen
+]
+(\labelwidth+2.80,-8.80)
+rectangle
+(\labelwidth+7.55,-8.50);
+
+\filldraw[
+    task,
+    fill=timelinegreen!88,
+    draw=timelinegreen
+]
+(\labelwidth+2.00,-9.45)
+rectangle
+(\labelwidth+8.05,-9.15);
+
+\filldraw[
+    task,
+    fill=timelinegreen!60,
+    draw=timelinegreen
+]
+(\labelwidth+4.75,-10.10)
+rectangle
+(\labelwidth+8.05,-9.80);
+
+% Year 2 publication bar
+\filldraw[
+    task,
+    fill=timelineorange!80,
+    draw=timelineorange
+]
+(\labelwidth+5.50,-10.75)
+rectangle
+(\labelwidth+8.00,-10.45);
+
+% =================================================
+% PHASE 3 HEADER
+% =================================================
+\fill[phasepurple] (0,-10.95) rectangle (\chartwidth,-11.65);
+\draw[gray!55] (0,-10.95) rectangle (\chartwidth,-11.65);
+
+% Small chart icon
+\draw[
+    timelinepurple,
+    line width=0.8pt
+]
+(0.25,-11.45) -- (0.25,-11.10);
+
+\draw[
+    timelinepurple,
+    line width=0.8pt
+]
+(0.25,-11.45) -- (0.62,-11.45);
+
+\fill[timelinepurple]
+    (0.30,-11.40) rectangle (0.36,-11.28);
+
+\fill[timelinepurple]
+    (0.40,-11.40) rectangle (0.46,-11.20);
+
+\fill[timelinepurple]
+    (0.50,-11.40) rectangle (0.56,-11.10);
+
+\draw[
+    timelinepurple,
+    line width=0.8pt,
+    -stealth
+]
+(0.29,-11.30)
+--
+(0.42,-11.22)
+--
+(0.52,-11.11)
+--
+(0.62,-11.04);
+
+\node[
+    anchor=west,
+    font=\bfseries\large
+] at (0.82,-11.30)
+{Year 3: Validation and Dissertation};
+
+% =================================================
+% YEAR 3 ACTIVITIES
+% =================================================
+\node[anchor=west, font=\large]
+    at (0.60,-12.00)
+    {Comprehensive Evaluation};
+
+\node[anchor=west, font=\large]
+    at (0.60,-12.65)
+    {Optimization and Validation};
+
+\node[
+    anchor=west,
+    font=\normalsize\bfseries,
+    text=timelineorange!85!black
+] at (0.60,-13.30)
+{Publication on Evaluation and Validation};
+
+\node[anchor=west, font=\large]
+    at (0.60,-13.95)
+    {Dissertation Writing};
+
+\node[anchor=west, font=\large]
+    at (0.60,-14.60)
+    {Thesis Submission};
+
+% Year 3 bars
+\filldraw[
+    task,
+    fill=timelinepurple!78,
+    draw=timelinepurple
+]
+(\labelwidth+6.05,-12.15)
+rectangle
+(\labelwidth+9.40,-11.85);
+
+\filldraw[
+    task,
+    fill=timelinepurple!82,
+    draw=timelinepurple
+]
+(\labelwidth+6.05,-12.80)
+rectangle
+(\labelwidth+9.70,-12.50);
+
+% Year 3 publication bar
+\filldraw[
+    task,
+    fill=timelineorange!80,
+    draw=timelineorange
+]
+(\labelwidth+8.20,-13.45)
+rectangle
+(\labelwidth+11.20,-13.15);
+
+\filldraw[
+    task,
+    fill=timelinepurple!76,
+    draw=timelinepurple
+]
+(\labelwidth+7.70,-14.10)
+rectangle
+(\labelwidth+11.25,-13.80);
+
+% Thesis-submission milestone
+\node[
+    text=timelinepurple,
+    font=\fontsize{22}{22}\selectfont
+] at (\labelwidth+11.55,-14.60)
+{$\star$};
+
+% =================================================
+% GRID AND OUTER BORDER
+% =================================================
+
+% Vertical divider after activity names
+\draw[gray!65]
+    (\labelwidth,-0.8)
+    --
+    (\labelwidth,-14.92);
+
+% Dotted quarter grid
+\foreach \i in {1,...,11}{
+    \pgfmathsetmacro{\gx}{\labelwidth+\i}
+
+    \draw[
+        gridgray,
+        densely dashed,
+        line width=0.35pt
+    ]
+    (\gx,-2.2)
+    --
+    (\gx,-14.92);
+}
+
+% Strong year separators
+\draw[gray!65, line width=0.7pt]
+    (\labelwidth+4,-0.8)
+    --
+    (\labelwidth+4,-14.92);
+
+\draw[gray!65, line width=0.7pt]
+    (\labelwidth+8,-0.8)
+    --
+    (\labelwidth+8,-14.92);
+
+% Horizontal task guides
+\foreach \y in {
+    -2.90,-3.55,-4.20,-4.85,-5.50,-6.15,
+    -7.00,-7.65,-8.30,-8.95,-9.60,-10.25,-10.90,
+    -11.65,-12.30,-12.95,-13.60,-14.25,-14.92
+}{
+    \draw[
+        gridgray,
+        dotted,
+        line width=0.35pt
+    ]
+    (\labelwidth,\y)
+    --
+    (\chartwidth,\y);
+}
+
+% Outer frame
+\draw[
+    gray!70,
+    line width=0.7pt
+]
+(0,0)
+rectangle
+(\chartwidth,-14.92);
+
+\end{tikzpicture}%
+}
+\caption{Three-year timeline of the proposed doctoral research.}
+\label{fig:research-timeline}
+
+\end{figure}

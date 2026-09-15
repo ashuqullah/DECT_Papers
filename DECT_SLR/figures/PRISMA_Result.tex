@@ -1,0 +1,286 @@
+% =============================================================================
+% PRISMA 2020 RESULTS FLOW DIAGRAM
+% One-column version
+% =============================================================================
+
+% -----------------------------------------------------------------------------
+% EDIT ONLY THESE VALUES
+% -----------------------------------------------------------------------------
+\def\prismaIEEE{42}
+\def\prismaScopus{44}
+\def\prismaACM{0}
+\def\prismaSpringer{0}
+\def\prismaScienceDirect{0}
+\def\prismaOther{0}
+
+\def\prismaIdentified{86}
+
+% Replace placeholders after final verification
+\def\prismaDuplicates{A}
+\def\prismaScreened{B}
+\def\prismaScreenExcluded{C}
+\def\prismaSought{D}
+\def\prismaNotRetrieved{E}
+\def\prismaEligibility{F}
+\def\prismaFullTextExcluded{G}
+
+% Verified final values
+\def\prismaIncluded{51}
+\def\prismaContextual{5}
+\def\prismaStandards{H}
+\def\prismaLateDuplicates{1}
+\def\prismaExcludedFinal{2}
+
+
+% =============================================================================
+% FIGURE
+% =============================================================================
+
+\begin{figure}[!t]
+\centering
+
+\resizebox{\columnwidth}{!}{%
+\begin{tikzpicture}[
+font=\sffamily\small,
+>=Latex,
+box/.style={
+draw=black,
+rounded corners=1.5pt,
+align=left,
+inner sep=6pt,
+text width=7.0cm
+},
+smallbox/.style={
+draw=black,
+rounded corners=1.5pt,
+align=left,
+inner sep=6pt,
+text width=5.8cm
+},
+included/.style={
+draw=black,
+rounded corners=1.5pt,
+align=center,
+inner sep=6pt,
+text width=7.0cm,
+fill=green!15
+},
+additional/.style={
+draw=black,
+dashed,
+rounded corners=1.5pt,
+align=left,
+inner sep=6pt,
+text width=7.0cm
+},
+stage/.style={
+fill=blue!15,
+draw=black,
+rounded corners=2pt,
+align=center,
+font=\sffamily\bfseries,
+minimum height=0.75cm,
+text width=7.0cm
+},
+arrow/.style={
+->,
+>=Latex,
+line width=0.8pt
+}
+]
+
+% =============================================================================
+% HEADER
+% =============================================================================
+
+\node[
+fill=blue!70!black,
+text=white,
+rounded corners=3pt,
+align=center,
+font=\sffamily\bfseries,
+minimum height=0.8cm,
+text width=7.0cm
+] (header)
+{Identification of studies via databases and registers};
+
+
+% =============================================================================
+% IDENTIFICATION
+% =============================================================================
+
+\node[
+stage,
+below=4mm of header
+] (stage1)
+{Identification};
+
+\node[
+box,
+below=3mm of stage1
+] (identified)
+{
+\textbf{Records identified from:}\\[2pt]
+IEEE Xplore ($n=\prismaIEEE$)\\
+Scopus ($n=\prismaScopus$)\\
+ACM Digital Library ($n=\prismaACM$)\\
+SpringerLink ($n=\prismaSpringer$)\\
+ScienceDirect ($n=\prismaScienceDirect$)\\
+Google Scholar ($n=0$)\\
+Other sources ($n=\prismaOther$)\\[3pt]
+\textbf{Total records identified:}
+$n=\prismaIdentified$
+};
+
+\node[
+smallbox,
+below=3mm of identified
+] (duplicates)
+{
+\textbf{Records removed before screening}\\[2pt]
+Duplicate records removed:
+$n=\prismaDuplicates$
+};
+
+\draw[arrow]
+(identified.south) -- (duplicates.north);
+
+
+% =============================================================================
+% SCREENING
+% =============================================================================
+
+\node[
+stage,
+below=5mm of duplicates
+] (stage2)
+{Screening};
+
+\node[
+box,
+below=3mm of stage2
+] (screened)
+{
+\textbf{Records screened:}
+$n=\prismaScreened$
+};
+
+\node[
+smallbox,
+below=3mm of screened
+] (screenexcluded)
+{
+\textbf{Records excluded:}
+$n=\prismaScreenExcluded$
+};
+
+\draw[arrow]
+(screened.south) -- (screenexcluded.north);
+
+\node[
+box,
+below=3mm of screenexcluded
+] (sought)
+{
+\textbf{Reports sought for retrieval:}
+$n=\prismaSought$
+};
+
+\draw[arrow]
+(screenexcluded.south) -- (sought.north);
+
+\node[
+smallbox,
+below=3mm of sought
+] (notretrieved)
+{
+\textbf{Reports not retrieved:}
+$n=\prismaNotRetrieved$
+};
+
+\draw[arrow]
+(sought.south) -- (notretrieved.north);
+
+
+% =============================================================================
+% ELIGIBILITY
+% =============================================================================
+
+\node[
+stage,
+below=5mm of notretrieved
+] (stage3)
+{Eligibility};
+
+\node[
+box,
+below=3mm of stage3
+] (eligibility)
+{
+\textbf{Reports assessed for eligibility (full-text):}\\
+$n=\prismaEligibility$
+};
+
+\node[
+box,
+below=3mm of eligibility
+] (fullexcluded)
+{
+\textbf{Reports excluded:}
+$n=\prismaFullTextExcluded$\\[3pt]
+\textbf{Reasons:}\\
+$\bullet$ Not primarily about DECT-2020 NR\\
+$\bullet$ Insufficient technical content\\
+$\bullet$ Wrong publication type\\
+$\bullet$ Not in English\\
+$\bullet$ Contextual/background only\\
+$\bullet$ Other reasons
+};
+
+\draw[arrow]
+(eligibility.south) -- (fullexcluded.north);
+
+
+% =============================================================================
+% INCLUDED
+% =============================================================================
+
+\node[
+stage,
+below=5mm of fullexcluded
+] (stage4)
+{Included};
+
+\node[
+included,
+below=3mm of stage4
+] (included)
+{
+\textbf{Studies included in quantitative synthesis}\\
+\textbf{(primary research corpus)}\\[3pt]
+$n=\prismaIncluded$
+};
+
+\node[
+additional,
+below=3mm of included
+] (additional)
+{
+\textbf{Additional records not included in quantitative synthesis:}\\[3pt]
+$\bullet$ Contextual studies ($n=\prismaContextual$)\\
+$\bullet$ Standards / Technical Reports ($n=\prismaStandards$)\\
+$\bullet$ Duplicate identified later ($n=\prismaLateDuplicates$)\\
+$\bullet$ Excluded after full-text ($n=\prismaExcludedFinal$)
+};
+
+\draw[arrow]
+(included.south) -- (additional.north);
+
+\end{tikzpicture}%
+}
+
+\caption{\gls{prisma} 2020 flow diagram showing the study-selection process
+and the number of records at each stage of the systematic literature review.}
+\label{fig:prisma_results}
+
+\end{figure}

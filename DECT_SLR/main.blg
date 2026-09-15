@@ -5,50 +5,53 @@ The style file: elsarticle-num.bst
 Database file #1: references.bib
 Warning--empty journal in fagerholmFPGAbasedDECT2020New2024
 Warning--empty journal in bandaraExperimentalValidationAnalysis2025
-Warning--empty journal in jahangirAnalysisPerformanceDECT2024
+Warning--empty pages in montalvoDECTEvolutionMeeting2024
 Warning--empty journal in dangUniRATUnifiedDECT20202026
 Warning--there's a number but no volume in dangUniRATUnifiedDECT20202026
-Warning--empty journal in fedrecheskiMariResponsiveWireless2026
-Warning--there's a number but no volume in fedrecheskiMariResponsiveWireless2026
-You've used 43 entries,
+Warning--empty journal in pennerLinkLevelPerformanceEvaluation2021
+Warning--there's a number but no volume in pennerLinkLevelPerformanceEvaluation2021
+Warning--empty journal in ngoIoTDeviceAuthentication2025
+Warning--empty journal in poetsDECTNRNew2024
+Warning--empty journal in jahangirAnalysisPerformanceDECT2024
+You've used 75 entries,
             2952 wiz_defined-function locations,
-            963 strings with 17082 characters,
-and the built_in function-call counts, 14968 in all, are:
-= -- 1471
-> -- 488
-< -- 25
-+ -- 191
-- -- 148
-* -- 1141
-:= -- 2002
-add.period$ -- 70
-call.type$ -- 43
-change.case$ -- 44
-chr.to.int$ -- 3
-cite$ -- 50
-duplicate$ -- 506
-empty$ -- 1663
-format.name$ -- 177
-if$ -- 3902
+            1139 strings with 26659 characters,
+and the built_in function-call counts, 26930 in all, are:
+= -- 2477
+> -- 928
+< -- 49
++ -- 359
+- -- 284
+* -- 1792
+:= -- 3488
+add.period$ -- 77
+call.type$ -- 75
+change.case$ -- 76
+chr.to.int$ -- 0
+cite$ -- 85
+duplicate$ -- 1028
+empty$ -- 3137
+format.name$ -- 345
+if$ -- 7127
 int.to.chr$ -- 0
-int.to.str$ -- 43
-missing$ -- 33
-newline$ -- 175
-num.names$ -- 43
-pop$ -- 294
+int.to.str$ -- 75
+missing$ -- 64
+newline$ -- 247
+num.names$ -- 77
+pop$ -- 665
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 990
+skip$ -- 1802
 stack$ -- 0
-substring$ -- 626
-swap$ -- 204
-text.length$ -- 24
+substring$ -- 1309
+swap$ -- 325
+text.length$ -- 49
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 7
-while$ -- 109
-width$ -- 45
-write$ -- 450
-(There were 7 warnings)
+warning$ -- 10
+while$ -- 223
+width$ -- 77
+write$ -- 679
+(There were 10 warnings)

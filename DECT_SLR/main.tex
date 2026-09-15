@@ -38,7 +38,6 @@
     shapes.geometric,
     calc
 }
-
 \graphicspath{{figures/}}
 
 \usepackage[acronym,nomain,nonumberlist]{glossaries}
@@ -71,32 +70,110 @@
 }
 
 \begin{abstract}
-To be written after completing the survey.
+DECT-2020 New Radio (DECT NR+) is a non-cellular radio technology designed
+for decentralized, infrastructure-light, and large-scale wireless
+communication, with particular relevance to industrial Internet of Things
+applications. Despite growing research activity, the available literature
+remains fragmented across physical-layer design, medium access control,
+multi-hop networking, resource management, reliability, energy efficiency,
+positioning, and experimental implementations. This paper presents a
+systematic literature review of DECT NR+ research following the PRISMA 2020
+guidelines. A structured search and selection process identified 51 primary
+studies published between 2020 and July 2026, which were analyzed with respect
+to publication characteristics, technical contributions, evaluation methods,
+experimental platforms, performance metrics, and application domains. The
+results show that PHY, MAC, and routing/mesh networking constitute the most
+extensively investigated areas, while experimental validation has increasingly
+progressed toward commercial hardware, SDR platforms, multi-hop testbeds, and
+application-oriented prototypes. However, large-scale physical mesh
+experiments, application-oriented scheduling and resource allocation,
+long-duration evaluation, positioning, security, coexistence, and multi-RAT
+integration remain comparatively underexplored. The synthesis further shows
+that DECT NR+ performance is inherently cross-layer and application-dependent,
+with interactions among radio configuration, channel access, scheduling,
+routing, topology, energy management, and hardware behavior. The review
+therefore identifies application-oriented cross-layer configuration,
+large-scale experimental validation, and reproducible benchmarking as key
+directions for translating the flexibility of DECT NR+ into predictable
+performance for industrial wireless systems.
 \end{abstract}
 
 \begin{keyword}
 DECT-2020 NR \sep
 DECT NR+ \sep
-non-cellular 5G \sep
-industrial Internet of Things \sep
-systematic literature review \sep
-PRISMA
+Industrial Internet of Things \sep
+Systematic Literature Review \sep
+PRISMA\sep
+Multi-Hop Networks \sep
+MAC Scheduling \sep
+Resource Allocation
 \end{keyword}
 
 \end{frontmatter}
+% ============================================================
+% List of Acronyms
+% ============================================================
+
+\glsadd{dect}
+\glsadd{dectnr}
+\glsadd{etsi}
+\glsadd{iot}
+\glsadd{iiot}
+\glsadd{itur}
+\glsadd{imt2020}
+\glsadd{rit}
+\glsadd{phy}
+\glsadd{mac}
+\glsadd{qos}
+\glsadd{slr}
+\glsadd{prisma}
+\glsadd{qa}
+\glsadd{rq}
+\glsadd{kpi}
+\glsadd{urllc}
+\glsadd{mmtc}
+\glsadd{embb}
+\glsadd{mcs}
+\glsadd{ber}
+\glsadd{per}
+\glsadd{pdr}
+\glsadd{rtt}
+\glsadd{rssi}
+\glsadd{snr}
+\glsadd{sinr}
+\glsadd{lbt}
+\glsadd{harq}
+\glsadd{sdr}
+\glsadd{fpga}
+\glsadd{usrp}
+\glsadd{los}
+\glsadd{nlos}
+\glsadd{aoi}
+\glsadd{mse}
+\glsadd{rmse}
+\glsadd{noma}
+\glsadd{gnn}
+\glsadd{drl}
+\glsadd{uav}
+\glsadd{lpwan}
+\glsadd{pmse}
+\glsadd{ft}
+\glsadd{pt}
+
+\printnoidxglossary[
+    type=\acronymtype,
+    title={List of Acronyms}
+]
 
 \input{sections/01_introduction}
 \input{sections/02_methodology}
 \input{sections/03_literature_search_results}
 \input{sections/04_research_classification}
-\input{sections/05_comparative_analysis}
-\input{sections/06_research_gaps}
-\input{sections/07_future_research_directions}
-\input{sections/08_conclusion}
-\printnoidxglossary[
-    type=\acronymtype,
-    title={List of Acronyms}
-]
+
+\input{sections/05_research_gaps}
+
+\input{sections/06_conclusion}
+
 \bibliographystyle{elsarticle-num}
 \bibliography{references}
 

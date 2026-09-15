@@ -1,94 +1,244 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background and Motivation}
-\label{subsec:intro_background}
-
-The rapid digital transformation of modern industry has fundamentally changed the role of wireless communication systems. Emerging paradigms such as Industry~4.0, the Industrial Internet of Things (\gls{iiot}), cyber-physical systems (\gls{cps}), intelligent manufacturing, autonomous robotics, digital twins, and edge computing increasingly rely on seamless connectivity among heterogeneous devices, sensors, actuators, and control systems. Unlike traditional communication networks that primarily support human-centric services, modern industrial environments require continuous machine-to-machine communication capable of supporting real-time monitoring, distributed control, predictive maintenance, collaborative robotics, and autonomous decision-making. Consequently, wireless communication has evolved from a convenient alternative to wired connectivity into a fundamental enabling technology for digital transformation across manufacturing, transportation, healthcare, logistics, agriculture, and other industrial sectors \cite{xuInternetThingsIndustries2014,sisinniIndustrialInternetThings2018,boyesIndustrialInternetThings2018,wollschlaegerFutureIndustrialCommunication2017a}.
-
-The communication requirements of these emerging applications differ significantly from those of conventional mobile broadband services. Industrial communication systems demand deterministic medium access, ultra-high reliability, low end-to-end latency, synchronized operation among distributed devices, massive machine connectivity, high energy efficiency, and predictable communication performance even under harsh electromagnetic conditions. Simultaneously, wireless infrastructures must support large numbers of heterogeneous devices while maintaining scalability, deployment flexibility, and long operational lifetimes with minimal maintenance. These often conflicting requirements have become one of the principal driving forces behind the evolution of next-generation wireless communication technologies \cite{liIndustrialInternetSurvey2017,sisinniIndustrialInternetThings2018,xuInternetThingsIndustries2014}.
-
-Although existing wireless technologies such as Wi-Fi, Bluetooth, IEEE~802.15.4, WirelessHART, and conventional cellular systems have enabled numerous industrial applications, each has been designed to optimize only a subset of these communication requirements. High-throughput technologies frequently struggle to provide deterministic communication and predictable latency, whereas low-power wireless networks often sacrifice scalability, mobility, or spectral efficiency. Similarly, traditional cellular systems provide extensive coverage and mobility support but generally rely on licensed spectrum and infrastructure-centric deployments that may not be suitable for all industrial scenarios. These limitations have motivated the development of new radio access technologies capable of combining the flexibility of license-exempt operation with the reliability, scalability, and quality-of-service required by next-generation industrial communication systems \cite{wollschlaegerFutureIndustrialCommunication2017a,boccardiFiveDisruptiveTechnology2014,agiwalNextGeneration5G2016}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Evolution toward IMT-2020 Wireless Communications}
-\label{subsec:intro_imt}
+\label{subsec:background_motivation}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The evolution of wireless communication has been characterized by continuous improvements in capacity, spectral efficiency, mobility support, and service diversity. While second- and third-generation cellular systems primarily focused on voice and mobile data services, fourth-generation technologies introduced all-IP architectures capable of supporting broadband multimedia applications. However, the rapid emergence of industrial automation, cyber-physical systems, and large-scale machine communications exposed new requirements that could not be fully addressed through incremental improvements of existing cellular technologies. Future wireless networks were expected to simultaneously support enhanced broadband services, latency-critical industrial applications, and massive deployments of connected devices, creating the need for a fundamentally new communication framework \cite{andrewsWhatWill5G2014a,boccardiFiveDisruptiveTechnology2014,osseiranScenarios5GMobile2014,agiwalNextGeneration5G2016,parkvallNRNew5G2017a,dahlman2013lteadvanced}.
+The continuing digitalization of industrial systems has accelerated the
+integration of \gls{iot}, \gls{iiot}, cyber-physical systems, and wireless
+communication into modern production and automation environments. Industrial
+networks increasingly support applications ranging from process monitoring and
+condition sensing to closed-loop control, mobile robotics, safety systems,
+localization, and multimedia services. These developments form an important
+technological foundation of Industry~4.0 and smart manufacturing, where
+machines, sensors, actuators, controllers, and mobile systems must exchange
+information reliably and efficiently
+\cite{xuInternetThingsIndustries2014,
+sisinniIndustrialInternetThings2018,
+boyesIndustrialInternetThings2018,
+wollschlaegerFutureIndustrialCommunication2017a}.
 
-To address these challenges, the International Telecommunication Union Radiocommunication Sector (ITU-R) established the International Mobile Telecommunications-2020 (\gls{imt2020}) framework, defining a comprehensive vision for future wireless communication systems. Rather than specifying a single radio technology, IMT-2020 establishes performance objectives, minimum technical requirements, evaluation methodologies, and interoperability criteria that candidate radio interface technologies must satisfy. The framework defines three complementary service categories, namely enhanced Mobile Broadband (\gls{embb}), Ultra-Reliable Low-Latency Communications (\gls{urllc}), and massive Machine-Type Communications (\gls{mmtc}), which together extend wireless communication far beyond conventional mobile broadband toward industrial automation, mission-critical networking, intelligent transportation, and massive IoT deployments \cite{itur_m2083,itur_m2410,itur_m2412,itur_m2150}.
+A fundamental challenge is the heterogeneity of industrial communication
+requirements. Control and robotic applications may require bounded latency,
+low jitter, and predictable communication cycles, whereas safety-related
+applications place particular emphasis on highly reliable packet delivery.
+Monitoring and sensing applications may tolerate less stringent timing
+constraints but often require energy-efficient operation and long device
+lifetimes. Mobile and logistics applications introduce additional requirements
+related to mobility, coverage, localization, and changing radio conditions,
+while multimedia services may generate substantially different traffic volumes
+and \gls{qos} requirements
+\cite{sisinniIndustrialInternetThings2018,
+wollschlaegerFutureIndustrialCommunication2017a}.
 
-An important characteristic of \gls{imt2020} is its technology-neutral philosophy. Unlike previous generations, which were largely associated with a single family of cellular technologies, \gls{imt2020} establishes a common performance, evaluation, and interoperability framework that enables multiple \glspl{rit} to satisfy the same set of technical requirements rather than prescribing a single air interface \cite{itur_m2083,itur_m2410,itur_m2412,itur_m2150}. Although 3GPP New Radio (NR) represents the dominant cellular implementation within the \gls{imt2020} ecosystem, the framework also accommodates alternative radio technologies designed for deployment scenarios where conventional cellular solutions may not provide the most appropriate balance between performance, deployment flexibility, and spectrum utilization.
+Figure~\ref{fig:industrial_requirements} summarizes representative industrial
+application classes and their corresponding wireless communication
+requirements. Industrial wireless networks must therefore address multiple
+performance dimensions, including latency, reliability, jitter, energy
+efficiency, scalability, coverage, and differentiated \gls{qos}, whose relative
+importance depends on the application and deployment scenario.
 
-Within this context, \gls{etsi} initiated the development of \gls{dectnr} as a next-generation wireless technology operating in globally available license-exempt spectrum. Building upon the legacy of the original \gls{dect} standard while introducing a completely new radio interface, \gls{dectnr} was designed to support reliable, scalable, and deterministic wireless communication for industrial automation, massive machine-type communications, professional audio, and other mission-critical applications. Following a comprehensive evaluation against the technical performance requirements defined by \gls{imt2020}, \gls{dectnr} was officially approved by the \gls{itur} as a \gls{rit}, becoming the first \gls{etsi}-developed non-cellular radio interface included in the \gls{imt2020} family \cite{etsi_tr103810,etsi_tr103943,maliatsosEvaluationIMT2020Candidate2022a,perez-guiraoDECTNRUnveiling2022,kovalchukovDECT2020NewRadio2022}. This achievement significantly broadened the technological diversity of \gls{imt2020} by introducing a wireless communication platform specifically optimized for industrial, enterprise, and other license-exempt deployment scenarios, thereby complementing existing cellular solutions rather than replacing them \cite{smidaETSIDECT2020Component2023,haqueDECT2020NRLink2025}.
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/IndustrialApp.png}
+    \caption{Representative industrial applications and their corresponding
+    wireless communication requirements.}
+    \label{fig:industrial_requirements}
+\end{figure*}
+
+The evolution toward fifth-generation wireless communication broadened the
+scope of wireless systems beyond conventional human-centric broadband. The
+\gls{itur} IMT Vision defined three principal usage scenarios for
+\gls{imt2020}: enhanced mobile broadband, massive machine-type communications,
+and ultra-reliable and low-latency communications
+\cite{itur_m2083}. The associated requirements and evaluation methodology
+cover performance dimensions such as latency, reliability, connection density,
+mobility, spectrum efficiency, and energy efficiency
+\cite{itur_m2410,itur_m2412}. Importantly, \gls{imt2020} is not restricted to
+a single radio interface; multiple \glspl{rit} can satisfy the common technical
+and evaluation framework
+\cite{itur_m2083,itur_m2410,itur_m2412,itur_m2150}.
+
+This technology-neutral framework is particularly relevant to industrial and
+enterprise environments, where locally managed networks, flexible topologies,
+dense device connectivity, direct communication, and infrastructure-light
+deployment can be important. These requirements create a role for
+complementary radio technologies that address deployment models different from
+those of conventional cellular networks.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{DECT-2020 NR: A New IMT-2020 Radio Interface}
-\label{subsec:intro_dect}
+\subsection{DECT-2020 NR and the Emerging Research Landscape}
+\label{subsec:dectnr_landscape}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Among the radio interface technologies accepted within the IMT-2020 framework, DECT-2020 New Radio (DECT-2020 NR) represents a unique milestone in the evolution of wireless communications. Unlike conventional cellular technologies, DECT-2020 NR was specifically developed by the European Telecommunications Standards Institute (ETSI) to provide a flexible, scalable, and reliable wireless communication system operating in globally available license-exempt spectrum. Building upon the successful legacy of Digital Enhanced Cordless Telecommunications (DECT), the new radio interface extends the technology far beyond cordless telephony by introducing a modern packet-oriented architecture capable of supporting industrial automation, massive machine-type communications, ultra-reliable low-latency services, and mission-critical wireless networking. Its acceptance by ITU-R as an official IMT-2020 radio interface established DECT-2020 NR as the first non-cellular technology recognized within the IMT-2020 family, significantly broadening the technological diversity of future wireless communication systems \cite{itur_m2150,etsi_tr103810,maliatsosEvaluationIMT2020Candidate2022a,perez-guiraoDECTNRUnveiling2022}.
+Within this context, \gls{etsi} developed \gls{dectnr} as a next-generation
+radio technology for local wireless communication, massive machine-type
+connectivity, and other demanding communication scenarios. Although it builds
+on the regulatory and technological heritage of \gls{dect}, \gls{dectnr}
+introduces a new radio interface and protocol architecture supporting flexible,
+decentralized, and infrastructure-light deployments
+\cite{kovalchukovDECT2020NewRadio2022,
+perez-guiraoDECTNRUnveiling2022}.
 
-The standardization of DECT-2020 NR was carried out through a comprehensive family of ETSI Technical Specifications defining the overall system architecture, protocol stack, physical layer, medium access control procedures, convergence layer, and implementation framework. Release~1 established the initial protocol architecture and radio interface, while Release~2 introduced numerous enhancements aimed at improving system flexibility, scalability, interoperability, and industrial applicability. Together with the accompanying ETSI Technical Reports, these specifications provide a complete framework covering protocol operation, spectrum usage, regulatory aspects, coexistence mechanisms, and evaluation procedures required for IMT-2020 compliance \cite{etsi_ts103636_1,etsi_ts103636_2,etsi_ts103636_3,etsi_ts103636_4,etsi_ts103636_5,etsi_tr103943,etsi_tr103810}.
+The technology was evaluated within the \gls{imt2020} process and subsequently
+included by the \gls{itur} as an \gls{imt2020} radio interface
+\cite{itur_m2150,
+maliatsosEvaluationIMT2020Candidate2022a,
+smidaETSIDECT2020Component2023}. Its architecture is specified primarily
+through the \gls{etsi} TS~103~636 series, covering the system architecture,
+radio requirements, \gls{phy}, \gls{mac}, and related protocol procedures
+\cite{etsi_ts103636_1,
+etsi_ts103636_2,
+etsi_ts103636_3,
+etsi_ts103636_4,
+etsi_ts103636_5}. Devices can assume different operational roles and establish
+direct, point-to-multipoint, and multi-hop communication structures without
+requiring the conventional base-station and core-network architecture
+associated with cellular systems.
 
-Unlike conventional cellular deployments that depend on licensed spectrum and centralized network infrastructures, DECT-2020 NR emphasizes autonomous network operation, decentralized resource management, efficient spectrum utilization, and flexible deployment in industrial and enterprise environments. These characteristics make the technology particularly attractive for private wireless networks, industrial Internet of Things applications, cyber-physical production systems, warehouse automation, autonomous mobile robots, smart logistics, and other mission-critical industrial scenarios where deterministic communication, low deployment cost, and spectrum independence are essential. Consequently, DECT-2020 NR has attracted increasing attention from both academia and industry as a complementary wireless technology capable of addressing communication scenarios that remain challenging for conventional cellular systems \cite{kovalchukovDECT2020NewRadio2022,perez-guiraoDECTNRUnveiling2022,smidaETSIDECT2020Component2023}.
+These characteristics make \gls{dectnr} relevant to industrial and
+\gls{iot} environments in which local network ownership, deployment
+flexibility, device density, multi-hop connectivity, and application-specific
+communication requirements are important. Rather than being considered a
+replacement for cellular 5G, \gls{dectnr} can be viewed as a complementary
+\gls{imt2020} radio technology addressing deployment scenarios with distinct
+architectural and operational requirements
+\cite{kovalchukovDECT2020NewRadio2022,
+perez-guiraoDECTNRUnveiling2022,
+smidaETSIDECT2020Component2023}.
+
+Research on \gls{dectnr} has expanded rapidly beyond standardization and
+initial technology evaluation. Early investigations concentrated on
+\gls{imt2020} performance assessment and the feasibility of the technology for
+machine-type and low-latency communication
+\cite{maliatsosEvaluationIMT2020Candidate2022a,
+smidaETSIDECT2020Component2023}. Subsequent work has addressed PHY performance,
+channel access, routing and multi-hop networking, scheduling and resource
+allocation, reliability, energy efficiency, positioning, coexistence,
+heterogeneous-network integration, and application-specific communication.
+At the same time, evaluation has increasingly progressed from analytical and
+simulation-based studies toward commercial devices, hardware prototypes,
+software-defined radio implementations, testbeds, and measurements under
+practical deployment conditions
+\cite{fagerholmFPGAbasedDECT2020New2024,
+wassmannPerformanceDECT2020NR2024,
+bandaraExperimentalValidationAnalysis2025,
+haqueDECT2020NRLink2025,
+grafWhatExpectWhen2026}.
+
+Application-oriented research has similarly expanded toward professional
+audio, industrial monitoring, critical infrastructure, localization,
+energy-constrained networking, multi-hop communication, and other emerging
+use cases. This diversification indicates increasing technological maturity,
+but it has also produced a fragmented research landscape spanning multiple
+protocol layers, methodologies, performance metrics, implementation platforms,
+and application domains.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Evolution of the DECT-2020 NR Research Landscape}
-\label{subsec:intro_landscape}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-Following the publication of the ETSI specifications, research on DECT-2020 NR rapidly evolved from standardization activities toward practical implementation and experimental validation. Early studies concentrated on validating the protocol architecture and investigating the fundamental characteristics of the physical and medium access control layers, including synchronization procedures, waveform generation, channel estimation, modulation and coding schemes, random access mechanisms, coexistence strategies, and radio resource management. These investigations confirmed the feasibility of the standardized design while establishing the theoretical and experimental foundations required for practical deployment \cite{smidaETSIDECT2020Component2023,haqueDECT2020NRLink2025,wassmannPerformanceDECT2020NR2024,glazkovImprovingNearURLLCServices2025}.
-
-As implementation platforms became available, the focus of the research community progressively shifted toward hardware realization and system-level experimentation. Software-defined radio platforms, FPGA-based implementations, commercial Nordic Semiconductor development kits, embedded communication modules, and industrial testbeds enabled comprehensive experimental investigations under realistic deployment conditions. These studies evaluated protocol behavior, link performance, latency, throughput, synchronization accuracy, coexistence performance, and energy consumption, thereby demonstrating the practical viability of DECT-2020 NR for industrial wireless communication systems \cite{fagerholmFPGAbasedDECT2020New2024,bandaraExperimentalValidationAnalysis2025,jahangirAnalysisPerformanceDECT2024,grafParetoOptimalityApproach2026a,grafWhatExpectWhen2026}.
-
-More recently, the research landscape has expanded considerably beyond the lower communication layers. Current investigations encompass scheduling and radio resource allocation, routing and multi-hop communication, mesh networking, positioning and localization, authentication and security, coexistence with heterogeneous wireless technologies, software-defined networking, energy-efficient communication, multi-RAT integration, industrial automation, professional audio applications, and emerging non-terrestrial communication scenarios. This diversification illustrates the rapid transition of DECT-2020 NR from a newly standardized radio interface into a comprehensive research field spanning wireless communications, embedded systems, industrial networking, and cyber-physical systems \cite{soniPerformanceMultihopAssisted2021,soniLinkLevelAssessmentNOMA2023,saikkoPositioningDECT2020NR2024,saikkoPositioningTrackingDECT20202025,fuhrlingRobustRoutingProtocol2025b,nihtilaEnergySavingRouter2022,dangUniRATUnifiedDECT20202026,fedrecheskiMariResponsiveWireless2026,piresDECT2020NREnergy2026b}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Research Gap }
+\subsection{Research Gap and Contributions}
 \label{subsec:intro_gap}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-The rapid evolution of \gls{dectnr} has resulted in a substantial increase in both the volume and diversity of the available scientific literature. As demonstrated by the systematic review presented in this paper, research has progressively evolved from standardization activities toward protocol optimization, hardware implementation, experimental validation, and industrial deployment. Consequently, the literature now encompasses a broad spectrum of research topics, including system architecture, \gls{phy} techniques, \gls{mac} protocols, synchronization, scheduling and resource allocation, routing and mesh networking, localization and positioning, security, coexistence mechanisms, embedded implementations, performance evaluation, and application-specific deployments. This diversification demonstrates the growing technological maturity of \gls{dectnr} while simultaneously increasing the complexity of understanding the overall research landscape \cite{etsi_ts103636_1,etsi_ts103636_2,etsi_ts103636_3,etsi_ts103636_4,etsi_ts103636_5,smidaETSIDECT2020Component2023,haqueDECT2020NRLink2025,wassmannPerformanceDECT2020NR2024,bandaraExperimentalValidationAnalysis2025,jahangirAnalysisPerformanceDECT2024,grafWhatExpectWhen2026,soniPerformanceMultihopAssisted2021,saikkoPositioningDECT2020NR2024,dangUniRATUnifiedDECT20202026}.
+Despite this growing body of research, the available knowledge remains
+distributed across heterogeneous sources. Normative aspects are defined in
+\gls{etsi} specifications and \gls{itur} recommendations, while protocol
+enhancements, analytical models, simulations, implementation techniques,
+hardware evaluations, and application studies are distributed across journal
+articles, conference proceedings, theses, and other technical publications.
+Individual studies consequently provide detailed evidence for particular
+aspects of \gls{dectnr}, but do not by themselves reveal how the different
+research directions relate to one another, how experimental maturity has
+evolved, or where the principal gaps remain.
 
-The findings of our systematic literature review further indicate that the available knowledge is distributed across multiple publication types and research communities. Fundamental aspects of the technology are documented in ETSI Technical Specifications, Technical Reports, and ITU-R recommendations, whereas implementation methodologies, protocol optimizations, hardware platforms, experimental evaluations, and industrial applications are primarily reported in journal articles, conference proceedings, industrial demonstrations, and experimental studies. Although these publications collectively provide comprehensive coverage of individual research topics, they are largely organized according to specific technical objectives rather than the overall evolution of the technology. Consequently, researchers and practitioners must consult numerous heterogeneous sources to obtain a comprehensive understanding of \gls{dectnr} and its current state of development \cite{itur_m2083,itur_m2150,etsi_tr103810,etsi_tr103943,etsi_ts103636_1,etsi_ts103636_2,etsi_ts103636_3,etsi_ts103636_4,etsi_ts103636_5,smidaETSIDECT2020Component2023,perez-guiraoDECTNRUnveiling2022,haqueDECT2020NRLink2025,bandaraExperimentalValidationAnalysis2025,grafParetoOptimalityApproach2026a}.
+Existing surveys and overview publications provide valuable descriptions of
+selected aspects of the technology
+\cite{kovalchukovDECT2020NewRadio2022,
+perez-guiraoDECTNRUnveiling2022,
+smidaETSIDECT2020Component2023}, but a systematic synthesis spanning the
+complete research landscape remains lacking. In particular, the literature has
+not yet been consolidated within a common framework that jointly characterizes
+publication trends, technical research areas, evaluation methodologies,
+implementation platforms, performance metrics, application domains, and
+cross-layer relationships.
 
-Furthermore, the continuous evolution of the standard itself has accelerated the diversification of research. Following the publication of the initial Release~1 specifications, Release~2 introduced additional capabilities that stimulated new investigations in radio resource management, synchronization, localization, industrial automation, energy-efficient communication, multi-hop networking, and emerging Industry~4.0 applications. At the same time, the availability of commercial chipsets, software development kits, \gls{fpga} implementations, and industrial testbeds has shifted the research focus from theoretical protocol design toward comprehensive experimental validation under realistic deployment conditions. As a result, the literature has become increasingly fragmented across protocol layers, implementation platforms, optimization techniques, and application domains \cite{etsi_ts103636_1,etsi_ts103636_2,etsi_ts103636_3,fagerholmFPGAbasedDECT2020New2024,haqueDECT2020NRLink2025,bandaraExperimentalValidationAnalysis2025,saikkoPositioningTrackingDECT20202025,nihtilaEnergySavingRouter2022,fedrecheskiMariResponsiveWireless2026,piresDECT2020NREnergy2026b}.
+This paper addresses this gap through a \gls{prisma}-based systematic
+literature review and technical synthesis of \gls{dectnr} research published
+from 2020 through July~2026
+\cite{pagePRISMA2020}. Following systematic identification, screening,
+eligibility assessment, and quality assessment, 51 primary studies are included
+in the quantitative and qualitative synthesis. Normative \gls{etsi} and
+\gls{itur} documents are analyzed separately to provide the standardization
+context without treating standards as evaluation studies.
 
-Our analysis of the selected literature further reveals that most existing publications investigate individual aspects of \gls{dectnr} in isolation. While these studies have significantly advanced the technology, relatively few establish relationships among different protocol layers, compare alternative technical approaches across multiple research domains, or synthesize the overall evolution of the technology from standardization to industrial deployment. Consequently, common design principles, emerging research trends, remaining technical challenges, and future research opportunities remain dispersed throughout the literature rather than being presented within a unified analytical framework \cite{smidaETSIDECT2020Component2023,haqueDECT2020NRLink2025,soniPerformanceMultihopAssisted2021,saikkoPositioningDECT2020NR2024,dangUniRATUnifiedDECT20202026,bandaraExperimentalValidationAnalysis2025}.
+The principal contributions of this survey are as follows:
 
-Motivated by these observations, this paper presents a comprehensive systematic literature review of \gls{dectnr} following the \gls{prisma}~2020 methodology. Unlike conventional narrative surveys, our review employs a transparent and reproducible protocol for literature identification, screening, quality assessment, data extraction, and qualitative synthesis. The selected publications are systematically classified into a unified taxonomy covering the complete \gls{dectnr} technology stack, including standardization, system architecture, \gls{phy}, \gls{mac}, scheduling and resource allocation, routing and mesh networking, localization, security, implementation platforms, experimental validation, performance evaluation, and industrial applications. By integrating these diverse research directions into a coherent analytical framework, this survey provides a comprehensive overview of the current state of \gls{dectnr} research while identifying technological trends, remaining research challenges, and promising future research directions.
+\begin{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Contributions of This Survey}
-\label{subsec:intro_contributions}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \item \textbf{Systematic and reproducible literature review:}
+    A structured review of the \gls{dectnr} literature is conducted using
+    predefined research questions, information sources, search strategy,
+    eligibility criteria, quality assessment, data extraction, and synthesis
+    procedures.
 
-The main contributions of this survey are summarized as follows:
+    \item \textbf{Quantitative characterization of the research landscape:}
+    The 51 primary studies are analyzed with respect to publication trends,
+    publication types, primary contributions, technical topics, research
+    methodologies, validation approaches, performance metrics, and
+    implementation platforms.
 
-\begin{enumerate}
+    \item \textbf{Unified technical taxonomy and synthesis:}
+    The research landscape is organized into ten complementary areas:
+    standardization and system architecture; physical-layer research; MAC and
+    channel access; routing and mesh networking; scheduling and resource
+    allocation; reliability, URLLC, and mMTC; energy efficiency; positioning
+    and localization; security, coexistence, and multi-RAT integration; and
+    industrial applications and experimental implementations.
 
-\item We present the first comprehensive \gls{prisma}-based systematic literature review of DECT-2020 NR research, employing a transparent, reproducible, and evidence-based methodology for literature identification, screening, quality assessment, data extraction, and qualitative synthesis.
+    \item \textbf{Assessment of experimental maturity and performance
+    evaluation:}
+    The survey examines how \gls{dectnr} has been evaluated through analytical
+    modeling, simulation, hardware prototypes, commercial devices,
+    software-defined radio platforms, field trials, and industrial
+    measurements, together with the \glspl{kpi} used to characterize
+    performance.
 
-\item We provide a unified taxonomy that systematically classifies DECT-2020 NR research into coherent technical categories spanning the complete technology stack, including standardization, system architecture, physical layer, medium access control, scheduling and resource allocation, routing and mesh networking, localization, security, implementation platforms, experimental validation, performance evaluation, and industrial applications.
+    \item \textbf{Cross-layer synthesis of technical evidence:}
+    Relationships among PHY configuration, channel access, scheduling,
+    routing, reliability, energy consumption, positioning, and hardware
+    behavior are synthesized to show how application-visible performance
+    emerges from interactions across protocol and implementation layers.
 
-\item We critically synthesize the existing literature by integrating ETSI standards, ITU-R recommendations, journal articles, conference papers, and industrial implementation studies, thereby providing a comprehensive overview of the technological evolution of DECT-2020 NR from standardization to practical deployment.
+    \item \textbf{Research gaps and future directions:}
+    Based on the systematic evidence, the survey identifies underexplored
+    areas and future priorities including application-oriented cross-layer
+    design, large-scale mesh evaluation, deterministic communication,
+    energy-aware networking, experimental localization, secure multi-hop
+    operation, heterogeneous integration, and hardware-aware optimization.
 
-\item We analyze the current state of research across the identified technical categories, highlighting the major technological developments, implementation approaches, experimental achievements, and emerging research trends that characterize the evolution of DECT-2020 NR.
+\end{itemize}
 
-\item We identify the remaining research challenges, unresolved technical issues, and promising future research directions, providing guidance for researchers, system developers, standardization bodies, and industrial practitioners working on next-generation industrial wireless communication systems.
+By combining quantitative characterization with technical and cross-layer
+synthesis, the review aims not only to summarize existing work but also to
+provide a structured view of the maturity, limitations, and future development
+of the \gls{dectnr} research ecosystem.
 
-\end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Paper Organization}
-\label{subsec:intro_organization}
+\label{subsec:paper_organization}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The remainder of this paper is organized as follows.
-Section~\ref{sec:methodology} presents the systematic review methodology, including the search strategy, study selection, quality assessment, data extraction, and qualitative synthesis procedures.
-Section~\ref{sec:results} summarizes the literature search results, publication trends, and bibliometric analysis.
-Section~\ref{sec:technical_synthesis} provides a comprehensive technical synthesis of the selected studies according to the proposed taxonomy.
-Section~\ref{sec:future} discusses the remaining research challenges and outlines promising future research directions.
-Finally, Section~\ref{sec:conclusion} concludes the paper.
+Section~\ref{sec:methodology} describes the systematic review methodology,
+including the research questions, information sources, search strategy,
+eligibility criteria, quality assessment, data extraction, and synthesis
+procedure. Section~\ref{sec:results} presents the study-selection results and
+the quantitative characteristics of the 51 included primary studies.
+Section~\ref{sec:technical_synthesis} develops the technical taxonomy and
+synthesizes the major research directions across the ten identified areas.
+Section~\ref{sec:discussion} discusses the cross-layer implications,
+experimental and methodological limitations, research gaps, and future
+priorities. The final section concludes the paper.
