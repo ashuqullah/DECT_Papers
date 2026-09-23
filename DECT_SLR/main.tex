@@ -1,180 +1,162 @@
-\documentclass[5p,twocolumn]{elsarticle}
+\documentclass{ieeeaccess}
 
 % ============================================================
-% Computer Networks manuscript
+% Packages
 % ============================================================
 
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-
+\usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{diffcoeff}
-\usepackage{isomath}
-\usepackage{siunitx}
 \usepackage{graphicx}
 \usepackage{textcomp}
+\usepackage{bm}
+
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{float}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
-\usepackage{pgf}
-\usepackage{pgfplots}
+\usepackage{siunitx}
 \usepackage{url}
-\usepackage[nonumberlist,acronym,nomain]{glossaries}
-\usepackage{cleveref}
-\usetikzlibrary{positioning,arrows.meta}
-\sisetup{table-format=1.3}
-\pgfplotsset{compat=1.18}
 
-\usepackage{tikz}
-\usepackage{xcolor}
-\usetikzlibrary{
-    positioning,
-    arrows.meta,
-    fit,
-    backgrounds,
-    shapes.geometric,
-    calc
-}
+
+\sisetup{table-format=1.3}
+
 \graphicspath{{figures/}}
 
+% ============================================================
+% Acronyms
+% ============================================================
+
 \usepackage[acronym,nomain,nonumberlist]{glossaries}
-\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
 \makenoidxglossaries
 \loadglsentries{acronyms}
 
-\journal{Computer Networks}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% ============================================================
+% Document
+% ============================================================
 
 \begin{document}
 
-\begin{frontmatter}
+\history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
+\doi{10.1109/ACCESS.2026.DOI}
+% ============================================================
+% Title
+% ============================================================
 
 \title{DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
 
-\author[aalen]{Ashuqullah Alizai\corref{cor1}}
-\ead{ashuqullah.alizai@hs-aalen.de}
-\cortext[cor1]{Corresponding author.}
+% ============================================================
+% Authors
+% ============================================================
 
-\author[aalen]{Mohammad Reza Mousavi}
-\ead{mohammad.mousavi@hs-aalen.de}
-
-\author[aalen]{Stephan Ludwig}
-\ead{stephan.ludwig@hs-aalen.de}
-
-\affiliation[aalen]{
-  organization={Aalen University of Applied Sciences},
-  city={Aalen},
-  country={Germany}
+\author{
+\uppercase{Ashuqullah Alizai}\authorrefmark{1},
+\uppercase{Mohammad Reza Mousavi}\authorrefmark{1},
+and
+\uppercase{Stephan Ludwig}\authorrefmark{1}
 }
+
+\address[1]{
+Aalen University of Applied Sciences, Aalen, Germany
+(e-mail: ashuqullah.alizai@hs-aalen.de;
+mohammad.mousavi@hs-aalen.de;
+stephan.ludwig@hs-aalen.de)
+}
+
+% ============================================================
+% Funding acknowledgment
+% ============================================================
+
+
+% ============================================================
+% Running header
+% ============================================================
+
+\markboth
+{Alizai \headeretal: DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+{Alizai \headeretal: DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+
+% ============================================================
+% Corresponding author
+% ============================================================
+
+\corresp{
+Corresponding author: Ashuqullah Alizai
+(e-mail: ashuqullah.alizai@hs-aalen.de).
+}
+
+% ============================================================
+% Abstract
+% ============================================================
 
 \begin{abstract}
 DECT-2020 New Radio (DECT NR+) is a non-cellular radio technology designed
 for decentralized, infrastructure-light, and large-scale wireless
 communication, with particular relevance to industrial Internet of Things
-applications. Despite growing research activity, the available literature
-remains fragmented across physical-layer design, medium access control,
-multi-hop networking, resource management, reliability, energy efficiency,
-positioning, and experimental implementations. This paper presents a
-systematic literature review of DECT NR+ research following the PRISMA 2020
-guidelines. A structured search and selection process identified 51 primary
-studies published between 2020 and July 2026, which were analyzed with respect
-to publication characteristics, technical contributions, evaluation methods,
+applications. Despite growing research activity, the literature remains
+fragmented across physical-layer design, medium access control, multi-hop
+networking, resource management, reliability, energy efficiency, positioning,
+and experimental implementations. This paper presents a systematic literature
+review of DECT NR+ research following the Preferred Reporting Items for
+Systematic Reviews and Meta-Analyses (PRISMA) 2020 guidelines. A structured
+search and selection process identified 51 primary studies published between
+2020 and July 2026. The studies were systematically analyzed with respect to
+publication characteristics, technical contributions, evaluation methods,
 experimental platforms, performance metrics, and application domains. The
-results show that PHY, MAC, and routing/mesh networking constitute the most
-extensively investigated areas, while experimental validation has increasingly
-progressed toward commercial hardware, SDR platforms, multi-hop testbeds, and
-application-oriented prototypes. However, large-scale physical mesh
-experiments, application-oriented scheduling and resource allocation,
-long-duration evaluation, positioning, security, coexistence, and multi-RAT
-integration remain comparatively underexplored. The synthesis further shows
-that DECT NR+ performance is inherently cross-layer and application-dependent,
-with interactions among radio configuration, channel access, scheduling,
-routing, topology, energy management, and hardware behavior. The review
-therefore identifies application-oriented cross-layer configuration,
-large-scale experimental validation, and reproducible benchmarking as key
-directions for translating the flexibility of DECT NR+ into predictable
-performance for industrial wireless systems.
+results show that physical-layer, medium-access-control, and routing/mesh
+research dominate the literature, whereas experimental validation has
+increasingly progressed toward commercial hardware, software-defined radio
+platforms, multi-hop testbeds, and application-oriented prototypes. However,
+large-scale physical mesh experiments, application-oriented scheduling and
+resource allocation, long-duration evaluation, positioning, security,
+coexistence, and multi-radio-access-technology integration remain
+comparatively underexplored. The synthesis further reveals that DECT NR+
+performance is inherently cross-layer and application-dependent, involving
+interactions among radio configuration, channel access, scheduling, routing,
+topology, energy management, and hardware behavior. These findings identify
+application-oriented cross-layer configuration, large-scale experimental
+validation, and reproducible benchmarking as important research directions
+for achieving predictable DECT NR+ performance in industrial wireless
+systems.
 \end{abstract}
 
-\begin{keyword}
-DECT-2020 NR \sep
-DECT NR+ \sep
-Industrial Internet of Things \sep
-Systematic Literature Review \sep
-PRISMA\sep
-Multi-Hop Networks \sep
-MAC Scheduling \sep
-Resource Allocation
-\end{keyword}
-
-\end{frontmatter}
 % ============================================================
-% List of Acronyms
+% Keywords
 % ============================================================
 
-\glsadd{dect}
-\glsadd{dectnr}
-\glsadd{etsi}
-\glsadd{iot}
-\glsadd{iiot}
-\glsadd{itur}
-\glsadd{imt2020}
-\glsadd{rit}
-\glsadd{phy}
-\glsadd{mac}
-\glsadd{qos}
-\glsadd{slr}
-\glsadd{prisma}
-\glsadd{qa}
-\glsadd{rq}
-\glsadd{kpi}
-\glsadd{urllc}
-\glsadd{mmtc}
-\glsadd{embb}
-\glsadd{mcs}
-\glsadd{ber}
-\glsadd{per}
-\glsadd{pdr}
-\glsadd{rtt}
-\glsadd{rssi}
-\glsadd{snr}
-\glsadd{sinr}
-\glsadd{lbt}
-\glsadd{harq}
-\glsadd{sdr}
-\glsadd{fpga}
-\glsadd{usrp}
-\glsadd{los}
-\glsadd{nlos}
-\glsadd{aoi}
-\glsadd{mse}
-\glsadd{rmse}
-\glsadd{noma}
-\glsadd{gnn}
-\glsadd{drl}
-\glsadd{uav}
-\glsadd{lpwan}
-\glsadd{pmse}
-\glsadd{ft}
-\glsadd{pt}
+\begin{keywords}
+DECT-2020 NR, DECT NR+, industrial Internet of Things,
+MAC scheduling, multi-hop networks, PRISMA, resource allocation,
+systematic literature review.
+\end{keywords}
 
-\printnoidxglossary[
-    type=\acronymtype,
-    title={List of Acronyms}
-]
+\titlepgskip=-21pt
+
+\maketitle
+
+% ============================================================
+% Acronyms
+% ============================================================
+
+% ============================================================
+% Main manuscript
+% ============================================================
 
 \input{sections/01_introduction}
 \input{sections/02_methodology}
 \input{sections/03_literature_search_results}
 \input{sections/04_research_classification}
-
 \input{sections/05_research_gaps}
-
 \input{sections/06_conclusion}
 
-\bibliographystyle{elsarticle-num}
+% ============================================================
+% References
+% ============================================================
+
+\bibliographystyle{IEEEtran}
 \bibliography{references}
+\EOD
 
 \end{document}

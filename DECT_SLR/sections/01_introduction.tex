@@ -3,20 +3,18 @@
 \label{sec:introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Background and Motivation}
 \label{subsec:background_motivation}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The continuing digitalization of industrial systems has accelerated the
 integration of \gls{iot}, \gls{iiot}, cyber-physical systems, and wireless
-communication into modern production and automation environments. Industrial
-networks increasingly support applications ranging from process monitoring and
-condition sensing to closed-loop control, mobile robotics, safety systems,
-localization, and multimedia services. These developments form an important
-technological foundation of Industry~4.0 and smart manufacturing, where
-machines, sensors, actuators, controllers, and mobile systems must exchange
-information reliably and efficiently
+communication technologies into modern production and automation
+environments. Industrial networks increasingly support applications ranging
+from process monitoring and condition sensing to closed-loop control, mobile
+robotics, safety systems, localization, and multimedia services. These
+developments form an important technological foundation of Industry~4.0 and
+smart manufacturing, where machines, sensors, actuators, controllers, and
+mobile systems must exchange information reliably and efficiently
 \cite{xuInternetThingsIndustries2014,
 sisinniIndustrialInternetThings2018,
 boyesIndustrialInternetThings2018,
@@ -28,19 +26,19 @@ low jitter, and predictable communication cycles, whereas safety-related
 applications place particular emphasis on highly reliable packet delivery.
 Monitoring and sensing applications may tolerate less stringent timing
 constraints but often require energy-efficient operation and long device
-lifetimes. Mobile and logistics applications introduce additional requirements
-related to mobility, coverage, localization, and changing radio conditions,
-while multimedia services may generate substantially different traffic volumes
-and \gls{qos} requirements
+lifetimes. Mobile and logistics applications introduce additional
+requirements related to mobility, coverage, localization, and changing radio
+conditions, whereas multimedia services may generate substantially different
+traffic volumes and \gls{qos} requirements
 \cite{sisinniIndustrialInternetThings2018,
 wollschlaegerFutureIndustrialCommunication2017a}.
 
-Figure~\ref{fig:industrial_requirements} summarizes representative industrial
+Fig.~\ref{fig:industrial_requirements} summarizes representative industrial
 application classes and their corresponding wireless communication
 requirements. Industrial wireless networks must therefore address multiple
 performance dimensions, including latency, reliability, jitter, energy
-efficiency, scalability, coverage, and differentiated \gls{qos}, whose relative
-importance depends on the application and deployment scenario.
+efficiency, scalability, coverage, and differentiated \gls{qos}, whose
+relative importance depends on the application and deployment scenario.
 
 \begin{figure*}[!t]
     \centering
@@ -56,19 +54,19 @@ scope of wireless systems beyond conventional human-centric broadband. The
 \gls{imt2020}: enhanced mobile broadband, massive machine-type communications,
 and ultra-reliable and low-latency communications
 \cite{itur_m2083}. The associated requirements and evaluation methodology
-cover performance dimensions such as latency, reliability, connection density,
-mobility, spectrum efficiency, and energy efficiency
+cover performance dimensions such as latency, reliability, connection
+density, mobility, spectrum efficiency, and energy efficiency
 \cite{itur_m2410,itur_m2412}. Importantly, \gls{imt2020} is not restricted to
-a single radio interface; multiple \glspl{rit} can satisfy the common technical
-and evaluation framework
+a single radio interface; multiple \glspl{rit} can satisfy the common
+technical and evaluation framework
 \cite{itur_m2083,itur_m2410,itur_m2412,itur_m2150}.
 
 This technology-neutral framework is particularly relevant to industrial and
 enterprise environments, where locally managed networks, flexible topologies,
 dense device connectivity, direct communication, and infrastructure-light
 deployment can be important. These requirements create a role for
-complementary radio technologies that address deployment models different from
-those of conventional cellular networks.
+complementary radio technologies that address deployment models different
+from those of conventional cellular networks.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{DECT-2020 NR and the Emerging Research Landscape}
@@ -79,8 +77,8 @@ Within this context, \gls{etsi} developed \gls{dectnr} as a next-generation
 radio technology for local wireless communication, massive machine-type
 connectivity, and other demanding communication scenarios. Although it builds
 on the regulatory and technological heritage of \gls{dect}, \gls{dectnr}
-introduces a new radio interface and protocol architecture supporting flexible,
-decentralized, and infrastructure-light deployments
+introduces a new radio interface and protocol architecture supporting
+flexible, decentralized, and infrastructure-light deployments
 \cite{kovalchukovDECT2020NewRadio2022,
 perez-guiraoDECTNRUnveiling2022}.
 
@@ -113,13 +111,15 @@ smidaETSIDECT2020Component2023}.
 
 Research on \gls{dectnr} has expanded rapidly beyond standardization and
 initial technology evaluation. Early investigations concentrated on
-\gls{imt2020} performance assessment and the feasibility of the technology for
-machine-type and low-latency communication
+\gls{imt2020} performance assessment and the feasibility of the technology
+for machine-type and low-latency communication
 \cite{maliatsosEvaluationIMT2020Candidate2022a,
-smidaETSIDECT2020Component2023}. Subsequent work has addressed PHY performance,
-channel access, routing and multi-hop networking, scheduling and resource
-allocation, reliability, energy efficiency, positioning, coexistence,
-heterogeneous-network integration, and application-specific communication.
+smidaETSIDECT2020Component2023}. Subsequent work has addressed physical-layer
+performance, channel access, routing and multi-hop networking, scheduling and
+resource allocation, reliability, energy efficiency, positioning,
+coexistence, heterogeneous-network integration, and application-specific
+communication.
+
 At the same time, evaluation has increasingly progressed from analytical and
 simulation-based studies toward commercial devices, hardware prototypes,
 software-defined radio implementations, testbeds, and measurements under
@@ -128,15 +128,13 @@ practical deployment conditions
 wassmannPerformanceDECT2020NR2024,
 bandaraExperimentalValidationAnalysis2025,
 haqueDECT2020NRLink2025,
-grafWhatExpectWhen2026}.
-
-Application-oriented research has similarly expanded toward professional
-audio, industrial monitoring, critical infrastructure, localization,
-energy-constrained networking, multi-hop communication, and other emerging
-use cases. This diversification indicates increasing technological maturity,
-but it has also produced a fragmented research landscape spanning multiple
-protocol layers, methodologies, performance metrics, implementation platforms,
-and application domains.
+grafWhatExpectWhen2026}. Application-oriented research has similarly expanded
+toward professional audio, industrial monitoring, critical infrastructure,
+localization, energy-constrained networking, multi-hop communication, and
+other emerging use cases. This diversification indicates increasing
+technological maturity, but it has also produced a fragmented research
+landscape spanning multiple protocol layers, methodologies, performance
+metrics, implementation platforms, and application domains.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Research Gap and Contributions}
@@ -145,34 +143,34 @@ and application domains.
 
 Despite this growing body of research, the available knowledge remains
 distributed across heterogeneous sources. Normative aspects are defined in
-\gls{etsi} specifications and \gls{itur} recommendations, while protocol
+\gls{etsi} specifications and \gls{itur} recommendations, whereas protocol
 enhancements, analytical models, simulations, implementation techniques,
 hardware evaluations, and application studies are distributed across journal
 articles, conference proceedings, theses, and other technical publications.
 Individual studies consequently provide detailed evidence for particular
 aspects of \gls{dectnr}, but do not by themselves reveal how the different
 research directions relate to one another, how experimental maturity has
-evolved, or where the principal gaps remain.
+evolved, or where the principal research gaps remain.
 
 Existing surveys and overview publications provide valuable descriptions of
 selected aspects of the technology
 \cite{kovalchukovDECT2020NewRadio2022,
 perez-guiraoDECTNRUnveiling2022,
 smidaETSIDECT2020Component2023}, but a systematic synthesis spanning the
-complete research landscape remains lacking. In particular, the literature has
-not yet been consolidated within a common framework that jointly characterizes
-publication trends, technical research areas, evaluation methodologies,
-implementation platforms, performance metrics, application domains, and
-cross-layer relationships.
+complete research landscape remains lacking. In particular, the literature
+has not yet been consolidated within a common framework that jointly
+characterizes publication trends, technical research areas, evaluation
+methodologies, implementation platforms, performance metrics, application
+domains, and cross-layer relationships.
 
 This paper addresses this gap through a \gls{prisma}-based systematic
 literature review and technical synthesis of \gls{dectnr} research published
-from 2020 through July~2026
-\cite{pagePRISMA2020}. Following systematic identification, screening,
-eligibility assessment, and quality assessment, 51 primary studies are included
-in the quantitative and qualitative synthesis. Normative \gls{etsi} and
-\gls{itur} documents are analyzed separately to provide the standardization
-context without treating standards as evaluation studies.
+from 2020 through July~2026 \cite{pagePRISMA2020}. Following systematic
+identification, screening, eligibility assessment, and quality assessment,
+51 primary studies are included in the quantitative and qualitative
+synthesis. Normative \gls{etsi} and \gls{itur} documents are analyzed
+separately to provide the standardization context without treating standards
+as evaluation studies.
 
 The principal contributions of this survey are as follows:
 
@@ -207,14 +205,15 @@ The principal contributions of this survey are as follows:
     performance.
 
     \item \textbf{Cross-layer synthesis of technical evidence:}
-    Relationships among PHY configuration, channel access, scheduling,
-    routing, reliability, energy consumption, positioning, and hardware
-    behavior are synthesized to show how application-visible performance
-    emerges from interactions across protocol and implementation layers.
+    Relationships among physical-layer configuration, channel access,
+    scheduling, routing, reliability, energy consumption, positioning, and
+    hardware behavior are synthesized to show how application-visible
+    performance emerges from interactions across protocol and implementation
+    layers.
 
     \item \textbf{Research gaps and future directions:}
     Based on the systematic evidence, the survey identifies underexplored
-    areas and future priorities including application-oriented cross-layer
+    areas and future priorities, including application-oriented cross-layer
     design, large-scale mesh evaluation, deterministic communication,
     energy-aware networking, experimental localization, secure multi-hop
     operation, heterogeneous integration, and hardware-aware optimization.
@@ -222,9 +221,8 @@ The principal contributions of this survey are as follows:
 \end{itemize}
 
 By combining quantitative characterization with technical and cross-layer
-synthesis, the review aims not only to summarize existing work but also to
-provide a structured view of the maturity, limitations, and future development
-of the \gls{dectnr} research ecosystem.
+synthesis, this review provides a structured view of the maturity,
+limitations, and future development of the \gls{dectnr} research ecosystem.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Paper Organization}

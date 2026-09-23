@@ -1,57 +1,65 @@
 This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
-The style file: elsarticle-num.bst
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: references.bib
+Warning--I didn't find a database entry for "mousavi2026rs"
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
 Warning--empty journal in fagerholmFPGAbasedDECT2020New2024
 Warning--empty journal in bandaraExperimentalValidationAnalysis2025
-Warning--empty pages in montalvoDECTEvolutionMeeting2024
 Warning--empty journal in dangUniRATUnifiedDECT20202026
-Warning--there's a number but no volume in dangUniRATUnifiedDECT20202026
 Warning--empty journal in pennerLinkLevelPerformanceEvaluation2021
-Warning--there's a number but no volume in pennerLinkLevelPerformanceEvaluation2021
 Warning--empty journal in ngoIoTDeviceAuthentication2025
 Warning--empty journal in poetsDECTNRNew2024
 Warning--empty journal in jahangirAnalysisPerformanceDECT2024
-You've used 75 entries,
-            2952 wiz_defined-function locations,
-            1139 strings with 26659 characters,
-and the built_in function-call counts, 26930 in all, are:
-= -- 2477
-> -- 928
-< -- 49
-+ -- 359
-- -- 284
-* -- 1792
-:= -- 3488
-add.period$ -- 77
-call.type$ -- 75
-change.case$ -- 76
-chr.to.int$ -- 0
-cite$ -- 85
-duplicate$ -- 1028
-empty$ -- 3137
-format.name$ -- 345
-if$ -- 7127
+
+Done.
+You've used 80 entries,
+            4087 wiz_defined-function locations,
+            1305 strings with 29429 characters,
+and the built_in function-call counts, 61561 in all, are:
+= -- 4788
+> -- 1562
+< -- 449
++ -- 824
+- -- 301
+* -- 3020
+:= -- 9072
+add.period$ -- 187
+call.type$ -- 80
+change.case$ -- 83
+chr.to.int$ -- 1035
+cite$ -- 87
+duplicate$ -- 4595
+empty$ -- 5181
+format.name$ -- 350
+if$ -- 14350
 int.to.chr$ -- 0
-int.to.str$ -- 75
-missing$ -- 64
-newline$ -- 247
-num.names$ -- 77
-pop$ -- 665
+int.to.str$ -- 80
+missing$ -- 904
+newline$ -- 287
+num.names$ -- 82
+pop$ -- 2114
 preamble$ -- 1
 purify$ -- 0
-quote$ -- 0
-skip$ -- 1802
+quote$ -- 2
+skip$ -- 4486
 stack$ -- 0
-substring$ -- 1309
-swap$ -- 325
-text.length$ -- 49
+substring$ -- 2550
+swap$ -- 3709
+text.length$ -- 104
 text.prefix$ -- 0
-top$ -- 0
-type$ -- 0
-warning$ -- 10
-while$ -- 223
-width$ -- 77
-write$ -- 679
-(There were 10 warnings)
+top$ -- 5
+type$ -- 80
+warning$ -- 7
+while$ -- 296
+width$ -- 82
+write$ -- 808
+(There were 8 warnings)

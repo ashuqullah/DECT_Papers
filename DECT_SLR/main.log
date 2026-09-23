@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.10)  2 SEP 2026 14:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.4.10)  23 SEP 2026 16:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -7,43 +7,127 @@ entering extended mode
 (/home/ashuqullah-alizai/Documents/DECT_Papers/DECT_SLR/main.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
-(/usr/share/texlive/texmf-dist/tex/latex/elsarticle/elsarticle.cls
-Document Class: elsarticle 2020/11/20, 3.3: Elsevier Ltd
-(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2024-01-22 L3 programming layer (loader) 
- (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count187
-\l__pdf_internal_box=\box51
-)) (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2023-10-10 L3 Experimental document command parser
-) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count188
+(./ieeeaccess.cls (./IEEEtran.cls
+Document Class: IEEEtran 2015/08/26 V1.8b by Michael Shell
+-- See the "IEEEtran_HOWTO" manual for usage information.
+-- http://www.michaelshell.org/tex/ieeetran/
+\@IEEEtrantmpdimenA=\dimen140
+\@IEEEtrantmpdimenB=\dimen141
+\@IEEEtrantmpdimenC=\dimen142
+\@IEEEtrantmpcountA=\count187
+\@IEEEtrantmpcountB=\count188
+\@IEEEtrantmpcountC=\count189
+\@IEEEtrantmptoksA=\toks17
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 503.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
-\@bls=\dimen140
- (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
-)
-\c@part=\count189
+-- Using 8.5in x 11in (letter) paper.
+-- Using PDF output.
+\@IEEEnormalsizeunitybaselineskip=\dimen143
+-- This is a 10 point document.
+\CLASSINFOnormalsizebaselineskip=\dimen144
+\CLASSINFOnormalsizeunitybaselineskip=\dimen145
+\IEEEnormaljot=\dimen146
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <5> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <8> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <11> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <17> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <20> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1090.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <24> not available
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 1090.
+\IEEEquantizedlength=\dimen147
+\IEEEquantizedlengthdiff=\dimen148
+\IEEEquantizedtextheightdiff=\dimen149
+\IEEEilabelindentA=\dimen150
+\IEEEilabelindentB=\dimen151
+\IEEEilabelindent=\dimen152
+\IEEEelabelindent=\dimen153
+\IEEEdlabelindent=\dimen154
+\IEEElabelindent=\dimen155
+\IEEEiednormlabelsep=\dimen156
+\IEEEiedmathlabelsep=\dimen157
+\IEEEiedtopsep=\skip48
 \c@section=\count190
 \c@subsection=\count191
 \c@subsubsection=\count192
 \c@paragraph=\count193
-\c@subparagraph=\count194
+\c@IEEEsubequation=\count194
+\abovecaptionskip=\skip49
+\belowcaptionskip=\skip50
 \c@figure=\count195
 \c@table=\count196
-\abovecaptionskip=\skip48
-\belowcaptionskip=\skip49
-\bibindent=\dimen141
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks17
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+\@IEEEeqnnumcols=\count197
+\@IEEEeqncolcnt=\count198
+\@IEEEsubeqnnumrollback=\count199
+\@IEEEquantizeheightA=\dimen158
+\@IEEEquantizeheightB=\dimen159
+\@IEEEquantizeheightC=\dimen160
+\@IEEEquantizeprevdepth=\dimen161
+\@IEEEquantizemultiple=\count266
+\@IEEEquantizeboxA=\box51
+\@IEEEtmpitemindent=\dimen162
+\IEEEPARstartletwidth=\dimen163
+\c@IEEEbiography=\count267
+\@IEEEtranrubishbin=\box52
+) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+ (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+)) (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+ (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks18
+\XKV@tempa@toks=\toks19
+ (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count268
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+)){/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{t1-times.map}{t1-formata.map}{t1-giovannistd.map}
+\@draftversionrule=\dimen164
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2022/01/06 v1.3d Standard LaTeX Color (DPC)
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 149.
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+) (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)) (./spotcolor.sty
+Package: spotcolor 2006/11/15 v1.2 Package for adding Spot Color support to pdfLaTeX.
+ (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
  (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
@@ -51,125 +135,41 @@ Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
-))
-\Gin@req@height=\dimen142
-\Gin@req@width=\dimen143
 )
-\c@tnote=\count197
-\c@fnote=\count198
-\c@cnote=\count199
-\c@ead=\count266
-\c@author=\count267
-\@eadauthor=\toks18
-\c@affn=\count268
-\absbox=\box52
-\elsarticlehighlightsbox=\box53
-\elsarticlegrabsbox=\box54
-\keybox=\box55
-\Columnwidth=\dimen144
-\space@left=\dimen145
-\els@boxa=\box56
-\els@boxb=\box57
-\leftMargin=\dimen146
-\@enLab=\toks19
-\@sep=\skip50
-\@@sep=\skip51
- (./main.spl) (/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
-Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip52
-\bibsep=\skip53
-LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count269
+\thecolorprofile=\count269
+\thecolor=\count270
 )
-\splwrite=\write3
-\openout3 = `main.spl'.
-
- (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
-Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
-Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
-))
-\Gm@cnth=\count270
-\Gm@cntv=\count271
-\c@Gm@tempcnt=\count272
-\Gm@bindingoffset=\dimen147
-\Gm@wd@mp=\dimen148
-\Gm@odd@mp=\dimen149
-\Gm@even@mp=\dimen150
-\Gm@layoutwidth=\dimen151
-\Gm@layoutheight=\dimen152
-\Gm@layouthoffset=\dimen153
-\Gm@layoutvoffset=\dimen154
-\Gm@dimlist=\toks20
-) (/usr/share/texlive/texmf-dist/tex/latex/base/fleqn.clo
-File: fleqn.clo 2016/12/29 v1.2b Standard LaTeX option (flush left equations)
-\mathindent=\skip54
-Applying: [2015/01/01] Make \[ robust on input line 50.
-LaTeX Info: Redefining \[ on input line 51.
-Already applied: [0000/00/00] Make \[ robust on input line 62.
-Applying: [2015/01/01] Make \] robust on input line 74.
-LaTeX Info: Redefining \] on input line 75.
-Already applied: [0000/00/00] Make \] robust on input line 83.
-)
-\appnamewidth=\dimen155
-) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-) (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks21
-\inpenc@posthook=\toks22
-) (/usr/share/texmf/tex/latex/lm/lmodern.sty
-Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
-LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
-LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
-(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
-LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
-LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
-(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
-LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
-LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
-LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+\PANTONE=\toks20
+Package color Info: Redefining color black on input line 287.
+\figbox=\box53
+\titlewidth=\skip51
+\abstractwidth=\skip52
+\c@addrCtr=\count271
+\abstractbox=\box54
+\indexbox=\box55
+\absht=\dimen165
+\kwdht=\dimen166
+\@tempcntc=\count272
+\titlepgskip=\skip53
+\maketitlebox=\box56
+) (/usr/share/texlive/texmf-dist/tex/latex/cite/cite.sty
+LaTeX Info: Redefining \cite on input line 302.
+LaTeX Info: Redefining \nocite on input line 332.
+Package: cite 2015/02/27  v 5.5
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2023/05/13 v2.17o AMS math features
-\@mathmargin=\skip55
+\@mathmargin=\skip54
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
  (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks23
-\ex@=\dimen156
+\@emptytoks=\toks21
+\ex@=\dimen167
 )) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen157
+\pmbraise@=\dimen168
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
@@ -184,13 +184,13 @@ LaTeX Info: Redefining \colon on input line 410.
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box58
-\strutbox@=\box59
+\Mathstrutbox@=\box57
+\strutbox@=\box58
 LaTeX Info: Redefining \big on input line 722.
 LaTeX Info: Redefining \Big on input line 723.
 LaTeX Info: Redefining \bigg on input line 724.
 LaTeX Info: Redefining \Bigg on input line 725.
-\big@size=\dimen158
+\big@size=\dimen169
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \macc@depth=\count278
@@ -203,21 +203,21 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \dotsspace@=\muskip16
 \c@parentequation=\count280
 \dspbrk@lvl=\count281
-\tag@help=\toks24
+\tag@help=\toks22
 \row@=\count282
 \column@=\count283
 \maxfields@=\count284
-\andhelp@=\toks25
-\eqnshift@=\dimen159
-\alignsep@=\dimen160
-\tagshift@=\dimen161
-\tagwidth@=\dimen162
-\totwidth@=\dimen163
-\lineht@=\dimen164
-\@envbody=\toks26
-\multlinegap=\skip56
-\multlinetaggap=\skip57
-\mathdisplay@stack=\toks27
+\andhelp@=\toks23
+\eqnshift@=\dimen170
+\alignsep@=\dimen171
+\tagshift@=\dimen172
+\tagwidth@=\dimen173
+\totwidth@=\dimen174
+\lineht@=\dimen175
+\@envbody=\toks24
+\multlinegap=\skip55
+\multlinetaggap=\skip56
+\mathdisplay@stack=\toks25
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
 ) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
@@ -229,463 +229,166 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/usr/share/texlive/texmf-dist/tex/latex/diffcoeff/diffcoeff.sty (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
-Package: xtemplate 2023-10-10 L3 Experimental prototype document functions
-\l__xtemplate_tmp_dim=\dimen165
-\l__xtemplate_tmp_int=\count285
-\l__xtemplate_tmp_muskip=\muskip17
-\l__xtemplate_tmp_skip=\skip58
-) (/usr/share/texlive/texmf-dist/tex/generic/mleftright/mleftright.sty
-Package: mleftright 2019/12/03 v1.2 Math left/right delim. as open/close (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
-Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-))
-Package: diffcoeff 2023/11/14 v5.4 Write differential coefficients easily and consistently.
-\l__diffcoeff_spaced_int=\count286
-\l__diffcoeff_group_int=\count287
-\l__diffcoeff_style_int=\count288
-\l__diffcoeff_curr_tok_int=\count289
-\l__diffcoeff_curr_state_int=\count290
-\l__diffcoeff_nos_int=\count291
-\l__diffcoeff_parenvar_int=\count292
-
-Package xtemplate Info: Declaring object type 'diffcoeff' taking 5 argument(s)
-(xtemplate)             on line 107.
-
-) (/usr/share/texlive/texmf-dist/tex/latex/isomath/isomath.sty
-Package: isomath 2012/09/04 v0.6.1 ISO math style
- (/usr/share/texlive/texmf-dist/tex/latex/fixmath/fixmath.sty
-Package: fixmath 2022/10/06 v0.9.1 (WaS)
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 27.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 28.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 29.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 30.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 31.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 32.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 33.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 34.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 35.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 36.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 37.
-LaTeX Font Info:    Redeclaring math symbol \alpha on input line 38.
-LaTeX Font Info:    Redeclaring math symbol \beta on input line 39.
-LaTeX Font Info:    Redeclaring math symbol \gamma on input line 40.
-LaTeX Font Info:    Redeclaring math symbol \delta on input line 41.
-LaTeX Font Info:    Redeclaring math symbol \epsilon on input line 42.
-LaTeX Font Info:    Redeclaring math symbol \zeta on input line 43.
-LaTeX Font Info:    Redeclaring math symbol \eta on input line 44.
-LaTeX Font Info:    Redeclaring math symbol \theta on input line 45.
-LaTeX Font Info:    Redeclaring math symbol \iota on input line 46.
-LaTeX Font Info:    Redeclaring math symbol \kappa on input line 47.
-LaTeX Font Info:    Redeclaring math symbol \lambda on input line 48.
-LaTeX Font Info:    Redeclaring math symbol \mu on input line 49.
-LaTeX Font Info:    Redeclaring math symbol \nu on input line 50.
-LaTeX Font Info:    Redeclaring math symbol \xi on input line 51.
-LaTeX Font Info:    Redeclaring math symbol \pi on input line 52.
-LaTeX Font Info:    Redeclaring math symbol \rho on input line 53.
-LaTeX Font Info:    Redeclaring math symbol \sigma on input line 54.
-LaTeX Font Info:    Redeclaring math symbol \tau on input line 55.
-LaTeX Font Info:    Redeclaring math symbol \upsilon on input line 56.
-LaTeX Font Info:    Redeclaring math symbol \phi on input line 57.
-LaTeX Font Info:    Redeclaring math symbol \chi on input line 58.
-LaTeX Font Info:    Redeclaring math symbol \psi on input line 59.
-LaTeX Font Info:    Redeclaring math symbol \omega on input line 60.
-LaTeX Font Info:    Redeclaring math symbol \varepsilon on input line 61.
-LaTeX Font Info:    Redeclaring math symbol \vartheta on input line 62.
-LaTeX Font Info:    Redeclaring math symbol \varpi on input line 63.
-LaTeX Font Info:    Redeclaring math symbol \varphi on input line 64.
-LaTeX Font Info:    Redeclaring math symbol \varrho on input line 65.
-LaTeX Font Info:    Redeclaring math symbol \varsigma on input line 66.
-) (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-))) (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx.sty
-Package: siunitx 2024-01-25 v3.3.10 A comprehensive (SI) units package
-\l__siunitx_number_uncert_offset_int=\count293
-\l__siunitx_number_exponent_fixed_int=\count294
-\l__siunitx_number_min_decimal_int=\count295
-\l__siunitx_number_min_integer_int=\count296
-\l__siunitx_number_round_precision_int=\count297
-\l__siunitx_number_lower_threshold_int=\count298
-\l__siunitx_number_upper_threshold_int=\count299
-\l__siunitx_number_group_first_int=\count300
-\l__siunitx_number_group_size_int=\count301
-\l__siunitx_number_group_minimum_int=\count302
-\l__siunitx_angle_tmp_dim=\dimen166
-\l__siunitx_angle_marker_box=\box60
-\l__siunitx_angle_unit_box=\box61
-\l__siunitx_compound_count_int=\count303
- (/usr/share/texlive/texmf-dist/tex/latex/translations/translations.sty
-Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
- (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-))
-\l__siunitx_table_tmp_box=\box62
-\l__siunitx_table_tmp_dim=\dimen167
-\l__siunitx_table_column_width_dim=\dimen168
-\l__siunitx_table_integer_box=\box63
-\l__siunitx_table_decimal_box=\box64
-\l__siunitx_table_uncert_box=\box65
-\l__siunitx_table_before_box=\box66
-\l__siunitx_table_after_box=\box67
-\l__siunitx_table_before_dim=\dimen169
-\l__siunitx_table_carry_dim=\dimen170
-\l__siunitx_unit_tmp_int=\count304
-\l__siunitx_unit_position_int=\count305
-\l__siunitx_unit_total_int=\count306
- (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
-Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
-\col@sep=\dimen171
-\ar@mcellbox=\box68
-\extrarowheight=\dimen172
-\NC@list=\toks28
-\extratabsurround=\skip59
-\backup@length=\skip60
-\ar@cellbox=\box69
-)) (/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+)) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+\Gin@req@height=\dimen176
+\Gin@req@width=\dimen177
+) (/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
 Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2023/07/08 v1.2f Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+Package bm Info: No bold for \OMX/cmex/m/n, using \pmb.
+Package bm Info: No bold for \U/msa/m/n, using \pmb.
+Package bm Info: No bold for \U/msb/m/n, using \pmb.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 149.
 ) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen173
-\lightrulewidth=\dimen174
-\cmidrulewidth=\dimen175
-\belowrulesep=\dimen176
-\belowbottomsep=\dimen177
-\aboverulesep=\dimen178
-\abovetopsep=\dimen179
-\cmidrulesep=\dimen180
-\cmidrulekern=\dimen181
-\defaultaddspace=\dimen182
-\@cmidla=\count307
-\@cmidlb=\count308
-\@aboverulesep=\dimen183
-\@belowrulesep=\dimen184
-\@thisruleclass=\count309
-\@lastruleclass=\count310
-\@thisrulewidth=\dimen185
+\heavyrulewidth=\dimen178
+\lightrulewidth=\dimen179
+\cmidrulewidth=\dimen180
+\belowrulesep=\dimen181
+\belowbottomsep=\dimen182
+\aboverulesep=\dimen183
+\abovetopsep=\dimen184
+\cmidrulesep=\dimen185
+\cmidrulekern=\dimen186
+\defaultaddspace=\dimen187
+\@cmidla=\count285
+\@cmidlb=\count286
+\@aboverulesep=\dimen188
+\@belowrulesep=\dimen189
+\@thisruleclass=\count287
+\@lastruleclass=\count288
+\@thisrulewidth=\dimen190
 ) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
 Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
-\multirow@colwidth=\skip61
-\multirow@cntb=\count311
-\multirow@dima=\skip62
-\bigstrutjot=\dimen186
-) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
-Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count312
-\float@exts=\toks29
-\float@box=\box70
-\@float@everytoks=\toks30
-\@floatcapt=\box71
+\multirow@colwidth=\skip57
+\multirow@cntb=\count289
+\multirow@dima=\skip58
+\bigstrutjot=\dimen191
 ) (/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
- (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count290
+\float@exts=\toks26
+\float@box=\box59
+\@float@everytoks=\toks27
+\@floatcapt=\box60
+) (/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
 )
-\@float@every@algorithm=\toks31
-\c@algorithm=\count313
+\@float@every@algorithm=\toks28
+\c@algorithm=\count291
 ) (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
 Package: algpseudocode 
  (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
 Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
 
 Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
-\c@ALG@line=\count314
-\c@ALG@rem=\count315
-\c@ALG@nested=\count316
-\ALG@tlm=\skip63
-\ALG@thistlm=\skip64
-\c@ALG@Lnr=\count317
-\c@ALG@blocknr=\count318
-\c@ALG@storecount=\count319
-\c@ALG@tmpcounter=\count320
-\ALG@tmplength=\skip65
+\c@ALG@line=\count292
+\c@ALG@rem=\count293
+\c@ALG@nested=\count294
+\ALG@tlm=\skip59
+\ALG@thistlm=\skip60
+\c@ALG@Lnr=\count295
+\c@ALG@blocknr=\count296
+\c@ALG@storecount=\count297
+\c@ALG@tmpcounter=\count298
+\ALG@tmplength=\skip61
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks32
-\pgfutil@tempdima=\dimen187
-\pgfutil@tempdimb=\dimen188
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
-\pgfutil@abb=\box72
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex)
-Package: pgfrcs 2023-01-15 v3.1.10 (3.1.10)
+) (/usr/share/texlive/texmf-dist/tex/latex/siunitx/siunitx.sty
+Package: siunitx 2024-01-25 v3.3.10 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count299
+\l__siunitx_number_exponent_fixed_int=\count300
+\l__siunitx_number_min_decimal_int=\count301
+\l__siunitx_number_min_integer_int=\count302
+\l__siunitx_number_round_precision_int=\count303
+\l__siunitx_number_lower_threshold_int=\count304
+\l__siunitx_number_upper_threshold_int=\count305
+\l__siunitx_number_group_first_int=\count306
+\l__siunitx_number_group_size_int=\count307
+\l__siunitx_number_group_minimum_int=\count308
+\l__siunitx_angle_tmp_dim=\dimen192
+\l__siunitx_angle_marker_box=\box61
+\l__siunitx_angle_unit_box=\box62
+\l__siunitx_compound_count_int=\count309
+ (/usr/share/texlive/texmf-dist/tex/latex/translations/translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+ (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count310
+) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+) (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
 ))
-Package: pgf 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
-Package: pgfsys 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks33
-\pgfkeys@temptoks=\toks34
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeyslibraryfiltered.code.tex
-\pgfkeys@tmptoks=\toks35
-))
-\pgf@x=\dimen189
-\pgf@y=\dimen190
-\pgf@xa=\dimen191
-\pgf@ya=\dimen192
-\pgf@xb=\dimen193
-\pgf@yb=\dimen194
-\pgf@xc=\dimen195
-\pgf@yc=\dimen196
-\pgf@xd=\dimen197
-\pgf@yd=\dimen198
-\w@pgf@writea=\write4
-\r@pgf@reada=\read2
-\c@pgf@counta=\count321
-\c@pgf@countb=\count322
-\c@pgf@countc=\count323
-\c@pgf@countd=\count324
-\t@pgf@toka=\toks36
-\t@pgf@tokb=\toks37
-\t@pgf@tokc=\toks38
-\pgf@sys@id@count=\count325
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
-File: pgf.cfg 2023-01-15 v3.1.10 (3.1.10)
-)
-Driver file for pgf: pgfsys-pdftex.def
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
-File: pgfsys-pdftex.def 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.def
-File: pgfsys-common-pdf.def 2023-01-15 v3.1.10 (3.1.10)
-))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
-File: pgfsyssoftpath.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfsyssoftpath@smallbuffer@items=\count326
-\pgfsyssoftpath@bigbuffer@items=\count327
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
-File: pgfsysprotocol.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)) (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
-File: color.cfg 2016/01/02 v1.6 sample color configuration
-)
-Package xcolor Info: Driver file: pdftex.def on input line 274.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
-Package xcolor Info: Model `RGB' extended on input line 1366.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
-Package: pgfcore 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
-\pgfmath@dimen=\dimen199
-\pgfmath@count=\count328
-\pgfmath@box=\box73
-\pgfmath@toks=\toks39
-\pgfmath@stack@operand=\toks40
-\pgfmath@stack@operation=\toks41
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonometric.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithmetics.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count329
-)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
-File: pgfcorepoints.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@picminx=\dimen256
-\pgf@picmaxx=\dimen257
-\pgf@picminy=\dimen258
-\pgf@picmaxy=\dimen259
-\pgf@pathminx=\dimen260
-\pgf@pathmaxx=\dimen261
-\pgf@pathminy=\dimen262
-\pgf@pathmaxy=\dimen263
-\pgf@xx=\dimen264
-\pgf@xy=\dimen265
-\pgf@yx=\dimen266
-\pgf@yy=\dimen267
-\pgf@zx=\dimen268
-\pgf@zy=\dimen269
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.code.tex
-File: pgfcorepathconstruct.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@path@lastx=\dimen270
-\pgf@path@lasty=\dimen271
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code.tex
-File: pgfcorepathusage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@shorten@end@additional=\dimen272
-\pgf@shorten@start@additional=\dimen273
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.tex
-File: pgfcorescopes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfpic=\box74
-\pgf@hbox=\box75
-\pgf@layerbox@main=\box76
-\pgf@picture@serial@count=\count330
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code.tex
-File: pgfcoregraphicstate.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgflinewidth=\dimen274
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformations.code.tex
-File: pgfcoretransformations.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@pt@x=\dimen275
-\pgf@pt@y=\dimen276
-\pgf@pt@temp=\dimen277
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
-File: pgfcorequick.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.tex
-File: pgfcoreobjects.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing.code.tex
-File: pgfcorepathprocessing.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.tex
-File: pgfcorearrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowsep=\dimen278
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
-File: pgfcoreshade.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@max=\dimen279
-\pgf@sys@shading@range@num=\count331
-\pgf@shadingcount=\count332
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
-File: pgfcoreimage.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.tex
-File: pgfcoreexternal.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfexternal@startupbox=\box77
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.tex
-File: pgfcorelayers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.code.tex
-File: pgfcoretransparency.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.tex
-File: pgfcorepatterns.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
-File: pgfcorerdf.code.tex 2023-01-15 v3.1.10 (3.1.10)
-))) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
-File: pgfmoduleshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfnodeparttextbox=\box78
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
-File: pgfmoduleplot.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65.sty
-Package: pgfcomp-version-0-65 2023-01-15 v3.1.10 (3.1.10)
-\pgf@nodesepstart=\dimen280
-\pgf@nodesepend=\dimen281
-) (/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18.sty
-Package: pgfcomp-version-1-18 2023-01-15 v3.1.10 (3.1.10)
-)) (/usr/share/texlive/texmf-dist/tex/latex/pgfplots/pgfplots.sty (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.revision.tex)
-Package: pgfplots 2021/05/15 v1.18.1 Data Visualization (1.18.1)
- (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
-Package: pgffor 2023-01-15 v3.1.10 (3.1.10)
-\pgffor@iter=\dimen282
-\pgffor@skip=\dimen283
-\pgffor@stack=\toks42
-\pgffor@toks=\toks43
-)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
-Package: tikz 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex
-File: pgflibraryplothandlers.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@plot@mark@count=\count333
-\pgfplotmarksize=\dimen284
-)
-\tikz@lastx=\dimen285
-\tikz@lasty=\dimen286
-\tikz@lastxsaved=\dimen287
-\tikz@lastysaved=\dimen288
-\tikz@lastmovetox=\dimen289
-\tikz@lastmovetoy=\dimen290
-\tikzleveldistance=\dimen291
-\tikzsiblingdistance=\dimen292
-\tikz@figbox=\box79
-\tikz@figbox@bg=\box80
-\tikz@tempbox=\box81
-\tikz@tempbox@bg=\box82
-\tikztreelevel=\count334
-\tikznumberofchildren=\count335
-\tikznumberofcurrentchild=\count336
-\tikz@fig@count=\count337
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
-File: pgfmodulematrix.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfmatrixcurrentrow=\count338
-\pgfmatrixcurrentcolumn=\count339
-\pgf@matrix@numberofcolumns=\count340
-)
-\tikz@expandcount=\count341
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex
-File: tikzlibrarytopaths.code.tex 2023-01-15 v3.1.10 (3.1.10)
-))) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
-\t@pgfplots@toka=\toks44
-\t@pgfplots@tokb=\toks45
-\t@pgfplots@tokc=\toks46
-\pgfplots@tmpa=\dimen293
-\c@pgfplots@coordindex=\count342
-\c@pgfplots@scanlineindex=\count343
- (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibrary.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldpgfsupp_loader.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex)
-Package pgfplots: loading complementary utilities for your pgf version...
-\t@pgf@toka=\toks47
-\t@pgf@tokb=\toks48
-\t@pgf@tokc=\toks49
-(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldpgfsupp_pgfutil-common-lists.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsliststructure.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsliststructureext.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray.code.tex
-\c@pgfplotsarray@tmp=\count344
-) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatrix.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshared.code.tex
-\c@pgfplotstable@counta=\count345
-\t@pgfplotstable@a=\toks50
-) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.data.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.verb.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.surfshading.code.tex
-\c@pgfplotslibrarysurf@no=\count346
- (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surfshading.pgfsys-pdftex.def))) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolormap.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolor.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsstackedplots.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsplothandlers.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplothandler.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplotimage.code.tex))) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.scaling.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscoordprocessing.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.errorbars.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.markers.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsticks.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.paths.code.tex) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen294
-\pgfdecoratedremainingdistance=\dimen295
-\pgfdecoratedinputsegmentcompleteddistance=\dimen296
-\pgfdecoratedinputsegmentremainingdistance=\dimen297
-\pgf@decorate@distancetomove=\dimen298
-\pgf@decorate@repeatstate=\count347
-\pgfdecorationsegmentamplitude=\dimen299
-\pgfdecorationsegmentlength=\dimen300
-)
-\tikz@lib@dec@box=\box83
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathmorphing.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathmorphing.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.pathreplacing.code.tex (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.pathreplacing.code.tex)) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.contourlua.code.tex)
-\pgfplots@numplots=\count348
-\pgfplots@xmin@reg=\dimen301
-\pgfplots@xmax@reg=\dimen302
-\pgfplots@ymin@reg=\dimen303
-\pgfplots@ymax@reg=\dimen304
-\pgfplots@zmin@reg=\dimen305
-\pgfplots@zmax@reg=\dimen306
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryplotmarks.code.tex
-File: tikzlibraryplotmarks.code.tex 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
-File: pgflibraryplotmarks.code.tex 2023-01-15 v3.1.10 (3.1.10)
-))) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip18
+\l__siunitx_table_tmp_box=\box63
+\l__siunitx_table_tmp_dim=\dimen193
+\l__siunitx_table_column_width_dim=\dimen194
+\l__siunitx_table_integer_box=\box64
+\l__siunitx_table_decimal_box=\box65
+\l__siunitx_table_uncert_box=\box66
+\l__siunitx_table_before_box=\box67
+\l__siunitx_table_after_box=\box68
+\l__siunitx_table_before_dim=\dimen195
+\l__siunitx_table_carry_dim=\dimen196
+\l__siunitx_unit_tmp_int=\count311
+\l__siunitx_unit_position_int=\count312
+\l__siunitx_unit_total_int=\count313
+ (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
+\col@sep=\dimen197
+\ar@mcellbox=\box69
+\extrarowheight=\dimen198
+\NC@list=\toks29
+\extratabsurround=\skip62
+\backup@length=\skip63
+\ar@cellbox=\box70
+)) (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/base/glossaries.sty
 Package: glossaries 2023/09/29 v4.53 (NLCT)
- (/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
- (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
-\XKV@toks=\toks51
-\XKV@tempa@toks=\toks52
-)
-\XKV@depth=\count349
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-)) (/usr/share/texlive/texmf-dist/tex/latex/mfirstuc/mfirstuc.sty
+ (/usr/share/texlive/texmf-dist/tex/latex/mfirstuc/mfirstuc.sty
 Package: mfirstuc 2022/10/14 v2.08 (NLCT)
-\@glsmfirst=\toks53
-\@glsmrest=\toks54
+\@glsmfirst=\toks30
+\@glsmrest=\toks31
 ) (/usr/share/texlive/texmf-dist/tex/latex/xfor/xfor.sty
 Package: xfor 2009/02/05 v1.05 (NLCT)
 ) (/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-base.sty
 Package: datatool-base 2019/09/27 v2.32 (NLCT)
  (/usr/share/texlive/texmf-dist/tex/latex/substr/substr.sty
 Package: substr 2009/10/20 v1.2 Handle substrings
-\c@su@anzahl=\count350
+\c@su@anzahl=\count314
 ) (/usr/share/texlive/texmf-dist/tex/latex/datatool/datatool-fp.sty
 Package: datatool-fp 2019/09/27 v2.32 (NLCT)
  (/usr/share/texlive/texmf-dist/tex/latex/fp/fp.sty
 Package: fp 1995/04/02
  `Fixed Point Package', Version 0.8, April 2, 1995 (C) Michael Mehlich (/usr/share/texlive/texmf-dist/tex/latex/fp/defpattern.sty
 Package: defpattern 1994/10/12
-\actioncount=\count351
+\actioncount=\count315
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-basic.sty
 Package: fp-basic 1996/05/13
-\FP@xs=\count352
-\FP@xia=\count353
-\FP@xib=\count354
-\FP@xfa=\count355
-\FP@xfb=\count356
-\FP@rega=\count357
-\FP@regb=\count358
-\FP@regs=\count359
-\FP@times=\count360
+\FP@xs=\count316
+\FP@xia=\count317
+\FP@xib=\count318
+\FP@xfa=\count319
+\FP@xfb=\count320
+\FP@rega=\count321
+\FP@regb=\count322
+\FP@regs=\count323
+\FP@times=\count324
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-addons.sty
 Package: fp-addons 1995/03/15
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-snap.sty
@@ -698,7 +401,7 @@ Package: fp-trigo 1995/04/14
 Package: fp-pas 1994/08/29
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-random.sty
 Package: fp-random 1995/02/23
-\FPseed=\count361
+\FPseed=\count325
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eqn.sty
 Package: fp-eqn 1995/04/03
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-upn.sty
@@ -706,732 +409,1530 @@ Package: fp-upn 1996/10/21
 ) (/usr/share/texlive/texmf-dist/tex/latex/fp/fp-eval.sty
 Package: fp-eval 1995/04/03
 )))
-\@dtl@toks=\toks55
-\@dtl@tmpcount=\count362
-\dtl@tmplength=\skip66
-\dtl@sortresult=\count363
-\@dtl@numgrpsepcount=\count364
-\@dtl@datatype=\count365
-\dtl@codeA=\count366
-\dtl@codeB=\count367
-\@dtl@foreach@level=\count368
+\@dtl@toks=\toks32
+\@dtl@tmpcount=\count326
+\dtl@tmplength=\skip64
+\dtl@sortresult=\count327
+\@dtl@numgrpsepcount=\count328
+\@dtl@datatype=\count329
+\dtl@codeA=\count330
+\dtl@codeB=\count331
+\@dtl@foreach@level=\count332
 )
-\gls@level=\count369
-\@gls@tmpb=\toks56
-\gls@tmplen=\skip67
-\glskeylisttok=\toks57
-\glslabeltok=\toks58
-\glsshorttok=\toks59
-\glslongtok=\toks60
+\gls@level=\count333
+\@gls@tmpb=\toks33
+\gls@tmplen=\skip65
+\glskeylisttok=\toks34
+\glslabeltok=\toks35
+\glsshorttok=\toks36
+\glslongtok=\toks37
  (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-hypernav.sty
 Package: glossary-hypernav 2023/09/29 v4.53 (NLCT)
 ) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-list.sty
 Package: glossary-list 2023/09/29 v4.53 (NLCT)
-\glslistdottedwidth=\skip68
+\glslistdottedwidth=\skip66
 ) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-long.sty
 Package: glossary-long 2023/09/29 v4.53 (NLCT)
  (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2023-11-01 v4.19 Multi-page Table package (DPC)
-\LTleft=\skip69
-\LTright=\skip70
-\LTpre=\skip71
-\LTpost=\skip72
-\LTchunksize=\count370
-\LTcapwidth=\dimen307
-\LT@head=\box84
-\LT@firsthead=\box85
-\LT@foot=\box86
-\LT@lastfoot=\box87
-\LT@gbox=\box88
-\LT@cols=\count371
-\LT@rows=\count372
-\c@LT@tables=\count373
-\c@LT@chunks=\count374
-\LT@p@ftn=\toks61
+\LTleft=\skip67
+\LTright=\skip68
+\LTpre=\skip69
+\LTpost=\skip70
+\LTchunksize=\count334
+\LTcapwidth=\dimen199
+\LT@head=\box71
+\LT@firsthead=\box72
+\LT@foot=\box73
+\LT@lastfoot=\box74
+\LT@gbox=\box75
+\LT@cols=\count335
+\LT@rows=\count336
+\c@LT@tables=\count337
+\c@LT@chunks=\count338
+\LT@p@ftn=\toks38
 )
-\glsdescwidth=\skip73
-\glspagelistwidth=\skip74
+\glsdescwidth=\skip71
+\glspagelistwidth=\skip72
 ) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-super.sty
 Package: glossary-super 2023/09/29 v4.53 (NLCT)
  (/usr/share/texlive/texmf-dist/tex/latex/supertabular/supertabular.sty
 Package: supertabular 2020/02/02 v4.1g the supertabular environment
-\c@tracingst=\count375
-\ST@wd=\dimen308
-\ST@rightskip=\skip75
-\ST@leftskip=\skip76
-\ST@parfillskip=\skip77
-\ST@pageleft=\dimen309
-\ST@headht=\dimen310
-\ST@tailht=\dimen311
-\ST@pagesofar=\dimen312
-\ST@pboxht=\dimen313
-\ST@lineht=\dimen314
-\ST@prevht=\dimen315
-\ST@toadd=\dimen316
-\ST@dimen=\dimen317
-\ST@pbox=\box89
+\c@tracingst=\count339
+\ST@wd=\dimen256
+\ST@rightskip=\skip73
+\ST@leftskip=\skip74
+\ST@parfillskip=\skip75
+\ST@pageleft=\dimen257
+\ST@headht=\dimen258
+\ST@tailht=\dimen259
+\ST@pagesofar=\dimen260
+\ST@pboxht=\dimen261
+\ST@lineht=\dimen262
+\ST@prevht=\dimen263
+\ST@toadd=\dimen264
+\ST@dimen=\dimen265
+\ST@pbox=\box76
 )) (/usr/share/texlive/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
 Package: glossary-tree 2023/09/29 v4.53 (NLCT)
-\glstreeindent=\skip78
-)) (/usr/share/texlive/texmf-dist/tex/latex/cleveref/cleveref.sty
-Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
-Package cleveref Info: `algorithmicx' support loaded on input line 3120.
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
-File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
-File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowinset=\dimen318
-\pgfarrowlength=\dimen319
-\pgfarrowwidth=\dimen320
-\pgfarrowlinewidth=\dimen321
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryfit.code.tex
-File: tikzlibraryfit.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybackgrounds.code.tex
-File: tikzlibrarybackgrounds.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgf@layerbox@background=\box90
-\pgf@layerboxsaved@background=\box91
-) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
-File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
- (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex
-File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex
-File: tikzlibrarycalc.code.tex 2023-01-15 v3.1.10 (3.1.10)
-) (./acronyms.tex)
-Package translations Info: No language package found. I am going to use `english' as default language. on input line 50.
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 50.
- (/usr/share/texmf/tex/latex/lm/t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+\glstreeindent=\skip76
+)) (./acronyms.tex)
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 40.
+ (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count340
+\l__pdf_internal_box=\box77
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
-LaTeX Font Info:    ... okay on input line 50.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
+LaTeX Font Info:    ... okay on input line 40.
+
+-- Lines per column: 56 (exact).
+\symNewLetters=\mathgroup9
+\symxsymbols=\mathgroup10
+LaTeX Font Info:    Redeclaring math symbol \ddagger on input line 40.
+LaTeX Font Info:    Redeclaring math symbol \dagger on input line 40.
+\c@mv@regular=\count341
+LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
+(Font)              `operators' in the math version `regular' on input line 40.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `regular'
+(Font)                  OT1/cmr/m/n --> T1/formata/n/n on input line 40.
+LaTeX Font Info:    Overwriting symbol font `NewLetters' in version `regular'
+(Font)                  T1/times/n/it --> T1/formata/n/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `regular'
+(Font)                  T1/formata/n/n --> T1/formata/n/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `regular'
+(Font)                  OT1/cmr/m/it --> T1/formata/n/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `regular'
+(Font)                  OT1/cmr/bx/n --> T1/formata/m/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `regular'
+(Font)                  OT1/cmtt/m/n --> OT1/pcr/m/n on input line 40.
+\c@mv@medium=\count342
+LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
+(Font)              `operators' in the math version `medium' on input line 40.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `medium'
+(Font)                  OT1/cmr/m/n --> T1/formata/m/n on input line 40.
+LaTeX Font Info:    Overwriting symbol font `NewLetters' in version `medium'
+(Font)                  T1/times/n/it --> T1/formata/m/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `medium'
+(Font)                  > T1/formata/m/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `medium'
+(Font)                  OT1/cmr/m/it --> T1/formata/m/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `medium'
+(Font)                  > T1/formata/b/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `medium'
+(Font)                  OT1/cmtt/m/n --> OT1/pcr/b/n on input line 40.
+\c@mv@black=\count343
+LaTeX Font Info:    Encoding `OT1' has changed to `T1' for symbol font
+(Font)              `operators' in the math version `black' on input line 40.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `black'
+(Font)                  OT1/cmr/m/n --> T1/formata/b/n on input line 40.
+LaTeX Font Info:    Overwriting symbol font `NewLetters' in version `black'
+(Font)                  T1/times/n/it --> T1/formata/b/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `black'
+(Font)                  > T1/formata/b/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `black'
+(Font)                  OT1/cmr/m/it --> T1/formata/b/it on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `black'
+(Font)                  > T1/formata/b/n on input line 40.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `black'
+(Font)                  OT1/cmtt/m/n --> OT1/pcr/b/n on input line 40.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 40.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+LaTeX Font Info:    Trying to load font information for T1+times on input line 40.
+ (./t1times.fd) (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count376
-\scratchdimen=\dimen322
-\scratchbox=\box92
-\nofMPsegments=\count377
-\nofMParguments=\count378
-\everyMPshowfont=\toks62
-\MPscratchCnt=\count379
-\MPscratchDim=\dimen323
-\MPnumerator=\count380
-\makeMPintoPDFobject=\count381
-\everyMPtoPDFconversion=\toks63
+\scratchcounter=\count344
+\scratchdimen=\dimen266
+\scratchbox=\box78
+\nofMPsegments=\count345
+\nofMParguments=\count346
+\everyMPshowfont=\toks39
+\MPscratchCnt=\count347
+\MPscratchDim=\dimen267
+\MPnumerator=\count348
+\makeMPintoPDFobject=\count349
+\everyMPtoPDFconversion=\toks40
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-))
-*geometry* driver: auto-detecting
-*geometry* detected driver: pdftex
-*geometry* verbose mode - [ preamble ] result:
-* driver: pdftex
-* paper: custom
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* hratio: 1:1
-* vratio: 1:1
-* modes: 
-* h-part:(L,W,R)=(37.75394pt, 522.0pt, 37.75394pt)
-* v-part:(T,H,B)=(81.52342pt, 682.0pt, 81.52342pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=522.0pt
-* \textheight=682.0pt
-* \oddsidemargin=-34.51605pt
-* \evensidemargin=-34.51605pt
-* \topmargin=-52.74657pt
-* \headheight=50.0pt
-* \headsep=12.0pt
-* \topskip=10.0pt
-* \footskip=18.0pt
-* \marginparwidth=4.0pt
-* \marginparsep=10.0pt
-* \columnsep=18.0pt
-* \skip\footins=24.0pt plus 2.0pt minus 12.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumntrue
-* \@twosidefalse
-* \@mparswitchfalse
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
-(/usr/share/texlive/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
+)) (/usr/share/texlive/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
 File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
 )
-Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 50.
-
-Package pgfplots notification 'compat/show suggested version=true': document has been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
-
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 112.
-(/usr/share/texmf/tex/latex/lm/ot1lmr.fd
-File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 112.
- (/usr/share/texmf/tex/latex/lm/omllmm.fd
-File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 112.
- (/usr/share/texmf/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 112.
- (/usr/share/texmf/tex/latex/lm/omxlmex.fd
-File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 112.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 112.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 112.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 112.
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 40.
+<bullet.png, id=3, 12.045pt x 35.38219pt>
+File: bullet.png Graphic file (type png)
+<use bullet.png>
+Package pdftex.def Info: bullet.png  used on input line 94.
+(pdftex.def)             Requested size: 5.0pt x 14.6871pt.
+File: bullet.png Graphic file (type png)
+<use bullet.png>
+Package pdftex.def Info: bullet.png  used on input line 129.
+(pdftex.def)             Requested size: 5.0pt x 14.6871pt.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 137.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 112.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 137.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 112.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 112.
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 112.
- (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
-File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Using TeX to sort glossary entries---this may take a while
+LaTeX Font Info:    Calculating math sizes for size <9.9> on input line 137.
+LaTeX Font Info:    Calculating math sizes for size <6.6> on input line 137.
 
-Underfull \hbox (badness 1796) in paragraph at lines 166--166
-[]\T1/lmr/m/n/10 European Telecom-mu-ni-ca-tions Stan-dards In-sti-
+Overfull \hbox (9.2679pt too wide) in paragraph at lines 137--137
+[]  
  []
 
 
-Underfull \hbox (badness 4752) in paragraph at lines 166--166
-[]\T1/lmr/m/n/10 International Mo-bile Telecommunications-
+Overfull \hbox (9.2679pt too wide) in paragraph at lines 137--137
+[]  
+ []
+
+(./sections/01_introduction.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+<logo.png, id=4, 206.27063pt x 53.44969pt>
+File: logo.png Graphic file (type png)
+<use logo.png>
+Package pdftex.def Info: logo.png  used on input line 35.
+(pdftex.def)             Requested size: 91.32pt x 23.66309pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Overfull \hbox (2.22221pt too wide) has occurred while \output is active
-[] 
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
 
 
-] (./sections/01_introduction.tex
-<figures/IndustrialApp.png, id=20, 1145.27875pt x 753.81625pt>
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[1
+
+
+ <./logo.png> <./bullet.png>]
+<figures/IndustrialApp.png, id=17, 1145.27875pt x 753.81625pt>
 File: figures/IndustrialApp.png Graphic file (type png)
 <use figures/IndustrialApp.png>
-Package pdftex.def Info: figures/IndustrialApp.png  used on input line 47.
-(pdftex.def)             Requested size: 522.0pt x 343.58505pt.
- [2]
-Underfull \hbox (badness 1184) in paragraph at lines 78--86
-[]\T1/lmr/m/n/10 Within this con-text, []Eu-ro-pean Telecom-mu-ni-ca-tions
+Package pdftex.def Info: figures/IndustrialApp.png  used on input line 45.
+(pdftex.def)             Requested size: 505.12177pt x 332.47383pt.
+
+Underfull \hbox (badness 4341) in paragraph at lines 51--63
+\T1/times/n/n/10 ni-ca-tion broad-ened the scope of wire-less sys-tems be-
+ []
+
+
+Underfull \hbox (badness 1436) in paragraph at lines 76--84
+\T1/times/n/n/10 (DECT-2020 NR) as a next-generation ra-dio tech-nol-ogy
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 76--84
+\T1/times/n/n/10 for lo-cal wire-less com-mu-ni-ca-tion, mas-sive machine-type
+ []
+
+
+Underfull \hbox (badness 1436) in paragraph at lines 123--138
+\T1/times/n/n/10 re-search has sim-i-larly ex-panded to-ward pro-fes-sional au-
+ []
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 144--154
+\T1/times/n/n/10 ware eval-u-a-tions, and ap-pli-ca-tion stud-ies are dis-tributed
+ []
+
+<notaglinelogo.png, id=19, 169.38281pt x 42.91031pt>
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 174.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 174.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[2 <./notaglinelogo.png>]
+Underfull \hbox (badness 2753) in paragraph at lines 214--220
+\T1/times/n/n/10 sys-tem-atic ev-i-dence, the sur-vey iden-ti-fies un-der-ex-
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [3 <./figures/IndustrialApp.png>]
-Underfull \hbox (badness 1558) in paragraph at lines 146--156
-[]\T1/lmr/m/n/10 Despite this grow-ing body of re-search, the avail-
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 220.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 220.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 181.
-(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[3 <./figures/IndustrialApp.png>]) (./sections/02_methodology.tex
+<figures/PRSIMA.pdf, id=29, 824.28049pt x 517.65895pt>
+File: figures/PRSIMA.pdf Graphic file (type pdf)
+<use figures/PRSIMA.pdf>
+Package pdftex.def Info: figures/PRSIMA.pdf  used on input line 23.
+(pdftex.def)             Requested size: 505.12177pt x 317.23277pt.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 99.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
-Underfull \hbox (badness 2237) in paragraph at lines 187--192
-\T1/lmr/m/n/10 pri-mary con-tri-bu-tions, tech-ni-cal top-ics, re-search
+
+LaTeX Font Warning: Font shape `T1/pcr/n/n' undefined
+(Font)              using `T1/pcr/m/n' instead on input line 99.
+
+
+Overfull \hbox (34.92618pt too wide) in paragraph at lines 99--100
+[] \T1/pcr/m/n/9 ("DECT-2020 NR" OR "DECT NR+" OR "DECT-2020
  []
 
 
-Underfull \hbox (badness 1275) in paragraph at lines 215--221
-\T1/lmr/m/n/10 un-der-ex-plored ar-eas and fu-ture pri-or-i-ties in-clud-
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
+\T1/pcr/m/n/9 New Radio" OR "DECT NR" OR "DECT New
  []
 
 
-Underfull \hbox (badness 1748) in paragraph at lines 215--221
-\T1/lmr/m/n/10 ing application-oriented cross-layer de-sign, large-
- []
-
-) (./sections/02_methodology.tex [4{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}] (./figures/PRISMA_Methodology.tex
-LaTeX Font Info:    Trying to load font information for T1+lmss on input line 278.
- (/usr/share/texmf/tex/latex/lm/t1lmss.fd
-File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-))
-Underfull \hbox (badness 2626) in paragraph at lines 45--48
-[]\T1/lmr/m/n/10 Which eval-u-a-tion method-olo-gies, im-ple-men-ta-tion
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
+\T1/pcr/m/n/9 Radio") AND (architecture OR protocol
  []
 
 
-Underfull \hbox (badness 1661) in paragraph at lines 45--48
-\T1/lmr/m/n/10 have been em-ployed to in-ves-ti-gate and val-i-date
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
+\T1/pcr/m/n/9 OR PHY OR "physical layer" OR MAC OR
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-[] \T1/lmtt/m/n/9 ("DECT-2020 NR" OR "DECT NR+" OR "DECT-2020
+Overfull \hbox (18.7262pt too wide) in paragraph at lines 99--100
+\T1/pcr/m/n/9 "medium access control" OR implementation
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 New Radio" OR "DECT NR" OR "DECT New Radio")
+Overfull \hbox (7.92621pt too wide) in paragraph at lines 99--100
+\T1/pcr/m/n/9 OR experimental OR testbed OR prototype
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 AND (architecture OR protocol OR PHY OR
+Overfull \hbox (29.52618pt too wide) in paragraph at lines 99--100
+\T1/pcr/m/n/9 OR performance OR evaluation OR measurement
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 "physical layer" OR MAC OR "medium access
+Overfull \hbox (40.32617pt too wide) in paragraph at lines 99--100
+\T1/pcr/m/n/9 OR industrial OR IoT OR URLLC OR reliability) 
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 123.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 123.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 control" OR implementation OR experimental
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 OR testbed OR prototype OR performance OR
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[4{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}]
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 191.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 191.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
-\T1/lmtt/m/n/9 evaluation OR measurement OR industrial OR
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 1024) in paragraph at lines 124--125
-[]\T1/lmr/m/n/10 primarily in-ves-ti-gated []DECT-2020 NR or DECT
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
  []
 
-[5] [6]) (./sections/03_literature_search_results.tex [7]
-<figures/PRISMA_Result.png, id=49, 763.85374pt x 1229.59375pt>
+[5 <./figures/PRSIMA.pdf>]) (./sections/03_literature_search_results.tex
+<figures/PRISMA_Result.png, id=68, 763.85374pt x 1229.59375pt>
 File: figures/PRISMA_Result.png Graphic file (type png)
 <use figures/PRISMA_Result.png>
 Package pdftex.def Info: figures/PRISMA_Result.png  used on input line 57.
-(pdftex.def)             Requested size: 252.0pt x 405.65462pt.
-<figures/fig1.png, id=50, 891.33pt x 428.60126pt>
+(pdftex.def)             Requested size: 242.67355pt x 390.6262pt.
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 75.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 75.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[6]
+<figures/fig1.png, id=72, 891.33pt x 428.60126pt>
 File: figures/fig1.png Graphic file (type png)
 <use figures/fig1.png>
 Package pdftex.def Info: figures/fig1.png  used on input line 78.
-(pdftex.def)             Requested size: 252.0pt x 121.17163pt.
-<figures/fig2.png, id=51, 891.33pt x 428.60126pt>
+(pdftex.def)             Requested size: 242.67355pt x 116.69179pt.
+<figures/fig2.png, id=73, 891.33pt x 428.60126pt>
 File: figures/fig2.png Graphic file (type png)
 <use figures/fig2.png>
 Package pdftex.def Info: figures/fig2.png  used on input line 99.
-(pdftex.def)             Requested size: 252.0pt x 121.17163pt.
-<figures/fig3.png, id=52, 891.33pt x 562.1pt>
+(pdftex.def)             Requested size: 242.67355pt x 116.69179pt.
+<figures/fig3.png, id=74, 891.33pt x 562.1pt>
 File: figures/fig3.png Graphic file (type png)
 <use figures/fig3.png>
 Package pdftex.def Info: figures/fig3.png  used on input line 122.
-(pdftex.def)             Requested size: 252.0pt x 158.91362pt.
- [8 <./figures/PRISMA_Result.png> <./figures/fig1.png> <./figures/fig2.png>]
-Underfull \hbox (badness 1194) in paragraph at lines 137--143
-[]\T1/lmr/m/n/10 The primary-contribution clas-si-fi-ca-tion as-signs each
+(pdftex.def)             Requested size: 242.67355pt x 153.0384pt.
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 143.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 143.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
-<figures/fig4.png, id=59, 803.0pt x 627.34375pt>
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[7 <./figures/PRISMA_Result.png> <./figures/fig1.png> <./figures/fig2.png>]
+<figures/fig4.png, id=82, 803.0pt x 627.34375pt>
 File: figures/fig4.png Graphic file (type png)
 <use figures/fig4.png>
 Package pdftex.def Info: figures/fig4.png  used on input line 146.
-(pdftex.def)             Requested size: 252.0pt x 196.87724pt.
-<figures/fig5.png, id=60, 891.33pt x 428.60126pt>
+(pdftex.def)             Requested size: 242.67355pt x 189.58301pt.
+<figures/fig5.png, id=83, 891.33pt x 428.60126pt>
 File: figures/fig5.png Graphic file (type png)
 <use figures/fig5.png>
 Package pdftex.def Info: figures/fig5.png  used on input line 181.
-(pdftex.def)             Requested size: 252.0pt x 121.17163pt.
-<figures/fig6.png, id=61, 891.33pt x 562.1pt>
+(pdftex.def)             Requested size: 242.67355pt x 116.69179pt.
+<figures/fig6.png, id=84, 891.33pt x 562.1pt>
 File: figures/fig6.png Graphic file (type png)
 <use figures/fig6.png>
 Package pdftex.def Info: figures/fig6.png  used on input line 200.
-(pdftex.def)             Requested size: 252.0pt x 158.91362pt.
-[9 <./figures/fig3.png> <./figures/fig4.png> <./figures/fig5.png>]
-<figures/fig7.png, id=68, 803.0pt x 627.34375pt>
+(pdftex.def)             Requested size: 242.67355pt x 153.0384pt.
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 214.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 214.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[8 <./figures/fig3.png> <./figures/fig4.png> <./figures/fig5.png> <./figures/fig6.png>]
+<figures/fig7.png, id=92, 803.0pt x 627.34375pt>
 File: figures/fig7.png Graphic file (type png)
 <use figures/fig7.png>
 Package pdftex.def Info: figures/fig7.png  used on input line 221.
-(pdftex.def)             Requested size: 252.0pt x 196.87724pt.
-<figures/fig8.png, id=69, 891.33pt x 534.99875pt>
+(pdftex.def)             Requested size: 242.67355pt x 189.58301pt.
+<figures/fig8.png, id=93, 891.33pt x 534.99875pt>
 File: figures/fig8.png Graphic file (type png)
 <use figures/fig8.png>
 Package pdftex.def Info: figures/fig8.png  used on input line 244.
-(pdftex.def)             Requested size: 252.0pt x 151.25171pt.
+(pdftex.def)             Requested size: 242.67355pt x 145.65977pt.
 ) (./sections/04_research_classification.tex
-<figures/ResearchTexanomy.png, id=70, 1541.76pt x 1027.84pt>
+<figures/ResearchTexanomy.png, id=94, 2053.6725pt x 1014.79124pt>
 File: figures/ResearchTexanomy.png Graphic file (type png)
 <use figures/ResearchTexanomy.png>
 Package pdftex.def Info: figures/ResearchTexanomy.png  used on input line 17.
-(pdftex.def)             Requested size: 522.0pt x 347.98672pt.
- [10 <./figures/fig6.png> <./figures/fig7.png> <./figures/fig8.png>]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+(pdftex.def)             Requested size: 505.12177pt x 249.59381pt.
 
- [11 <./figures/ResearchTexanomy.png (PNG copy)>]
-<figures/archetictur.png, id=80, 1107.13625pt x 1004.75375pt>
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 68.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 68.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[9 <./figures/fig7.png> <./figures/fig8.png>]
+<figures/archetictur.png, id=100, 1107.13625pt x 1004.75375pt>
 File: figures/archetictur.png Graphic file (type png)
 <use figures/archetictur.png>
 Package pdftex.def Info: figures/archetictur.png  used on input line 99.
-(pdftex.def)             Requested size: 495.8984pt x 450.03464pt.
+(pdftex.def)             Requested size: 479.86412pt x 435.48524pt.
 
-Underfull \hbox (badness 1014) in paragraph at lines 107--115
-\T1/lmr/m/n/10 dis-cov-ery, bea-con-ing, as-so-ci-a-tion, random-access, and
+Underfull \hbox (badness 1515) in paragraph at lines 126--137
+\T1/times/n/n/10 through chan-nel ob-ser-va-tion, se-lec-tion, and interference-
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 126--137
-\T1/lmr/m/n/10 net-works through chan-nel ob-ser-va-tion, se-lec-tion, and
+Underfull \hbox (badness 1424) in paragraph at lines 138--146
+\T1/times/n/n/10 from external-network con-nec-tiv-ity. Stan-dard-ized con-ver-
  []
 
-[12{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}]
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 146.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 146.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[10 <./figures/ResearchTexanomy.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 2126) has occurred while \output is active []
 
- [13 <./figures/archetictur.png>] [14{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}]
-Underfull \hbox (badness 2376) in paragraph at lines 443--461
-[]\T1/lmr/m/n/10 Overall, the MAC lit-er-a-ture shows a pro-gres-sion
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 180.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 180.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[11 <./figures/archetictur.png>]
+Overfull \hbox (9.2887pt too wide) in paragraph at lines 181--182
+[]\T1/times/n/n/10 DECT-2020 NR em-ploys cyclic-prefix or-thog-o-nal frequency-
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 279.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 279.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[12]
+Underfull \hbox (badness 3590) in paragraph at lines 280--292
+[]\T1/times/n/n/10 Receiver im-ple-men-ta-tion rep-re-sents an-other PHY re-
+ []
+
+
+Underfull \hbox (badness 2922) in paragraph at lines 280--292
+\T1/times/n/n/10 search di-rec-tion. Fager-holm in-ves-ti-gates autocorrelation-
+ []
+
+
+Underfull \hbox (badness 1642) in paragraph at lines 280--292
+\T1/times/n/n/10 posed FPGA-oriented ar-chi-tec-ture re-duces com-pu-ta-tional
+ []
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 368.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 368.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[13]
+Underfull \hbox (badness 1394) in paragraph at lines 371--383
+\T1/times/n/n/10 dio con-for-mance test-ing con-se-quently in-cludes both PT-
+ []
+
+
+Underfull \hbox (badness 2221) in paragraph at lines 395--404
+\T1/times/n/n/10 conservation pro-ce-dures and show that net-work den-sity
+ []
+
+
+Underfull \hbox (badness 2932) in paragraph at lines 430--439
+[]\T1/times/n/n/10 Channel ac-cess is equally im-por-tant for co-ex-is-tence.
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 458.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 458.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[14]
+Underfull \hbox (badness 1448) in paragraph at lines 458--476
+\T1/times/n/n/10 adapt random-access du-ra-tion, Ah-mad et al. re-con-fig-ure
+ []
+
+
+Underfull \hbox (badness 1931) in paragraph at lines 547--563
+\T1/times/n/n/10 de-vices, paths of ap-prox-i-mately ten hops, and a sin-gle
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 588--600
+[]\T1/times/n/n/10 The re-sult-ing GNN+DRL frame-work im-proves the
+ []
+
+
+Underfull \hbox (badness 1648) in paragraph at lines 588--600
+\T1/times/n/n/10 over-head, com-pu-ta-tional re-quire-ments, on-line adap-ta-tion,
+ []
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 600.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 600.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
  []
 
 [15]
-Underfull \hbox (badness 1360) in paragraph at lines 573--585
-[]\T1/lmr/m/n/10 The re-sult-ing GNN+DRL frame-work im-proves the
+Underfull \hbox (badness 10000) in paragraph at lines 619--635
+\T1/times/n/n/10 oriented for-ward-ing to-ward in-creas-ingly se-lec-tive and
  []
 
 
-Underfull \hbox (badness 4391) in paragraph at lines 604--620
-[]\T1/lmr/m/n/10 Overall, the lit-er-a-ture shows an evo-lu-tion from
+Underfull \hbox (badness 2103) in paragraph at lines 619--635
+\T1/times/n/n/10 in-com-plete net-work in-for-ma-tion, and learning-based ap-
  []
 
 
-Underfull \hbox (badness 1783) in paragraph at lines 621--635
-[]\T1/lmr/m/n/10 The avail-able ev-i-dence there-fore es-tab-lishes na-tive
+Underfull \hbox (badness 1655) in paragraph at lines 662--672
+\T1/times/n/n/10 reliability-critical com-mu-ni-ca-tion, and energy-constrained
+ []
+
+<figures/AppRequirment.png, id=126, 1416.29124pt x 1315.91624pt>
+File: figures/AppRequirment.png Graphic file (type png)
+<use figures/AppRequirment.png>
+Package pdftex.def Info: figures/AppRequirment.png  used on input line 675.
+(pdftex.def)             Requested size: 505.12177pt x 469.31206pt.
+
+Underfull \hbox (badness 3815) in paragraph at lines 712--722
+\T1/times/n/n/10 PHY con-fig-u-ra-tion. Samuylov et al. show that sched-
  []
 
 
-Underfull \hbox (badness 2027) in paragraph at lines 647--657
-\T1/lmr/m/n/10 sub-slots, or trans-mis-sion op-por-tu-ni-ties are as-signed,
+Underfull \hbox (badness 3138) in paragraph at lines 712--722
+\T1/times/n/n/10 uled ac-cess, LBT, and last-minute chan-nel sens-ing af-
  []
 
-<figures/app_requirments.png, id=98, 1541.76pt x 1027.84pt>
-File: figures/app_requirments.png Graphic file (type png)
-<use figures/app_requirments.png>
-Package pdftex.def Info: figures/app_requirments.png  used on input line 660.
-(pdftex.def)             Requested size: 522.0pt x 347.98672pt.
+
+Underfull \hbox (badness 2173) in paragraph at lines 712--722
+\T1/times/n/n/10 pro-duce environment-dependent Pareto-optimal trade-offs
+ []
+
+
+Underfull \hbox (badness 1436) in paragraph at lines 723--738
+\T1/times/n/n/10 clas-si-fi-ca-tion, queue-ing, schedul-ing, shap-ing, and pac-ing
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 739.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 739.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
 [16]
-Underfull \vbox (badness 1478) has occurred while \output is active []
-
- [17 <./figures/app_requirments.png (PNG copy)>]
-Underfull \vbox (badness 2698) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Underfull \hbox (badness 1931) in paragraph at lines 833--844
-\T1/lmr/m/n/10 trans-mis-sions, con-ser-va-tive ac-cess, ac-knowl-edge-ments,
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 765.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 765.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 845--855
-[]\T1/lmr/m/n/10 Biswas et al. quan-tify this trade-off for critical-
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 1946) in paragraph at lines 845--855
-\T1/lmr/m/n/10 infrastructure mon-i-tor-ing. Their sim-u-la-tions re-port
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
  []
 
-[18] [19]
-Underfull \hbox (badness 1540) in paragraph at lines 1025--1038
-[]\T1/lmr/m/n/10 To dis-tribute this for-ward-ing bur-den, Ni-htila and
- []
-
-
-Underfull \hbox (badness 1776) in paragraph at lines 1039--1048
-[]\T1/lmr/m/n/10 Experimental work com-ple-ments these system-level
+[17 <./figures/AppRequirment.png>]
+Underfull \hbox (badness 2452) in paragraph at lines 780--796
+\T1/times/n/n/10 ity, MAC pa-ram-e-ters and pri-or-i-ties can be co-or-di-nated
  []
 
 
-Underfull \hbox (badness 1019) in paragraph at lines 1062--1073
-\T1/lmr/m/n/10 sensitive com-mu-ni-ca-tion re-quires more fre-quent ra-dio
+Underfull \hbox (badness 2547) in paragraph at lines 780--796
+\T1/times/n/n/10 for latency-sensitive traf-fic, co-ex-is-tence af-fects re-source
+ []
+
+
+Underfull \hbox (badness 5622) in paragraph at lines 780--796
+\T1/times/n/n/10 lo-cated re-sources, and hard-ware turnaround in-tro-duces
+ []
+
+
+Underfull \hbox (badness 1715) in paragraph at lines 834--847
+\T1/times/n/n/10 larger scale. Soni et al. eval-u-ate multi-hop decode-and-
+ []
+
+
+Underfull \hbox (badness 1817) in paragraph at lines 848--859
+[]\T1/times/n/n/10 Combining high re-li-a-bil-ity with low la-tency be-comes
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 860--870
+[]\T1/times/n/n/10 Biswas et al. quan-tify this trade-off for critical-
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 895.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 895.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[18]
+Underfull \hbox (badness 2626) in paragraph at lines 895--907
+[]\T1/times/n/n/10 Reliability can also be im-proved by mod-i-fy-ing con-
+ []
+
+
+Underfull \hbox (badness 1968) in paragraph at lines 895--907
+\T1/times/n/n/10 nec-tiv-ity. Ah-mad et al. dy-nam-i-cally as-sign in-ter-me-di-ate
+ []
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 895--907
+\T1/times/n/n/10 cept to-ward ultra-reliable multi-hop []IIoT com-mu-ni-ca-tion
+ []
+
+
+Underfull \hbox (badness 2970) in paragraph at lines 988--995
+\T1/times/n/n/10 ing anal-y-sis shows that RX--TX turnaround on single-
+ []
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 1053.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 1053.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[19]
+Underfull \hbox (badness 1924) in paragraph at lines 1149--1163
+[]\T1/times/n/n/10 A ma-jor re-main-ing chal-lenge is there-fore ex-per-i-men-
+ []
+
+
+Underfull \hbox (badness 1430) in paragraph at lines 1177--1186
+\T1/times/n/n/10 sure-ment se-lec-tion us-ing time-of-arrival-based range and
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 1186.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 1186.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
  []
 
 [20]
-Underfull \hbox (badness 3690) in paragraph at lines 1208--1218
-[]\T1/lmr/m/n/10 Localization can also sup-port net-work op-er-a-tion.
+Underfull \hbox (badness 1571) in paragraph at lines 1199--1213
+\T1/times/n/n/10 mul-ti-modal po-si-tion-ing and track-ing us-ing range, an-gle,
  []
 
 
-Underfull \hbox (badness 1418) in paragraph at lines 1266--1272
-\T1/lmr/m/n/10 te-gra-tion re-main com-par-a-tively un-der-ex-plored in the
+Underfull \hbox (badness 1715) in paragraph at lines 1234--1243
+[]\T1/times/n/n/10 The avail-able ev-i-dence nev-er-the-less re-mains pre-dom-i-
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [21] [22]
-Underfull \hbox (badness 1735) in paragraph at lines 1394--1408
-[]\T1/lmr/m/n/10 Despite re-cent progress, ex-per-i-men-tal ev-i-dence re-
+Underfull \hbox (badness 1783) in paragraph at lines 1288--1303
+\T1/times/n/n/10 three in-ter-act-ing de-ploy-ment di-men-sions. \T1/times/n/it/10 Se-cu-rity \T1/times/n/n/10 de-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1498--1515
-[]\T1/lmr/m/n/10 Poets and Waÿ-mann sub-se-quently broaden the
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 1315.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 1315.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 2318) in paragraph at lines 1498--1515
-\T1/lmr/m/n/10 PHY or packet mea-sure-ments, this application-level
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1498--1515
-\T1/lmr/m/n/10 demon-stra-tion ad-di-tion-ally ex-poses syn-chro-niza-tion,
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[21]
+Underfull \hbox (badness 5756) in paragraph at lines 1375--1384
+[]\T1/times/n/n/10 Dang et al. demon-strate this prin-ci-ple through en-
  []
 
 
-Underfull \hbox (badness 1199) in paragraph at lines 1498--1515
-\T1/lmr/m/n/10 ex-plo-ration and mo-dem la-tency mea-sure-ment to-ward
+Underfull \hbox (badness 2245) in paragraph at lines 1375--1384
+\T1/times/n/n/10 for-ma-tion, while Wi-Fi car-ries the high-bandwidth data
  []
 
-[23] [24]) (./sections/05_research_gaps.tex
-Underfull \hbox (badness 1205) in paragraph at lines 81--90
-[]\T1/lmr/m/n/10 Figure 15[] sum-ma-rizes these de-pen-den-cies from an
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 1440.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 1440.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
-<figures/crosslayerframework.png, id=127, 1541.76pt x 1027.84pt>
-File: figures/crosslayerframework.png Graphic file (type png)
-<use figures/crosslayerframework.png>
-Package pdftex.def Info: figures/crosslayerframework.png  used on input line 93.
-(pdftex.def)             Requested size: 522.0pt x 347.98672pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[22]
+
+LaTeX Warning: Citation `mousavi2026rs' on page 23 undefined on input line 1440.
+
+
+Underfull \hbox (badness 1910) in paragraph at lines 1472--1482
+[]\T1/times/n/n/10 Commercial-device ex-per-i-ments broaden this ev-i-dence
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 1503--1516
+\T1/times/n/n/10 main with strin-gent la-tency and re-li-a-bil-ity re-quire-ments.
+ []
+
+
+Underfull \hbox (badness 1721) in paragraph at lines 1503--1516
+\T1/times/n/n/10 dem hard-ware and prac-ti-cal la-tency mea-sure-ments [76].
+ []
+
+
+Overfull \hbox (2.59625pt too wide) in paragraph at lines 1517--1534
+[]\T1/times/n/n/10 Poets and Waÿ-mann sub-se-quently broaden the professional-
+ []
+
+
+Underfull \hbox (badness 1484) in paragraph at lines 1517--1534
+\T1/times/n/n/10 work im-ple-ments a func-tional pro-to-type con-nect-ing two
+ []
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 1534.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 1534.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[23]
+Underfull \hbox (badness 1817) in paragraph at lines 1610--1630
+\T1/times/n/n/10 straints; power-grid mon-i-tor-ing in-tro-duces het-ero-ge-neous
+ []
+
+
+Underfull \hbox (badness 1968) in paragraph at lines 1610--1630
+\T1/times/n/n/10 traf-fic, gate-ways, multi-hop com-mu-ni-ca-tion, and longer-
+ []
+
+
+Underfull \hbox (badness 6608) in paragraph at lines 1610--1630
+\T1/times/n/n/10 duration op-er-a-tion; UAV anal-y-sis in-tro-duces mobility-
+ []
+
+
+Underfull \hbox (badness 2073) in paragraph at lines 1610--1630
+\T1/times/n/n/10 sure-ments ex-pose re-al-is-tic prop-a-ga-tion; and device-level
+ []
+
+
+Underfull \hbox (badness 2875) in paragraph at lines 1610--1630
+\T1/times/n/n/10 [22], [58], [75], [76], [78]--[80]. Ap-pli-ca-tion suit-abil-ity
+ []
+
+
+Underfull \hbox (badness 2941) in paragraph at lines 1644--1653
+\T1/times/n/n/10 SDR im-ple-men-ta-tions, ap-pli-ca-tion pro-to-types, multi-hop
+ []
+
+) (./sections/05_research_gaps.tex
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 2.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 2.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[24]
+Underfull \hbox (badness 6708) in paragraph at lines 81--90
+[]\T1/times/n/n/10 Figure 15[] sum-ma-rizes these de-pen-den-cies from an
+ []
+
+<figures/CrossLayerFramework.png, id=156, 1526.70375pt x 1235.61626pt>
+File: figures/CrossLayerFramework.png Graphic file (type png)
+<use figures/CrossLayerFramework.png>
+Package pdftex.def Info: figures/CrossLayerFramework.png  used on input line 93.
+(pdftex.def)             Requested size: 505.12177pt x 408.81046pt.
+
+Underfull \hbox (badness 1454) in paragraph at lines 114--127
+[]\T1/times/n/n/10 This gap is par-tic-u-larly vis-i-ble in schedul-ing and re-
+ []
+
+
+Underfull \vbox (badness 4353) has occurred while \output is active []
+
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 143.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 143.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
 [25]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [26 <./figures/crosslayerframework.png (PNG copy)>]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 202.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 167.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 167.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
+ []
+
+
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[26 <./figures/CrossLayerFramework.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 209--209
+[]|\T1/times/m/n/9 Cross-layer and
+ []
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 209--209
-[]|\T1/lmr/m/n/9 Cross-layer and
+\T1/times/m/n/9 application-oriented
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
-\T1/lmr/m/n/9 application-oriented
+Underfull \hbox (badness 3209) in paragraph at lines 210--212
+\T1/times/m/n/9 ping from ap-pli-ca-tion re-quire-ments to
  []
 
 
-Underfull \hbox (badness 4647) in paragraph at lines 210--212
-[]|\T1/lmr/m/n/9 PHY, MAC, schedul-ing, rout-ing,
+Underfull \hbox (badness 10000) in paragraph at lines 217--217
+[]|\T1/times/m/n/9 Scheduling and
  []
 
 
-Underfull \hbox (badness 3449) in paragraph at lines 217--217
-[]|\T1/lmr/m/n/9 Scheduling and re-
+Underfull \hbox (badness 1354) in paragraph at lines 220--223
+\T1/times/m/n/9 ing and re-source al-lo-ca-tion for co-ex-ist-ing pe-ri-odic,
  []
 
 
-Underfull \hbox (badness 4096) in paragraph at lines 220--223
-[]|\T1/lmr/m/n/9 Develop de-ter-min-is-tic and reliability-oriented
+Underfull \hbox (badness 1939) in paragraph at lines 224--224
+[]|\T1/times/m/n/9 Large-scale mesh net-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--224
-[]|\T1/lmr/m/n/9 Large-scale mesh
+Underfull \hbox (badness 6910) in paragraph at lines 231--231
+[]|\T1/times/m/n/9 Experimental method-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 231--231
-[]|\T1/lmr/m/n/9 Experimental
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+[]|\T1/times/m/n/9 Experimental con-fig-u-ra-tions,
  []
 
 
-Underfull \hbox (badness 3690) in paragraph at lines 232--233
-[]|\T1/lmr/m/n/9 Experimental con-fig-u-ra-tions, mea-
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+\T1/times/m/n/9 mea-sure-ment bound-aries, hard-ware
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--245
-[]|\T1/lmr/m/n/9 Energy-aware net-
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
+\T1/times/m/n/9 plat-forms, and re-ported []KPIs vary
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 248--251
-[]|\T1/lmr/m/n/9 Jointly in-ves-ti-gate PHY adap-ta-tion, sleep
+Underfull \hbox (badness 10000) in paragraph at lines 238--238
+[]|\T1/times/m/n/9 Reliability and
  []
 
 
-Underfull \hbox (badness 3179) in paragraph at lines 248--251
-\T1/lmr/m/n/9 schedul-ing, router-role man-age-ment, rout-ing,
+Underfull \hbox (badness 10000) in paragraph at lines 238--238
+\T1/times/m/n/9 de-ter-min-is-tic
  []
 
 
-Underfull \hbox (badness 2376) in paragraph at lines 252--252
-[]|\T1/lmr/m/n/9 Positioning and lo-
+Underfull \hbox (badness 2050) in paragraph at lines 241--244
+[]|\T1/times/m/n/9 Evaluate la-tency dis-tri-bu-tions, dead-line sat-is-fac-tion,
+ []
+
+
+Underfull \hbox (badness 2253) in paragraph at lines 252--252
+[]|\T1/times/m/n/9 Positioning and lo-cal-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 258--258
-\T1/lmr/m/n/9 and het-ero-ge-neous
+[]|\T1/times/m/n/9 Security, co-ex-is-tence,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 258--258
+\T1/times/m/n/9 and het-ero-ge-neous
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 259--260
+[]|\T1/times/m/n/9 DECT NR+-specific se-cu-rity,
+ []
+
+
+Underfull \hbox (badness 7064) in paragraph at lines 259--260
+\T1/times/m/n/9 co-ex-is-tence, and multi-RAT op-er-a-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--265
+[]|\T1/times/m/n/9 Hardware-aware
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 266--268
-[]|\T1/lmr/m/n/9 Radio turnaround, pro-cess-ing,
+\T1/times/m/n/9 firmware, and other implementation-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 266--268
-\T1/lmr/m/n/9 buffer-ing, firmware, and other
+\T1/times/m/n/9 specific ef-fects are not con-sis-tently
  []
 
 
-Underfull \hbox (badness 6125) in paragraph at lines 266--268
-\T1/lmr/m/n/9 implementation-specific ef-fects are
+Underfull \hbox (badness 1365) in paragraph at lines 291--302
+\T1/times/n/n/10 ten-tion. Po-si-tion-ing re-sults demon-strate the po-ten-tial for
+ []
+
+) (./sections/06_conclusion.tex
+Underfull \hbox (badness 2096) in paragraph at lines 36--44
+\T1/times/n/n/10 per-for-mance should be con-sid-ered as a cross-layer and
  []
 
 
-Underfull \hbox (badness 4819) in paragraph at lines 269--271
-[]|\T1/lmr/m/n/9 Integrate hard-ware con-straints into la-tency,
- []
-
-) (./sections/06_conclusion.tex [27])
-Underfull \hbox (badness 2951) in paragraph at lines 55--176
-[]\T1/lmr/m/n/10 Overall, the re-viewed ev-i-dence es-tab-lishes DECT
+Underfull \hbox (badness 4981) in paragraph at lines 45--54
+\T1/times/n/n/10 iso-lated op-ti-miza-tion of in-di-vid-ual mech-a-nisms to-ward
  []
 
 
-Underfull \hbox (badness 1189) in paragraph at lines 55--176
-\T1/lmr/m/n/10 NR+ as a promis-ing plat-form for de-cen-tral-ized and
+Underfull \hbox (badness 2035) in paragraph at lines 45--54
+\T1/times/n/n/10 application-oriented and ex-per-i-men-tally val-i-dated sys-tem
  []
 
 
-Underfull \hbox (badness 2529) in paragraph at lines 55--176
-\T1/lmr/m/n/10 infrastructure-light in-dus-trial wire-less com-mu-ni-ca-tion,
- []
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 55.
 
-(./main.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 55.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
 
- [28]
-Underfull \hbox (badness 3792) in paragraph at lines 33--35
-\T1/lmr/m/n/8 ter-faces of In-ter-na-tional Mo-bile Telecommunications-2020
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 33--35
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . itu . int / rec / R-[]REC-[]M . 2150-[]3-[]202602-[]I /
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 1308) in paragraph at lines 40--41
-[]\T1/lmr/m/n/8 M. D. Perez-Guirao, T. Weis-shaupt, A. Wilzeck, DECT
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--51
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ ts / 103600 _
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[27]) (./main.bbl
+LaTeX Font Info:    Calculating math sizes for size <7.61> on input line 37.
+
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
+[]\T1/times/n/n/7.61 M. D. Perez-Guirao, T. Weis-shaupt, and A. Wilzeck, ``DECT
+ []
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 66.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 66.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--55
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ ts / 103600 _
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--59
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ ts / 103600 _
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
+[]\T1/times/m/n/7.61 A. Samuylov, D. Moltchanov, A. Gay-damaka, E. Ly-czkowski,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--63
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ ts / 103600 _
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 196.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 196.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 65--67
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ ts / 103600 _
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+[29])
+File: bullet.png Graphic file (type png)
+<use bullet.png>
+Package pdftex.def Info: bullet.png  used on input line 160.
+(pdftex.def)             Requested size: 5.0pt x 14.6871pt.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--90
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ tr / 103800 _
+Package glossaries Warning: No \printnoidxglossary or \printnoidxglossaries
+ found. (Remove \makenoidxglossaries if you don't want any glossaries.)
+This document will not have a glossary.
+
+File: notaglinelogo.png Graphic file (type png)
+<use notaglinelogo.png>
+Package pdftex.def Info: notaglinelogo.png  used on input line 162.
+(pdftex.def)             Requested size: 91.32pt x 23.1352pt.
+
+LaTeX Font Warning: Font shape `T1/formata/m/sl' undefined
+(Font)              using `T1/formata/m/it' instead on input line 162.
+
+
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 1590) in paragraph at lines 92--94
-[]\T1/lmr/m/n/8 ETSI, Sys-tem Ref-er-ence Doc-u-ment (SR-doc); DECT-2020
+Overfull \hbox (505.12177pt too wide) has occurred while \output is active
+[]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--94
-\T1/lmr/m/n/8 URL $\T1/lmtt/m/n/8 https : / / www . etsi . org / deliver / etsi _ tr / 103900 _
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
  []
 
-
-Underfull \hbox (badness 3780) in paragraph at lines 121--123
-[]\T1/lmr/m/n/8 Comment: 6 pages, 5 fig-ures, 3 ta-bles (Apr. 2021).
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [29]
-Underfull \hbox (badness 1622) in paragraph at lines 182--183
-[]\T1/lmr/m/n/8 U. Mo-ro-zova, D. Niko-laev, E. Gaidamaka, A. Vlask-ina,
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [30]) [31
-
-] (./main.aux)
+[30] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
+
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 39820 strings out of 474222
- 966144 string characters out of 5748733
- 1957975 words of memory out of 5000000
- 61391 multiletter control sequences out of 15000+600000
- 633676 words of font info for 86 fonts, out of 8000000 for 9000
+ 15024 strings out of 474222
+ 299837 string characters out of 5748733
+ 1960975 words of memory out of 5000000
+ 37020 multiletter control sequences out of 15000+600000
+ 644175 words of font info for 185 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,10n,93p,2399b,889s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr7.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri7.pfb></usr/share/texmf/fonts/type1/public/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt9.pfb>
-Output written on main.pdf (31 pages, 5983239 bytes).
+ 94i,13n,93p,2398b,532s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><./t1-formata-bold.pfb><./t1-formata-condmedium.pfb><./t1-formata-medium.pfb><./t1-formata-mediumitalic.pfb><./t1-formata-regular.pfb><./t1-giovannistd-bookitalic.pfb><./t1-times-bold.pfb><./t1-times-italic.pfb><./t1-times.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on main.pdf (30 pages, 2010699 bytes).
 PDF statistics:
- 248 PDF objects out of 1000 (max. 8388607)
- 145 compressed objects within 2 object streams
+ 243 PDF objects out of 1000 (max. 8388607)
+ 139 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 

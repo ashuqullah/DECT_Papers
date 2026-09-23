@@ -176,6 +176,13 @@ standard-oriented link-level evaluation toward comparative analysis,
 propagation and industrial measurements, receiver implementation,
 commercial-hardware experimentation, and adaptive transmission-parameter
 selection.
+The DECT-2020 New Radio (DECT-2020 NR) physical layer provides a flexible multicarrier air interface for direct, point-to-multipoint, and locally coordinated wireless communication. It interfaces with the medium access control (MAC) layer through a Physical Control Channel (PCC) and a Physical Data Channel (PDC). The PCC conveys the control information required to interpret a transmission, whereas the PDC transports the corresponding MAC protocol data unit. In addition to waveform generation and reception, the PHY performs synchronization, channel coding, rate matching, modulation, error detection, radio measurements, Hybrid Automatic Repeat Request (HARQ) soft combining, and multiple-antenna processing \cite{etsi_ts_103636_1_r2,etsi_ts_103636_3_r2}.
+
+DECT-2020 NR employs cyclic-prefix orthogonal frequency-division multiplexing (CP-OFDM). Time Division Duplex (TDD) is combined with Time Division Multiple Access (TDMA) and Frequency Division Multiple Access (FDMA), allowing transmissions to be separated in both time and frequency. A radio frame has a duration of $10$~ms and is divided into 24 slots of approximately $0.4167$~ms. Depending on the selected numerology, a slot contains 10, 20, 40, or 80 OFDM symbols and can be subdivided into smaller transmission units called subslots. Packet durations are expressed as integer multiples of these subslots, enabling the transmission time to be adapted to the traffic and latency requirements \cite{etsi_ts_103636_3_r2}.
+
+Four subcarrier spacings are defined: 27, 54, 108, and 216~kHz. Together with configurable Fourier-transform sizes, these numerologies support transmission bandwidths from the basic 1.728~MHz channel to aggregated bandwidths of up to 221.184~MHz. Consequently, the waveform can be configured for different propagation conditions, frequency bands, throughput targets, and latency constraints. A physical packet contains synchronization and reference-signal components followed by the PCC and PDC, thereby supporting packet detection, timing and frequency synchronization, channel estimation, control decoding, and payload recovery.
+
+The Release~2 PHY supports BPSK, QPSK, 16-QAM, 64-QAM, 256-QAM, and 1024-QAM. Physical-channel data are protected by a rate-$1/3$ turbo mother code, with puncturing and rate matching used to obtain the coding rate associated with the selected modulation and coding scheme. The specification additionally supports transmit diversity, beamforming, and multiple-input multiple-output operation. These capabilities expose a broad configuration space in which modulation order, coding rate, bandwidth, packet duration, transmit power, and spatial-stream count jointly determine throughput, reliability, coverage, latency, and energy consumption. The PHY should therefore be regarded as an adaptable foundation whose application-visible performance depends strongly on its interaction with MAC-layer resource allocation and retransmission control. Its IMT-2020 performance was examined through latency and reliability evaluations, while complementary radio-test procedures define methods for assessing transmitter, receiver, and channel-access behavior \cite{etsi_tr_103810,etsi_ts_103776}.
 
 The \gls{dectnr} \gls{phy} uses cyclic-prefix orthogonal
 frequency-division multiplexing and supports configurable subcarrier spacing,
@@ -353,7 +360,15 @@ address MAC mechanisms as either a primary or secondary topic. This reflects
 the central role of channel access, association, resource coordination,
 retransmission, and relay operation in determining latency, reliability,
 scalability, and energy efficiency.
+The DECT-2020 NR medium access control (MAC) layer coordinates access to the shared radio medium and maps higher-layer signaling and user data onto PHY transmissions. It provides data-transfer and radio-resource-allocation services to the upper layers while relying on the PHY for packet transport and radio measurements. The MAC architecture defines the Broadcast Control Channel (BCCH), Paging Control Channel (PCCH), Common Control Channel (CCCH), Dedicated Control Channel (DCCH), Dedicated Traffic Channel (DTCH), and Multicast Traffic Channel (MTCH). These logical channels are multiplexed onto the Paging and Broadcast Channel (PCH/BCH), Dedicated Channel (DCH), or Random Access Channel (RACH), which are subsequently carried by the physical data channel \cite{etsi_ts_103636_4_r2}.
 
+MAC operation is organized around a control entity containing functions for local radio control, paging, broadcast and beacon control, random-access control, beacon scanning, and connection configuration. These functions coordinate channel selection, logical-channel prioritization, MAC-PDU multiplexing, modulation-and-coding selection, HARQ configuration, security, and mobility. Network and device identities are maintained at different scopes: a 32-bit Network ID distinguishes the network, a 32-bit Long Radio Device ID identifies a device within that network, and a 16-bit Short Radio Device ID provides a compact identifier for local PHY control signaling \cite{etsi_ts_103636_4_r2}.
+
+Network discovery and local coordination are based principally on beaconing and association. A radio device operating in the Fixed Termination (FT) role periodically transmits network and cluster beacons containing synchronization, identification, resource-allocation, and association information. A device operating in the Portable Termination (PT) role scans the available channels, measures detected beacons, selects a suitable FT, and initiates association. Because FT and PT are logical protocol roles rather than permanently fixed device classes, a device can combine them to support decentralized clusters and multi-hop connectivity. The MAC supplies the discovery and coordination mechanisms required by such topologies, whereas packet forwarding and end-to-end routing are principally handled by the data-link-control functionality \cite{etsi_ts_103636_1_r2,etsi_ts_103636_4_r2}.
+
+Two complementary access modes are provided. In random access, available RACH resources are announced through beacons or unicast signaling. A transmitting device applies Listen Before Talk (LBT), exponential backoff, and resource-validity checks before initiating transmission. This mode is suitable for association, sporadic traffic, and large populations for which permanent resource reservation would be inefficient. Scheduled access instead uses explicitly signaled time-frequency allocations and can provide more predictable transmission opportunities for periodic or latency-sensitive traffic. The MAC also manages HARQ processes and conveys acknowledgement, negative-acknowledgement, and redundancy-version information through PHY control signaling. Integrity protection and ciphering are applied at the MAC layer where required.
+
+The coexistence of distributed contention, explicit scheduling, adaptive link configuration, and feedback-based retransmission makes MAC behavior inherently cross-layer. Beacon periodicity, sensing thresholds, backoff parameters, random-access allocation, scheduled resources, MCS selection, and HARQ configuration jointly affect latency, reliability, scalability, spectrum utilization, and energy consumption. Radio conformance testing consequently includes both PT-mode random access and scheduled transmission behavior in addition to conventional transmitter and receiver measurements \cite{etsi_ts_103776}.
 The standardized DECT NR+ MAC supports network discovery, beaconing,
 association, random access, radio-resource signaling, scheduled transmission,
 feedback, and retransmission within the FT/PT architecture. Combined FT/PT
@@ -657,7 +672,7 @@ Fig.~\ref{fig:application_scheduling}.
 
 \begin{figure*}[!t]
     \centering
-    \includegraphics[width=\textwidth]{figures/app_requirments.png}
+    \includegraphics[width=\textwidth]{figures/AppRequirment.png}
     \caption{Application-oriented scheduling and resource-allocation design
     space for DECT NR+. Application requirements motivate different scheduling
     objectives, which are realized through configurable MAC resources and are
@@ -1270,6 +1285,22 @@ under security or multi-RAT integration, while two explicitly address
 coexistence or regulatory aspects. Compared with PHY, MAC, and routing, these
 deployment-oriented topics therefore remain relatively immature.
 
+The available evidence can therefore be synthesized across three interacting
+deployment dimensions. \emph{Security} determines trusted participation and
+communication protection
+\cite{etsi_ts103636_4,etsi_ts103636_5,
+ngoIoTDeviceAuthentication2025}; \emph{coexistence} determines how DECT NR+
+shares spectrum under technical and regulatory constraints
+\cite{samuylovPerformanceAssessmentDECT20202023,
+samuylovPerformanceDECT2020NR2025}; and \emph{multi-RAT integration}
+determines how DECT NR+ cooperates with complementary radio and core-network
+technologies
+\cite{dangEWDCIntegratingDECT20202025a,
+dangUniRATUnifiedDECT20202026}. These dimensions are coupled because
+interference can trigger channel or RAT changes, inter-RAT transitions can
+require security procedures, and authentication and tunneling introduce
+processing and signaling overhead.
+
 Security functionality is nevertheless integral to the standardized DECT NR+
 architecture. The specifications define mechanisms for device identification,
 authentication, key management, integrity protection, and confidentiality
@@ -1375,21 +1406,6 @@ be activated according to application requirements and radio conditions
 \cite{dangEWDCIntegratingDECT20202025a,
 dangUniRATUnifiedDECT20202026}.
 
-The available evidence can therefore be synthesized across three interacting
-deployment dimensions. \emph{Security} determines trusted participation and
-communication protection
-\cite{etsi_ts103636_4,etsi_ts103636_5,
-ngoIoTDeviceAuthentication2025}; \emph{coexistence} determines how DECT NR+
-shares spectrum under technical and regulatory constraints
-\cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceDECT2020NR2025}; and \emph{multi-RAT integration}
-determines how DECT NR+ cooperates with complementary radio and core-network
-technologies
-\cite{dangEWDCIntegratingDECT20202025a,
-dangUniRATUnifiedDECT20202026}. These dimensions are coupled because
-interference can trigger channel or RAT changes, inter-RAT transitions can
-require security procedures, and authentication and tunneling introduce
-processing and signaling overhead.
 
 Despite recent progress, experimental evidence remains limited. Coexistence
 studies are predominantly simulation-based
@@ -1420,6 +1436,9 @@ multi-hop operation, attack-oriented evaluation, interference-aware channel
 selection, application-aware RAT selection, mobility and failover, and
 experimental characterization of the latency, energy, and signaling overhead
 introduced by security and interworking mechanisms.
+
+Mousavi et al. investigate Reed--Solomon (RS) coding as a proactive MAC-layer recovery mechanism for DECT NR+, aiming to reduce dependence on feedback-driven retransmissions \cite{mousavi2026rs}. Their design applies RS parity across the Physical Data Channel payloads of grouped slots while leaving synchronization, reference, and control fields outside the RS codeword. The authors evaluate 3-slot packets containing two data slots and one parity slot, 12-slot packets containing nine data slots and three parity slots, and alternative combinations within a common 24-slot radio-frame budget. Using a CRC-aided slot-erasure model, independent Rayleigh fading, and plain ARQ without HARQ soft combining as the baseline, the simulations reveal a fundamental reliability--latency--throughput trade-off. Short RS-protected groups localize losses, provide finer recovery granularity, and reduce completion latency under unfavorable channel conditions because recovery can occur without an additional feedback and retransmission cycle. Longer groups amortize repeated PHY signaling and coding overhead more effectively and consequently provide higher useful throughput at moderate-to-high SNR. Mixed frame structures offer an intermediate compromise. The study therefore indicates that RS coding can complement the standardized DECT NR+ retransmission mechanisms when bounded recovery time is important; however, the preferred packetization and code configuration remain application- and channel-dependent. These conclusions are limited to the adopted slot-erasure abstraction and plain-ARQ comparison, as HARQ soft combining, hardware timing, mobility, interference, and energy consumption were not evaluated.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
