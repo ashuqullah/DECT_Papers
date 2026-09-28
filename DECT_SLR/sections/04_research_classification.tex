@@ -1,6 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Technical Synthesis of DECT-2020 NR Research}
 \label{sec:technical_synthesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 The quantitative results presented in Section~\ref{sec:results} describe the
 distribution of the reviewed literature across publication characteristics,
@@ -8,11 +9,11 @@ technical topics, methodologies, and evaluation approaches. This section
 complements that quantitative analysis with a technical synthesis of the
 51 included primary studies. Based on their principal technical contributions,
 the literature is organized into the research taxonomy shown in
-Figure~\ref{fig:research_taxonomy}. The taxonomy provides the structure for the
+Fig.~\ref{fig:research_taxonomy}. The taxonomy provides the structure for the
 subsequent analysis while recognizing that individual studies may contribute
 to multiple research areas.
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
     \centering
     \includegraphics[width=\textwidth]{figures/ResearchTexanomy.png}
     \caption{Taxonomy of the DECT-2020 NR research landscape derived from the
@@ -22,8 +23,6 @@ to multiple research areas.
     \label{fig:research_taxonomy}
 \end{figure*}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Standardization and System Architecture}
 \label{subsec:standardization_architecture}
@@ -48,7 +47,8 @@ through ITU-R M.2083, M.2410, and M.2412
 evaluated as a candidate \gls{rit}, particularly for \gls{urllc} and
 \gls{mmtc}, and its inclusion in Recommendation ITU-R M.2150 established it
 as an IMT-2020 radio interface
-\cite{itur_m2150,maliatsosEvaluationIMT2020Candidate2022a,
+\cite{itur_m2150,
+maliatsosEvaluationIMT2020Candidate2022a,
 smidaETSIDECT2020Component2023}. Early studies therefore focused on
 specification-level evaluation and compliance with the IMT-2020 framework,
 providing the baseline for later protocol- and application-oriented research
@@ -59,15 +59,23 @@ The \gls{dectnr} specification is organized as a modular protocol family.
 ETSI TS~103~636-1 defines the general system description and terminology,
 Part~2 the radio requirements, Part~3 the \gls{phy}, Part~4 the \gls{mac},
 and Part~5 the data-link-control and convergence functionality
-\cite{etsi_ts103636_1,etsi_ts103636_2,etsi_ts103636_3,
-etsi_ts103636_4,etsi_ts103636_5}. Complementary technical reports document
-IMT-2020 evaluation and additional technical and regulatory aspects
-\cite{etsi_tr103810,etsi_tr103943}. Together, these specifications provide
-the protocol framework underlying the technical research synthesized in the
-following subsections.
+\cite{etsi_ts103636_1,
+etsi_ts103636_2,
+etsi_ts103636_3,
+etsi_ts103636_4,
+etsi_ts103636_5}. The specification framework has subsequently evolved through
+Release~2 revisions, extending the technical baseline while retaining the
+fundamental DECT NR+ system architecture
+\cite{etsi_ts_103636_1_r2,
+etsi_ts_103636_3_r2,
+etsi_ts_103636_4_r2}. Complementary technical reports document IMT-2020
+evaluation and additional technical and regulatory aspects
+\cite{etsi_tr103810,etsi_tr103943,etsi_tr_103810}. Together, these
+specifications provide the protocol framework underlying the technical
+research synthesized in the following subsections.
 
-Beyond introducing a new radio interface, DECT NR+ adopts a decentralized and
-flexible architecture designed for dense machine-type and vertical
+Beyond introducing a new radio interface, \gls{dectnr} adopts a decentralized
+and flexible architecture designed for dense machine-type and vertical
 communication
 \cite{kovalchukovDECT2020NewRadio2022,
 perez-guiraoDECTNRUnveiling2022}. Montalvo et al. place this development within
@@ -78,19 +86,21 @@ requirements
 \cite{montalvoDECTEvolutionMeeting2024}.
 
 A fundamental architectural element is the distinction between the logical
-Fixed Termination (FT) and Portable Termination (PT) roles. An FT provides
-control and radio-resource information, whereas PTs discover and associate
-with an FT and use the available communication resources. These are logical
-protocol roles rather than permanently assigned hardware classes, allowing
-devices to support different roles according to their network function
-\cite{etsi_ts103636_1,etsi_ts103636_4,
+\gls{ft} and \gls{pt} roles. An \gls{ft} provides control and radio-resource
+information, whereas \glspl{pt} discover and associate with an \gls{ft} and
+use the available communication resources. These are logical protocol roles
+rather than permanently assigned hardware classes, allowing devices to
+support different roles according to their network function
+\cite{etsi_ts103636_1,
+etsi_ts103636_4,
 kovalchukovDECT2020NewRadio2022,
 perez-guiraoDECTNRUnveiling2022}. This flexibility enables point-to-point and
-local cluster communication as well as hierarchical and mesh-oriented
+local-cluster communication as well as hierarchical and mesh-oriented
 multi-hop structures in which combined FT/PT devices extend connectivity
 without requiring every device to maintain a direct link to centralized
 infrastructure
-\cite{etsi_ts103636_1,etsi_ts103636_4,
+\cite{etsi_ts103636_1,
+etsi_ts103636_4,
 kovalchukovDECT2020NewRadio2022,
 perez-guiraoDECTNRUnveiling2022}.
 
@@ -105,11 +115,12 @@ perez-guiraoDECTNRUnveiling2022}.
 \end{figure*}
 
 Network formation is supported through standardized discovery, beaconing,
-association, random-access, and resource-allocation procedures. FTs advertise
-the information required for network discovery and radio operation, while PTs
-use this information to associate and access communication resources. The
-\gls{phy} and \gls{mac} additionally define channel observation, resource
-selection, feedback, retransmission, and radio-resource coordination
+association, random-access, and resource-allocation procedures. \glspl{ft}
+advertise the information required for network discovery and radio operation,
+while \glspl{pt} use this information to associate and access communication
+resources. The \gls{phy} and \gls{mac} additionally define channel
+observation, resource selection, feedback, retransmission, and radio-resource
+coordination
 \cite{etsi_ts103636_3,etsi_ts103636_4}. These mechanisms form the basis for
 the channel-access and scheduling strategies examined later in the literature.
 
@@ -161,7 +172,7 @@ fuhrlingRobustRoutingProtocol2025b,
 samuylovEmpoweringNearURLLCIoT2025,
 bandaraExperimentalValidationAnalysis2025,
 grafParetoOptimalityApproach2026a}.
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Physical-Layer Research}
@@ -176,26 +187,50 @@ standard-oriented link-level evaluation toward comparative analysis,
 propagation and industrial measurements, receiver implementation,
 commercial-hardware experimentation, and adaptive transmission-parameter
 selection.
-The DECT-2020 New Radio (DECT-2020 NR) physical layer provides a flexible multicarrier air interface for direct, point-to-multipoint, and locally coordinated wireless communication. It interfaces with the medium access control (MAC) layer through a Physical Control Channel (PCC) and a Physical Data Channel (PDC). The PCC conveys the control information required to interpret a transmission, whereas the PDC transports the corresponding MAC protocol data unit. In addition to waveform generation and reception, the PHY performs synchronization, channel coding, rate matching, modulation, error detection, radio measurements, Hybrid Automatic Repeat Request (HARQ) soft combining, and multiple-antenna processing \cite{etsi_ts_103636_1_r2,etsi_ts_103636_3_r2}.
 
-DECT-2020 NR employs cyclic-prefix orthogonal frequency-division multiplexing (CP-OFDM). Time Division Duplex (TDD) is combined with Time Division Multiple Access (TDMA) and Frequency Division Multiple Access (FDMA), allowing transmissions to be separated in both time and frequency. A radio frame has a duration of $10$~ms and is divided into 24 slots of approximately $0.4167$~ms. Depending on the selected numerology, a slot contains 10, 20, 40, or 80 OFDM symbols and can be subdivided into smaller transmission units called subslots. Packet durations are expressed as integer multiples of these subslots, enabling the transmission time to be adapted to the traffic and latency requirements \cite{etsi_ts_103636_3_r2}.
+The \gls{dectnr} \gls{phy} provides a flexible multicarrier air interface for
+direct, point-to-multipoint, and locally coordinated wireless communication.
+It interfaces with the \gls{mac} layer through the Physical Control Channel
+(PCC) and Physical Data Channel (PDC). The PCC conveys the control information
+required to interpret a transmission, whereas the PDC transports the
+corresponding MAC protocol data unit. In addition to waveform generation and
+reception, the PHY performs synchronization, channel coding, rate matching,
+modulation, error detection, radio measurements, \gls{harq} soft combining,
+and multiple-antenna processing
+\cite{etsi_ts103636_3,etsi_ts_103636_1_r2,etsi_ts_103636_3_r2}.
 
-Four subcarrier spacings are defined: 27, 54, 108, and 216~kHz. Together with configurable Fourier-transform sizes, these numerologies support transmission bandwidths from the basic 1.728~MHz channel to aggregated bandwidths of up to 221.184~MHz. Consequently, the waveform can be configured for different propagation conditions, frequency bands, throughput targets, and latency constraints. A physical packet contains synchronization and reference-signal components followed by the PCC and PDC, thereby supporting packet detection, timing and frequency synchronization, channel estimation, control decoding, and payload recovery.
+DECT NR+ employs cyclic-prefix orthogonal frequency-division multiplexing
+(CP-OFDM), with transmissions separated in both time and frequency. A radio
+frame has a duration of 10~ms and is divided into 24 slots of approximately
+0.4167~ms. Depending on the selected numerology, a slot contains 10, 20, 40,
+or 80 OFDM symbols and can be subdivided into smaller transmission units
+referred to as subslots. Packet durations are expressed as integer multiples
+of these subslots, allowing transmission timing to be adapted to traffic and
+latency requirements
+\cite{etsi_ts103636_3,etsi_ts_103636_3_r2}.
 
-The Release~2 PHY supports BPSK, QPSK, 16-QAM, 64-QAM, 256-QAM, and 1024-QAM. Physical-channel data are protected by a rate-$1/3$ turbo mother code, with puncturing and rate matching used to obtain the coding rate associated with the selected modulation and coding scheme. The specification additionally supports transmit diversity, beamforming, and multiple-input multiple-output operation. These capabilities expose a broad configuration space in which modulation order, coding rate, bandwidth, packet duration, transmit power, and spatial-stream count jointly determine throughput, reliability, coverage, latency, and energy consumption. The PHY should therefore be regarded as an adaptable foundation whose application-visible performance depends strongly on its interaction with MAC-layer resource allocation and retransmission control. Its IMT-2020 performance was examined through latency and reliability evaluations, while complementary radio-test procedures define methods for assessing transmitter, receiver, and channel-access behavior \cite{etsi_tr_103810,etsi_ts_103776}.
+Four subcarrier spacings are defined: 27, 54, 108, and 216~kHz. Together with
+configurable Fourier-transform sizes, these numerologies support transmission
+bandwidths ranging from the basic 1.728~MHz channel to aggregated bandwidths
+of up to 221.184~MHz. A physical packet contains synchronization and
+reference-signal components followed by the PCC and PDC, supporting packet
+detection, timing and frequency synchronization, channel estimation, control
+decoding, and payload recovery
+\cite{etsi_ts_103636_3_r2}.
 
-The \gls{dectnr} \gls{phy} uses cyclic-prefix orthogonal
-frequency-division multiplexing and supports configurable subcarrier spacing,
-bandwidth, packet duration, modulation and coding, and transmission power.
-These parameters jointly determine trade-offs among data rate, latency,
-reliability, propagation robustness, and energy consumption
-\cite{etsi_ts103636_2,etsi_ts103636_3,
-perez-guiraoDECTNRUnveiling2022,
-grafWhatExpectWhen2026,
-grafParetoOptimalityApproach2026a}. In particular, higher MCS levels increase
-payload capacity under favorable channel conditions, whereas more robust
-configurations improve link reliability at the expense of transmission
-efficiency.
+The Release~2 PHY extends the available transmission capabilities and supports
+BPSK, QPSK, 16-QAM, 64-QAM, 256-QAM, and 1024-QAM. Physical-channel data are
+protected by a rate-$1/3$ turbo mother code, with puncturing and rate matching
+used to obtain the coding rate associated with the selected modulation and
+coding scheme. The specification additionally supports transmit diversity,
+beamforming, and multiple-input multiple-output operation
+\cite{etsi_ts_103636_3_r2}. Consequently, modulation order, coding rate,
+bandwidth, packet duration, transmission power, and spatial configuration
+jointly determine trade-offs among throughput, latency, reliability, coverage,
+propagation robustness, and energy consumption. Complementary radio-test
+procedures define methods for assessing transmitter, receiver, and
+channel-access behavior
+\cite{etsi_tr_103810,etsi_ts_103776}.
 
 Early PHY investigations were closely associated with IMT-2020 evaluation.
 Penner et al. established link-level performance under standardized ITU-R
@@ -220,7 +255,7 @@ rather than deployment guarantees
 \cite{kizilirmakExaminationPHYLayer2024}. Leugner and Hellbrueck extend this
 comparative perspective toward low-power wide-area networking by evaluating
 DECT NR+ as an alternative to sub-GHz LPWAN technologies. Their study combines
-modeled and experimental evaluation and highlights the trade-off between
+modeled and experimental evaluation and highlights the trade-off among
 communication range, data rate, and the use of higher-frequency spectrum
 \cite{leugnerAlternativeSubGHzLPWAN2025a}. Soni et al. investigate
 power-domain NOMA for multi-hop DECT-2020 NR and evaluate BER, outage
@@ -230,13 +265,13 @@ alternative multiple-access techniques in dense multi-hop scenarios
 
 Propagation and industrial-environment studies demonstrate the difference
 between standardized link-level performance and practical radio behavior.
-Haque et al. report packet success rates above 90\% for indoor non-line-of-sight
-links beyond 60~m at 0~dBm and outdoor line-of-sight links beyond 600~m at
-19~dBm
-\cite{haqueDECT2020NRLink2025}. Llaguno et al. show through
-factory-oriented simulations that PHY performance alone is insufficient to
-guarantee stringent industrial reliability and must be complemented by
-higher-layer control mechanisms
+Haque et al. report packet-success rates above 90\% for indoor
+non-line-of-sight links beyond 60~m at 0~dBm and outdoor line-of-sight links
+beyond 600~m at 19~dBm
+\cite{haqueDECT2020NRLink2025}. Llaguno et al. show through factory-oriented
+simulations that PHY performance alone is insufficient to guarantee stringent
+industrial reliability and must be complemented by higher-layer control
+mechanisms
 \cite{llagunoPhysicalLayerPerformance2024}. Wa{\ss}mann et al. further
 evaluate DECT-2020 NR at 450, 1350, and 3700~MHz using bandwidths from
 1.728 to 13.824~MHz in an industrial environment and report an average RMS
@@ -245,10 +280,8 @@ delay spread of approximately 65~ns for the 13.824~MHz configuration
 hardware-dependent differences between frequency bands. Collectively, these
 studies show that path loss, multipath, antenna placement, operating
 frequency, radio hardware, transmission power, and MCS jointly determine
-practical link performance
-\cite{haqueDECT2020NRLink2025,
-llagunoPhysicalLayerPerformance2024,
-wassmannPerformanceDECT2020NR2024}.
+practical link performance.
+
 Channel estimation represents a complementary PHY research direction,
 particularly for challenging industrial propagation conditions. Liu et al.
 investigate data-aided channel estimation for robust DECT NR+ links in
@@ -257,6 +290,7 @@ validation. Their results demonstrate how data-assisted channel estimation can
 improve link robustness under demanding channel conditions, extending the PHY
 literature beyond propagation characterization toward receiver-side adaptation
 \cite{liuDataAidedChannelEstimation2025}.
+
 The availability of commercial DECT NR+ hardware shifted the literature toward
 experimental characterization. Bandara reports approximately 730~m outdoor
 line-of-sight range at an 80\% packet-delivery ratio, maximum measured
@@ -264,18 +298,14 @@ throughput of about 2.50~Mbit/s compared with a theoretical 3.36~Mbit/s, and
 a minimum RTT of approximately 2.255~ms
 \cite{bandaraExperimentalValidationAnalysis2025}. The same experiments report
 energy consumption of approximately 0.26--2.6~$\mu$J/bit, demonstrating the
-coupling between MCS, transmission duration, reliability, and energy
-efficiency
+coupling among MCS, transmission duration, reliability, and energy efficiency
 \cite{bandaraExperimentalValidationAnalysis2025}. Graf et al. further
 characterize packet delivery and range across representative environments,
 strengthening the experimental evidence for the operating envelope of
 commercial DECT NR+ devices
 \cite{grafWhatExpectWhen2026}. Together with the measurements of Haque et al.,
 these studies mark a transition from specification-level feasibility toward
-practical radio characterization
-\cite{haqueDECT2020NRLink2025,
-bandaraExperimentalValidationAnalysis2025,
-grafWhatExpectWhen2026}.
+practical radio characterization.
 
 Receiver implementation represents another PHY research direction. Fagerholm
 investigates autocorrelation-based packet detection and timing synchronization
@@ -286,12 +316,12 @@ additional SNR relative to the reference detector, depending on the
 configuration
 \cite{fagerholmFPGAbasedDECT2020New2024}. The design was evaluated using a
 MATLAB/Icarus Verilog environment with captured signals rather than as a
-complete over-the-air FPGA transceiver, and should therefore be interpreted as
+complete over-the-air FPGA transceiver and should therefore be interpreted as
 a receiver building block rather than full FPGA-based DECT NR+ validation
 \cite{fagerholmFPGAbasedDECT2020New2024}.
 
-Recent work moves beyond characterization toward \emph{link adaptation}.
-Graf et al. jointly investigate MCS, transmit power, and packet length using
+Recent work moves beyond characterization toward link adaptation. Graf et al.
+jointly investigate MCS, transmission power, and packet length using
 commercial Nordic nRF91-series devices and formulate configuration selection
 as a multi-objective optimization problem
 \cite{grafParetoOptimalityApproach2026a}. Their Pareto analysis shows that
@@ -300,8 +330,7 @@ to radio conditions and application requirements. Together with earlier
 hardware measurements, this indicates that PHY configuration should be treated
 as a joint application-dependent optimization problem rather than as
 independent selection of individual radio parameters
-\cite{etsi_ts103636_3,
-bandaraExperimentalValidationAnalysis2025,
+\cite{bandaraExperimentalValidationAnalysis2025,
 grafWhatExpectWhen2026,
 grafParetoOptimalityApproach2026a}.
 
@@ -317,35 +346,21 @@ grafParetoOptimalityApproach2026a}. This cross-layer dependence explains why
 PHY-related aspects occur in 22 studies despite only 12 being classified
 primarily as PHY contributions.
 
-Overall, the literature shows a clear maturation from link-level IMT-2020
+Overall, the literature shows a clear progression from link-level IMT-2020
 evaluation toward comparative link analysis, propagation and channel
 characterization, industrial measurements, commercial-hardware benchmarking,
-receiver implementation, and adaptive parameter selection
-\cite{pennerLinkLevelPerformanceEvaluation2021,
-dhanwaniAssessmentCandidateTechnology2020,
-maliatsosEvaluationIMT2020Candidate2022a,
-soniLinkLevelAssessmentNOMA2023,
-kizilirmakExaminationPHYLayer2024,
-leugnerAlternativeSubGHzLPWAN2025a,
-llagunoPhysicalLayerPerformance2024,
-liuDataAidedChannelEstimation2025,
-fagerholmFPGAbasedDECT2020New2024,
-wassmannPerformanceDECT2020NR2024,
-haqueDECT2020NRLink2025,
-bandaraExperimentalValidationAnalysis2025,
-grafWhatExpectWhen2026,
-grafParetoOptimalityApproach2026a}.The accumulated evidence increasingly
-supports the feasibility of the standardized PHY beyond analytical and
-simulation-based evaluation. However, experimental evidence remains
-concentrated on a limited number of hardware platforms and relatively
+receiver implementation, and adaptive parameter selection. The accumulated
+evidence increasingly supports the feasibility of the standardized PHY beyond
+analytical and simulation-based evaluation. However, experimental evidence
+remains concentrated on a limited number of hardware platforms and relatively
 small-scale deployments, with comparatively little work combining real-time
 channel observation with application-dependent parameter adaptation
-\cite{haqueDECT2020NRLink2025,
-fagerholmFPGAbasedDECT2020New2024,
+\cite{fagerholmFPGAbasedDECT2020New2024,
 bandaraExperimentalValidationAnalysis2025,
 grafWhatExpectWhen2026,
 grafParetoOptimalityApproach2026a}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -360,34 +375,74 @@ address MAC mechanisms as either a primary or secondary topic. This reflects
 the central role of channel access, association, resource coordination,
 retransmission, and relay operation in determining latency, reliability,
 scalability, and energy efficiency.
-The DECT-2020 NR medium access control (MAC) layer coordinates access to the shared radio medium and maps higher-layer signaling and user data onto PHY transmissions. It provides data-transfer and radio-resource-allocation services to the upper layers while relying on the PHY for packet transport and radio measurements. The MAC architecture defines the Broadcast Control Channel (BCCH), Paging Control Channel (PCCH), Common Control Channel (CCCH), Dedicated Control Channel (DCCH), Dedicated Traffic Channel (DTCH), and Multicast Traffic Channel (MTCH). These logical channels are multiplexed onto the Paging and Broadcast Channel (PCH/BCH), Dedicated Channel (DCH), or Random Access Channel (RACH), which are subsequently carried by the physical data channel \cite{etsi_ts_103636_4_r2}.
 
-MAC operation is organized around a control entity containing functions for local radio control, paging, broadcast and beacon control, random-access control, beacon scanning, and connection configuration. These functions coordinate channel selection, logical-channel prioritization, MAC-PDU multiplexing, modulation-and-coding selection, HARQ configuration, security, and mobility. Network and device identities are maintained at different scopes: a 32-bit Network ID distinguishes the network, a 32-bit Long Radio Device ID identifies a device within that network, and a 16-bit Short Radio Device ID provides a compact identifier for local PHY control signaling \cite{etsi_ts_103636_4_r2}.
+The standardized DECT NR+ MAC coordinates access to the shared radio medium
+and maps higher-layer signaling and user data onto PHY transmissions. It
+provides data-transfer and radio-resource-allocation services to the upper
+layers while relying on the PHY for packet transport and radio measurements.
+The MAC architecture defines the Broadcast Control Channel (BCCH), Paging
+Control Channel (PCCH), Common Control Channel (CCCH), Dedicated Control
+Channel (DCCH), Dedicated Traffic Channel (DTCH), and Multicast Traffic
+Channel (MTCH). These logical channels are multiplexed onto the Paging and
+Broadcast Channel (PCH/BCH), Dedicated Channel (DCH), or Random Access
+Channel (RACH), which are subsequently carried by the physical data channel
+\cite{etsi_ts103636_4,etsi_ts_103636_4_r2}.
 
-Network discovery and local coordination are based principally on beaconing and association. A radio device operating in the Fixed Termination (FT) role periodically transmits network and cluster beacons containing synchronization, identification, resource-allocation, and association information. A device operating in the Portable Termination (PT) role scans the available channels, measures detected beacons, selects a suitable FT, and initiates association. Because FT and PT are logical protocol roles rather than permanently fixed device classes, a device can combine them to support decentralized clusters and multi-hop connectivity. The MAC supplies the discovery and coordination mechanisms required by such topologies, whereas packet forwarding and end-to-end routing are principally handled by the data-link-control functionality \cite{etsi_ts_103636_1_r2,etsi_ts_103636_4_r2}.
+MAC operation is organized around control functions for local radio operation,
+paging, broadcast and beacon control, random access, beacon scanning, and
+connection configuration. These functions coordinate channel selection,
+logical-channel prioritization, MAC-PDU multiplexing, modulation-and-coding
+selection, \gls{harq} configuration, security, and mobility. Network and
+device identities are maintained at different scopes: a 32-bit Network ID
+distinguishes the network, a 32-bit Long Radio Device ID identifies a device
+within that network, and a 16-bit Short Radio Device ID provides a compact
+identifier for local PHY control signaling
+\cite{etsi_ts_103636_4_r2}.
 
-Two complementary access modes are provided. In random access, available RACH resources are announced through beacons or unicast signaling. A transmitting device applies Listen Before Talk (LBT), exponential backoff, and resource-validity checks before initiating transmission. This mode is suitable for association, sporadic traffic, and large populations for which permanent resource reservation would be inefficient. Scheduled access instead uses explicitly signaled time-frequency allocations and can provide more predictable transmission opportunities for periodic or latency-sensitive traffic. The MAC also manages HARQ processes and conveys acknowledgement, negative-acknowledgement, and redundancy-version information through PHY control signaling. Integrity protection and ciphering are applied at the MAC layer where required.
-
-The coexistence of distributed contention, explicit scheduling, adaptive link configuration, and feedback-based retransmission makes MAC behavior inherently cross-layer. Beacon periodicity, sensing thresholds, backoff parameters, random-access allocation, scheduled resources, MCS selection, and HARQ configuration jointly affect latency, reliability, scalability, spectrum utilization, and energy consumption. Radio conformance testing consequently includes both PT-mode random access and scheduled transmission behavior in addition to conventional transmitter and receiver measurements \cite{etsi_ts_103776}.
-The standardized DECT NR+ MAC supports network discovery, beaconing,
-association, random access, radio-resource signaling, scheduled transmission,
-feedback, and retransmission within the FT/PT architecture. Combined FT/PT
-functionality additionally enables hierarchical and multi-hop operation
+Network discovery and local coordination are based principally on beaconing
+and association. An \gls{ft} periodically transmits network and cluster
+beacons containing synchronization, identification, resource-allocation, and
+association information. A \gls{pt} scans the available channels, measures
+detected beacons, selects a suitable \gls{ft}, and initiates association.
+Because FT and PT are logical protocol roles rather than permanently fixed
+device classes, a device can combine them to support decentralized clusters
+and multi-hop connectivity. The MAC supplies the discovery and coordination
+mechanisms required by such topologies, whereas packet forwarding and
+end-to-end routing are principally handled by the data-link-control
+functionality
 \cite{etsi_ts103636_1,etsi_ts103636_4,
-perez-guiraoDECTNRUnveiling2022,
-kovalchukovDECT2020NewRadio2022}. A key characteristic is the coexistence of
-contention-based and coordinated access: contention supports sporadic traffic
-and large \gls{mmtc} populations, whereas scheduled resources provide greater
-predictability for periodic or latency-sensitive traffic
-\cite{etsi_ts103636_4,samuylovPerformanceMACLayer2024a}.
+etsi_ts_103636_1_r2,etsi_ts_103636_4_r2}.
 
-Listen-Before-Talk (LBT) is an important mechanism for distributed
-contention-based access. Devices sense the channel before transmission and use
-deferral, backoff, and retransmission when resources are occupied. Although
-these mechanisms reduce simultaneous transmissions and facilitate spectrum
-sharing, sensing, collisions, waiting, and retransmissions increase access
-delay. LBT configuration therefore trades aggressive low-delay access against
-collision avoidance
+Two complementary access modes are provided. In random access, available RACH
+resources are announced through beacons or unicast signaling. A transmitting
+device applies Listen Before Talk (LBT), exponential backoff, and
+resource-validity checks before initiating transmission. This mode is suitable
+for association, sporadic traffic, and large \gls{mmtc} populations for which
+permanent resource reservation would be inefficient. Scheduled access instead
+uses explicitly signaled time-frequency allocations and can provide more
+predictable transmission opportunities for periodic or latency-sensitive
+traffic. The MAC also manages \gls{harq} processes and conveys
+acknowledgement, negative-acknowledgement, and redundancy-version information
+through PHY control signaling
+\cite{etsi_ts103636_4,etsi_ts_103636_4_r2}.
+
+The coexistence of distributed contention, explicit scheduling, adaptive link
+configuration, and feedback-based retransmission makes MAC behavior
+inherently cross-layer. Beacon periodicity, sensing thresholds, backoff
+parameters, random-access allocation, scheduled resources, MCS selection, and
+\gls{harq} configuration jointly affect latency, reliability, scalability,
+spectrum utilization, and energy consumption. Radio conformance testing
+consequently includes both PT-mode random access and scheduled transmission
+behavior in addition to conventional transmitter and receiver measurements
+\cite{etsi_ts_103776}.
+
+Listen-Before-Talk is an important mechanism for distributed contention-based
+access. Devices sense the channel before transmission and use deferral,
+backoff, and retransmission when resources are occupied. Although these
+mechanisms reduce simultaneous transmissions and facilitate spectrum sharing,
+sensing, collisions, waiting, and retransmissions increase access delay. LBT
+configuration therefore trades aggressive low-delay access against collision
+avoidance
 \cite{etsi_ts103636_4,
 samuylovPerformanceMACLayer2024a,
 glazkovImprovingNearURLLCServices2025}.
@@ -410,8 +465,7 @@ state-aware adaptation can reduce delay while balancing time allocated to
 random access and data transmission. This moves random-access duration from a
 fixed parameter toward a traffic-dependent control variable, although
 experimental validation is still required to quantify estimation, signaling,
-and implementation overhead
-\cite{gaidamakaOptimizingDelaysRandom2025}.
+and implementation overhead.
 
 Flexible FT/PT operation has also been exploited for reliability and coverage.
 Ahmad et al. dynamically assign combined FT/PT devices as intermediate relays
@@ -423,9 +477,7 @@ intermediate-node assignment and additional MAC signaling
 \cite{ahmadMACLayerProtocolUltraReliable2025}. These results demonstrate the
 coupling between MAC operation and mesh formation, although hardware timing,
 mobility, signaling overhead, and energy costs remain less extensively
-validated experimentally
-\cite{ahmadMACProtocolReducing2024,
-ahmadMACLayerProtocolUltraReliable2025}.
+validated experimentally.
 
 Channel access is equally important for coexistence. Samuylov et al.
 investigate DECT-2020 NR in the presence of classic DECT using LBT,
@@ -458,21 +510,13 @@ simulation-based evaluation.
 Overall, the MAC literature shows a progression from characterization of
 standardized mechanisms toward traffic- and application-dependent
 configuration. Dense-network studies identify sensitivity to device
-population, Gaidamaka et al. adapt random-access duration, Ahmad et al.
-reconfigure FT/PT relay roles, and Glazkov et al. jointly tune access,
-acknowledgement, power-control, and priority mechanisms
-\cite{samuylovPerformanceMACLayer2024a,
-gaidamakaOptimizingDelaysRandom2025,
-ahmadMACProtocolReducing2024,
-ahmadMACLayerProtocolUltraReliable2025,
-glazkovImprovingNearURLLCServices2025}. This progression also demonstrates
-the cross-layer relationship between MAC, routing, scheduling, reliability,
-and energy: changes in LBT, backoff, acknowledgements, relay assignment, or
-resource reservation simultaneously affect several performance dimensions
-\cite{etsi_ts103636_4,
-samuylovPerformanceMACLayer2024a,
-ahmadMACProtocolReducing2024,
-glazkovImprovingNearURLLCServices2025}.
+population, random-access resources can be adapted to estimated activity,
+FT/PT relay roles can be dynamically reassigned, and access, acknowledgement,
+power-control, and priority mechanisms can be jointly configured. This
+progression demonstrates the cross-layer relationship among MAC operation,
+routing, scheduling, reliability, and energy because changes in LBT, backoff,
+acknowledgements, relay assignment, or resource reservation simultaneously
+affect several performance dimensions.
 
 From a broader wireless-networking perspective, DECT NR+ combines mechanisms
 associated with both distributed and coordinated access. IEEE 802.11 WLANs
@@ -487,24 +531,17 @@ combining contention and coordination according to network and application
 requirements rather than relying exclusively on either access paradigm.
 
 The accumulated evidence indicates that the standardized MAC can support
-dense \gls{mmtc}, reliability enhancement, coexistence, and near-\gls{urllc}
-\cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceMACLayer2024a,
-gaidamakaOptimizingDelaysRandom2025,
-ahmadMACProtocolReducing2024,
-ahmadMACLayerProtocolUltraReliable2025,
-samuylovEmpoweringNearURLLCIoT2025,
-glazkovImprovingNearURLLCServices2025}. However, much of this evidence remains
-analytical or simulation-based. Large-scale hardware experiments are still
-needed to determine how contention, LBT, random-access duration,
-retransmissions, acknowledgements, priorities, and scheduled resources
-interact under realistic interference, heterogeneous traffic, mobility, and
-hardware timing constraints
+dense \gls{mmtc}, reliability enhancement, coexistence, and near-\gls{urllc}.
+However, much of this evidence remains analytical or simulation-based.
+Large-scale hardware experiments are still needed to determine how
+contention, LBT, random-access duration, retransmissions, acknowledgements,
+priorities, and scheduled resources interact under realistic interference,
+heterogeneous traffic, mobility, and hardware timing constraints
 \cite{gaidamakaOptimizingDelaysRandom2025,
 glazkovImprovingNearURLLCServices2025,
 ahmadMACLayerProtocolUltraReliable2025}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Routing and Mesh Networking}
 \label{subsec:routing}
@@ -514,11 +551,12 @@ Routing and mesh networking constitute a prominent theme in the \gls{dectnr}
 literature. As shown in Section~\ref{sec:results}, 23 of the 51 included
 studies address routing or mesh-related aspects either directly or through
 broader PHY, MAC, reliability, positioning, or application contributions.
-This reflects a distinguishing feature of DECT NR+: devices can operate as FT,
-PT, or combined FT/PT nodes, enabling intermediate forwarding and connectivity
-beyond a single radio hop
+This reflects a distinguishing feature of DECT NR+: devices can operate as
+FTs, PTs, or combined FT/PT nodes, enabling intermediate forwarding and
+connectivity beyond a single radio hop
 \cite{etsi_ts103636_1,etsi_ts103636_4,etsi_ts103636_5,
-kovalchukovDECT2020NewRadio2022,perez-guiraoDECTNRUnveiling2022}.
+kovalchukovDECT2020NewRadio2022,
+perez-guiraoDECTNRUnveiling2022}.
 
 Multi-hop operation can extend coverage and reduce dependence on densely
 deployed infrastructure, but each additional hop introduces channel-access,
@@ -552,14 +590,13 @@ and outage increase substantially, whereas end-to-end deterministic source
 routing approaches approximately 140--145 packets/s while maintaining packet
 outage below 1\%
 \cite{alamDLRoutingPerformance2026a}. Capacity increases progressively as
-source routing covers additional hops, from approximately 18 packets/s for one
-source-routed hop to 40, 70, and about 135 packets/s for two, three, and five
-hops, respectively
+source routing covers additional hops, from approximately 18 packets/s for
+one source-routed hop to 40, 70, and about 135 packets/s for two, three, and
+five hops, respectively
 \cite{alamDLRoutingPerformance2026a}. These results indicate that forwarding
 redundancy can become a major scalability limitation, although the absolute
 capacities remain specific to the simulated topology, channel, and traffic
-assumptions
-\cite{alamDLRoutingPerformance2026a}.
+assumptions.
 
 Explicit routing, however, depends on sufficiently accurate topology
 information. F{\"u}hrling et al. address incomplete connectivity knowledge
@@ -568,9 +605,8 @@ matrix completion, multi-hop localization, and local route discovery
 \cite{fuhrlingRobustRoutingProtocol2025b}. Missing entries in an incomplete
 hop matrix are estimated before localization and route discovery are applied,
 allowing viable paths to be recovered under different network densities and
-levels of topology incompleteness
-\cite{fuhrlingRobustRoutingProtocol2025b}. The approach reduces dependence on
-complete topology observations and network-wide routing-message flooding, but
+levels of topology incompleteness. The approach reduces dependence on
+complete topology observations and network-wide routing-message flooding but
 introduces estimation and computational overhead that remains to be evaluated
 under mobility and rapidly changing physical networks.
 
@@ -595,8 +631,7 @@ latency and reliability is important because the lowest-latency path may
 contain unreliable links, whereas minimizing packet error alone can result in
 unnecessarily long routes. Nevertheless, training overhead, computational
 requirements, online adaptation, generalization, and predictable fallback
-behavior remain to be validated on physical DECT NR+ meshes
-\cite{rauwolfTopologyAwareDeepReinforcement2026a}.
+behavior remain to be validated on physical DECT NR+ meshes.
 
 The routing challenges share characteristics with conventional ad-hoc and
 wireless mesh networks, where dynamic topology and forwarding overhead have
@@ -610,28 +645,18 @@ asifURLLCBasedMultiHopCommunication2025,
 alamDLRoutingPerformance2026a}. Consequently, no single routing paradigm is
 optimal across all conditions: flooding provides resilience with limited
 topology knowledge, while deterministic routing reduces forwarding overhead
-when accurate route information is available
-\cite{alameriSystematicReviewModification2022,
-asifURLLCBasedMultiHopCommunication2025,
-alamDLRoutingPerformance2026a,
-fuhrlingRobustRoutingProtocol2025b}.
+when accurate route information is available.
 
-Overall, the literature shows an evolution from redundancy-oriented forwarding
-toward increasingly selective and context-aware routing. Latency-aware routing
-reduces unnecessary forwarding, deterministic source routing improves
-large-mesh scalability, topology-recovery methods address incomplete network
-information, and learning-based approaches jointly incorporate topology,
-latency, and reliability
-\cite{asifURLLCBasedMultiHopCommunication2025,
-fuhrlingRobustRoutingProtocol2025b,
-alamDLRoutingPerformance2026a,
-rauwolfTopologyAwareDeepReinforcement2026a}. These mechanisms remain tightly
-coupled to PHY and MAC behavior because every route consists of radio links
-affected by propagation and transmission configuration, while each hop incurs
-access, scheduling, acknowledgement, retransmission, and queueing overhead
-\cite{samuylovPerformanceMACLayer2024a,
-asifURLLCBasedMultiHopCommunication2025,
-rauwolfTopologyAwareDeepReinforcement2026a}.
+Overall, the literature shows an evolution from redundancy-oriented
+forwarding toward increasingly selective and context-aware routing.
+Latency-aware routing reduces unnecessary forwarding, deterministic source
+routing improves large-mesh scalability, topology-recovery methods address
+incomplete network information, and learning-based approaches jointly
+incorporate topology, latency, and reliability. These mechanisms remain
+tightly coupled to PHY and MAC behavior because every route consists of radio
+links affected by propagation and transmission configuration, while each hop
+incurs access, scheduling, acknowledgement, retransmission, and queueing
+overhead.
 
 The available evidence therefore establishes native multi-hop operation as a
 major DECT NR+ capability but remains predominantly analytical and
@@ -644,8 +669,8 @@ reliability, energy, and traffic requirements
 \cite{fuhrlingRobustRoutingProtocol2025b,
 alamDLRoutingPerformance2026a,
 rauwolfTopologyAwareDeepReinforcement2026a}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Scheduling and Resource Allocation}
 \label{subsec:scheduling}
@@ -663,9 +688,10 @@ Resource allocation determines which channels, slots, subslots, or
 transmission opportunities are assigned, whereas scheduling determines when
 and how these resources are used. The DECT NR+ specifications provide
 radio-resource structures, scheduled transmissions, random-access
-opportunities, and signaling mechanisms, but do not prescribe a single
+opportunities, and signaling mechanisms but do not prescribe a single
 application-specific scheduling policy
-\cite{etsi_ts103636_3,etsi_ts103636_4}. This flexibility allows different
+\cite{etsi_ts103636_3,etsi_ts103636_4,
+etsi_ts_103636_3_r2,etsi_ts_103636_4_r2}. This flexibility allows different
 strategies for periodic control, reliability-critical communication, and
 energy-constrained sensing, as summarized in
 Fig.~\ref{fig:application_scheduling}.
@@ -687,8 +713,8 @@ A central scheduling trade-off is the balance between contention-based and
 scheduled communication. Random access accommodates bursty traffic without
 permanent resource reservation but becomes less predictable as contention
 increases, whereas scheduled opportunities improve temporal control at the
-risk of underutilization. The appropriate balance therefore depends on traffic
-periodicity, load, device population, and latency requirements
+risk of underutilization. The appropriate balance therefore depends on
+traffic periodicity, load, device population, and latency requirements
 \cite{samuylovPerformanceMACLayer2024a,
 gaidamakaOptimizingDelaysRandom2025}. Gaidamaka et al. illustrate dynamic
 resource partitioning by using a Hidden Markov Model (HMM) to estimate device
@@ -724,22 +750,20 @@ Comparable application-aware concepts are more mature in cellular resource
 management. Delay-aware 5G scheduling can incorporate traffic priorities,
 channel conditions, fairness, and packet delay into resource assignment
 \cite{madiDelayBasedResourceAllocation2022a}, while programmable RAN
-frameworks extend traffic control through classification, queueing, scheduling,
-shaping, and pacing
+frameworks extend traffic control through classification, queueing,
+scheduling, shaping, and pacing
 \cite{irazabalTCRANProgrammableTraffic2024}. These approaches cannot be
 transferred directly because DECT NR+ combines decentralized operation,
 contention, scheduled resources, flexible FT/PT roles, and native multi-hop
 communication
 \cite{etsi_ts103636_1,etsi_ts103636_4}. Nevertheless, they illustrate the
 broader principle that application and \gls{qos} requirements should influence
-resource decisions
-\cite{madiDelayBasedResourceAllocation2022a,
-irazabalTCRANProgrammableTraffic2024}.
+resource decisions.
 
 This requirement is particularly important in industrial communication,
-where application periods and deadlines may not align naturally with the radio
-timing structure. Predictable communication requires coordination among packet
-generation, resource reservation, schedule repetition, transmission,
+where application periods and deadlines may not align naturally with the
+radio timing structure. Predictable communication requires coordination among
+packet generation, resource reservation, schedule repetition, transmission,
 acknowledgement, and retransmission
 \cite{etsi_ts103636_3,etsi_ts103636_4}. Reliability may additionally require
 redundant opportunities or channel diversity, whereas energy-constrained
@@ -751,17 +775,16 @@ grafParetoOptimalityApproach2026a}.
 
 Implementation-level timing further constrains scheduling. Alizai et al.
 experimentally investigate UL/DL scheduling in DECT-2020 NR star networks
-using a single-chip DECT NR+ platform, digital-storage oscilloscope
+using a single-chip DECT NR+ platform, digital-storage-oscilloscope
 measurements, and internal modem timing analysis
 \cite{alizaiMeasurementDrivenLatencyAnalysis2026}. The results isolate the
 RX--TX turnaround associated with alternating reception and transmission and
 show that, for short-packet and request--response traffic, this turnaround can
 constitute a significant part of the latency budget. Consequently, reducing
 the nominal scheduling interval does not necessarily produce a proportional
-reduction in end-to-end latency on a single-transceiver device
-\cite{alizaiMeasurementDrivenLatencyAnalysis2026}. These findings motivate
-scheduling and architectural approaches that reduce unnecessary UL/DL
-alternation, including the potential separation of UL and DL resources.
+reduction in end-to-end latency on a single-transceiver device. These findings
+motivate scheduling and architectural approaches that reduce unnecessary
+UL/DL alternation, including the potential separation of UL and DL resources.
 
 A complementary perspective is provided by analytical queueing studies.
 Morozova et al. model a DECT-2020 cluster as a discrete-time queue and show
@@ -773,29 +796,23 @@ mean, and variance of Peak Age of Information (PAoI)
 \cite{nikolaevModelingDECT2020Tandem2026}. Together, these studies show that
 resource allocation should consider not only instantaneous access delay and
 capacity but also traffic generation, queueing, service-time variability, and
-information freshness
-\cite{morozovaComparisonTwoModels2026a,
-nikolaevModelingDECT2020Tandem2026}.
+information freshness.
 
 Overall, existing studies show a progression from static resource
 configuration toward context-aware management. Random-access duration can be
 adapted to device activity, MAC parameters and priorities can be coordinated
 for latency-sensitive traffic, coexistence affects resource availability, PHY
 configuration changes the utility of allocated resources, and hardware
-turnaround introduces implementation-level timing constraints
-\cite{gaidamakaOptimizingDelaysRandom2025,
-glazkovImprovingNearURLLCServices2025,
-samuylovPerformanceAssessmentDECT20202023,
-grafParetoOptimalityApproach2026a,
-alizaiMeasurementDrivenLatencyAnalysis2026}. However, these contributions
-address separate parts of the problem rather than providing a unified
-application-oriented scheduler. A central open challenge is therefore to map
-application requirements for latency, reliability, traffic periodicity, and
-energy to coordinated access, resource, PHY, and timing configurations while
-accounting for routing and practical hardware constraints.
+turnaround introduces implementation-level timing constraints. However, these
+contributions address separate parts of the problem rather than providing a
+unified application-oriented scheduler. A central open challenge is therefore
+to map application requirements for latency, reliability, traffic periodicity,
+and energy to coordinated access, resource, PHY, and timing configurations
+while accounting for routing and practical hardware constraints.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -827,23 +844,20 @@ practical reliability depends strongly on radio configuration and environment
 bandaraExperimentalValidationAnalysis2025,
 grafParetoOptimalityApproach2026a}. Modulation and coding, transmission power,
 packet length, propagation, and interference therefore determine operating
-points that trade reliability against airtime, throughput, and energy
-\cite{pennerURLLCPerformanceEvaluation2021,
-grafParetoOptimalityApproach2026a}.
+points that trade reliability against airtime, throughput, and energy.
 
 The \gls{mmtc} literature exposes similar dependencies at larger scale. Soni
 et al. evaluate multi-hop decode-and-forward communication and show that
 outage probability deteriorates with increasing hop count and transmission
-rate, while coding improves BER performance
+rate, while coding improves \gls{ber} performance
 \cite{soniPerformanceMultihopAssisted2021}. Singhwi et al. investigate relay
 selection, association, and channel allocation in an Urban-Macro scenario and
-report the most favorable SINR distribution for angle-based assignment, with
-approximately 7~dB difference between the best and worst evaluated approaches
+report the most favorable \gls{sinr} distribution for angle-based assignment,
+with approximately 7~dB difference between the best and worst evaluated
+approaches
 \cite{singhwiDECT2020NewRadio2021}. These results demonstrate that massive
 connectivity depends not only on connection density but also on relay depth,
-interference, association, and channel allocation
-\cite{soniPerformanceMultihopAssisted2021,
-singhwiDECT2020NewRadio2021}.
+interference, association, and channel allocation.
 
 Combining high reliability with low latency becomes more difficult in
 multi-hop communication because retransmissions, conservative access,
@@ -858,26 +872,50 @@ approximately 30~ms
 latency cost introduced by additional forwarding stages.
 
 Biswas et al. quantify this trade-off for critical-infrastructure monitoring.
-Their simulations report HARQ-based user-plane latency of approximately
+Their simulations report \gls{harq}-based user-plane latency of approximately
 10.55--25.07~ms over five hops and 15.55--38.78~ms over eight hops, depending
 on packet size
 \cite{biswasReliableLowLatencyCommunications2024}. Additional retransmissions
 further increase latency, directly demonstrating that mechanisms intended to
 recover failed packets consume part of the available latency budget. These
 values remain scenario-specific because the study considers an optimized,
-simulation-based mesh under controlled traffic and propagation assumptions
-\cite{biswasReliableLowLatencyCommunications2024}.
+simulation-based mesh under controlled traffic and propagation assumptions.
+
+A complementary recovery strategy is investigated by Mousavi et al., who
+apply Reed--Solomon (RS) coding as a proactive MAC-layer recovery mechanism
+for DECT NR+, aiming to reduce dependence on feedback-driven retransmissions
+\cite{mousavi2026rs}. Their design applies RS parity across the Physical Data
+Channel payloads of grouped slots while leaving synchronization, reference,
+and control fields outside the RS codeword. The authors evaluate 3-slot
+packets containing two data slots and one parity slot, 12-slot packets
+containing nine data slots and three parity slots, and alternative
+combinations within a common 24-slot radio-frame budget. Using a CRC-aided
+slot-erasure model, independent Rayleigh fading, and plain ARQ without
+\gls{harq} soft combining as the baseline, the simulations reveal a
+reliability--latency--throughput trade-off. Short RS-protected groups localize
+losses, provide finer recovery granularity, and reduce completion latency
+under unfavorable channel conditions because recovery can occur without an
+additional feedback and retransmission cycle. Longer groups amortize repeated
+PHY signaling and coding overhead more effectively and consequently provide
+higher useful throughput at moderate-to-high SNR. Mixed frame structures
+provide an intermediate compromise. The study therefore indicates that RS
+coding can complement standardized DECT NR+ retransmission mechanisms when
+bounded recovery time is important; however, the preferred packetization and
+code configuration remain application- and channel-dependent. These
+conclusions are limited to the adopted slot-erasure abstraction and plain-ARQ
+comparison because HARQ soft combining, hardware timing, mobility,
+interference, and energy consumption were not evaluated.
 
 Glazkov et al. investigate whether coordinated configuration of standardized
-mechanisms can improve this behavior by jointly considering power control,
-LBT, backoff, priority queuing, and acknowledgement timing
+mechanisms can improve reliability and latency by jointly considering power
+control, LBT, backoff, priority queuing, and acknowledgement timing
 \cite{glazkovImprovingNearURLLCServices2025}. Their simulations report
 approximately 30--80\% lower multi-hop latency and 10--20\% lower packet loss,
 depending on the \gls{urllc} and \gls{mmtc} traffic conditions, with
-comparatively limited impact on coexisting \gls{mmtc} traffic
-\cite{glazkovImprovingNearURLLCServices2025}. The results show that
-differentiated traffic treatment and coordinated MAC configuration can improve
-near-\gls{urllc} performance without replacing the standardized mechanisms.
+comparatively limited impact on coexisting \gls{mmtc} traffic. The results
+show that differentiated traffic treatment and coordinated MAC configuration
+can improve near-\gls{urllc} performance without replacing the standardized
+mechanisms.
 
 Routing provides another reliability mechanism because end-to-end performance
 depends on the quality and number of links traversed. Latency-oriented path
@@ -886,8 +924,8 @@ against route length
 \cite{asifURLLCBasedMultiHopCommunication2025,
 rauwolfTopologyAwareDeepReinforcement2026a}. Rauwolf et al. explicitly
 optimize this trade-off using a topology-aware GNN+DRL framework and report
-reductions of up to 19.9\% in end-to-end latency and 10\% in PER, together
-with fewer transmissions relative to the evaluated baselines
+reductions of up to 19.9\% in end-to-end latency and 10\% in \gls{per},
+together with fewer transmissions relative to the evaluated baselines
 \cite{rauwolfTopologyAwareDeepReinforcement2026a}. The approach remains
 simulation-driven, however, leaving computational requirements, online
 adaptation, and generalization to physical industrial networks open.
@@ -901,9 +939,7 @@ toward ultra-reliable multi-hop \gls{iiot} communication through dynamic
 intermediate-device assignment and additional MAC/convergence procedures
 \cite{ahmadMACLayerProtocolUltraReliable2025}. Such topology adaptation can
 improve connectivity but introduces signaling, forwarding, energy, and
-route-establishment overhead
-\cite{ahmadMACProtocolReducing2024,
-ahmadMACLayerProtocolUltraReliable2025}.
+route-establishment overhead.
 
 Bin Asif et al. explore a complementary approach by modifying the propagation
 environment through Intelligent Reflecting Surfaces (IRS) for industrial
@@ -911,13 +947,11 @@ environment through Intelligent Reflecting Surfaces (IRS) for industrial
 \cite{binasifIRSAssistedDECT2020NR2025}. Their framework identifies shadowed
 regions and assigns IRS resources together with priority-based subslot
 allocation. Simulation results report improved received power and throughput
-and reduced RTT relative to the considered conventional and intermediate-node
-approaches
-\cite{binasifIRSAssistedDECT2020NR2025}. The approach broadens the reliability
-design space beyond retransmission and relaying, although IRS control,
-channel estimation, mobility, synchronization, and hardware integration remain
-to be experimentally demonstrated
-\cite{binasifIRSAssistedDECT2020NR2025}.
+and reduced \gls{rtt} relative to the considered conventional and
+intermediate-node approaches. The approach broadens the reliability design
+space beyond retransmission and relaying, although IRS control, channel
+estimation, mobility, synchronization, and hardware integration remain to be
+experimentally demonstrated.
 
 For \gls{mmtc}, reliability is additionally constrained by contention as
 device activity increases. Samuylov et al. demonstrate the sensitivity of MAC
@@ -927,63 +961,17 @@ phase according to estimated device activity
 gaidamakaOptimizingDelaysRandom2025}. Together with the relay and link-level
 studies, the evidence indicates that scalable \gls{mmtc} depends jointly on
 radio robustness, relay and channel assignment, contention management, and
-adaptive access
-\cite{singhwiDECT2020NewRadio2021,
-soniPerformanceMultihopAssisted2021,
-samuylovPerformanceMACLayer2024a,
-gaidamakaOptimizingDelaysRandom2025}.
+adaptive access.
 
 The coexistence of \gls{urllc} and \gls{mmtc} traffic further requires
 differentiated resource treatment. Absolute priority for latency-sensitive
 traffic can disadvantage massive sensing traffic, whereas uniform treatment
 can prevent \gls{urllc} flows from satisfying deadlines. Existing work shows
 that traffic priority, access configuration, relay selection, and adaptive
-resource management can provide differentiation
+resource management can provide such differentiation
 \cite{samuylovEmpoweringNearURLLCIoT2025,
 glazkovImprovingNearURLLCServices2025,
 singhwiDECT2020NewRadio2021}.
-
-Taken together, the literature identifies several complementary reliability
-mechanisms: robust PHY configuration, contention and acknowledgement control,
-retransmission, resource prioritization, relay assignment, routing, topology
-adaptation, and propagation enhancement
-\cite{grafParetoOptimalityApproach2026a,
-glazkovImprovingNearURLLCServices2025,
-ahmadMACLayerProtocolUltraReliable2025,
-rauwolfTopologyAwareDeepReinforcement2026a,
-binasifIRSAssistedDECT2020NR2025}. These mechanisms operate at different
-layers but affect the same end-to-end objectives and incur different costs in
-latency, energy, resource utilization, and complexity
-\cite{samuylovPerformanceMACLayer2024a,
-grafParetoOptimalityApproach2026a,
-glazkovImprovingNearURLLCServices2025}. The relevant objective is therefore
-not maximum reliability in isolation, but sufficient reliability within the
-latency and resource constraints of the application
-\cite{soniPerformanceMultihopAssisted2021,
-biswasReliableLowLatencyCommunications2024,
-samuylovEmpoweringNearURLLCIoT2025}.
-
-Overall, the literature progresses from IMT-2020 feasibility assessment and
-multi-hop \gls{mmtc} toward cross-layer optimization involving access,
-retransmission, traffic priority, relay assignment, routing, PHY configuration,
-and propagation enhancement
-\cite{maliatsosEvaluationIMT2020Candidate2022a,
-singhwiDECT2020NewRadio2021,
-soniPerformanceMultihopAssisted2021,
-samuylovPerformanceMACLayer2024a,
-samuylovEmpoweringNearURLLCIoT2025,
-glazkovImprovingNearURLLCServices2025,
-biswasReliableLowLatencyCommunications2024,
-rauwolfTopologyAwareDeepReinforcement2026a,
-binasifIRSAssistedDECT2020NR2025}. Nevertheless, much of the multi-hop
-near-\gls{urllc} and massive-\gls{mmtc} evidence remains analytical or
-simulation-based. Experimental studies have validated important link and
-commercial-device characteristics
-\cite{haqueDECT2020NRLink2025,
-bandaraExperimentalValidationAnalysis2025,
-grafParetoOptimalityApproach2026a,
-alizaiMeasurementDrivenLatencyAnalysis2026}, but comparable large-scale
-end-to-end reliability experiments remain limited.
 
 Implementation effects become particularly important at tight latency budgets.
 Measurement-driven UL/DL scheduling analysis shows that RX--TX turnaround on
@@ -993,16 +981,33 @@ short-packet and request--response latency
 accumulate with access, forwarding, queueing, acknowledgement, and
 retransmission delays across multiple hops.
 
-Future work should therefore treat reliability as an end-to-end,
-application-dependent, and cross-layer property. Large-scale experiments are
-needed to characterize reliability and latency under realistic interference,
-heterogeneous traffic, mobility, failures, variable device activity, and
-hardware timing, while jointly considering deadline-aware retransmission,
-resource or path redundancy, multi-channel diversity, reliability-aware
-routing, and priority-aware coexistence of \gls{urllc} and \gls{mmtc}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Taken together, the literature identifies several complementary reliability
+mechanisms: robust PHY configuration, contention and acknowledgement control,
+retransmission and proactive recovery, resource prioritization, relay
+assignment, routing, topology adaptation, and propagation enhancement. These
+mechanisms operate at different layers but affect the same end-to-end
+objectives and incur different costs in latency, energy, resource utilization,
+and complexity. The relevant objective is therefore not maximum reliability
+in isolation, but sufficient reliability within the latency and resource
+constraints of the application.
+
+Overall, the literature progresses from IMT-2020 feasibility assessment and
+multi-hop \gls{mmtc} toward cross-layer reliability management involving
+access, retransmission and recovery, traffic priority, relay assignment,
+routing, PHY configuration, and propagation enhancement. Nevertheless, much
+of the multi-hop near-\gls{urllc} and massive-\gls{mmtc} evidence remains
+analytical or simulation-based. Experimental studies have validated important
+link, commercial-device, and implementation-timing characteristics
+\cite{haqueDECT2020NRLink2025,
+bandaraExperimentalValidationAnalysis2025,
+grafParetoOptimalityApproach2026a,
+alizaiMeasurementDrivenLatencyAnalysis2026}, but comparable large-scale
+end-to-end reliability experiments remain limited. This motivates
+application-oriented evaluation under realistic interference, heterogeneous
+traffic, mobility, failures, variable device activity, and hardware timing,
+with reliability assessed jointly with latency, energy, and resource cost.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Energy Efficiency}
 \label{subsec:energy}
@@ -1024,8 +1029,7 @@ hop count also increases forwarding energy, with device density and
 interference influencing the resulting balance. Multi-hop operation therefore
 does not provide an unconditional energy advantage; its benefit depends on the
 trade-off between shorter transmission distances and additional forwarding
-activity
-\cite{kovalchukovDECT2020NewRadio2022}.
+activity.
 
 Nihtila and Berg examine this trade-off from the perspective of battery-powered
 mesh operation and identify a fundamental tension between communication
@@ -1034,8 +1038,7 @@ latency and device lifetime
 traffic can remain inactive for comparatively long periods, whereas forwarding
 nodes must provide sufficiently frequent receive opportunities. Shorter
 availability intervals reduce forwarding latency but increase radio-on time,
-creating asymmetric energy consumption between leaf and router devices
-\cite{nihtilaEnergyConsumptionDECT20202022}.
+creating asymmetric energy consumption between leaf and router devices.
 
 To distribute this forwarding burden, Nihtila and Taipale propose periodic
 router rotation among eligible nodes
@@ -1044,10 +1047,9 @@ forwarding responsibility can improve the distribution of energy consumption
 and extend network lifetime relative to static router assignment. This
 distinguishes device-level energy efficiency from network lifetime: minimizing
 aggregate communication energy does not necessarily prevent strategically
-important forwarding nodes from being depleted prematurely
-\cite{nihtilaEnergySavingRouter2022}. Energy-aware routing must therefore
-consider both communication performance and the distribution of forwarding
-cost across devices
+important forwarding nodes from being depleted prematurely. Energy-aware
+routing must therefore consider both communication performance and the
+distribution of forwarding cost across devices
 \cite{nihtilaEnergyConsumptionDECT20202022,
 nihtilaEnergySavingRouter2022}.
 
@@ -1071,8 +1073,7 @@ configurations
 necessarily minimize energy if it increases packet errors and retransmissions,
 while robust configurations may increase airtime. Energy-efficient PHY
 operation is therefore application- and channel-dependent rather than
-represented by a universally optimal radio configuration
-\cite{grafParetoOptimalityApproach2026a}.
+represented by a universally optimal radio configuration.
 
 These results connect energy directly to scheduling and reliability.
 Applications with relaxed reporting deadlines can tolerate longer inactive
@@ -1092,14 +1093,12 @@ can serve as an ambient RF source for extremely low-power devices
 \cite{liaoDataAssistedBackscatter2025}. Their design integrates a backscatter
 receiver with a DECT NR+ SDR receiver and exploits waveform structure for
 data-assisted detection. Over-the-air experiments demonstrate feasibility,
-with BER values as low as 0.02 under the most favorable evaluated conditions
-\cite{liaoDataAssistedBackscatter2025}. Although still a proof of concept,
-this approach broadens the energy design space beyond optimization of active
-radios and could support sensing devices with substantially smaller power
-budgets. Practical challenges remain in range, multi-device access,
-synchronization, scheduling, interference, and operation in industrial
-channels
-\cite{liaoDataAssistedBackscatter2025}.
+with \gls{ber} values as low as 0.02 under the most favorable evaluated
+conditions. Although still a proof of concept, this approach broadens the
+energy design space beyond optimization of active radios and could support
+sensing devices with substantially smaller power budgets. Practical
+challenges remain in range, multi-device access, synchronization, scheduling,
+interference, and operation in industrial channels.
 
 The reviewed evidence can therefore be interpreted at three interacting
 levels. At the device and link level, modem state, MCS, transmission power,
@@ -1132,33 +1131,21 @@ Overall, the literature indicates that DECT NR+ energy efficiency is a
 cross-layer property. Transmission parameters determine link-level energy;
 topology and routing distribute forwarding costs; duty cycle determines
 background reception energy; scheduling determines radio availability; and
-reliability requirements introduce additional airtime or retransmissions
-\cite{kovalchukovDECT2020NewRadio2022,
-nihtilaEnergyConsumptionDECT20202022,
-nihtilaEnergySavingRouter2022,
-grafParetoOptimalityApproach2026a}. However, mesh-level energy and router-role
-studies remain predominantly simulation-based, whereas detailed hardware
-measurements mainly characterize point-to-point operation
-\cite{kovalchukovDECT2020NewRadio2022,
-nihtilaEnergyConsumptionDECT20202022,
+reliability requirements introduce additional airtime or retransmissions.
+However, mesh-level energy and router-role studies remain predominantly
+simulation-based, whereas detailed hardware measurements mainly characterize
+point-to-point operation
+\cite{nihtilaEnergyConsumptionDECT20202022,
 nihtilaEnergySavingRouter2022,
 bandaraExperimentalValidationAnalysis2025,
 grafWhatExpectWhen2026,
-grafParetoOptimalityApproach2026a}.
+grafParetoOptimalityApproach2026a}. A major remaining challenge is therefore
+experimentally validated, application-oriented lifetime optimization that
+jointly considers sleep-aware scheduling, residual-energy-aware relay
+selection, router rotation, adaptive PHY configuration, application deadlines,
+and battery state.
 
-A major remaining challenge is therefore experimentally validated,
-application-oriented lifetime optimization. Future work should jointly
-consider sleep-aware scheduling, residual-energy-aware relay selection,
-router rotation, adaptive PHY configuration, application deadlines, and
-battery state. Large-scale hardware experiments are particularly needed to
-determine how these mechanisms interact under realistic interference,
-heterogeneous traffic, changing topology, and multi-hop operation
-\cite{nihtilaEnergySavingRouter2022,
-grafParetoOptimalityApproach2026a,
-liaoDataAssistedBackscatter2025}.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Positioning and Localization}
 \label{subsec:positioning}
@@ -1168,9 +1155,9 @@ Positioning and localization represent an emerging research direction within
 \gls{dectnr}. As shown in Section~\ref{sec:results}, six of the 51 included
 studies address positioning or localization, while only two are classified
 primarily in this category. Compared with PHY, MAC, and routing, localization
-therefore remains comparatively immature. A central challenge is to obtain
-useful positioning information without excessive measurement, signaling,
-processing, and energy overhead
+is therefore comparatively less developed in the reviewed literature. A
+central challenge is to obtain useful positioning information without
+excessive measurement, signaling, processing, and energy overhead
 \cite{saikkoPositioningDECT2020NR2024,
 saikkoPositioningTrackingDECT20202025}.
 
@@ -1208,17 +1195,15 @@ errors reach approximately 60\%
 \cite{saikkoPositioningTrackingDECT20202025}. The study also shows that
 selection performance depends on the quality of prior state information;
 longer measurement intervals and increased prediction uncertainty can reduce
-the reliability of anchor selection
-\cite{saikkoPositioningTrackingDECT20202025}.
+the reliability of anchor selection.
 
 Together, these studies establish an important principle for DECT NR+
 localization: positioning should optimize the \emph{information value} of
-measurements rather than simply maximizing the number acquired
-\cite{saikkoPositioningDECT2020NR2024,
-saikkoPositioningTrackingDECT20202025}. Measurement selection consequently
-becomes a resource-management problem because fewer, more informative
-measurements can reduce signaling, processing, radio activity, and potentially
-energy consumption while maintaining positioning performance.
+measurements rather than simply maximizing the number acquired. Measurement
+selection consequently becomes a resource-management problem because fewer,
+more informative measurements can reduce signaling, processing, radio
+activity, and potentially energy consumption while maintaining positioning
+performance.
 
 Localization can also support network operation. F{\"u}hrling et al.
 incorporate multi-hop localization into a routing framework for partially
@@ -1228,8 +1213,7 @@ local route discovery
 roles for localization in DECT NR+: \emph{application-level positioning}, in
 which location is the required service, and \emph{network-assisted
 localization}, in which spatial information supports functions such as routing
-or topology management
-\cite{fuhrlingRobustRoutingProtocol2025b}.
+or topology management.
 
 The available evidence nevertheless remains predominantly analytical and
 simulation-based
@@ -1262,17 +1246,14 @@ largely unexplored.
 Overall, DECT NR+ positioning research has progressed from proactive selection
 of range and angle measurements toward multimodal range--angle--RSS tracking.
 Information-aware measurement selection can substantially improve positioning
-performance when measurement resources are limited
-\cite{saikkoPositioningDECT2020NR2024,
-saikkoPositioningTrackingDECT20202025}, but experimental maturity remains
-considerably below that of communication-oriented DECT NR+ research. Future
-work should therefore emphasize hardware-based industrial localization,
-mobility and NLoS conditions, multimodal fusion, adaptive measurement
-intervals, cooperative mesh positioning, and integration of positioning with
-MAC scheduling and energy management.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+performance when measurement resources are limited. However, experimental
+maturity remains below that of communication-oriented DECT NR+ research,
+particularly for hardware-based industrial localization, mobility and NLoS
+conditions, multimodal fusion, adaptive measurement intervals, cooperative
+mesh positioning, and integration of positioning with MAC scheduling and
+energy management.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Security, Coexistence, and Multi-RAT Integration}
 \label{subsec:security_coexistence}
@@ -1283,26 +1264,26 @@ comparatively underexplored in the \gls{dectnr} literature. As shown in
 Section~\ref{sec:results}, only three of the 51 included studies were coded
 under security or multi-RAT integration, while two explicitly address
 coexistence or regulatory aspects. Compared with PHY, MAC, and routing, these
-deployment-oriented topics therefore remain relatively immature.
+deployment-oriented topics are therefore comparatively less developed in the
+reviewed literature.
 
-The available evidence can therefore be synthesized across three interacting
-deployment dimensions. \emph{Security} determines trusted participation and
-communication protection
-\cite{etsi_ts103636_4,etsi_ts103636_5,
-ngoIoTDeviceAuthentication2025}; \emph{coexistence} determines how DECT NR+
-shares spectrum under technical and regulatory constraints
+The available evidence can be synthesized across three interacting deployment
+dimensions. Security determines trusted participation and communication
+protection
+\cite{etsi_ts103636_4,etsi_ts103636_5};
+coexistence determines how DECT NR+ shares spectrum under technical and
+regulatory constraints
 \cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceDECT2020NR2025}; and \emph{multi-RAT integration}
-determines how DECT NR+ cooperates with complementary radio and core-network
-technologies
+samuylovPerformanceDECT2020NR2025}; and multi-RAT integration determines how
+DECT NR+ cooperates with complementary radio and core-network technologies
 \cite{dangEWDCIntegratingDECT20202025a,
 dangUniRATUnifiedDECT20202026}. These dimensions are coupled because
 interference can trigger channel or RAT changes, inter-RAT transitions can
 require security procedures, and authentication and tunneling introduce
 processing and signaling overhead.
 
-Security functionality is nevertheless integral to the standardized DECT NR+
-architecture. The specifications define mechanisms for device identification,
+Security functionality is integral to the standardized DECT NR+ architecture.
+The specifications define mechanisms for device identification,
 authentication, key management, integrity protection, and confidentiality
 \cite{etsi_ts103636_4,etsi_ts103636_5}. In multi-hop networks, however,
 security extends beyond individual radio links because devices can participate
@@ -1316,23 +1297,22 @@ rauwolfTopologyAwareDeepReinforcement2026a}.
 Comparable threats are well established in other low-power mesh networks,
 where manipulation of routing information has motivated lightweight detection
 mechanisms for attacks such as rank manipulation
-\cite{kalyaniResourceefficientEnsembleMachine2026}. Although such mechanisms
-cannot be transferred directly to DECT NR+, they illustrate the need to
-evaluate routing manipulation, falsified topology information, unauthorized
-participation, and resource-exhaustion attacks in distributed DECT NR+
-networks.
+\cite{kalyaniResourceefficientEnsembleMachine2026}. This evidence is used
+only for contextual comparison rather than as evidence about DECT NR+
+itself. Nevertheless, it illustrates relevant questions for future DECT NR+
+evaluation, including routing manipulation, falsified topology information,
+unauthorized participation, and resource-exhaustion attacks.
 
-Ngo addresses security from an interworking perspective by integrating
+For additional contextual evidence beyond the 51-study primary corpus, Ngo
+addresses security from an interworking perspective by integrating
 resource-constrained non-cellular IoT devices, including DECT-2020 NR
 platforms, with 5G-core authentication and session management
 \cite{ngoIoTDeviceAuthentication2025}. The architecture transfers substantial
 authentication and traffic-control functionality toward the 5G core rather
 than requiring a complete cellular security stack on every constrained device,
 and interoperability is demonstrated with commercial and open-source 5G core
-platforms
-\cite{ngoIoTDeviceAuthentication2025}. Although this work is used here as
-contextual evidence rather than as part of the 51-study primary corpus, it
-provides a relevant pathway for incorporating DECT NR+-based devices into
+platforms. Although this work is not part of the quantitative primary corpus,
+it provides a relevant pathway for incorporating DECT NR+-based devices into
 broader infrastructure-managed security architectures.
 
 A second deployment challenge is spectrum coexistence. DECT NR+ channel
@@ -1347,23 +1327,19 @@ conditions, standard LBT keeps classic-DECT packet drops below approximately
 2\% when 25\% of resources are allocated to classic DECT. Last-minute
 scanning increases DECT-2020 NR packet drops by more than 10\% relative to
 LBT-only operation, whereas the considered scheduling approach improves
-DECT-2020 NR performance by approximately 2--5\%
-\cite{samuylovPerformanceAssessmentDECT20202023}. These results indicate
-that coexistence performance depends on the particular sensing and scheduling
-strategy rather than channel occupancy alone
-\cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceMACLayer2024a}.
+DECT-2020 NR performance by approximately 2--5\%. These results indicate that
+coexistence performance depends on the particular sensing and scheduling
+strategy rather than channel occupancy alone.
 
 Regulatory access rules can impose additional constraints. Samuylov et al.
 compare native DECT-2020 NR LBT with mesh operation following FCC access rules
 for the UPCS band
-\cite{samuylovPerformanceDECT2020NR2025}. In the evaluated scenarios,
-packet delivery for the FCC-based mesh falls below 85\%, compared with
-approximately 98--99\% using native DECT NR+ LBT, while the effect on
-coexisting classic-DECT devices remains comparatively small
-\cite{samuylovPerformanceDECT2020NR2025}. The result shows that practical
-mesh performance depends not only on the radio protocol but also on the
-regulatory spectrum-access regime.
+\cite{samuylovPerformanceDECT2020NR2025}. In the evaluated scenarios, packet
+delivery for the FCC-based mesh falls below 85\%, compared with approximately
+98--99\% using native DECT NR+ LBT, while the effect on coexisting
+classic-DECT devices remains comparatively small. The result shows that
+practical mesh performance depends not only on the radio protocol but also on
+the regulatory spectrum-access regime.
 
 A third direction concerns deliberate cooperation between DECT NR+ and other
 \glspl{rit}. Rather than using one technology for every function,
@@ -1377,71 +1353,54 @@ connectivity (EWDC), which combines DECT-2020 NR and Wi-Fi
 \cite{dangEWDCIntegratingDECT20202025a}. DECT is used for discovery and secure
 exchange of Wi-Fi configuration information, while Wi-Fi carries the
 high-bandwidth data path. The implementation uses Nordic nRF9161-DK hardware,
-with WireGuard protecting Wi-Fi communication
-\cite{dangEWDCIntegratingDECT20202025a}. EWDC therefore illustrates a
+with WireGuard protecting Wi-Fi communication. EWDC therefore illustrates a
 functional division between control/discovery and data transmission rather
 than requiring both radios to carry identical traffic.
 
-The subsequent Uni-RAT framework extends this concept to DECT-2020 NR,
-Wi-Fi, and a 5G core
+The subsequent Uni-RAT framework extends this concept to DECT-2020 NR, Wi-Fi,
+and a 5G core
 \cite{dangUniRATUnifiedDECT20202026}. DECT-2020 NR operates as the Master-RAT
 and anchors control-plane security through 5G-AKA and NAS, while Wi-Fi acts as
 a Secondary-RAT for data delivery. WireGuard protects Layer-3 communication,
-and customized NAS signaling distributes configuration and keying information.
-A physical prototype combines Nordic nRF9161 DECT devices, Raspberry Pi Wi-Fi
-nodes, a commercial 5G core, and Arm TrustZone for security-critical
-functionality
-\cite{dangUniRATUnifiedDECT20202026}.
+and customized NAS signaling distributes configuration and keying
+information. A physical prototype combines Nordic nRF9161 DECT devices,
+Raspberry Pi Wi-Fi nodes, a commercial 5G core, and Arm TrustZone for
+security-critical functionality.
 
-Taken together, the interworking studies indicate a progression from
-core-assisted authentication toward functional and security integration across
-DECT NR+, Wi-Fi, and 5G infrastructure
-\cite{ngoIoTDeviceAuthentication2025,
-dangEWDCIntegratingDECT20202025a,
-dangUniRATUnifiedDECT20202026}. Such integration also expands the trust
-boundary across radio interfaces, gateways, security contexts, configuration
-exchange, and core-network functions. Multi-RAT systems must additionally
-decide which interface should carry a traffic flow and when another RAT should
-be activated according to application requirements and radio conditions
+Taken together, the interworking studies indicate a progression toward
+functional and security integration across DECT NR+, Wi-Fi, and 5G
+infrastructure
 \cite{dangEWDCIntegratingDECT20202025a,
-dangUniRATUnifiedDECT20202026}.
-
+dangUniRATUnifiedDECT20202026}. Such integration expands the trust boundary
+across radio interfaces, gateways, security contexts, configuration exchange,
+and core-network functions. Multi-RAT systems must additionally decide which
+interface should carry a traffic flow and when another RAT should be activated
+according to application requirements and radio conditions.
 
 Despite recent progress, experimental evidence remains limited. Coexistence
 studies are predominantly simulation-based
 \cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceDECT2020NR2025}, whereas security and multi-RAT prototypes
-cover only a subset of possible authentication, mobility, failover, routing,
-and heterogeneous-traffic scenarios
-\cite{ngoIoTDeviceAuthentication2025,
-dangEWDCIntegratingDECT20202025a,
+samuylovPerformanceDECT2020NR2025}, whereas the available multi-RAT
+prototypes cover only a subset of possible authentication, mobility, failover,
+routing, and heterogeneous-traffic scenarios
+\cite{dangEWDCIntegratingDECT20202025a,
 dangUniRATUnifiedDECT20202026}. Security of native multi-hop operation is a
 particularly important gap because increasingly sophisticated routing and
 topology-management mechanisms have not yet been matched by comparable
-attack-oriented experimental analysis
-\cite{fuhrlingRobustRoutingProtocol2025b,
-rauwolfTopologyAwareDeepReinforcement2026a}.
+attack-oriented experimental analysis.
 
 Overall, the evidence shows a progression from standardized security and
 autonomous spectrum access toward heterogeneous connectivity architectures.
 Coexistence and regulatory constraints can materially affect packet-delivery
-performance, while core-assisted authentication, EWDC, and Uni-RAT demonstrate
-practical pathways for integrating DECT NR+ with Wi-Fi and 5G infrastructure
-\cite{samuylovPerformanceAssessmentDECT20202023,
-samuylovPerformanceDECT2020NR2025,
-ngoIoTDeviceAuthentication2025,
-dangEWDCIntegratingDECT20202025a,
-dangUniRATUnifiedDECT20202026}. Future research should emphasize secure
-multi-hop operation, attack-oriented evaluation, interference-aware channel
-selection, application-aware RAT selection, mobility and failover, and
-experimental characterization of the latency, energy, and signaling overhead
-introduced by security and interworking mechanisms.
+performance, while EWDC and Uni-RAT demonstrate practical pathways for
+integrating DECT NR+ with Wi-Fi and 5G infrastructure. Important remaining
+questions concern secure multi-hop operation, attack-oriented evaluation,
+interference-aware channel selection, application-aware RAT selection,
+mobility and failover, and experimental characterization of the latency,
+energy, and signaling overhead introduced by security and interworking
+mechanisms.
 
-Mousavi et al. investigate Reed--Solomon (RS) coding as a proactive MAC-layer recovery mechanism for DECT NR+, aiming to reduce dependence on feedback-driven retransmissions \cite{mousavi2026rs}. Their design applies RS parity across the Physical Data Channel payloads of grouped slots while leaving synchronization, reference, and control fields outside the RS codeword. The authors evaluate 3-slot packets containing two data slots and one parity slot, 12-slot packets containing nine data slots and three parity slots, and alternative combinations within a common 24-slot radio-frame budget. Using a CRC-aided slot-erasure model, independent Rayleigh fading, and plain ARQ without HARQ soft combining as the baseline, the simulations reveal a fundamental reliability--latency--throughput trade-off. Short RS-protected groups localize losses, provide finer recovery granularity, and reduce completion latency under unfavorable channel conditions because recovery can occur without an additional feedback and retransmission cycle. Longer groups amortize repeated PHY signaling and coding overhead more effectively and consequently provide higher useful throughput at moderate-to-high SNR. Mixed frame structures offer an intermediate compromise. The study therefore indicates that RS coding can complement the standardized DECT NR+ retransmission mechanisms when bounded recovery time is important; however, the preferred packetization and code configuration remain application- and channel-dependent. These conclusions are limited to the adopted slot-erasure abstraction and plain-ARQ comparison, as HARQ soft combining, hardware timing, mobility, interference, and energy consumption were not evaluated.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Industrial Applications and Experimental Implementations}
 \label{subsec:industrial_experimental}
@@ -1471,10 +1430,10 @@ performance on propagation conditions and radio configuration.
 
 Commercial-device experiments broaden this evidence to multiple \glspl{kpi}.
 Bandara evaluates Nordic nRF91-series hardware and reports outdoor LoS
-communication of approximately 730~m at an 80\% packet-delivery ratio, maximum
-measured throughput of approximately 2.50~Mbit/s for MCS~4 with eight subslots
-compared with approximately 3.36~Mbit/s theoretically, and a minimum measured
-RTT of approximately 2.255~ms for a 12-byte payload
+communication of approximately 730~m at an 80\% packet-delivery ratio,
+maximum measured throughput of approximately 2.50~Mbit/s for MCS~4 with
+eight subslots compared with approximately 3.36~Mbit/s theoretically, and a
+minimum measured \gls{rtt} of approximately 2.255~ms for a 12-byte payload
 \cite{bandaraExperimentalValidationAnalysis2025}. Energy consumption varies
 from approximately 0.26 to 2.6~$\mu$J/bit depending on configuration,
 illustrating that range, throughput, latency, reliability, and energy must be
@@ -1495,8 +1454,7 @@ Mudriievskyi et al. construct a low-cost DECT NR+ testbed for Tactile Internet
 and human-in-the-loop communication using commercial platforms
 \cite{mudriievskyiCHEAP5GDECT2024a}. Their non-optimized COTS implementation
 achieves approximately 2--8~ms latency and 2.3--2.5~Mbit/s under the evaluated
-packet lengths and MCS configurations
-\cite{mudriievskyiCHEAP5GDECT2024a}. Although limited to two platforms and
+packet lengths and MCS configurations. Although limited to two platforms and
 primarily point-to-point communication, the experiment demonstrates practical
 low-latency operation on comparatively inexpensive hardware.
 
@@ -1508,11 +1466,10 @@ modem hardware and practical latency measurements
 trade-off among latency, RF-resource utilization, and transmission robustness
 and identifies a minimum measured latency of approximately 2.312~ms with the
 available modem implementation, at the cost of roughly one third of the RF
-channel resources
-\cite{durreDECT2020NRProfessional2024}. Because the implementation available
-for the study primarily exposed PHY-level functionality, the reported value
-should be interpreted as a minimum implementation-latency estimate rather than
-a complete application-level audio delay.
+channel resources. Because the implementation available for the study
+primarily exposed PHY-level functionality, the reported value should be
+interpreted as a minimum implementation-latency estimate rather than a
+complete application-level audio delay.
 
 Poets and Wa{\ss}mann subsequently broaden the professional-audio perspective
 by examining the DECT NR+ design space for wireless microphones and media
@@ -1521,16 +1478,12 @@ applications
 connecting two Dante-enabled audio devices through an open-source DECT NR+ SDR
 implementation
 \cite{poetsProfessionalNetworkedAudio2025}. The prototype achieves an average
-one-way latency of approximately 1.7~ms
-\cite{poetsProfessionalNetworkedAudio2025}. Unlike isolated PHY or packet
+one-way latency of approximately 1.7~ms. Unlike isolated PHY or packet
 measurements, this application-level demonstration additionally exposes
 synchronization, periodic traffic, buffering, and application-specific
 \gls{qos} requirements. Taken together, the professional-audio studies show a
-progression from radio-level design-space exploration and modem latency
-measurement toward end-to-end application prototyping
-\cite{durreDECT2020NRProfessional2024,
-poetsDECTNRNew2024,
-poetsProfessionalNetworkedAudio2025}.
+progression from radio-level design-space exploration and modem-latency
+measurement toward end-to-end application prototyping.
 
 Power-grid monitoring extends experimental validation toward multi-hop and
 heterogeneous application traffic. Pires et al. evaluate DECT-2020 NR mesh
@@ -1539,40 +1492,36 @@ detection, and power-quality monitoring
 \cite{piresDECT2020NREnergy2026b}. Under two-hop conditions, the three
 substation use cases exhibit mean mesh latencies of approximately 15.45,
 18.55, and 27.93~ms and corresponding end-to-end mean latencies of
-approximately 26.6, 29.71, and 39.62~ms
-\cite{piresDECT2020NREnergy2026b}. The difference illustrates the additional
-delay introduced by gateway and backhaul components beyond the DECT NR+ mesh
-itself. A second proof of concept uses five nRF9151/nRF9161-based nodes in a
-four-hop mesh and includes a 48-hour power-quality measurement experiment,
-providing evidence beyond short-duration point-to-point testing
-\cite{piresDECT2020NREnergy2026b}.
+approximately 26.6, 29.71, and 39.62~ms. The difference illustrates the
+additional delay introduced by gateway and backhaul components beyond the
+DECT NR+ mesh itself. A second proof of concept uses five
+nRF9151/nRF9161-based nodes in a four-hop mesh and includes a 48-hour
+power-quality measurement experiment, providing evidence beyond short-duration
+point-to-point testing.
 
 The application landscape also extends beyond fixed industrial and indoor
 deployments. Jahangir investigates DECT NR+ connectivity for unmanned aerial
 vehicles through analytical link-budget modeling and simulation of
 air-to-ground and air-to-air communication
 \cite{jahangirAnalysisPerformanceDECT2024}. The analysis considers frequencies
-of 915~MHz, 1.89~GHz, and 3.5~GHz together with different modulation schemes and
-communication distances. Under the modeled conditions, lower-frequency
+of 915~MHz, 1.89~GHz, and 3.5~GHz together with different modulation schemes
+and communication distances. Under the modeled conditions, lower-frequency
 operation, particularly at 915~MHz, provides more favorable long-range link
 behavior because of reduced path loss, whereas the higher-frequency options
-become increasingly constrained as distance grows
-\cite{jahangirAnalysisPerformanceDECT2024}. The study broadens the potential
-application space of DECT NR+ toward aerial connectivity, but its evidence
-remains analytical and simulation-based; UAV flight tests, mobility,
+become increasingly constrained as distance grows. The study broadens the
+potential application space of DECT NR+ toward aerial connectivity, but its
+evidence remains analytical and simulation-based; UAV flight tests, mobility,
 altitude-dependent propagation, antenna orientation, Doppler effects, and
-dynamic routing remain open for experimental validation
-\cite{jahangirAnalysisPerformanceDECT2024}.
+dynamic routing remain open for experimental validation.
 
 Implementation-oriented research also addresses the realization of individual
 PHY functions. Fagerholm et al. propose an FPGA-oriented synchronization
 architecture requiring only two complex multiplications
 \cite{fagerholmFPGAbasedDECT2020New2024}. Evaluation with MATLAB, Icarus
-Verilog, and captured real-world data indicates an additional SNR requirement
-of approximately 2.6~dB or more depending on configuration
-\cite{fagerholmFPGAbasedDECT2020New2024}. The work demonstrates efficient
-hardware-oriented synchronization, although it should not be interpreted as a
-complete FPGA-based DECT NR+ PHY/MAC testbed.
+Verilog, and captured real-world data indicates an additional \gls{snr}
+requirement of approximately 2.6~dB or more depending on configuration. The
+work demonstrates efficient hardware-oriented synchronization, although it
+should not be interpreted as a complete FPGA-based DECT NR+ PHY/MAC testbed.
 
 Recent measurement-driven work extends experimentation toward internal
 scheduling behavior. Alizai et al. investigate UL/DL scheduling on a
@@ -1581,12 +1530,11 @@ and internal modem timing analysis
 \cite{alizaiMeasurementDrivenLatencyAnalysis2026}. By isolating the RX--TX
 turnaround associated with alternating reception and transmission, the study
 shows that hardware switching can constitute a significant component of the
-latency budget for short-packet and request--response communication
-\cite{alizaiMeasurementDrivenLatencyAnalysis2026}. Consequently, reducing
-nominal scheduling delay alone does not necessarily produce a proportional
-reduction in application-visible latency on single-transceiver hardware,
-motivating scheduling and architectural approaches that reduce unnecessary
-UL/DL alternation.
+latency budget for short-packet and request--response communication.
+Consequently, reducing nominal scheduling delay alone does not necessarily
+produce a proportional reduction in application-visible latency on
+single-transceiver hardware, motivating scheduling and architectural
+approaches that reduce unnecessary UL/DL alternation.
 
 The experimental literature therefore spans complementary implementation
 platforms. Commercial Nordic nRF91-series devices provide standardized modem
@@ -1601,7 +1549,7 @@ application-level flexibility
 poetsProfessionalNetworkedAudio2025}; and FPGA-oriented work provides
 architectural control over digital implementation
 \cite{fagerholmFPGAbasedDECT2020New2024}. These approaches collectively show
-a maturation from radio characterization toward measurement-driven
+a progression from radio characterization toward measurement-driven
 configuration and application-level validation. The UAV analysis complements
 these hardware studies by illustrating how analytical modeling can be used to
 explore application domains that have not yet reached physical deployment
@@ -1611,20 +1559,10 @@ Across application domains, different studies expose different aspects of
 DECT NR+. Tactile communication emphasizes short-packet latency; professional
 audio adds stringent periodic traffic, synchronization, and RF-resource
 constraints; power-grid monitoring introduces heterogeneous traffic, gateways,
-multi-hop communication, and longer-duration operation; UAV analysis introduces
-mobility-oriented range and frequency considerations; industrial measurements
-expose realistic propagation; and device-level studies reveal implementation
-and energy constraints
-\cite{wassmannPerformanceDECT2020NR2024,
-haqueDECT2020NRLink2025,
-bandaraExperimentalValidationAnalysis2025,
-mudriievskyiCHEAP5GDECT2024a,
-durreDECT2020NRProfessional2024,
-poetsProfessionalNetworkedAudio2025,
-piresDECT2020NREnergy2026b,
-jahangirAnalysisPerformanceDECT2024,
-grafWhatExpectWhen2026,
-alizaiMeasurementDrivenLatencyAnalysis2026}. Application suitability should
+multi-hop communication, and longer-duration operation; UAV analysis
+introduces mobility-oriented range and frequency considerations; industrial
+measurements expose realistic propagation; and device-level studies reveal
+implementation and energy constraints. Application suitability should
 therefore be established through use-case-specific requirements rather than a
 generic claim of industrial applicability.
 
@@ -1644,19 +1582,12 @@ substantially to end-to-end latency
 Overall, DECT NR+ research has progressed from conceptual and simulation-based
 feasibility toward industrial-channel measurements, commercial-device
 characterization, SDR implementations, application prototypes, multi-hop
-proofs of concept, and implementation-level timing analysis
-\cite{durreDECT2020NRProfessional2024,
-jahangirAnalysisPerformanceDECT2024}. The central experimental question is
-consequently shifting from whether DECT NR+ can operate to how its PHY, MAC,
-scheduling, routing, topology, and hardware configuration should be selected
-for specific applications.
-
-Future work should emphasize larger and more representative physical
-deployments with multi-hop communication, mobility, heterogeneous traffic,
-interference, failures, multi-channel operation, and long-duration
-measurements. Experimental evaluation should jointly characterize latency
-distributions, jitter, reliability, throughput, energy, and network lifetime
-and explicitly map these \glspl{kpi} to application requirements. Such
-reproducible, application-driven validation is necessary to determine which
-combinations of DECT NR+ mechanisms provide predictable performance in real
-industrial systems.
+proofs of concept, and implementation-level timing analysis. The central
+experimental question is consequently shifting from whether DECT NR+ can
+operate to how its PHY, MAC, scheduling, routing, topology, and hardware
+configuration should be selected for specific applications. Larger and more
+representative physical deployments are still required to evaluate multi-hop
+communication, mobility, heterogeneous traffic, interference, failures,
+multi-channel operation, and long-duration behavior while jointly relating
+latency distributions, jitter, reliability, throughput, energy, and network
+lifetime to application requirements.
