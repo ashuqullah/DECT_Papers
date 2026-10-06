@@ -1,0 +1,132 @@
+\documentclass{ieeeaccess}
+
+% ============================================================
+% Packages
+% ============================================================
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{bm}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{siunitx}
+\usepackage{url}
+
+
+\sisetup{table-format=1.3}
+
+\graphicspath{{figures/}}
+
+% ============================================================
+% Acronyms
+% ============================================================
+
+\usepackage[acronym,nomain,nonumberlist]{glossaries}
+\makenoidxglossaries
+\loadglsentries{acronyms}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+% ============================================================
+% Document
+% ============================================================
+
+\begin{document}
+
+\history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
+\doi{10.1109/ACCESS.2026.DOI}
+% ============================================================
+% Title
+% ============================================================
+
+\title{DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+
+% ============================================================
+% Authors
+% ============================================================
+
+\author{
+\uppercase{Ashuqullah Alizai}\authorrefmark{1},
+\uppercase{Mohammad Reza Mousavi}\authorrefmark{1},
+and
+\uppercase{Stephan Ludwig}\authorrefmark{1}
+}
+
+\address[1]{
+Aalen University of Applied Sciences, Aalen, Germany
+(e-mail: ashuqullah.alizai@hs-aalen.de;
+mohammad.mousavi@hs-aalen.de;
+stephan.ludwig@hs-aalen.de)
+}
+
+% ============================================================
+% Funding acknowledgment
+% ============================================================
+
+
+% ============================================================
+% Running header
+% ============================================================
+
+\markboth
+{Alizai \headeretal: DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+{Alizai \headeretal: DECT-2020 NR: A Comprehensive Systematic Literature Review, Taxonomy, and Future Research Directions}
+
+% ============================================================
+% Corresponding author
+% ============================================================
+
+\corresp{
+Corresponding author: Ashuqullah Alizai
+(e-mail: ashuqullah.alizai@hs-aalen.de).
+}
+
+% ============================================================
+% Abstract
+% ============================================================
+\begin{abstract}
+\gls{nr}, also known as DECT NR+, is a non-cellular radio technology designed for decentralized, infrastructure-light, andlarge-scale wireless communication, with particular relevance to \gls{iiot} applications. Despite rapidly growing research activity, the evidence is distributed across physical-layer design, medium access control, multi-hop networking, resource management, reliability, energy efficiency, positioning, experimental implementations. This paper presents a \gls{slr} of DECT-2020 NR research following the \gls{prisma} 2020 guidelines. A structured search and selection process identified 51 primary studies published between 2020 and July 2026. The studies were systematically analyzed with respect to publication characteristics, technical contributions, evaluation methods, experimental platforms, performance metrics, and application domains. The results show that physical-layer, medium-access-control, and routing/mesh research dominate the literature, while experimental validation has increasingly progressed toward commercial hardware, \gls{sdr} platforms, multi-hop testbeds, and application-oriented prototypes. However, large-scale physical mesh experiments, application-oriented scheduling and resource allocation, long-duration evaluation, positioning, security, coexistence, and multi-radio-access technology integration remain comparatively less investigated and experimentally validated. The synthesis further shows that DECT-2020 NR performance is inherently cross-layer and application-dependent, involving interactions among radio configuration, channel access, scheduling, routing, topology, energy management, traffic characteristics, and hardware behavior. These findings identify application-oriented cross-layer configuration, large-scale experimental validation, and reproducible benchmarking as important research directions for achieving predictable DECT-2020 NR performance in industrial wireless systems.
+\end{abstract}
+% ============================================================
+% Keywords
+% ============================================================
+
+\begin{keywords}
+DECT-2020 NR, industrial Internet of Things, MAC,
+multi-hop networking, systematic literature review, wireless communication.
+\end{keywords}
+
+\titlepgskip=-21pt
+
+\maketitle
+\glsresetall
+% ============================================================
+% Acronyms
+% ============================================================
+
+% ============================================================
+% Main manuscript
+% ============================================================
+
+\input{sections/01_introduction}
+\input{sections/02_methodology}
+\input{sections/03_literature_search_results}
+\input{sections/04_research_classification}
+\input{sections/05_research_gaps}
+\input{sections/06_conclusion}
+
+% ============================================================
+% References
+% ============================================================
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\EOD
+
+\end{document}

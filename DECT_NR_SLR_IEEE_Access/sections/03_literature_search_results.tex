@@ -1,0 +1,144 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results of the Systematic Literature Review}
+\label{sec:results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This section presents the quantitative results of the systematic literature review. The analysis characterizes the study-selection process, publication trends, technical research distribution, evaluation methodologies, validation approaches, reported performance metrics, and implementation platforms. The technical contributions and findings of the individual studies are not examined in detail here; instead, they are synthesized thematically in the subsequent technical synthesis section.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Study Selection and Search Results}
+\label{subsec:study_selection_results}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The systematic literature search was conducted in July 2026 according to the review protocol described in Section~\ref{sec:methodology}. Searches across the five primary literature databases identified 107 records in total: 42 from IEEE Xplore, 44 from Scopus, one from the ACM Digital Library, 15 from SpringerLink, and five from ScienceDirect. In addition to the primary database search, Google Scholar was used to support backward and forward citation searching. This complementary snowballing process involved the examination of 226 records.
+
+Combining the primary database search and the records examined through snowballing resulted in 333 records at the identification stage. Duplicate and other records that did not proceed to formal screening were removed before screening, leaving 86 records for title and abstract assessment. At this stage, 22 records were excluded, and 64 reports were subsequently sought for full-text retrieval. Five reports could not be retrieved, resulting in 59 reports being assessed for full-text eligibility according to the predefined criteria described in Section~\ref{subsec:eligibility}.
+
+Of the 59 reports assessed at the full-text stage, 51 satisfied the criteria for inclusion in the primary research corpus and were retained for the quantitative synthesis. The remaining eight records did not form part of the primary corpus: five were retained as contextual or background studies, two were excluded because their primary technical focus was not \gls{dectnr}, and one duplicate was identified during final verification. Accordingly, the quantitative analyses presented in the remainder of this section are based on the 51 included studies.
+
+Normative \gls{etsi} specifications, \gls{etsi} Technical Reports, and relevant \gls{itur} recommendations were consulted separately to establish the technical and standardization baseline. As specified in the review methodology, these documents were not treated as primary research studies and were therefore not included in the 51-study quantitative corpus.
+
+The complete study-selection process is summarized in the \gls{prisma} flow diagram shown in Fig.~\ref{fig:prisma_results}.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/PRISMA_Result.png}
+    \caption{PRISMA flow diagram of the study identification, screening,
+    eligibility assessment, and final inclusion process.}
+    \label{fig:prisma_results}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Research Characteristics}
+\label{subsec:research_characteristics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The final research corpus comprises 51 studies published between 2020 and July 2026. Fig.~\ref{fig:publication_year} shows the annual distribution of the included studies. Research activity was initially limited, with one included study in 2020, followed by four studies in 2021, five in 2022, and three in 2023. Publication activity increased substantially thereafter, reaching 13 studies in 2024 and 16 studies in 2025. A further nine studies were identified in 2026 up to the review cut-off in July.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig1.png}
+    \caption{Annual distribution of the 51 included \gls{dectnr} studies
+    published between 2020 and July 2026.}
+    \label{fig:publication_year}
+\end{figure}
+
+The temporal distribution shows a marked increase in research activity from 2024 onward. Of the 51 included studies, 38 were published between 2024 and July 2026, representing approximately 75\% of the primary research corpus. The lower number observed for 2026 should be interpreted in relation to the July 2026 search cut-off and therefore does not represent a complete publication year.
+
+Fig.~\ref{fig:publication_type} presents the distribution of the included studies by publication type. Conference papers constitute the dominant publication channel, accounting for 36 of the 51 studies (70.6\%). The remaining corpus comprises seven survey or overview papers (13.7\%), five journal articles (9.8\%), and three theses (5.9\%).
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig2.png}
+    \caption{Distribution of the 51 included studies by publication type.}
+    \label{fig:publication_type}
+\end{figure}
+
+The publication distribution is therefore characterized by a strong concentration of conference papers and a substantial increase in publication activity from 2024 onward. Journal publications remain comparatively limited, whereas survey and overview papers constitute a smaller but noticeable component of the literature.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Technical Research Landscape}
+\label{subsec:technical_landscape}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+To characterize the technical orientation of the literature, each included study was assigned one primary contribution category representing its dominant research focus. Fig.~\ref{fig:primary_contribution} presents the resulting distribution across the 51-study corpus.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig3.png}
+    \caption{Distribution of the included studies according to their primary
+    technical contribution.}
+    \label{fig:primary_contribution}
+\end{figure}
+
+Industrial and application-oriented research constitutes the largest primary contribution category, accounting for 14 studies, followed by \gls{phy} research with 12 studies. \gls{mac} and routing or mesh-networking research each account for six studies, while five studies primarily address standardization. Modeling and analytical research accounts for three studies, whereas positioning and security or multi-RAT research each comprise two studies. Only one study was classified primarily under scheduling and resource allocation.
+
+The primary-contribution classification assigns each study to a single dominant category and therefore provides a mutually exclusive view of the research corpus. However, many studies address several technical aspects simultaneously. To capture this overlap, the literature was additionally coded using multi-label technical-topic categories. The resulting distribution is shown in Fig.~\ref{fig:technical_topics}.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig4.png}
+    \caption{Technical topics addressed across the included studies.
+    Multiple topics may be assigned to an individual study.}
+    \label{fig:technical_topics}
+\end{figure}
+
+Routing and mesh networking is the most frequently represented technical topic, appearing in 23 studies, followed by \gls{phy} and \gls{mac} aspects with 22 studies each. Experimental, testbed, or application-oriented aspects are reported in 18 studies, while standardization or overview topics occur in 13 studies. Among the service-oriented topics, \gls{urllc} is addressed in nine studies and \gls{mmtc} in five. Energy-related aspects occur in eight studies and positioning in six, whereas scheduling and resource allocation appear in four studies.
+
+Other topics remain less frequently represented: security or multi-RAT operation appears in three studies, professional audio in three, and coexistence or regulatory aspects, AI/ML, and queueing or Age of Information each occur in two studies. Backscatter or ambient-IoT communication appears in one study. Because this classification is multi-label, the category counts exceed the total number of included studies.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Evaluation Characteristics}
+\label{subsec:evaluation_characteristics}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The methodological characteristics of the literature were examined by classifying the evaluation approaches used by the included studies. Fig.~\ref{fig:evaluation_methodologies} summarizes the resulting distribution. Since individual studies may combine multiple evaluation approaches, these categories are not mutually exclusive.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig5.png}
+    \caption{Evaluation methodologies employed across the included studies.
+    Multiple methodologies may be reported by an individual study.}
+    \label{fig:evaluation_methodologies}
+\end{figure}
+
+Simulation is the most frequently employed evaluation methodology, appearing in 32 studies, while analytical or modeling approaches are reported in 23 studies. Experimental or testbed-based evaluation is present in 16 studies, and nine studies employ survey or overview methodologies. The distribution therefore shows that simulation and analytical evaluation constitute a substantial component of the current evidence base, alongside an established body of experimental research.
+
+Fig.~\ref{fig:validation_approaches} further distinguishes the specific validation approaches reported in the literature.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig6.png}
+    \caption{Validation approaches reported across the included studies.
+    Multiple validation approaches may be associated with an individual study.}
+    \label{fig:validation_approaches}
+\end{figure}
+
+Hardware prototypes represent the most frequently reported validation approach, appearing in 16 studies, followed by commercial-device evaluation in 11 studies. System-level and numerical simulation are each reported in 10 studies, while link-level simulation appears in six and event-based simulation in two. Among experimental approaches, five studies report field trials, three employ \gls{sdr} or over-the-air validation, and three report industrial measurements. These categories may overlap where studies combine simulation, prototype implementation, and experimental validation.
+
+The performance indicators used to evaluate \gls{dectnr} are summarized in Fig.~\ref{fig:performance_metrics}. As with the preceding classifications, multiple metrics may be reported by a single study.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig7.png}
+    \caption{Performance metrics reported across the included studies.
+    Multiple metrics may be reported by an individual study.}
+    \label{fig:performance_metrics}
+\end{figure}
+
+Packet error rate or packet-loss-related metrics are the most frequently reported performance measures, occurring in 40 studies. Energy or power metrics are reported in 22 studies, while latency and reliability or outage metrics each appear in 15 studies. Bit error rate is reported in 11 studies, and coverage or communication range in seven. Throughput is evaluated in five studies, while RSSI, SNR/SINR, and fairness each occur in two studies. Packet delivery ratio, Age of Information, localization error, connection density, and spectral efficiency are each reported in one study. No studies in the coded corpus explicitly reported RTT, delay spread, or resource-use metrics as separate evaluation indicators.
+
+Finally, Fig.~\ref{fig:implementation_platforms} summarizes the explicitly reported implementation and software platforms identified in the included studies.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig8.png}
+    \caption{Software and hardware platforms explicitly reported across the
+    included studies. Multiple platforms may be associated with an individual
+    study.}
+    \label{fig:implementation_platforms}
+\end{figure}
+
+Nordic nRF91-series hardware is the most frequently identified implementation platform, appearing in five studies. MATLAB is explicitly reported in two studies, while GNU Radio, Zephyr, FPGA-based platforms, USRP, and explicitly identified open-source implementations each occur in one study. No studies in the coded corpus explicitly identified ns-3 or Python as implementation platforms under the adopted coding scheme.
+
+Overall, the quantitative results reveal a research landscape characterized by rapid recent publication growth, a strong concentration of conference papers, and substantial activity in \gls{phy}, \gls{mac}, routing and mesh networking, and industrial or application-oriented research. Simulation and analytical evaluation remain prominent, while hardware prototypes, commercial devices, field trials, and industrial measurements constitute an established experimental component of the literature. The technical implications of these distributions, including the maturity of individual research areas and the remaining gaps in the literature, are examined in the following technical synthesis section.

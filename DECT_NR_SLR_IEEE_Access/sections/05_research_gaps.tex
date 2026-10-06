@@ -1,0 +1,109 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion and Research Gaps}
+\label{sec:discussion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The results of this systematic review show that research on \gls{dectnr} has expanded rapidly since its introduction within the \gls{imt2020} standardization process. The literature now spans PHY and MAC operation, multi-hop networking, reliability, resource management, energy efficiency, positioning, coexistence, and application-oriented implementations. However, the evidence is unevenly distributed across these areas and remains heterogeneous in both methodology and experimental scale. This section interprets the quantitative and technical findings of the review, identifies the principal limitations of the current evidence base, and derives research priorities for further investigation of DECT NR+ in industrial wireless systems.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Maturity of the DECT-2020 NR Research Landscape}
+\label{subsec:research_maturity}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The publication trend indicates a rapidly expanding but still comparatively young research field. Approximately 75\% of the 51 included studies were published between 2024 and July 2026, and 36 studies appeared as conference publications. This concentration of recent work indicates continued exploration of fundamental mechanisms, implementation strategies, and application opportunities rather than convergence toward widely established and extensively validated design practices.
+
+Research maturity also differs substantially across technical areas. PHY, MAC, and routing/mesh networking are the most frequently investigated topics, with 22, 22, and 23 studies addressing these areas, respectively. Experimental, testbed, or application-related aspects appear in 18 studies, indicating an increasing transition from analytical and simulation-based feasibility studies toward physical implementation. In contrast, scheduling and resource allocation, positioning, security, coexistence, and multi-RAT integration remain less extensively investigated. The reviewed evidence is therefore strongest for fundamental communication mechanisms and more limited for several functions that become increasingly important when DECT NR+ is deployed as part of a complete industrial communication system.
+
+The methodological distribution reinforces this interpretation. Simulation is used in 32 studies and analytical or modeling approaches in 23, whereas 16 studies employ experimental or testbed evaluation. Hardware-based investigations are particularly important because they expose implementation effects that are difficult to represent completely in abstract models, including industrial propagation, modem energy consumption, implementation-dependent throughput, gateway processing, and RX--TX turnaround behavior \cite{wassmannPerformanceDECT2020NR2024, bandaraExperimentalValidationAnalysis2025, grafWhatExpectWhen2026, piresDECT2020NREnergy2026b, alizaiMeasurementDrivenLatencyAnalysis2026}. The literature has therefore progressed beyond exclusively analytical and simulation-based evaluation, but the degree of experimental validation remains uneven across research areas.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \subsection{Cross-Layer and Application-Oriented Design}
+\label{subsec:cross_layer_gaps}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+One of the clearest conclusions of the technical synthesis is that DECT NR+ performance is inherently cross-layer. PHY configuration affects data rate, coverage, reliability, airtime, and energy consumption \cite{grafParetoOptimalityApproach2026a}; MAC and channel-access mechanisms influence contention and access delay \cite{samuylovPerformanceMACLayer2024a, gaidamakaOptimizingDelaysRandom2025}; and routing decisions affect hop count, forwarding load, latency, and reliability \cite{asifURLLCBasedMultiHopCommunication2025, alamDLRoutingPerformance2026a, rauwolfTopologyAwareDeepReinforcement2026a}. Network lifetime is additionally affected by router availability and role assignment \cite{nihtilaEnergyConsumptionDECT20202022, nihtilaEnergySavingRouter2022}, while hardware constraints can alter the latency achievable by otherwise efficient schedules \cite{alizaiMeasurementDrivenLatencyAnalysis2026}.
+
+Fig.~\ref{fig:cross_layer_framework} summarizes these dependencies from an application-oriented perspective. Industrial service requirements are translated through scheduling and \gls{qos} management, MAC and channel access, routing and mesh networking, PHY configuration, and finally the capabilities and constraints of the hardware implementation. At the same time, traffic characteristics, propagation conditions, topology, and device capabilities influence several layers simultaneously. The resulting application-level performance is therefore determined by interactions across the protocol stack rather than by any individual mechanism in isolation.
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/CrossLayerFramework.png}
+    \caption{Application-oriented cross-layer framework for DECT-2020 NR,
+    illustrating how application requirements and operating conditions interact
+    with scheduling, MAC, routing, PHY, and hardware mechanisms to determine
+    measurable application-level performance.}
+    \label{fig:cross_layer_framework}
+\end{figure*}
+
+This interaction is especially important for industrial applications because their requirements differ substantially. Periodic sensing may prioritize energy efficiency and long device lifetime, deterministic control requires bounded latency and high reliability, mobile systems introduce topology and routing dynamics, and professional media applications combine stringent timing with sustained traffic. Existing implementations demonstrate the feasibility of several such application classes \cite{mudriievskyiCHEAP5GDECT2024a, poetsProfessionalNetworkedAudio2025, piresDECT2020NREnergy2026b}, but the reviewed literature does not yet provide a systematic mapping from application requirements to complete PHY, MAC, scheduling, routing, and energy-management configurations.
+
+This gap is particularly visible in scheduling and resource allocation. Although DECT NR+ provides flexible resource assignment and decentralized channel access, comparatively few included studies treat application-aware scheduling as their primary problem. Existing work demonstrates benefits from adaptive random access, coordinated resource configuration, and application-dependent PHY selection \cite{gaidamakaOptimizingDelaysRandom2025, glazkovImprovingNearURLLCServices2025, grafParetoOptimalityApproach2026a}, but joint management of deterministic, reliability-oriented, high-throughput, and energy-constrained traffic remains insufficiently explored in the reviewed literature. Future work should therefore move from isolated parameter optimization toward configurable cross-layer strategies that select operating points according to explicit application requirements and observed network conditions.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimental and Methodological Gaps}
+\label{subsec:experimental_gaps}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A second major limitation concerns the gap between the scale and abstraction of simulation studies and the conditions evaluated experimentally. Analytical and system-level studies frequently consider dense and multi-hop deployments, whereas physical experiments typically involve smaller device populations, point-to-point communication, or relatively simple static topologies. Recent multi-hop and application-oriented prototypes represent important progress \cite{piresDECT2020NREnergy2026b, poetsProfessionalNetworkedAudio2025}, but the reviewed literature provides limited evidence from large physical deployments combining routing, scheduling, heterogeneous traffic, mobility, and interference.
+
+This distinction matters because physical implementations introduce effects that are commonly simplified or omitted in simulation. Radio-state transitions, processing and buffering delays, firmware behavior, synchronization, gateway processing, and transceiver turnaround can contribute directly to application-visible performance \cite{bandaraExperimentalValidationAnalysis2025, piresDECT2020NREnergy2026b, alizaiMeasurementDrivenLatencyAnalysis2026}. Protocol-level improvements should therefore increasingly be evaluated together with the implementation constraints of the target hardware.
+
+Comparison across experimental studies is further complicated by the absence of common benchmark configurations. Payload size, MCS, transmit power, traffic load, topology, channel conditions, measurement duration, hardware platform, and even the boundaries used to define latency differ between studies. Consequently, apparently different performance results may reflect different experimental conditions rather than differences in the mechanisms being evaluated. A reproducible DECT NR+ evaluation framework should therefore report at least the PHY configuration, channel and bandwidth, transmit power, packet size, traffic model and offered load, number of devices, topology and hop count, interference conditions, firmware or modem version, and measurement duration.
+
+The reported \glspl{kpi} also reveal a pronounced imbalance in the current evidence base. Packet loss or \gls{per} is evaluated in 40 of the 51 included studies, whereas energy or power is addressed in 22 and latency in 15. Reliability or outage also appears in 15 studies and \gls{ber} in 11, while coverage or range is evaluated in seven and throughput in five. In contrast, fairness, \gls{rssi}, and \gls{snr}/\gls{sinr} are reported in only two studies each, while \gls{aoi}, localization error, connection density, and spectral efficiency each appear in only one study. This distribution indicates that the literature has concentrated more strongly on link reliability and radio-level performance than on several application- and system-level properties.
+
+For latency-sensitive industrial systems, average delay alone is insufficient because rare but large delays can determine whether application deadlines are satisfied. Future evaluations should therefore increasingly characterize latency distributions and high percentiles together with reliability, jitter, energy consumption, and application-specific performance measures. Such reporting would provide a more complete representation of predictability than mean values alone.
+
+Long-duration and failure-oriented validation represents another important gap. Industrial networks must continue operating under interference, node failures, route changes, mobility, bursty traffic, and changing propagation conditions. Within the reviewed literature, comparatively limited evidence is available from long-duration experiments or controlled failure scenarios. Experiments extending over hours or days, together with controlled fault injection and recovery analysis, would therefore provide stronger evidence of system behavior under deployment-relevant conditions.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Research Gaps and Future Research Priorities}
+\label{subsec:future_directions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The preceding analysis indicates that the next phase of DECT NR+ research should increasingly address how individual mechanisms interact within complete industrial systems. Table~\ref{tab:research_gaps} consolidates the principal gaps identified from the reviewed literature and maps them to corresponding research priorities.
+
+\begin{table*}[!t]
+\centering
+\caption{Key research gaps and future research priorities identified from the
+reviewed DECT-2020 NR literature.}
+\label{tab:research_gaps}
+\renewcommand{\arraystretch}{1.12}
+\small
+\begin{tabular}{p{3.0cm} p{5.3cm} p{7.0cm}}
+\hline
+\textbf{Research Area} &
+\textbf{Identified Gap} &
+\textbf{Future Research Priority} \\
+\hline
+
+Cross-layer and application-oriented design & The reviewed literature provides limited mapping from application requirements to coordinated PHY, MAC, scheduling, routing, and energy configurations. & Develop cross-layer configuration methods that translate latency, reliability, traffic, mobility, density, and energy requirements into coordinated protocol and radio parameters. \\
+
+Scheduling and resource allocation & Application-aware scheduling under heterogeneous traffic and competing \gls{qos} requirements remains comparatively underexplored in the reviewed literature. & Develop deterministic and reliability-oriented scheduling and resource allocation for coexisting periodic, event-driven, bursty, and energy-constrained traffic. \\
+
+Large-scale mesh networking & Large and dense networks are primarily evaluated analytically or through simulation, while physical multi-hop testbeds in the reviewed literature remain comparatively small. & Validate routing, topology management, scalability, mobility, congestion, and recovery using larger hardware deployments under realistic traffic and interference. \\
+
+Experimental methodology & Experimental configurations, measurement boundaries, hardware platforms, and reported \glspl{kpi} vary substantially across the included studies. & Establish reproducible benchmark scenarios and standardized reporting of radio, traffic, topology, hardware, firmware, interference, and measurement conditions. \\
+
+Reliability and deterministic communication & Latency and reliability are widely investigated, but the reviewed literature provides more limited evidence on tail behavior, predictability, failures, and sustained operation. & Evaluate latency distributions, deadline satisfaction, reliability, and recovery under interference, topology changes, retransmissions, failures, and long-duration workloads. \\
+
+Energy-aware networking & The reviewed literature provides limited joint evaluation of energy with routing, reliability, latency, and network availability. & Jointly investigate PHY adaptation, sleep scheduling, router-role management, routing, residual energy, and application \gls{qos} to optimize network lifetime. \\
+
+Positioning and localization & Positioning has received substantially less experimental attention than core communication mechanisms in the reviewed literature. & Validate integrated communication and positioning under industrial propagation, mobility, NLoS conditions, and realistic anchor deployments. \\
+
+Security, coexistence, and heterogeneous integration & Security, coexistence, and multi-RAT operation remain comparatively less investigated and experimentally validated. & Investigate secure multi-hop operation, authentication, interference-aware coexistence, failover, and integration with Wi-Fi, cellular, and industrial networks. \\
+
+Hardware-aware system design & Radio turnaround, processing, buffering, firmware, and other implementation-specific effects are not consistently represented in the reviewed system-level models. & Integrate hardware constraints into latency, scheduling, energy, and cross-layer models and validate the resulting designs experimentally. \\
+
+\hline
+\end{tabular}
+\end{table*}
+
+Several priorities cut across the individual areas in Table~\ref{tab:research_gaps}. Multi-objective configuration is required because improvements in latency, reliability, throughput, and energy can conflict \cite{grafParetoOptimalityApproach2026a}. Reliability-oriented mechanisms should increasingly be validated under mixed traffic and changing network conditions \cite{samuylovEmpoweringNearURLLCIoT2025, glazkovImprovingNearURLLCServices2025, ahmadMACLayerProtocolUltraReliable2025}, while energy-aware networking should combine router management, sleep behavior, routing, and radio configuration rather than treating transmit power in isolation \cite{nihtilaEnergyConsumptionDECT20202022, nihtilaEnergySavingRouter2022, grafParetoOptimalityApproach2026a}.
+
+Areas with comparatively limited evidence also require broader experimental attention. Positioning studies demonstrate the potential of communication-assisted localization \cite{saikkoPositioningDECT2020NR2024, saikkoPositioningTrackingDECT20202025}, while primary studies on heterogeneous networking demonstrate practical integration of DECT NR+ with complementary radio and network infrastructures \cite{dangEWDCIntegratingDECT20202025a, dangUniRATUnifiedDECT20202026}. Related contextual work further illustrates a potential pathway for integrating resource-constrained devices with infrastructure-managed authentication and session management \cite{ngoIoTDeviceAuthentication2025}. These directions require broader evaluation under realistic industrial mobility, interference, security, and failover conditions.
+
+Overall, the principal challenge identified by this review is no longer only to demonstrate that individual DECT NR+ mechanisms can achieve favorable performance, but to determine how they should be configured and combined to provide predictable application-level behavior under realistic scale, traffic, topology, interference, energy, and hardware constraints. Addressing this challenge through reproducible and increasingly large-scale experimental evaluation would strengthen the evidence needed to translate the flexibility of DECT NR+ into dependable industrial wireless systems.

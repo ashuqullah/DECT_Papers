@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methodology}
+\label{sec:methodology}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This study adopts a \gls{slr} methodology following the \gls{prisma} 2020 guidelines \cite{pagePRISMA2020} to systematically identify, evaluate, classify, and synthesize the available literature on \gls{dectnr}. A predefined review protocol was established prior to the literature search to improve the transparency, consistency, and reproducibility of the review process.
+
+As illustrated in Fig.~\ref{fig:review_workflow}, the review comprised four principal phases: identification, screening, eligibility assessment, and evidence synthesis. The identification phase covered the formulation of the \glspl{rq}, selection of information sources, development of the search strategy, literature retrieval, and duplicate removal. Screening was performed using titles and abstracts, followed by full-text eligibility assessment and \gls{qa}. The final phase comprised structured data extraction, classification, and synthesis of the included evidence.
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/PRSIMA.pdf}
+    \caption{Systematic literature review workflow adopted in this study.
+    The review comprises four principal phases: identification, screening,
+    eligibility assessment, and evidence synthesis.}
+    \label{fig:review_workflow}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Review Protocol and Research Questions}
+\label{subsec:review_protocol}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The review protocol defined the research objectives, information sources, search strategy, eligibility criteria, quality assessment procedure, data extraction framework, classification scheme, and synthesis methodology. The literature search covered publications from January 2020 to July 2026, corresponding to the emergence and subsequent development of \gls{dectnr}.
+
+The review was guided by the following \glspl{rq}:
+
+\begin{itemize}
+
+    \item[\textbf{RQ1}] How has research on \gls{dectnr} evolved in terms of publication trends, publication types, and application domains?
+
+    \item[\textbf{RQ2}] Which technical aspects of \gls{dectnr}, including the \gls{phy}, \gls{mac}, routing and mesh networking, resource allocation     and scheduling, positioning, security, and industrial applications, have     been investigated?
+
+    \item[\textbf{RQ3}] Which evaluation methodologies, implementation platforms, software tools, and hardware platforms have been employed to  investigate and validate \gls{dectnr}?
+
+    \item[\textbf{RQ4}] Which \glspl{kpi} have been used to evaluate \gls{dectnr}, and which performance characteristics have received the     greatest research attention?
+
+    \item[\textbf{RQ5}] What are the principal scientific contributions and technical limitations reported in the existing literature?
+
+    \item[\textbf{RQ6}] Which research gaps remain insufficiently addressed in the current body of \gls{dectnr} literature?
+
+    \item[\textbf{RQ7}] What future research directions are most promising for advancing \gls{dectnr} toward large-scale \gls{iiot} deployments?
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsection{Information Sources and Search Strategy}
+\label{subsec:search_strategy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The literature search was conducted using five primary scientific databases: IEEE Xplore, Scopus, ACM Digital Library, SpringerLink, and ScienceDirect. Google Scholar was used as a complementary source for backward and forward snowballing and for identifying potentially relevant publications not retrieved through the primary database search.
+
+To capture both technology-specific publications and studies addressing its main technical and application-oriented aspects, the search strategy combined alternative names for \gls{dectnr} with terms related to architecture, protocol design, the \gls{phy}, the \gls{mac}, implementation, experimental validation, performance evaluation, and industrial communication. The Boolean search query used in the review was:
+
+\begin{quote} \small \texttt{ ("DECT-2020 NR" OR "DECT NR+" OR "DECT-2020 New Radio" OR "DECT NR" OR "DECT New Radio") AND (architecture OR protocol OR PHY OR "physical layer" OR MAC OR "medium access control" OR implementation OR experimental OR testbed OR prototype OR performance OR evaluation OR measurement OR industrial OR IoT OR URLLC OR reliability) }
+\end{quote}
+
+Database-specific syntax was adapted where necessary while preserving the semantic meaning of the search expression. Where supported by the respective database, the search was applied to publication titles, abstracts, and author-defined keywords.
+
+All retrieved records were consolidated and managed using Zotero Reference Manager. Duplicate records were identified and removed before the screening stage. Backward snowballing was performed by examining the references of eligible studies, while forward snowballing was supported using Google Scholar. Additional studies identified through snowballing were subjected to the same eligibility criteria as records retrieved through the primary search.
+
+Normative \gls{etsi} specifications, \gls{etsi} Technical Reports, and relevant \gls{itur} recommendations were additionally consulted to establish the standardization and technical baseline for the synthesis. These normative documents were analyzed separately from the primary research corpus and were therefore not included in the quantitative bibliometric analysis or subjected to the research-study quality assessment procedure.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Eligibility and Study Selection}
+\label{subsec:eligibility}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The inclusion and exclusion criteria were defined before screening. A study was eligible for the primary research corpus if it:
+
+\begin{itemize}
+
+    \item primarily investigated \gls{dectnr} or DECT NR+;
+
+    \item presented a technical, analytical, experimental, architectural, or     application-oriented contribution;
+
+    \item was written in English and had accessible full text;
+
+    \item was published between January 2020 and July 2026; and
+
+    \item contained sufficient methodological or technical information for     data extraction.
+
+\end{itemize}
+
+Studies were excluded if they mentioned \gls{dectnr} only as background, primarily investigated another communication technology, duplicated another record, lacked sufficient technical content, or consisted of non-technical material such as presentation slides, posters, or editorials.
+
+Studies relevant to the broader technological context but not primarily focused on \gls{dectnr} were classified as contextual studies and excluded from the quantitative synthesis.
+
+Study selection was performed sequentially through title screening, abstract screening, and full-text eligibility assessment. Exclusion decisions were recorded throughout the screening process. The numerical outcome of the study selection procedure is reported separately using the \gls{prisma} flow diagram in Section~\ref{sec:results}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quality Assessment}
+\label{subsec:quality_assessment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Eligible research studies were evaluated using a five-criterion \gls{qa} framework covering:
+
+\begin{enumerate}
+
+    \item clarity of the research objective;
+
+    \item appropriateness of the methodology;
+
+    \item strength of the validation;
+
+    \item clarity of the discussion and limitations; and
+
+    \item reproducibility of the study.
+
+\end{enumerate}
+
+Each criterion was assigned a score of 0 (not addressed), 1 (partially addressed), or 2 (fully addressed), resulting in a maximum quality score of 10. Studies scoring 8--10 were classified as high quality, those scoring 5--7 as moderate quality, and those scoring below 5 as low quality. No study was excluded solely on the basis of its quality score; rather, the quality assessment was used to characterize the methodological strength of the evidence and to support interpretation of the synthesized findings.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Data Extraction and Coding}
+\label{subsec:data_extraction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A structured data-extraction template was used to ensure consistent collection of information from the included studies. The extracted variables covered bibliographic characteristics, research contributions, technical topics, evaluation methodologies, implementation platforms, deployment characteristics, evaluated \glspl{kpi}, application domains, key findings, limitations, identified research gaps, and proposed future work.
+
+Each publication was assigned one primary research contribution to avoid double counting in the analysis of dominant research directions. Secondary technical characteristics were coded using a multi-label classification scheme covering the \gls{phy}, \gls{mac}, routing and mesh networking, scheduling and resource allocation, positioning and localization, security, energy efficiency, coexistence, artificial intelligence, industrial applications, \gls{urllc}, \gls{mmtc}, and related topics.
+
+Evaluation methodologies and reported performance metrics were also treated as multi-label variables because individual studies frequently employed multiple evaluation approaches or investigated several \glspl{kpi}. Binary one-hot coding was used for these attributes in the structured spreadsheet database.
+
+To improve consistency, the extracted data and corresponding classification matrices were cross-checked against the source publications. Ambiguous or inconsistent classifications were resolved by re-examining the relevant sections of the full text. Following verification, the resulting database was frozen and used as the single source for the quantitative analyses, tables, and figures reported in this review.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Data Synthesis and Threats to Validity}
+\label{subsec:data_synthesis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The extracted evidence was analyzed using descriptive, comparative, and thematic synthesis. Descriptive analysis was used to characterize publication trends, publication types, research topics, evaluation methodologies, implementation platforms, application domains, and reported performance metrics. Comparative analysis was used to examine methodological and technical differences across the identified research categories. Thematic synthesis was subsequently applied to integrate scientific contributions, limitations, research gaps, and proposed future directions across the literature.
+
+Because several variables, including technical topics, evaluation methods, and performance metrics, were coded using a multi-label scheme, the sum of the corresponding category frequencies or percentages may exceed the total number of publications or 100\%.
+
+Several threats to validity remain. Relevant studies may have been missed because of differences in database coverage, indexing, or terminology. This risk was mitigated through searches across multiple scientific databases and backward and forward snowballing. Classification and quality assessment also involve researcher judgment. To reduce subjectivity, predefined coding and assessment criteria were applied consistently, and ambiguous classifications were re-examined against the corresponding full-text publications. Finally, \gls{dectnr} remains a rapidly evolving technology, and recently accepted or unpublished studies may not yet be indexed. Consequently, the review represents the state of the literature available up to July 2026.

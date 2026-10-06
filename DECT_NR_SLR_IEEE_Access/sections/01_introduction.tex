@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Background and Motivation}
+\label{subsec:background_motivation}
+
+The continuing digitalization of industrial systems has accelerated the integration of \gls{iiot}, cyber-physical systems, and wireless communication technologies into modern production and automation environments. Industrial networks increasingly support applications ranging from process monitoring and condition sensing to closed-loop control, mobile robotics, safety systems, localization, and multimedia services. These developments form an important technological foundation of Industry~4.0 and smart manufacturing, where machines, sensors, actuators, controllers, and mobile systems must exchange information reliably and efficiently \cite{xuInternetThingsIndustries2014, sisinniIndustrialInternetThings2018, boyesIndustrialInternetThings2018, wollschlaegerFutureIndustrialCommunication2017a}.
+
+A fundamental challenge is the heterogeneity of industrial communication requirements. Control and robotic applications may require bounded latency, low jitter, and predictable communication cycles, whereas safety-related applications place particular emphasis on highly reliable packet delivery. Monitoring and sensing applications may tolerate less stringent timing constraints but often require energy-efficient operation and long device lifetimes. Mobile and logistics applications introduce additional requirements related to mobility, coverage, localization, and changing radio conditions, whereas multimedia services may generate substantially different traffic volumes and \gls{qos} requirements \cite{sisinniIndustrialInternetThings2018, wollschlaegerFutureIndustrialCommunication2017a}.
+
+Fig.~\ref{fig:industrial_requirements} summarizes representative industrial application classes and their corresponding wireless communication requirements. Industrial wireless networks must therefore address multiple performance dimensions, including latency, reliability, jitter, energy efficiency, scalability, coverage, and differentiated \gls{qos}, whose relative importance depends on the application and deployment scenario.
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/IndustrialApp.png}
+    \caption{Representative industrial applications and their corresponding
+    wireless communication requirements.}
+    \label{fig:industrial_requirements}
+\end{figure*}
+
+The evolution toward fifth-generation wireless communication broadened the scope of wireless systems beyond conventional human-centric broadband. The \gls{itur} IMT Vision defined three principal usage scenarios for \gls{imt2020}: enhanced mobile broadband, \gls{mmtc}, and \gls{urllc} \cite{itur_m2083}. The associated requirements and evaluation methodology cover performance dimensions such as latency, reliability, connection density, mobility, spectrum efficiency, and energy efficiency \cite{itur_m2410,itur_m2412}. Importantly, \gls{imt2020} is not restricted to a single radio interface; multiple \glspl{rit} can satisfy the common technical and evaluation framework \cite{itur_m2083,itur_m2410,itur_m2412,itur_m2150}.
+
+This technology-neutral framework is particularly relevant to industrial and enterprise environments, where locally managed networks, flexible topologies, dense device connectivity, direct communication, and infrastructure-light deployment can be important. These requirements create a role for complementary radio technologies that address deployment models different from those of conventional cellular networks.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \subsection{DECT-2020 NR and the Emerging Research Landscape} \label{subsec:dectnr_landscape} %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Within this context, \gls{etsi} developed \gls{dectnr} as a next-generation radio technology for local wireless communication, massive machine-type connectivity, and other demanding communication scenarios. Although it builds on the regulatory and technological heritage of \gls{dect}, \gls{dectnr} introduces a new radio interface and protocol architecture supporting flexible, decentralized, and infrastructure-light deployments \cite{kovalchukovDECT2020NewRadio2022, perez-guiraoDECTNRUnveiling2022}.
+
+The technology was evaluated within the \gls{imt2020} process and subsequently included by the \gls{itur} as an \gls{imt2020} radio interface \cite{itur_m2150, maliatsosEvaluationIMT2020Candidate2022a, smidaETSIDECT2020Component2023}. Its architecture is specified primarily through the \gls{etsi} TS~103~636 series, covering the system architecture, radio requirements, \gls{phy}, \gls{mac}, and related protocol procedures \cite{etsi_ts103636_1, etsi_ts103636_2, etsi_ts103636_3, etsi_ts103636_4, etsi_ts103636_5}. Devices can assume different operational roles and establish direct, point-to-multipoint, and multi-hop communication structures without requiring the conventional base-station and core-network architecture associated with cellular systems.
+
+These characteristics make \gls{dectnr} relevant to industrial and \gls{iot} environments in which local network ownership, deployment flexibility, device density, multi-hop connectivity, and application-specific communication requirements are important. Rather than being considered a replacement for cellular 5G, \gls{dectnr} can be viewed as a complementary \gls{imt2020} radio technology addressing deployment scenarios with distinct architectural and operational requirements \cite{kovalchukovDECT2020NewRadio2022, perez-guiraoDECTNRUnveiling2022, smidaETSIDECT2020Component2023}.
+
+Research on \gls{dectnr} has expanded rapidly beyond standardization and initial technology evaluation. Early investigations concentrated on \gls{imt2020} performance assessment and the feasibility of the technology for machine-type and low-latency communication \cite{maliatsosEvaluationIMT2020Candidate2022a, smidaETSIDECT2020Component2023}. Subsequent work has addressed physical-layer performance, channel access, routing and multi-hop networking, scheduling and resource allocation, reliability, energy efficiency, positioning, coexistence, heterogeneous-network integration, and application-specific communication.
+
+At the same time, evaluation has increasingly progressed from analytical and simulation-based studies toward commercial devices, hardware prototypes, \gls{sdr} implementations, testbeds, and measurements under practical deployment conditions \cite{fagerholmFPGAbasedDECT2020New2024, wassmannPerformanceDECT2020NR2024, bandaraExperimentalValidationAnalysis2025, haqueDECT2020NRLink2025, grafWhatExpectWhen2026}. Application-oriented research has similarly expanded toward professional audio, industrial monitoring, critical infrastructure, localization, energy-constrained networking, multi-hop communication, and other emerging use cases. This diversification suggests increasing research and experimental maturity, but it has also produced a fragmented research landscape spanning multiple protocol layers, methodologies, performance metrics, implementation platforms, and application domains.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Research Gap and Contributions}
+\label{subsec:intro_gap}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Despite this growing body of research, the available knowledge remains distributed across heterogeneous sources. Normative aspects are defined in \gls{etsi} specifications and \gls{itur} recommendations, whereas protocol enhancements, analytical models, simulations, implementation techniques, hardware evaluations, and application studies are distributed across journal articles, conference proceedings, theses, and other technical publications. Individual studies consequently provide detailed evidence for particular aspects of \gls{dectnr}, but do not by themselves reveal how the different research directions relate to one another, how experimental maturity has evolved, or where the principal research gaps remain.
+
+Existing surveys and overview publications provide valuable descriptions of selected aspects of the technology \cite{kovalchukovDECT2020NewRadio2022, perez-guiraoDECTNRUnveiling2022, smidaETSIDECT2020Component2023}, but a systematic synthesis spanning the complete research landscape remains lacking. In particular, the literature has not yet been consolidated within a common framework that jointly characterizes publication trends, technical research areas, evaluation methodologies, implementation platforms, performance metrics, application domains, and cross-layer relationships.
+
+This paper addresses this gap through a \gls{prisma}-based systematic literature review and technical synthesis of \gls{dectnr} research published from 2020 through July~2026 \cite{pagePRISMA2020}. Following systematic identification, screening, eligibility assessment, and quality assessment, 51 primary studies are included in the quantitative and qualitative synthesis. Normative \gls{etsi} and \gls{itur} documents are analyzed separately to provide the standardization context without treating standards as evaluation studies.
+
+The principal contributions of this survey are as follows:
+
+\begin{itemize}
+
+    \item \textbf{Systematic and reproducible literature review:}     A structured review of the \gls{dectnr} literature is conducted using     predefined research questions, information sources, search strategy,     eligibility criteria, quality assessment, data extraction, and synthesis     procedures.
+
+    \item \textbf{Quantitative characterization of the research landscape:}     The 51 primary studies are analyzed with respect to publication trends,     publication types, primary contributions, technical topics, research     methodologies, validation approaches, performance metrics, and     implementation platforms.
+
+    \item \textbf{Unified technical taxonomy and synthesis:}     The research landscape is organized into ten complementary areas:     standardization and system architecture; physical-layer research;     \gls{mac} and channel access; routing and mesh networking; scheduling and     resource allocation; reliability, \gls{urllc}, and \gls{mmtc}; energy     efficiency; positioning and localization; security, coexistence, and     multi-RAT integration; and industrial applications and experimental     implementations.
+
+    \item \textbf{Assessment of experimental maturity and performance     evaluation:}     The survey examines how \gls{dectnr} has been evaluated through analytical     modeling, simulation, hardware prototypes, commercial devices,     \gls{sdr} platforms, field trials, and industrial measurements, together     with the \glspl{kpi} used to characterize performance.
+
+    \item \textbf{Cross-layer synthesis of technical evidence:}     Relationships among physical-layer configuration, channel access,     scheduling, routing, reliability, energy consumption, positioning, and     hardware behavior are synthesized to show how application-visible     performance emerges from interactions across protocol and implementation     layers.
+
+    \item \textbf{Research gaps and future directions:}     Based on the systematic evidence, the survey identifies underexplored     areas and future priorities, including application-oriented cross-layer     design, large-scale mesh evaluation, deterministic communication,     energy-aware networking, experimental localization, secure multi-hop     operation, heterogeneous integration, and hardware-aware optimization.
+
+\end{itemize}
+
+By combining quantitative characterization with technical and cross-layer synthesis, this review provides a structured view of the maturity, limitations, and future development of the \gls{dectnr} research ecosystem.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Paper Organization}
+\label{subsec:paper_organization}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The remainder of this paper is organized as follows. Section~\ref{sec:methodology} describes the systematic review methodology, including the research questions, information sources, search strategy, eligibility criteria, quality assessment, data extraction, and synthesis procedure. Section~\ref{sec:results} presents the study-selection results and the quantitative characteristics of the 51 included primary studies. Section~\ref{sec:technical_synthesis} develops the technical taxonomy and synthesizes the major research directions across the ten identified areas. Section~\ref{sec:discussion} discusses the cross-layer implications, experimental and methodological limitations, research gaps, and future priorities. The final section concludes the paper.
